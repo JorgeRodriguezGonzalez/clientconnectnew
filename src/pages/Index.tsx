@@ -1,6 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import HeroSection from "@/components/home/HeroSection";
+import { HeroNew } from "@/components/home/HeroNew";
 import ServicesSection from "@/components/home/ServicesSection";
 import WhyUsSection from "@/components/home/WhyUsSection";
 import ProcessSection from "@/components/home/ProcessSection";
@@ -12,7 +12,7 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        <HeroSection />
+        <HeroNew />
         <ServicesSection />
         <WhyUsSection />
         <ProcessSection />
