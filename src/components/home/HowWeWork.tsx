@@ -141,7 +141,7 @@ const InfiniteCarousel = () => {
   );
 };
 
-const HowWeWork = () => {
+export const HowWeWork = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -174,7 +174,7 @@ const HowWeWork = () => {
                 scale: index < workSteps.length - 1 ? scale : 1,
                 position: 'sticky',
                 top: `${step.top}px`,
-                zIndex: workSteps.length - index
+                zIndex: index + 1  // ← CORREGIDO: ahora aumenta con el índice
               }}
               className="bg-white rounded-[32px] shadow-[0_0_0_1px_rgba(0,0,0,0.08)] overflow-hidden"
             >
@@ -261,5 +261,3 @@ const HowWeWork = () => {
     </div>
   );
 };
-export { HowWeWork };
-export default HowWeWork;
