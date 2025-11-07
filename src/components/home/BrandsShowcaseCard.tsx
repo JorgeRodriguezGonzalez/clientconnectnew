@@ -12,14 +12,7 @@ export const BrandsShowcaseCard = ({
 }: BrandsShowcaseCardProps) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [isHovered, setIsHovered] = React.useState(false);
-  const [hasAnimated, setHasAnimated] = React.useState(false);
-
-  React.useEffect(() => {
-    if (isInView && !hasAnimated) {
-      setHasAnimated(true);
-    }
-  }, [isInView, hasAnimated]);
+  const [hoverCount, setHoverCount] = React.useState(0);
 
   return (
     <motion.div 
@@ -32,7 +25,7 @@ export const BrandsShowcaseCard = ({
         opacity: 0,
         y: 20
       }} 
-      animate={hasAnimated ? {
+      animate={isInView ? {
         opacity: 1,
         y: 0
       } : {
@@ -45,12 +38,12 @@ export const BrandsShowcaseCard = ({
       whileHover={{
         boxShadow: 'rgba(0, 0, 0, 0.08) 0px 24px 32px 0px'
       }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
       <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[262px] bg-[#F5F5F5] rounded-[22px] overflow-hidden">
         <div className="relative w-full h-full">
           <motion.div 
+            key={`left-${hoverCount}`}
             className="absolute w-[146px] h-[249px] overflow-visible" 
             style={{
               top: '90.6px',
@@ -62,8 +55,8 @@ export const BrandsShowcaseCard = ({
               opacity: 0.8
             }} 
             animate={{
-              x: (hasAnimated || isHovered) ? 0 : -20,
-              opacity: (hasAnimated || isHovered) ? 1 : 0.8
+              x: 0,
+              opacity: 1
             }} 
             transition={{
               duration: 0.6,
@@ -76,6 +69,7 @@ export const BrandsShowcaseCard = ({
           </motion.div>
           
           <motion.div 
+            key={`right-${hoverCount}`}
             className="absolute w-[146px] h-[248px] overflow-visible" 
             style={{
               top: '92px',
@@ -87,8 +81,8 @@ export const BrandsShowcaseCard = ({
               opacity: 0.8
             }} 
             animate={{
-              x: (hasAnimated || isHovered) ? 0 : 20,
-              opacity: (hasAnimated || isHovered) ? 1 : 0.8
+              x: 0,
+              opacity: 1
             }} 
             transition={{
               duration: 0.6,
@@ -101,6 +95,7 @@ export const BrandsShowcaseCard = ({
           </motion.div>
           
           <motion.div 
+            key={`center-${hoverCount}`}
             className="absolute w-[156px] h-[287px] overflow-visible rounded-[9px]" 
             style={{
               top: '48.6px',
@@ -113,8 +108,8 @@ export const BrandsShowcaseCard = ({
               opacity: 0
             }} 
             animate={{
-              y: (hasAnimated || isHovered) ? 0 : -10,
-              opacity: (hasAnimated || isHovered) ? 1 : 0
+              y: 0,
+              opacity: 1
             }} 
             transition={{
               duration: 0.6,
