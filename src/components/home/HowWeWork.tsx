@@ -216,8 +216,26 @@ const AnimatedImage = ({
 
   return (
     <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden">
-      {/* Background con gradiente azul de izquierda (transparente) a derecha (más opaco) */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#3255D2]/10 to-[#3255D2]/25" />
+      {/* Background con puntitos */}
+      <div className="absolute inset-0">
+        <img 
+          src="https://framerusercontent.com/images/8mtG4MOmLSI8Pbm4UN69jB9tcsk.jpg?width=1329&height=1263" 
+          alt="Background dots" 
+          className="w-full h-full object-cover object-[100%_50.4%]" 
+        />
+      </div>
+
+      {/* Background overlay con puntitos */}
+      <div className="absolute inset-0 z-[1]">
+        <img 
+          src="https://framerusercontent.com/images/8mtG4MOmLSI8Pbm4UN69jB9tcsk.jpg?width=1329&height=1263" 
+          alt="Background overlay dots" 
+          className="w-full h-full object-cover object-[100%_50.4%]" 
+        />
+      </div>
+
+      {/* Gradiente azul */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#3255D2]/10 to-[#3255D2]/25 z-[2]" />
 
       {/* Imagen principal animada */}
       <motion.div
@@ -230,6 +248,37 @@ const AnimatedImage = ({
       >
         <img src={src} alt={alt} className="w-full h-full object-cover object-[0%_0%]" />
       </motion.div>
+    </div>
+  );
+};
+
+// Componente para el fondo de la segunda tarjeta (Strategy) con puntitos
+const TaskCardBackground = () => {
+  return (
+    <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
+      {/* Background con puntitos */}
+      <div className="absolute inset-0">
+        <img 
+          src="https://framerusercontent.com/images/8mtG4MOmLSI8Pbm4UN69jB9tcsk.jpg?width=1329&height=1263" 
+          alt="Background dots" 
+          className="w-full h-full object-cover object-[100%_50.4%]" 
+        />
+      </div>
+
+      {/* Background overlay con puntitos */}
+      <div className="absolute inset-0">
+        <img 
+          src="https://framerusercontent.com/images/8mtG4MOmLSI8Pbm4UN69jB9tcsk.jpg?width=1329&height=1263" 
+          alt="Background overlay dots" 
+          className="w-full h-full object-cover object-[100%_50.4%]" 
+        />
+      </div>
+
+      {/* Contenido (TaskCard y AddButton) */}
+      <div className="relative z-10 flex flex-col items-center gap-5">
+        <TaskCard />
+        <AddButton />
+      </div>
     </div>
   );
 };
@@ -293,10 +342,7 @@ export const HowWeWork = () => {
 
                 <div className="flex-1 relative overflow-hidden">
                   {step.showTaskCard && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-gray-50">
-                      <TaskCard />
-                      <AddButton />
-                    </div>
+                    <TaskCardBackground />
                   )}
 
                   {step.showCarousel && (
