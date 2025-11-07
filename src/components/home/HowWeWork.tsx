@@ -199,6 +199,16 @@ export const HowWeWork = () => {
                 </div>
 
                 <div className="flex-1 relative overflow-hidden">
+                  {/* Imagen de fondo para tarjetas con imagen */}
+                  {step.image && !step.showTaskCard && !step.showCarousel && (
+                    <img
+                      src={step.image}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover"
+                      style={{ objectPosition: '100% 50.4%' }}
+                    />
+                  )}
+
                   {step.showTaskCard && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
                       <TaskCard />
@@ -212,14 +222,15 @@ export const HowWeWork = () => {
                     </div>
                   )}
 
+                  {/* Imagen animada que se superpone para la primera tarjeta */}
                   {step.id === 's1' && (
                     <motion.div
                       initial={{ opacity: 0, x: 301.322 }}
                       whileInView={{ opacity: 0.498, x: 0 }}
                       transition={{ duration: 0.8, ease: 'easeOut' }}
                       viewport={{ 
-                        once: false,  // ← Cambiado a false para que se repita
-                        amount: 0.3   // ← Se activa cuando el 30% está visible
+                        once: false,
+                        amount: 0.3
                       }}
                       className="absolute right-0 top-1/2 -translate-y-1/2 w-[551px] h-[454px] rounded-l-xl shadow-lg overflow-hidden"
                     >
@@ -231,12 +242,16 @@ export const HowWeWork = () => {
                     </motion.div>
                   )}
 
+                  {/* Imagen animada que se superpone para la última tarjeta */}
                   {step.id === 's4' && (
                     <motion.div
                       initial={{ opacity: 0, x: 600 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8, ease: 'easeOut' }}
-                      viewport={{ once: true }}
+                      viewport={{ 
+                        once: false,
+                        amount: 0.3
+                      }}
                       className="absolute right-0 top-1/2 -translate-y-1/2 w-[551px] h-[454px] rounded-l-xl shadow-lg overflow-hidden"
                     >
                       <img
