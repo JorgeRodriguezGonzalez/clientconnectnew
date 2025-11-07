@@ -3,7 +3,7 @@ import Footer from "@/components/layout/Footer";
 import { HeroNew } from "@/components/home/HeroNew";
 import ServicesSection from "@/components/home/ServicesSection";
 import WhyUsSection from "@/components/home/WhyUsSection";
-import HowWeWork from "@/components/home/HowWeWork";
+import { HowWeWork } from "@/components/home/HowWeWork";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
 
