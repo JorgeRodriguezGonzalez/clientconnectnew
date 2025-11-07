@@ -174,7 +174,7 @@ export const HowWeWork = () => {
                 scale: index < workSteps.length - 1 ? scale : 1,
                 position: 'sticky',
                 top: `${step.top}px`,
-                zIndex: index + 1  // ← CORREGIDO: ahora aumenta con el índice
+                zIndex: index + 1
               }}
               className="bg-white rounded-[32px] shadow-[0_0_0_1px_rgba(0,0,0,0.08)] overflow-hidden"
             >
@@ -199,15 +199,6 @@ export const HowWeWork = () => {
                 </div>
 
                 <div className="flex-1 relative overflow-hidden">
-                  {step.image && (
-                    <img
-                      src={step.image}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-cover"
-                      style={{ objectPosition: '100% 50.4%' }}
-                    />
-                  )}
-
                   {step.showTaskCard && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
                       <TaskCard />
@@ -226,7 +217,10 @@ export const HowWeWork = () => {
                       initial={{ opacity: 0, x: 301.322 }}
                       whileInView={{ opacity: 0.498, x: 0 }}
                       transition={{ duration: 0.8, ease: 'easeOut' }}
-                      viewport={{ once: true }}
+                      viewport={{ 
+                        once: false,  // ← Cambiado a false para que se repita
+                        amount: 0.3   // ← Se activa cuando el 30% está visible
+                      }}
                       className="absolute right-0 top-1/2 -translate-y-1/2 w-[551px] h-[454px] rounded-l-xl shadow-lg overflow-hidden"
                     >
                       <img
