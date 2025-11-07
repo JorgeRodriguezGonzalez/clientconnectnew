@@ -30,13 +30,20 @@ export const SkillsShowcaseCard = ({
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [isHovered, setIsHovered] = React.useState(false);
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [isInView, hasAnimated]);
 
   return (
     <motion.div 
       ref={ref}
       className="relative flex h-[380px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[28px] bg-white p-1.5 shadow-[0_24px_32px_0_rgba(0,0,0,0.03)]"
       initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
       whileHover={{ 
         boxShadow: 'rgba(0, 0, 0, 0.08) 0px 28px 40px 0px',
@@ -59,23 +66,20 @@ export const SkillsShowcaseCard = ({
         
         {skills.map((skill, index) => (
           <motion.div
-            key={index}
+            key={`${skill.text}-${index}`}
             className="absolute flex items-center justify-center overflow-hidden rounded-[826px] bg-white px-2.5 py-1.5 shadow-[0_10px_9px_0_rgba(0,0,0,0.12)]"
             style={{
               ...skill.position,
               ...(skill.transform && { transform: skill.transform })
             }}
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView || isHovered ? { 
-              opacity: 1, 
-              scale: 1 
-            } : { 
-              opacity: 0, 
-              scale: 0.8 
+            animate={{ 
+              opacity: (hasAnimated || isHovered) ? 1 : 0, 
+              scale: (hasAnimated || isHovered) ? 1 : 0.8 
             }}
             transition={{
               duration: 0.4,
-              delay: isHovered ? index * 0.05 : index * 0.1,
+              delay: index * 0.05,
               ease: [0.22, 1, 0.36, 1]
             }}
             whileHover={{ scale: 1.1 }}
