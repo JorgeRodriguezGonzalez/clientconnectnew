@@ -141,7 +141,7 @@ const InfiniteCarousel = () => {
   );
 };
 
-// Componente separado para la imagen animada con gradiente y puntos
+// Componente separado para la imagen animada con gradiente horizontal
 const AnimatedImage = ({ 
   src, 
   alt 
@@ -154,19 +154,8 @@ const AnimatedImage = ({
 
   return (
     <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden">
-      {/* Background con gradiente azul y patrón de puntos */}
-      <div className="absolute inset-0">
-        {/* Gradiente azul */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#3255D2]/20 via-[#5568D3]/15 to-[#7B9EFF]/10" />
-        {/* Patrón de puntos */}
-        <div 
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: 'radial-gradient(circle, #3255D2 1px, transparent 1px)',
-            backgroundSize: '20px 20px'
-          }}
-        />
-      </div>
+      {/* Background con gradiente azul de izquierda (transparente) a derecha (más opaco) */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#3255D2]/10 to-[#3255D2]/25" />
 
       {/* Imagen principal animada */}
       <motion.div
