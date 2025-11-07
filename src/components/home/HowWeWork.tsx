@@ -1,6 +1,6 @@
 import React from 'react';
 import { Code, Check, Edit, Zap } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 const workSteps = [
   {
@@ -141,6 +141,27 @@ const InfiniteCarousel = () => {
   );
 };
 
+// Componente separado para la imagen animada
+const AnimatedImage = ({ src, alt }: { src: string; alt: string }) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { amount: 0.3 });
+
+  return (
+    <div ref={ref} className="absolute right-0 top-0 bottom-0 w-full h-full">
+      <motion.div
+        animate={{
+          opacity: isInView ? 1 : 0,
+          x: isInView ? 0 : 600
+        }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="w-full h-full"
+      >
+        <img src={src} alt={alt} className="w-full h-full object-cover" />
+      </motion.div>
+    </div>
+  );
+};
+
 export const HowWeWork = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -212,46 +233,14 @@ export const HowWeWork = () => {
                     </div>
                   )}
 
-                  {/* Imagen animada SOLO para la primera tarjeta */}
-                  {step.id === 's1' && (
-                    <motion.div
-                      initial={{ opacity: 0, x: 600 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 600 }}
-                      transition={{ duration: 0.8, ease: 'easeOut' }}
-                      viewport={{ 
-                        once: false,
-                        amount: 0.3
-                      }}
-                      className="absolute right-0 top-0 bottom-0 w-full h-full"
-                    >
-                      <img
-                        src={step.image}
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
-                    </motion.div>
+                  {/* Imagen animada para la primera tarjeta */}
+                  {step.id === 's1' && step.image && (
+                    <AnimatedImage src={step.image} alt="Discovery process" />
                   )}
 
-                  {/* Imagen animada SOLO para la última tarjeta */}
-                  {step.id === 's4' && (
-                    <motion.div
-                      initial={{ opacity: 0, x: 600 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 600 }}
-                      transition={{ duration: 0.8, ease: 'easeOut' }}
-                      viewport={{ 
-                        once: false,
-                        amount: 0.3
-                      }}
-                      className="absolute right-0 top-0 bottom-0 w-full h-full"
-                    >
-                      <img
-                        src={step.image}
-                        alt=""
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </motion.div>
+                  {/* Imagen animada para la última tarjeta */}
+                  {step.id === 's4' && step.image && (
+                    <AnimatedImage src={step.image} alt="Optimization process" />
                   )}
                 </div>
               </div>
