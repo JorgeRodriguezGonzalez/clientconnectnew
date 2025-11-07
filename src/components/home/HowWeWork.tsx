@@ -10,6 +10,7 @@ const workSteps = [
     title: 'Understand your business and goals',
     description: 'We start with a deep dive into your business, target audience, and competition to create a custom strategy that drives real results.',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+    backgroundImage: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80',
     top: 126
   },
   {
@@ -37,6 +38,7 @@ const workSteps = [
     title: 'Continuous improvement and reporting',
     description: 'We monitor performance daily, provide transparent monthly reports, and constantly optimize to ensure you get the best results.',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    backgroundImage: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80',
     top: 216
   }
 ];
@@ -141,22 +143,52 @@ const InfiniteCarousel = () => {
   );
 };
 
-// Componente separado para la imagen animada
-const AnimatedImage = ({ src, alt }: { src: string; alt: string }) => {
+// Componente separado para la imagen animada con nuevo estilo
+const AnimatedImage = ({ 
+  src, 
+  backgroundSrc, 
+  alt 
+}: { 
+  src: string; 
+  backgroundSrc?: string; 
+  alt: string 
+}) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { amount: 0.3 });
 
   return (
-    <div ref={ref} className="absolute right-0 top-0 bottom-0 w-full h-full">
+    <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden">
+      {/* Background con gradiente azul y patrón de puntos */}
+      <div className="absolute inset-0">
+        {backgroundSrc && (
+          <img 
+            src={backgroundSrc} 
+            alt="" 
+            className="w-full h-full object-cover object-[100%_50.4%]" 
+          />
+        )}
+        {/* Overlay con gradiente azul */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#3255D2]/20 to-[#1e3a8a]/30" />
+        {/* Patrón de puntos */}
+        <div 
+          className="absolute inset-0 opacity-30"
+          style={{
+            backgroundImage: 'radial-gradient(circle, #3255D2 1px, transparent 1px)',
+            backgroundSize: '20px 20px'
+          }}
+        />
+      </div>
+
+      {/* Imagen principal animada */}
       <motion.div
         animate={{
           opacity: isInView ? 1 : 0,
-          x: isInView ? 0 : 600
+          x: isInView ? 0 : 300
         }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="w-full h-full"
+        className="relative w-[551px] h-[454px] rounded-l-[12px] overflow-hidden shadow-[0_0_48px_0_rgba(0,0,0,0.02),0_12px_25px_-24px_rgba(0,0,0,0.7),0_0_0_1px_rgba(0,0,0,0.06)] z-10"
       >
-        <img src={src} alt={alt} className="w-full h-full object-cover" />
+        <img src={src} alt={alt} className="w-full h-full object-cover object-[0%_0%]" />
       </motion.div>
     </div>
   );
@@ -219,28 +251,36 @@ export const HowWeWork = () => {
                   </p>
                 </div>
 
-                <div className="flex-1 relative overflow-hidden bg-gray-100">
+                <div className="flex-1 relative overflow-hidden">
                   {step.showTaskCard && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-gray-50">
                       <TaskCard />
                       <AddButton />
                     </div>
                   )}
 
                   {step.showCarousel && (
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
                       <InfiniteCarousel />
                     </div>
                   )}
 
                   {/* Imagen animada para la primera tarjeta */}
                   {step.id === 's1' && step.image && (
-                    <AnimatedImage src={step.image} alt="Discovery process" />
+                    <AnimatedImage 
+                      src={step.image} 
+                      backgroundSrc={step.backgroundImage}
+                      alt="Discovery process" 
+                    />
                   )}
 
                   {/* Imagen animada para la última tarjeta */}
                   {step.id === 's4' && step.image && (
-                    <AnimatedImage src={step.image} alt="Optimization process" />
+                    <AnimatedImage 
+                      src={step.image}
+                      backgroundSrc={step.backgroundImage}
+                      alt="Optimization process" 
+                    />
                   )}
                 </div>
               </div>
