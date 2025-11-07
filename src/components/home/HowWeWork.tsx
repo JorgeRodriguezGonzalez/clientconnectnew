@@ -10,7 +10,6 @@ const workSteps = [
     title: 'Understand your business and goals',
     description: 'We start with a deep dive into your business, target audience, and competition to create a custom strategy that drives real results.',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
-    backgroundImage: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&q=80',
     top: 126
   },
   {
@@ -38,7 +37,6 @@ const workSteps = [
     title: 'Continuous improvement and reporting',
     description: 'We monitor performance daily, provide transparent monthly reports, and constantly optimize to ensure you get the best results.',
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
-    backgroundImage: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80',
     top: 216
   }
 ];
@@ -143,14 +141,12 @@ const InfiniteCarousel = () => {
   );
 };
 
-// Componente separado para la imagen animada con nuevo estilo
+// Componente separado para la imagen animada con gradiente y puntos
 const AnimatedImage = ({ 
   src, 
-  backgroundSrc, 
   alt 
 }: { 
   src: string; 
-  backgroundSrc?: string; 
   alt: string 
 }) => {
   const ref = React.useRef(null);
@@ -160,18 +156,11 @@ const AnimatedImage = ({
     <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden">
       {/* Background con gradiente azul y patrón de puntos */}
       <div className="absolute inset-0">
-        {backgroundSrc && (
-          <img 
-            src={backgroundSrc} 
-            alt="" 
-            className="w-full h-full object-cover object-[100%_50.4%]" 
-          />
-        )}
-        {/* Overlay con gradiente azul */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#3255D2]/20 to-[#1e3a8a]/30" />
+        {/* Gradiente azul */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#3255D2]/20 via-[#5568D3]/15 to-[#7B9EFF]/10" />
         {/* Patrón de puntos */}
         <div 
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0 opacity-20"
           style={{
             backgroundImage: 'radial-gradient(circle, #3255D2 1px, transparent 1px)',
             backgroundSize: '20px 20px'
@@ -269,7 +258,6 @@ export const HowWeWork = () => {
                   {step.id === 's1' && step.image && (
                     <AnimatedImage 
                       src={step.image} 
-                      backgroundSrc={step.backgroundImage}
                       alt="Discovery process" 
                     />
                   )}
@@ -278,7 +266,6 @@ export const HowWeWork = () => {
                   {step.id === 's4' && step.image && (
                     <AnimatedImage 
                       src={step.image}
-                      backgroundSrc={step.backgroundImage}
                       alt="Optimization process" 
                     />
                   )}
