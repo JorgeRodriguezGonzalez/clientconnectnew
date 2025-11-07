@@ -17,6 +17,13 @@ export const SavingsCard = ({
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [isHovered, setIsHovered] = React.useState(false);
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [isInView, hasAnimated]);
 
   return (
     <motion.div 
@@ -29,7 +36,7 @@ export const SavingsCard = ({
         opacity: 0,
         y: 20
       }} 
-      animate={isInView ? {
+      animate={hasAnimated ? {
         opacity: 1,
         y: 0
       } : {
@@ -90,17 +97,14 @@ export const SavingsCard = ({
                 pathLength: 0,
                 opacity: 0
               }} 
-              animate={isInView || isHovered ? {
-                pathLength: 1,
-                opacity: 1
-              } : {
-                pathLength: 0,
-                opacity: 0
+              animate={{
+                pathLength: (hasAnimated || isHovered) ? 1 : 0,
+                opacity: (hasAnimated || isHovered) ? 1 : 0
               }} 
               transition={{
-                duration: isHovered ? 1 : 1.5,
+                duration: 1.5,
                 ease: 'easeInOut',
-                delay: isHovered ? 0 : 0.2
+                delay: 0.2
               }} 
             />
           </svg>
@@ -116,15 +120,13 @@ export const SavingsCard = ({
               initial={{
                 pathLength: 0
               }} 
-              animate={isInView || isHovered ? {
-                pathLength: 1
-              } : {
-                pathLength: 0
+              animate={{
+                pathLength: (hasAnimated || isHovered) ? 1 : 0
               }} 
               transition={{
-                duration: isHovered ? 0.8 : 1,
+                duration: 1,
                 ease: 'easeInOut',
-                delay: isHovered ? 0 : 0.5
+                delay: 0.5
               }} 
             />
           </svg>

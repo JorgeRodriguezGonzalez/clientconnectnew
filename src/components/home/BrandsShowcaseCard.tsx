@@ -13,6 +13,13 @@ export const BrandsShowcaseCard = ({
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [isHovered, setIsHovered] = React.useState(false);
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [isInView, hasAnimated]);
 
   return (
     <motion.div 
@@ -25,7 +32,7 @@ export const BrandsShowcaseCard = ({
         opacity: 0,
         y: 20
       }} 
-      animate={isInView ? {
+      animate={hasAnimated ? {
         opacity: 1,
         y: 0
       } : {
@@ -54,16 +61,13 @@ export const BrandsShowcaseCard = ({
               x: -20,
               opacity: 0.8
             }} 
-            animate={isInView || isHovered ? {
-              x: 0,
-              opacity: 1
-            } : {
-              x: -20,
-              opacity: 0.8
+            animate={{
+              x: (hasAnimated || isHovered) ? 0 : -20,
+              opacity: (hasAnimated || isHovered) ? 1 : 0.8
             }} 
             transition={{
               duration: 0.6,
-              delay: isHovered ? 0 : 0.1
+              delay: 0.1
             }}
           >
             <img src="https://framerusercontent.com/images/Cs7myyCzaXS8LyQHqBxdAlCZ8.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
@@ -82,16 +86,13 @@ export const BrandsShowcaseCard = ({
               x: 20,
               opacity: 0.8
             }} 
-            animate={isInView || isHovered ? {
-              x: 0,
-              opacity: 1
-            } : {
-              x: 20,
-              opacity: 0.8
+            animate={{
+              x: (hasAnimated || isHovered) ? 0 : 20,
+              opacity: (hasAnimated || isHovered) ? 1 : 0.8
             }} 
             transition={{
               duration: 0.6,
-              delay: isHovered ? 0 : 0.1
+              delay: 0.1
             }}
           >
             <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
@@ -111,16 +112,13 @@ export const BrandsShowcaseCard = ({
               y: -10,
               opacity: 0
             }} 
-            animate={isInView || isHovered ? {
-              y: 0,
-              opacity: 1
-            } : {
-              y: -10,
-              opacity: 0
+            animate={{
+              y: (hasAnimated || isHovered) ? 0 : -10,
+              opacity: (hasAnimated || isHovered) ? 1 : 0
             }} 
             transition={{
               duration: 0.6,
-              delay: isHovered ? 0 : 0.2
+              delay: 0.2
             }}
           >
             <img src="https://framerusercontent.com/images/pb1l1eWieWRyif3smeXnmDu1jnY.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover rounded-[9px]" style={{
