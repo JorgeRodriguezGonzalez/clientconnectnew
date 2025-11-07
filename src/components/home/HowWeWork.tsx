@@ -44,7 +44,8 @@ const workSteps = [
 const carouselLogos = [
   'https://cdn.worldvectorlogo.com/logos/google-ads-1.svg',
   'https://cdn.worldvectorlogo.com/logos/meta-1.svg',
-  'https://cdn.worldvectorlogo.com/logos/google-analytics-2.svg'
+  'https://cdn.worldvectorlogo.com/logos/google-analytics-2.svg',
+  'https://cdn.worldvectorlogo.com/logos/semrush-1.svg'
 ];
 
 const TaskCard = () => {
@@ -112,32 +113,93 @@ const AddButton = () => {
 };
 
 const InfiniteCarousel = () => {
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    let animationId: number;
+    let scrollPosition = 0;
+    const scrollSpeed = 0.5;
+
+    const animate = () => {
+      scrollPosition += scrollSpeed;
+      if (scrollContainer) {
+        const maxScroll = scrollContainer.scrollWidth / 2;
+        if (scrollPosition >= maxScroll) {
+          scrollPosition = 0;
+        }
+        scrollContainer.style.transform = `translateX(-${scrollPosition}px)`;
+      }
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, []);
+
+  const duplicatedLogos = [...carouselLogos, ...carouselLogos, ...carouselLogos, ...carouselLogos];
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 600 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-      viewport={{ once: true }}
-      className="w-full h-[400px] overflow-hidden relative"
-      style={{
-        maskImage: 'linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 87.5%, rgba(0, 0, 0, 0) 100%)'
-      }}
-    >
-      <motion.div
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        className="flex gap-5 absolute"
+    <div className="relative w-[660px] h-[580px] flex items-center justify-end overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <img 
+          src="https://framerusercontent.com/images/8mtG4MOmLSI8Pbm4UN69jB9tcsk.jpg?width=1329&height=1263" 
+          alt="Background" 
+          className="w-full h-full object-cover object-[100%_50.4%]" 
+        />
+      </div>
+
+      {/* Background overlay */}
+      <div className="absolute inset-0 z-[1]">
+        <img 
+          src="https://framerusercontent.com/images/8mtG4MOmLSI8Pbm4UN69jB9tcsk.jpg?width=1329&height=1263" 
+          alt="Background overlay" 
+          className="w-full h-full object-cover object-[100%_50.4%]" 
+        />
+      </div>
+
+      {/* Carousel section */}
+      <section 
+        className="relative z-[2] w-[660px] h-[400px] flex items-center justify-center overflow-hidden p-2.5"
+        style={{
+          maskImage: 'linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 87.5%, rgba(0, 0, 0, 0) 100%)'
+        }}
       >
-        {[...carouselLogos, ...carouselLogos, ...carouselLogos, ...carouselLogos].map((img, idx) => (
-          <div
-            key={idx}
-            className="flex-shrink-0 w-[152px] h-[152px] bg-white rounded-3xl shadow-lg flex items-center justify-center p-8"
-          >
-            <img src={img} alt="" className="w-[88px] h-[88px] object-contain" />
-          </div>
-        ))}
-      </motion.div>
-    </motion.div>
+        <div 
+          ref={scrollContainerRef}
+          className="flex items-center gap-5 relative"
+          style={{
+            width: 'fit-content',
+            willChange: 'transform'
+          }}
+        >
+          {duplicatedLogos.map((logo, index) => (
+            <div 
+              key={`${logo}-${index}`}
+              className="flex-shrink-0 w-44 h-44 p-3"
+            >
+              <div className="flex flex-col items-center justify-center w-full h-full bg-white rounded-3xl shadow-[0_0_48px_0_rgba(0,0,0,0.02),0_12px_25px_-24px_rgba(0,0,0,0.4),0_0_0_1px_rgba(0,0,0,0.06)] p-8">
+                <div className="w-22 h-22 relative">
+                  <img 
+                    src={logo} 
+                    alt="Marketing tool" 
+                    className="w-full h-full object-contain" 
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 };
 
@@ -238,9 +300,7 @@ export const HowWeWork = () => {
                   )}
 
                   {step.showCarousel && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
-                      <InfiniteCarousel />
-                    </div>
+                    <InfiniteCarousel />
                   )}
 
                   {/* Imagen animada para la primera tarjeta */}
