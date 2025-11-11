@@ -28,7 +28,7 @@ export const GoogleGeminiEffect = ({
   // En scroll progress 0.05 (muy temprano), ya se mueve significativamente
   const translateY = useTransform(
     scrollYProgress,
-    [0, 0.02, 0.08],
+    [0, 0.005, 0.04],
     [600, 0, 0]  // Empieza abajo (600px), llega al centro (0), sigue subiendo (-100px)
   );
 
