@@ -39,7 +39,7 @@ export const GoogleGeminiEffect = ({
 
   return (
     <motion.div className={cn("sticky top-0", className)}>
-      <div className="w-full h-[890px] -top-20 md:-top-10 flex items-center justify-center absolute">
+      <div className="w-full h-[890px] -top-20 md:top-0 flex items-center justify-center absolute">
         {/* Tarjeta unificada con glassmorphism gradient */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -94,7 +94,7 @@ export const GoogleGeminiEffect = ({
             </div>
 
             {/* Beneficios */}
-            <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
                 <p className="text-white/90 text-sm">
@@ -121,7 +121,10 @@ export const GoogleGeminiEffect = ({
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Espacio para las líneas SVG - aquí es transparente */}
+            <div className="h-10 md:h-4 mb-6"></div>
+
+            <form onSubmit={handleSubmit} className="space-y-5 mt-8">
               {/* Primera fila: Name y Website */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Campo Name */}
@@ -192,16 +195,7 @@ export const GoogleGeminiEffect = ({
                 <span>Get My Free Audit</span>
                 <Send className="w-4 h-4" />
               </button>
-
-              {/* Trust indicators */}
-              <div className="text-center pt-1">
-                <p className="text-white/60 text-xs">
-                  🔒 Your information is 100% secure. No spam, ever.
-                </p>
-                <p className="text-white/70 text-xs mt-1 font-medium">
-                  ⚡ Response within 24 hours
-                </p>
-              </div>
+              
             </form>
           </div>
         </motion.div>
