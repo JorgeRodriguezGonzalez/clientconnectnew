@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion, MotionValue, useTransform, useScroll } from "framer-motion";
+import { motion, MotionValue } from "framer-motion";
 import React from "react";
 import { Mail, User, Send } from "lucide-react";
 
@@ -22,23 +22,6 @@ export const GoogleGeminiEffect = ({
     message: ""
   });
 
-  // Scroll progress independiente para el formulario
-  const { scrollYProgress } = useScroll();
-
-  // Transform para el background del formulario
-  // De transparente (0) a glassmorphism con 0.5 de opacidad
-  const formBackgroundOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.15, 0.3],
-    [0, 0.25, 0.5]
-  );
-
-  const formBorderOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.15, 0.3],
-    [0, 0.1, 0.2]
-  );
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
@@ -54,76 +37,56 @@ export const GoogleGeminiEffect = ({
   return (
     <div className={cn("sticky top-80", className)}>
       <div className="w-full h-[890px] -top-60 md:-top-40 flex items-center justify-center absolute">
-        {/* Formulario de contacto con glassmorphism progresivo */}
+        {/* Formulario de contacto con glassmorphism estático */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-[90%] max-w-[450px] rounded-2xl shadow-2xl p-8 md:mt-24 mt-8 z-30 relative overflow-hidden"
+          className="w-[90%] max-w-[450px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-8 md:mt-24 mt-8 z-30"
         >
-          {/* Background animado con glassmorphism */}
-          <motion.div
-            className="absolute inset-0 backdrop-blur-lg rounded-2xl"
-            style={{
-              backgroundColor: useTransform(
-                formBackgroundOpacity,
-                (value) => `rgba(255, 255, 255, ${value})`
-              ),
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              borderColor: useTransform(
-                formBorderOpacity,
-                (value) => `rgba(255, 255, 255, ${value})`
-              ),
-            }}
-          />
+          <h3 className="text-2xl font-bold text-white mb-2 text-center">Get In Touch</h3>
+          <p className="text-white/70 text-sm text-center mb-6">
+            Ready to transform your digital presence?
+          </p>
 
-          {/* Contenido del formulario */}
-          <div className="relative z-10">
-            <h3 className="text-2xl font-bold text-white mb-2 text-center">Get In Touch</h3>
-            <p className="text-white/70 text-sm text-center mb-6">
-              Ready to transform your digital presence?
-            </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Campo Nombre */}
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your Name"
+                required
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+              />
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Campo Nombre */}
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your Name"
-                  required
-                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
-                />
-              </div>
+            {/* Campo Email */}
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="your.email@example.com"
+                required
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+              />
+            </div>
 
-              {/* Campo Email */}
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="your.email@example.com"
-                  required
-                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
-                />
-              </div>
-
-              {/* Botón Submit */}
-              <button
-                type="submit"
-                className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl"
-              >
-                <span>Send Message</span>
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
-          </div>
+            {/* Botón Submit */}
+            <button
+              type="submit"
+              className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl"
+            >
+              <span>Send Message</span>
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
         </motion.div>
       </div>
       
