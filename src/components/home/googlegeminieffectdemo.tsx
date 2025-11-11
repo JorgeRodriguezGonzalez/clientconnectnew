@@ -47,7 +47,7 @@ export function GoogleGeminiEffectDemo() {
       style={{ 
         backgroundColor 
       }}
-      className="h-[140vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[400vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       {/* Contenido con texto y CTAs */}
       <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40">
@@ -141,7 +141,7 @@ export function GoogleGeminiEffectDemo() {
           </div>
 
           {/* Espaciador con margen negativo para acercar el GoogleGeminiEffect */}
-          <div className="-mb-96" />
+          <div className="-mb-[500px]" />
 
         </div>
 
