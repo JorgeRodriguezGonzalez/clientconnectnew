@@ -17,28 +17,46 @@ export function GoogleGeminiEffectDemo() {
   const pathLengthFourth = useTransform(scrollYProgress, [0, 0.8], [0.05, 1.2]);
   const pathLengthFifth = useTransform(scrollYProgress, [0, 0.8], [0, 1.2]);
 
-  // Transformaciones para el gradiente: Azul espacial casi negro → Azul oscuro → Azul medio
+  // Transformaciones para el gradiente con opacidad 0.5: Azul espacial casi negro → Azul oscuro → Azul medio
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
     [
-      "rgb(10, 15, 35)",       // Azul espacial casi negro (inicio)
-      "rgb(20, 35, 90)",       // Azul oscuro (medio)
-      "rgb(35, 55, 140)"       // Azul medio oscuro (final)
+      "rgba(10, 15, 35, 0.5)",       // Azul espacial casi negro con 50% opacidad
+      "rgba(20, 35, 90, 0.5)",       // Azul oscuro con 50% opacidad
+      "rgba(35, 55, 140, 0.5)"       // Azul medio oscuro con 50% opacidad
     ]
   );
 
   return (
     <motion.div
       ref={ref}
-      style={{ 
-        backgroundColor 
-      }}
       className="h-[400vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
+      {/* Video de fondo */}
+      <div className="absolute inset-0 w-full h-full">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/videos/hero-video.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Overlay con gradiente animado */}
+      <motion.div
+        style={{ 
+          backgroundColor 
+        }}
+        className="absolute inset-0 w-full h-full"
+      />
+
       {/* Contenido con texto y CTAs */}
-      <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40">
-        <div className="z-10 flex flex-col items-center justify-center gap-6 max-w-[976px] px-5">
+      <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40 relative z-10">
+        <div className="flex flex-col items-center justify-center gap-6 max-w-[976px] px-5">
           {/* Badge superior */}
           <div className="flex items-center justify-center gap-1.5 h-[21px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[2px] px-3 py-0.5">
             <div className="flex-shrink-0 w-4 h-4 rounded-[2px] overflow-hidden p-0.5">
@@ -131,15 +149,17 @@ export function GoogleGeminiEffectDemo() {
       </div>
 
       {/* Efecto SVG de fondo */}
-      <GoogleGeminiEffect
-        pathLengths={[
-          pathLengthFirst,
-          pathLengthSecond,
-          pathLengthThird,
-          pathLengthFourth,
-          pathLengthFifth,
-        ]}
-      />
+      <div className="relative z-[5]">
+        <GoogleGeminiEffect
+          pathLengths={[
+            pathLengthFirst,
+            pathLengthSecond,
+            pathLengthThird,
+            pathLengthFourth,
+            pathLengthFifth,
+          ]}
+        />
+      </div>
     </motion.div>
   );
 }
