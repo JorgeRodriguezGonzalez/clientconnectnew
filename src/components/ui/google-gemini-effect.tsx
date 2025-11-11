@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import { motion, MotionValue } from "framer-motion";
 import React from "react";
+import { Mail, User, MessageSquare, Send } from "lucide-react";
 
 const transition = {
   duration: 0,
@@ -15,13 +16,95 @@ export const GoogleGeminiEffect = ({
   pathLengths: MotionValue[];
   className?: string;
 }) => {
+  const [formData, setFormData] = React.useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Aquí puedes agregar la lógica para enviar el formulario
+    console.log("Form submitted:", formData);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   return (
     <div className={cn("sticky top-80", className)}>
-      <div className="w-full h-[890px] -top-60 md:-top-40 flex items-center justify-center bg-red-transparent absolute">
-        <button className="font-bold bg-white rounded-full md:px-4 md:py-2 px-2 py-1 md:mt-24 mt-8 z-30 md:text-base text-black text-xs w-fit mx-auto">
-          ui.aceternity.com
-        </button>
+      <div className="w-full h-[890px] -top-60 md:-top-40 flex items-center justify-center absolute">
+        {/* Formulario de contacto con glassmorphism */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="w-[90%] max-w-[450px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-8 md:mt-24 mt-8 z-30"
+        >
+          <h3 className="text-2xl font-bold text-white mb-2 text-center">Get In Touch</h3>
+          <p className="text-white/70 text-sm text-center mb-6">
+            Ready to transform your digital presence?
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Campo Nombre */}
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your Name"
+                required
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+              />
+            </div>
+
+            {/* Campo Email */}
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="your.email@example.com"
+                required
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+              />
+            </div>
+
+            {/* Campo Mensaje */}
+            <div className="relative">
+              <MessageSquare className="absolute left-3 top-4 w-5 h-5 text-white/60" />
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Tell us about your project..."
+                required
+                rows={4}
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all resize-none"
+              />
+            </div>
+
+            {/* Botón Submit */}
+            <button
+              type="submit"
+              className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl"
+            >
+              <span>Send Message</span>
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
+        </motion.div>
       </div>
+      
       <svg
         width="1440"
         height="890"
