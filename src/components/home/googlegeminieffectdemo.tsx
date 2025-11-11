@@ -33,8 +33,8 @@ export function GoogleGeminiEffectDemo() {
       ref={ref}
       className="h-[400vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
-      {/* Video de fondo fijo */}
-      <div className="fixed inset-0 w-full h-screen">
+      {/* Video de fondo - absolute para que esté contenido dentro del componente */}
+      <div className="absolute top-0 left-0 w-full h-screen">
         <video
           autoPlay
           loop
@@ -51,7 +51,7 @@ export function GoogleGeminiEffectDemo() {
         style={{ 
           backgroundColor 
         }}
-        className="fixed inset-0 w-full h-screen pointer-events-none"
+        className="absolute top-0 left-0 w-full h-screen pointer-events-none"
       />
 
       {/* Contenido con texto y CTAs */}
