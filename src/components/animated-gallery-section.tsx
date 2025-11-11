@@ -12,8 +12,8 @@ import {
     "/images/4.png",
   ]
   const IMAGES_2 = [
-    "/images/5.png",
-    "/images/6.png",
+    "/images/5.jpg",
+    "/images/6.jpg",
     "/images/7.jpg",
     "/images/8.jpg",
   ]
