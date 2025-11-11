@@ -112,16 +112,6 @@ export function GoogleGeminiEffectDemo() {
             </div>
           </div>
 
-          {/* Texto de confianza */}
-          <p 
-            className="text-[11px] font-normal leading-3 text-center uppercase text-white/60 mt-8"
-            style={{
-              fontFamily: '"JetBrains Mono", monospace',
-              letterSpacing: 'normal'
-            }}
-          >
-            Trusted by 100+ Sydney businesses
-          </p>
         </div>
       </div>
 
