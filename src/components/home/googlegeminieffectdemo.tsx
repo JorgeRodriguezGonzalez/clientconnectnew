@@ -17,15 +17,14 @@ export function GoogleGeminiEffectDemo() {
   const pathLengthFourth = useTransform(scrollYProgress, [0, 0.8], [0.05, 1.2]);
   const pathLengthFifth = useTransform(scrollYProgress, [0, 0.8], [0, 1.2]);
 
-  // Transformaciones para el gradiente basadas en el scroll
+  // Transformaciones para el gradiente basadas en el scroll: Azul → Naranja
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.33, 0.66, 1],
+    [0, 0.5, 1],
     [
       "rgb(50, 85, 210)",      // #3255D2 (azul inicial)
-      "rgb(80, 40, 250)",      // #5028fa (morado medio)
-      "rgb(120, 60, 240)",     // intermedio morado-blanco
-      "rgb(255, 255, 255)"     // blanco final
+      "rgb(200, 110, 90)",     // intermedio azul-naranja
+      "rgb(246, 148, 29)"      // #F6941D (naranja final)
     ]
   );
 
