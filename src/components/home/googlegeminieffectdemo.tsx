@@ -20,10 +20,11 @@ export function GoogleGeminiEffectDemo() {
   // Transformaciones para el gradiente basadas en el scroll: Azul → Naranja
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 1],
+    [0, 0.5, 1],
     [
-      "rgb(50, 85, 210)",      // intermedio azul-naranja
-      "rgb(246, 148, 29)"      // #F6941D (naranja final)
+      "rgb(20, 35, 90)",       // Azul muy oscuro (inicio)
+      "rgb(35, 55, 140)",      // Azul medio oscuro (basado en #3255D2 pero más oscuro)
+      "rgb(45, 25, 85)"        // Azul-violeta oscuro (final)
     ]
   );
 
