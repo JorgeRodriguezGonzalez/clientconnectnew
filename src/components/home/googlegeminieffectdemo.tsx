@@ -8,7 +8,7 @@ export function GoogleGeminiEffectDemo() {
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end end"],
+    offset: ["start end", "end end"],
   });
 
   const pathLengthFirst = useTransform(scrollYProgress, [0, 0.8], [0.2, 1.2]);
@@ -47,7 +47,7 @@ export function GoogleGeminiEffectDemo() {
       style={{ 
         backgroundColor 
       }}
-      className="h-[100vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       {/* Contenido con texto y CTAs */}
       <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40">
