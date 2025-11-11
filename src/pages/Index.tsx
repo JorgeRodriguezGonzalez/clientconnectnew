@@ -1,6 +1,5 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { HeroNew } from "@/components/home/HeroNew";
 import { GoogleGeminiEffectDemo } from "@/components/home/googlegeminieffectdemo"; // ← Añade .tsx
 import { AnimatedGallerySection } from "@/components/animated-gallery-section";
 import ServicesSection from "@/components/home/ServicesSection";
@@ -16,7 +15,6 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        <HeroNew />
         <GoogleGeminiEffectDemo />
         <AnimatedGallerySection />
         <ServicesSection />
