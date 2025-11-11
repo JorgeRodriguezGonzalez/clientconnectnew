@@ -33,8 +33,8 @@ export function GoogleGeminiEffectDemo() {
       ref={ref}
       className="h-[400vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
-      {/* Video de fondo - absolute para que esté contenido dentro del componente */}
-      <div className="absolute top-0 left-0 w-full h-screen">
+      {/* Video de fondo - sticky para que se quede visible durante el scroll */}
+      <div className="sticky top-0 h-screen w-full -z-10">
         <video
           autoPlay
           loop
@@ -46,16 +46,16 @@ export function GoogleGeminiEffectDemo() {
         </video>
       </div>
 
-      {/* Overlay con gradiente animado */}
+      {/* Overlay con gradiente animado - sticky */}
       <motion.div
         style={{ 
           backgroundColor 
         }}
-        className="absolute top-0 left-0 w-full h-screen pointer-events-none"
+        className="sticky top-0 h-screen w-full pointer-events-none -z-5"
       />
 
       {/* Contenido con texto y CTAs */}
-      <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40">
+      <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40 -mt-[200vh]">
         <div className="z-10 flex flex-col items-center justify-center gap-6 max-w-[976px] px-5">
           {/* Badge superior */}
           <div className="flex items-center justify-center gap-1.5 h-[21px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[2px] px-3 py-0.5">
@@ -149,15 +149,17 @@ export function GoogleGeminiEffectDemo() {
       </div>
 
       {/* Efecto SVG de fondo */}
-      <GoogleGeminiEffect
-        pathLengths={[
-          pathLengthFirst,
-          pathLengthSecond,
-          pathLengthThird,
-          pathLengthFourth,
-          pathLengthFifth,
-        ]}
-      />
+      <div className="-mt-[100vh]">
+        <GoogleGeminiEffect
+          pathLengths={[
+            pathLengthFirst,
+            pathLengthSecond,
+            pathLengthThird,
+            pathLengthFourth,
+            pathLengthFifth,
+          ]}
+        />
+      </div>
     </div>
   );
 }
