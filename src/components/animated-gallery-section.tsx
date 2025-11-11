@@ -7,21 +7,21 @@ import {
   
   const IMAGES_1 = [
     "/images/1.png",
-    "/images/2.png",
-    "/images/3.png",
+    "/images/7.jpg",
+    "/images/12.jpg",
     "/images/4.png",
   ]
   const IMAGES_2 = [
     "/images/6.jpg",
     "/images/5.jpg",
-    "/images/7.jpg",
+    "/images/2.png",
     "/images/8.jpg",
   ]
   const IMAGES_3 = [
     "/images/9.jpg",
     "/images/10.jpg",
     "/images/11.jpg",
-    "/images/12.jpg",
+    "/images/3.png",
   ]
   
   export const AnimatedGallerySection = () => {
