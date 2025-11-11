@@ -122,7 +122,7 @@ export const GoogleGeminiEffect = ({
             </div>
 
             {/* Espacio para las líneas SVG - aquí es transparente */}
-            <div className="h-8 md:h-4 mb-4"></div>
+            <div className="h-10 md:h-4 mb-6"></div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Primera fila: Name y Website */}
