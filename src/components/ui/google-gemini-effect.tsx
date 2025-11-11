@@ -22,8 +22,7 @@ export const GoogleGeminiEffect = ({
     name: "",
     email: "",
     phone: "",
-    website: "",
-    message: ""
+    website: ""
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,7 +30,7 @@ export const GoogleGeminiEffect = ({
     console.log("Form submitted:", formData);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -46,7 +45,7 @@ export const GoogleGeminiEffect = ({
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-[90%] max-w-[550px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-6 md:p-8 md:mt-24 mt-8 z-30 max-h-[85vh] overflow-y-auto"
+          className="w-[90%] max-w-[750px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-6 md:p-10 md:mt-24 mt-8 z-30"
         >
           {/* Header del formulario */}
           <div className="text-center mb-6">
@@ -59,7 +58,7 @@ export const GoogleGeminiEffect = ({
           </div>
 
           {/* Beneficios */}
-          <div className="mb-6 space-y-2">
+          <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex items-start gap-2">
               <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
               <p className="text-white/90 text-sm">
@@ -86,81 +85,96 @@ export const GoogleGeminiEffect = ({
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Campo Nombre */}
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Your Name *"
-                required
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-              />
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Primera fila: Name y Website */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Campo Name */}
+              <div>
+                <label className="block text-white/90 text-sm font-medium mb-2">
+                  Name *
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="John Smith"
+                    required
+                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Campo Website */}
+              <div>
+                <label className="block text-white/90 text-sm font-medium mb-2">
+                  Website *
+                </label>
+                <div className="relative">
+                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                  <input
+                    type="url"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    placeholder="www.yourwebsite.com"
+                    required
+                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Campo Email */}
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="your.email@example.com *"
-                required
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-              />
-            </div>
+            {/* Segunda fila: Phone y Email */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Campo Phone */}
+              <div>
+                <label className="block text-white/90 text-sm font-medium mb-2">
+                  Phone *
+                </label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+61 4XX XXX XXX"
+                    required
+                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                  />
+                </div>
+              </div>
 
-            {/* Campo Phone */}
-            <div className="relative">
-              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="Phone Number"
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-              />
-            </div>
-
-            {/* Campo Website */}
-            <div className="relative">
-              <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-              <input
-                type="url"
-                name="website"
-                value={formData.website}
-                onChange={handleChange}
-                placeholder="Your Website URL *"
-                required
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-              />
-            </div>
-
-            {/* Campo Message */}
-            <div className="relative">
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Tell us about your business goals... (Optional)"
-                rows={3}
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all resize-none"
-              />
+              {/* Campo Email */}
+              <div>
+                <label className="block text-white/90 text-sm font-medium mb-2">
+                  Email *
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="john@company.com"
+                    required
+                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Botón Submit */}
             <button
               type="submit"
-              className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3.5 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl"
+              className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-4 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl mt-6"
             >
-              <span>Get My Free Audit</span>
-              <Send className="w-4 h-4" />
+              <span className="text-lg">Get My Free Audit</span>
+              <Send className="w-5 h-5" />
             </button>
 
             {/* Trust indicators */}
