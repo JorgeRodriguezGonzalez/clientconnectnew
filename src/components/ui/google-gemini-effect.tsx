@@ -94,7 +94,7 @@ export const GoogleGeminiEffect = ({
             </div>
 
             {/* Beneficios */}
-            <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
                 <p className="text-white/90 text-sm">
@@ -120,9 +120,6 @@ export const GoogleGeminiEffect = ({
                 </p>
               </div>
             </div>
-
-            {/* Espacio para las líneas SVG - aquí es transparente */}
-            <div className="h-16 md:h-24 mb-8"></div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Primera fila: Name y Website */}
