@@ -29,7 +29,7 @@ export const GoogleGeminiEffect = ({
   const translateY = useTransform(
     scrollYProgress,
     [0, 0.005, 0.04],
-    [-200, 0, 0]  // Empieza abajo (600px), llega al centro (0), sigue subiendo (-100px)
+    [0, 0, 0]  // Empieza abajo (600px), llega al centro (0), sigue subiendo (-100px)
   );
 
   const handleSubmit = (e: React.FormEvent) => {
