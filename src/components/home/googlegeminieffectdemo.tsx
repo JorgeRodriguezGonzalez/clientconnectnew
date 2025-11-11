@@ -171,6 +171,7 @@ export function GoogleGeminiEffectDemo() {
           pathLengthFourth,
           pathLengthFifth,
         ]}
+        scrollYProgress={scrollYProgress}
       />
     </motion.div>
   );
