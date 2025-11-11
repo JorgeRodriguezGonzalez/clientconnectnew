@@ -124,6 +124,17 @@ export const GoogleGeminiEffect = ({
             {/* Espacio para las líneas SVG - aquí es transparente */}
             <div className="h-10 md:h-4 mb-6"></div>
 
+            {/* Logo en círculo blanco */}
+            <div className="flex justify-center mb-6">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
+                <img 
+                  src="/images/client-connect-australia-logo.png" 
+                  alt="Client Connect Australia" 
+                  className="w-14 h-14 object-contain"
+                />
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-5 mt-8">
               {/* Primera fila: Name y Website */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
