@@ -22,8 +22,8 @@ export function GoogleGeminiEffectDemo() {
       ref={ref}
     >
       {/* Contenido con texto y CTAs */}
-      <div className="sticky top-0 h-screen flex items-center justify-center">
-        <div className="z-10 flex flex-col items-center justify-center gap-8 max-w-[976px] px-5">
+      <div className="sticky top-0 h-screen flex items-center justify-center pt-20">
+        <div className="z-10 flex flex-col items-center justify-center gap-6 max-w-[976px] px-5">
           {/* Badge superior */}
           <div className="flex items-center justify-center gap-1.5 h-[21px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[2px] px-3 py-0.5">
             <div className="flex-shrink-0 w-4 h-4 rounded-[2px] overflow-hidden p-0.5">
