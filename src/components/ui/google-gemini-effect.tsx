@@ -216,15 +216,7 @@ export const GoogleGeminiEffect = ({
                 <Send className="w-4 h-4" />
               </button>
 
-              {/* Trust indicators */}
-              <div className="text-center pt-1">
-                <p className="text-white/60 text-xs">
-                  🔒 Your information is 100% secure. No spam, ever.
-                </p>
-                <p className="text-white/70 text-xs mt-1 font-medium">
-                  ⚡ Response within 24 hours
-                </p>
-              </div>
+              
             </form>
           </div>
         </motion.div>
