@@ -2,12 +2,13 @@ import { useScroll, useTransform } from "framer-motion";
 import React from "react";
 import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 import { Send, Calendar } from 'lucide-react';
+import { motion } from "framer-motion";
 
 export function GoogleGeminiEffectDemo() {
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end start"],
+    offset: ["start start", "end end"],
   });
 
   const pathLengthFirst = useTransform(scrollYProgress, [0, 0.8], [0.2, 1.2]);
@@ -16,10 +17,25 @@ export function GoogleGeminiEffectDemo() {
   const pathLengthFourth = useTransform(scrollYProgress, [0, 0.8], [0.05, 1.2]);
   const pathLengthFifth = useTransform(scrollYProgress, [0, 0.8], [0, 1.2]);
 
+  // Transformaciones para el gradiente basadas en el scroll
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 0.33, 0.66, 1],
+    [
+      "rgb(50, 85, 210)",      // #3255D2 (azul inicial)
+      "rgb(80, 40, 250)",      // #5028fa (morado medio)
+      "rgb(120, 60, 240)",     // intermedio morado-blanco
+      "rgb(255, 255, 255)"     // blanco final
+    ]
+  );
+
   return (
-    <div
-      className="h-[400vh] bg-black w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+    <motion.div
       ref={ref}
+      style={{ 
+        backgroundColor 
+      }}
+      className="h-[400vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       {/* Contenido con texto y CTAs */}
       <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40">
@@ -125,6 +141,6 @@ export function GoogleGeminiEffectDemo() {
           pathLengthFifth,
         ]}
       />
-    </div>
+    </motion.div>
   );
 }
