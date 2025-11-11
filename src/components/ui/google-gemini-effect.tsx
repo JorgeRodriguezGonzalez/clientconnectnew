@@ -39,15 +39,16 @@ export const GoogleGeminiEffect = ({
 
   return (
     <motion.div className={cn("sticky top-0", className)}>
-      <div className="w-full h-[890px] -top-20 md:-top-10 flex items-center justify-center absolute">
-        {/* Formulario de contacto con glassmorphism estático */}
+      <div className="w-full h-[890px] -top-20 md:-top-10 flex flex-col items-center justify-center absolute gap-6 px-4">
+        
+        {/* Tarjeta superior - Título y beneficios */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-[90%] max-w-[750px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-6 md:p-10 md:mt-24 mt-8 z-30"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-[90%] max-w-[750px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-6 md:p-8 z-30"
         >
-          {/* Header del formulario */}
+          {/* Header */}
           <div className="text-center mb-6">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
               Get Your Free Website Audit
@@ -58,7 +59,7 @@ export const GoogleGeminiEffect = ({
           </div>
 
           {/* Beneficios */}
-          <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex items-start gap-2">
               <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
               <p className="text-white/90 text-sm">
@@ -84,7 +85,15 @@ export const GoogleGeminiEffect = ({
               </p>
             </div>
           </div>
+        </motion.div>
 
+        {/* Tarjeta inferior - Formulario */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="w-[90%] max-w-[750px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-6 md:p-8 z-30"
+        >
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Primera fila: Name y Website */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -171,14 +180,14 @@ export const GoogleGeminiEffect = ({
             {/* Botón Submit */}
             <button
               type="submit"
-              className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-4 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl mt-6"
+              className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl mt-4"
             >
-              <span className="text-lg">Get My Free Audit</span>
-              <Send className="w-5 h-5" />
+              <span>Get My Free Audit</span>
+              <Send className="w-4 h-4" />
             </button>
 
             {/* Trust indicators */}
-            <div className="text-center pt-2">
+            <div className="text-center pt-1">
               <p className="text-white/60 text-xs">
                 🔒 Your information is 100% secure. No spam, ever.
               </p>
