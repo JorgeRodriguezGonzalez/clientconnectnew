@@ -47,9 +47,7 @@ export const GoogleGeminiEffect = ({
   return (
     <motion.div 
       className={cn("sticky top-0", className)}
-      style={{
-        y: translateY,
-      }}
+      
     >
       <div className="w-full h-[890px] -top-20 md:-top-10 flex items-center justify-center absolute">
         {/* Formulario de contacto con glassmorphism estático */}
