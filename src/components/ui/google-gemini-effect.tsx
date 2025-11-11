@@ -1,8 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion, MotionValue, useTransform } from "framer-motion";
+import { motion, MotionValue } from "framer-motion";
 import React from "react";
-import { Mail, User, Send } from "lucide-react";
+import { Mail, User, Send, Phone, Globe, CheckCircle2 } from "lucide-react";
 
 const transition = {
   duration: 0,
@@ -21,16 +21,10 @@ export const GoogleGeminiEffect = ({
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
+    phone: "",
+    website: "",
     message: ""
   });
-
-  // Transform para mover todo hacia arriba más rápido
-  // En scroll progress 0.05 (muy temprano), ya se mueve significativamente
-  const translateY = useTransform(
-    scrollYProgress,
-    [0, 0.005, 0.04],
-    [0, 0, 0]  // Empieza abajo (600px), llega al centro (0), sigue subiendo (-100px)
-  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,22 +39,52 @@ export const GoogleGeminiEffect = ({
   };
 
   return (
-    <motion.div 
-      className={cn("sticky top-0", className)}
-      
-    >
+    <motion.div className={cn("sticky top-0", className)}>
       <div className="w-full h-[890px] -top-20 md:-top-10 flex items-center justify-center absolute">
         {/* Formulario de contacto con glassmorphism estático */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-[90%] max-w-[450px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-8 md:mt-24 mt-8 z-30"
+          className="w-[90%] max-w-[550px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-6 md:p-8 md:mt-24 mt-8 z-30 max-h-[85vh] overflow-y-auto"
         >
-          <h3 className="text-2xl font-bold text-white mb-2 text-center">Get In Touch</h3>
-          <p className="text-white/70 text-sm text-center mb-6">
-            Ready to transform your digital presence?
-          </p>
+          {/* Header del formulario */}
+          <div className="text-center mb-6">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+              Get Your Free Website Audit
+            </h3>
+            <p className="text-white/80 text-sm md:text-base leading-relaxed">
+              Discover how to generate more leads through:
+            </p>
+          </div>
+
+          {/* Beneficios */}
+          <div className="mb-6 space-y-2">
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
+              <p className="text-white/90 text-sm">
+                <span className="font-semibold">Better Google Rankings</span> - Dominate search results
+              </p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
+              <p className="text-white/90 text-sm">
+                <span className="font-semibold">AI Visibility</span> - Rank in ChatGPT & Gemini
+              </p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
+              <p className="text-white/90 text-sm">
+                <span className="font-semibold">Higher Conversion Rate</span> - Turn visitors into customers
+              </p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
+              <p className="text-white/90 text-sm">
+                <span className="font-semibold">Website Optimization</span> - Boost performance & UX
+              </p>
+            </div>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Campo Nombre */}
@@ -71,9 +95,9 @@ export const GoogleGeminiEffect = ({
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Your Name"
+                placeholder="Your Name *"
                 required
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
               />
             </div>
 
@@ -85,20 +109,69 @@ export const GoogleGeminiEffect = ({
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="your.email@example.com"
+                placeholder="your.email@example.com *"
                 required
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+              />
+            </div>
+
+            {/* Campo Phone */}
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Phone Number"
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+              />
+            </div>
+
+            {/* Campo Website */}
+            <div className="relative">
+              <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              <input
+                type="url"
+                name="website"
+                value={formData.website}
+                onChange={handleChange}
+                placeholder="Your Website URL *"
+                required
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+              />
+            </div>
+
+            {/* Campo Message */}
+            <div className="relative">
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Tell us about your business goals... (Optional)"
+                rows={3}
+                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all resize-none"
               />
             </div>
 
             {/* Botón Submit */}
             <button
               type="submit"
-              className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl"
+              className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3.5 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl"
             >
-              <span>Send Message</span>
+              <span>Get My Free Audit</span>
               <Send className="w-4 h-4" />
             </button>
+
+            {/* Trust indicators */}
+            <div className="text-center pt-2">
+              <p className="text-white/60 text-xs">
+                🔒 Your information is 100% secure. No spam, ever.
+              </p>
+              <p className="text-white/70 text-xs mt-1 font-medium">
+                ⚡ Response within 24 hours
+              </p>
+            </div>
           </form>
         </motion.div>
       </div>
