@@ -6,14 +6,14 @@ import {
   } from "@/components/ui/animated-gallery"
   
   const IMAGES_1 = [
-    "/lovable-uploads/5582f858-af9c-47da-8522-4916485aba3d.png",
-    "/lovable-uploads/99b7543a-d759-4c7d-99bb-31eaea2d11d7.png",
-    "/lovable-uploads/d0915efc-ea6b-4ec2-94fe-e15a16392d1c.png",
-    "/lovable-uploads/41a9e9a3-4a7a-4ab9-9d0b-e0f775d0190a.png",
+    "/images/1.png",
+    "/images/2.png",
+    "/images/3.png",
+    "/images/4.png",
   ]
   const IMAGES_2 = [
-    "/lovable-uploads/a524300c-6025-4637-8d0d-a8f01d43aa71.png",
-    "/lovable-uploads/bf578457-09f8-4047-abd0-4a57a933f2c7.png",
+    "/images/5.png",
+    "/images/6.png",
     "/lovable-uploads/bd7a31ea-72e3-4ba4-9f93-00ba3f6bc43e.png",
     "/lovable-uploads/8f2bb631-9f79-45d4-bfd5-65d57179aa91.png",
   ]
