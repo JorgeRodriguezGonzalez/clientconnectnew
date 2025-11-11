@@ -39,7 +39,7 @@ export const GoogleGeminiEffect = ({
 
   return (
     <motion.div className={cn("sticky top-0", className)}>
-      <div className="w-full h-[890px] -top-20 md:-top-10 flex items-center justify-center absolute">
+      <div className="w-full h-[890px] -top-20 md:top-10 flex items-center justify-center absolute">
         {/* Tarjeta unificada con glassmorphism gradient */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -215,7 +215,6 @@ export const GoogleGeminiEffect = ({
                 <span>Get My Free Audit</span>
                 <Send className="w-4 h-4" />
               </button>
-
               
             </form>
           </div>
