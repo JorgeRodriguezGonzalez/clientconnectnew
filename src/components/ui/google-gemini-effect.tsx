@@ -39,7 +39,7 @@ export const GoogleGeminiEffect = ({
 
   return (
     <motion.div className={cn("sticky top-0", className)}>
-      <div className="w-full h-[890px] -top-20 md:top-0 flex items-center justify-center absolute">
+      <div className="w-full h-[890px] -top-20 md:-top-10 flex items-center justify-center absolute">
         {/* Tarjeta unificada con glassmorphism gradient */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -94,7 +94,7 @@ export const GoogleGeminiEffect = ({
             </div>
 
             {/* Beneficios */}
-            <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
                 <p className="text-white/90 text-sm">
@@ -121,89 +121,66 @@ export const GoogleGeminiEffect = ({
               </div>
             </div>
 
-            {/* Espacio para las líneas SVG - aquí es transparente */}
-            <div className="h-10 md:h-4 mb-6"></div>
-
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Primera fila: Name y Website */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Campo Name */}
-                <div>
-                  <label className="block text-white/90 text-sm font-medium mb-2">
-                    Name *
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="John Smith"
-                      required
-                      className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-                    />
-                  </div>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your Name *"
+                    required
+                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                  />
                 </div>
 
                 {/* Campo Website */}
-                <div>
-                  <label className="block text-white/90 text-sm font-medium mb-2">
-                    Website *
-                  </label>
-                  <div className="relative">
-                    <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                    <input
-                      type="url"
-                      name="website"
-                      value={formData.website}
-                      onChange={handleChange}
-                      placeholder="www.yourwebsite.com"
-                      required
-                      className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-                    />
-                  </div>
+                <div className="relative">
+                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                  <input
+                    type="url"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    placeholder="Your Website *"
+                    required
+                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                  />
                 </div>
               </div>
 
               {/* Segunda fila: Phone y Email */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Campo Phone */}
-                <div>
-                  <label className="block text-white/90 text-sm font-medium mb-2">
-                    Phone *
-                  </label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+61 4XX XXX XXX"
-                      required
-                      className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-                    />
-                  </div>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="Your Phone *"
+                    required
+                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                  />
                 </div>
 
                 {/* Campo Email */}
-                <div>
-                  <label className="block text-white/90 text-sm font-medium mb-2">
-                    Email *
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="john@company.com"
-                      required
-                      className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-                    />
-                  </div>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Your Email *"
+                    required
+                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                  />
                 </div>
               </div>
 
@@ -215,7 +192,16 @@ export const GoogleGeminiEffect = ({
                 <span>Get My Free Audit</span>
                 <Send className="w-4 h-4" />
               </button>
-              
+
+              {/* Trust indicators */}
+              <div className="text-center pt-1">
+                <p className="text-white/60 text-xs">
+                  🔒 Your information is 100% secure. No spam, ever.
+                </p>
+                <p className="text-white/70 text-xs mt-1 font-medium">
+                  ⚡ Response within 24 hours
+                </p>
+              </div>
             </form>
           </div>
         </motion.div>
