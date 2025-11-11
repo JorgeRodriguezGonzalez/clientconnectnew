@@ -28,6 +28,19 @@ export function GoogleGeminiEffectDemo() {
     ]
   );
 
+  // Transform para el overlay glassmorphism
+  const overlayOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.3],
+    [0, 0.3, 0.6]
+  );
+
+  const overlayBlur = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.3],
+    [0, 8, 16]
+  );
+
   return (
     <motion.div
       ref={ref}
@@ -128,6 +141,25 @@ export function GoogleGeminiEffectDemo() {
           </div>
 
         </div>
+
+        {/* Overlay glassmorphism que difumina el contenido del hero */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none z-20"
+          style={{
+            backgroundColor: useTransform(
+              overlayOpacity,
+              (value) => `rgba(255, 255, 255, ${value * 0.1})`
+            ),
+            backdropFilter: useTransform(
+              overlayBlur,
+              (value) => `blur(${value}px)`
+            ),
+            WebkitBackdropFilter: useTransform(
+              overlayBlur,
+              (value) => `blur(${value}px)`
+            ),
+          }}
+        />
       </div>
 
       {/* Efecto SVG de fondo */}
