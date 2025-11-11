@@ -36,7 +36,7 @@ export const GoogleGeminiEffect = ({
 
   return (
     <div className={cn("sticky top-0", className)}>
-      <div className="w-full h-[890px] -top-20 md:-top-10 flex items-center justify-center absolute">
+      <div className="w-full h-[500px] -top-20 md:-top-10 flex items-center justify-center absolute">
         {/* Formulario de contacto con glassmorphism estático */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
