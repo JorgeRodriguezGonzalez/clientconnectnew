@@ -79,19 +79,7 @@ export const GoogleGeminiEffect = ({
               />
             </div>
 
-            {/* Campo Mensaje */}
-            <div className="relative">
-              <MessageSquare className="absolute left-3 top-4 w-5 h-5 text-white/60" />
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Tell us about your project..."
-                required
-                rows={4}
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all resize-none"
-              />
-            </div>
+            
 
             {/* Botón Submit */}
             <button
