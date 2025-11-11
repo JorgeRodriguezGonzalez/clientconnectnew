@@ -36,7 +36,7 @@ export const GoogleGeminiEffect = ({
 
   return (
     <div className={cn("sticky top-0", className)}>
-      <div className="w-full h-[600px] -top-20 md:-top-10 flex items-center justify-center absolute">
+      <div className="w-full h-[890px] -top-20 md:-top-10 flex items-center justify-center absolute">
         {/* Formulario de contacto con glassmorphism estático */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -92,8 +92,8 @@ export const GoogleGeminiEffect = ({
       
       <svg
         width="1440"
-        height="600"
-        viewBox="0 0 1440 600"
+        height="890"
+        viewBox="0 0 1440 890"
         xmlns="http://www.w3.org/2000/svg"
         className="absolute -top-20 md:-top-10 w-full"
       >
