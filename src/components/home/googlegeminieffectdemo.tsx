@@ -47,10 +47,10 @@ export function GoogleGeminiEffectDemo() {
       style={{ 
         backgroundColor 
       }}
-      className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[400vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       {/* Contenido con texto y CTAs */}
-      <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40" style={{ marginTop: '-20vh' }}>
+      <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40">
         <div className="z-10 flex flex-col items-center justify-center gap-6 max-w-[976px] px-5">
           {/* Badge superior */}
           <div className="flex items-center justify-center gap-1.5 h-[21px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[2px] px-3 py-0.5">
