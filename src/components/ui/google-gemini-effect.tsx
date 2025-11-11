@@ -1,8 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion, MotionValue } from "framer-motion";
+import { motion, MotionValue, useTransform, useScroll } from "framer-motion";
 import React from "react";
-import { Mail, User, MessageSquare, Send } from "lucide-react";
+import { Mail, User, Send } from "lucide-react";
 
 const transition = {
   duration: 0,
@@ -22,9 +22,25 @@ export const GoogleGeminiEffect = ({
     message: ""
   });
 
+  // Scroll progress independiente para el formulario
+  const { scrollYProgress } = useScroll();
+
+  // Transform para el background del formulario
+  // De transparente (0) a glassmorphism con 0.5 de opacidad
+  const formBackgroundOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.3],
+    [0, 0.25, 0.5]
+  );
+
+  const formBorderOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.3],
+    [0, 0.1, 0.2]
+  );
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para enviar el formulario
     console.log("Form submitted:", formData);
   };
 
@@ -38,58 +54,76 @@ export const GoogleGeminiEffect = ({
   return (
     <div className={cn("sticky top-80", className)}>
       <div className="w-full h-[890px] -top-60 md:-top-40 flex items-center justify-center absolute">
-        {/* Formulario de contacto con glassmorphism */}
+        {/* Formulario de contacto con glassmorphism progresivo */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-[90%] max-w-[450px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-8 md:mt-24 mt-8 z-30"
+          className="w-[90%] max-w-[450px] rounded-2xl shadow-2xl p-8 md:mt-24 mt-8 z-30 relative overflow-hidden"
         >
-          <h3 className="text-2xl font-bold text-white mb-2 text-center">Get In Touch</h3>
-          <p className="text-white/70 text-sm text-center mb-6">
-            Ready to transform your digital presence?
-          </p>
+          {/* Background animado con glassmorphism */}
+          <motion.div
+            className="absolute inset-0 backdrop-blur-lg rounded-2xl"
+            style={{
+              backgroundColor: useTransform(
+                formBackgroundOpacity,
+                (value) => `rgba(255, 255, 255, ${value})`
+              ),
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderColor: useTransform(
+                formBorderOpacity,
+                (value) => `rgba(255, 255, 255, ${value})`
+              ),
+            }}
+          />
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Campo Nombre */}
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Your Name"
-                required
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
-              />
-            </div>
+          {/* Contenido del formulario */}
+          <div className="relative z-10">
+            <h3 className="text-2xl font-bold text-white mb-2 text-center">Get In Touch</h3>
+            <p className="text-white/70 text-sm text-center mb-6">
+              Ready to transform your digital presence?
+            </p>
 
-            {/* Campo Email */}
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="your.email@example.com"
-                required
-                className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
-              />
-            </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Campo Nombre */}
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your Name"
+                  required
+                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+                />
+              </div>
 
-            
+              {/* Campo Email */}
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your.email@example.com"
+                  required
+                  className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all"
+                />
+              </div>
 
-            {/* Botón Submit */}
-            <button
-              type="submit"
-              className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl"
-            >
-              <span>Send Message</span>
-              <Send className="w-4 h-4" />
-            </button>
-          </form>
+              {/* Botón Submit */}
+              <button
+                type="submit"
+                className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl"
+              >
+                <span>Send Message</span>
+                <Send className="w-4 h-4" />
+              </button>
+            </form>
+          </div>
         </motion.div>
       </div>
       
@@ -165,8 +199,6 @@ export const GoogleGeminiEffect = ({
           }}
           transition={transition}
         />
-
-        {/* Gaussian blur for the background paths */}
 
         <path
           d="M0 663C145.5 663 191 666.265 269 647C326.5 630 339.5 621 397.5 566C439 531.5 455 529.5 490 523C509.664 519.348 521 503.736 538 504.236C553.591 504.236 562.429 514.739 584.66 522.749C592.042 525.408 600.2 526.237 607.356 523.019C624.755 515.195 641.446 496.324 657 496.735C673.408 496.735 693.545 519.572 712.903 526.769C718.727 528.934 725.184 528.395 730.902 525.965C751.726 517.115 764.085 497.106 782 496.735C794.831 496.47 804.103 508.859 822.469 518.515C835.13 525.171 850.214 526.815 862.827 520.069C875.952 513.049 889.748 502.706 903.5 503.736C922.677 505.171 935.293 510.562 945.817 515.673C954.234 519.76 963.095 522.792 972.199 524.954C996.012 530.611 1007.42 534.118 1034 549C1077.5 573.359 1082.5 594.5 1140 629C1206 670 1328.5 662.5 1440 662.5"
