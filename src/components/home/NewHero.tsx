@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useScroll, useTransform } from "framer-motion";
 import { Send, Calendar } from 'lucide-react';
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export function NewHero() {
   const ref = React.useRef(null);
@@ -9,7 +9,7 @@ export function NewHero() {
   const [titleNumber, setTitleNumber] = useState(0);
   
   const words = useMemo(
-    () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales",],
+    () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales"],
     []
   );
 
@@ -160,11 +160,11 @@ export function NewHero() {
             }}
           >
             We Bring{" "}
-            <span className="relative inline-block overflow-hidden">
+            <span className="relative inline-flex items-center overflow-hidden" style={{ minHeight: '1em' }}>
               {words.map((word, index) => (
                 <motion.span
                   key={index}
-                  className="font-light inline-block"
+                  className="font-light"
                   initial={{ opacity: 0, y: -100 }}
                   transition={{ 
                     type: "spring", 
@@ -181,7 +181,9 @@ export function NewHero() {
                       : {
                           y: titleNumber > index ? 20 : -50,
                           opacity: 0,
-                          position: "absolute"
+                          position: "absolute",
+                          top: 0,
+                          left: 0
                         }
                   }
                 >
