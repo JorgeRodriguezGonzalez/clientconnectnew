@@ -1,5 +1,5 @@
 import Footer from "@/components/layout/Footer";
-import { GoogleGeminiEffectDemo } from "@/components/home/googlegeminieffectdemo";
+import { NewHero } from "@/components/home/NewHero";
 import { AnimatedGallerySection } from "@/components/animated-gallery-section";
 import ServicesSection from "@/components/home/ServicesSection";
 import WhyUsSection from "@/components/home/WhyUsSection";
@@ -13,7 +13,7 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
-        <GoogleGeminiEffectDemo />
+        <NewHero />
         <BrandsShowcaseSection />
         <AnimatedGallerySection />
         <ServicesSection />
