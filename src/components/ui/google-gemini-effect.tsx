@@ -199,23 +199,25 @@ export const GoogleGeminiEffect = ({
     amount: 0.99
   });
 
-  // Estado para controlar si la animación explosiva ya ocurrió en esta visita
-  const [hasAnimated, setHasAnimated] = React.useState(false);
+  // Ref para trackear si ya animamos (evita loops)
+  const hasAnimatedRef = React.useRef(false);
+  // Estado para disparar la animación
+  const [triggerAnimation, setTriggerAnimation] = React.useState(false);
 
   React.useEffect(() => {
-    if (isInView && !hasAnimated) {
-      setHasAnimated(true);
-      // Reset después de que termine la animación (1 segundo)
+    if (isInView && !hasAnimatedRef.current) {
+      hasAnimatedRef.current = true;
+      setTriggerAnimation(true);
+      
+      // Reset la animación después de 1 segundo (duración de la animación)
       setTimeout(() => {
-        if (!isInView) {
-          setHasAnimated(false);
-        }
+        setTriggerAnimation(false);
       }, 1000);
-    } else if (!isInView && hasAnimated) {
-      // Reset cuando sale de vista
-      setHasAnimated(false);
+    } else if (!isInView) {
+      // Reset cuando sale de vista para que anime de nuevo en la próxima entrada
+      hasAnimatedRef.current = false;
     }
-  }, [isInView, hasAnimated]);
+  }, [isInView]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -245,8 +247,8 @@ export const GoogleGeminiEffect = ({
               opacity: 1, 
               y: 0,
               // Animación suave de shake cuando está en vista
-              rotate: hasAnimated ? [0, -1, 1, -0.5, 0.5, 0] : 0,
-              scale: hasAnimated ? [1, 1.005, 0.998, 1.002, 1] : 1,
+              rotate: triggerAnimation ? [0, -1, 1, -0.5, 0.5, 0] : 0,
+              scale: triggerAnimation ? [1, 1.005, 0.998, 1.002, 1] : 1,
             }}
             transition={{ 
               opacity: { duration: 0.6, delay: 0.3 },
@@ -341,7 +343,7 @@ export const GoogleGeminiEffect = ({
                       ref={logoRef}
                       animate={{
                         // Animación explosiva del círculo - escala dramática y pulse
-                        scale: hasAnimated ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
+                        scale: triggerAnimation ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
                       }}
                       transition={{
                         duration: 1,
