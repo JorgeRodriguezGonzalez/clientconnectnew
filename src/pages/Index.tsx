@@ -1,6 +1,5 @@
-import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { GoogleGeminiEffectDemo } from "@/components/home/googlegeminieffectdemo"; // ← Añade .tsx
+import { GoogleGeminiEffectDemo } from "@/components/home/googlegeminieffectdemo";
 import { AnimatedGallerySection } from "@/components/animated-gallery-section";
 import ServicesSection from "@/components/home/ServicesSection";
 import WhyUsSection from "@/components/home/WhyUsSection";
@@ -13,7 +12,6 @@ import CTASection from "@/components/home/CTASection";
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
       <main className="flex-1">
         <GoogleGeminiEffectDemo />
         <BrandsShowcaseSection />
