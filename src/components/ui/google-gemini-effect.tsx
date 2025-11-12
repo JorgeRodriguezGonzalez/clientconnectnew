@@ -122,10 +122,10 @@ export const GoogleGeminiEffect = ({
             </div>
 
             {/* Espacio para las líneas SVG - aquí es transparente */}
-            <div className="h-4 md:h-2 mb-4"></div>
+            <div className="h-2 md:h-1 mb-2"></div>
 
             {/* Logo en círculo blanco con borde difuminado */}
-            <div className="flex justify-center mb-6">
+            <div className="flex justify-center mb-8">
               <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl" style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3)' }}>
                 <img 
                   src="/images/client-connect-australia-logo.png" 
@@ -135,7 +135,7 @@ export const GoogleGeminiEffect = ({
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5 mt-6">
+            <form onSubmit={handleSubmit} className="space-y-5 mt-8">
               {/* Primera fila: Name y Website */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Campo Name */}
