@@ -3,7 +3,7 @@ import React from "react";
 import { Send, Calendar } from 'lucide-react';
 import { motion } from "framer-motion";
 
-export function GoogleGeminiEffectDemo() {
+export function NewHero() {
   const ref = React.useRef(null);
   
   const { scrollYProgress } = useScroll({
