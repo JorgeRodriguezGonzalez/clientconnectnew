@@ -16,8 +16,8 @@ export function NewHero() {
   // Anchos aproximados para cada palabra (en px)
   const wordWidths: { [key: string]: number } = {
     "Light": 115,
-    "Leads": 125,
-    "Clients": 145,
+    "Leads": 145,
+    "Clients": 155,
     "Sales": 120
   };
 
@@ -56,7 +56,7 @@ export function NewHero() {
       } else {
         setTitleNumber(titleNumber + 1);
       }
-    }, 3000);
+    }, 2500);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, words]);
 
