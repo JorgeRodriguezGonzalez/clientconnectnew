@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useScroll, useTransform } from "framer-motion";
 import { Send, Calendar } from 'lucide-react';
 import { motion } from "framer-motion";
@@ -6,6 +6,12 @@ import { motion } from "framer-motion";
 export function NewHero() {
   const ref = React.useRef(null);
   const [scrolled, setScrolled] = useState(false);
+  const [titleNumber, setTitleNumber] = useState(0);
+  
+  const words = useMemo(
+    () => ["Light", "Leads", "Clients", "Sales"],
+    []
+  );
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -34,6 +40,17 @@ export function NewHero() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (titleNumber === words.length - 1) {
+        setTitleNumber(0);
+      } else {
+        setTitleNumber(titleNumber + 1);
+      }
+    }, 2000);
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber, words]);
 
   return (
     <motion.div
@@ -142,7 +159,31 @@ export function NewHero() {
               letterSpacing: '-1.5px',
             }}
           >
-            We Bring Light to Your Business Growth
+            We Bring{" "}
+            <span className="relative inline-flex justify-center overflow-hidden">
+              {words.map((word, index) => (
+                <motion.span
+                  key={index}
+                  className="absolute font-semibold"
+                  initial={{ opacity: 0, y: "-100" }}
+                  transition={{ type: "spring", stiffness: 50 }}
+                  animate={
+                    titleNumber === index
+                      ? {
+                          y: 0,
+                          opacity: 1,
+                        }
+                      : {
+                          y: titleNumber > index ? -150 : 150,
+                          opacity: 0,
+                        }
+                  }
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </span>{" "}
+            to Your Business Growth
           </motion.h1>
           
           {/* Subtítulo */}
