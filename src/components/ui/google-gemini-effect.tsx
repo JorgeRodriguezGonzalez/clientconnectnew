@@ -132,6 +132,9 @@ const MovingBorderCard = ({
       animate={{ opacity: isActive ? 1 : 0 }}
       transition={{ duration: 0.3 }}
       className="absolute inset-0 pointer-events-none"
+      style={{
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 15%, 0% 15%, 0% 85%, 100% 85%, 100% 100%, 0% 100%)'
+      }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +195,7 @@ export const GoogleGeminiEffect = ({
   
   // Detectar cuando la tarjeta está en el centro del viewport
   const isInView = useInView(cardRef, { 
-    once: true,
+    once: true,  // Solo se activa una vez
     amount: 0.99
   });
 
