@@ -11,11 +11,11 @@ export function GoogleGeminiEffectDemo() {
     offset: ["start start", "end end"],
   });
 
-  const pathLengthFirst = useTransform(scrollYProgress, [0.2, 0.8], [0.2, 1.2]);
-  const pathLengthSecond = useTransform(scrollYProgress, [0.2, 0.8], [0.15, 1.2]);
-  const pathLengthThird = useTransform(scrollYProgress, [0.2, 0.8], [0.1, 1.2]);
-  const pathLengthFourth = useTransform(scrollYProgress, [0.2, 0.8], [0.05, 1.2]);
-  const pathLengthFifth = useTransform(scrollYProgress, [0.2, 0.8], [0, 1.2]);
+  const pathLengthFirst = useTransform(scrollYProgress, [0.4, 0.8], [0.2, 1.2]);
+  const pathLengthSecond = useTransform(scrollYProgress, [0.4, 0.8], [0.15, 1.2]);
+  const pathLengthThird = useTransform(scrollYProgress, [0.4, 0.8], [0.1, 1.2]);
+  const pathLengthFourth = useTransform(scrollYProgress, [0.4, 0.8], [0.05, 1.2]);
+  const pathLengthFifth = useTransform(scrollYProgress, [0.4, 0.8], [0, 1.2]);
 
   // Transformaciones para el gradiente: Azul espacial casi negro → Azul oscuro → Azul medio
   const backgroundColor = useTransform(
