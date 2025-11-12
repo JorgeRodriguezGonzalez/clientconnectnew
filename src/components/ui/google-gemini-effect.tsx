@@ -9,8 +9,8 @@ const transition = {
   ease: "linear",
 };
 
-// Componente MovingBorder adaptado para el círculo
-const MovingBorder = ({
+// Componente MovingBorder para el círculo del logo
+const MovingBorderCircle = ({
   children,
   duration = 2000,
   isActive = false,
@@ -93,6 +93,83 @@ const MovingBorder = ({
   );
 };
 
+// Componente MovingBorder para la tarjeta (rectángulo)
+const MovingBorderCard = ({
+  duration = 3000,
+  isActive = false,
+  rx = "1rem",
+}: {
+  duration?: number;
+  isActive?: boolean;
+  rx?: string;
+}) => {
+  const pathRef = useRef<any>();
+  const progress = useMotionValue<number>(0);
+
+  useAnimationFrame((time) => {
+    if (!isActive) return;
+    const length = pathRef.current?.getTotalLength();
+    if (length) {
+      const pxPerMillisecond = length / duration;
+      progress.set((time * pxPerMillisecond) % length);
+    }
+  });
+
+  const x = useTransform(
+    progress,
+    (val) => pathRef.current?.getPointAtLength(val).x
+  );
+  const y = useTransform(
+    progress,
+    (val) => pathRef.current?.getPointAtLength(val).y
+  );
+
+  const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isActive ? 1 : 0 }}
+      transition={{ duration: 0.3 }}
+      className="absolute inset-0 pointer-events-none"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+        className="absolute h-full w-full"
+        width="100%"
+        height="100%"
+      >
+        <rect
+          fill="none"
+          width="100%"
+          height="100%"
+          rx={rx}
+          ry={rx}
+          ref={pathRef}
+        />
+      </svg>
+      <motion.div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          display: "inline-block",
+          transform,
+        }}
+      >
+        <div 
+          className="h-20 w-20 rounded-full opacity-[0.8]"
+          style={{
+            background: 'radial-gradient(circle, #00D4FF 40%, transparent 70%)',
+            boxShadow: '0 0 20px #00D4FF, 0 0 40px #00D4FF, 0 0 60px rgba(0, 212, 255, 0.5)',
+          }}
+        />
+      </motion.div>
+    </motion.div>
+  );
+};
+
 export const GoogleGeminiEffect = ({
   pathLengths,
   className,
@@ -134,204 +211,210 @@ export const GoogleGeminiEffect = ({
   return (
     <motion.div className={cn("sticky top-0", className)}>
       <div className="w-full h-[890px] -top-20 md:top-0 flex items-center justify-center absolute">
-        {/* Tarjeta unificada con glassmorphism gradient */}
-        <motion.div
-          ref={cardRef}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ 
-            opacity: 1, 
-            y: 0,
-            // Animación suave de shake cuando está en vista
-            rotate: isInView ? [0, -1, 1, -0.5, 0.5, 0] : 0,
-            scale: isInView ? [1, 1.005, 0.998, 1.002, 1] : 1,
-          }}
-          transition={{ 
-            opacity: { duration: 0.6, delay: 0.3 },
-            y: { duration: 0.6, delay: 0.3 },
-            rotate: { duration: 0.6, ease: "easeInOut" },
-            scale: { duration: 0.6, ease: "easeInOut" },
-          }}
-          className="w-[90%] max-w-[750px] border border-white/20 rounded-2xl shadow-2xl p-6 md:p-10 z-30 relative overflow-hidden"
-        >
-          {/* Fondo con gradiente glassmorphism - opaco arriba y abajo, transparente en el centro */}
-          <div 
-            className="absolute inset-0 backdrop-blur-lg rounded-2xl"
-            style={{
-              background: `
-                linear-gradient(
-                  to bottom,
-                  rgba(255, 255, 255, 0.1) 0%,
-                  rgba(255, 255, 255, 0.1) 25%,
-                  rgba(255, 255, 255, 0) 50%,
-                  rgba(255, 255, 255, 0.1) 75%,
-                  rgba(255, 255, 255, 0.1) 100%
-                )
-              `,
-              maskImage: `
-                linear-gradient(
-                  to bottom,
-                  black 0%,
-                  black 30%,
-                  transparent 50%,
-                  black 70%,
-                  black 100%
-                )
-              `,
-              WebkitMaskImage: `
-                linear-gradient(
-                  to bottom,
-                  black 0%,
-                  black 30%,
-                  transparent 50%,
-                  black 70%,
-                  black 100%
-                )
-              `
+        {/* Wrapper con overflow-hidden para el efecto de borde */}
+        <div className="relative w-[90%] max-w-[750px] rounded-2xl overflow-hidden">
+          {/* MovingBorder para la tarjeta */}
+          <MovingBorderCard duration={3000} isActive={isInView} rx="1rem" />
+          
+          {/* Tarjeta unificada con glassmorphism gradient */}
+          <motion.div
+            ref={cardRef}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0,
+              // Animación suave de shake cuando está en vista
+              rotate: isInView ? [0, -1, 1, -0.5, 0.5, 0] : 0,
+              scale: isInView ? [1, 1.005, 0.998, 1.002, 1] : 1,
             }}
-          />
+            transition={{ 
+              opacity: { duration: 0.6, delay: 0.3 },
+              y: { duration: 0.6, delay: 0.3 },
+              rotate: { duration: 0.6, ease: "easeInOut" },
+              scale: { duration: 0.6, ease: "easeInOut" },
+            }}
+            className="border border-white/20 rounded-2xl shadow-2xl p-6 md:p-10 z-30 relative overflow-hidden"
+          >
+            {/* Fondo con gradiente glassmorphism - opaco arriba y abajo, transparente en el centro */}
+            <div 
+              className="absolute inset-0 backdrop-blur-lg rounded-2xl"
+              style={{
+                background: `
+                  linear-gradient(
+                    to bottom,
+                    rgba(255, 255, 255, 0.1) 0%,
+                    rgba(255, 255, 255, 0.1) 25%,
+                    rgba(255, 255, 255, 0) 50%,
+                    rgba(255, 255, 255, 0.1) 75%,
+                    rgba(255, 255, 255, 0.1) 100%
+                  )
+                `,
+                maskImage: `
+                  linear-gradient(
+                    to bottom,
+                    black 0%,
+                    black 30%,
+                    transparent 50%,
+                    black 70%,
+                    black 100%
+                  )
+                `,
+                WebkitMaskImage: `
+                  linear-gradient(
+                    to bottom,
+                    black 0%,
+                    black 30%,
+                    transparent 50%,
+                    black 70%,
+                    black 100%
+                  )
+                `
+              }}
+            />
 
-          {/* Contenido con z-index mayor para estar por encima del fondo */}
-          <div className="relative z-10">
-            {/* Header del formulario */}
-            <div className="text-center mb-6">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                Get Your Free Website Audit
-              </h3>
-            </div>
+            {/* Contenido con z-index mayor para estar por encima del fondo */}
+            <div className="relative z-10">
+              {/* Header del formulario */}
+              <div className="text-center mb-6">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                  Get Your Free Website Audit
+                </h3>
+              </div>
 
-            {/* Beneficios */}
-            <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
-                <p className="text-white/90 text-sm">
-                  <span className="font-semibold">Better Google Rankings</span> - Dominate search results
-                </p>
+              {/* Beneficios */}
+              <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
+                  <p className="text-white/90 text-sm">
+                    <span className="font-semibold">Better Google Rankings</span> - Dominate search results
+                  </p>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
+                  <p className="text-white/90 text-sm">
+                    <span className="font-semibold">AI Visibility</span> - Rank in ChatGPT & Gemini
+                  </p>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
+                  <p className="text-white/90 text-sm">
+                    <span className="font-semibold">Higher Conversion Rate</span> - Turn visitors into customers
+                  </p>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
+                  <p className="text-white/90 text-sm">
+                    <span className="font-semibold">Website Optimization</span> - Boost performance & UX
+                  </p>
+                </div>
               </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
-                <p className="text-white/90 text-sm">
-                  <span className="font-semibold">AI Visibility</span> - Rank in ChatGPT & Gemini
-                </p>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
-                <p className="text-white/90 text-sm">
-                  <span className="font-semibold">Higher Conversion Rate</span> - Turn visitors into customers
-                </p>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-5 h-5 text-[#F6941D] flex-shrink-0 mt-0.5" />
-                <p className="text-white/90 text-sm">
-                  <span className="font-semibold">Website Optimization</span> - Boost performance & UX
-                </p>
-              </div>
-            </div>
 
-            {/* Espacio para las líneas SVG - aquí es transparente */}
-            <div className="h-2 md:h-0 mb-2"></div>
+              {/* Espacio para las líneas SVG - aquí es transparente */}
+              <div className="h-2 md:h-0 mb-2"></div>
 
-            {/* Logo en círculo blanco con 2 bordes animados */}
-            <div className="flex justify-center mb-8">
-              <MovingBorder duration={2000} isActive={isInView} offset={0}>
-                <MovingBorder duration={2000} isActive={isInView} offset={115}>
-                  <motion.div 
-                    ref={logoRef}
-                    animate={{
-                      // Animación explosiva del círculo - escala dramática y pulse
-                      scale: isInView ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
-                    }}
-                    transition={{
-                      duration: 1,
-                      ease: "easeInOut",
-                    }}
-                    className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl relative" 
-                    style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3)' }}
-                  >
-                    <img 
-                      src="/images/client-connect-australia-logo.png" 
-                      alt="Client Connect Australia" 
-                      className="w-14 h-14 object-contain"
+              {/* Logo en círculo blanco con 2 bordes animados */}
+              <div className="flex justify-center mb-8">
+                <MovingBorderCircle duration={2000} isActive={isInView} offset={0}>
+                  <MovingBorderCircle duration={2000} isActive={isInView} offset={115}>
+                    <motion.div 
+                      ref={logoRef}
+                      animate={{
+                        // Animación explosiva del círculo - escala dramática y pulse
+                        scale: isInView ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
+                      }}
+                      transition={{
+                        duration: 1,
+                        ease: "easeInOut",
+                      }}
+                      className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl relative" 
+                      style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3)' }}
+                    >
+                      <img 
+                        src="/images/client-connect-australia-logo.png" 
+                        alt="Client Connect Australia" 
+                        className="w-14 h-14 object-contain"
+                      />
+                    </motion.div>
+                  </MovingBorderCircle>
+                </MovingBorderCircle>
+              </div>
+
+              <div className="space-y-5 mt-8">
+                {/* Primera fila: Name y Website */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Campo Name */}
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your Name *"
+                      required
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
                     />
-                  </motion.div>
-                </MovingBorder>
-              </MovingBorder>
-            </div>
+                  </div>
 
-            <div className="space-y-5 mt-8">
-              {/* Primera fila: Name y Website */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Campo Name */}
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your Name *"
-                    required
-                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-                  />
+                  {/* Campo Website */}
+                  <div className="relative">
+                    <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                    <input
+                      type="url"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      placeholder="Your Website *"
+                      required
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                    />
+                  </div>
                 </div>
 
-                {/* Campo Website */}
-                <div className="relative">
-                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                  <input
-                    type="url"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleChange}
-                    placeholder="Your Website *"
-                    required
-                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-                  />
+                {/* Segunda fila: Phone y Email */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Campo Phone */}
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="Your Phone *"
+                      required
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                    />
+                  </div>
+
+                  {/* Campo Email */}
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Your Email *"
+                      required
+                      className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
+                    />
+                  </div>
                 </div>
+
+                {/* Botón Submit */}
+                <button
+                  onClick={handleSubmit}
+                  className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl mt-4"
+                >
+                  <span>Get My Free Audit</span>
+                  <Send className="w-4 h-4" />
+                </button>
+                
               </div>
-
-              {/* Segunda fila: Phone y Email */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Campo Phone */}
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="Your Phone *"
-                    required
-                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-                  />
-                </div>
-
-                {/* Campo Email */}
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Your Email *"
-                    required
-                    className="w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-11 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#F6941D] transition-all"
-                  />
-                </div>
-              </div>
-
-              {/* Botón Submit */}
-              <button
-                onClick={handleSubmit}
-                className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl mt-4"
-              >
-                <span>Get My Free Audit</span>
-                <Send className="w-4 h-4" />
-              </button>
-              
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
       
       <svg
