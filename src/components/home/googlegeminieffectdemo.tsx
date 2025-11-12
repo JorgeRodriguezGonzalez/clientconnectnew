@@ -143,7 +143,7 @@ export function GoogleGeminiEffectDemo() {
               duration: 0.8,
               ease: "easeOut",
             }}
-            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[27px] text-center text-white/80 max-w-[683px] relative z-50 mb-4"
+            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[27px] text-center text-white/80 max-w-[683px] relative z-50 mb-6"
             style={{
               fontFamily: '"Inter Display", sans-serif',
               letterSpacing: '0.2px'
