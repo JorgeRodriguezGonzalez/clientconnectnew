@@ -227,32 +227,28 @@ export const GoogleGeminiEffect = ({
             {/* Espacio para las líneas SVG - aquí es transparente */}
             <div className="h-2 md:h-0 mb-2"></div>
 
-            {/* Logo en círculo blanco con borde difuminado y 2 bordes animados */}
+            {/* Logo en círculo blanco con borde difuminado y borde animado */}
             <div className="flex justify-center mb-8">
-              {/* Primer círculo azul - empieza en posición 0 */}
-              <MovingBorder duration={2000} isActive={isInView} offset={0}>
-                {/* Segundo círculo azul - empieza en posición opuesta (180 grados) */}
-                <MovingBorder duration={2000} isActive={isInView} offset={157}>
-                  <motion.div 
-                    ref={logoRef}
-                    animate={{
-                      // Animación explosiva del círculo - escala dramática y pulse
-                      scale: isInView ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
-                    }}
-                    transition={{
-                      duration: 1,
-                      ease: "easeInOut",
-                    }}
-                    className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl relative" 
-                    style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3)' }}
-                  >
-                    <img 
-                      src="/images/client-connect-australia-logo.png" 
-                      alt="Client Connect Australia" 
-                      className="w-14 h-14 object-contain"
-                    />
-                  </motion.div>
-                </MovingBorder>
+              <MovingBorder duration={2000} isActive={isInView}>
+                <motion.div 
+                  ref={logoRef}
+                  animate={{
+                    // Animación explosiva del círculo - escala dramática y pulse
+                    scale: isInView ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
+                  }}
+                  transition={{
+                    duration: 1,
+                    ease: "easeInOut",
+                  }}
+                  className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl relative" 
+                  style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3)' }}
+                >
+                  <img 
+                    src="/images/client-connect-australia-logo.png" 
+                    alt="Client Connect Australia" 
+                    className="w-14 h-14 object-contain"
+                  />
+                </motion.div>
               </MovingBorder>
             </div>
 
