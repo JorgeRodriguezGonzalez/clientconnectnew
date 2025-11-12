@@ -118,7 +118,7 @@ export function GoogleGeminiEffectDemo() {
 
           {/* Título principal */}
           <h1 
-            className="text-3xl md:text-[52px] font-semibold leading-tight md:leading-[60px] text-center text-white"
+            className="text-3xl md:text-[52px] font-semibold leading-tight md:leading-[60px] text-center text-white relative z-50"
             style={{
               fontFamily: '"Inter Display", sans-serif',
               letterSpacing: '-1.5px',
@@ -129,7 +129,7 @@ export function GoogleGeminiEffectDemo() {
           
           {/* Subtítulo */}
           <p 
-            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[27px] text-center text-white/80 max-w-[683px]"
+            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[27px] text-center text-white/80 max-w-[683px] relative z-50"
             style={{
               fontFamily: '"Inter Display", sans-serif',
               letterSpacing: '0.2px'
@@ -139,7 +139,7 @@ export function GoogleGeminiEffectDemo() {
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50">
             {/* CTA Secundario */}
             <a 
               href="#contact" 
@@ -180,7 +180,7 @@ export function GoogleGeminiEffectDemo() {
           </div>
 
           {/* Badges */}
-          <div className="flex items-center justify-center gap-2 flex-wrap">
+          <div className="flex items-center justify-center gap-2 flex-wrap relative z-50">
             <div className="h-[23px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[2px] px-3 flex items-center justify-center">
               <p className="text-[11px] font-medium leading-[16.6px] text-center text-white/80">
                 Google Partner
