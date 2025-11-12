@@ -131,7 +131,7 @@ export function GoogleGeminiEffectDemo() {
               letterSpacing: '-1.5px',
             }}
           >
-            Connecting Sydney Businesses with Their Ideal Clients
+            We Bring Light to Your Business Growth
           </motion.h1>
           
           {/* Subtítulo */}
