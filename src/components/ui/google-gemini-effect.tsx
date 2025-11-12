@@ -1,12 +1,96 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion, MotionValue, useInView } from "framer-motion";
-import React from "react";
+import { motion, MotionValue, useInView, useAnimationFrame, useMotionTemplate, useMotionValue, useTransform } from "framer-motion";
+import React, { useRef } from "react";
 import { Mail, User, Send, Phone, Globe, CheckCircle2 } from "lucide-react";
 
 const transition = {
   duration: 0,
   ease: "linear",
+};
+
+// Componente MovingBorder adaptado para el círculo
+const MovingBorder = ({
+  children,
+  duration = 2000,
+  isActive = false,
+  offset = 0,
+}: {
+  children: React.ReactNode;
+  duration?: number;
+  isActive?: boolean;
+  offset?: number;
+}) => {
+  const pathRef = useRef<any>();
+  const progress = useMotionValue<number>(0);
+
+  useAnimationFrame((time) => {
+    if (!isActive) return;
+    const length = pathRef.current?.getTotalLength();
+    if (length) {
+      const pxPerMillisecond = length / duration;
+      progress.set(((time * pxPerMillisecond) + offset) % length);
+    }
+  });
+
+  const x = useTransform(
+    progress,
+    (val) => pathRef.current?.getPointAtLength(val).x
+  );
+  const y = useTransform(
+    progress,
+    (val) => pathRef.current?.getPointAtLength(val).y
+  );
+
+  const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
+
+  return (
+    <div className="relative">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isActive ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="absolute inset-0"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          className="absolute h-full w-full"
+          width="100%"
+          height="100%"
+        >
+          <circle
+            cx="50%"
+            cy="50%"
+            r="48%"
+            fill="none"
+            strokeWidth="2"
+            stroke="transparent"
+            ref={pathRef}
+          />
+        </svg>
+        <motion.div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            display: "inline-block",
+            transform,
+          }}
+        >
+          <div 
+            className="h-3 w-3 rounded-full opacity-[0.9]" 
+            style={{
+              background: 'radial-gradient(circle, #00D4FF 30%, rgba(0, 212, 255, 0.6) 50%, rgba(0, 212, 255, 0.2) 75%, transparent 100%)',
+              boxShadow: '0 0 15px #00D4FF, 0 0 30px #00D4FF, 0 0 45px rgba(0, 212, 255, 0.5)',
+              filter: 'blur(0.5px)'
+            }}
+          />
+        </motion.div>
+      </motion.div>
+      {children}
+    </div>
+  );
 };
 
 export const GoogleGeminiEffect = ({
@@ -31,8 +115,8 @@ export const GoogleGeminiEffect = ({
   
   // Detectar cuando la tarjeta está en el centro del viewport
   const isInView = useInView(cardRef, { 
-    once: false,  // se activa cada vez que entra en vista
-    amount: 0.99   // cuando el 50% del elemento es visible
+    once: false,
+    amount: 0.99
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -146,30 +230,31 @@ export const GoogleGeminiEffect = ({
             {/* Espacio para las líneas SVG - aquí es transparente */}
             <div className="h-2 md:h-0 mb-2"></div>
 
-            {/* Logo en círculo blanco con borde difuminado */}
+            {/* Logo en círculo blanco con 2 bordes animados */}
             <div className="flex justify-center mb-8">
-              <motion.div 
-                ref={logoRef}
-                animate={{
-                  // Animación más visible y explosiva del círculo
-                  rotate: isInView ? [0, -8, 8, -5, 5, -3, 3, 0] : 0,
-                  scale: isInView ? [1, 0.95, 1.1, 0.98, 1.05, 1] : 1,
-                  x: isInView ? [0, -3, 3, -2, 2, 0] : 0,
-                  y: isInView ? [0, -3, 3, -2, 2, 0] : 0,
-                }}
-                transition={{
-                  duration: 0.8,
-                  ease: "easeInOut",
-                }}
-                className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl" 
-                style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3)' }}
-              >
-                <img 
-                  src="/images/client-connect-australia-logo.png" 
-                  alt="Client Connect Australia" 
-                  className="w-14 h-14 object-contain"
-                />
-              </motion.div>
+              <MovingBorder duration={2000} isActive={isInView} offset={0}>
+                <MovingBorder duration={2000} isActive={isInView} offset={115}>
+                  <motion.div 
+                    ref={logoRef}
+                    animate={{
+                      // Animación explosiva del círculo - escala dramática y pulse
+                      scale: isInView ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
+                    }}
+                    transition={{
+                      duration: 1,
+                      ease: "easeInOut",
+                    }}
+                    className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl relative" 
+                    style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3)' }}
+                  >
+                    <img 
+                      src="/images/client-connect-australia-logo.png" 
+                      alt="Client Connect Australia" 
+                      className="w-14 h-14 object-contain"
+                    />
+                  </motion.div>
+                </MovingBorder>
+              </MovingBorder>
             </div>
 
             <div className="space-y-5 mt-8">
