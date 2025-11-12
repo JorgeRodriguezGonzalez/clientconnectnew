@@ -133,7 +133,9 @@ const MovingBorderCard = ({
       transition={{ duration: 0.3 }}
       className="absolute inset-0 pointer-events-none"
       style={{
-        clipPath: 'polygon(0% 0%, 100% 0%, 100% 15%, 0% 15%, 0% 85%, 100% 85%, 100% 100%, 0% 100%)'
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 15%, 0% 15%, 0% 85%, 100% 85%, 100% 100%, 0% 100%)',
+        willChange: 'transform',
+        transform: 'translateZ(0)'
       }}
     >
       <svg
@@ -159,6 +161,7 @@ const MovingBorderCard = ({
           left: 0,
           display: "inline-block",
           transform,
+          willChange: 'transform'
         }}
       >
         <div 
@@ -235,7 +238,13 @@ export const GoogleGeminiEffect = ({
     <motion.div className={cn("sticky top-0", className)}>
       <div className="w-full h-[890px] -top-20 md:top-0 flex items-center justify-center absolute">
         {/* Wrapper con overflow-hidden para el efecto de borde */}
-        <div className="relative w-[90%] max-w-[750px] rounded-2xl overflow-hidden">
+        <div 
+          className="relative w-[90%] max-w-[750px] rounded-2xl overflow-hidden"
+          style={{
+            willChange: 'transform',
+            transform: 'translateZ(0)'
+          }}
+        >
           {/* MovingBorder para la tarjeta */}
           <MovingBorderCard duration={3000} isActive={isInView} rx="1rem" />
           
