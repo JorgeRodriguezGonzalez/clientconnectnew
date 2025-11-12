@@ -154,7 +154,7 @@ export function NewHero() {
               duration: 0.8,
               ease: "easeOut",
             }}
-            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[27px] text-center text-white/80 max-w-[683px] relative z-50 mb-6"
+            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[27px] text-center text-white/80 max-w-[683px] relative z-50 mt-6 mb-6"
             style={{
               fontFamily: '"Inter Display", sans-serif',
               letterSpacing: '0.2px'
@@ -164,15 +164,16 @@ export function NewHero() {
           </motion.p>
 
           {/* CTAs */}
+          
           <motion.div 
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              delay: 0.9,
-              duration: 0.8,
-              ease: "easeOut",
+                delay: 1.1,
+                duration: 0.8,
+                ease: "easeOut",
             }}
-            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50">
+            className="flex items-center justify-center gap-2 flex-wrap relative z-50 mt-4" >
             {/* CTA Secundario */}
             <a 
               href="#contact" 
