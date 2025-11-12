@@ -145,7 +145,7 @@ export const GoogleGeminiEffect = ({
             rotate: isInView ? [0, -1, 1, -0.5, 0.5, 0] : 0,
             scale: isInView ? [1, 1.005, 0.998, 1.002, 1] : 1,
             // Animación del borde
-            borderWidth: isInView ? "1.25px" : "1px",
+            borderWidth: isInView ? "1.15px" : "1px",
             borderColor: isInView ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.2)"
           }}
           transition={{ 
