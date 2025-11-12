@@ -32,7 +32,7 @@ export const GoogleGeminiEffect = ({
   // Detectar cuando la tarjeta está en el centro del viewport
   const isInView = useInView(cardRef, { 
     once: false,  // se activa cada vez que entra en vista
-    amount: 0.95   // cuando el 50% del elemento es visible
+    amount: 0.99   // cuando el 50% del elemento es visible
   });
 
   const handleSubmit = (e: React.FormEvent) => {
