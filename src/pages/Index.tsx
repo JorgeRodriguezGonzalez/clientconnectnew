@@ -16,12 +16,12 @@ const Index = () => {
       <Header />
       <main className="flex-1">
         <GoogleGeminiEffectDemo />
+        <BrandsShowcaseSection />
         <AnimatedGallerySection />
         <ServicesSection />
         <WhyUsSection />
         <HowWeWork />
         <WhySubscribeBento />
-        <BrandsShowcaseSection />
         <TestimonialsSection />
         <CTASection />
       </main>
