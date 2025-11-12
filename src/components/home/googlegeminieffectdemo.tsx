@@ -117,7 +117,14 @@ export function GoogleGeminiEffectDemo() {
           </div>
 
           {/* Título principal */}
-          <h1 
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.5,
+              duration: 0.8,
+              ease: "easeOut",
+            }}
             className="text-3xl md:text-[52px] font-semibold leading-tight md:leading-[60px] text-center text-white relative z-50"
             style={{
               fontFamily: '"Inter Display", sans-serif',
@@ -125,10 +132,17 @@ export function GoogleGeminiEffectDemo() {
             }}
           >
             Connecting Sydney Businesses with Their Ideal Clients
-          </h1>
+          </motion.h1>
           
           {/* Subtítulo */}
-          <p 
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.7,
+              duration: 0.8,
+              ease: "easeOut",
+            }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[27px] text-center text-white/80 max-w-[683px] relative z-50"
             style={{
               fontFamily: '"Inter Display", sans-serif',
@@ -136,10 +150,18 @@ export function GoogleGeminiEffectDemo() {
             }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
-          </p>
+          </motion.p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.9,
+              duration: 0.8,
+              ease: "easeOut",
+            }}
+            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50">
             {/* CTA Secundario */}
             <a 
               href="#contact" 
@@ -177,10 +199,18 @@ export function GoogleGeminiEffectDemo() {
                 Book Free Consultation →
               </p>
             </a>
-          </div>
+          </motion.div>
 
           {/* Badges */}
-          <div className="flex items-center justify-center gap-2 flex-wrap relative z-50">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 1.1,
+              duration: 0.8,
+              ease: "easeOut",
+            }}
+            className="flex items-center justify-center gap-2 flex-wrap relative z-50">
             <div className="h-[23px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[2px] px-3 flex items-center justify-center">
               <p className="text-[11px] font-medium leading-[16.6px] text-center text-white/80">
                 Google Partner
@@ -192,7 +222,7 @@ export function GoogleGeminiEffectDemo() {
                 5★ Rated Agency
               </p>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
