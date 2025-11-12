@@ -77,7 +77,7 @@ const MovingBorder = ({
           }}
         >
           <div 
-            className="h-4 w-4 rounded-full opacity-[0.9]" 
+            className="h-2 w-2 rounded-full opacity-[0.9]" 
             style={{
               background: '#00D4FF',
               boxShadow: '0 0 10px #00D4FF, 0 0 20px #00D4FF'
