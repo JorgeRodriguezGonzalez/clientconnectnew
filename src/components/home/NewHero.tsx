@@ -9,7 +9,7 @@ export function NewHero() {
   const [titleNumber, setTitleNumber] = useState(0);
   
   const words = useMemo(
-    () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales"],
+    () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", ],
     []
   );
 
@@ -160,7 +160,7 @@ export function NewHero() {
             }}
           >
             We Bring{" "}
-            <span className="relative inline-block" style={{ minWidth: '160px' }}>
+            <span className="relative inline-block" style={{ minWidth: '150px' }}>
               <span className="invisible font-semibold">Light</span>
               {words.map((word, index) => (
                 <motion.span
