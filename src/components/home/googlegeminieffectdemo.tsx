@@ -118,14 +118,14 @@ export function GoogleGeminiEffectDemo() {
 
           {/* Título principal */}
           <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: 0.5,
               duration: 0.8,
               ease: "easeOut",
             }}
-            className="text-3xl md:text-[52px] font-semibold leading-tight md:leading-[60px] text-center text-white relative z-50"
+            className="text-3xl md:text-[52px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
             style={{
               fontFamily: '"Inter Display", sans-serif',
               letterSpacing: '-1.5px',
@@ -136,7 +136,7 @@ export function GoogleGeminiEffectDemo() {
           
           {/* Subtítulo */}
           <motion.p 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: 0.7,
@@ -154,7 +154,7 @@ export function GoogleGeminiEffectDemo() {
 
           {/* CTAs */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: 0.9,
@@ -184,7 +184,7 @@ export function GoogleGeminiEffectDemo() {
             {/* CTA Principal */}
             <a 
               href="#contact" 
-              className="flex items-center justify-center gap-1.5 h-[42px] bg-[#F6941D] hover:bg-[#e58315] rounded-[50px] px-5 py-3 transition-all cursor-pointer shadow-lg w-full sm:w-auto" 
+              className="flex items-center justify-center gap-1.5 h-[42px] bg-[#06B6D4] hover:bg-[#0891B2] rounded-[50px] px-5 py-3 transition-all cursor-pointer shadow-lg w-full sm:w-auto" 
             >
               <div className="w-[18px] h-[14px] relative overflow-hidden">
                 <Calendar className="w-[17px] h-[14px] text-white" />
@@ -203,7 +203,7 @@ export function GoogleGeminiEffectDemo() {
 
           {/* Badges */}
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: 1.1,
@@ -211,13 +211,13 @@ export function GoogleGeminiEffectDemo() {
               ease: "easeOut",
             }}
             className="flex items-center justify-center gap-2 flex-wrap relative z-50">
-            <div className="h-[23px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[2px] px-3 flex items-center justify-center">
+            <div className="h-[23px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 flex items-center justify-center">
               <p className="text-[11px] font-medium leading-[16.6px] text-center text-white/80">
                 Google Partner
               </p>
             </div>
 
-            <div className="h-[23px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[2px] px-3 flex items-center justify-center">
+            <div className="h-[23px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 flex items-center justify-center">
               <p className="text-[11px] font-medium leading-[16.6px] text-center text-white/80">
                 5★ Rated Agency
               </p>
