@@ -1,12 +1,11 @@
 import { useScroll, useTransform } from "framer-motion";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 import { Send, Calendar } from 'lucide-react';
 import { motion } from "framer-motion";
 
 export function GoogleGeminiEffectDemo() {
   const ref = React.useRef(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -43,231 +42,6 @@ export function GoogleGeminiEffectDemo() {
     [0, 8, 16]
   );
 
-  // WebGL Shader Setup
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const gl = canvas.getContext('webgl');
-    if (!gl) {
-      console.warn('WebGL not supported.');
-      return;
-    }
-
-    // Vertex shader
-    const vsSource = `
-      attribute vec4 aVertexPosition;
-      void main() {
-        gl_Position = aVertexPosition;
-      }
-    `;
-
-    // Fragment shader
-    const fsSource = `
-      precision highp float;
-      uniform vec2 iResolution;
-      uniform float iTime;
-
-      const float overallSpeed = 0.2;
-      const float gridSmoothWidth = 0.015;
-      const float axisWidth = 0.05;
-      const float majorLineWidth = 0.025;
-      const float minorLineWidth = 0.0125;
-      const float majorLineFrequency = 5.0;
-      const float minorLineFrequency = 1.0;
-      const vec4 gridColor = vec4(0.5);
-      const float scale = 5.0;
-      const vec4 lineColor = vec4(0.2, 0.4, 0.9, 1.0);
-      const float minLineWidth = 0.006;
-      const float maxLineWidth = 0.12;
-      const float lineSpeed = 1.0 * overallSpeed;
-      const float lineAmplitude = 1.0;
-      const float lineFrequency = 0.2;
-      const float warpSpeed = 0.2 * overallSpeed;
-      const float warpFrequency = 0.5;
-      const float warpAmplitude = 1.0;
-      const float offsetFrequency = 0.5;
-      const float offsetSpeed = 1.33 * overallSpeed;
-      const float minOffsetSpread = 0.6;
-      const float maxOffsetSpread = 2.0;
-      const int linesPerGroup = 16;
-
-      #define drawCircle(pos, radius, coord) smoothstep(radius + gridSmoothWidth, radius, length(coord - (pos)))
-      #define drawSmoothLine(pos, halfWidth, t) smoothstep(halfWidth, 0.0, abs(pos - (t)))
-      #define drawCrispLine(pos, halfWidth, t) smoothstep(halfWidth + gridSmoothWidth, halfWidth, abs(pos - (t)))
-      #define drawPeriodicLine(freq, width, t) drawCrispLine(freq / 2.0, width, abs(mod(t, freq) - (freq) / 2.0))
-
-      float drawGridLines(float axis) {
-        return drawCrispLine(0.0, axisWidth, axis)
-              + drawPeriodicLine(majorLineFrequency, majorLineWidth, axis)
-              + drawPeriodicLine(minorLineFrequency, minorLineWidth, axis);
-      }
-
-      float drawGrid(vec2 space) {
-        return min(1.0, drawGridLines(space.x) + drawGridLines(space.y));
-      }
-
-      float random(float t) {
-        return (cos(t) + cos(t * 1.3 + 1.3) + cos(t * 1.4 + 1.4)) / 3.0;
-      }
-
-      float getPlasmaY(float x, float horizontalFade, float offset) {
-        return random(x * lineFrequency + iTime * lineSpeed) * horizontalFade * lineAmplitude + offset;
-      }
-
-      void main() {
-        vec2 fragCoord = gl_FragCoord.xy;
-        vec4 fragColor;
-        vec2 uv = fragCoord.xy / iResolution.xy;
-        vec2 space = (fragCoord - iResolution.xy / 2.0) / iResolution.x * 2.0 * scale;
-
-        float horizontalFade = 1.0 - (cos(uv.x * 6.28) * 0.5 + 0.5);
-        float verticalFade = 1.0 - (cos(uv.y * 6.28) * 0.5 + 0.5);
-
-        space.y += random(space.x * warpFrequency + iTime * warpSpeed) * warpAmplitude * (0.5 + horizontalFade);
-        space.x += random(space.y * warpFrequency + iTime * warpSpeed + 2.0) * warpAmplitude * horizontalFade;
-
-        vec4 lines = vec4(0.0);
-        vec4 bgColor1 = vec4(0.05, 0.1, 0.25, 1.0);
-        vec4 bgColor2 = vec4(0.1, 0.2, 0.4, 1.0);
-
-        for(int l = 0; l < linesPerGroup; l++) {
-          float normalizedLineIndex = float(l) / float(linesPerGroup);
-          float offsetTime = iTime * offsetSpeed;
-          float offsetPosition = float(l) + space.x * offsetFrequency;
-          float rand = random(offsetPosition + offsetTime) * 0.5 + 0.5;
-          float halfWidth = mix(minLineWidth, maxLineWidth, rand * horizontalFade) / 2.0;
-          float offset = random(offsetPosition + offsetTime * (1.0 + normalizedLineIndex)) * mix(minOffsetSpread, maxOffsetSpread, horizontalFade);
-          float linePosition = getPlasmaY(space.x, horizontalFade, offset);
-          float line = drawSmoothLine(linePosition, halfWidth, space.y) / 2.0 + drawCrispLine(linePosition, halfWidth * 0.15, space.y);
-
-          float circleX = mod(float(l) + iTime * lineSpeed, 25.0) - 12.0;
-          vec2 circlePosition = vec2(circleX, getPlasmaY(circleX, horizontalFade, offset));
-          float circle = drawCircle(circlePosition, 0.01, space) * 4.0;
-
-          line = line + circle;
-          lines += line * lineColor * rand;
-        }
-
-        fragColor = mix(bgColor1, bgColor2, uv.x);
-        fragColor *= verticalFade;
-        fragColor.a = 1.0;
-        fragColor += lines;
-
-        gl_FragColor = fragColor;
-      }
-    `;
-
-    const loadShader = (gl: WebGLRenderingContext, type: number, source: string) => {
-      const shader = gl.createShader(type);
-      if (!shader) return null;
-      
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error('Shader compile error: ', gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
-        return null;
-      }
-
-      return shader;
-    };
-
-    const initShaderProgram = (gl: WebGLRenderingContext, vsSource: string, fsSource: string) => {
-      const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
-      const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
-
-      if (!vertexShader || !fragmentShader) return null;
-
-      const shaderProgram = gl.createProgram();
-      if (!shaderProgram) return null;
-
-      gl.attachShader(shaderProgram, vertexShader);
-      gl.attachShader(shaderProgram, fragmentShader);
-      gl.linkProgram(shaderProgram);
-
-      if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-        console.error('Shader program link error: ', gl.getProgramInfoLog(shaderProgram));
-        return null;
-      }
-
-      return shaderProgram;
-    };
-
-    const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
-    if (!shaderProgram) return;
-
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    const positions = [
-      -1.0, -1.0,
-       1.0, -1.0,
-      -1.0,  1.0,
-       1.0,  1.0,
-    ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-    const programInfo = {
-      program: shaderProgram,
-      attribLocations: {
-        vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
-      },
-      uniformLocations: {
-        resolution: gl.getUniformLocation(shaderProgram, 'iResolution'),
-        time: gl.getUniformLocation(shaderProgram, 'iTime'),
-      },
-    };
-
-    const resizeCanvas = () => {
-      const parent = canvas.parentElement;
-      if (parent) {
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
-        gl.viewport(0, 0, canvas.width, canvas.height);
-      }
-    };
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    let startTime = Date.now();
-    let animationId: number;
-
-    const render = () => {
-      const currentTime = (Date.now() - startTime) / 1000;
-
-      gl.clearColor(0.0, 0.0, 0.0, 1.0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-
-      gl.useProgram(programInfo.program);
-
-      gl.uniform2f(programInfo.uniformLocations.resolution, canvas.width, canvas.height);
-      gl.uniform1f(programInfo.uniformLocations.time, currentTime);
-
-      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-      gl.vertexAttribPointer(
-        programInfo.attribLocations.vertexPosition,
-        2,
-        gl.FLOAT,
-        false,
-        0,
-        0
-      );
-      gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
-
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      animationId = requestAnimationFrame(render);
-    };
-
-    animationId = requestAnimationFrame(render);
-
-    return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      cancelAnimationFrame(animationId);
-    };
-  }, []);
-
   return (
     <motion.div
       ref={ref}
@@ -278,23 +52,69 @@ export function GoogleGeminiEffectDemo() {
     >
       {/* Contenido con texto y CTAs */}
       <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40">
-        {/* Canvas con Shader de líneas animadas - dentro del contenedor sticky */}
-        <canvas 
-          ref={canvasRef} 
-          className="absolute top-0 left-0 w-full h-full opacity-40 pointer-events-none"
-          style={{ mixBlendMode: 'screen' }}
-        />
-        <div className="z-10 flex flex-col items-center justify-center gap-6 max-w-[976px] px-5">
-          {/* Badge superior */}
-          <div className="flex items-center justify-center gap-1.5 h-[21px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[2px] px-3 py-0.5">
-            <div className="flex-shrink-0 w-4 h-4 rounded-[2px] overflow-hidden p-0.5">
-              <div className="w-full h-full bg-green-500 rounded-full" />
-            </div>
-            <p className="text-[11px] font-medium leading-[16.6px] text-center whitespace-nowrap text-white/80">
-              Sydney's Premier Marketing Agency • 100+ Happy Clients
-            </p>
-          </div>
+        
+        {/* Lamp Effect - posicionado en la parte superior */}
+        <div className="absolute top-0 left-0 right-0 flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0">
+          <motion.div
+            initial={{ opacity: 0.5, width: "15rem" }}
+            whileInView={{ opacity: 1, width: "30rem" }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            style={{
+              backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
+            }}
+            className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-cyan-500 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
+          >
+            <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: 'rgb(10, 15, 35)' }} />
+            <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: 'rgb(10, 15, 35)' }} />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0.5, width: "15rem" }}
+            whileInView={{ opacity: 1, width: "30rem" }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            style={{
+              backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
+            }}
+            className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-cyan-500 text-white [--conic-position:from_290deg_at_center_top]"
+          >
+            <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: 'rgb(10, 15, 35)' }} />
+            <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: 'rgb(10, 15, 35)' }} />
+          </motion.div>
+          <div className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl" style={{ backgroundColor: 'rgb(10, 15, 35)' }}></div>
+          <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent opacity-10 backdrop-blur-md"></div>
+          <div className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-cyan-500 opacity-50 blur-3xl"></div>
+          <motion.div
+            initial={{ width: "8rem" }}
+            whileInView={{ width: "16rem" }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-cyan-400 blur-2xl"
+          ></motion.div>
+          <motion.div
+            initial={{ width: "15rem" }}
+            whileInView={{ width: "30rem" }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-cyan-400"
+          ></motion.div>
 
+          <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: 'rgb(10, 15, 35)' }}></div>
+        </div>
+
+        <div className="z-10 flex flex-col items-center justify-center gap-6 max-w-[976px] px-5">
           {/* Título principal */}
           <h1 
             className="text-4xl md:text-[64px] font-bold leading-tight md:leading-[70.4px] text-center text-white"
