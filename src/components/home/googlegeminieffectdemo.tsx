@@ -276,12 +276,14 @@ export function GoogleGeminiEffectDemo() {
       }}
       className="h-[300vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
-      {/* Canvas con Shader de líneas animadas */}
-      <canvas 
-        ref={canvasRef} 
-        className="absolute top-0 left-0 w-full h-full opacity-30"
-        style={{ mixBlendMode: 'screen' }}
-      />
+      {/* Canvas con Shader de líneas animadas - sticky para que esté visible desde el inicio */}
+      <div className="sticky top-0 h-screen w-full pointer-events-none">
+        <canvas 
+          ref={canvasRef} 
+          className="absolute top-0 left-0 w-full h-full opacity-40"
+          style={{ mixBlendMode: 'screen' }}
+        />
+      </div>
 
       {/* Contenido con texto y CTAs */}
       <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40">
