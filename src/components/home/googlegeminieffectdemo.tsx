@@ -55,8 +55,8 @@ export function GoogleGeminiEffectDemo() {
         
         <div className="z-10 flex flex-col items-center justify-center gap-6 max-w-[976px] px-5 relative">
           
-          {/* Lamp Effect - posicionado justo encima del título */}
-          <div className="absolute -top-[200px] md:-top-[50px] left-1/2 -translate-x-1/2 w-full flex items-center justify-center isolate z-0">
+          {/* Lamp Effect - en el lugar del badge eliminado */}
+          <div className="w-full h-[100px] relative flex items-center justify-center">
             <motion.div
               initial={{ opacity: 0.5, width: "15rem" }}
               whileInView={{ opacity: 1, width: "30rem" }}
