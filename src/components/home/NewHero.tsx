@@ -175,7 +175,7 @@ export function NewHero() {
                           opacity: 1,
                         }
                       : {
-                          y: titleNumber > index ? 50 : -100,
+                          y: titleNumber > index ? 20 : -50,
                           opacity: 0,
                         }
                   }
