@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useScroll, useTransform } from "framer-motion";
 import { Send, Calendar } from 'lucide-react';
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function NewHero() {
   const ref = React.useRef(null);
@@ -9,7 +9,7 @@ export function NewHero() {
   const [titleNumber, setTitleNumber] = useState(0);
   
   const words = useMemo(
-    () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", ],
+    () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales",],
     []
   );
 
@@ -160,23 +160,28 @@ export function NewHero() {
             }}
           >
             We Bring{" "}
-            <span className="relative inline-block" style={{ minWidth: '150px' }}>
-              <span className="invisible font-semibold">Light</span>
+            <span className="relative inline-block overflow-hidden">
               {words.map((word, index) => (
                 <motion.span
                   key={index}
-                  className="absolute inset-0 font-light flex items-center justify-center"
+                  className="font-light inline-block"
                   initial={{ opacity: 0, y: -100 }}
-                  transition={{ type: "spring", stiffness: 50 }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 50,
+                    opacity: { duration: 0.2 }
+                  }}
                   animate={
                     titleNumber === index
                       ? {
                           y: 0,
                           opacity: 1,
+                          position: "relative"
                         }
                       : {
                           y: titleNumber > index ? 20 : -50,
                           opacity: 0,
+                          position: "absolute"
                         }
                   }
                 >
