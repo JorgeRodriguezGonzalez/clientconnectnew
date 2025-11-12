@@ -9,7 +9,7 @@ export function NewHero() {
   const [titleNumber, setTitleNumber] = useState(0);
   
   const words = useMemo(
-    () => ["Light", "Leads", "Clients", "Sales"],
+    () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales"],
     []
   );
 
