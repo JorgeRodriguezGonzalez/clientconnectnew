@@ -233,7 +233,7 @@ export const GoogleGeminiEffect = ({
             {/* Logo en círculo blanco con 2 bordes animados */}
             <div className="flex justify-center mb-8">
               <MovingBorder duration={2000} isActive={isInView} offset={0}>
-                <MovingBorder duration={2000} isActive={isInView} offset={40}>
+                <MovingBorder duration={2000} isActive={isInView} offset={80}>
                   <motion.div 
                     ref={logoRef}
                     animate={{
