@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useScroll, useTransform } from "framer-motion";
 import { Send, Calendar } from 'lucide-react';
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function NewHero() {
   const ref = React.useRef(null);
@@ -48,7 +48,7 @@ export function NewHero() {
       } else {
         setTitleNumber(titleNumber + 1);
       }
-    }, 2000);
+    }, 3000);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, words]);
 
@@ -160,7 +160,17 @@ export function NewHero() {
             }}
           >
             We Bring{" "}
-            <span className="relative inline-flex items-center overflow-hidden" style={{ minHeight: '1em' }}>
+            <motion.span 
+              className="relative inline-flex items-center overflow-hidden"
+              layout
+              transition={{ 
+                layout: { 
+                  duration: 0.5,
+                  ease: "easeInOut"
+                }
+              }}
+              style={{ minHeight: '1em' }}
+            >
               {words.map((word, index) => (
                 <motion.span
                   key={index}
@@ -190,7 +200,7 @@ export function NewHero() {
                   {word}
                 </motion.span>
               ))}
-            </span>{" "}
+            </motion.span>{" "}
             to Your Business Growth
           </motion.h1>
           
