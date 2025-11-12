@@ -119,12 +119,14 @@ export const GoogleGeminiEffect = ({
   // Monitorear el progreso de la línea central (pathLengths[2])
   React.useEffect(() => {
     const unsubscribe = pathLengths[2].on("change", (latest) => {
-      if (latest > 0.5 && !shouldAnimate) {  // Cuando la línea central esté al 80%
+      if (latest > 0.5) {
         setShouldAnimate(true);
+      } else {
+        setShouldAnimate(false);
       }
     });
     return unsubscribe;
-  }, [pathLengths, shouldAnimate]);
+  }, [pathLengths]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
