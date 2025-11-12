@@ -160,12 +160,12 @@ export function NewHero() {
             }}
           >
             We Bring{" "}
-            <span className="relative inline-flex justify-center overflow-hidden">
+            <span className="relative inline-flex justify-center overflow-hidden md:pb-4 md:pt-1" style={{ minWidth: '160px' }}>
               {words.map((word, index) => (
                 <motion.span
                   key={index}
                   className="absolute font-semibold"
-                  initial={{ opacity: 0, y: "-100" }}
+                  initial={{ opacity: 0, y: -100 }}
                   transition={{ type: "spring", stiffness: 50 }}
                   animate={
                     titleNumber === index
