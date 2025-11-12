@@ -13,6 +13,14 @@ export function NewHero() {
     []
   );
 
+  // Anchos aproximados para cada palabra (en px)
+  const wordWidths: { [key: string]: number } = {
+    "Light": 95,
+    "Leads": 105,
+    "Clients": 125,
+    "Sales": 100
+  };
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
@@ -51,6 +59,9 @@ export function NewHero() {
     }, 3000);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, words]);
+
+  const currentWord = words[titleNumber];
+  const currentWidth = wordWidths[currentWord] || 100;
 
   return (
     <motion.div
@@ -162,12 +173,10 @@ export function NewHero() {
             We Bring{" "}
             <motion.span 
               className="relative inline-flex items-center overflow-hidden"
-              layout
+              animate={{ width: currentWidth }}
               transition={{ 
-                layout: { 
-                  duration: 0.5,
-                  ease: "easeInOut"
-                }
+                duration: 0.5,
+                ease: "easeInOut"
               }}
               style={{ minHeight: '1em' }}
             >
