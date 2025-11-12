@@ -76,7 +76,13 @@ const MovingBorder = ({
             transform,
           }}
         >
-          <div className="h-8 w-8 opacity-[0.8] bg-[radial-gradient(#00D4FF_40%,transparent_70%)]" />
+          <div 
+            className="h-16 w-1.5 opacity-[0.9]" 
+            style={{
+              background: 'linear-gradient(to bottom, transparent 0%, #00D4FF 50%, transparent 100%)',
+              boxShadow: '0 0 10px #00D4FF, 0 0 20px #00D4FF'
+            }}
+          />
         </motion.div>
       </motion.div>
       {children}
