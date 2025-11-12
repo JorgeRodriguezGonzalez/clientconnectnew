@@ -113,11 +113,18 @@ export const GoogleGeminiEffect = ({
   const cardRef = React.useRef(null);
   const logoRef = React.useRef(null);
   
-  // Detectar cuando la tarjeta está en el centro del viewport
-  const isInView = useInView(cardRef, { 
-    once: false,
-    amount: 0.99
-  });
+  // Estado para controlar las animaciones basado en pathLength
+  const [shouldAnimate, setShouldAnimate] = React.useState(false);
+  
+  // Monitorear el progreso de la línea central (pathLengths[2])
+  React.useEffect(() => {
+    const unsubscribe = pathLengths[2].on("change", (latest) => {
+      if (latest > 0.8 && !shouldAnimate) {  // Cuando la línea central esté al 80%
+        setShouldAnimate(true);
+      }
+    });
+    return unsubscribe;
+  }, [pathLengths, shouldAnimate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -142,11 +149,11 @@ export const GoogleGeminiEffect = ({
             opacity: 1, 
             y: 0,
             // Animación suave de shake cuando está en vista
-            rotate: isInView ? [0, -1, 1, -0.5, 0.5, 0] : 0,
-            scale: isInView ? [1, 1.005, 0.998, 1.002, 1] : 1,
+            rotate: shouldAnimate ? [0, -1, 1, -0.5, 0.5, 0] : 0,
+            scale: shouldAnimate ? [1, 1.005, 0.998, 1.002, 1] : 1,
             // Animación del borde
-            borderWidth: isInView ? "1.15px" : "1px",
-            borderColor: isInView ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.2)"
+            borderWidth: shouldAnimate ? "1.15px" : "1px",
+            borderColor: shouldAnimate ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.2)"
           }}
           transition={{ 
             opacity: { duration: 0.6, delay: 0.3 },
@@ -237,13 +244,13 @@ export const GoogleGeminiEffect = ({
 
             {/* Logo en círculo blanco con 2 bordes animados */}
             <div className="flex justify-center mb-8">
-              <MovingBorder duration={2000} isActive={isInView} offset={0}>
-                <MovingBorder duration={2000} isActive={isInView} offset={115}>
+              <MovingBorder duration={2000} isActive={shouldAnimate} offset={0}>
+                <MovingBorder duration={2000} isActive={shouldAnimate} offset={115}>
                   <motion.div 
                     ref={logoRef}
                     animate={{
                       // Animación explosiva del círculo - escala dramática y pulse
-                      scale: isInView ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
+                      scale: shouldAnimate ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
                     }}
                     transition={{
                       duration: 1,
