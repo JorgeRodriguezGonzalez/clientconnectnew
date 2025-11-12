@@ -77,9 +77,9 @@ const MovingBorder = ({
           }}
         >
           <div 
-            className="h-16 w-1.5 opacity-[0.9]" 
+            className="h-4 w-4 rounded-full opacity-[0.9]" 
             style={{
-              background: 'linear-gradient(to bottom, transparent 0%, #00D4FF 50%, transparent 100%)',
+              background: 'radial-gradient(circle, #00D4FF 40%, transparent 70%)',
               boxShadow: '0 0 10px #00D4FF, 0 0 20px #00D4FF'
             }}
           />
