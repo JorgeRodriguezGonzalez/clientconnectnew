@@ -144,12 +144,17 @@ export const GoogleGeminiEffect = ({
             // Animación suave de shake cuando está en vista
             rotate: isInView ? [0, -1, 1, -0.5, 0.5, 0] : 0,
             scale: isInView ? [1, 1.005, 0.998, 1.002, 1] : 1,
+            // Animación del borde
+            borderWidth: isInView ? "2px" : "1px",
+            borderColor: isInView ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.2)"
           }}
           transition={{ 
             opacity: { duration: 0.6, delay: 0.3 },
             y: { duration: 0.6, delay: 0.3 },
             rotate: { duration: 0.6, ease: "easeInOut" },
             scale: { duration: 0.6, ease: "easeInOut" },
+            borderWidth: { duration: 0.6, ease: "easeInOut" },
+            borderColor: { duration: 0.6, ease: "easeInOut" }
           }}
           className="w-[90%] max-w-[750px] border border-white/20 rounded-2xl shadow-2xl p-6 md:p-10 z-30 relative overflow-hidden"
         >
