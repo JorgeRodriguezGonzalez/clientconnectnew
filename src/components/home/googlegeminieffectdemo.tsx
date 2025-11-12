@@ -51,10 +51,10 @@ export function GoogleGeminiEffectDemo() {
       className="h-[300vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       {/* Contenido con texto y CTAs */}
-      <div className="sticky top-0 h-screen flex items-start justify-center pt-32 md:pt-40">
+      <div className="sticky top-0 h-screen flex items-center justify-center">
         
-        {/* Lamp Effect - posicionado en la parte superior */}
-        <div className="absolute top-0 left-0 right-0 flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0">
+        {/* Lamp Effect - posicionado justo encima del título */}
+        <div className="absolute top-1/2 -translate-y-[280px] md:-translate-y-[320px] left-0 right-0 flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0">
           <motion.div
             initial={{ opacity: 0.5, width: "15rem" }}
             whileInView={{ opacity: 1, width: "30rem" }}
@@ -117,10 +117,10 @@ export function GoogleGeminiEffectDemo() {
         <div className="z-10 flex flex-col items-center justify-center gap-6 max-w-[976px] px-5">
           {/* Título principal */}
           <h1 
-            className="text-4xl md:text-[64px] font-bold leading-tight md:leading-[70.4px] text-center text-white"
+            className="text-3xl md:text-[52px] font-semibold leading-tight md:leading-[60px] text-center text-white"
             style={{
               fontFamily: '"Inter Display", sans-serif',
-              letterSpacing: '-1.8px',
+              letterSpacing: '-1.5px',
             }}
           >
             Connecting Sydney Businesses with Their Ideal Clients
