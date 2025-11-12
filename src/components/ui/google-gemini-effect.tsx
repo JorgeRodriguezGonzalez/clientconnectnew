@@ -236,30 +236,25 @@ export const GoogleGeminiEffect = ({
   return (
     <motion.div className={cn("sticky top-0", className)}>
       <div className="w-full h-[890px] -top-20 md:top-0 flex items-center justify-center absolute">
-        {/* Wrapper con overflow-hidden para el efecto de borde */}
-        <div className="relative w-[90%] max-w-[750px] rounded-2xl overflow-hidden">
-          {/* MovingBorder para la tarjeta */}
-          <MovingBorderCard duration={3000} isActive={isInView} rx="1rem" />
-          
-          {/* Tarjeta unificada con glassmorphism gradient */}
-          <motion.div
-            ref={cardRef}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ 
-              opacity: 1, 
-              y: 0,
-              // Animación suave de shake cuando está en vista
-              rotate: triggerAnimation ? [0, -1, 1, -0.5, 0.5, 0] : 0,
-              scale: triggerAnimation ? [1, 1.005, 0.998, 1.002, 1] : 1,
-            }}
-            transition={{ 
-              opacity: { duration: 0.6, delay: 0.3 },
-              y: { duration: 0.6, delay: 0.3 },
-              rotate: { duration: 0.6, ease: "easeInOut" },
-              scale: { duration: 0.6, ease: "easeInOut" },
-            }}
-            className="border border-white/20 rounded-2xl shadow-2xl p-6 md:p-10 z-30 relative overflow-hidden"
-          >
+        {/* Tarjeta unificada con glassmorphism gradient */}
+        <motion.div
+          ref={cardRef}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ 
+            opacity: 1, 
+            y: 0,
+            // Animación suave de shake cuando está en vista
+            rotate: triggerAnimation ? [0, -1, 1, -0.5, 0.5, 0] : 0,
+            scale: triggerAnimation ? [1, 1.005, 0.998, 1.002, 1] : 1,
+          }}
+          transition={{ 
+            opacity: { duration: 0.6, delay: 0.3 },
+            y: { duration: 0.6, delay: 0.3 },
+            rotate: { duration: 0.6, ease: "easeInOut" },
+            scale: { duration: 0.6, ease: "easeInOut" },
+          }}
+          className="w-[90%] max-w-[750px] border border-white/20 rounded-2xl shadow-2xl p-6 md:p-10 z-30 relative overflow-hidden"
+        >
             {/* Fondo con gradiente glassmorphism - opaco arriba y abajo, transparente en el centro */}
             <div 
               className="absolute inset-0 backdrop-blur-lg rounded-2xl"
