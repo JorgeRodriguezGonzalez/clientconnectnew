@@ -16,9 +16,9 @@ export function NewHero() {
   // Anchos aproximados para cada palabra (en px)
   const wordWidths: { [key: string]: number } = {
     "Light": 115,
-    "Leads": 145,
-    "Clients": 155,
-    "Sales": 120
+    "Leads": 140,
+    "Clients": 150,
+    "Sales": 125
   };
 
   const { scrollYProgress } = useScroll({
