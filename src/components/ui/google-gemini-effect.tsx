@@ -122,7 +122,7 @@ export const GoogleGeminiEffect = ({
             </div>
 
             {/* Espacio para las líneas SVG - aquí es transparente */}
-            <div className="h-2 md:h-1 mb-2"></div>
+            <div className="h-2 md:h-0 mb-2"></div>
 
             {/* Logo en círculo blanco con borde difuminado */}
             <div className="flex justify-center mb-8">
