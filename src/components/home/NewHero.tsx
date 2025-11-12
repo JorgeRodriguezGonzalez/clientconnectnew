@@ -5,28 +5,12 @@ import { motion } from "framer-motion";
 
 export function NewHero() {
   const ref = React.useRef(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  // Transformaciones para el gradiente: Azul espacial casi negro → Azul oscuro → Azul medio
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [
-      "rgb(10, 15, 35)",       // Azul espacial casi negro (inicio)
-      "rgb(20, 35, 90)",       // Azul oscuro (medio)
-      "rgb(35, 55, 140)"       // Azul medio oscuro (final)
-    ]
-  );
 
   return (
-    <motion.div
+    <div
       ref={ref}
       style={{ 
-        backgroundColor 
+        backgroundColor: 'rgb(10, 15, 35)' // Color fijo
       }}
       className="h-[300vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
@@ -206,6 +190,6 @@ export function NewHero() {
 
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
