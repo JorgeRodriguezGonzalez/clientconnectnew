@@ -112,7 +112,7 @@ export function NewHero() {
             ></motion.div>
             <motion.div
               initial={{ width: "15rem" }}
-              whileInView={{ width: "30rem" }}
+              whileInView={{ opacity: 1, width: "30rem" }}
               transition={{
                 delay: 0.3,
                 duration: 0.8,
@@ -164,16 +164,15 @@ export function NewHero() {
           </motion.p>
 
           {/* CTAs */}
-          
           <motion.div 
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-                delay: 1.1,
+                delay: 0.9,
                 duration: 0.8,
                 ease: "easeOut",
             }}
-            className="flex items-center justify-center gap-2 flex-wrap relative z-50 mt-4" >
+            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50">
             {/* CTA Secundario */}
             <a 
               href="#contact" 
@@ -222,7 +221,7 @@ export function NewHero() {
               duration: 0.8,
               ease: "easeOut",
             }}
-            className="flex items-center justify-center gap-2 flex-wrap relative z-50">
+            className="flex items-center justify-center gap-2 flex-wrap relative z-50 mt-5">
             <div className="h-[23px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 flex items-center justify-center">
               <p className="text-[11px] font-medium leading-[16.6px] text-center text-white/80">
                 Google Partner
