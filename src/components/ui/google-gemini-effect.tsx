@@ -195,7 +195,7 @@ export const GoogleGeminiEffect = ({
   
   // Detectar cuando la tarjeta está en el centro del viewport
   const isInView = useInView(cardRef, { 
-    once: true,  // Solo se activa una vez
+    once: false,  // Solo se activa una vez
     amount: 0.99
   });
 
