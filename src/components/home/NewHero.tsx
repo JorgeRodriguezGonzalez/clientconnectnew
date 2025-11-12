@@ -1,21 +1,17 @@
-import { useScroll, useTransform } from "framer-motion";
 import React from "react";
 import { Send, Calendar } from 'lucide-react';
 import { motion } from "framer-motion";
 
 export function NewHero() {
-  const ref = React.useRef(null);
-
   return (
     <div
-      ref={ref}
       style={{ 
-        backgroundColor: 'rgb(10, 15, 35)' // Color fijo
+        backgroundColor: 'rgb(10, 15, 35)'
       }}
-      className="h-[300vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-screen w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       {/* Contenido con texto y CTAs */}
-      <div className="sticky top-0 h-screen flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center">
         
         <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative">
           
