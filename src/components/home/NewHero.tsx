@@ -165,7 +165,7 @@ export function NewHero() {
               {words.map((word, index) => (
                 <motion.span
                   key={index}
-                  className="absolute inset-0 font-normal flex items-center justify-center"
+                  className="absolute inset-0 font-light flex items-center justify-center"
                   initial={{ opacity: 0, y: -100 }}
                   transition={{ type: "spring", stiffness: 50 }}
                   animate={
