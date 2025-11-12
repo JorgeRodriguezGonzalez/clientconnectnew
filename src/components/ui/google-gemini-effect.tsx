@@ -195,9 +195,27 @@ export const GoogleGeminiEffect = ({
   
   // Detectar cuando la tarjeta está en el centro del viewport
   const isInView = useInView(cardRef, { 
-    once: false,  // Solo se activa una vez
+    once: false,  // Se activa cada vez que entra en vista
     amount: 0.99
   });
+
+  // Estado para controlar si la animación explosiva ya ocurrió en esta visita
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true);
+      // Reset después de que termine la animación (1 segundo)
+      setTimeout(() => {
+        if (!isInView) {
+          setHasAnimated(false);
+        }
+      }, 1000);
+    } else if (!isInView && hasAnimated) {
+      // Reset cuando sale de vista
+      setHasAnimated(false);
+    }
+  }, [isInView, hasAnimated]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -227,8 +245,8 @@ export const GoogleGeminiEffect = ({
               opacity: 1, 
               y: 0,
               // Animación suave de shake cuando está en vista
-              rotate: isInView ? [0, -1, 1, -0.5, 0.5, 0] : 0,
-              scale: isInView ? [1, 1.005, 0.998, 1.002, 1] : 1,
+              rotate: hasAnimated ? [0, -1, 1, -0.5, 0.5, 0] : 0,
+              scale: hasAnimated ? [1, 1.005, 0.998, 1.002, 1] : 1,
             }}
             transition={{ 
               opacity: { duration: 0.6, delay: 0.3 },
@@ -323,7 +341,7 @@ export const GoogleGeminiEffect = ({
                       ref={logoRef}
                       animate={{
                         // Animación explosiva del círculo - escala dramática y pulse
-                        scale: isInView ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
+                        scale: hasAnimated ? [1, 0.8, 1.25, 0.95, 1.15, 1.05, 1] : 1,
                       }}
                       transition={{
                         duration: 1,
