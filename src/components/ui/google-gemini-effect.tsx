@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion, MotionValue, useInView } from "framer-motion";
+import { motion, MotionValue } from "framer-motion";
 import React from "react";
 import { Mail, User, Send, Phone, Globe, CheckCircle2 } from "lucide-react";
 
@@ -25,16 +25,6 @@ export const GoogleGeminiEffect = ({
     website: ""
   });
 
-  // Referencias para las animaciones
-  const cardRef = React.useRef(null);
-  const logoRef = React.useRef(null);
-  
-  // Detectar cuando la tarjeta está en el centro del viewport
-  const isInView = useInView(cardRef, { 
-    once: false,  // se activa cada vez que entra en vista
-    amount: 0.5   // cuando el 50% del elemento es visible
-  });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
@@ -52,21 +42,9 @@ export const GoogleGeminiEffect = ({
       <div className="w-full h-[890px] -top-20 md:top-0 flex items-center justify-center absolute">
         {/* Tarjeta unificada con glassmorphism gradient */}
         <motion.div
-          ref={cardRef}
           initial={{ opacity: 0, y: 50 }}
-          animate={{ 
-            opacity: 1, 
-            y: 0,
-            // Animación suave de shake cuando está en vista
-            rotate: isInView ? [0, -1, 1, -0.5, 0.5, 0] : 0,
-            scale: isInView ? [1, 1.005, 0.998, 1.002, 1] : 1,
-          }}
-          transition={{ 
-            opacity: { duration: 0.6, delay: 0.3 },
-            y: { duration: 0.6, delay: 0.3 },
-            rotate: { duration: 0.6, ease: "easeInOut" },
-            scale: { duration: 0.6, ease: "easeInOut" },
-          }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="w-[90%] max-w-[750px] border border-white/20 rounded-2xl shadow-2xl p-6 md:p-10 z-30 relative overflow-hidden"
         >
           {/* Fondo con gradiente glassmorphism - opaco arriba y abajo, transparente en el centro */}
@@ -144,35 +122,20 @@ export const GoogleGeminiEffect = ({
             </div>
 
             {/* Espacio para las líneas SVG - aquí es transparente */}
-            <div className="h-8 md:h-6 mb-4"></div>
+            <div className="h-2 md:h-0 mb-2"></div>
 
             {/* Logo en círculo blanco con borde difuminado */}
             <div className="flex justify-center mb-8">
-              <motion.div 
-                ref={logoRef}
-                animate={{
-                  // Animación más visible y explosiva del círculo
-                  rotate: isInView ? [0, -8, 8, -5, 5, -3, 3, 0] : 0,
-                  scale: isInView ? [1, 0.95, 1.1, 0.98, 1.05, 1] : 1,
-                  x: isInView ? [0, -3, 3, -2, 2, 0] : 0,
-                  y: isInView ? [0, -3, 3, -2, 2, 0] : 0,
-                }}
-                transition={{
-                  duration: 0.8,
-                  ease: "easeInOut",
-                }}
-                className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl" 
-                style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3)' }}
-              >
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl" style={{ boxShadow: '0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.3)' }}>
                 <img 
                   src="/images/client-connect-australia-logo.png" 
                   alt="Client Connect Australia" 
                   className="w-14 h-14 object-contain"
                 />
-              </motion.div>
+              </div>
             </div>
 
-            <div className="space-y-5 mt-8">
+            <form onSubmit={handleSubmit} className="space-y-5 mt-8">
               {/* Primera fila: Name y Website */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Campo Name */}
@@ -237,14 +200,14 @@ export const GoogleGeminiEffect = ({
 
               {/* Botón Submit */}
               <button
-                onClick={handleSubmit}
+                type="submit"
                 className="w-full bg-[#F6941D] hover:bg-[#e58315] text-white font-semibold rounded-lg px-6 py-3 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl mt-4"
               >
                 <span>Get My Free Audit</span>
                 <Send className="w-4 h-4" />
               </button>
               
-            </div>
+            </form>
           </div>
         </motion.div>
       </div>
