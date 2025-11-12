@@ -160,7 +160,7 @@ export function NewHero() {
             }}
           >
             We Bring{" "}
-            <span className="relative inline-flex justify-center items-center overflow-hidden" style={{ minWidth: '160px', height: '1em', verticalAlign: 'baseline' }}>
+            <span className="relative inline-flex justify-center items-center overflow-hidden" style={{ minWidth: '160px', height: '1em', verticalAlign: '-0.1em' }}>
               {words.map((word, index) => (
                 <motion.span
                   key={index}
