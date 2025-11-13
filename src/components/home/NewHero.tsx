@@ -15,10 +15,10 @@ export function NewHero() {
   );
 
   const wordWidths: { [key: string]: number } = {
-    "Light": 120,
-    "Leads": 130,
-    "Clients": 155,
-    "Sales": 125
+    "Light": 110,
+    "Leads": 135,
+    "Clients": 150,
+    "Sales": 120
   };
 
   const { scrollYProgress } = useScroll({
