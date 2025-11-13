@@ -71,7 +71,7 @@ export function NewHero() {
         <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative">
 
           {/* LAMP + TÍTULO con 10px de separación */}
-          <div className="flex flex-col items-center gap-[10px]">
+          <div className="flex flex-col items-center gap-[2px]">
             {/* Lamp Effect */}
             <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
               <motion.div
