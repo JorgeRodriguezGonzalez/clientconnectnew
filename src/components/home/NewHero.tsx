@@ -67,7 +67,7 @@ export function NewHero() {
       style={{ backgroundColor }}
       className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
-      <div className="h-screen flex justify-center pt-32">
+      <div className="top-[0px] h-screen flex justify-center pt-32">
         <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative">
 
           {/* LAMP + TÍTULO: superpuestos 30px */}
