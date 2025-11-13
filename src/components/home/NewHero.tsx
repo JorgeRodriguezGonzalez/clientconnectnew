@@ -68,7 +68,7 @@ export function NewHero() {
       className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       <div className="sticky top-0 h-screen flex justify-center pt-32">
-        <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative">
+        <div className="z-10 flex flex-col items-center justify-center gap-0 max-w-[976px] px-5 relative">
 
           {/* LAMP + TÍTULO con 10px de separación */}
           <div className="flex flex-col items-center gap-[-20px]">
