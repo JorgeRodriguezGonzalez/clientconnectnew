@@ -35,8 +35,8 @@ export function NewHero() {
     ]
   );
 
-  // Transforms para el círculo y el texto
-  const circleBackground = useTransform(
+  // Transforms para el arco y el texto
+  const arcBackground = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
     [
@@ -253,10 +253,10 @@ export function NewHero() {
             <div className="relative -mt-32 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               
-              {/* Círculo completo en lugar de arco */}
+              {/* Arco con transición de color */}
               <motion.div 
-                className="absolute left-1/2 top-1/2 w-[150vw] h-[150vw] rounded-full z-10 -translate-x-1/2 -translate-y-[20%]" 
-                style={{ backgroundColor: circleBackground }} 
+                className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20" 
+                style={{ backgroundColor: arcBackground }} 
               />
               
               <Sparkles
