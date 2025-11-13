@@ -281,28 +281,7 @@ export function NewHero() {
             </a>
           </motion.div>
 
-          {/* Badges */}
-          <motion.div 
-            initial={{ opacity: 0, y: 80 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: 1.1,
-              duration: 0.8,
-              ease: "easeOut",
-            }}
-            className="flex items-center justify-center gap-2 flex-wrap relative z-50 mt-5">
-            <div className="h-[23px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 flex items-center justify-center">
-              <p className="text-[11px] font-medium leading-[16.6px] text-center text-white/80">
-                Google Partner
-              </p>
-            </div>
-
-            <div className="h-[23px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 flex items-center justify-center">
-              <p className="text-[11px] font-medium leading-[16.6px] text-center text-white/80">
-                5★ Rated Agency
-              </p>
-            </div>
-          </motion.div>
+          
 
           {/* TrustedBrandsSection integrado */}
           <motion.div
