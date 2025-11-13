@@ -73,7 +73,7 @@ export function NewHero() {
           {/* LAMP + TÍTULO: superpuestos 30px */}
           <div className="flex flex-col items-center gap-[-30px]">
             {/* Lamp Effect */}
-            <div className="w-full h-[80px] relative flex items-center justify-center pt-60 overflow-visible">
+            <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
               <motion.div
                 initial={{ opacity: 0.5, width: "15rem" }}
                 whileInView={{ opacity: 1, width: "30rem" }}
