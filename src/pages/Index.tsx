@@ -6,7 +6,7 @@ import WhyUsSection from "@/components/home/WhyUsSection";
 import { HowWeWork } from "@/components/home/HowWeWork";
 import { WhySubscribeBento } from "@/components/home/WhySubscribeBento";
 import BrandsShowcaseSection from "@/components/home/BrandsShowcaseSection";
-import { TrustedBrandsSection } from "@/components/home/TrustedBrandsSection"; // ← NUEVO
+import { TrustedBrandsSection } from "@/components/home/TrustedBrandsSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
 
@@ -14,9 +14,11 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
-        <NewHero />
+        <div className="-mt-10">
+          <NewHero />
+        </div>
         <BrandsShowcaseSection />
-        <TrustedBrandsSection /> {/* ← NUEVO COMPONENTE */}
+        <TrustedBrandsSection />
         <AnimatedGallerySection />
         <ServicesSection />
         <WhyUsSection />
