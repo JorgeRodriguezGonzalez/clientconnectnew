@@ -73,7 +73,7 @@ export function NewHero() {
       className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       {/* Contenido con texto y CTAs */}
-      <div className="sticky top-0 h-screen flex items-center justify-center">
+      <div className="sticky top-0 h-screen flex items-center justify-center pt-24">
         
         <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative pt-20">
           
