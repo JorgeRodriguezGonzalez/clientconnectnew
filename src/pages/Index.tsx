@@ -6,6 +6,7 @@ import WhyUsSection from "@/components/home/WhyUsSection";
 import { HowWeWork } from "@/components/home/HowWeWork";
 import { WhySubscribeBento } from "@/components/home/WhySubscribeBento";
 import BrandsShowcaseSection from "@/components/home/BrandsShowcaseSection";
+import { TrustedBrandsSection } from "@/components/home/TrustedBrandsSection"; // ← NUEVO
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
 
@@ -15,6 +16,7 @@ const Index = () => {
       <main className="flex-1">
         <NewHero />
         <BrandsShowcaseSection />
+        <TrustedBrandsSection /> {/* ← NUEVO COMPONENTE */}
         <AnimatedGallerySection />
         <ServicesSection />
         <WhyUsSection />
