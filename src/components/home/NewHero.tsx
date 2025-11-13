@@ -234,7 +234,7 @@ export function NewHero() {
               <div className="absolute -left-1/2 top-[45%] aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20" style={{ backgroundColor: 'rgb(10, 15, 35)' }} />
               <Sparkles
                 density={1200}
-                className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                className="absolute inset-x-0 top-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
                 color="#ffffff"
               />
             </div>
