@@ -89,7 +89,7 @@ export function NewHero() {
       className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       <div className="top-[-40px] h-screen flex justify-center pt-32">
-        <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative">
+        <div className="z-10 flex flex-col items-center justify-center gap-4 w-full px-5 relative">
 
           {/* LAMP + TÍTULO: superpuestos 30px */}
           <div className="flex flex-col items-center gap-[-30px]">
@@ -253,9 +253,9 @@ export function NewHero() {
             <div className="relative -mt-32 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               
-              {/* Arco con transición de color - AUMENTADO ANCHO Y ALTO */}
+              {/* Arco con transición de color */}
               <motion.div 
-                className="absolute left-1/2 top-1/2 w-[200vw] h-[200vw] z-10 rounded-[100%] border-t border-white/20 -translate-x-1/2"
+                className="absolute left-1/2 top-1/2 w-[200vw] h-[200vw] z-10 rounded-[100%] border-t border-white/20 -translate-x-1/2" 
                 style={{ backgroundColor: arcBackground }} 
               />
               
