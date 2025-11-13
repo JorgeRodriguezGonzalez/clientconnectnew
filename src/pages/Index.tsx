@@ -13,7 +13,7 @@ import CTASection from "@/components/home/CTASection";
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <main className="flex-1 -mt-10">
+      <main className="flex-1">  // Quita el -mt-10
         <NewHero />
         <BrandsShowcaseSection />
         <TrustedBrandsSection />
