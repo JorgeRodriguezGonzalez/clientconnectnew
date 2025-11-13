@@ -165,7 +165,7 @@ export function NewHero() {
               duration: 0.8,
               ease: "easeOut",
             }}
-            className="text-3xl md:text-[52px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50 -mt-8"
+            className="text-3xl md:text-[42px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50 -mt-8"
             style={{
               fontFamily: '"Inter Display", sans-serif',
               letterSpacing: '-1.5px',
