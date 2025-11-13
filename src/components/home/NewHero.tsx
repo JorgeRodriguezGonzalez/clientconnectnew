@@ -78,7 +78,7 @@ export function NewHero() {
         <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative">
           
           {/* Lamp Effect */}
-          <div className="w-full h-[80px] relative flex items-center justify-center pt-48">
+          <div className="w-full h-[80px] relative flex items-center justify-center pt-60">
             <motion.div
               initial={{ opacity: 0.5, width: "15rem" }}
               whileInView={{ opacity: 1, width: "30rem" }}
