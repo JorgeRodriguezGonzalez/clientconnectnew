@@ -65,7 +65,7 @@ export function NewHero() {
     <motion.div
       ref={ref}
       style={{ backgroundColor }}
-      className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip -mt-10"
     >
       <div className="sticky top-0 h-screen flex justify-center pt-32">
         <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative">
