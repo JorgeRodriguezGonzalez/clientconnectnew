@@ -73,7 +73,7 @@ export function NewHero() {
           {/* LAMP + TÍTULO: superpuestos 30px */}
           <div className="flex flex-col items-center gap-[-30px]">
             {/* Lamp Effect */}
-            <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
+            <div className="w-full h-[80px] relative flex items-center justify-center pt-60 overflow-visible">
               <motion.div
                 initial={{ opacity: 0.5, width: "15rem" }}
                 whileInView={{ opacity: 1, width: "30rem" }}
@@ -229,12 +229,12 @@ export function NewHero() {
             </div>
 
             {/* Sparkles Effect */}
-            <div className="relative -mt-32 h-[500px] w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
+            <div className="relative -mt-32 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
-              <div className="absolute -left-1/2 top-[45%] aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20" style={{ backgroundColor: 'rgb(10, 15, 35)' }} />
+              <div className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20" style={{ backgroundColor: 'rgb(10, 15, 35)' }} />
               <Sparkles
                 density={1200}
-                className="absolute inset-x-0 top-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
                 color="#ffffff"
               />
             </div>
