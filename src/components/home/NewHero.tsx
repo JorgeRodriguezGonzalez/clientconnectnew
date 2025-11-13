@@ -67,7 +67,7 @@ export function NewHero() {
       style={{ backgroundColor }}
       className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
-      <div className="top-[-40px] h-screen flex justify-center pt-32">
+      <div className="sticky top-[-40px] h-screen flex justify-center pt-32">
         <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative">
 
           {/* LAMP + TÍTULO: superpuestos 30px */}
@@ -206,6 +206,29 @@ export function NewHero() {
             </a>
           </motion.div>
 
+          {/* Trusted Brands */}
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1, duration: 0.8, ease: "easeOut" }}
+            className="w-full mt-16 relative z-50"
+          >
+            <div className="mx-auto w-full max-w-2xl">
+              <div className="text-center text-2xl md:text-[16px] leading-tight mb-6">
+                <span className="text-cyan-300">Trusted by experts.</span>
+                <br />
+                <span className="text-white">Used by the leaders.</span>
+              </div>
+              <div className="flex justify-center items-center gap-12 flex-wrap">
+                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Retool</div>
+                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Vercel</div>
+                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Remote</div>
+                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Arc</div>
+                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Raycast</div>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Sparkles Effect */}
           <motion.div
             initial={{ opacity: 0, y: 80 }}
@@ -239,28 +262,8 @@ export function NewHero() {
             </h2>
           </motion.div>
 
-          {/* Trusted Brands */}
-          <motion.div
-            initial={{ opacity: 0, y: 80 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.7, duration: 0.8, ease: "easeOut" }}
-            className="w-full mt-12 relative z-50"
-          >
-            <div className="mx-auto w-full max-w-2xl">
-              <div className="text-center text-2xl md:text-[16px] leading-tight mb-6">
-                <span className="text-cyan-300">Trusted by experts.</span>
-                <br />
-                <span className="text-white">Used by the leaders.</span>
-              </div>
-              <div className="flex justify-center items-center gap-12 flex-wrap">
-                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Retool</div>
-                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Vercel</div>
-                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Remote</div>
-                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Arc</div>
-                <div className="text-white/70 text-lg font-medium hover:text-white transition-colors cursor-pointer">Raycast</div>
-              </div>
-            </div>
-          </motion.div>
+          {/* Spacing */}
+          <div className="h-[100px]"></div>
 
         </div>
       </div>
