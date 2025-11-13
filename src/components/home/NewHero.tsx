@@ -35,6 +35,27 @@ export function NewHero() {
     ]
   );
 
+  // Nuevos transforms para la sección debajo del arco
+  const belowArcBackground = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [
+      "rgb(10, 15, 35)",
+      "rgb(10, 15, 35)",
+      "rgb(255, 255, 255)"
+    ]
+  );
+
+  const belowArcTextColor = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [
+      "rgb(255, 255, 255)",
+      "rgb(255, 255, 255)",
+      "rgb(0, 0, 0)"
+    ]
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -231,7 +252,10 @@ export function NewHero() {
             {/* Sparkles Effect */}
             <div className="relative -mt-32 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
-              <div className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20" style={{ backgroundColor: 'rgb(10, 15, 35)' }} />
+              <motion.div 
+                className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20" 
+                style={{ backgroundColor: belowArcBackground }} 
+              />
               <Sparkles
                 density={1200}
                 className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
@@ -245,8 +269,12 @@ export function NewHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
-            className="text-2xl md:text-[40px] font-light leading-tight md:leading-[50px] text-center text-white relative z-50 mt-8"
-            style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.2px' }}
+            style={{ 
+              fontFamily: '"Inter Display", sans-serif', 
+              letterSpacing: '-1.2px',
+              color: belowArcTextColor
+            }}
+            className="text-2xl md:text-[40px] font-light leading-tight md:leading-[50px] text-center relative z-50 mt-8"
           >
             Your New Title Here
           </motion.h2>
