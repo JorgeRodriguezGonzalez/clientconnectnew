@@ -303,7 +303,7 @@ export function NewHero() {
                 <span className="text-white">Used by the leaders.</span>
               </div>
 
-              <div className="mt-14 grid grid-cols-5 text-white">
+              <div className="mt-6 grid grid-cols-5 text-white">
                 <Retool />
                 <Vercel />
                 <Remote />
