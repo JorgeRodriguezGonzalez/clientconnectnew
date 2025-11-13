@@ -75,7 +75,7 @@ export function NewHero() {
       {/* Contenido con texto y CTAs */}
       <div className="sticky top-0 h-screen flex items-center justify-center">
         
-        <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative">
+        <div className="z-10 flex flex-col items-center justify-center gap-4 max-w-[976px] px-5 relative pt-20">
           
           {/* Lamp Effect */}
           <div className="w-full h-[80px] relative flex items-center justify-center">
