@@ -295,7 +295,7 @@ export function NewHero() {
             className="w-full mt-16 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
-              <div className="text-center text-2xl md:text-2xl">
+              <div className="text-center text-xl md:text-2xl">
                 <span className="text-cyan-300">
                   Trusted by experts.
                 </span>
