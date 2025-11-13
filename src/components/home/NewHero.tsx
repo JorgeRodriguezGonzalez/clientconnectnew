@@ -255,7 +255,7 @@ export function NewHero() {
               
               {/* Arco con transición de color - AUMENTADO ANCHO Y ALTO */}
               <motion.div 
-                className="absolute left-1/2 top-1/2 w-[250vw] h-[250vh] z-10 rounded-[100%] border-t border-white/20 -translate-x-1/2"
+                className="absolute left-1/2 top-1/2 w-[3000px] h-[2100px] z-10 rounded-[100%] border-t border-white/20 -translate-x-1/2"
                 style={{ backgroundColor: arcBackground }} 
               />
               
