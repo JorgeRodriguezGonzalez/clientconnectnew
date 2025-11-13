@@ -1,23 +1,20 @@
 import { Sparkles } from "../ui/sparkles";
 
 export function TrustedBrandsSection() {
-  // Detectar si es tema oscuro (puedes ajustar esto según tu implementación de tema)
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
   return (
-    <div className="h-screen w-full overflow-hidden bg-white dark:bg-zinc-900">
+    <div className="h-screen w-full overflow-hidden bg-zinc-950">
       <div className="mx-auto mt-32 w-full max-w-2xl">
-        <div className="text-center text-3xl text-foreground">
-          <span className="text-indigo-900 dark:text-indigo-200">
+        <div className="text-center text-3xl">
+          <span className="text-indigo-300">
             Trusted by experts.
           </span>
 
           <br />
 
-          <span className="text-zinc-900 dark:text-white">Used by the leaders.</span>
+          <span className="text-white">Used by the leaders.</span>
         </div>
 
-        <div className="mt-14 grid grid-cols-5 text-zinc-900 dark:text-white">
+        <div className="mt-14 grid grid-cols-5 text-white">
           <Retool />
           <Vercel />
           <Remote />
