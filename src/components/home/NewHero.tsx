@@ -295,13 +295,14 @@ export function NewHero() {
             className="w-full mt-16 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
-              <div className="text-center text-2xl md:text-md">
-                <span className="text-cyan-300">
-                  Trusted by experts.
-                </span>
-                <br />
-                <span className="text-white">Used by the leaders.</span>
-              </div>
+                <div className="text-center text-2xl md:text-[18px] leading-tight">
+                    <span className="text-cyan-300">
+                    Trusted by experts.
+                    </span>
+                    <br />
+                    <span className="text-white">Used by the leaders.</span>
+                </div>
+                </div>
 
               <div className="mt-14 grid grid-cols-5 text-white">
                 <Retool />
