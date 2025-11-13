@@ -253,16 +253,18 @@ export function NewHero() {
             <div className="relative -mt-32 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               
-              {/* Fondo completo debajo del arco */}
+              {/* Fondo completo debajo del arco - z-[5] para estar detrás del arco */}
               <motion.div 
-                className="absolute -left-1/2 top-1/2 w-[200%] h-[200%] z-0"
+                className="absolute -left-1/2 top-1/2 w-[200%] h-[200%] z-[5]"
                 style={{ backgroundColor: belowArcBackground }}
               />
               
-              <motion.div 
+              {/* Arco - z-10 para estar delante del fondo */}
+              <div 
                 className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20" 
-                style={{ backgroundColor: belowArcBackground }} 
+                style={{ backgroundColor: 'rgb(10, 15, 35)' }} 
               />
+              
               <Sparkles
                 density={1200}
                 className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
