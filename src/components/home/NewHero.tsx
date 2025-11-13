@@ -239,6 +239,17 @@ export function NewHero() {
               />
             </div>
           </motion.div>
+
+          {/* Nuevo título debajo del arco */}
+          <motion.h2
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
+            className="text-2xl md:text-[40px] font-light leading-tight md:leading-[50px] text-center text-white relative z-50 mt-8"
+            style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.2px' }}
+          >
+            Your New Title Here
+          </motion.h2>
         </div>
       </div>
     </motion.div>
