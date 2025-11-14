@@ -3,6 +3,7 @@ import { useScroll, useTransform } from "framer-motion";
 import { Send, Calendar } from 'lucide-react';
 import { motion } from "framer-motion";
 import { Sparkles } from "@/components/ui/sparkles";
+import { BrandsShowcaseSection } from "@/components/home/BrandsShowcaseSection";
 
 export function NewHero() {
   const ref = React.useRef(null);
@@ -65,6 +66,12 @@ export function NewHero() {
   const textOpacity = useTransform(
     scrollYProgress,
     [0, 0.5, 0.6],
+    [0, 0, 1]
+  );
+
+  const brandsOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.79, 0.84],
     [0, 0, 1]
   );
 
@@ -308,6 +315,16 @@ export function NewHero() {
                 >
                   This Is How We Do It
                 </motion.h2>
+                
+                {/* BrandsShowcaseSection */}
+                <motion.div
+                  style={{ 
+                    opacity: brandsOpacity
+                  }}
+                  className="absolute top-[15%] left-1/2 -translate-x-1/2 z-50 w-full px-8"
+                >
+                  <BrandsShowcaseSection />
+                </motion.div>
               </motion.div>
               
               <Sparkles
