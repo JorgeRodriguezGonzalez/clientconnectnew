@@ -170,7 +170,7 @@ export function NewHero() {
             <motion.h1
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
+              transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
               className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
               style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.5px' }}
             >
@@ -205,7 +205,7 @@ export function NewHero() {
           <motion.p
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-6 mb-6"
             style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
           >
@@ -216,7 +216,7 @@ export function NewHero() {
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50"
           >
             <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-all cursor-pointer w-full sm:w-auto">
@@ -241,7 +241,7 @@ export function NewHero() {
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 3.0, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-16 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
@@ -272,7 +272,7 @@ export function NewHero() {
                 <motion.h2
                   initial={{ opacity: 0, y: 80 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.0, duration: 0.8, ease: "easeOut" }}
+                  transition={{ delay: 3.2, duration: 0.8, ease: "easeOut" }}
                   style={{ 
                     fontFamily: '"Inter Display", sans-serif', 
                     letterSpacing: '-1.2px',
