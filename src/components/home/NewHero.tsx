@@ -270,7 +270,7 @@ export function NewHero() {
             </div>
 
             {/* Sparkles Effect */}
-            <div className="relative  -mt-[520px] h-[1300px] w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
+            <div className="relative  -mt-[570px] h-[1300px] w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               
               {/* Círculo completo con transición de color y título dentro */}
