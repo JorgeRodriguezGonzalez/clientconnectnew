@@ -241,22 +241,32 @@ export function NewHero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 3.2, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-16 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
-              <div className="text-center text-2xl md:text-[16px] leading-tight">
+              <motion.div 
+                initial={{ opacity: 0, y: 80 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+                className="text-center text-2xl md:text-[16px] leading-tight"
+              >
                 <span className="text-cyan-300">Trusted by experts.</span>
                 <br />
                 <span className="text-white">Used by the leaders.</span>
-              </div>
-              <div className="mt-6 grid grid-cols-5 text-white">
+              </motion.div>
+              <motion.div 
+                initial={{ opacity: 0, y: 80 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+                className="mt-6 grid grid-cols-5 text-white"
+              >
                 <Retool />
                 <Vercel />
                 <Remote />
                 <Arc />
                 <Raycast />
-              </div>
+              </motion.div>
             </div>
 
             {/* Sparkles Effect */}
