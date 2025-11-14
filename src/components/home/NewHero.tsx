@@ -246,7 +246,7 @@ export function NewHero() {
           >
             <div className="mx-auto w-full max-w-2xl">
               <motion.div 
-                initial={{ opacity: 0, y: 80 }}
+                initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 4.2, duration: 0.8, ease: "easeOut" }}
                 className="text-center text-2xl md:text-[16px] leading-tight"
@@ -256,7 +256,7 @@ export function NewHero() {
                 <span className="text-white">Used by the leaders.</span>
               </motion.div>
               <motion.div 
-                initial={{ opacity: 0, y: 80 }}
+                initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 4.2, duration: 0.8, ease: "easeOut" }}
                 className="mt-6 grid grid-cols-5 text-white"
