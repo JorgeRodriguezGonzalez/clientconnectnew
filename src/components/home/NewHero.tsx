@@ -241,7 +241,7 @@ export function NewHero() {
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.0, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-16 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
@@ -272,7 +272,7 @@ export function NewHero() {
                 <motion.h2
                   initial={{ opacity: 0, y: 80 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 3.2, duration: 0.8, ease: "easeOut" }}
+                  transition={{ delay: 3.6, duration: 0.8, ease: "easeOut" }}
                   style={{ 
                     fontFamily: '"Inter Display", sans-serif', 
                     letterSpacing: '-1.2px',
