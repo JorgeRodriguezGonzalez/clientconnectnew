@@ -332,16 +332,16 @@ export function NewHero() {
                 >
                   This Is How We Do It
                 </motion.h2>
-                
-                {/* BrandsShowcaseSection */}
-                <motion.div
-                  style={{ 
-                    opacity: brandsOpacity
-                  }}
-                  className="absolute top-[12%] left-1/2 -translate-x-1/2 z-[9999] w-full"
-                >
-                  <BrandsShowcaseSection />
-                </motion.div>
+              </motion.div>
+              
+              {/* BrandsShowcaseSection FUERA del círculo */}
+              <motion.div
+                style={{ 
+                  opacity: brandsOpacity
+                }}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[35%] z-[9999] w-full"
+              >
+                <BrandsShowcaseSection />
               </motion.div>
               
               <motion.div
