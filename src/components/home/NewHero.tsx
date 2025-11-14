@@ -90,7 +90,7 @@ export function NewHero() {
   const circleMaxSize = useTransform(
     scrollYProgress,
     [0, 0.65, 1],
-    ["2000px", "2000px", "4000px"]
+    ["2000px", "2000px", "2000px"]
   );
 
   useEffect(() => {
