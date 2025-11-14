@@ -28,7 +28,7 @@ export function NewHero() {
 
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.7, 1],
+    [0, 0.65, 1],
     [
       "rgb(5, 10, 25)",
       "rgb(30, 50, 120)",
@@ -50,7 +50,7 @@ export function NewHero() {
 
   const belowArcTextColor = useTransform(
     scrollYProgress,
-    [0, 0.7, 1],
+    [0, 0.65, 1],
     [
       "rgb(255, 255, 255)",
       "rgb(255, 255, 255)",
@@ -60,7 +60,7 @@ export function NewHero() {
 
   const circleBorderRadius = useTransform(
     scrollYProgress,
-    [0, 0.7, 1],
+    [0, 0.65, 1],
     ["50%", "50%", "0%"]
   );
 
