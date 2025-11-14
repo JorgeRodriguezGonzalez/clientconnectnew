@@ -29,7 +29,7 @@ export function NewHero() {
 
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.75, 0.8, 1],
+    [0, 0.75, 0.79, 1],
     [
       "rgb(5, 10, 25)",
       "rgb(30, 50, 120)",
@@ -41,14 +41,14 @@ export function NewHero() {
   // Transforms para el círculo y el texto
   const circleBackground = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.6, 0.75, 0.8, 1],
+    [0, 0.3, 0.6, 0.75, 0.79, 1],
     [
       "rgb(5, 10, 25)",
       "rgb(22, 34, 69)",
       "rgb(103, 130, 214)",
       "rgb(103, 130, 214)",
-      "rgb(255, 255, 255)",
-      "rgb(255, 255, 255)"
+      "rgba(255, 255, 255, 0)",
+      "rgba(255, 255, 255, 0)"
     ]
   );
 
@@ -75,10 +75,22 @@ export function NewHero() {
     [0, 0, 1]
   );
 
+  const sparklesOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.79, 0.82],
+    [1, 1, 0]
+  );
+
   const circleBorderRadius = useTransform(
     scrollYProgress,
     [0, 0.65, 1],
     ["50%", "50%", "0%"]
+  );
+
+  const circleMaxSize = useTransform(
+    scrollYProgress,
+    [0, 0.65, 1],
+    ["2000px", "2000px", "4000px"]
   );
 
   useEffect(() => {
@@ -300,8 +312,13 @@ export function NewHero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
-                className="absolute left-1/2 top-1/2 w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-[5] border border-white/20 -translate-x-1/2 flex items-center justify-center" 
-                style={{ backgroundColor: circleBackground, borderRadius: circleBorderRadius }} 
+                className="absolute left-1/2 top-1/2 w-[2000vw] h-[2000vw] z-[5] border border-white/20 -translate-x-1/2 flex items-center justify-center" 
+                style={{ 
+                  backgroundColor: circleBackground, 
+                  borderRadius: circleBorderRadius,
+                  maxWidth: circleMaxSize,
+                  maxHeight: circleMaxSize
+                }} 
               >
                 {/* Título dentro del círculo */}
                 <motion.h2
@@ -311,27 +328,31 @@ export function NewHero() {
                     color: belowArcTextColor,
                     opacity: textOpacity
                   }}
-                  className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center absolute top-[8%] left-1/2 -translate-x-1/2 z-50 px-8"
+                  className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center absolute top-[8%] left-1/2 -translate-x-1/2 z-[60] px-8"
                 >
                   This Is How We Do It
                 </motion.h2>
-                
-                {/* BrandsShowcaseSection */}
-                <motion.div
-                  style={{ 
-                    opacity: brandsOpacity
-                  }}
-                  className="absolute top-[12%] left-1/2 -translate-x-1/2 z-50 w-full"
-                >
-                  <BrandsShowcaseSection />
-                </motion.div>
               </motion.div>
               
-              <Sparkles
-                density={1200}
-                className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
-                color="#ffffff"
-              />
+              {/* BrandsShowcaseSection FUERA del círculo */}
+              <motion.div
+                style={{ 
+                  opacity: brandsOpacity
+                }}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-[5%] z-[9999] w-full"
+              >
+                <BrandsShowcaseSection />
+              </motion.div>
+              
+              <motion.div
+                style={{ opacity: sparklesOpacity }}
+              >
+                <Sparkles
+                  density={1200}
+                  className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                  color="#ffffff"
+                />
+              </motion.div>
             </div>
           </motion.div>
         </div>
