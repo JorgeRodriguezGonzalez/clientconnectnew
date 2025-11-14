@@ -75,6 +75,12 @@ export function NewHero() {
     [0, 0, 1]
   );
 
+  const sparklesOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.79, 0.82],
+    [1, 1, 0]
+  );
+
   const circleBorderRadius = useTransform(
     scrollYProgress,
     [0, 0.65, 1],
@@ -327,11 +333,15 @@ export function NewHero() {
                 </motion.div>
               </motion.div>
               
-              <Sparkles
-                density={1200}
-                className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
-                color="#ffffff"
-              />
+              <motion.div
+                style={{ opacity: sparklesOpacity }}
+              >
+                <Sparkles
+                  density={1200}
+                  className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                  color="#ffffff"
+                />
+              </motion.div>
             </div>
           </motion.div>
         </div>
