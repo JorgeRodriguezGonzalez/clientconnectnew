@@ -255,7 +255,7 @@ export function NewHero() {
               
               {/* Círculo completo con transición de color y título dentro */}
               <motion.div 
-                className="absolute left-1/2 top-1/2 w-[80vw] h-[80vw] max-w-[600px] max-h-[600px] z-10 rounded-full border border-white/20 -translate-x-1/2 flex items-center justify-center" 
+                className="absolute left-1/2 top-1/2 w-[800vw] h-[800vw] max-w-[600px] max-h-[600px] z-10 rounded-full border border-white/20 -translate-x-1/2 flex items-center justify-center" 
                 style={{ backgroundColor: circleBackground }} 
               >
                 {/* Título dentro del círculo */}
