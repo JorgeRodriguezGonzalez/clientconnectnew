@@ -26,7 +26,7 @@ export function Sparkles({
       setIsReady(true);
       setTimeout(() => {
         setIsVisible(true);
-      }, 200);
+      }, 600);
     });
   }, []);
 
