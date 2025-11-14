@@ -30,7 +30,7 @@ export function NewHero() {
     scrollYProgress,
     [0, 1],
     [
-      "rgb(2, 5, 15)",
+      "rgb(5, 10, 25)",
       "rgb(20, 35, 90)"
     ]
   );
@@ -40,8 +40,8 @@ export function NewHero() {
     scrollYProgress,
     [0, 0.5, 1],
     [
-      "rgb(2, 5, 15)",
-      "rgb(2, 5, 15)",
+      "rgb(5, 10, 25)",
+      "rgb(5, 10, 25)",
       "rgb(255, 255, 255)"
     ]
   );
@@ -94,11 +94,16 @@ export function NewHero() {
           {/* LAMP + TÍTULO: superpuestos 30px */}
           <div className="flex flex-col items-center gap-[-30px]">
             {/* Lamp Effect */}
-            <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
+              className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible"
+            >
               <motion.div
                 initial={{ opacity: 0.5, width: "15rem" }}
-                whileInView={{ opacity: 1, width: "30rem" }}
-                transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
+                animate={{ opacity: 1, width: "30rem" }}
+                transition={{ delay: 0, duration: 0.8, ease: "easeInOut" }}
                 style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
                 className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-cyan-500 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
               >
@@ -114,8 +119,8 @@ export function NewHero() {
 
               <motion.div
                 initial={{ opacity: 0.5, width: "15rem" }}
-                whileInView={{ opacity: 1, width: "30rem" }}
-                transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
+                animate={{ opacity: 1, width: "30rem" }}
+                transition={{ delay: 0, duration: 0.8, ease: "easeInOut" }}
                 style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
                 className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-cyan-500 text-white [--conic-position:from_290deg_at_center_top]"
               >
@@ -138,15 +143,15 @@ export function NewHero() {
 
               <motion.div
                 initial={{ width: "8rem" }}
-                whileInView={{ width: "16rem" }}
-                transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
+                animate={{ width: "16rem" }}
+                transition={{ delay: 0, duration: 0.8, ease: "easeInOut" }}
                 className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-cyan-400 blur-2xl"
               ></motion.div>
 
               <motion.div
                 initial={{ width: "15rem" }}
-                whileInView={{ opacity: 1, width: "30rem" }}
-                transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
+                animate={{ opacity: 1, width: "30rem" }}
+                transition={{ delay: 0, duration: 0.8, ease: "easeInOut" }}
                 className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-cyan-400"
               ></motion.div>
 
@@ -154,13 +159,13 @@ export function NewHero() {
                 className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]"
                 style={{ backgroundColor }}
               />
-            </div>
+            </motion.div>
 
             {/* Título principal (sin mt-0) */}
             <motion.h1
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+              transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
               className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
               style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.5px' }}
             >
@@ -195,7 +200,7 @@ export function NewHero() {
           <motion.p
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-6 mb-6"
             style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
           >
@@ -206,7 +211,7 @@ export function NewHero() {
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50"
           >
             <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-all cursor-pointer w-full sm:w-auto">
@@ -231,7 +236,7 @@ export function NewHero() {
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 1.8, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-16 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
@@ -262,7 +267,7 @@ export function NewHero() {
                 <motion.h2
                   initial={{ opacity: 0, y: 80 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
+                  transition={{ delay: 2.0, duration: 0.8, ease: "easeOut" }}
                   style={{ 
                     fontFamily: '"Inter Display", sans-serif', 
                     letterSpacing: '-1.2px',
