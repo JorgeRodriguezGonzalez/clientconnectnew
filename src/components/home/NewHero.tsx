@@ -250,12 +250,12 @@ export function NewHero() {
             </div>
 
             {/* Sparkles Effect */}
-            <div className="relative  -mt-[1000px] h-[2000px] w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
+            <div className="relative -mt-32 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               
               {/* Círculo completo con transición de color y título dentro */}
               <motion.div 
-                className="absolute left-1/2 top-1/2 w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-10 rounded-full border border-white/20 -translate-x-1/2 flex items-center justify-center" 
+                className="absolute left-1/2 top-1/2 w-[80vw] h-[80vw] max-w-[600px] max-h-[600px] z-10 rounded-full border border-white/20 -translate-x-1/2 flex items-center justify-center" 
                 style={{ backgroundColor: circleBackground }} 
               >
                 {/* Título dentro del círculo */}
