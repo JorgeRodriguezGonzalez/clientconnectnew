@@ -321,7 +321,7 @@ export function NewHero() {
                   style={{ 
                     opacity: brandsOpacity
                   }}
-                  className="absolute top-[15%] left-1/2 -translate-x-1/2 z-50 w-full px-8"
+                  className="absolute top-[12%] left-1/2 -translate-x-1/2 z-50 w-full"
                 >
                   <BrandsShowcaseSection />
                 </motion.div>
