@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
-import { TrendingUp } from 'lucide-react';
 
 type SavingsCardProps = {
   title?: string;
@@ -17,11 +16,12 @@ export const SavingsCard = ({
 }: SavingsCardProps) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [hoverCount, setHoverCount] = React.useState(0);
 
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-start gap-4 w-[326.6px] h-[380px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[28px] p-6 overflow-hidden" 
+      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[380px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[28px] p-1.5 overflow-hidden" 
       initial={{
         opacity: 0,
         y: 20
@@ -43,65 +43,105 @@ export const SavingsCard = ({
           duration: 0.3
         }
       }}
+      onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      {/* Badge */}
-      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-cyan-300/20 border border-cyan-300/30 rounded-full">
-        <TrendingUp className="w-3.5 h-3.5 text-cyan-300" />
-        <p className="text-[11px] font-medium text-cyan-300 leading-none" style={{
-          fontFamily: '"Inter Display", sans-serif',
-          letterSpacing: '0.2px'
+      <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[262px] bg-white/5 backdrop-blur-sm rounded-[22px] overflow-hidden">
+        <div className="absolute inset-0 w-full h-full overflow-hidden" style={{
+          maskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)',
+          WebkitMaskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)'
         }}>
-          {badge}
-        </p>
-      </div>
+          <div className="absolute top-[21px] left-[22px]">
+            <p className="text-[28px] font-semibold text-white leading-[33.6px] whitespace-nowrap" style={{
+              fontFamily: '"Inter Display", sans-serif',
+              letterSpacing: '-0.8px'
+            }}>
+              {title}
+            </p>
+          </div>
 
-      {/* Title */}
-      <div className="flex flex-col gap-1">
-        <h3 className="text-[32px] font-light text-white leading-[38px]" style={{
-          fontFamily: '"Inter Display", sans-serif',
-          letterSpacing: '-1.2px'
-        }}>
-          {title}
-        </h3>
-        <div className="w-12 h-0.5 bg-cyan-300/50 rounded-full" />
-      </div>
+          <div className="absolute top-[32px] right-[22px]">
+            <p className="text-[12.6px] font-normal text-cyan-300 leading-[15.2px] whitespace-nowrap" style={{
+              fontFamily: '"Inter Display", sans-serif',
+              letterSpacing: '-0.4px'
+            }}>
+              {badge}
+            </p>
+          </div>
 
-      {/* Chart Area with Gradient Background */}
-      <div className="flex-1 w-full relative rounded-2xl overflow-hidden bg-gradient-to-br from-cyan-500/10 to-transparent border border-cyan-300/10 p-4">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(6,182,212,0.1),transparent_70%)]" />
-        
-        {/* Simplified visual indicator */}
-        <div className="relative h-full flex items-end gap-2">
-          {[40, 65, 45, 70, 55, 85, 75].map((height, i) => (
-            <motion.div
-              key={i}
-              className="flex-1 bg-gradient-to-t from-cyan-400/60 to-cyan-300/40 rounded-t-lg"
-              initial={{ height: 0 }}
-              animate={isInView ? { height: `${height}%` } : { height: 0 }}
-              transition={{ 
-                duration: 0.6, 
-                delay: 0.1 * i,
-                ease: "easeOut"
-              }}
+          <svg className="absolute bottom-[-77px] left-[-167.4px] w-[494px] h-[286px]" viewBox="0 0 494 286" fill="none" xmlns="http://www.w3.org/2000/svg" style={{
+            imageRendering: 'auto'
+          }}>
+            <defs>
+              <linearGradient id="chartGradient" x1="0.4994780349390567" x2="0.5005219650609433" y1="0" y2="1">
+                <stop offset="0" stopColor="rgba(6, 182, 212, 0.6)" stopOpacity="0.6" />
+                <stop offset="1" stopColor="rgba(6, 182, 212, 0)" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <motion.path 
+              key={`chart-${hoverCount}`}
+              d="M 53.822 170.122 C 29.189 152.204 27.801 174.942 20.839 174.892 L 3.089 174.764 L 4.869 279.745 L 489.248 283.23 L 489.248 5.489 C 450.411 67.986 400.334 97.664 374.382 97.664 C 343.334 97.664 333.834 78.489 306.334 78.489 C 270.376 78.489 256.769 133.668 239.781 135.692 C 211.601 139.05 204.045 106.821 181.936 126.692 C 160.817 145.673 145.501 144.542 128.933 138.472 C 109.017 131.175 97.916 147.548 92.857 156.811 C 86.727 168.036 78.454 188.04 53.822 170.122 Z" 
+              fill="url(#chartGradient)" 
+              stroke="rgb(103, 232, 249)" 
+              strokeWidth="2.77" 
+              strokeMiterlimit="10" 
+              initial={{
+                pathLength: 0,
+                opacity: 0
+              }} 
+              animate={{
+                pathLength: 1,
+                opacity: 1
+              }} 
+              transition={{
+                duration: 1.5,
+                ease: 'easeInOut',
+                delay: 0.2
+              }} 
             />
-          ))}
+          </svg>
+
+          <svg className="absolute top-[49px] left-[-15px] w-[343px] h-[7px]" viewBox="0 0 343 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <motion.path 
+              key={`line-${hoverCount}`}
+              d="M 2.33 3.5 L 367.931 3.5" 
+              fill="transparent" 
+              stroke="rgba(103, 232, 249, 0.5)" 
+              strokeWidth="3" 
+              strokeMiterlimit="10" 
+              strokeDasharray="9.07,9.07" 
+              initial={{
+                pathLength: 0
+              }} 
+              animate={{
+                pathLength: 1
+              }} 
+              transition={{
+                duration: 1,
+                ease: 'easeInOut',
+                delay: 0.5
+              }} 
+            />
+          </svg>
         </div>
       </div>
 
-      {/* Amount and Description */}
-      <div className="flex flex-col gap-2 w-full">
-        <p className="text-[22px] font-medium text-white leading-tight" style={{
-          fontFamily: '"Inter Display", sans-serif',
-          letterSpacing: '-0.6px'
-        }}>
-          {amount}
-        </p>
-        <p className="text-[13px] font-normal text-white/60 leading-[18px]" style={{
-          fontFamily: '"Inter Display", sans-serif',
-          letterSpacing: '0.1px'
-        }}>
-          {description}
-        </p>
+      <div className="flex flex-col items-start justify-center gap-2 w-[314.6px] h-[100.2px] px-4 pt-5 pb-4">
+        <div className="w-[282.6px]">
+          <p className="text-[18px] font-medium text-white leading-[17px]" style={{
+            fontFamily: '"Inter Display", sans-serif',
+            letterSpacing: '-0.6px'
+          }}>
+            {amount}
+          </p>
+        </div>
+        <div className="w-[282.6px]">
+          <p className="text-[14px] font-normal text-white/60 leading-[19.6px]" style={{
+            fontFamily: '"Inter Display", sans-serif',
+            letterSpacing: '-0.4px'
+          }}>
+            {description}
+          </p>
+        </div>
       </div>
     </motion.div>
   );
