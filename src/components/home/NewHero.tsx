@@ -49,7 +49,7 @@ export function NewHero() {
 
   const belowArcTextColor = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
+    [0, 0.7, 1],
     [
       "rgb(255, 255, 255)",
       "rgb(255, 255, 255)",
