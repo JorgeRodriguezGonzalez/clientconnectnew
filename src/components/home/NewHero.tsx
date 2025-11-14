@@ -241,7 +241,7 @@ export function NewHero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 3.2, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-16 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
@@ -277,7 +277,7 @@ export function NewHero() {
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
+                transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
                 className="absolute left-1/2 top-1/2 w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-10 rounded-full border border-white/20 -translate-x-1/2 flex items-center justify-center" 
                 style={{ backgroundColor: circleBackground }} 
               >

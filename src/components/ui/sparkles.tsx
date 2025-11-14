@@ -17,17 +17,20 @@ export function Sparkles({
   options = {},
 }) {
   const [isReady, setIsReady] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
     }).then(() => {
       setIsReady(true);
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 200);
     });
   }, []);
 
   const id = useId();
-
   const defaultOptions = {
     background: {
       color: {
@@ -77,7 +80,7 @@ export function Sparkles({
   };
 
   return (
-    isReady && (
+    isReady && isVisible && (
       <Particles
         id={id}
         options={{ ...defaultOptions, ...options }}
