@@ -31,7 +31,7 @@ export function NewHero() {
     [0, 1],
     [
       "rgb(5, 10, 25)",
-      "rgb(20, 35, 90)"
+      "rgb(30, 50, 120)"
     ]
   );
 
