@@ -220,18 +220,15 @@ export function NewHero() {
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50"
           >
             <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-all cursor-pointer w-full sm:w-auto">
-              <div className="w-6 h-6 relative overflow-hidden">
-                <Send className="w-6 h-6 text-white" />
-              </div>
               <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
-                Message
+                How we do it
               </p>
             </a>
-            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-[#06B6D4] hover:bg-[#0891B2] rounded-[50px] px-5 py-3 transition-all cursor-pointer shadow-lg w-full sm:w-auto">
+            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-[#06B6D4]/80 rounded-[50px] px-5 py-3 transition-all cursor-pointer w-full sm:w-auto">
               <div className="w-[18px] h-[14px] relative overflow-hidden">
-                <Calendar className="w-[17px] h-[14px] text-white" />
+                <Calendar className="w-[17px] h-[14px] text-[#06B6D4]" />
               </div>
-              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+              <p className="text-[14px] font-medium leading-5 text-[#06B6D4] whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
                 Book Free Consultation
               </p>
             </a>
