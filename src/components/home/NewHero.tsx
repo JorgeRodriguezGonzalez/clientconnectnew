@@ -41,7 +41,7 @@ export function NewHero() {
     [0, 0.5, 1],
     [
       "rgb(5, 10, 25)",
-      "rgb(100, 180, 220)",
+      "rgb(5, 10, 25)",
       "rgb(255, 255, 255)"
     ]
   );
@@ -217,14 +217,14 @@ export function NewHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50"
+            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
           >
-            <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-all cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-all cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100]">
               <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
                 How we do it
               </p>
             </a>
-            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-cyan-300/80 rounded-[50px] px-5 py-3 transition-all cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)]">
+            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-cyan-300/80 rounded-[50px] px-5 py-3 transition-all cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100]">
               <div className="w-[18px] h-[14px] relative overflow-hidden">
                 <Calendar className="w-[17px] h-[14px] text-cyan-300" />
               </div>
