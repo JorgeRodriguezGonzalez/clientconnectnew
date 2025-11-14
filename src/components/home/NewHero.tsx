@@ -239,8 +239,8 @@ export function NewHero() {
 
           {/* Trusted Brands */}
           <motion.div
-            initial={{ opacity: 0, y: 80 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-16 relative z-50"
           >
