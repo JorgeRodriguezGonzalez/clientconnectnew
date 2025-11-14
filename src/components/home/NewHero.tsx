@@ -90,7 +90,7 @@ export function NewHero() {
   const circleMaxSize = useTransform(
     scrollYProgress,
     [0, 0.65, 1],
-    ["2000px", "2000px", "2000px"]
+    ["2000px", "2000px", "4000px"]
   );
 
   useEffect(() => {
@@ -339,7 +339,7 @@ export function NewHero() {
                 style={{ 
                   opacity: brandsOpacity
                 }}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[35%] z-[9999] w-full"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-[5%] z-[9999] w-full"
               >
                 <BrandsShowcaseSection />
               </motion.div>
