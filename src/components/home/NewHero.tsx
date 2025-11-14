@@ -28,10 +28,11 @@ export function NewHero() {
 
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 1],
+    [0, 0.7, 1],
     [
       "rgb(5, 10, 25)",
-      "rgb(30, 50, 120)"
+      "rgb(30, 50, 120)",
+      "rgb(255, 255, 255)"
     ]
   );
 
