@@ -289,7 +289,7 @@ export function NewHero() {
                     letterSpacing: '-1.5px',
                     color: belowArcTextColor
                   }}
-                  className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center absolute top-[5%] left-1/2 -translate-x-1/2 z-50 px-8"
+                  className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center absolute top-[8%] left-1/2 -translate-x-1/2 z-50 px-8"
                 >
                   How We Do It
                 </motion.h2>
