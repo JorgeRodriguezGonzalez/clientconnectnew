@@ -30,7 +30,7 @@ export function NewHero() {
     scrollYProgress,
     [0, 1],
     [
-      "rgb(5, 10, 25)",
+      "rgb(2, 5, 15)",
       "rgb(20, 35, 90)"
     ]
   );
@@ -40,8 +40,8 @@ export function NewHero() {
     scrollYProgress,
     [0, 0.5, 1],
     [
-      "rgb(5, 10, 25)",
-      "rgb(5, 10, 25)",
+      "rgb(2, 5, 15)",
+      "rgb(2, 5, 15)",
       "rgb(255, 255, 255)"
     ]
   );
