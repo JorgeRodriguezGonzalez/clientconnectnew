@@ -87,6 +87,12 @@ export function NewHero() {
     ["50%", "50%", "0%"]
   );
 
+  const circleMaxSize = useTransform(
+    scrollYProgress,
+    [0, 0.65, 1],
+    ["2000px", "2000px", "4000px"]
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -306,8 +312,13 @@ export function NewHero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
-                className="absolute left-1/2 top-1/2 w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-[5] border border-white/20 -translate-x-1/2 flex items-center justify-center" 
-                style={{ backgroundColor: circleBackground, borderRadius: circleBorderRadius }} 
+                className="absolute left-1/2 top-1/2 w-[2000vw] h-[2000vw] z-[5] border border-white/20 -translate-x-1/2 flex items-center justify-center" 
+                style={{ 
+                  backgroundColor: circleBackground, 
+                  borderRadius: circleBorderRadius,
+                  maxWidth: circleMaxSize,
+                  maxHeight: circleMaxSize
+                }} 
               >
                 {/* Título dentro del círculo */}
                 <motion.h2
