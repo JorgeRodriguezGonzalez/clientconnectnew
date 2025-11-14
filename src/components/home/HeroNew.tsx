@@ -1,169 +1,319 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo } from "react";
+import { useScroll, useTransform } from "framer-motion";
 import { Send, Calendar } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Sparkles } from "@/components/ui/sparkles";
 
-export const HeroNew = () => {
-  return (
-    <div className="w-full flex flex-col items-center justify-end px-5" style={{
-      maxWidth: '1260px',
-      height: '943.4px',
-      margin: '0 auto'
-    }}>
-      <div className="z-[2] flex items-center justify-center gap-6 w-full max-w-[1260px]" style={{
-        height: '568.4px',
-        minHeight: '568.4px'
-      }}>
-        <div className="flex-1 flex items-center justify-center gap-2.5 h-[545px]">
-          <div className="flex flex-col items-start justify-center gap-4 w-[976px]" style={{
-            height: '387.8px'
-          }}>
-            {/* Badge superior */}
-            <div className="flex items-center justify-center gap-1.5 h-[21px] bg-white border border-gray-200 rounded-[2px] px-3 py-0.5" style={{
-              width: '296.2px'
-            }}>
-              <div className="flex-shrink-0 w-4 h-4 rounded-[2px] overflow-hidden p-0.5">
-                <div className="w-full h-full bg-green-500 rounded-full" />
-              </div>
-              <div className="flex items-center justify-center" style={{
-                width: '260.2px',
-                height: '17px'
-              }}>
-                <p className="text-[11px] font-medium leading-[16.6px] text-center whitespace-nowrap opacity-80">
-                  Sydney's Premier Marketing Agency • 100+ Happy Clients
-                </p>
-              </div>
-            </div>
+export function NewHero() {
+  const ref = React.useRef(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [titleNumber, setTitleNumber] = useState(0);
 
-            <div className="flex flex-col items-start justify-center gap-8 w-[976px]" style={{
-              height: '350.8px'
-            }}>
-              <div className="flex flex-col items-start justify-center gap-6 w-[976px]" style={{
-                height: '218.8px'
-              }}>
-                {/* Título principal */}
-                <h1 className="text-[64px] font-bold leading-[70.4px] text-left w-[976px]" style={{
-                  fontFamily: '"Inter Display", sans-serif',
-                  letterSpacing: '-1.8px',
-                  height: '140.8px'
-                }}>
-                  Connecting Sydney Businesses with Their Ideal Clients
-                </h1>
-                
-                {/* Subtítulo */}
-                <p className="text-[18px] font-normal leading-[27px] text-left text-[#333333] w-[683.2px] h-[54px]" style={{
-                  fontFamily: '"Inter Display", sans-serif',
-                  letterSpacing: '0.2px'
-                }}>
-                  We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
-                </p>
-              </div>
-
-              {/* CTAs */}
-              <div className="flex items-center gap-2 w-[976px] h-[42px]">
-                {/* CTA Secundario */}
-                <a 
-                  href="#contact" 
-                  className="flex items-center justify-center gap-[7px] h-[42px] bg-[#EDEDED] hover:bg-gray-300 rounded-[50px] px-4 py-2 transition-all cursor-pointer" 
-                  style={{
-                    width: '114.6px'
-                  }}
-                >
-                  <div className="w-6 h-6 relative overflow-hidden">
-                    <Send className="w-6 h-6 text-[#3255D2]" />
-                  </div>
-                  <p className="text-[14px] font-medium leading-5 text-right whitespace-nowrap" style={{
-                    fontFamily: '"Inter Display", sans-serif',
-                    letterSpacing: '0.2px',
-                    width: '57.6px'
-                  }}>
-                    Message
-                  </p>
-                </a>
-
-                {/* CTA Principal */}
-                <a 
-                  href="#contact" 
-                  className="flex items-center justify-center gap-1.5 h-[42px] bg-[#F6941D] hover:bg-[#e58315] rounded-[50px] px-5 py-3 transition-all cursor-pointer shadow-lg" 
-                  style={{
-                    width: '220px'
-                  }}
-                >
-                  <div className="w-[18px] h-[14px] relative overflow-hidden">
-                    <Calendar className="w-[17px] h-[14px] text-white" />
-                  </div>
-                  <p className="text-[14px] font-medium leading-5 text-right text-white whitespace-nowrap z-[1]" style={{
-                    fontFamily: '"Inter Display", sans-serif',
-                    letterSpacing: '0.2px'
-                  }}>
-                    Book Free Consultation →
-                  </p>
-                </a>
-              </div>
-
-              {/* Badges */}
-              <div className="flex items-center gap-2 w-[976px] h-[26px] overflow-hidden">
-                <div className="relative h-[23px] flex-shrink-0 bg-white border border-gray-200 rounded-[2px] px-3" style={{
-                  width: '117px'
-                }}>
-                  <p className="flex items-center justify-center h-full text-[11px] font-medium leading-[16.6px] text-center opacity-80">
-                    Google Partner
-                  </p>
-                </div>
-
-                <div className="relative h-[23px] flex-shrink-0 bg-white border border-gray-200 rounded-[2px] px-3" style={{
-                  width: '100px'
-                }}>
-                  <p className="flex items-center justify-center h-full text-[11px] font-medium leading-[16.6px] text-center opacity-80">
-                    5★ Rated Agency
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Sección de logos de clientes */}
-      <div className="z-[1] flex flex-col items-start justify-center gap-8 w-full max-w-[1260px] h-[200px] py-[60px]">
-        <p className="text-[11px] font-normal leading-3 text-center uppercase text-[#71717A] w-full" style={{
-          fontFamily: '"JetBrains Mono", monospace',
-          letterSpacing: 'normal'
-        }}>
-          Trusted by 100+ Sydney businesses
-        </p>
-
-        {/* Logos placeholder */}
-        <div className="flex flex-wrap items-center justify-center gap-[50px] w-full opacity-40">
-          {/* Logo 1 */}
-          <div className="flex items-center justify-center w-[120px] h-[40px] bg-gray-300 rounded-md">
-            <span className="text-gray-600 font-bold text-sm">COMPANY</span>
-          </div>
-
-          {/* Logo 2 */}
-          <div className="flex items-center justify-center w-[100px] h-[40px] bg-gray-300 rounded-md">
-            <span className="text-gray-600 font-bold text-sm">BRAND</span>
-          </div>
-
-          {/* Logo 3 */}
-          <div className="flex items-center justify-center w-[110px] h-[40px] bg-gray-300 rounded-md">
-            <span className="text-gray-600 font-bold text-sm">CLIENT</span>
-          </div>
-
-          {/* Logo 4 */}
-          <div className="flex items-center justify-center w-[130px] h-[40px] bg-gray-300 rounded-md">
-            <span className="text-gray-600 font-bold text-sm">PARTNER</span>
-          </div>
-
-          {/* Logo 5 */}
-          <div className="flex items-center justify-center w-[90px] h-[40px] bg-gray-300 rounded-md">
-            <span className="text-gray-600 font-bold text-sm">BUSS</span>
-          </div>
-
-          {/* Logo 6 */}
-          <div className="flex items-center justify-center w-[115px] h-[40px] bg-gray-300 rounded-md">
-            <span className="text-gray-600 font-bold text-sm">STARTUP</span>
-          </div>
-        </div>
-      </div>
-    </div>
+  const words = useMemo(
+    () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales"],
+    []
   );
-};
+
+  const wordWidths: { [key: string]: number } = {
+    "Light": 110,
+    "Leads": 135,
+    "Clients": 150,
+    "Sales": 120
+  };
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"],
+  });
+
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [
+      "rgb(5, 10, 25)",
+      "rgb(20, 35, 90)"
+    ]
+  );
+
+  // Transforms para el círculo y el texto
+  const circleBackground = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [
+      "rgb(5, 10, 25)",
+      "rgb(5, 10, 25)",
+      "rgb(255, 255, 255)"
+    ]
+  );
+
+  const belowArcTextColor = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [
+      "rgb(255, 255, 255)",
+      "rgb(255, 255, 255)",
+      "rgb(0, 0, 0)"
+    ]
+  );
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (titleNumber === words.length - 1) {
+        setTitleNumber(0);
+      } else {
+        setTitleNumber(titleNumber + 1);
+      }
+    }, 3000);
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber, words]);
+
+  const currentWord = words[titleNumber];
+  const currentWidth = wordWidths[currentWord] || 100;
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ backgroundColor }}
+      className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+    >
+      <div className="top-[-40px] h-[150vh] flex justify-center pt-32">
+        <div className="z-10 flex flex-col items-center justify-center gap-4 w-full px-5 relative">
+
+          {/* LAMP + TÍTULO: superpuestos 30px */}
+          <div className="flex flex-col items-center gap-[-30px]">
+            {/* Lamp Effect */}
+            <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
+              <motion.div
+                initial={{ opacity: 0.5, width: "15rem" }}
+                whileInView={{ opacity: 1, width: "30rem" }}
+                transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
+                style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
+                className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-cyan-500 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
+              >
+                <motion.div
+                  className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
+                  style={{ backgroundColor }}
+                />
+                <motion.div
+                  className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]"
+                  style={{ backgroundColor }}
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0.5, width: "15rem" }}
+                whileInView={{ opacity: 1, width: "30rem" }}
+                transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
+                style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
+                className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-cyan-500 text-white [--conic-position:from_290deg_at_center_top]"
+              >
+                <motion.div
+                  className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]"
+                  style={{ backgroundColor }}
+                />
+                <motion.div
+                  className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
+                  style={{ backgroundColor }}
+                />
+              </motion.div>
+
+              <motion.div
+                className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl"
+                style={{ backgroundColor }}
+              />
+              <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent opacity-10 backdrop-blur-md"></div>
+              <div className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-cyan-500 opacity-50 blur-3xl"></div>
+
+              <motion.div
+                initial={{ width: "8rem" }}
+                whileInView={{ width: "16rem" }}
+                transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-cyan-400 blur-2xl"
+              ></motion.div>
+
+              <motion.div
+                initial={{ width: "15rem" }}
+                whileInView={{ opacity: 1, width: "30rem" }}
+                transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-cyan-400"
+              ></motion.div>
+
+              <motion.div
+                className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]"
+                style={{ backgroundColor }}
+              />
+            </div>
+
+            {/* Título principal (sin mt-0) */}
+            <motion.h1
+              initial={{ opacity: 0, y: 80 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
+              className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
+              style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.5px' }}
+            >
+              We Bring{" "}
+              <motion.span
+                className="relative inline-flex items-center overflow-hidden"
+                animate={{ width: currentWidth }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                style={{ minHeight: '1em' }}
+              >
+                {words.map((word, index) => (
+                  <motion.span
+                    key={index}
+                    className="font-light"
+                    initial={{ opacity: 0, y: -100 }}
+                    transition={{ type: "spring", stiffness: 50, opacity: { duration: 0.2 } }}
+                    animate={
+                      titleNumber === index
+                        ? { y: 0, opacity: 1, position: "relative" }
+                        : { y: titleNumber > index ? 20 : -50, opacity: 0, position: "absolute", top: 0, left: 0 }
+                    }
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </motion.span>{" "}
+              to Your Business Growth
+            </motion.h1>
+          </div>
+
+          {/* Subtítulo */}
+          <motion.p
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
+            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-6 mb-6"
+            style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
+          >
+            We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50"
+          >
+            <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-all cursor-pointer w-full sm:w-auto">
+              <div className="w-6 h-6 relative overflow-hidden">
+                <Send className="w-6 h-6 text-white" />
+              </div>
+              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+                Message
+              </p>
+            </a>
+            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-[#06B6D4] hover:bg-[#0891B2] rounded-[50px] px-5 py-3 transition-all cursor-pointer shadow-lg w-full sm:w-auto">
+              <div className="w-[18px] h-[14px] relative overflow-hidden">
+                <Calendar className="w-[17px] h-[14px] text-white" />
+              </div>
+              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+                Book Free Consultation
+              </p>
+            </a>
+          </motion.div>
+
+          {/* Trusted Brands */}
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.8, duration: 0.8, ease: "easeOut" }}
+            className="w-full mt-16 relative z-50"
+          >
+            <div className="mx-auto w-full max-w-2xl">
+              <div className="text-center text-2xl md:text-[16px] leading-tight">
+                <span className="text-cyan-300">Trusted by experts.</span>
+                <br />
+                <span className="text-white">Used by the leaders.</span>
+              </div>
+              <div className="mt-6 grid grid-cols-5 text-white">
+                <Retool />
+                <Vercel />
+                <Remote />
+                <Arc />
+                <Raycast />
+              </div>
+            </div>
+
+            {/* Sparkles Effect */}
+            <div className="relative  -mt-[550px] h-[1300px] w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
+              <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
+              
+              {/* Círculo completo con transición de color y título dentro */}
+              <motion.div 
+                className="absolute left-1/2 top-1/2 w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-10 rounded-full border border-white/20 -translate-x-1/2 flex items-center justify-center" 
+                style={{ backgroundColor: circleBackground }} 
+              >
+                {/* Título dentro del círculo */}
+                <motion.h2
+                  initial={{ opacity: 0, y: 80 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.0, duration: 0.8, ease: "easeOut" }}
+                  style={{ 
+                    fontFamily: '"Inter Display", sans-serif', 
+                    letterSpacing: '-1.2px',
+                    color: belowArcTextColor
+                  }}
+                  className="text-2xl md:text-[40px] font-light leading-tight md:leading-[50px] text-center relative z-50 px-8"
+                >
+                  Your New Title Here
+                </motion.h2>
+              </motion.div>
+              
+              <Sparkles
+                density={1200}
+                className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                color="#ffffff"
+              />
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// Logos como texto
+const Retool = () => (
+  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
+    Retool
+  </div>
+);
+
+const Vercel = () => (
+  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
+    Vercel
+  </div>
+);
+
+const Remote = () => (
+  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
+    Remote
+  </div>
+);
+
+const Arc = () => (
+  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
+    Arc
+  </div>
+);
+
+const Raycast = () => (
+  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
+    Raycast
+  </div>
+);
