@@ -40,18 +40,20 @@ export function NewHero() {
   // Transforms para el círculo y el texto
   const circleBackground = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.6, 1],
+    [0, 0.3, 0.6, 0.75, 0.8, 1],
     [
       "rgb(5, 10, 25)",
       "rgb(22, 34, 69)",
       "rgb(103, 130, 214)",
+      "rgb(103, 130, 214)",
+      "rgb(255, 255, 255)",
       "rgb(255, 255, 255)"
     ]
   );
 
   const belowArcTextColor = useTransform(
     scrollYProgress,
-    [0, 0.48, 0.5, 1],
+    [0, 0.58, 0.6, 1],
     [
       "rgb(255, 255, 255)",
       "rgb(255, 255, 255)",
