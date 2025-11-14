@@ -62,6 +62,12 @@ export function NewHero() {
     ]
   );
 
+  const textOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.5, 0.6],
+    [0, 0, 1]
+  );
+
   const circleBorderRadius = useTransform(
     scrollYProgress,
     [0, 0.65, 1],
@@ -292,17 +298,15 @@ export function NewHero() {
               >
                 {/* Título dentro del círculo */}
                 <motion.h2
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 3.6, duration: 0.8, ease: "easeOut" }}
                   style={{ 
                     fontFamily: '"Inter Display", sans-serif', 
                     letterSpacing: '-1.5px',
-                    color: belowArcTextColor
+                    color: belowArcTextColor,
+                    opacity: textOpacity
                   }}
                   className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center absolute top-[8%] left-1/2 -translate-x-1/2 z-50 px-8"
                 >
-                  How We Do It
+                  This Is How We Do It
                 </motion.h2>
               </motion.div>
               
