@@ -7,7 +7,7 @@ type BrandsShowcaseSectionProps = Record<string, never>;
 
 export const BrandsShowcaseSection = (_props: BrandsShowcaseSectionProps) => {
   return (
-    <div className="w-full bg-white flex flex-col items-center justify-center gap-16 px-10 py-0">
+    <div className="w-full flex flex-col items-center justify-center gap-16 px-10 py-0">
       {/* Header Section */}
       <div className="flex flex-col items-center justify-center gap-4 max-w-[800px] text-center">
         <p 
