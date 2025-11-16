@@ -155,7 +155,7 @@ GalleryCol.displayName = "GalleryCol"
 export const ContainerStagger = React.forwardRef
   HTMLDivElement,
   HTMLMotionProps<"div">
->(({ className, viewport, transition, ...props }, ref) => {
+>(function ContainerStagger({ className, viewport, transition, ...props }, ref) {
   return (
     <motion.div
       className={cn("relative", className)}
@@ -176,7 +176,7 @@ ContainerStagger.displayName = "ContainerStagger"
 export const ContainerAnimated = React.forwardRef
   HTMLDivElement,
   HTMLMotionProps<"div">
->(({ className, transition, ...props }, ref) => {
+>(function ContainerAnimated({ className, transition, ...props }, ref) {
   return (
     <motion.div
       ref={ref}
