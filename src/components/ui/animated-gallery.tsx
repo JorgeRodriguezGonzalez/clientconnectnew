@@ -140,7 +140,7 @@ export const GalleryCol = ({
   ...props
 }: HTMLMotionProps<"div"> & { yRange?: string[] }) => {
   const { scrollYProgress } = useContainerScrollContext()
-  const y = useTransform(scrollYProgress, [0.3, 0.8], yRange)
+  const y = useTransform(scrollYProgress, [0.1, 0.6], yRange)
 
   return (
     <motion.div
