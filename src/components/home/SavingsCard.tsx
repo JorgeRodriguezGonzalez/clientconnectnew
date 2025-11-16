@@ -101,10 +101,10 @@ export const SavingsCard = ({
             />
           </svg>
 
-          <svg className="absolute top-[49px] left-[-15px] w-[343px] h-[7px]" viewBox="0 0 343 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg className="absolute bottom-[-77px] left-[-167.4px] w-[494px] h-[286px]" viewBox="0 0 494 286" fill="none" xmlns="http://www.w3.org/2000/svg">
             <motion.path 
               key={`line-${hoverCount}`}
-              d="M 2.33 3.5 L 367.931 3.5" 
+              d="M 489.248 5.489 C 450.411 67.986 400.334 97.664 374.382 97.664 C 343.334 97.664 333.834 78.489 306.334 78.489 C 270.376 78.489 256.769 133.668 239.781 135.692 C 211.601 139.05 204.045 106.821 181.936 126.692 C 160.817 145.673 145.501 144.542 128.933 138.472 C 109.017 131.175 97.916 147.548 92.857 156.811 C 86.727 168.036 78.454 188.04 53.822 170.122 C 29.189 152.204 27.801 174.942 20.839 174.892" 
               fill="transparent" 
               stroke="rgba(103, 232, 249, 0.5)" 
               strokeWidth="3" 
