@@ -32,7 +32,7 @@ export const AnimatedGallerySection = () => {
       <ContainerScroll className="relative h-[300vh] bg-transparent">
         <ContainerSticky className="h-svh bg-transparent">
           <GalleryContainer className="bg-transparent gap-[30px]">
-            <GalleryCol yRange={["-10%", "2%"]} className="-mt-2 gap-[10px]">
+            <GalleryCol yRange={["-5%", "2%"]} className="-mt-2 gap-[10px]">
               {IMAGES_1.map((imageUrl, index) => (
                 <img
                   key={index}
@@ -42,7 +42,7 @@ export const AnimatedGallerySection = () => {
                 />
               ))}
             </GalleryCol>
-            <GalleryCol className="mt-[-50%] gap-[10px]" yRange={["15%", "5%"]}>
+            <GalleryCol className="mt-[-50%] gap-[10px]" yRange={["10%", "5%"]}>
               {IMAGES_2.map((imageUrl, index) => (
                 <img
                   key={index}
@@ -52,7 +52,7 @@ export const AnimatedGallerySection = () => {
                 />
               ))}
             </GalleryCol>
-            <GalleryCol yRange={["-10%", "2%"]} className="-mt-2 gap-[10px]">
+            <GalleryCol yRange={["-5%", "2%"]} className="-mt-2 gap-[10px]">
               {IMAGES_3.map((imageUrl, index) => (
                 <img
                   key={index}
