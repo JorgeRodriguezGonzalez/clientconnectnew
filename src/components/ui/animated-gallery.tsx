@@ -34,18 +34,20 @@ const blurVariants: Variants = {
   },
 }
 
-const ContainerScrollContext = React.createContext
-  ContainerScrollContextValue | undefined
->(undefined)
+const ContainerScrollContext = React.createContext<ContainerScrollContextValue>({
+  scrollYProgress: null as any,
+})
+
 function useContainerScrollContext() {
   const context = React.useContext(ContainerScrollContext)
-  if (!context) {
+  if (!context || !context.scrollYProgress) {
     throw new Error(
       "useContainerScrollContext must be used within a ContainerScroll Component"
     )
   }
   return context
 }
+
 export const ContainerScroll = ({
   children,
   className,
@@ -75,6 +77,7 @@ export const ContainerScroll = ({
   )
 }
 ContainerScroll.displayName = "ContainerScroll"
+
 export const ContainerSticky = ({
   className,
   style,
