@@ -28,7 +28,7 @@ const IMAGES_3 = [
 
 export const AnimatedGallerySection = () => {
   return (
-    <div className="relative -mt-10 bg-transparent">
+    <div className="relative -mt-32 bg-transparent">
       <ContainerScroll className="relative h-[200vh] bg-transparent">
         <ContainerSticky className="h-svh bg-transparent">
           <GalleryContainer className="bg-transparent gap-[30px]">
