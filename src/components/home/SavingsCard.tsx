@@ -9,7 +9,7 @@ type SavingsCardProps = {
 };
 
 export const SavingsCard = ({
-  title = 'Savings',
+  title = 'Growth',
   badge = 'Highest (This month)',
   amount = '$100,000+ Saved for Brands',
   description = 'so they can reinvest where it matters the most'
@@ -51,9 +51,10 @@ export const SavingsCard = ({
           WebkitMaskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)'
         }}>
           <div className="absolute top-[21px] left-[22px]">
-            <p className="text-[28px] font-semibold text-black leading-[33.6px] whitespace-nowrap" style={{
+            <p className="text-[28px] font-light text-black leading-[33.6px] whitespace-nowrap" style={{
               fontFamily: '"Inter Display", sans-serif',
-              letterSpacing: '-0.8px'
+              letterSpacing: '-0.8px',
+              fontWeight: 300
             }}>
               {title}
             </p>
@@ -82,7 +83,7 @@ export const SavingsCard = ({
               d="M 53.822 170.122 C 29.189 152.204 27.801 174.942 20.839 174.892 L 3.089 174.764 L 4.869 279.745 L 489.248 283.23 L 489.248 5.489 C 450.411 67.986 400.334 97.664 374.382 97.664 C 343.334 97.664 333.834 78.489 306.334 78.489 C 270.376 78.489 256.769 133.668 239.781 135.692 C 211.601 139.05 204.045 106.821 181.936 126.692 C 160.817 145.673 145.501 144.542 128.933 138.472 C 109.017 131.175 97.916 147.548 92.857 156.811 C 86.727 168.036 78.454 188.04 53.822 170.122 Z" 
               fill="url(#chartGradient)" 
               stroke="rgb(103, 232, 249)" 
-              strokeWidth="2.77" 
+              strokeWidth="1.77" 
               strokeMiterlimit="10" 
               initial={{
                 pathLength: 0,
@@ -110,10 +111,12 @@ export const SavingsCard = ({
               strokeMiterlimit="10" 
               strokeDasharray="9.07,9.07" 
               initial={{
-                pathLength: 0
+                pathLength: 0,
+                pathOffset: 1
               }} 
               animate={{
-                pathLength: 1
+                pathLength: 1,
+                pathOffset: 0
               }} 
               transition={{
                 duration: 1,
