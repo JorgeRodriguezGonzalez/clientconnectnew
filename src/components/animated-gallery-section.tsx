@@ -36,7 +36,7 @@ export const AnimatedGallerySection = () => {
               {IMAGES_1.map((imageUrl, index) => (
                 <img
                   key={index}
-                  className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow mb-[30px]"
+                  className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow mb-[60px]"
                   src={imageUrl}
                   alt="gallery item"
                 />
