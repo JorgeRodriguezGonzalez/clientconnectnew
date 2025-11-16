@@ -56,7 +56,7 @@ export const AnimatedGallerySection = () => {
 
   return (
     <div ref={ref} className="relative -mt-32 bg-transparent">
-      <ContainerScroll className="relative h-[200vh] bg-transparent">
+      <ContainerScroll className="relative h-[300vh] bg-transparent">
         <ContainerSticky className="h-svh bg-transparent">
           <GalleryContainer className="bg-transparent gap-[30px]">
             <GalleryCol yRange={["-5%", "2%"]} className="-mt-2 gap-[10px]">
