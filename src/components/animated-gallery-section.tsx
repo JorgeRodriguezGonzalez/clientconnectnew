@@ -46,7 +46,7 @@ export const AnimatedGallerySection = () => {
               {IMAGES_2.map((imageUrl, index) => (
                 <img
                   key={index}
-                  className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow mb-[10px]"
+                  className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow mb-[90px]"
                   src={imageUrl}
                   alt="gallery item"
                 />
@@ -56,7 +56,7 @@ export const AnimatedGallerySection = () => {
               {IMAGES_3.map((imageUrl, index) => (
                 <img
                   key={index}
-                  className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow mb-[10px]"
+                  className="aspect-video block h-auto max-h-full w-full rounded-md object-cover shadow mb-[90px]"
                   src={imageUrl}
                   alt="gallery item"
                 />
