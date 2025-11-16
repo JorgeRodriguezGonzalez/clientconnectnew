@@ -34,7 +34,7 @@ const blurVariants: Variants = {
   },
 }
 
-const ContainerScrollContext = React.createContext<
+const ContainerScrollContext = React.createContext
   ContainerScrollContextValue | undefined
 >(undefined)
 function useContainerScrollContext() {
@@ -106,8 +106,8 @@ export const GalleryContainer = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & HTMLMotionProps<"div">) => {
   const { scrollYProgress } = useContainerScrollContext()
-  const rotateX = useTransform(scrollYProgress, [0, 0.5], [75, 0])
-  const scale = useTransform(scrollYProgress, [0.5, 0.9], [1.2, 1])
+  const rotateX = useTransform(scrollYProgress, [0, 0.3], [75, 0])
+  const scale = useTransform(scrollYProgress, [0.3, 0.7], [1.2, 1])
 
   return (
     <motion.div
@@ -137,7 +137,7 @@ export const GalleryCol = ({
   ...props
 }: HTMLMotionProps<"div"> & { yRange?: string[] }) => {
   const { scrollYProgress } = useContainerScrollContext()
-  const y = useTransform(scrollYProgress, [0.5, 1], yRange)
+  const y = useTransform(scrollYProgress, [0.3, 0.8], yRange)
 
   return (
     <motion.div
@@ -152,7 +152,7 @@ export const GalleryCol = ({
 }
 GalleryCol.displayName = "GalleryCol"
 
-export const ContainerStagger = React.forwardRef<
+export const ContainerStagger = React.forwardRef
   HTMLDivElement,
   HTMLMotionProps<"div">
 >(({ className, viewport, transition, ...props }, ref) => {
@@ -173,7 +173,7 @@ export const ContainerStagger = React.forwardRef<
 })
 ContainerStagger.displayName = "ContainerStagger"
 
-export const ContainerAnimated = React.forwardRef<
+export const ContainerAnimated = React.forwardRef
   HTMLDivElement,
   HTMLMotionProps<"div">
 >(({ className, transition, ...props }, ref) => {
