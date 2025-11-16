@@ -111,12 +111,10 @@ export const SavingsCard = ({
               strokeMiterlimit="10" 
               strokeDasharray="9.07,9.07" 
               initial={{
-                pathLength: 0,
-                pathOffset: 1
+                pathLength: 0
               }} 
               animate={{
-                pathLength: 1,
-                pathOffset: 0
+                pathLength: 1
               }} 
               transition={{
                 duration: 1,
