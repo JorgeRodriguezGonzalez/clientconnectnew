@@ -20,9 +20,9 @@ export const BrandsShowcaseSection = (_props: BrandsShowcaseSectionProps) => {
 
       {/* Cards Grid */}
       <div className="flex flex-wrap items-start justify-center gap-8 w-full max-w-[1200px]">
-        <SavingsCard />
         <BrandsShowcaseCard />
         <SkillsShowcaseCard />
+        <SavingsCard />
       </div>
     </div>
   );
