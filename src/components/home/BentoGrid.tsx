@@ -17,7 +17,7 @@ export const BentoGrid = ({
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <div className="flex flex-col items-center w-full gap-12">
+    <div className="flex flex-col items-center w-full gap-12 mt-16">
       <BrandsShowcaseSection />
       
       <motion.div 
