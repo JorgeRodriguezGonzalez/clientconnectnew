@@ -88,7 +88,7 @@ export function FinalHero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
-              className="w-full h-[80px] relative flex items-center justify-center pt-32 overflow-visible"
+              className="w-full h-[80px] relative flex items-center justify-center pt-64 overflow-visible"
             >
               <motion.div
                 initial={{ opacity: 0.5, width: "15rem" }}
