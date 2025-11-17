@@ -18,7 +18,10 @@ export const TextAndImage = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex items-center gap-8 w-full max-w-[1040px] min-h-[280px] bg-white rounded-[28px] p-8 shadow-lg z-[999999] border-4 border-black"
+      className="relative flex items-center gap-8 w-full max-w-[1040px] min-h-[280px] bg-white rounded-[28px] p-8 z-[999999]"
+      style={{
+        boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1), 0 -10px 15px -3px rgb(0 0 0 / 0.1)'
+      }}
       initial={{
         opacity: 0,
         y: 20
