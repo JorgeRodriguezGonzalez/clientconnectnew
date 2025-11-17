@@ -17,10 +17,7 @@ export const BrandsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[280px] bg-white rounded-[28px] p-1.5 overflow-hidden" 
-      style={{
-        boxShadow: 'rgba(0, 0, 0, 0) 0px 24px 32px 0px'
-      }} 
+      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[280px] bg-white rounded-[28px] p-1.5 overflow-hidden border-[1.77px] border-[#1e3a8a]" 
       initial={{
         opacity: 0,
         y: 20
@@ -35,9 +32,6 @@ export const BrandsShowcaseCard = ({
       transition={{
         duration: 0.5
       }} 
-      whileHover={{
-        boxShadow: 'rgba(0, 0, 0, 0.08) 0px 24px 32px 0px'
-      }}
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
       <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[192px] bg-[#F5F5F5] rounded-[22px] overflow-hidden">
