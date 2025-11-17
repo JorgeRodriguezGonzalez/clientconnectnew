@@ -76,7 +76,7 @@ export function FinalHero() {
     <motion.div
       ref={ref}
       style={{ backgroundColor }}
-      className="h-[100vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[130vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
         <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
