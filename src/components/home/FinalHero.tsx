@@ -76,7 +76,7 @@ export function FinalHero() {
     <motion.div
       ref={ref}
       style={{ backgroundColor }}
-      className="h-[130vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[100vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
         <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
@@ -191,7 +191,7 @@ export function FinalHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-3 mb-3"
+            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
             style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
@@ -224,7 +224,7 @@ export function FinalHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.8, duration: 0.8, ease: "easeOut" }}
-            className="w-full mt-8 relative z-50"
+            className="w-full mt-12 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
               <div className="text-center text-2xl md:text-[16px] leading-tight">
@@ -232,7 +232,7 @@ export function FinalHero() {
                 <br />
                 <span className="text-white">Used by the leaders.</span>
               </div>
-              <div className="mt-4 grid grid-cols-5 text-white">
+              <div className="mt-6 grid grid-cols-5 text-white">
                 <div className="w-full flex items-center justify-center text-white text-lg font-medium">Retool</div>
                 <div className="w-full flex items-center justify-center text-white text-lg font-medium">Vercel</div>
                 <div className="w-full flex items-center justify-center text-white text-lg font-medium">Remote</div>
