@@ -242,7 +242,7 @@ export function FinalHero() {
             </div>
 
             {/* Contenedor Sparkles - Arco y Sparkles */}
-            <div className="relative -mt-20 -mb-32 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
+            <div className="relative -mt-20 -mb-48 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               <motion.div 
                 className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20"
