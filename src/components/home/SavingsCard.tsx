@@ -101,6 +101,18 @@ export const SavingsCard = ({
             />
           </svg>
 
+          {/* Línea horizontal fija (negra) */}
+          <svg className="absolute top-[49px] left-[-15px] w-[343px] h-[7px]" viewBox="0 0 343 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path 
+              d="M 2.33 3.5 L 367.931 3.5" 
+              fill="transparent" 
+              stroke="rgba(0, 0, 0, 0.2)" 
+              strokeWidth="1" 
+              strokeMiterlimit="10" 
+            />
+          </svg>
+
+          {/* Línea curva animada (azul eléctrico) */}
           <svg className="absolute bottom-[-77px] left-[-167.4px] w-[494px] h-[286px]" viewBox="0 0 494 286" fill="none" xmlns="http://www.w3.org/2000/svg">
             <motion.path 
               key={`line-${hoverCount}`}
