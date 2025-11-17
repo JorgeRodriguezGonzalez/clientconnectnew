@@ -14,7 +14,7 @@ export function FinalHero() {
     []
   );
 
-  const wordWidths: { [key: string]: number } = {
+  const wordWidths = {
     "Light": 110,
     "Leads": 135,
     "Clients": 150,
@@ -76,14 +76,15 @@ export function FinalHero() {
     <motion.div
       ref={ref}
       style={{ backgroundColor }}
-      className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[100vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
-      <div className="top-[-40px] h-[150vh] flex justify-center pt-8">
+      {/* AQUÍ SE CONTROLA EL ESPACIO: top-[-40px] y pt-32 */}
+      <div className="top-[-40px] h-[150vh] flex justify-center pt-32">
         <div className="z-10 flex flex-col items-center justify-center gap-4 w-full px-5 relative">
 
           {/* LAMP + TÍTULO: superpuestos 30px */}
           <div className="flex flex-col items-center gap-[-30px]">
-            {/* Lamp Effect */}
+            {/* Lamp Effect - AQUÍ TAMBIÉN: pt-80 controla el espacio interno */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -151,7 +152,7 @@ export function FinalHero() {
               />
             </motion.div>
 
-            {/* Título principal (sin mt-0) */}
+            {/* Título principal */}
             <motion.h1
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
@@ -201,22 +202,19 @@ export function FinalHero() {
           <motion.div
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-50"
+            transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
           >
-            <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-all cursor-pointer w-full sm:w-auto">
-              <div className="w-6 h-6 relative overflow-hidden">
-                <Send className="w-6 h-6 text-white" />
-              </div>
+            <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
               <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
-                Message
+                How we do it
               </p>
             </a>
-            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-[#06B6D4] hover:bg-[#0891B2] rounded-[50px] px-5 py-3 transition-all cursor-pointer shadow-lg w-full sm:w-auto">
+            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-cyan-300/80 rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]">
               <div className="w-[18px] h-[14px] relative overflow-hidden">
-                <Calendar className="w-[17px] h-[14px] text-white" />
+                <Calendar className="w-[17px] h-[14px] text-cyan-300" />
               </div>
-              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+              <p className="text-[14px] font-medium leading-5 text-cyan-300 whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
                 Book Free Consultation
               </p>
             </a>
@@ -236,11 +234,11 @@ export function FinalHero() {
                 <span className="text-white">Used by the leaders.</span>
               </div>
               <div className="mt-6 grid grid-cols-5 text-white">
-                <Retool />
-                <Vercel />
-                <Remote />
-                <Arc />
-                <Raycast />
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Retool</div>
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Vercel</div>
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Remote</div>
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Arc</div>
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Raycast</div>
               </div>
             </div>
 
@@ -263,34 +261,3 @@ export function FinalHero() {
     </motion.div>
   );
 }
-
-// Logos como texto
-const Retool = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Retool
-  </div>
-);
-
-const Vercel = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Vercel
-  </div>
-);
-
-const Remote = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Remote
-  </div>
-);
-
-const Arc = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Arc
-  </div>
-);
-
-const Raycast = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Raycast
-  </div>
-);
