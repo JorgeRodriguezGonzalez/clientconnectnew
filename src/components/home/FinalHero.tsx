@@ -228,7 +228,7 @@ export function FinalHero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 3, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-12 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
