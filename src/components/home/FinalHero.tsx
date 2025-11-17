@@ -35,6 +35,17 @@ export function FinalHero() {
     ]
   );
 
+  // Transform para el color del arco (igual que tenía el círculo)
+  const arcBackground = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [
+      "rgb(5, 10, 25)",
+      "rgb(5, 10, 25)",
+      "rgb(255, 255, 255)"
+    ]
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -238,7 +249,7 @@ export function FinalHero() {
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               <motion.div 
                 className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20"
-                style={{ backgroundColor }}
+                style={{ backgroundColor: arcBackground }}
               />
               <Sparkles
                 density={1200}
