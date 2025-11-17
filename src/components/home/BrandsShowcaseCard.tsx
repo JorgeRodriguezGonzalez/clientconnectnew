@@ -17,7 +17,7 @@ export const BrandsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[380px] bg-white rounded-[28px] p-1.5 overflow-hidden" 
+      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[280px] bg-white rounded-[28px] p-1.5 overflow-hidden" 
       style={{
         boxShadow: 'rgba(0, 0, 0, 0) 0px 24px 32px 0px'
       }} 
@@ -40,15 +40,15 @@ export const BrandsShowcaseCard = ({
       }}
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[262px] bg-[#F5F5F5] rounded-[22px] overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[192px] bg-[#F5F5F5] rounded-[22px] overflow-hidden">
         <div className="relative w-full h-full">
           <motion.div 
             key={`left-${hoverCount}`}
-            className="absolute w-[146px] h-[249px] overflow-visible" 
+            className="absolute w-[120px] h-[205px] overflow-visible" 
             style={{
-              top: '90.6px',
+              top: '50px',
               left: '5.6px',
-              transformOrigin: '73px 124.6px'
+              transformOrigin: '60px 102.5px'
             }} 
             initial={{
               x: -20,
@@ -70,11 +70,11 @@ export const BrandsShowcaseCard = ({
           
           <motion.div 
             key={`right-${hoverCount}`}
-            className="absolute w-[146px] h-[248px] overflow-visible" 
+            className="absolute w-[120px] h-[204px] overflow-visible" 
             style={{
-              top: '92px',
-              left: '164.8px',
-              transformOrigin: '73px 124px'
+              top: '51px',
+              left: '191px',
+              transformOrigin: '60px 102px'
             }} 
             initial={{
               x: 20,
@@ -96,11 +96,11 @@ export const BrandsShowcaseCard = ({
           
           <motion.div 
             key={`center-${hoverCount}`}
-            className="absolute w-[156px] h-[287px] overflow-visible rounded-[9px]" 
+            className="absolute w-[136px] h-[250px] overflow-visible rounded-[9px]" 
             style={{
-              top: '48.6px',
-              left: '79.4px',
-              transformOrigin: '78px 143.6px',
+              top: '8px',
+              left: '89.4px',
+              transformOrigin: '68px 125px',
               boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px'
             }} 
             initial={{
@@ -123,7 +123,7 @@ export const BrandsShowcaseCard = ({
         </div>
       </div>
       
-      <div className="flex flex-col items-start justify-center gap-2 w-[314.6px] h-[100.2px] px-4 pt-5 pb-4">
+      <div className="flex flex-col items-start justify-center gap-2 w-[314.6px] h-[70px] px-4 pt-3 pb-3">
         <h2 className="font-medium text-black text-[18px] leading-[17px] tracking-[-0.6px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
