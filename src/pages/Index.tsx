@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/Footer";
 import { FinalHero } from "@/components/home/FinalHero";
-import { TextAndImage } from "@/components/home/TextAndImage";
+import { BentoGrid } from "@/components/home/BentoGrid";
 import { AnimatedGallerySection } from "@/components/animated-gallery-section";
 import ServicesSection from "@/components/home/ServicesSection";
 import WhyUsSection from "@/components/home/WhyUsSection";
@@ -15,7 +15,7 @@ const Index = () => {
       <main className="flex-1 -mt-4">
         <FinalHero />
         <div className="w-full flex justify-center px-10 pb-16 relative z-[999999]">
-          <TextAndImage />
+          <BentoGrid />
         </div>
         <AnimatedGallerySection />
         <ServicesSection />
