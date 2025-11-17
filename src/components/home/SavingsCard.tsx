@@ -21,7 +21,7 @@ export const SavingsCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[380px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[28px] p-1.5 overflow-hidden" 
+      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[280px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[28px] p-1.5 overflow-hidden" 
       initial={{
         opacity: 0,
         y: 20
@@ -45,7 +45,7 @@ export const SavingsCard = ({
       }}
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[262px] bg-white/5 backdrop-blur-sm rounded-[22px] overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[192px] bg-white/5 backdrop-blur-sm rounded-[22px] overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden" style={{
           maskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)',
           WebkitMaskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)'
@@ -69,7 +69,7 @@ export const SavingsCard = ({
             </p>
           </div>
 
-          <svg className="absolute bottom-[-77px] left-[-167.4px] w-[494px] h-[286px]" viewBox="0 0 494 286" fill="none" xmlns="http://www.w3.org/2000/svg" style={{
+          <svg className="absolute bottom-[-50px] left-[-167.4px] w-[494px] h-[286px]" viewBox="0 0 494 286" fill="none" xmlns="http://www.w3.org/2000/svg" style={{
             imageRendering: 'auto'
           }}>
             <defs>
@@ -125,7 +125,7 @@ export const SavingsCard = ({
         </div>
       </div>
 
-      <div className="flex flex-col items-start justify-center gap-2 w-[314.6px] h-[100.2px] px-4 pt-5 pb-4">
+      <div className="flex flex-col items-start justify-center gap-2 w-[314.6px] h-[70px] px-4 pt-3 pb-3">
         <div className="w-[282.6px]">
           <p className="text-[18px] font-medium text-black leading-[17px]" style={{
             fontFamily: '"Inter Display", sans-serif',
