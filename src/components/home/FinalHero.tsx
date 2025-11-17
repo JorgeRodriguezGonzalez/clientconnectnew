@@ -228,14 +228,14 @@ export function FinalHero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 3, duration: 0.8, ease: "easeOut" }}
+            transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-12 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
               <motion.div 
                 initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 4.2, duration: 0.8, ease: "easeOut" }}
+                transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
                 className="text-center text-2xl md:text-[16px] leading-tight"
               >
                 <span className="text-cyan-300">Trusted by experts.</span>
