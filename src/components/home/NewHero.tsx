@@ -299,7 +299,7 @@ export function NewHero() {
 
             {/* Sparkles Effect */}
             <motion.div 
-              className="relative  -mt-[1600px] h-[2350px] w-full overflow-hidden"
+              className="relative  -mt-[1650px] h-[2450px] w-full overflow-hidden"
               style={{
                 WebkitMaskImage: sparklesMaskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
                 maskImage: sparklesMaskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
@@ -312,7 +312,7 @@ export function NewHero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
-                className="absolute left-1/2 top-[70%] w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-[5] border border-white/20 -translate-x-1/2 flex items-center justify-center" 
+                className="absolute left-1/2 top-[72%] w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-[5] border border-white/20 -translate-x-1/2 flex items-center justify-center" 
                 style={{ backgroundColor: circleBackground, borderRadius: circleBorderRadius }} 
               >
                 {/* Título dentro del círculo */}
@@ -342,7 +342,7 @@ export function NewHero() {
               <motion.div style={{ opacity: sparklesMaskOpacity }}>
                 <Sparkles
                   density={800}
-                  className="absolute inset-x-0 bottom-[400px] h-[500px] w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                  className="absolute inset-x-0 bottom-[450px] h-[500px] w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
                   color="#ffffff"
                 />
               </motion.div>
