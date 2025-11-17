@@ -76,20 +76,19 @@ export function FinalHero() {
     <motion.div
       ref={ref}
       style={{ backgroundColor }}
-      className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[100vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
-      {/* AQUÍ SE CONTROLA EL ESPACIO: top-[-40px] y pt-32 */}
-      <div className="top-[-40px] h-[150vh] flex justify-center pt-32">
-        <div className="z-10 flex flex-col items-center justify-center gap-4 w-full px-5 relative">
+      <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
+        <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
 
-          {/* LAMP + TÍTULO: superpuestos 30px */}
-          <div className="flex flex-col items-center gap-[-30px]">
-            {/* Lamp Effect - AQUÍ TAMBIÉN: pt-80 controla el espacio interno */}
+          {/* LAMP + TÍTULO */}
+          <div className="flex flex-col items-center gap-[-20px]">
+            {/* Lamp Effect */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
-              className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible"
+              className="w-full h-[80px] relative flex items-center justify-center pt-32 overflow-visible"
             >
               <motion.div
                 initial={{ opacity: 0.5, width: "15rem" }}
@@ -192,7 +191,7 @@ export function FinalHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-6 mb-6"
+            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-3 mb-3"
             style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
@@ -225,7 +224,7 @@ export function FinalHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.8, duration: 0.8, ease: "easeOut" }}
-            className="w-full mt-16 relative z-50"
+            className="w-full mt-8 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
               <div className="text-center text-2xl md:text-[16px] leading-tight">
@@ -233,7 +232,7 @@ export function FinalHero() {
                 <br />
                 <span className="text-white">Used by the leaders.</span>
               </div>
-              <div className="mt-6 grid grid-cols-5 text-white">
+              <div className="mt-4 grid grid-cols-5 text-white">
                 <div className="w-full flex items-center justify-center text-white text-lg font-medium">Retool</div>
                 <div className="w-full flex items-center justify-center text-white text-lg font-medium">Vercel</div>
                 <div className="w-full flex items-center justify-center text-white text-lg font-medium">Remote</div>
@@ -243,7 +242,7 @@ export function FinalHero() {
             </div>
 
             {/* Contenedor Sparkles - Arco y Sparkles */}
-            <div className="relative -mt-32 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
+            <div className="relative -mt-20 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               <motion.div 
                 className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20"
