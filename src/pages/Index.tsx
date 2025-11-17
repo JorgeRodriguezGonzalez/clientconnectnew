@@ -14,7 +14,7 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 -mt-4">
         <NewHero />
-        <div className="w-full flex justify-center px-10 py-16">
+        <div className="w-full flex justify-center px-10 pt-8 pb-16">
           <TextAndImage />
         </div>
         <AnimatedGallerySection />
