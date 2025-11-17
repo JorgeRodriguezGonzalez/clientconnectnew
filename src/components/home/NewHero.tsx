@@ -299,7 +299,7 @@ export function NewHero() {
 
             {/* Sparkles Effect */}
             <motion.div 
-              className="relative  -mt-[1050px] h-[1700px] w-full overflow-hidden"
+              className="relative  -mt-[1250px] h-[1900px] w-full overflow-hidden"
               style={{
                 WebkitMaskImage: sparklesMaskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
                 maskImage: sparklesMaskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
@@ -312,7 +312,7 @@ export function NewHero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
-                className="absolute left-1/2 top-[63%] w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-[5] border border-white/20 -translate-x-1/2 flex items-center justify-center" 
+                className="absolute left-1/2 top-[68%] w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-[5] border border-white/20 -translate-x-1/2 flex items-center justify-center" 
                 style={{ backgroundColor: circleBackground, borderRadius: circleBorderRadius }} 
               >
                 {/* Título dentro del círculo */}
