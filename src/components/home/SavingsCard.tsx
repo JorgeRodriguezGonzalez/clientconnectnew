@@ -21,7 +21,7 @@ export const SavingsCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[280px] bg-white/10 backdrop-blur-sm border-[1.77px] border-[#1e3a8a] rounded-[28px] p-1.5 overflow-hidden" 
+      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[280px] bg-white/10 backdrop-blur-sm border-[1.77px] border-[#4b5563] rounded-[28px] p-1.5 overflow-hidden" 
       initial={{
         opacity: 0,
         y: 20
