@@ -299,7 +299,7 @@ export function NewHero() {
 
             {/* Sparkles Effect */}
             <motion.div 
-              className="relative  -mt-[1450px] h-[2200px] w-full overflow-hidden"
+              className="relative  -mt-[1500px] h-[2250px] w-full overflow-hidden"
               style={{
                 WebkitMaskImage: sparklesMaskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
                 maskImage: sparklesMaskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
