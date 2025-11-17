@@ -35,27 +35,6 @@ export function FinalHero() {
     ]
   );
 
-  // Transforms para el círculo y el texto
-  const circleBackground = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [
-      "rgb(5, 10, 25)",
-      "rgb(5, 10, 25)",
-      "rgb(255, 255, 255)"
-    ]
-  );
-
-  const belowArcTextColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [
-      "rgb(255, 255, 255)",
-      "rgb(255, 255, 255)",
-      "rgb(0, 0, 0)"
-    ]
-  );
-
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -259,39 +238,13 @@ export function FinalHero() {
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               <motion.div 
                 className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20"
-                style={{ backgroundColor: circleBackground }}
+                style={{ backgroundColor }}
               />
               <Sparkles
                 density={1200}
                 className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
                 color="#ffffff"
               />
-            </div>
-
-            {/* Círculo con transición de color y título dentro */}
-            <div className="relative -mt-[550px] h-[1300px] w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
-              <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
-              
-              {/* Círculo completo con transición de color y título dentro */}
-              <motion.div 
-                className="absolute left-1/2 top-1/2 w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-10 rounded-full border border-white/20 -translate-x-1/2 flex items-center justify-center" 
-                style={{ backgroundColor: circleBackground }} 
-              >
-                {/* Título dentro del círculo */}
-                <motion.h2
-                  initial={{ opacity: 0, y: 80 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 2.0, duration: 0.8, ease: "easeOut" }}
-                  style={{ 
-                    fontFamily: '"Inter Display", sans-serif', 
-                    letterSpacing: '-1.2px',
-                    color: belowArcTextColor
-                  }}
-                  className="text-2xl md:text-[40px] font-light leading-tight md:leading-[50px] text-center relative z-50 px-8"
-                >
-                  Your New Title Here
-                </motion.h2>
-              </motion.div>
             </div>
           </motion.div>
         </div>
