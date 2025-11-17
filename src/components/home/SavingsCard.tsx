@@ -102,12 +102,12 @@ export const SavingsCard = ({
           </svg>
 
           {/* Línea horizontal fija (negra) */}
-          <svg className="absolute top-[49px] left-[-15px] w-[343px] h-[7px]" viewBox="0 0 343 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg className="absolute top-[60px] left-[-15px] w-[343px] h-[7px]" viewBox="0 0 343 7" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path 
               d="M 2.33 3.5 L 367.931 3.5" 
               fill="transparent" 
               stroke="rgba(0, 0, 0, 0.2)" 
-              strokeWidth="1" 
+              strokeWidth="1.77" 
               strokeMiterlimit="10" 
             />
           </svg>
