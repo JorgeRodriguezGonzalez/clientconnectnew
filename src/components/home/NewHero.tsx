@@ -342,7 +342,7 @@ export function NewHero() {
               <motion.div style={{ opacity: sparklesMaskOpacity }}>
                 <Sparkles
                   density={800}
-                  className="absolute inset-x-0 bottom-[800px] h-[1500px] w-[400px] [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                  className="absolute inset-x-0 mx-auto bottom-[200px] h-[300px] w-[60%] [mask-image:radial-gradient(30%_30%,white,transparent_70%)]"
                   color="#ffffff"
                 />
               </motion.div>
