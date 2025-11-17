@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/Footer";
 import { NewHero } from "@/components/home/NewHero";
+import { TextAndImage } from "@/components/home/TextAndImage";
 import { AnimatedGallerySection } from "@/components/animated-gallery-section";
 import ServicesSection from "@/components/home/ServicesSection";
 import WhyUsSection from "@/components/home/WhyUsSection";
@@ -13,6 +14,9 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 -mt-4">
         <NewHero />
+        <div className="w-full flex justify-center px-10 py-16">
+          <TextAndImage />
+        </div>
         <AnimatedGallerySection />
         <ServicesSection />
         <WhyUsSection />
