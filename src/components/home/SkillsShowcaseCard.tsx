@@ -35,7 +35,7 @@ export const SkillsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex h-[280px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[28px] bg-white p-1.5 border-[1.77px] border-[#1e3a8a]"
+      className="relative flex h-[280px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[28px] bg-white p-1.5 shadow-2xl"
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
