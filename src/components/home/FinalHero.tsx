@@ -76,7 +76,7 @@ export function FinalHero() {
     <motion.div
       ref={ref}
       style={{ backgroundColor }}
-      className="h-[130vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
     >
       <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
         <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
@@ -196,7 +196,7 @@ export function FinalHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
-            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
+            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
             style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
