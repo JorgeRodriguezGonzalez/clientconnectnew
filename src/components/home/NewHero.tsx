@@ -117,7 +117,7 @@ export function NewHero() {
     <motion.div
       ref={ref}
       style={{ backgroundColor }}
-      className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[220vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
     >
       <div className="top-[-40px] h-[150vh] flex justify-center pt-32">
         <div className="z-10 flex flex-col items-center justify-center gap-4 w-full px-5 relative">
@@ -342,7 +342,7 @@ export function NewHero() {
               <motion.div style={{ opacity: sparklesMaskOpacity }}>
                 <Sparkles
                   density={800}
-                  className="absolute inset-x-0 bottom-[500px] h-[500px] w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                  className="absolute inset-x-0 bottom-[500px] h-[450px] w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
                   color="#ffffff"
                 />
               </motion.div>
