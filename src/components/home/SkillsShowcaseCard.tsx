@@ -8,18 +8,18 @@ type SkillsShowcaseCardProps = {
 };
 
 const skills = [
-  { text: 'Mobile App Design', position: { top: '216px', right: '-14px' } },
-  { text: 'Webflow Development', position: { top: '128.4px', right: '-2px' }, transform: 'translateY(-12px)' },
-  { text: 'Framer Development', position: { top: '88px', left: '29px' } },
-  { text: 'Social Media Posts', position: { top: '72px', right: '56px' } },
-  { text: 'Web Designs', position: { top: '11px', right: '53px' } },
-  { text: 'Pitch Decks', position: { bottom: '41px', left: '11px' } },
-  { text: 'Email Designs', position: { bottom: '18px', left: '50px' } },
-  { text: 'Branding', position: { bottom: '75px', left: '9px' } },
-  { text: 'Copywriting', position: { top: '143px', left: '49px' } },
-  { text: 'Logos', position: { top: '67px', left: '18px' } },
-  { text: 'Landing pages', position: { top: '23px', left: '46px' } },
-  { text: 'Creative Strategy', position: { bottom: '59px', right: '29px' } }
+  { text: 'Mobile App Design', position: { top: '156px', right: '-14px' } },
+  { text: 'Webflow Development', position: { top: '88px', right: '-2px' }, transform: 'translateY(-12px)' },
+  { text: 'Framer Development', position: { top: '58px', left: '29px' } },
+  { text: 'Social Media Posts', position: { top: '45px', right: '56px' } },
+  { text: 'Web Designs', position: { top: '8px', right: '53px' } },
+  { text: 'Pitch Decks', position: { bottom: '31px', left: '11px' } },
+  { text: 'Email Designs', position: { bottom: '14px', left: '50px' } },
+  { text: 'Branding', position: { bottom: '55px', left: '9px' } },
+  { text: 'Copywriting', position: { top: '103px', left: '49px' } },
+  { text: 'Logos', position: { top: '47px', left: '18px' } },
+  { text: 'Landing pages', position: { top: '18px', left: '46px' } },
+  { text: 'Creative Strategy', position: { bottom: '45px', right: '29px' } }
 ] as any[];
 
 export const SkillsShowcaseCard = ({
@@ -35,7 +35,7 @@ export const SkillsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex h-[380px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[28px] bg-white p-1.5 shadow-[0_24px_32px_0_rgba(0,0,0,0.03)]"
+      className="relative flex h-[280px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[28px] bg-white p-1.5 shadow-[0_24px_32px_0_rgba(0,0,0,0.03)]"
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
@@ -49,10 +49,10 @@ export const SkillsShowcaseCard = ({
       }}
       onHoverEnd={() => setIsHovered(false)}
     >
-      <div className="relative flex h-[262px] w-[314.6px] items-center justify-center overflow-hidden rounded-[22px] bg-[#f5f5f5]">
-        <div className="absolute bottom-[-123px] left-[41.8px] h-[352px] w-[219px] overflow-hidden" style={{ transform: 'scale(0.9)' }}>
-          <div className="absolute bottom-[-30px] left-[109.6px] top-[-85px] h-[467px] w-[218.6px]" style={{ transform: 'translateX(-109.309px)' }}>
-            <p className="m-0 whitespace-nowrap border-0 p-0 text-[389px] font-normal leading-[466.8px] tracking-[-11.6px] text-black/20" style={{
+      <div className="relative flex h-[192px] w-[314.6px] items-center justify-center overflow-hidden rounded-[22px] bg-[#f5f5f5]">
+        <div className="absolute bottom-[-93px] left-[41.8px] h-[280px] w-[175px] overflow-hidden" style={{ transform: 'scale(0.9)' }}>
+          <div className="absolute bottom-[-24px] left-[87.5px] top-[-68px] h-[372px] w-[174.5px]" style={{ transform: 'translateX(-87.25px)' }}>
+            <p className="m-0 whitespace-nowrap border-0 p-0 text-[310px] font-normal leading-[372px] tracking-[-9.3px] text-black/20" style={{
               fontFamily: '"Euclid Circular B Bold", "Euclid Circular B Bold Placeholder", sans-serif',
               WebkitTextStroke: '0px rgba(0, 0, 0, 0.2)'
             }}>
@@ -87,7 +87,7 @@ export const SkillsShowcaseCard = ({
         ))}
       </div>
       
-      <div className="flex w-[314.6px] flex-col items-start justify-center gap-2 overflow-hidden px-4 pb-4 pt-5">
+      <div className="flex w-[314.6px] flex-col items-start justify-center gap-2 overflow-hidden px-4 pb-3 pt-3">
         <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[18px] font-medium leading-[17px] tracking-[-0.6px] text-black" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif'
         }}>
