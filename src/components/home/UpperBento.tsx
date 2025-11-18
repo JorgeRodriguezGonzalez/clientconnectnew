@@ -135,3 +135,5 @@ export const BrandsShowcaseCard = ({
     </motion.div>
   );
 };
+
+export default UpperBento;
