@@ -17,7 +17,7 @@ export const BrandsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[280px] rounded-[28px] p-1.5 overflow-hidden shadow-lg"
+      className="relative flex flex-col items-center gap-1.5 w-[685.2px] h-[280px] rounded-[28px] p-1.5 overflow-hidden shadow-lg"
       style={{ backgroundColor: 'rgb(20, 35, 90)' }}
       initial={{
         opacity: 0,
@@ -35,7 +35,7 @@ export const BrandsShowcaseCard = ({
       }} 
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[192px] bg-[#F5F5F5] rounded-[22px] overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center w-[673.2px] h-[192px] bg-[#F5F5F5] rounded-[22px] overflow-hidden">
         <div className="relative w-full h-full">
           <motion.div 
             key={`left-${hoverCount}`}
@@ -68,7 +68,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[120px] h-[204px] overflow-visible" 
             style={{
               top: '51px',
-              left: '191px',
+              left: '549.6px',
               transformOrigin: '60px 102px'
             }} 
             initial={{
@@ -94,7 +94,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[136px] h-[250px] overflow-visible rounded-[9px]" 
             style={{
               top: '8px',
-              left: '89.4px',
+              left: '268.6px',
               transformOrigin: '68px 125px',
               boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px'
             }} 
@@ -118,7 +118,7 @@ export const BrandsShowcaseCard = ({
         </div>
       </div>
       
-      <div className="flex flex-col items-start justify-center gap-2 w-[314.6px] h-[70px] px-4 pt-3 pb-3">
+      <div className="flex flex-col items-start justify-center gap-2 w-[673.2px] h-[70px] px-4 pt-3 pb-3">
         <h2 className="font-medium text-white text-[18px] leading-[17px] tracking-[-0.6px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
