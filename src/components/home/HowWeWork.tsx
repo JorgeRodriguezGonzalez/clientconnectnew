@@ -303,7 +303,7 @@ export const HowWeWork = () => {
   return (
     <div
       ref={containerRef}
-      className="w-full min-h-screen bg-gradient-to-br from-[#3255D2] via-[#5028fa] to-white flex flex-col items-center gap-[100px] px-10 py-40"
+      className="w-full min-h-screen bg-gradient-to-br from-[#3255D2] via-[#5028fa] to-[#06b6d4] flex flex-col items-center gap-[100px] px-10 py-40"
     >
       <h3 className="text-center text-[32px] leading-[35.2px] font-medium tracking-[-0.2px] text-gray-200 max-w-[600px]">
         <span className="text-white">How we work? </span>
