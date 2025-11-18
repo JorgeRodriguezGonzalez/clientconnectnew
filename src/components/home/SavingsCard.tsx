@@ -16,6 +16,7 @@ export const SavingsCard = ({
 }: SavingsCardProps) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [isHovered, setIsHovered] = React.useState(false);
 
   return (
     <motion.div 
@@ -35,6 +36,8 @@ export const SavingsCard = ({
       transition={{
         duration: 0.5
       }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
     >
       <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[192px] bg-[#f5f5f5] rounded-[12px] overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden" style={{
@@ -69,21 +72,27 @@ export const SavingsCard = ({
                 <stop offset="1" stopColor="rgba(6, 182, 212, 0)" stopOpacity="0" />
               </linearGradient>
             </defs>
-            <path 
+            <motion.path 
               d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 3.089 174.764 L 20.839 174.892 C 27.801 174.942 29.189 152.204 53.822 170.122 C 78.454 188.04 86.727 168.036 92.857 156.811 C 97.916 147.548 109.017 131.175 128.933 138.472 C 145.501 144.542 160.817 145.673 181.936 126.692 C 204.045 106.821 211.601 139.05 239.781 135.692 C 256.769 133.668 270.376 78.489 306.334 78.489 C 333.834 78.489 343.334 97.664 374.382 97.664 C 400.334 97.664 450.411 67.986 489.248 5.489 Z" 
               fill="url(#chartGradient)" 
               stroke="rgb(103, 232, 249)" 
               strokeWidth="1.77" 
               strokeMiterlimit="10"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.5 }}
             />
 
-            <path 
+            <motion.path 
               d="M 20.839 174.892 C 27.801 174.942 29.189 152.204 53.822 170.122 C 78.454 188.04 86.727 168.036 92.857 156.811 C 97.916 147.548 109.017 131.175 128.933 138.472 C 145.501 144.542 160.817 145.673 181.936 126.692 C 204.045 106.821 211.601 139.05 239.781 135.692 C 256.769 133.668 270.376 78.489 306.334 78.489 C 333.834 78.489 343.334 97.664 374.382 97.664 C 400.334 97.664 450.411 67.986 489.248 5.489" 
               fill="transparent" 
               stroke="rgba(103, 232, 249, 0.5)" 
               strokeWidth="3" 
               strokeMiterlimit="10" 
               strokeDasharray="9.07,9.07"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.5, delay: isHovered ? 0.5 : 0 }}
             />
           </svg>
         </div>
