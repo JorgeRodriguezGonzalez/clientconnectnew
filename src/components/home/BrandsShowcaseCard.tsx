@@ -17,7 +17,7 @@ export const BrandsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[685.2px] h-[280px] rounded-[28px] p-1.5 overflow-hidden shadow-lg"
+      className="relative flex flex-col items-center gap-1.5 w-[685.2px] h-[310px] rounded-[28px] p-1.5 overflow-hidden shadow-lg"
       style={{ 
         background: 'linear-gradient(135deg, rgb(20, 35, 90) 0%, rgb(40, 80, 150) 100%)'
       }}
@@ -120,7 +120,7 @@ export const BrandsShowcaseCard = ({
         </div>
       </div>
       
-      <div className="flex flex-col items-start justify-center gap-2 w-[673.2px] h-[100px] px-4 pt-5 pb-4">
+      <div className="flex flex-col items-start justify-start gap-2 w-[673.2px] h-[100px] px-4 pt-4 pb-6">
         <h2 className="font-medium text-white text-[18px] leading-[17px] tracking-[-0.6px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
