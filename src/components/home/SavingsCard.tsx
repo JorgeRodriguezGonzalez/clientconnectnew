@@ -62,7 +62,7 @@ export const SavingsCard = ({
             </p>
           </div>
 
-          <svg className="absolute bottom-[-50px] left-[-167.4px] w-[494px] h-[286px]" viewBox="0 0 494 286" fill="none" xmlns="http://www.w3.org/2000/svg" style={{
+          <svg className="absolute bottom-[-70px] left-[-167.4px] w-[494px] h-[286px]" viewBox="0 0 494 286" fill="none" xmlns="http://www.w3.org/2000/svg" style={{
             imageRendering: 'auto'
           }}>
             <defs>
@@ -118,22 +118,16 @@ export const SavingsCard = ({
       </div>
 
       <div className="flex flex-col items-start justify-start gap-2 w-[314.6px] h-[100px] px-4 pt-4 pb-6">
-        <div className="w-[282.6px]">
-          <p className="text-[18px] font-medium text-black leading-[17px]" style={{
-            fontFamily: '"Inter Display", sans-serif',
-            letterSpacing: '-0.6px'
-          }}>
-            {amount}
-          </p>
-        </div>
-        <div className="w-[282.6px]">
-          <p className="text-[14px] font-normal text-black/40 leading-[19.6px]" style={{
-            fontFamily: '"Inter Display", sans-serif',
-            letterSpacing: '-0.4px'
-          }}>
-            {description}
-          </p>
-        </div>
+        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[18px] font-medium leading-[17px] tracking-[-0.6px] text-black" style={{
+          fontFamily: 'Inter, "Inter Placeholder", sans-serif'
+        }}>
+          {amount}
+        </p>
+        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px] text-black/40" style={{
+          fontFamily: 'Inter, "Inter Placeholder", sans-serif'
+        }}>
+          {description}
+        </p>
       </div>
     </motion.div>
   );
