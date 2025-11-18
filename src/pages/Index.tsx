@@ -16,7 +16,7 @@ const Index = () => {
       <main className="flex-1 -mt-4">
         <FinalHero />
         <UseCasesShowcase />
-        <div className="w-full flex justify-center pb-16 relative z-[999999] -mt-[250px]">
+        <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
         <HowWeWork />
