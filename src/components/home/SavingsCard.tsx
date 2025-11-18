@@ -107,7 +107,7 @@ export const SavingsCard = ({
                 pathLength: 1
               }} 
               transition={{
-                duration: 1,
+                duration: 3,
                 ease: 'easeInOut',
                 delay: 0.5
               }} 
