@@ -102,10 +102,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           }} transition={{
             delay: 0.5,
             duration: 0.8
-          }} className="absolute top-[323px] left-[45px] w-[109px]" style={{
+          }} className="absolute top-[323px] left-[45px] w-[109px] h-[109px]" style={{
             transformStyle: 'preserve-3d'
           }}>
-              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68cd1b097d167447080dbf14_Group%202085663103%20(2).svg" alt="Decorative element" className="w-full h-auto object-cover" width={108} height={108} />
+              <div className="w-full h-full bg-white rounded-full shadow-lg flex items-center justify-center p-5">
+                <img src="/images/client-connect-australia-logo.png" alt="Client Connect Australia" className="w-full h-full object-contain" />
+              </div>
             </motion.div>
 
             <motion.div initial={{
@@ -212,10 +214,6 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   </div>
                 </motion.div>)}
             </div>
-          </div>
-
-          <div className="absolute top-[-92px] left-[-191px] hidden lg:block">
-            <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c44e_box%20line%20(11)%20(copy).svg" alt="Background decoration" className="w-[598px] h-[468px]" width={598} height={468} />
           </div>
         </div>
       </div>
