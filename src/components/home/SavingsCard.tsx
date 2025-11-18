@@ -107,7 +107,7 @@ export const SavingsCard = ({
                 strokeDashoffset: 0
               }} 
               transition={{
-                duration: 2,
+                duration: 10,
                 ease: 'linear',
                 delay: 0.5
               }} 
