@@ -8,18 +8,14 @@ type SkillsShowcaseCardProps = {
 };
 
 const skills = [
-  { text: 'Mobile App Design', position: { top: '156px', right: '-14px' } },
-  { text: 'Webflow Development', position: { top: '88px', right: '-2px' }, transform: 'translateY(-12px)' },
-  { text: 'Framer Development', position: { top: '58px', left: '29px' } },
-  { text: 'Social Media Posts', position: { top: '45px', right: '56px' } },
-  { text: 'Web Designs', position: { top: '8px', right: '53px' } },
-  { text: 'Pitch Decks', position: { bottom: '31px', left: '11px' } },
-  { text: 'Email Designs', position: { bottom: '14px', left: '50px' } },
-  { text: 'Branding', position: { bottom: '55px', left: '9px' } },
-  { text: 'Copywriting', position: { top: '103px', left: '49px' } },
-  { text: 'Logos', position: { top: '47px', left: '18px' } },
-  { text: 'Landing pages', position: { top: '18px', left: '46px' } },
-  { text: 'Creative Strategy', position: { bottom: '45px', right: '29px' } }
+  { text: 'Website Design', position: { top: '156px', right: '-14px' } },
+  { text: 'SEO', position: { top: '88px', right: '-2px' }, transform: 'translateY(-12px)' },
+  { text: 'Google Ads', position: { top: '58px', left: '29px' } },
+  { text: 'Social Media Management', position: { top: '45px', right: '56px' } },
+  { text: 'CRM', position: { top: '8px', right: '53px' } },
+  { text: 'Facebook Ads', position: { bottom: '31px', left: '11px' } },
+  { text: 'Videography', position: { bottom: '14px', left: '50px' } },
+  { text: 'Photography', position: { bottom: '55px', left: '9px' } }
 ] as any[];
 
 export const SkillsShowcaseCard = ({
