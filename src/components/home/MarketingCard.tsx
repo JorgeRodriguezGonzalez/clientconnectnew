@@ -45,7 +45,7 @@ export const MarketingCard = ({
     >
       {/* Contenido izquierdo */}
       <div className="flex flex-col items-start justify-center gap-6 flex-1">
-        <h2 className="font-semibold text-black/80 text-[22px] leading-[28px] tracking-[0.5px] m-0 text-left" style={{
+        <h2 className="font-semibold text-black/80 text-[20px] leading-[28px] tracking-[0.5px] m-0 text-left" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
