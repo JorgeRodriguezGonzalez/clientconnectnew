@@ -98,3 +98,17 @@ All colors MUST be HSL.
     @apply py-16 md:py-24;
   }
 }
+
+/* Animation for MarketingCard animated line */
+@keyframes move {
+  0% {
+    transform: translateY(-200px);
+  }
+  100% {
+    transform: translateY(200px);
+  }
+}
+
+.animate-move {
+  animation: move 3s linear infinite;
+}
