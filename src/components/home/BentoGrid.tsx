@@ -17,7 +17,7 @@ export const BentoGrid = ({
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <div className="flex flex-col items-center w-full gap-12 mt-16 bg-white pt-[30px]">
+    <div className="flex flex-col items-center w-full gap-12 mt-16 bg-[#f8f8f8] pt-[30px]">
       <UpperBento />
       
       <motion.div 
@@ -51,6 +51,7 @@ export const BentoGrid = ({
           >
             {title}
           </h2>
+          
           <p 
             className="text-[16px] font-normal text-black/60 leading-[24px] tracking-[-0.2px] m-0"
             style={{
