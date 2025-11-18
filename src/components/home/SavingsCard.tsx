@@ -82,7 +82,7 @@ export const SavingsCard = ({
               transition={{
                 duration: 1.5,
                 ease: 'easeInOut',
-                delay: 0.2
+                delay: 0
               }} 
             />
 
@@ -103,7 +103,7 @@ export const SavingsCard = ({
               transition={{
                 duration: 1,
                 ease: 'easeInOut',
-                delay: 0.5
+                delay: 0.1
               }} 
             />
           </svg>
