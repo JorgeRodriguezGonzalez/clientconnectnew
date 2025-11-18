@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 type UseCaseItem = {
   id: number;
@@ -38,8 +38,11 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     useCases = defaultUseCases
   } = props;
 
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
   // @return
-  return <section className="relative overflow-hidden py-28 px-4 w-full bg-white mb-[50px]">
+  return <section ref={ref} className="relative overflow-hidden py-28 px-4 w-full bg-white mb-[50px]">
       <div className="max-w-[1225px] mx-auto">
         <div className="flex items-center justify-between gap-20 relative flex-col lg:flex-row">
           {/* Left Part - Images */}
@@ -48,80 +51,132 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c444_kloudera-home-one-cases-image.svg" alt="Main showcase" className="w-full h-auto object-cover" width={495} height={660} />
             </div>
 
-            <motion.div initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            delay: 0.2,
-            duration: 0.6
-          }} className="absolute top-[106px] left-5 w-[406px]" style={{
-            transformStyle: 'preserve-3d'
-          }}>
+            {/* Fade in desde la izquierda */}
+            <motion.div 
+              initial={{
+                opacity: 0,
+                x: -50
+              }} 
+              animate={isInView ? {
+                opacity: 1,
+                x: 0
+              } : {
+                opacity: 0,
+                x: -50
+              }} 
+              transition={{
+                delay: 0.2,
+                duration: 0.6
+              }} 
+              className="absolute top-[106px] left-5 w-[406px]" 
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
+            >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="Overlay 1" className="w-full h-auto object-cover" width={398} height={160} />
             </motion.div>
 
-            <motion.div initial={{
-            opacity: 0,
-            scale: 0.8
-          }} animate={{
-            opacity: 1,
-            scale: 1
-          }} transition={{
-            delay: 0.3,
-            duration: 0.6
-          }} className="absolute top-[106px] right-[-30px] w-[69px]" style={{
-            transformStyle: 'preserve-3d'
-          }}>
+            {/* Fade in simple */}
+            <motion.div 
+              initial={{
+                opacity: 0,
+                scale: 0.8
+              }} 
+              animate={isInView ? {
+                opacity: 1,
+                scale: 1
+              } : {
+                opacity: 0,
+                scale: 0.8
+              }} 
+              transition={{
+                delay: 0.3,
+                duration: 0.6
+              }} 
+              className="absolute top-[106px] right-[-30px] w-[69px]" 
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
+            >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c446_kloudera-home-one-cases-image.svg" alt="Overlay 2" className="w-full h-auto object-cover" width={67} height={68} />
             </motion.div>
 
-            <motion.div initial={{
-            opacity: 0,
-            x: 30
-          }} animate={{
-            opacity: 1,
-            x: 0
-          }} transition={{
-            delay: 0.4,
-            duration: 0.6
-          }} className="absolute top-[238px] right-[-104px] w-[431px]" style={{
-            transformStyle: 'preserve-3d'
-          }}>
+            {/* Fade in desde la derecha */}
+            <motion.div 
+              initial={{
+                opacity: 0,
+                x: 50
+              }} 
+              animate={isInView ? {
+                opacity: 1,
+                x: 0
+              } : {
+                opacity: 0,
+                x: 50
+              }} 
+              transition={{
+                delay: 0.4,
+                duration: 0.6
+              }} 
+              className="absolute top-[238px] right-[-104px] w-[431px]" 
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
+            >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c447_kloudera-home-one-cases-image.svg" alt="Overlay 3" className="w-full h-auto object-cover" width={435} height={301} />
             </motion.div>
 
-            <motion.div initial={{
-            opacity: 0,
-            rotate: -180
-          }} animate={{
-            opacity: 1,
-            rotate: 0
-          }} transition={{
-            delay: 0.5,
-            duration: 0.8
-          }} className="absolute top-[323px] left-[45px] w-[109px] h-[109px]" style={{
-            transformStyle: 'preserve-3d'
-          }}>
+            {/* Logo con fade in */}
+            <motion.div 
+              initial={{
+                opacity: 0,
+                scale: 0.8
+              }} 
+              animate={isInView ? {
+                opacity: 1,
+                scale: 1,
+                rotate: 0
+              } : {
+                opacity: 0,
+                scale: 0.8,
+                rotate: -180
+              }} 
+              transition={{
+                delay: 0.5,
+                duration: 0.8
+              }} 
+              className="absolute top-[323px] left-[45px] w-[109px] h-[109px]" 
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
+            >
               <div className="w-full h-full bg-white rounded-full shadow-lg flex items-center justify-center p-5">
                 <img src="/images/client-connect-australia-logo.png" alt="Client Connect Australia" className="w-full h-full object-contain" />
               </div>
             </motion.div>
 
-            <motion.div initial={{
-            opacity: 0,
-            y: -20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            delay: 0.6,
-            duration: 0.6
-          }} className="absolute bottom-0 left-0 w-[406px]" style={{
-            transformStyle: 'preserve-3d'
-          }}>
+            {/* Fade in desde abajo */}
+            <motion.div 
+              initial={{
+                opacity: 0,
+                y: 50
+              }} 
+              animate={isInView ? {
+                opacity: 1,
+                y: 0
+              } : {
+                opacity: 0,
+                y: 50
+              }} 
+              transition={{
+                delay: 0.6,
+                duration: 0.6
+              }} 
+              className="absolute bottom-0 left-0 w-[406px]" 
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
+            >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c449_kloudera-home-one-cases-image.svg" alt="Overlay 5" className="w-full h-auto object-cover" width={398} height={160} />
             </motion.div>
           </div>
