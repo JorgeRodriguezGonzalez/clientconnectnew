@@ -55,7 +55,7 @@ const TaskCard = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       viewport={{ once: true, margin: '-100px' }}
-      className="bg-white rounded-xl shadow-lg p-[18px] w-[368px]"
+      className="bg-white rounded-[16px] shadow-lg p-[18px] w-[368px]"
     >
       <div className="flex flex-col gap-5">
         <div className="flex items-center justify-between">
@@ -70,8 +70,18 @@ const TaskCard = () => {
         </div>
 
         <div className="flex flex-col gap-1">
-          <p className="text-[#131314] text-base font-medium">Keyword Research & Optimization</p>
-          <p className="text-[#878689] text-sm font-medium">Target high-value keywords for Sydney market</p>
+          <p className="text-black/80 text-[20px] font-semibold leading-[28px] tracking-[0.5px]" style={{
+            fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+            fontStyle: 'normal'
+          }}>
+            Keyword Research & Optimization
+          </p>
+          <p className="text-black/40 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px]" style={{
+            fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+            fontStyle: 'normal'
+          }}>
+            Target high-value keywords for Sydney market
+          </p>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -98,7 +108,7 @@ const AddButton = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
       viewport={{ once: true, margin: '-100px' }}
-      className="bg-white rounded-xl shadow-lg p-[18px] w-[368px] h-[68px] flex items-center justify-center"
+      className="bg-white rounded-[16px] shadow-lg p-[18px] w-[368px] h-[68px] flex items-center justify-center"
     >
       <div className="flex items-center gap-3">
         <button className="w-8 h-8 bg-[rgba(222,222,222,0.8)] rounded-full flex items-center justify-center">
@@ -186,7 +196,7 @@ const InfiniteCarousel = () => {
               key={`${logo}-${index}`}
               className="flex-shrink-0 w-44 h-44 p-3"
             >
-              <div className="flex flex-col items-center justify-center w-full h-full bg-white rounded-3xl shadow-[0_0_48px_0_rgba(0,0,0,0.02),0_12px_25px_-24px_rgba(0,0,0,0.4),0_0_0_1px_rgba(0,0,0,0.06)] p-8">
+              <div className="flex flex-col items-center justify-center w-full h-full bg-white rounded-[16px] shadow-lg p-8">
                 <div className="w-22 h-22 relative">
                   <img 
                     src={logo} 
@@ -244,7 +254,7 @@ const AnimatedImage = ({
           x: isInView ? 0 : 300
         }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative w-[551px] h-[454px] rounded-l-[12px] overflow-hidden shadow-[0_0_48px_0_rgba(0,0,0,0.02),0_12px_25px_-24px_rgba(0,0,0,0.7),0_0_0_1px_rgba(0,0,0,0.06)] z-10"
+        className="relative w-[551px] h-[454px] rounded-l-[16px] overflow-hidden shadow-lg z-10"
       >
         <img src={src} alt={alt} className="w-full h-full object-cover object-[0%_0%]" />
       </motion.div>
@@ -318,7 +328,7 @@ export const HowWeWork = () => {
                 top: `${step.top}px`,
                 zIndex: index + 1
               }}
-              className="bg-white rounded-[32px] shadow-[0_0_0_1px_rgba(0,0,0,0.08)] overflow-hidden"
+              className="bg-white rounded-[16px] shadow-lg overflow-hidden"
             >
               <div className="flex h-[580px]">
                 <div className="w-[540px] flex flex-col gap-5 p-10">
@@ -326,16 +336,25 @@ export const HowWeWork = () => {
                     <div className="w-8 h-8 bg-[#3255D2]/10 rounded-lg flex items-center justify-center">
                       <Icon size={16} className="text-[#3255D2]" />
                     </div>
-                    <h5 className="text-[#717073] text-lg font-medium tracking-[0.2px]">
+                    <h5 className="text-black/40 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px]" style={{
+                      fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+                      fontStyle: 'normal'
+                    }}>
                       {step.label}
                     </h5>
                   </div>
 
-                  <h2 className="text-[#131314] text-[48px] leading-[57.6px] font-medium tracking-[-1.2px] max-w-[460px]">
+                  <h2 className="text-black/80 text-[48px] leading-[57.6px] font-semibold tracking-[0.5px] max-w-[460px]" style={{
+                    fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+                    fontStyle: 'normal'
+                  }}>
                     {step.title}
                   </h2>
 
-                  <p className="text-[#878689] text-base leading-6 font-medium max-w-[460px]">
+                  <p className="text-black/40 text-base leading-6 font-normal max-w-[460px]" style={{
+                    fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+                    fontStyle: 'normal'
+                  }}>
                     {step.description}
                   </p>
                 </div>
