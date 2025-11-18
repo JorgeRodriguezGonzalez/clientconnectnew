@@ -36,8 +36,9 @@ export const BrandsShowcaseCard = ({
     >
       <div className="relative flex flex-col items-center justify-center w-[673.2px] h-[192px] bg-[#F5F5F5] rounded-[12px] overflow-hidden">
         <div className="relative w-full h-full">
+          {/* Imagen 1 - Izquierda (desde la izquierda) */}
           <motion.div 
-            key={`left-${hoverCount}`}
+            key={`img1-${hoverCount}`}
             className="absolute w-[120px] h-[205px] overflow-visible" 
             style={{
               top: '50px',
@@ -62,8 +63,91 @@ export const BrandsShowcaseCard = ({
             }} />
           </motion.div>
           
+          {/* Imagen 2 - Segunda desde izquierda (desde arriba) */}
           <motion.div 
-            key={`right-${hoverCount}`}
+            key={`img2-${hoverCount}`}
+            className="absolute w-[120px] h-[204px] overflow-visible" 
+            style={{
+              top: '51px',
+              left: '140px',
+              transformOrigin: '60px 102px'
+            }} 
+            initial={{
+              y: -20,
+              opacity: 0.8
+            }} 
+            animate={{
+              y: 0,
+              opacity: 1
+            }} 
+            transition={{
+              duration: 0.6,
+              delay: 0.15
+            }}
+          >
+            <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
+              objectPosition: '50% 50%'
+            }} />
+          </motion.div>
+          
+          {/* Imagen 3 - Centro (desde abajo) */}
+          <motion.div 
+            key={`img3-${hoverCount}`}
+            className="absolute w-[136px] h-[250px] overflow-visible rounded-[9px]" 
+            style={{
+              top: '8px',
+              left: '268.6px',
+              transformOrigin: '68px 125px',
+              boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px'
+            }} 
+            initial={{
+              y: 20,
+              opacity: 0
+            }} 
+            animate={{
+              y: 0,
+              opacity: 1
+            }} 
+            transition={{
+              duration: 0.6,
+              delay: 0.2
+            }}
+          >
+            <img src="https://framerusercontent.com/images/pb1l1eWieWRyif3smeXnmDu1jnY.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover rounded-[9px]" style={{
+              objectPosition: '50% 0%'
+            }} />
+          </motion.div>
+          
+          {/* Imagen 4 - Segunda desde derecha (desde arriba) */}
+          <motion.div 
+            key={`img4-${hoverCount}`}
+            className="absolute w-[120px] h-[204px] overflow-visible" 
+            style={{
+              top: '51px',
+              left: '415px',
+              transformOrigin: '60px 102px'
+            }} 
+            initial={{
+              y: -20,
+              opacity: 0.8
+            }} 
+            animate={{
+              y: 0,
+              opacity: 1
+            }} 
+            transition={{
+              duration: 0.6,
+              delay: 0.25
+            }}
+          >
+            <img src="https://framerusercontent.com/images/Cs7myyCzaXS8LyQHqBxdAlCZ8.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
+              objectPosition: '50% 50%'
+            }} />
+          </motion.div>
+          
+          {/* Imagen 5 - Derecha (desde la derecha) */}
+          <motion.div 
+            key={`img5-${hoverCount}`}
             className="absolute w-[120px] h-[204px] overflow-visible" 
             style={{
               top: '51px',
@@ -80,38 +164,11 @@ export const BrandsShowcaseCard = ({
             }} 
             transition={{
               duration: 0.6,
-              delay: 0.1
+              delay: 0.3
             }}
           >
             <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
               objectPosition: '50% 50%'
-            }} />
-          </motion.div>
-          
-          <motion.div 
-            key={`center-${hoverCount}`}
-            className="absolute w-[136px] h-[250px] overflow-visible rounded-[9px]" 
-            style={{
-              top: '8px',
-              left: '268.6px',
-              transformOrigin: '68px 125px',
-              boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px'
-            }} 
-            initial={{
-              y: -10,
-              opacity: 0
-            }} 
-            animate={{
-              y: 0,
-              opacity: 1
-            }} 
-            transition={{
-              duration: 0.6,
-              delay: 0.2
-            }}
-          >
-            <img src="https://framerusercontent.com/images/pb1l1eWieWRyif3smeXnmDu1jnY.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover rounded-[9px]" style={{
-              objectPosition: '50% 0%'
             }} />
           </motion.div>
         </div>
