@@ -49,7 +49,7 @@ export const SkillsShowcaseCard = ({
             className="w-[180px] h-auto object-contain opacity-20"
           />
         </div>
-        
+
         {skills.map((skill, index) => (
           <motion.div
             key={`${skill.text}-${hoverCount}`}
@@ -75,10 +75,11 @@ export const SkillsShowcaseCard = ({
           </motion.div>
         ))}
       </div>
-      
+
       <div className="flex w-[314.6px] h-[100px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[20px] font-medium leading-[17px] tracking-[-0.6px] text-black" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif'
+        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[20px] font-semibold leading-[28px] tracking-[0.5px] text-black/80" style={{
+          fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+          fontStyle: 'normal'
         }}>
           {title}
         </p>
