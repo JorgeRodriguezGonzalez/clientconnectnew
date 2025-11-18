@@ -46,6 +46,17 @@ export function FinalHero() {
     ]
   );
 
+  // Transform para el color del borde del arco
+  const arcBorderColor = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [
+      "rgba(255, 255, 255, 0.2)",
+      "rgba(255, 255, 255, 0.2)",
+      "rgba(255, 255, 255, 1)"
+    ]
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -260,8 +271,11 @@ export function FinalHero() {
             <div className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               <motion.div 
-                className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t border-white/20"
-                style={{ backgroundColor: arcBackground }}
+                className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-10 w-[200%] rounded-[100%] border-t"
+                style={{ 
+                  backgroundColor: arcBackground,
+                  borderTopColor: arcBorderColor
+                }}
               />
               <Sparkles
                 density={1200}
