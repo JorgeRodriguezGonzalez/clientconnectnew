@@ -17,10 +17,10 @@ const Index = () => {
         <div className="w-full flex justify-center pb-16 relative z-[999999] -mt-[250px]">
           <BentoGrid />
         </div>
+        <HowWeWork />
         <AnimatedGallerySection />
         <ServicesSection />
         <WhyUsSection />
-        <HowWeWork />
         <WhySubscribeBento />
         <TestimonialsSection />
         <CTASection />
