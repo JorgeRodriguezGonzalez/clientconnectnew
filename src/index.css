@@ -102,10 +102,10 @@ All colors MUST be HSL.
 /* Animation for MarketingCard animated line - HORIZONTAL movement */
 @keyframes move-horizontal {
   0% {
-    transform: translateX(-200px) translateY(-50%);
+    left: -100px;
   }
   100% {
-    transform: translateX(200px) translateY(-50%);
+    left: calc(100% + 100px);
   }
 }
 
