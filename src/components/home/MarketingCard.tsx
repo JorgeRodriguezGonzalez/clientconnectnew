@@ -46,7 +46,7 @@ export const MarketingCard = ({
       <ul className="flex flex-col gap-3 m-0 p-0 list-none">
         {bulletPoints.map((point, index) => (
           <li key={index} className="flex items-start gap-3">
-            <span className="text-black/40">•</span>
+            <span className="text-black/40 font-bold">✓</span>
             <p className="font-normal text-black/40 text-[14px] leading-[19.6px] tracking-[-0.4px] m-0" style={{
               fontFamily: 'Inter, "Inter Placeholder", sans-serif',
               fontStyle: 'normal'
