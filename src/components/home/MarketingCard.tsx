@@ -9,8 +9,8 @@ type MarketingCardProps = {
 export const MarketingCard = ({
   title = 'Digital Marketing Excellence',
   bulletPoints = [
-    'Data-driven strategies that amplify your brand presence',
-    'Targeted campaigns that engage your ideal audience',
+    'Data-driven strategies that amplify your brand',
+    'Targeted campaigns for your ideal audience',
     'Measurable results across all digital channels',
     'Continuous optimization for maximum ROI'
   ]
@@ -37,12 +37,13 @@ export const MarketingCard = ({
         duration: 0.5
       }}
     >
-      <h2 className="font-semibold text-black text-[32px] leading-[38px] tracking-[-1px] m-0 text-left" style={{
+      <h2 className="font-semibold text-black text-[22px] leading-[28px] tracking-[-1px] m-0 text-left" style={{
         fontFamily: 'Inter, "Inter Placeholder", sans-serif',
         fontStyle: 'normal'
       }}>
         {title}
       </h2>
+
       <ul className="flex flex-col gap-3 m-0 p-0 list-none">
         {bulletPoints.map((point, index) => (
           <li key={index} className="flex items-start gap-3">
