@@ -175,7 +175,7 @@ export const BrandsShowcaseCard = ({
       </div>
       
       <div className="flex flex-col items-start justify-start gap-2 w-[673.2px] h-[100px] px-4 pt-4 pb-6">
-        <h2 className="font-medium text-black text-[20px] leading-[17px] tracking-[-0.6px] m-0" style={{
+        <h2 className="font-semibold text-black/80 text-[20px] leading-[28px] tracking-[0.5px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
