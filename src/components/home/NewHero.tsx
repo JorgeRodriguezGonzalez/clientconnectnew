@@ -3,9 +3,8 @@ import { useScroll, useTransform } from "framer-motion";
 import { Send, Calendar } from 'lucide-react';
 import { motion } from "framer-motion";
 import { Sparkles } from "@/components/ui/sparkles";
-import { BrandsShowcaseSection } from "@/components/home/BrandsShowcaseSection";
 
-export function NewHero() {
+export function FinalHero() {
   const ref = React.useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [titleNumber, setTitleNumber] = useState(0);
@@ -15,7 +14,7 @@ export function NewHero() {
     []
   );
 
-  const wordWidths: { [key: string]: number } = {
+  const wordWidths = {
     "Light": 110,
     "Leads": 135,
     "Clients": 150,
@@ -29,61 +28,39 @@ export function NewHero() {
 
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.75, 0.8, 1],
+    [0, 1],
     [
       "rgb(5, 10, 25)",
-      "rgb(30, 50, 120)",
-      "rgb(255, 255, 255)",
+      "rgb(20, 35, 90)"
+    ]
+  );
+
+  // Transform para el color del arco (igual que tenía el círculo)
+  const arcBackground = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [
+      "rgb(5, 10, 25)",
+      "rgb(5, 10, 25)",
       "rgb(255, 255, 255)"
     ]
   );
 
-  // Transforms para el círculo y el texto
-  const circleBackground = useTransform(
+  // Transform para el color del borde del arco
+  const arcBorderColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.6, 0.75, 0.8, 1],
+    [0, 0.5, 1],
     [
-      "rgb(5, 10, 25)",
-      "rgb(22, 34, 69)",
-      "rgb(103, 130, 214)",
-      "rgb(103, 130, 214)",
-      "rgb(255, 255, 255)",
-      "rgb(255, 255, 255)"
+      "rgba(255, 255, 255, 0.2)",
+      "rgba(255, 255, 255, 0.2)",
+      "rgba(255, 255, 255, 1)"
     ]
   );
 
-  const belowArcTextColor = useTransform(
+  // Transform para remover el mask-image gradualmente
+  const maskOpacity = useTransform(
     scrollYProgress,
-    [0, 0.76, 0.79, 1],
-    [
-      "rgb(255, 255, 255)",
-      "rgb(255, 255, 255)",
-      "rgb(0, 0, 0)",
-      "rgb(0, 0, 0)"
-    ]
-  );
-
-  const textOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.5, 0.6],
-    [0, 0, 1]
-  );
-
-  const brandsOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.79, 0.84],
-    [0, 0, 1]
-  );
-
-  const circleBorderRadius = useTransform(
-    scrollYProgress,
-    [0, 0.65, 1],
-    ["50%", "50%", "0%"]
-  );
-
-  const sparklesMaskOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.74, 0.75],
+    [0, 0.5, 1],
     [1, 1, 0]
   );
 
@@ -117,13 +94,13 @@ export function NewHero() {
     <motion.div
       ref={ref}
       style={{ backgroundColor }}
-      className="h-[200vh] w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-clip"
+      className="h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
     >
-      <div className="top-[-40px] h-[150vh] flex justify-center pt-32">
-        <div className="z-10 flex flex-col items-center justify-center gap-4 w-full px-5 relative">
+      <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
+        <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
 
-          {/* LAMP + TÍTULO: superpuestos 30px */}
-          <div className="flex flex-col items-center gap-[-30px]">
+          {/* LAMP + TÍTULO */}
+          <div className="flex flex-col items-center gap-[-20px]">
             {/* Lamp Effect */}
             <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
               <motion.div
@@ -197,7 +174,7 @@ export function NewHero() {
               />
             </div>
 
-            {/* Título principal (sin mt-0) */}
+            {/* Título principal */}
             <motion.h1
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
@@ -237,7 +214,7 @@ export function NewHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
-            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-6 mb-6"
+            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
             style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
@@ -269,14 +246,14 @@ export function NewHero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
-            className="w-full mt-16 relative z-50"
+            transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
+            className="w-full mt-12 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
               <motion.div 
                 initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 4.2, duration: 0.8, ease: "easeOut" }}
+                transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
                 className="text-center text-2xl md:text-[16px] leading-tight"
               >
                 <span className="text-cyan-300">Trusted by experts.</span>
@@ -289,63 +266,35 @@ export function NewHero() {
                 transition={{ delay: 4.2, duration: 0.8, ease: "easeOut" }}
                 className="mt-6 grid grid-cols-5 text-white"
               >
-                <Retool />
-                <Vercel />
-                <Remote />
-                <Arc />
-                <Raycast />
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Retool</div>
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Vercel</div>
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Remote</div>
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Arc</div>
+                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Raycast</div>
               </motion.div>
             </div>
 
-            {/* Sparkles Effect */}
+            {/* Contenedor Sparkles - Arco y Sparkles */}
             <motion.div 
-              className="relative  -mt-[1750px] h-[2450px] w-full overflow-hidden"
+              className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden"
               style={{
-                WebkitMaskImage: sparklesMaskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
-                maskImage: sparklesMaskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
+                maskImage: maskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
+                WebkitMaskImage: maskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
               }}
             >
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
-              
-              {/* Círculo completo con transición de color y título dentro */}
               <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
-                className="absolute left-1/2 top-[74%] w-[2000vw] h-[2000vw] max-w-[2000px] max-h-[2000px] z-[5] border border-white/20 -translate-x-1/2 flex items-center justify-center" 
-                style={{ backgroundColor: circleBackground, borderRadius: circleBorderRadius }} 
-              >
-                {/* Título dentro del círculo */}
-                <motion.h2
-                  style={{ 
-                    fontFamily: '"Inter Display", sans-serif', 
-                    letterSpacing: '-1.5px',
-                    color: belowArcTextColor,
-                    opacity: textOpacity
-                  }}
-                  className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center absolute top-[8%] left-1/2 -translate-x-1/2 z-50 px-8"
-                >
-                  This Is How We Do It
-                </motion.h2>
-                
-                {/* BrandsShowcaseSection */}
-                <motion.div
-                  style={{ 
-                    opacity: brandsOpacity
-                  }}
-                  className="absolute top-[12%] left-1/2 -translate-x-1/2 z-50 w-full"
-                >
-                  <BrandsShowcaseSection />
-                </motion.div>
-              </motion.div>
-              
-              <motion.div style={{ opacity: sparklesMaskOpacity }}>
-                <Sparkles
-                  density={800}
-                  className="absolute inset-x-0 bottom-[400px] h-[450px] w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
-                  color="#ffffff"
-                />
-              </motion.div>
+                className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-[9999] w-[200%] rounded-[100%] border-t"
+                style={{ 
+                  backgroundColor: arcBackground,
+                  borderTopColor: arcBorderColor
+                }}
+              />
+              <Sparkles
+                density={1200}
+                className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                color="#ffffff"
+              />
             </motion.div>
           </motion.div>
         </div>
@@ -353,34 +302,3 @@ export function NewHero() {
     </motion.div>
   );
 }
-
-// Logos como texto
-const Retool = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Retool
-  </div>
-);
-
-const Vercel = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Vercel
-  </div>
-);
-
-const Remote = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Remote
-  </div>
-);
-
-const Arc = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Arc
-  </div>
-);
-
-const Raycast = () => (
-  <div className="w-full flex items-center justify-center text-white text-lg font-medium">
-    Raycast
-  </div>
-);
