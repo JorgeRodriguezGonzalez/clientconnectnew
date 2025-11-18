@@ -67,8 +67,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               transition={{
                 delay: 0.6,
                 duration: 0.6
-              }} 
-              className="absolute top-[106px] left-5 w-[406px]" 
+              }}
+              whileHover={{
+                scale: 1.02,
+                y: -2
+              }}
+              className="absolute top-[106px] left-5 w-[406px] cursor-pointer" 
               style={{
                 transformStyle: 'preserve-3d'
               }}
@@ -92,8 +96,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               transition={{
                 delay: 0.7,
                 duration: 0.6
-              }} 
-              className="absolute top-[106px] right-[-30px] w-[69px]" 
+              }}
+              whileHover={{
+                scale: 1.05,
+                rotate: 5
+              }}
+              className="absolute top-[106px] right-[-30px] w-[69px] cursor-pointer" 
               style={{
                 transformStyle: 'preserve-3d'
               }}
@@ -117,8 +125,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               transition={{
                 delay: 0.8,
                 duration: 0.6
-              }} 
-              className="absolute top-[238px] right-[-104px] w-[431px]" 
+              }}
+              whileHover={{
+                scale: 1.02,
+                y: -2
+              }}
+              className="absolute top-[238px] right-[-104px] w-[431px] cursor-pointer" 
               style={{
                 transformStyle: 'preserve-3d'
               }}
@@ -144,8 +156,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               transition={{
                 delay: 0.9,
                 duration: 0.8
-              }} 
-              className="absolute top-[323px] left-[45px] w-[109px] h-[109px]" 
+              }}
+              whileHover={{
+                scale: 1.08,
+                rotate: 5
+              }}
+              className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer" 
               style={{
                 transformStyle: 'preserve-3d'
               }}
@@ -171,8 +187,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               transition={{
                 delay: 1.0,
                 duration: 0.6
-              }} 
-              className="absolute bottom-0 left-0 w-[406px]" 
+              }}
+              whileHover={{
+                scale: 1.02,
+                y: -2
+              }}
+              className="absolute bottom-0 left-0 w-[406px] cursor-pointer" 
               style={{
                 transformStyle: 'preserve-3d'
               }}
