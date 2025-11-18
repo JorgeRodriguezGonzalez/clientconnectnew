@@ -157,7 +157,7 @@ const InfiniteCarousel = () => {
   const duplicatedLogos = [...carouselLogos, ...carouselLogos, ...carouselLogos, ...carouselLogos];
 
   return (
-    <div className="relative w-[660px] h-[580px] flex items-center justify-end overflow-hidden">
+    <div className="relative w-[500px] h-[420px] flex items-center justify-end overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0">
         <img 
@@ -178,7 +178,7 @@ const InfiniteCarousel = () => {
 
       {/* Carousel section */}
       <section 
-        className="relative z-[2] w-[660px] h-[400px] flex items-center justify-center overflow-hidden p-2.5"
+        className="relative z-[2] w-[500px] h-[300px] flex items-center justify-center overflow-hidden p-2.5"
         style={{
           maskImage: 'linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 12.5%, rgb(0, 0, 0) 87.5%, rgba(0, 0, 0, 0) 100%)'
         }}
@@ -194,10 +194,10 @@ const InfiniteCarousel = () => {
           {duplicatedLogos.map((logo, index) => (
             <div 
               key={`${logo}-${index}`}
-              className="flex-shrink-0 w-44 h-44 p-3"
+              className="flex-shrink-0 w-36 h-36 p-2.5"
             >
-              <div className="flex flex-col items-center justify-center w-full h-full bg-white rounded-[16px] shadow-lg p-8">
-                <div className="w-22 h-22 relative">
+              <div className="flex flex-col items-center justify-center w-full h-full bg-white rounded-[16px] shadow-lg p-6">
+                <div className="w-20 h-20 relative">
                   <img 
                     src={logo} 
                     alt="Marketing tool" 
@@ -254,7 +254,7 @@ const AnimatedImage = ({
           x: isInView ? 0 : 300
         }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative w-[551px] h-[454px] rounded-l-[16px] overflow-hidden shadow-lg z-10"
+        className="relative w-[420px] h-[346px] rounded-l-[16px] overflow-hidden shadow-lg z-10"
       >
         <img src={src} alt={alt} className="w-full h-full object-cover object-[0%_0%]" />
       </motion.div>
@@ -310,7 +310,7 @@ export const HowWeWork = () => {
         We turn marketing complexity into clear, measurable results through proven strategies and transparent reporting.
       </h3>
 
-      <div className="flex flex-col gap-[30px] w-full max-w-[1200px]">
+      <div className="flex flex-col gap-[30px] w-full max-w-[1000px]">
         {workSteps.map((step, index) => {
           const Icon = step.icon;
           const scale = useTransform(
@@ -330,8 +330,8 @@ export const HowWeWork = () => {
               }}
               className="bg-white rounded-[16px] shadow-lg overflow-hidden"
             >
-              <div className="flex h-[580px]">
-                <div className="w-[540px] flex flex-col gap-5 p-10">
+              <div className="flex h-[420px]">
+                <div className="w-[420px] flex flex-col gap-5 p-8">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 bg-[#3255D2]/10 rounded-lg flex items-center justify-center">
                       <Icon size={16} className="text-[#3255D2]" />
@@ -344,14 +344,14 @@ export const HowWeWork = () => {
                     </h5>
                   </div>
 
-                  <h2 className="text-black/80 text-[28px] leading-[33.6px] font-semibold tracking-[0.5px] max-w-[460px]" style={{
+                  <h2 className="text-black/80 text-[28px] leading-[33.6px] font-semibold tracking-[0.5px] max-w-[360px]" style={{
                     fontFamily: 'Inter, "Inter Placeholder", sans-serif',
                     fontStyle: 'normal'
                   }}>
                     {step.title}
                   </h2>
 
-                  <p className="text-black/40 text-base leading-6 font-normal max-w-[460px]" style={{
+                  <p className="text-black/40 text-base leading-6 font-normal max-w-[360px]" style={{
                     fontFamily: 'Inter, "Inter Placeholder", sans-serif',
                     fontStyle: 'normal'
                   }}>
