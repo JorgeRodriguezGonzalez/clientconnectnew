@@ -3,14 +3,12 @@ import { motion, useInView } from 'framer-motion';
 
 type SavingsCardProps = {
   title?: string;
-  badge?: string;
   amount?: string;
   description?: string;
 };
 
 export const SavingsCard = ({
   title = 'Growth',
-  badge = 'Highest',
   amount = '$100,000+ Saved for Brands',
   description = 'So they can reinvest where it matters the most'
 }: SavingsCardProps) => {
@@ -57,28 +55,6 @@ export const SavingsCard = ({
               {title}
             </p>
           </div>
-
-          <motion.div 
-            key={`badge-${hoverCount}`}
-            className="absolute top-[32px] right-[22px]"
-            initial={{
-              opacity: 0
-            }}
-            animate={{
-              opacity: isHovered ? 1 : 0
-            }}
-            transition={{
-              duration: 0.3,
-              delay: isHovered ? 0.6 : 0
-            }}
-          >
-            <p className="text-[12.6px] font-normal text-cyan-500 leading-[15.2px] whitespace-nowrap" style={{
-              fontFamily: '"Inter Display", sans-serif',
-              letterSpacing: '-0.4px'
-            }}>
-              {badge}
-            </p>
-          </motion.div>
 
           <svg className="absolute bottom-[-100px] left-[-167.4px] w-[494px] h-[286px]" viewBox="0 0 494 286" fill="none" xmlns="http://www.w3.org/2000/svg" style={{
             imageRendering: 'auto'
