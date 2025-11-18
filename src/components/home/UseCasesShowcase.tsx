@@ -65,7 +65,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 x: -50
               }} 
               transition={{
-                delay: 0.2,
+                delay: 0.6,
                 duration: 0.6
               }} 
               className="absolute top-[106px] left-5 w-[406px]" 
@@ -90,7 +90,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 scale: 0.8
               }} 
               transition={{
-                delay: 0.3,
+                delay: 0.7,
                 duration: 0.6
               }} 
               className="absolute top-[106px] right-[-30px] w-[69px]" 
@@ -115,7 +115,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 x: 50
               }} 
               transition={{
-                delay: 0.4,
+                delay: 0.8,
                 duration: 0.6
               }} 
               className="absolute top-[238px] right-[-104px] w-[431px]" 
@@ -142,7 +142,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 rotate: -180
               }} 
               transition={{
-                delay: 0.5,
+                delay: 0.9,
                 duration: 0.8
               }} 
               className="absolute top-[323px] left-[45px] w-[109px] h-[109px]" 
@@ -169,7 +169,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 y: 50
               }} 
               transition={{
-                delay: 0.6,
+                delay: 1.0,
                 duration: 0.6
               }} 
               className="absolute bottom-0 left-0 w-[406px]" 
