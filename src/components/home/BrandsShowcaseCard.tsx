@@ -18,7 +18,9 @@ export const BrandsShowcaseCard = ({
     <motion.div 
       ref={ref}
       className="relative flex flex-col items-center gap-1.5 w-[685.2px] h-[280px] rounded-[28px] p-1.5 overflow-hidden shadow-lg"
-      style={{ backgroundColor: 'rgb(20, 35, 90)' }}
+      style={{ 
+        background: 'linear-gradient(135deg, rgb(20, 35, 90) 0%, rgb(0, 200, 200) 100%)'
+      }}
       initial={{
         opacity: 0,
         y: 20
