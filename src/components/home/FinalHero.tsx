@@ -26,16 +26,19 @@ export function FinalHero() {
     offset: ["start start", "end end"],
   });
 
-  // Nuevo: Gradiente de fondo que cambia con el scroll
-  const heroBackgroundGradient = useTransform(
+  // Background con gradiente que cambia de arriba hacia abajo
+  // La parte superior mantiene el azul oscuro
+  // Solo el 10% inferior cambia a blanco con el scroll
+  const heroBackground = useTransform(
     scrollYProgress,
     [0, 1],
     [
       "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 90%, rgb(5, 10, 25) 100%)",
-      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(20, 35, 90) 90%, rgb(255, 255, 255) 100%)"
+      "linear-gradient(to bottom, rgb(20, 35, 90) 0%, rgb(20, 35, 90) 90%, rgb(255, 255, 255) 100%)"
     ]
   );
 
+  // Este backgroundColor es para los elementos internos del lamp effect
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 1],
@@ -96,29 +99,29 @@ export function FinalHero() {
   return (
     <motion.div
       ref={ref}
-      style={{ backgroundImage: heroBackgroundGradient }}
-      className="finalhero-unique-bg h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
+      style={{ backgroundImage: heroBackground }}
+      className="finalhero-container h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
     >
-      <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
-        <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
+      <div className="finalhero-content-wrapper top-[-20px] h-[100vh] flex justify-center pt-12">
+        <div className="finalhero-inner z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
 
           {/* LAMP + TÍTULO */}
-          <div className="flex flex-col items-center gap-[-20px]">
+          <div className="finalhero-lamp-title-group flex flex-col items-center gap-[-20px]">
             {/* Lamp Effect */}
-            <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
+            <div className="finalhero-lamp-container w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
                 animate={{ opacity: 1, width: "30rem" }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
                 style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
-                className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-cyan-500 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
+                className="finalhero-lamp-right absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-cyan-500 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
               >
                 <motion.div
-                  className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
+                  className="finalhero-lamp-mask-bottom absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
                   style={{ backgroundColor }}
                 />
                 <motion.div
-                  className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]"
+                  className="finalhero-lamp-mask-right absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]"
                   style={{ backgroundColor }}
                 />
               </motion.div>
@@ -128,51 +131,51 @@ export function FinalHero() {
                 animate={{ opacity: 1, width: "30rem" }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
                 style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
-                className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-cyan-500 text-white [--conic-position:from_290deg_at_center_top]"
+                className="finalhero-lamp-left absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-cyan-500 text-white [--conic-position:from_290deg_at_center_top]"
               >
                 <motion.div
-                  className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]"
+                  className="finalhero-lamp-mask-left absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]"
                   style={{ backgroundColor }}
                 />
                 <motion.div
-                  className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
+                  className="finalhero-lamp-mask-top absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
                   style={{ backgroundColor }}
                 />
               </motion.div>
 
               <motion.div
-                className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl"
+                className="finalhero-lamp-blur-bg absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl"
                 style={{ backgroundColor }}
               />
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.1 }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md"
+                className="finalhero-lamp-backdrop absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md"
               />
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-cyan-500 blur-3xl"
+                className="finalhero-lamp-glow-main absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-cyan-500 blur-3xl"
               />
 
               <motion.div
                 initial={{ opacity: 0, width: "8rem" }}
                 animate={{ opacity: 1, width: "16rem" }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-cyan-400 blur-2xl"
+                className="finalhero-lamp-glow-secondary absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-cyan-400 blur-2xl"
               ></motion.div>
 
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
                 animate={{ opacity: 1, width: "30rem" }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-cyan-400"
+                className="finalhero-lamp-line absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-cyan-400"
               ></motion.div>
 
               <motion.div
-                className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]"
+                className="finalhero-lamp-cover absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]"
                 style={{ backgroundColor }}
               />
             </div>
@@ -182,12 +185,12 @@ export function FinalHero() {
               initial={{ opacity: 0, y: 80 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-              className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
+              className="finalhero-title text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
               style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.5px' }}
             >
               We Bring{" "}
               <motion.span
-                className="relative inline-flex items-center overflow-hidden"
+                className="finalhero-title-word-wrapper relative inline-flex items-center overflow-hidden"
                 animate={{ width: currentWidth }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 style={{ minHeight: '1em' }}
@@ -195,7 +198,7 @@ export function FinalHero() {
                 {words.map((word, index) => (
                   <motion.span
                     key={index}
-                    className="font-light"
+                    className="finalhero-title-word font-light"
                     initial={{ opacity: 0, y: -100 }}
                     transition={{ type: "spring", stiffness: 50, opacity: { duration: 0.2 } }}
                     animate={
@@ -217,7 +220,7 @@ export function FinalHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
-            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
+            className="finalhero-subtitle text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
             style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
@@ -228,18 +231,18 @@ export function FinalHero() {
             initial={{ opacity: 0, y: 80 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
+            className="finalhero-ctas flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
           >
-            <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
-              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+            <a href="#contact" className="finalhero-cta-primary flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
+              <p className="finalhero-cta-text text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
                 How we do it
               </p>
             </a>
-            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-cyan-300/80 rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]">
-              <div className="w-[18px] h-[14px] relative overflow-hidden">
+            <a href="#contact" className="finalhero-cta-secondary flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-cyan-300/80 rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]">
+              <div className="finalhero-cta-icon w-[18px] h-[14px] relative overflow-hidden">
                 <Calendar className="w-[17px] h-[14px] text-cyan-300" />
               </div>
-              <p className="text-[14px] font-medium leading-5 text-cyan-300 whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+              <p className="finalhero-cta-text-secondary text-[14px] font-medium leading-5 text-cyan-300 whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
                 Book Free Consultation
               </p>
             </a>
@@ -250,14 +253,14 @@ export function FinalHero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
-            className="w-full mt-12 relative z-50"
+            className="finalhero-brands w-full mt-12 relative z-50"
           >
-            <div className="mx-auto w-full max-w-2xl">
+            <div className="finalhero-brands-inner mx-auto w-full max-w-2xl">
               <motion.div 
                 initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
-                className="text-center text-2xl md:text-[16px] leading-tight"
+                className="finalhero-brands-tagline text-center text-2xl md:text-[16px] leading-tight"
               >
                 <span className="text-cyan-300">Trusted by experts.</span>
                 <br />
@@ -267,21 +270,21 @@ export function FinalHero() {
                 initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 4.2, duration: 0.8, ease: "easeOut" }}
-                className="mt-6 grid grid-cols-5 text-white"
+                className="finalhero-brands-grid mt-6 grid grid-cols-5 text-white"
               >
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Retool</div>
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Vercel</div>
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Remote</div>
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Arc</div>
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Raycast</div>
+                <div className="finalhero-brand-item w-full flex items-center justify-center text-white text-lg font-medium">Retool</div>
+                <div className="finalhero-brand-item w-full flex items-center justify-center text-white text-lg font-medium">Vercel</div>
+                <div className="finalhero-brand-item w-full flex items-center justify-center text-white text-lg font-medium">Remote</div>
+                <div className="finalhero-brand-item w-full flex items-center justify-center text-white text-lg font-medium">Arc</div>
+                <div className="finalhero-brand-item w-full flex items-center justify-center text-white text-lg font-medium">Raycast</div>
               </motion.div>
             </div>
 
             {/* Contenedor Sparkles - Arco y Sparkles */}
-            <div className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
-              <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
+            <div className="finalhero-sparkles-container relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
+              <div className="finalhero-sparkles-gradient absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               <motion.div 
-                className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-[9999] w-[200%] rounded-[100%] border-t"
+                className="finalhero-arc absolute -left-1/2 top-1/2 aspect-[1/0.7] z-[9999] w-[200%] rounded-[100%] border-t"
                 style={{ 
                   backgroundColor: arcBackground,
                   borderTopColor: arcBorderColor
@@ -289,7 +292,7 @@ export function FinalHero() {
               />
               <Sparkles
                 density={1200}
-                className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+                className="finalhero-sparkles absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
                 color="#ffffff"
               />
             </div>
