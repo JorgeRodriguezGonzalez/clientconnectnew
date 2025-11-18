@@ -13,7 +13,7 @@ const skills = [
   { text: 'Google Ads', position: { top: '58px', left: '29px' } },
   { text: 'Social Media Management', position: { top: '45px', right: '56px' } },
   { text: 'CRM', position: { top: '8px', right: '53px' } },
-  { text: 'Facebook Ads', position: { bottom: '31px', left: '11px' } },
+  { text: 'Facebook Ads', position: { bottom: '31px', left: '80px' } },
   { text: 'Videography', position: { bottom: '14px', left: '50px' } },
   { text: 'Photography', position: { bottom: '55px', left: '9px' } }
 ] as any[];
