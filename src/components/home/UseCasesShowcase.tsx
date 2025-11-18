@@ -70,7 +70,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.02,
-                y: -2
+                y: -2,
+                transition: { duration: 0.2 }
               }}
               className="absolute top-[106px] left-5 w-[406px] cursor-pointer" 
               style={{
@@ -99,7 +100,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.05,
-                rotate: 5
+                rotate: 5,
+                transition: { duration: 0.2 }
               }}
               className="absolute top-[106px] right-[-30px] w-[69px] cursor-pointer" 
               style={{
@@ -128,7 +130,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.02,
-                y: -2
+                y: -2,
+                transition: { duration: 0.2 }
               }}
               className="absolute top-[238px] right-[-104px] w-[431px] cursor-pointer" 
               style={{
@@ -159,7 +162,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.08,
-                rotate: 5
+                rotate: 5,
+                transition: { duration: 0.2 }
               }}
               className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer" 
               style={{
@@ -190,7 +194,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.02,
-                y: -2
+                y: -2,
+                transition: { duration: 0.2 }
               }}
               className="absolute bottom-0 left-0 w-[406px] cursor-pointer" 
               style={{
