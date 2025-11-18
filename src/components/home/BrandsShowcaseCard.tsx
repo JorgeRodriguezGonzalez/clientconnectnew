@@ -17,10 +17,7 @@ export const BrandsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[685.2px] h-[310px] rounded-[28px] p-1.5 overflow-hidden shadow-lg"
-      style={{ 
-        background: 'linear-gradient(135deg, rgb(50, 90, 160) 0%, rgb(70, 130, 200) 100%)'
-      }}
+      className="relative flex flex-col items-center gap-1.5 w-[685.2px] h-[310px] rounded-[16px] p-1.5 overflow-hidden shadow-lg bg-white"
       initial={{
         opacity: 0,
         y: 20
@@ -37,7 +34,7 @@ export const BrandsShowcaseCard = ({
       }} 
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[673.2px] h-[192px] bg-[#F5F5F5] rounded-[22px] overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center w-[673.2px] h-[192px] bg-[#F5F5F5] rounded-[12px] overflow-hidden">
         <div className="relative w-full h-full">
           <motion.div 
             key={`left-${hoverCount}`}
@@ -121,13 +118,13 @@ export const BrandsShowcaseCard = ({
       </div>
       
       <div className="flex flex-col items-start justify-start gap-2 w-[673.2px] h-[100px] px-4 pt-4 pb-6">
-        <h2 className="font-medium text-white text-[18px] leading-[17px] tracking-[-0.6px] m-0" style={{
+        <h2 className="font-medium text-black text-[18px] leading-[17px] tracking-[-0.6px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
           {title}
         </h2>
-        <p className="font-normal text-white/70 text-[14px] leading-[19.6px] tracking-[-0.4px] m-0" style={{
+        <p className="font-normal text-black/40 text-[14px] leading-[19.6px] tracking-[-0.4px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
