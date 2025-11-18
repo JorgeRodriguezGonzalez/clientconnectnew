@@ -31,10 +31,7 @@ export const SkillsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[16px] p-1.5 shadow-lg"
-      style={{ 
-        background: 'linear-gradient(135deg, rgb(50, 90, 160) 0%, rgb(70, 130, 200) 100%)'
-      }}
+      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[16px] p-1.5 shadow-lg bg-white"
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
@@ -80,12 +77,12 @@ export const SkillsShowcaseCard = ({
       </div>
       
       <div className="flex w-[314.6px] h-[100px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[18px] font-medium leading-[17px] tracking-[-0.6px] text-white" style={{
+        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[18px] font-medium leading-[17px] tracking-[-0.6px] text-black" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif'
         }}>
           {title}
         </p>
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px] text-white/70" style={{
+        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px] text-black/40" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif'
         }}>
           {subtitle}
