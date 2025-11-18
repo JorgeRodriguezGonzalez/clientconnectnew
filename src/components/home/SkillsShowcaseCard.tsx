@@ -31,7 +31,7 @@ export const SkillsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[28px] p-1.5 shadow-lg"
+      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[16px] p-1.5 shadow-lg"
       style={{ 
         background: 'linear-gradient(135deg, rgb(50, 90, 160) 0%, rgb(70, 130, 200) 100%)'
       }}
@@ -44,7 +44,7 @@ export const SkillsShowcaseCard = ({
       }}
       onHoverEnd={() => setIsHovered(false)}
     >
-      <div className="relative flex h-[192px] w-[314.6px] items-center justify-center overflow-hidden rounded-[22px] bg-[#f5f5f5]">
+      <div className="relative flex h-[192px] w-[314.6px] items-center justify-center overflow-hidden rounded-[12px] bg-[#f5f5f5]">
         <div className="absolute inset-0 flex items-center justify-center">
           <img 
             src={logoSrc} 
