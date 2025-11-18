@@ -99,16 +99,16 @@ export const SavingsCard = ({
               stroke="rgba(103, 232, 249, 0.5)" 
               strokeWidth="3" 
               strokeMiterlimit="10" 
-              strokeDasharray="9.07,9.07" 
+              strokeDasharray="1000"
               initial={{
-                pathLength: 0
+                strokeDashoffset: 1000
               }} 
               animate={{
-                pathLength: 1
+                strokeDashoffset: 0
               }} 
               transition={{
-                duration: 3,
-                ease: 'easeInOut',
+                duration: 2,
+                ease: 'linear',
                 delay: 0.5
               }} 
             />
