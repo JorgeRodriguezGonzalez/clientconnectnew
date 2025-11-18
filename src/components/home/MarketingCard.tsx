@@ -62,7 +62,7 @@ export const MarketingCard = ({
       </div>
 
       {/* Logos animados derecha */}
-      <div className="w-[200px] h-full">
+      <div className="w-[240px] h-full">
         <AnimatedLogos />
       </div>
     </motion.div>
@@ -75,8 +75,14 @@ function AnimatedLogos() {
     { icon: <MetaIconOutline className="h-6 w-6" />, size: "md" as const },
     { icon: <GoogleAdsLogo className="h-8 w-8" />, size: "lg" as const },
     { icon: <LinkedInLogo className="h-6 w-6" />, size: "md" as const },
-    { icon: <InstagramLogo className="h-5 w-5" />, size: "sm" as const },
+    { icon: <InstagramLogo className="h-4 w-4" />, size: "sm" as const },
   ];
+
+  const sizeMap = {
+    sm: "h-8 w-8",
+    md: "h-12 w-12",
+    lg: "h-16 w-16",
+  };
 
   const scale = [1, 1.1, 1];
   const transform = ["translateY(0px)", "translateY(-4px)", "translateY(0px)"];
@@ -98,34 +104,47 @@ function AnimatedLogos() {
     return () => controls.stop();
   }, []);
 
-  const sizeMap = {
-    sm: "h-8 w-8",
-    md: "h-12 w-12",
-    lg: "h-16 w-16",
-  };
-
   return (
-    <div className="relative h-full flex items-center justify-center overflow-hidden">
-      <div className="flex flex-col justify-center items-center gap-4">
+    <div className="p-8 overflow-hidden h-full relative flex items-center justify-center">
+      {/* Logos en horizontal */}
+      <div className="flex flex-row flex-shrink-0 justify-center items-center gap-2">
         {icons.map((icon, index) => (
-          <div
+          <Container
             key={index}
-            className={`${sizeMap[icon.size]} circle-${index + 1} rounded-full flex items-center justify-center bg-gray-50 shadow-md`}
+            className={`${sizeMap[icon.size]} circle-${index + 1}`}
           >
             {icon.icon}
-          </div>
+          </Container>
         ))}
       </div>
       
-      {/* Línea vertical animada */}
-      <div className="h-40 w-px absolute top-1/2 -translate-y-1/2 m-auto z-40 bg-gradient-to-b from-transparent via-blue-500 to-transparent animate-move">
-        <div className="w-10 h-32 top-1/2 -translate-y-1/2 absolute -left-5">
-          <Sparkles />
-        </div>
-      </div>
+      {/* Línea vertical animada que cruza horizontalmente */}
+      <AnimatedSparkles />
     </div>
   );
 }
+
+// Container para cada logo
+const Container = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={`rounded-full flex items-center justify-center bg-[rgba(248,248,248,0.01)] shadow-[0px_0px_8px_0px_rgba(248,248,248,0.25)_inset,0px_32px_24px_-16px_rgba(0,0,0,0.40)] ${className}`}
+    {...props}
+  />
+));
+Container.displayName = "Container";
+
+// Línea vertical con sparkles
+const AnimatedSparkles = () => (
+  <div className="h-40 w-px absolute top-20 m-auto z-40 bg-gradient-to-b from-transparent via-cyan-500 to-transparent animate-move">
+    <div className="w-10 h-32 top-1/2 -translate-y-1/2 absolute -left-10">
+      <Sparkles />
+    </div>
+  </div>
+);
 
 // Componente de sparkles
 const Sparkles = () => {
@@ -158,7 +177,7 @@ const Sparkles = () => {
             borderRadius: "50%",
             zIndex: 1,
           }}
-          className="inline-block bg-blue-400"
+          className="inline-block bg-black dark:bg-white"
         />
       ))}
     </div>
