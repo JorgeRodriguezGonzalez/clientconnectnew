@@ -27,14 +27,12 @@ export function FinalHero() {
   });
 
   // Background con gradiente que cambia de arriba hacia abajo
-  // La parte superior mantiene el azul oscuro
-  // Solo el 10% inferior cambia a blanco con el scroll
   const heroBackground = useTransform(
     scrollYProgress,
     [0, 1],
     [
       "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 90%, rgb(5, 10, 25) 100%)",
-      "linear-gradient(to bottom, rgb(20, 35, 90) 0%, rgb(20, 35, 90) 50%, rgb(255, 255, 255) 100%)"
+      "linear-gradient(to bottom, rgb(20, 35, 90) 0%, rgb(20, 35, 90) 70%, rgb(255, 255, 255) 100%)"
     ]
   );
 
@@ -48,7 +46,7 @@ export function FinalHero() {
     ]
   );
 
-  // Transform para el color del arco (igual que tenía el círculo)
+  // Transform para el color del arco
   const arcBackground = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
@@ -68,6 +66,43 @@ export function FinalHero() {
       "rgba(255, 255, 255, 0.2)",
       "rgba(255, 255, 255, 1)"
     ]
+  );
+
+  // Transforms para convertir el arco en cuadrado al 80%
+  const arcBorderRadius = useTransform(
+    scrollYProgress,
+    [0, 0.8, 1],
+    ["100%", "100%", "12px"]
+  );
+
+  const arcWidth = useTransform(
+    scrollYProgress,
+    [0, 0.8, 1],
+    ["200%", "200%", "70%"]
+  );
+
+  const arcLeft = useTransform(
+    scrollYProgress,
+    [0, 0.8, 1],
+    ["-50%", "-50%", "15%"]
+  );
+
+  const arcTop = useTransform(
+    scrollYProgress,
+    [0, 0.8, 1],
+    ["50%", "50%", "25%"]
+  );
+
+  const arcHeight = useTransform(
+    scrollYProgress,
+    [0, 0.8, 1],
+    ["auto", "auto", "350px"]
+  );
+
+  const arcBorderWidth = useTransform(
+    scrollYProgress,
+    [0, 0.8, 1],
+    ["1px 0 0 0", "1px 0 0 0", "1px"]
   );
 
   useEffect(() => {
@@ -284,10 +319,21 @@ export function FinalHero() {
             <div className="finalhero-sparkles-container relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="finalhero-sparkles-gradient absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               <motion.div 
-                className="finalhero-arc absolute -left-1/2 top-1/2 aspect-[1/0.7] z-[9999] w-[200%] rounded-[100%] border-t"
+                className="finalhero-arc absolute z-[9999]"
                 style={{ 
                   backgroundColor: arcBackground,
-                  borderTopColor: arcBorderColor
+                  borderColor: arcBorderColor,
+                  borderRadius: arcBorderRadius,
+                  width: arcWidth,
+                  left: arcLeft,
+                  top: arcTop,
+                  height: arcHeight,
+                  borderWidth: arcBorderWidth,
+                  aspectRatio: useTransform(
+                    scrollYProgress,
+                    [0, 0.8, 1],
+                    ["1/0.7", "1/0.7", "1/0.9"]
+                  ),
                 }}
               />
               <Sparkles
