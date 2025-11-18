@@ -110,5 +110,5 @@ All colors MUST be HSL.
 }
 
 .animate-move-horizontal {
-  animation: move-horizontal 3s linear infinite;
+  animation: move-horizontal 6s linear infinite;
 }
