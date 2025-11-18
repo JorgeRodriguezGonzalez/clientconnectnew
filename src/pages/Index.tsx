@@ -8,12 +8,14 @@ import { HowWeWork } from "@/components/home/HowWeWork";
 import { WhySubscribeBento } from "@/components/home/WhySubscribeBento";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
+import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
 
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 -mt-4">
         <FinalHero />
+        <UseCasesShowcase />
         <div className="w-full flex justify-center pb-16 relative z-[999999] -mt-[250px]">
           <BentoGrid />
         </div>
