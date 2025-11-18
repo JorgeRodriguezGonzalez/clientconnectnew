@@ -19,7 +19,7 @@ export const BrandsShowcaseCard = ({
       ref={ref}
       className="relative flex flex-col items-center gap-1.5 w-[685.2px] h-[310px] rounded-[28px] p-1.5 overflow-hidden shadow-lg"
       style={{ 
-        background: 'linear-gradient(135deg, rgb(20, 35, 90) 0%, rgb(40, 80, 150) 100%)'
+        background: 'linear-gradient(135deg, rgb(50, 90, 160) 0%, rgb(70, 130, 200) 100%)'
       }}
       initial={{
         opacity: 0,
