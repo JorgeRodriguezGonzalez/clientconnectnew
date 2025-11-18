@@ -34,7 +34,7 @@ export function FinalHero() {
     [0, 1],
     [
       "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 90%, rgb(5, 10, 25) 100%)",
-      "linear-gradient(to bottom, rgb(20, 35, 90) 0%, rgb(20, 35, 90) 90%, rgb(255, 255, 255) 100%)"
+      "linear-gradient(to bottom, rgb(20, 35, 90) 0%, rgb(20, 35, 90) 80%, rgb(255, 255, 255) 100%)"
     ]
   );
 
