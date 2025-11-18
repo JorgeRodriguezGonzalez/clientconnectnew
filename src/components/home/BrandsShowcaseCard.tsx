@@ -17,7 +17,8 @@ export const BrandsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[280px] bg-white rounded-[28px] p-1.5 overflow-hidden shadow-lg" 
+      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[280px] rounded-[28px] p-1.5 overflow-hidden shadow-lg"
+      style={{ backgroundColor: 'rgb(20, 35, 90)' }}
       initial={{
         opacity: 0,
         y: 20
@@ -118,13 +119,13 @@ export const BrandsShowcaseCard = ({
       </div>
       
       <div className="flex flex-col items-start justify-center gap-2 w-[314.6px] h-[70px] px-4 pt-3 pb-3">
-        <h2 className="font-medium text-black text-[18px] leading-[17px] tracking-[-0.6px] m-0" style={{
+        <h2 className="font-medium text-white text-[18px] leading-[17px] tracking-[-0.6px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
           {title}
         </h2>
-        <p className="font-normal text-black/40 text-[14px] leading-[19.6px] tracking-[-0.4px] m-0" style={{
+        <p className="font-normal text-white/70 text-[14px] leading-[19.6px] tracking-[-0.4px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
