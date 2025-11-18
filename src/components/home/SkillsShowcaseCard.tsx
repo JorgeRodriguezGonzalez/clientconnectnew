@@ -33,7 +33,7 @@ export const SkillsShowcaseCard = ({
       ref={ref}
       className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[28px] p-1.5 shadow-lg"
       style={{ 
-        background: 'linear-gradient(135deg, rgb(20, 35, 90) 0%, rgb(40, 80, 150) 100%)'
+        background: 'linear-gradient(135deg, rgb(50, 90, 160) 0%, rgb(70, 130, 200) 100%)'
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
