@@ -26,13 +26,22 @@ export function FinalHero() {
     offset: ["start start", "end end"],
   });
 
-  // Gradiente de fondo que cambia solo en la parte inferior (5%)
-  const backgroundGradient = useTransform(
+  // Nuevo: Gradiente de fondo que cambia con el scroll
+  const heroBackgroundGradient = useTransform(
     scrollYProgress,
     [0, 1],
     [
-      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 85%, rgb(5, 10, 25) 100%)",
-      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 85%, rgb(20, 35, 90) 100%)"
+      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 90%, rgb(5, 10, 25) 100%)",
+      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(20, 35, 90) 90%, rgb(255, 255, 255) 100%)"
+    ]
+  );
+
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [
+      "rgb(5, 10, 25)",
+      "rgb(20, 35, 90)"
     ]
   );
 
@@ -87,8 +96,8 @@ export function FinalHero() {
   return (
     <motion.div
       ref={ref}
-      style={{ backgroundImage: backgroundGradient }}
-      className="final-hero-unique-bg h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
+      style={{ backgroundImage: heroBackgroundGradient }}
+      className="finalhero-unique-bg h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
     >
       <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
         <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
@@ -106,11 +115,11 @@ export function FinalHero() {
               >
                 <motion.div
                   className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
-                  style={{ backgroundColor: "rgb(5, 10, 25)" }}
+                  style={{ backgroundColor }}
                 />
                 <motion.div
                   className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]"
-                  style={{ backgroundColor: "rgb(5, 10, 25)" }}
+                  style={{ backgroundColor }}
                 />
               </motion.div>
 
@@ -123,17 +132,17 @@ export function FinalHero() {
               >
                 <motion.div
                   className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]"
-                  style={{ backgroundColor: "rgb(5, 10, 25)" }}
+                  style={{ backgroundColor }}
                 />
                 <motion.div
                   className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
-                  style={{ backgroundColor: "rgb(5, 10, 25)" }}
+                  style={{ backgroundColor }}
                 />
               </motion.div>
 
               <motion.div
                 className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl"
-                style={{ backgroundColor: "rgb(5, 10, 25)" }}
+                style={{ backgroundColor }}
               />
               <motion.div
                 initial={{ opacity: 0 }}
@@ -164,7 +173,7 @@ export function FinalHero() {
 
               <motion.div
                 className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]"
-                style={{ backgroundColor: "rgb(5, 10, 25)" }}
+                style={{ backgroundColor }}
               />
             </div>
 
