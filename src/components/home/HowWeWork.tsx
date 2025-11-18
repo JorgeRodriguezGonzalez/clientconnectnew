@@ -297,7 +297,7 @@ export const HowWeWork = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end end']
+    offset: ['start start', 'end 80%']
   });
 
   return (
@@ -344,7 +344,7 @@ export const HowWeWork = () => {
                     </h5>
                   </div>
 
-                  <h2 className="text-black/80 text-[28px] leading-[57.6px] font-semibold tracking-[0.5px] max-w-[460px]" style={{
+                  <h2 className="text-black/80 text-[28px] leading-[33.6px] font-semibold tracking-[0.5px] max-w-[460px]" style={{
                     fontFamily: 'Inter, "Inter Placeholder", sans-serif',
                     fontStyle: 'normal'
                   }}>
