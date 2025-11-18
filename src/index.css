@@ -99,16 +99,16 @@ All colors MUST be HSL.
   }
 }
 
-/* Animation for MarketingCard animated line */
-@keyframes move {
+/* Animation for MarketingCard animated line - HORIZONTAL movement */
+@keyframes move-horizontal {
   0% {
-    transform: translateY(-200px);
+    transform: translateX(-200px) translateY(-50%);
   }
   100% {
-    transform: translateY(200px);
+    transform: translateX(200px) translateY(-50%);
   }
 }
 
-.animate-move {
-  animation: move 3s linear infinite;
+.animate-move-horizontal {
+  animation: move-horizontal 3s linear infinite;
 }
