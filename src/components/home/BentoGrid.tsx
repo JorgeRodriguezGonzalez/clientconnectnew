@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
-import { BrandsShowcaseSection } from './BrandsShowcaseSection';
+import { UpperBento } from './UpperBento';
 
 type BentoGridProps = {
   title?: string;
@@ -18,7 +18,7 @@ export const BentoGrid = ({
 
   return (
     <div className="flex flex-col items-center w-full gap-12 mt-16 bg-white pt-[30px]">
-      <BrandsShowcaseSection />
+      <UpperBento />
       
       <motion.div 
         ref={ref}
