@@ -112,7 +112,7 @@ export const SavingsCard = ({
       </div>
 
       <div className="flex flex-col items-start justify-start gap-2 w-[314.6px] h-[100px] px-4 pt-4 pb-6">
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[18px] font-medium leading-[17px] tracking-[-0.6px] text-black" style={{
+        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[20px] font-medium leading-[17px] tracking-[-0.6px] text-black" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif'
         }}>
           {amount}
