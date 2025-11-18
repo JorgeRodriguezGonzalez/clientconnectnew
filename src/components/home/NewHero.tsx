@@ -31,9 +31,9 @@ export function FinalHero() {
     scrollYProgress,
     [0, 0.5, 1],
     [
-      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 95%, rgb(5, 10, 25) 100%)",
-      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 95%, rgb(5, 10, 25) 100%)",
-      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 95%, rgb(255, 255, 255) 100%)"
+      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 85%, rgb(5, 10, 25) 100%)",
+      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 85%, rgb(5, 10, 25) 100%)",
+      "linear-gradient(to bottom, rgb(5, 10, 25) 0%, rgb(5, 10, 25) 85%, rgb(255, 255, 255) 100%)"
     ]
   );
 
