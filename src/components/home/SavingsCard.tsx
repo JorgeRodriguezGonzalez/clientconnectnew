@@ -10,9 +10,9 @@ type SavingsCardProps = {
 
 export const SavingsCard = ({
   title = 'Growth',
-  badge = 'Highest (This month)',
+  badge = 'Highest',
   amount = '$100,000+ Saved for Brands',
-  description = 'so they can reinvest where it matters the most'
+  description = 'So they can reinvest where it matters the most'
 }: SavingsCardProps) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
