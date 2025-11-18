@@ -89,12 +89,14 @@ export const SavingsCard = ({
               fill="transparent" 
               stroke="rgba(103, 232, 249, 0.5)" 
               strokeWidth="3" 
-              strokeMiterlimit="10" 
-              strokeDasharray="9.07,9.07"
-              strokeDashoffset="0"
+              strokeMiterlimit="10"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.5, delay: 0.5, ease: "linear" }}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.5,
+                ease: 'easeInOut'
+              }}
             />
           </svg>
         </div>
