@@ -47,10 +47,9 @@ export const SavingsCard = ({
           WebkitMaskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)'
         }}>
           <div className="absolute top-[21px] left-[22px]">
-            <p className="text-[28px] font-light text-black leading-[33.6px] whitespace-nowrap" style={{
-              fontFamily: '"Inter Display", sans-serif',
-              letterSpacing: '-0.8px',
-              fontWeight: 300
+            <p className="text-[20px] font-semibold text-black/80 leading-[28px] tracking-[0.5px] whitespace-nowrap" style={{
+              fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+              fontStyle: 'normal'
             }}>
               {title}
             </p>
@@ -112,8 +111,9 @@ export const SavingsCard = ({
       </div>
 
       <div className="flex flex-col items-start justify-start gap-2 w-[314.6px] h-[100px] px-4 pt-4 pb-6">
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[20px] font-medium leading-[17px] tracking-[-0.6px] text-black" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif'
+        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[20px] font-semibold leading-[28px] tracking-[0.5px] text-black/80" style={{
+          fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+          fontStyle: 'normal'
         }}>
           {amount}
         </p>
