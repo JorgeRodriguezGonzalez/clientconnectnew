@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+
 type UseCaseItem = {
   id: number;
   icon: string;
   title: string;
   description: string;
 };
+
 type UseCasesShowcaseProps = {
   subText?: string;
   heading?: string;
@@ -13,34 +15,31 @@ type UseCasesShowcaseProps = {
   description?: string;
   useCases?: UseCaseItem[];
 };
+
 const defaultUseCases: UseCaseItem[] = [{
   id: 1,
   icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
-  title: 'Onboarding support and guidence',
-  description: 'We provide step-by-step onboarding support and guidance to ensure smooth setup and success.'
+  title: 'Strategic Planning & Implementation',
+  description: 'We develop comprehensive digital marketing strategies tailored to your business goals, ensuring every campaign drives measurable results.'
 }, {
   id: 2,
   icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
-  title: 'Multilingual chatbot',
-  description: 'Gain clarity with AI-powered analytics and insights to track performance, trends, and growth easily.'
+  title: 'Data-Driven Optimization',
+  description: 'Gain clarity with advanced analytics and insights to track performance, optimize campaigns, and maximize your marketing ROI continuously.'
 }];
 
 // @component: UseCasesShowcase
 export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const {
-    subText = 'use cases',
-    heading = 'AI agents transforming service into',
-    highlightText = 'smarter solutions',
-    description = 'AI agents streamline tasks, enhance decision-making, and deliver faster, smarter solutions to transform services with efficiency.',
+    subText = 'our approach',
+    heading = 'Marketing strategies that transform your business into',
+    highlightText = 'market leaders',
+    description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
     useCases = defaultUseCases
   } = props;
-  const [expandedId, setExpandedId] = useState<number | null>(1);
-  const toggleExpanded = (id: number) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
 
   // @return
-  return <section className="relative overflow-hidden py-28 px-4 w-full bg-white">
+  return <section className="relative overflow-hidden py-28 px-4 w-full bg-white mb-[50px]">
       <div className="max-w-[1225px] mx-auto">
         <div className="flex items-center justify-between gap-20 relative flex-col lg:flex-row">
           {/* Left Part - Images */}
@@ -193,7 +192,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             }} className={`py-[26px] ${index === useCases.length - 1 ? '' : 'border-b border-[#BEBDD2]'}`} style={{
               transformStyle: 'preserve-3d'
             }}>
-                  <button onClick={() => toggleExpanded(useCase.id)} className="w-full text-left focus:outline-none" aria-expanded={expandedId === useCase.id}>
+                  <div className="w-full">
                     <div className="flex items-center gap-5">
                       <div>
                         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#5200EE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-[25px] h-[25px]">
@@ -204,20 +203,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                         {useCase.title}
                       </div>
                     </div>
-                  </button>
+                  </div>
 
-                  <motion.div initial={false} animate={{
-                height: expandedId === useCase.id ? 'auto' : 0,
-                opacity: expandedId === useCase.id ? 1 : 0
-              }} transition={{
-                duration: 0.3
-              }} className="overflow-hidden">
-                    <div className="mt-[14px] ml-12">
-                      <p className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]">
-                        {useCase.description}
-                      </p>
-                    </div>
-                  </motion.div>
+                  <div className="mt-[14px] ml-12">
+                    <p className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]">
+                      {useCase.description}
+                    </p>
+                  </div>
                 </motion.div>)}
             </div>
           </div>
