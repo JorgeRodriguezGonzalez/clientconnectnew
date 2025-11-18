@@ -45,7 +45,7 @@ export const MarketingCard = ({
     >
       {/* Contenido izquierdo */}
       <div className="flex flex-col items-start justify-center gap-6 flex-1">
-        <h2 className="font-semibold text-black text-[22px] leading-[28px] tracking-[-1px] m-0 text-left" style={{
+        <h2 className="font-semibold text-black/80 text-[22px] leading-[28px] tracking-[0.5px] m-0 text-left" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
@@ -141,7 +141,7 @@ const Container = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={`rounded-full flex items-center justify-center bg-[rgba(248,248,248,0.01)] shadow-[0px_-2px_4px_0px_rgba(0,0,0,0.06)_inset,0px_8px_12px_-8px_rgba(0,0,0,0.15)] ${className}`}
+    className={`rounded-full flex items-center justify-center bg-[rgba(248,248,248,0.01)] shadow-[0px_-2px_6px_0px_rgba(0,0,0,0.12)_inset,0px_10px_14px_-8px_rgba(0,0,0,0.25)] ${className}`}
     {...props}
   />
 ));
