@@ -14,7 +14,7 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 -mt-4">
         <FinalHero />
-        <div className="w-full flex justify-center pb-16 relative z-[999999] -mt-[230px]">
+        <div className="w-full flex justify-center pb-16 relative z-[999999] -mt-[250px]">
           <BentoGrid />
         </div>
         <AnimatedGallerySection />
