@@ -9,7 +9,7 @@ type SavingsCardProps = {
 
 export const SavingsCard = ({
   title = 'Growth',
-  amount = '$100,000+ Saved for Brands',
+  amount = '$1,000,000+ Profit',
   description = 'So they can reinvest where it matters the most'
 }: SavingsCardProps) => {
   const ref = React.useRef(null);
