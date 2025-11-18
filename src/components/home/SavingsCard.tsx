@@ -17,6 +17,7 @@ export const SavingsCard = ({
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [hoverCount, setHoverCount] = React.useState(0);
+  const [isHovered, setIsHovered] = React.useState(false);
 
   return (
     <motion.div 
@@ -36,7 +37,11 @@ export const SavingsCard = ({
       transition={{
         duration: 0.5
       }}
-      onHoverStart={() => setHoverCount(prev => prev + 1)}
+      onHoverStart={() => {
+        setHoverCount(prev => prev + 1);
+        setIsHovered(true);
+      }}
+      onHoverEnd={() => setIsHovered(false)}
     >
       <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[192px] bg-[#f5f5f5] rounded-[12px] overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden" style={{
@@ -53,14 +58,27 @@ export const SavingsCard = ({
             </p>
           </div>
 
-          <div className="absolute top-[32px] right-[22px]">
+          <motion.div 
+            key={`badge-${hoverCount}`}
+            className="absolute top-[32px] right-[22px]"
+            initial={{
+              opacity: 0
+            }}
+            animate={{
+              opacity: isHovered ? 1 : 0
+            }}
+            transition={{
+              duration: 0.3,
+              delay: isHovered ? 0.6 : 0
+            }}
+          >
             <p className="text-[12.6px] font-normal text-cyan-500 leading-[15.2px] whitespace-nowrap" style={{
               fontFamily: '"Inter Display", sans-serif',
               letterSpacing: '-0.4px'
             }}>
               {badge}
             </p>
-          </div>
+          </motion.div>
 
           <svg className="absolute bottom-[-100px] left-[-167.4px] w-[494px] h-[286px]" viewBox="0 0 494 286" fill="none" xmlns="http://www.w3.org/2000/svg" style={{
             imageRendering: 'auto'
@@ -87,8 +105,9 @@ export const SavingsCard = ({
                 opacity: 1
               }} 
               transition={{
-                duration: 0.5,
-                ease: 'easeInOut'
+                duration: 1.5,
+                ease: 'easeInOut',
+                delay: 0.2
               }} 
             />
 
@@ -98,7 +117,8 @@ export const SavingsCard = ({
               fill="transparent" 
               stroke="rgba(103, 232, 249, 0.5)" 
               strokeWidth="3" 
-              strokeMiterlimit="10"
+              strokeMiterlimit="10" 
+              strokeDasharray="9.07,9.07" 
               initial={{
                 pathLength: 0
               }} 
@@ -106,8 +126,8 @@ export const SavingsCard = ({
                 pathLength: 1
               }} 
               transition={{
-                duration: 2,
-                ease: 'linear',
+                duration: 1,
+                ease: 'easeInOut',
                 delay: 0.5
               }} 
             />
