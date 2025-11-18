@@ -57,6 +57,13 @@ export function FinalHero() {
     ]
   );
 
+  // Transform para remover el mask-image gradualmente
+  const maskOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [1, 1, 0]
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -267,8 +274,14 @@ export function FinalHero() {
               </motion.div>
             </div>
 
-            {/* Contenedor Sparkles - Arco y Sparkles - SIN mask-image */}
-            <div className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden">
+            {/* Contenedor Sparkles - Arco y Sparkles */}
+            <motion.div 
+              className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden"
+              style={{
+                maskImage: maskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
+                WebkitMaskImage: maskOpacity.get() > 0 ? 'radial-gradient(50% 50%, white, transparent)' : 'none',
+              }}
+            >
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               <motion.div 
                 className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-[9999] w-[200%] rounded-[100%] border-t"
@@ -282,7 +295,7 @@ export function FinalHero() {
                 className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
                 color="#ffffff"
               />
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
