@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion';
 type SkillsShowcaseCardProps = {
   title?: string;
   subtitle?: string;
-  yearNumber?: string;
+  logoSrc?: string;
 };
 
 const skills = [
@@ -21,7 +21,7 @@ const skills = [
 export const SkillsShowcaseCard = ({
   title = '8 Years of Experience',
   subtitle = 'Bringing seasoned expertise to every project',
-  yearNumber = '8'
+  logoSrc = '/images/client-connect-australia-logo.png'
 }: SkillsShowcaseCardProps) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
@@ -45,15 +45,12 @@ export const SkillsShowcaseCard = ({
       onHoverEnd={() => setIsHovered(false)}
     >
       <div className="relative flex h-[192px] w-[314.6px] items-center justify-center overflow-hidden rounded-[22px] bg-[#f5f5f5]">
-        <div className="absolute bottom-[-93px] left-[41.8px] h-[280px] w-[175px] overflow-hidden" style={{ transform: 'scale(0.9)' }}>
-          <div className="absolute bottom-[-24px] left-[87.5px] top-[-68px] h-[372px] w-[174.5px]" style={{ transform: 'translateX(-87.25px)' }}>
-            <p className="m-0 whitespace-nowrap border-0 p-0 text-[310px] font-normal leading-[372px] tracking-[-9.3px] text-black/20" style={{
-              fontFamily: '"Euclid Circular B Bold", "Euclid Circular B Bold Placeholder", sans-serif',
-              WebkitTextStroke: '0px rgba(0, 0, 0, 0.2)'
-            }}>
-              {yearNumber}
-            </p>
-          </div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img 
+            src={logoSrc} 
+            alt="Client Connect Australia Logo" 
+            className="w-[180px] h-auto object-contain opacity-20"
+          />
         </div>
         
         {skills.map((skill, index) => (
