@@ -70,13 +70,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.02,
-                y: -2
-              }}
-              style={{
-                transformStyle: 'preserve-3d',
-                transition: 'all 0.2s ease-out'
+                y: -2,
+                transition: { duration: 0.15, ease: "easeOut" }
               }}
               className="absolute top-[106px] left-5 w-[406px]"
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
             >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="Overlay 1" className="w-full h-auto object-cover" width={398} height={160} />
             </motion.div>
@@ -100,13 +100,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.05,
-                rotate: 5
-              }}
-              style={{
-                transformStyle: 'preserve-3d',
-                transition: 'all 0.2s ease-out'
+                rotate: 5,
+                transition: { duration: 0.15, ease: "easeOut" }
               }}
               className="absolute top-[106px] right-[-30px] w-[69px]"
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
             >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c446_kloudera-home-one-cases-image.svg" alt="Overlay 2" className="w-full h-auto object-cover" width={67} height={68} />
             </motion.div>
@@ -130,13 +130,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.02,
-                y: -2
-              }}
-              style={{
-                transformStyle: 'preserve-3d',
-                transition: 'all 0.2s ease-out'
+                y: -2,
+                transition: { duration: 0.15, ease: "easeOut" }
               }}
               className="absolute top-[238px] right-[-104px] w-[431px]"
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
             >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c447_kloudera-home-one-cases-image.svg" alt="Overlay 3" className="w-full h-auto object-cover" width={435} height={301} />
             </motion.div>
@@ -162,13 +162,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.08,
-                rotate: 5
-              }}
-              style={{
-                transformStyle: 'preserve-3d',
-                transition: 'all 0.2s ease-out'
+                rotate: 5,
+                transition: { duration: 0.15, ease: "easeOut" }
               }}
               className="absolute top-[323px] left-[45px] w-[109px] h-[109px]"
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
             >
               <div className="w-full h-full bg-white rounded-full shadow-lg flex items-center justify-center p-5">
                 <img src="/images/client-connect-australia-logo.png" alt="Client Connect Australia" className="w-full h-full object-contain" />
@@ -194,13 +194,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               }}
               whileHover={{
                 scale: 1.02,
-                y: -2
-              }}
-              style={{
-                transformStyle: 'preserve-3d',
-                transition: 'all 0.2s ease-out'
+                y: -2,
+                transition: { duration: 0.15, ease: "easeOut" }
               }}
               className="absolute bottom-0 left-0 w-[406px]"
+              style={{
+                transformStyle: 'preserve-3d'
+              }}
             >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c449_kloudera-home-one-cases-image.svg" alt="Overlay 5" className="w-full h-auto object-cover" width={398} height={160} />
             </motion.div>
