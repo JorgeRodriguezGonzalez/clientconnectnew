@@ -17,7 +17,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   const ctrl1 = useAnimationControls();
   const ctrl2 = useAnimationControls();
@@ -35,27 +35,26 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     }
   }, [isInView]);
 
-  const replayAnimation = (ctrl: any, from: any, to: any) => {
+  const replay = (ctrl: any, from: any, to: any) => {
     ctrl.set(from);
     ctrl.start(to);
   };
 
   return (
-    <section ref={ref} className="relative">
-
-      {/* ARCO BLANCO QUE OCUPA TODO EL ANCHO (100vw) Y ES MUY PRONUNCIADO */}
-      <div className="absolute left-1/2 -translate-x-1/2 w-screen max-w-none h-96 -top-48 pointer-events-none z-40">
+    <section ref={ref} className="relative -mt-48 overflow-hidden">
+      {/* ARCO BLANCO PERFECTO - OCUPA TODO EL ANCHO Y SE INTEGRA AL CONTENIDO */}
+      <div className="absolute inset-x-0 top-0 h-96 pointer-events-none">
         <div
-          className="w-full h-full bg-white"
+          className="absolute inset-x-0 top-0 h-96 bg-white"
           style={{
             borderRadius: '50%',
-            transform: 'translateY(-60%)',
+            transform: 'translateY(-120%) scaleY(0.45)',
           }}
         />
       </div>
 
-      {/* CONTENIDO CON FONDO BLANCO */}
-      <div className="relative z-50 bg-white pt-64 pb-32 px-4">
+      {/* CONTENIDO - FONDO BLANCO DESDE EL ARCO HACIA ABAJO, SIN HUECOS */}
+      <div className="relative bg-white pt-32 pb-32 px-4">
         <div className="max-w-[1225px] mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-20">
 
@@ -68,7 +67,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={ctrl1}
-                onMouseEnter={() => replayAnimation(ctrl1, { opacity: 0, x: -50 }, { opacity: 1, x: 0 })}
+                onMouseEnter={() => replay(ctrl1, { opacity: 0, x: -50 }, { opacity: 1, x: 0 })}
                 className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
               >
                 <img src="/images/top.svg" alt="" className="w-full" />
@@ -77,7 +76,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={ctrl2}
-                onMouseEnter={() => replayAnimation(ctrl2, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1 })}
+                onMouseEnter={() => replay(ctrl2, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1 })}
                 className="absolute top-[106px] -right-8 w-[69px] cursor-pointer"
               >
                 <img src="/images/client.svg" alt="" className="w-full" />
@@ -86,32 +85,27 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <motion.div
                 initial={{ opacity: 0, x: 50 }}
                 animate={ctrl3}
-                onMouseEnter={() => replayAnimation(ctrl3, { opacity: 0, x: 50 }, { opacity: 1, x: 0 })}
+                onMouseEnter={() => replay(ctrl3, { opacity: 0, x: 50 }, { opacity: 1, x: 0 })}
                 className="absolute top-[238px] -right-24 w-[431px] cursor-pointer"
               >
                 <img src="/images/right.svg" alt="" className="w-full" />
               </motion.div>
 
-              {/* LOGO - AHORA SÍ ESTÁ BIEN CERRADO */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
                 animate={ctrl4}
-                onMouseEnter={() => replayAnimation(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 })}
+                onMouseEnter={() => replay(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 })}
                 className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
               >
                 <div className="w-full h-full bg-white rounded-full shadow-xl flex items-center justify-center p-5">
-                  <img
-                    src="/images/client-connect-australia-logo.png"
-                    alt="Client Connect Australia"
-                    className="w-full h-full object-contain"
-                  />
+                  <img src="/images/client-connect-australia-logo.png" alt="Logo" className="w-full h-full object-contain" />
                 </div>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={ctrl5}
-                onMouseEnter={() => replayAnimation(ctrl5, { opacity: 0, y: 50 }, { opacity: 1, y: 0 })}
+                onMouseEnter={() => replay(ctrl5, { opacity: 0, y: 50 }, { opacity: 1, y: 0 })}
                 className="absolute bottom-0 left-0 w-[406px] cursor-pointer"
               >
                 <img src="/images/down.svg" alt="" className="w-full" />
