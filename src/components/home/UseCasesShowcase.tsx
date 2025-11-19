@@ -48,7 +48,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   return (
     <section
       ref={ref}
-      className="relative -mt-[200px] pt-[200px] z-[99999] overflow-visible bg-transparent"
+      className="relative -mt-[200px] pt-[300px] z-[99999] overflow-visible bg-transparent"
     >
       {/* ARCO SUPERIOR BLANCO */}
       <div className="absolute top-0 left-0 right-0 h-48 bg-white">
