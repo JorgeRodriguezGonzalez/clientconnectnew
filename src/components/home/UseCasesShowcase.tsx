@@ -73,7 +73,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             fill="none"
             stroke="#e5e7eb"
             strokeWidth="0.1"
-            strokeDasharray="55 100"
+            strokeDasharray="100 100"
             strokeDashoffset="22.5"
           />
         </svg>
