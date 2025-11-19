@@ -32,7 +32,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   }, [isInView]);
 
   return (
-    <section ref={ref} className="relative bg-white -mt-64">
+    <section ref={ref} className="relative bg-white -mt-16">
       {/* ARCO BLANCO PERFECTO - ESTE SÍ SE VE */}
       <div className="absolute inset-x-0 top-0 h-80 pointer-events-none">
         <div
