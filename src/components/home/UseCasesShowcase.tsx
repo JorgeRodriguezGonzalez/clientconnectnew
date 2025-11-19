@@ -19,7 +19,6 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  // Controles individuales para cada imagen (como antes)
   const ctrl1 = useAnimationControls();
   const ctrl2 = useAnimationControls();
   const ctrl3 = useAnimationControls();
@@ -36,30 +35,30 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     }
   }, [isInView]);
 
-  // Función replay EXACTAMENTE como antes
   const replayAnimation = (ctrl: any, from: any, to: any, duration = 0.6) => {
     ctrl.set(from);
     ctrl.start({ ...to, transition: { duration, delay: 0 } });
   };
 
   return (
-    <section ref={ref} className="relative bg-white -mt-48">
-      {/* ARCO PERFECTO SIN SOMBRA */}
+    <section ref={ref} className="relative bg-white -mt-64">
+      {/* ARCO EXACTAMENTE COMO ANTES, PERO SIN SOMBRA */}
       <div className="absolute inset-x-0 top-0 h-80 pointer-events-none">
         <div
           className="w-full h-full bg-white rounded-[100%]"
           style={{
             transform: 'translateY(-65%)',
+            // SIN SHADOW → eliminado por completo
           }}
         />
       </div>
 
-      {/* CONTENIDO SUBIDO Y PEGADITO AL ARCO */}
+      {/* CONTENIDO PEGADITO AL ARCO (como antes, pero más arriba) */}
       <div className="relative pt-48 pb-32 px-4">
         <div className="max-w-[1225px] mx-auto">
           <div className="flex flex-col lg:flex-row items-start justify-between gap-20">
 
-            {/* IMÁGENES IZQUIERDA */}
+            {/* IMÁGENES IZQUIERDA - exactamente como antes */}
             <div className="relative flex-1 max-w-[495px] translate-x-[80px]">
               <div className="overflow-hidden rounded-[20px]">
                 <img src="/images/background.svg" alt="Background" className="w-full h-auto object-cover" />
@@ -118,7 +117,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               </motion.div>
             </div>
 
-            {/* TEXTO DERECHA - ESTILOS EXACTOS COMO ANTES */}
+            {/* TEXTO DERECHA - 100% COMO ANTES */}
             <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
