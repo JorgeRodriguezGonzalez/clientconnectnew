@@ -13,12 +13,20 @@ import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <main className="flex-1 -mt-4">
-        <FinalHero />
+      <main className="flex-1">
+        {/* Solución definitiva: envolvemos FinalHero para controlar el z-index sin errores */}
+        <div className="relative z-0">
+          <FinalHero />
+        </div>
+
+        {/* UseCasesShowcase con arco blanco superpuesto encima del hero */}
         <UseCasesShowcase />
+
+        {/* Resto de secciones */}
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
+
         <HowWeWork />
         <AnimatedGallerySection />
         <ServicesSection />
@@ -27,6 +35,7 @@ const Index = () => {
         <TestimonialsSection />
         <CTASection />
       </main>
+
       <Footer />
     </div>
   );
