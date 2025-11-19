@@ -27,7 +27,7 @@ export const MarketingCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-row items-center justify-between gap-8 w-[685.2px] h-[310px] rounded-[16px] overflow-hidden"
+      className="relative flex flex-row items-center justify-between gap-8 w-[685.2px] h-[310px] rounded-[4px] overflow-hidden"
       style={{
         backgroundColor: '#FFFFFF',
         border: '0.8px solid #DAE6FE',

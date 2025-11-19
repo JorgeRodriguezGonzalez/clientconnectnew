@@ -22,7 +22,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const ctrl1 = useAnimationControls();
   const ctrl2 = useAnimationControls();
   const ctrl3 = useAnimationControls();
-  const ctrl4 = useAnimationControls(); // logo → ahora 90°
+  const ctrl4 = useAnimationControls();
   const ctrl5 = useAnimationControls();
 
   React.useEffect(() => {
@@ -50,8 +50,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       <div className="max-w-[1225px] mx-auto">
         <div className="flex items-center justify-between gap-20 relative flex-col lg:flex-row">
 
-          {/* BLOQUE IZQUIERDO - Solo este se desplaza 20px a la derecha */}
-          <div className="relative flex-1 max-w-[495px] z-10 w-full pl-[20px]">
+          {/* BLOQUE IZQUIERDO - Movido 80px hacia la derecha (solo este bloque) */}
+          <div className="relative flex-1 max-w-[495px] z-10 w-full translate-x-[80px]">
             <div className="overflow-hidden rounded-[20px]">
               <img src="/images/background.svg" alt="Main background" className="w-full h-auto object-cover" />
             </div>
@@ -86,9 +86,9 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <img src="/images/right.svg" alt="Right overlay" className="w-full h-auto object-cover" />
             </motion.div>
 
-            {/* LOGO: ahora rota solo 90° */}
+            {/* Logo: rotación de -90° a 0° */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: -90 }} 
+              initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
               animate={ctrl4}
               onMouseEnter={() => replayAnimation(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 }, 0.8)}
               className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
@@ -110,7 +110,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             </motion.div>
           </div>
 
-          {/* BLOQUE DERECHO - NO se mueve nada, queda exactamente igual */}
+          {/* BLOQUE DERECHO - Texto: NO se mueve nada */}
           <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
             <div>
               <motion.div
