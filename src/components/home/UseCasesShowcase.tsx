@@ -142,9 +142,9 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 4. Logo con rotación */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
+              initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
               animate={ctrl4}
-              onMouseEnter={() => replayAnimation(ctrl4, { opacity: 0, scale: 0.8, rotate: -180 }, { opacity: 1, scale: 1, rotate: 0 }, 0.8)}
+              onMouseEnter={() => replayAnimation(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 }, 0.8)}
               className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
