@@ -27,7 +27,7 @@ export const MarketingCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-row items-center justify-between gap-8 w-[685.2px] h-[310px] rounded-[8px] overflow-hidden"
+      className="relative flex flex-row items-center justify-between w-[685.2px] h-[310px] rounded-[4px] overflow-hidden"
       style={{
         backgroundColor: '#FFFFFF',
         border: '0.8px solid #DAE6FE',
@@ -50,7 +50,7 @@ export const MarketingCard = ({
       }}
     >
       {/* Contenido izquierdo */}
-      <div className="flex flex-col items-start justify-center gap-6 flex-1">
+      <div className="flex flex-col items-start justify-center gap-6 flex-1 pr-8">
         <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
           fontFamily: 'Inter, sans-serif',
           fontStyle: 'normal',
@@ -75,7 +75,7 @@ export const MarketingCard = ({
       </div>
 
       {/* Logos animados derecha */}
-      <div className="w-[280px] h-full">
+      <div className="w-[280px] h-full flex-shrink-0">
         <AnimatedIcons />
       </div>
     </motion.div>
@@ -126,7 +126,7 @@ function AnimatedIcons() {
   }, []);
 
   return (
-    <div className="p-8 overflow-hidden h-full relative flex items-center justify-center">
+    <div className="overflow-hidden h-full relative flex items-center justify-center">
       <div className="flex flex-row flex-shrink-0 justify-center items-center gap-2">
         {icons.map((icon, index) => (
           <Container
@@ -142,7 +142,7 @@ function AnimatedIcons() {
   );
 }
 
-const Container = React.forwardRef<
+const Container = React.forwardRef
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
@@ -337,12 +337,3 @@ const MetaIconOutline = ({ className }: { className?: string }) => {
     </svg>
   );
 };
-
-// Demo
-export default function App() {
-  return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
-      <MarketingCard />
-    </div>
-  );
-}
