@@ -41,21 +41,20 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   };
 
   return (
-    <section ref={ref} className="relative bg-white -mt-64 overflow-hidden">
-      {/* ARCO BLANCO GRANDE Y PERFECTO - AHORA SÍ SE VE */}
-      <div className="absolute inset-x-0 top-0 h-96">
+    <section ref={ref} className="relative bg-white -mt-48 overflow-hidden">
+      {/* ARCO BLANCO PERFECTO - SOLO LA PARTE SUPERIOR DEL CÍRCULO */}
+      <div className="absolute inset-x-0 top-0 h-96 pointer-events-none">
         <div
-          className="w-full h-full bg-white"
+          className="absolute inset-x-0 bottom-0 h-[200%] bg-white"
           style={{
-            borderRadius: '50%',
-            transform: 'translateY(-70%)',
-            boxShadow: '0 20px 30px -10px rgba(0,0,0,0.08)',
+            borderRadius: '9999px 9999px 0 0',
+            transform: 'translateY(-50%)',
           }}
         />
       </div>
 
       {/* CONTENIDO PEGADITO AL ARCO */}
-      <div className="relative z-10 pt-48 pb-32 px-4">
+      <div className="relative z-10 pt-56 pb-32 px-4">
         <div className="max-w-[1225px] mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-20">
 
@@ -65,43 +64,82 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 <img src="/images/background.svg" alt="Background" className="w-full" />
               </div>
 
-              <motion.div initial={{ opacity: 0, x: -50 }} animate={ctrl1} onMouseEnter={() => replay(ctrl1, { opacity: 0, x: -50 }, { opacity: 1, x: 0 })} className="absolute top-[106px] left-5 w-[406px] cursor-pointer">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={ctrl1}
+                onMouseEnter={() => replay(ctrl1, { opacity: 0, x: -50 }, { opacity: 1, x: 0 })}
+                className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
+              >
                 <img src="/images/top.svg" alt="" className="w-full" />
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={ctrl2} onMouseEnter={() => replay(ctrl2, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1 })} className="absolute top-[106px] -right-8 w-[69px] cursor-pointer">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={ctrl2}
+                onMouseEnter={() => replay(ctrl2, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1 })}
+                className="absolute top-[106px] -right-8 w-[69px] cursor-pointer"
+              >
                 <img src="/images/client.svg" alt="" className="w-full" />
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, x: 50 }} animate={ctrl3} onMouseEnter={() => replay(ctrl3, { opacity: 0, x: 50 }, { opacity: 1, x: 0 })} className="absolute top-[238px] -right-24 w-[431px] cursor-pointer">
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={ctrl3}
+                onMouseEnter={() => replay(ctrl3, { opacity: 0, x: 50 }, { opacity: 1, x: 0 })}
+                className="absolute top-[238px] -right-24 w-[431px] cursor-pointer"
+              >
                 <img src="/images/right.svg" alt="" className="w-full" />
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, scale: 0.8, rotate: -90 }} animate={ctrl4} onMouseEnter={() => replay(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 })} className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
+                animate={ctrl4}
+                onMouseEnter={() => replay(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 })}
+                className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
+              >
                 <div className="w-full h-full bg-white rounded-full shadow-xl flex items-center justify-center p-5">
                   <img src="/images/client-connect-australia-logo.png" alt="Logo" className="w-full h-full object-contain" />
                 </div>
               </motion.div>
 
-              <motion.div initial={{ opacity: 0, y: 50 }} animate={ctrl5} onMouseEnter={() => replay(ctrl5, { opacity: 0, y: 50 }, { opacity: 1, y: 0 })} className="absolute bottom-0 left-0 w-[406px] cursor-pointer">
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={ctrl5}
+                onMouseEnter={() => replay(ctrl5, { opacity: 0, y: 50 }, { opacity: 1, y: 0 })}
+                className="absolute bottom-0 left-0 w-[406px] cursor-pointer"
+              >
                 <img src="/images/down.svg" alt="" className="w-full" />
               </motion.div>
             </div>
 
             {/* TEXTO DERECHA */}
             <div className="flex-1 max-w-[520px]">
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-[#F6941D] text-sm font-medium uppercase tracking-widest mb-3">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-[#F6941D] text-sm font-medium uppercase tracking-widest mb-3"
+              >
                 {subText}
               </motion.div>
 
-              <motion.h2 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl lg:text-5xl font-medium text-[#071332] leading-tight -tracking-tight mb-6">
+              <motion.h2
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-4xl lg:text-5xl font-medium text-[#071332] leading-tight -tracking-tight mb-6"
+              >
                 {heading}{' '}
                 <span className="bg-gradient-to-r from-[#0F4C81] via-[#0066CC] to-[#00D4FF] bg-clip-text text-transparent">
                   {highlightText}
                 </span>
               </motion.h2>
 
-              <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-[#4B497E] text-lg leading-relaxed">
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-[#4B497E] text-lg leading-relaxed"
+              >
                 {description}
               </motion.p>
             </div>
