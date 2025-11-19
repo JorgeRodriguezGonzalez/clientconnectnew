@@ -21,7 +21,7 @@ const Index = () => {
         </div>
 
         {/* UseCasesShowcase con margen negativo para superponerse */}
-        <div className="-mt-[400px] relative z-[99999]">
+        <div className="-mt-[300px] relative z-[99999]">
           <UseCasesShowcase />
         </div>
 
