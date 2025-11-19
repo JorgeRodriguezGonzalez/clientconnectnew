@@ -39,7 +39,7 @@ export const BrandsShowcaseCard = ({
       }} 
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[673.2px] h-[192px] bg-[#F5F5F5] rounded-[12px] overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center w-[653.2px] h-[192px] bg-[#F5F5F5] rounded-[12px] overflow-hidden">
         <div className="relative w-full h-full">
           {/* Imagen 1 - Izquierda (desde la izquierda) */}
           <motion.div 
@@ -101,7 +101,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[136px] h-[250px] overflow-visible rounded-[9px]" 
             style={{
               top: '8px',
-              left: '268.6px',
+              left: '258.6px',
               transformOrigin: '68px 125px',
               boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px'
             }} 
@@ -129,7 +129,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[120px] h-[204px] overflow-visible" 
             style={{
               top: '51px',
-              left: '415px',
+              left: '405px',
               transformOrigin: '60px 102px'
             }} 
             initial={{
@@ -156,7 +156,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[120px] h-[204px] overflow-visible" 
             style={{
               top: '51px',
-              left: '549.6px',
+              left: '527.6px',
               transformOrigin: '60px 102px'
             }} 
             initial={{
@@ -179,14 +179,14 @@ export const BrandsShowcaseCard = ({
         </div>
       </div>
       
-      <div className="flex flex-col items-start justify-start gap-2 w-[673.2px] h-[100px] px-4 pt-4 pb-6">
+      <div className="flex flex-col items-start justify-start gap-2 w-[653.2px] h-[100px] px-4 pt-4 pb-6">
         <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] tracking-[0.5px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
           {title}
         </h2>
-        <p className="font-normal text-black/60 text-[16px] leading-[20px] tracking-[-0.4px] m-0" style={{
+        <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
