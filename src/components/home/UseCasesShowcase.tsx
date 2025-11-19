@@ -52,7 +52,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       
       <div className="absolute inset-x-0 top-0 h-80 pointer-events-none">
         <div
-          className="w-full h-full bg-white rounded-[100%]"
+          className="w-full h-full bg-black rounded-[100%]"
           style={{
             transform: 'translateY(-65%)',
             borderBottomLeftRadius: 0,
