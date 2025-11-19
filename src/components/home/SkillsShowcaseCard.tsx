@@ -31,7 +31,7 @@ export const SkillsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[16px] shadow-lg"
+      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[16px]"
       style={{
         backgroundColor: '#FFFFFF',
         border: '0.8px solid #DAE6FE',
@@ -47,7 +47,7 @@ export const SkillsShowcaseCard = ({
       }}
       onHoverEnd={() => setIsHovered(false)}
     >
-      <div className="relative flex h-[192px] w-[314.6px] items-center justify-center overflow-hidden rounded-[12px]" style={{ backgroundColor: '#F7FCFF' }}>
+      <div className="relative flex h-[192px] w-[294.6px] items-center justify-center overflow-hidden rounded-[12px]" style={{ backgroundColor: '#F7FCFF' }}>
         <div className="absolute inset-0 flex items-center justify-center">
           <img 
             src={logoSrc} 
@@ -80,15 +80,15 @@ export const SkillsShowcaseCard = ({
           </motion.div>
         ))}
       </div>
-      <div className="flex w-[314.6px] h-[100px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
-        <h2 className="m-0 w-[282.6px] break-words border-0 p-0 text-[22px] font-semibold leading-[30px] text-black/90" style={{
+      <div className="flex w-[294.6px] h-[100px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
+        <h2 className="m-0 w-[262.6px] break-words border-0 p-0 text-[22px] font-semibold leading-[30px] text-black/90" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal',
           letterSpacing: '0px'
         }}>
           {title}
         </h2>
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[16px] font-normal leading-[22.4px] tracking-[-0.4px] text-black/60" style={{
+        <p className="m-0 w-[262.6px] break-words border-0 p-0 text-[16px] font-normal leading-[22.4px] tracking-[-0.4px] text-black/60" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif'
         }}>
           {subtitle}
