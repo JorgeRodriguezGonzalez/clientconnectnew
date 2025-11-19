@@ -43,7 +43,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  // Estado para forzar re-render y reiniciar animación en hover
+  // Forzamos reinicio de animación solo en hover
   const [hoveredId, setHoveredId] = React.useState<number | null>(null);
 
   return (
@@ -65,70 +65,89 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 1. Izquierda */}
             <motion.div
-              key={hoveredId === 1 ? 'left-hover' : 'left-normal'}
               initial={{ opacity: 0, x: -50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-              transition={{ delay: hoveredId === 1 ? 0 : 0.6, duration: 0.6 }}
+              animate={
+                hoveredId === 1
+                  ? { opacity: 1, x: 0 }
+                  : isInView
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: -50 }
+              }
+              transition={{
+                delay: hoveredId === 1 ? 0 : 0.6,
+                duration: 0.6,
+                // Solo animamos en hover → al salir no hay transición
+                ...(hoveredId !== 1 && { type: false })
+              }}
               onMouseEnter={() => setHoveredId(1)}
               onMouseLeave={() => setHoveredId(null)}
               className="absolute top-[106px] left-5 w-[406px]"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img
-                src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c445_kloudera-home-one-cases-image.svg"
-                alt="Overlay 1"
-                className="w-full h-auto object-cover"
-                width={398}
-                height={160}
-              />
+              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="Overlay 1" className="w-full h-auto object-cover" width={398} height={160} />
             </motion.div>
 
             {/* 2. Pequeña (scale) */}
             <motion.div
-              key={hoveredId === 2 ? 'small-hover' : 'small-normal'}
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              transition={{ delay: hoveredId === 2 ? 0 : 0.7, duration: 0.6 }}
+              animate={
+                hoveredId === 2
+                  ? { opacity: 1, scale: 1 }
+                  : isInView
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 0.8 }
+              }
+              transition={{
+                delay: hoveredId === 2 ? 0 : 0.7,
+                duration: 0.6,
+                ...(hoveredId !== 2 && { type: false })
+              }}
               onMouseEnter={() => setHoveredId(2)}
               onMouseLeave={() => setHoveredId(null)}
               className="absolute top-[106px] right-[-30px] w-[69px]"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img
-                src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c446_kloudera-home-one-cases-image.svg"
-                alt="Overlay 2"
-                className="w-full h-auto object-cover"
-                width={67}
-                height={68}
-              />
+              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c446_kloudera-home-one-cases-image.svg" alt="Overlay 2" className="w-full h-auto object-cover" width={67} height={68} />
             </motion.div>
 
             {/* 3. Derecha */}
             <motion.div
-              key={hoveredId === 3 ? 'right-hover' : 'right-normal'}
               initial={{ opacity: 0, x: 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-              transition={{ delay: hoveredId === 3 ? 0 : 0.8, duration: 0.6 }}
+              animate={
+                hoveredId === 3
+                  ? { opacity: 1, x: 0 }
+                  : isInView
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: 50 }
+              }
+              transition={{
+                delay: hoveredId === 3 ? 0 : 0.8,
+                duration: 0.6,
+                ...(hoveredId !== 3 && { type: false })
+              }}
               onMouseEnter={() => setHoveredId(3)}
               onMouseLeave={() => setHoveredId(null)}
               className="absolute top-[238px] right-[-104px] w-[431px]"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img
-                src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c447_kloudera-home-one-cases-image.svg"
-                alt="Overlay 3"
-                className="w-full h-auto object-cover"
-                width={435}
-                height={301}
-              />
+              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c447_kloudera-home-one-cases-image.svg" alt="Overlay 3" className="w-full h-auto object-cover" width={435} height={301} />
             </motion.div>
 
             {/* 4. Logo con rotación */}
             <motion.div
-              key={hoveredId === 4 ? 'logo-hover' : 'logo-normal'}
               initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.8, rotate: -180 }}
-              transition={{ delay: hoveredId === 4 ? 0 : 0.9, duration: 0.8 }}
+              animate={
+                hoveredId === 4
+                  ? { opacity: 1, scale: 1, rotate: 0 }
+                  : isInView
+                  ? { opacity: 1, scale: 1, rotate: 0 }
+                  : { opacity: 0, scale: 0.8, rotate: -180 }
+              }
+              transition={{
+                delay: hoveredId === 4 ? 0 : 0.9,
+                duration: 0.8,
+                ...(hoveredId !== 4 && { type: false })
+              }}
               onMouseEnter={() => setHoveredId(4)}
               onMouseLeave={() => setHoveredId(null)}
               className="absolute top-[323px] left-[45px] w-[109px] h-[109px]"
@@ -141,26 +160,29 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 5. Inferior */}
             <motion.div
-              key={hoveredId === 5 ? 'bottom-hover' : 'bottom-normal'}
               initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ delay: hoveredId === 5 ? 0 : 1.0, duration: 0.6 }}
+              animate={
+                hoveredId === 5
+                  ? { opacity: 1, y: 0 }
+                  : isInView
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 50 }
+              }
+              transition={{
+                delay: hoveredId === 5 ? 0 : 1.0,
+                duration: 0.6,
+                ...(hoveredId !== 5 && { type: false })
+              }}
               onMouseEnter={() => setHoveredId(5)}
               onMouseLeave={() => setHoveredId(null)}
               className="absolute bottom-0 left-0 w-[406px]"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img
-                src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c449_kloudera-home-one-cases-image.svg"
-                alt="Overlay 5"
-                className="w-full h-auto object-cover"
-                width={398}
-                height={160}
-              />
+              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c449_kloudera-home-one-cases-image.svg" alt="Overlay 5" className="w-full h-auto object-cover" width={398} height={160} />
             </motion.div>
           </div>
 
-          {/* RIGHT PART - TODO EXACTAMENTE IGUAL QUE ANTES */}
+          {/* RIGHT PART - 100% intacto */}
           <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
             <div>
               <motion.div
@@ -191,7 +213,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.5 }}
-                  className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]"
+                  className="m-0 font-['['DM_Sans']',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]"
                   style={{ transformStyle: 'preserve-3d' }}
                 >
                   {description}
