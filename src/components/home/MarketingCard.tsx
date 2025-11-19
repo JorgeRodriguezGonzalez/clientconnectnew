@@ -27,7 +27,7 @@ export const MarketingCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-row items-center justify-between w-[685.2px] h-[310px] rounded-[4px] overflow-hidden"
+      className="relative w-[685.2px] h-[310px] rounded-[4px] overflow-hidden"
       style={{
         backgroundColor: '#FFFFFF',
         border: '0.8px solid #DAE6FE',
@@ -49,34 +49,37 @@ export const MarketingCard = ({
         duration: 0.5
       }}
     >
-      {/* Contenido izquierdo */}
-      <div className="flex flex-col items-start justify-center gap-6 flex-1 pr-8">
-        <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
-          fontFamily: 'Inter, sans-serif',
-          fontStyle: 'normal',
-          letterSpacing: '0px'
-        }}>
-          {title}
-        </h2>
+      {/* Contenedor interno que respeta el padding */}
+      <div className="flex flex-row items-center justify-between h-full gap-8">
+        {/* Contenido izquierdo */}
+        <div className="flex flex-col items-start justify-center gap-6 flex-1">
+          <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
+            fontFamily: 'Inter, sans-serif',
+            fontStyle: 'normal',
+            letterSpacing: '0px'
+          }}>
+            {title}
+          </h2>
 
-        <ul className="flex flex-col gap-3 m-0 p-0 list-none">
-          {bulletPoints.map((point, index) => (
-            <li key={index} className="flex items-start gap-3">
-              <span className="text-black/60 font-bold">✓</span>
-              <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
-                fontFamily: 'Inter, sans-serif',
-                fontStyle: 'normal'
-              }}>
-                {point}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
+          <ul className="flex flex-col gap-3 m-0 p-0 list-none">
+            {bulletPoints.map((point, index) => (
+              <li key={index} className="flex items-start gap-3">
+                <span className="text-black/60 font-bold">✓</span>
+                <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontStyle: 'normal'
+                }}>
+                  {point}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      {/* Logos animados derecha */}
-      <div className="w-[280px] h-full flex-shrink-0">
-        <AnimatedIcons />
+        {/* Logos animados derecha */}
+        <div className="w-[240px] h-full flex-shrink-0">
+          <AnimatedIcons />
+        </div>
       </div>
     </motion.div>
   );
