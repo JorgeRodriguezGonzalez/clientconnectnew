@@ -20,7 +20,10 @@ export const SavingsCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[310px] bg-white shadow-lg rounded-[16px] p-1.5 overflow-hidden" 
+      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[310px] bg-white shadow-lg rounded-[16px] p-1.5 overflow-hidden"
+      style={{
+        border: '0.7px solid #DAE6FE'
+      }}
       initial={{
         opacity: 0,
         y: 20
