@@ -1,3 +1,4 @@
+filepath: src/app/page.tsx (o donde tengas tu index.tsx)
 import Footer from "@/components/layout/Footer";
 import { FinalHero } from "@/components/home/FinalHero";
 import { BentoGrid } from "@/components/home/BentoGrid";
@@ -15,13 +16,13 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
 
-        {/* FinalHero debajo de todo */}
+        {/* FinalHero debajo */}
         <div className="relative z-0">
           <FinalHero />
         </div>
 
-        {/* UseCasesShowcase con margen negativo para superponerse */}
-        <div className="-mt-[300px] relative z-[99999]">
+        {/* UseCasesShowcase superpuesto con arco perfecto */}
+        <div className="-mt-64 z-50">
           <UseCasesShowcase />
         </div>
 
