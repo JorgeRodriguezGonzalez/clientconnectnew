@@ -62,6 +62,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               />
             </div>
 
+            {/* 1. Izquierda */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={ctrl1}
@@ -69,9 +70,10 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img src="https://cdn.prod.website-files.com/6814558f14d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
+              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
             </motion.div>
 
+            {/* 2. Pequeña */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={ctrl2}
@@ -82,6 +84,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c446_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
             </motion.div>
 
+            {/* 3. Derecha → URL CORREGIDA */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={ctrl3}
@@ -92,6 +95,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c447_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
             </motion.div>
 
+            {/* 4. Logo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
               animate={ctrl4}
@@ -104,6 +108,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               </div>
             </motion.div>
 
+            {/* 5. Inferior */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={ctrl5}
