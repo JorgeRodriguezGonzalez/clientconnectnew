@@ -186,7 +186,7 @@ export const BrandsShowcaseCard = ({
         }}>
           {title}
         </h2>
-        <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
+        <p className="font-normal text-black/60 text-[16px] leading-[20px] tracking-[-0.4px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
