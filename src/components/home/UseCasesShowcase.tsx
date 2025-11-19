@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useAnimationControls } from 'framer-motion';
 
 type UseCaseItem = {
   id: number;
@@ -43,12 +43,49 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
+  // Controles individuales para cada overlay
+  const controls1 = useAnimationControls();
+  const controls2 = useAnimationControls();
+  const controls3 = useAnimationControls();
+  const controls4 = useAnimationControls();
+  const controls5 = useAnimationControls();
+
+  const overlays = [
+    { controls: controls1, from: { opacity: 0, x: -50 }, to: { opacity: 1, x: 0 }, delay: 0.6 },
+    { controls: controls2, from: { opacity: 0, scale: 0.8 }, to: { opacity: 1, scale: 1 }, delay: 0.7 },
+    { controls: controls3, from: { opacity: 0, x: 50 }, to: { opacity: 1, x: 0 }, delay: 0.8 },
+    { controls: controls4, from: { opacity: 0, scale: 0.8, rotate: -180 }, to: { opacity: 1, scale: 1, rotate: 0 }, delay: 0.9, duration: 0.8 },
+    { controls: controls5, from: { opacity: 0, y: 50 }, to: { opacity: 1, y: 0 }, delay: 1.0 },
+  ];
+
+  React.useEffect(() => {
+    if (isInView) {
+      overlays.forEach((item, i) => {
+        item.controls.start({
+          ...item.to,
+          transition: { delay: item.delay ?? 0.6 + i * 0.1, duration: item.duration ?? 0.6 }
+        });
+      });
+    }
+  }, [isInView]);
+
+  const handleHover = (controls: any, from: any, to: any, duration = 0.6) => {
+    controls.start({
+      ...from,
+      transition: { duration: 0 }
+    }).then(() => {
+      controls.start({
+        ...to,
+        transition: { duration, delay: 0 }
+      });
+    });
+  };
+
   return (
     <section ref={ref} className="relative overflow-hidden py-28 px-4 w-full bg-white mb-[50px]">
       <div className="max-w-[1225px] mx-auto">
         <div className="flex items-center justify-between gap-20 relative flex-col lg:flex-row">
 
-          {/* LEFT PART - IMÁGENES */}
           <div className="relative flex-1 max-w-[495px] z-10 w-full">
             <div className="overflow-hidden rounded-[20px]">
               <img
@@ -62,74 +99,44 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 1. Izquierda */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              whileHover={{ 
-                opacity: 1, 
-                x: 0,
-                transition: { duration: 0.6, delay: 0 }
-              }}
+              initial={overlays[0].from}
+              animate={controls1}
+              onMouseEnter={() => handleHover(controls1, overlays[0].from, overlays[0].to)}
               className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
-              // ← Este es el truco: forzar re-animación desde initial en hover
-              onHoverStart={(e, info) => {
-                e.currentTarget.animate?.([
-                  { opacity: 0, x: -50 },
-                  { opacity: 1, x: 0 }
-                ], { duration: 600, delay: 0 });
-              }}
             >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="Overlay 1" className="w-full h-auto object-cover" width={398} height={160} />
             </motion.div>
 
-            {/* 2. Pequeña (scale) */}
+            {/* 2. Pequeña */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
+              initial={overlays[1].from}
+              animate={controls2}
+              onMouseEnter={() => handleHover(controls2, overlays[1].from, overlays[1].to)}
               className="absolute top-[106px] right-[-30px] w-[69px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
-              onHoverStart={(e) => {
-                e.currentTarget.animate?.([
-                  { opacity: 0, scale: 0.8 },
-                  { opacity: 1, scale: 1 }
-                ], { duration: 600 });
-              }}
             >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c446_kloudera-home-one-cases-image.svg" alt="Overlay 2" className="w-full h-auto object-cover" width={67} height={68} />
             </motion.div>
 
             {/* 3. Derecha */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
+              initial={overlays[2].from}
+              animate={controls3}
+              onMouseEnter={() => handleHover(controls3, overlays[2].from, overlays[2].to)}
               className="absolute top-[238px] right-[-104px] w-[431px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
-              onHoverStart={(e) => {
-                e.currentTarget.animate?.([
-                  { opacity: 0, x: 50 },
-                  { opacity: 1, x: 0 }
-                ], { duration: 600 });
-              }}
             >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c447_kloudera-home-one-cases-image.svg" alt="Overlay 3" className="w-full h-auto object-cover" width={435} height={301} />
             </motion.div>
 
-            {/* 4. Logo con rotación */}
+            {/* 4. Logo */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
-              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.8, rotate: -180 }}
-              transition={{ delay: 0.9, duration: 0.8 }}
+              initial={overlays[3].from}
+              animate={controls4}
+              onMouseEnter={() => handleHover(controls4, overlays[3].from, overlays[3].to, 0.8)}
               className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
-              onHoverStart={(e) => {
-                e.currentTarget.animate?.([
-                  { opacity: 0, scale: 0.8, rotate: -180 },
-                  { opacity: 1, scale: 1, rotate: 0 }
-                ], { duration: 800 });
-              }}
             >
               <div className="w-full h-full bg-white rounded-full shadow-lg flex items-center justify-center p-5">
                 <img src="/images/client-connect-australia-logo.png" alt="Client Connect Australia" className="w-full h-full object-contain" />
@@ -138,23 +145,17 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 5. Inferior */}
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ delay: 1.0, duration: 0.6 }}
+              initial={overlays[4].from}
+              animate={controls5}
+              onMouseEnter={() => handleHover(controls5, overlays[4].from, overlays[4].to)}
               className="absolute bottom-0 left-0 w-[406px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
-              onHoverStart={(e) => {
-                e.currentTarget.animate?.([
-                  { opacity: 0, y: 50 },
-                  { opacity: 1, y: 0 }
-                ], { duration: 600 });
-              }}
             >
               <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c449_kloudera-home-one-cases-image.svg" alt="Overlay 5" className="w-full h-auto object-cover" width={398} height={160} />
             </motion.div>
           </div>
 
-          {/* DERECHA - 100% INTACTA */}
+          {/* DERECHA - 100% original */}
           <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
             <div>
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
