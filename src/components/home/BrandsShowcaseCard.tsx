@@ -179,13 +179,13 @@ export const BrandsShowcaseCard = ({
       </div>
       
       <div className="flex flex-col items-start justify-start gap-2 w-[673.2px] h-[100px] px-4 pt-4 pb-6">
-        <h2 className="font-semibold text-black/80 text-[20px] leading-[28px] tracking-[0.5px] m-0" style={{
+        <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] tracking-[0.5px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
           {title}
         </h2>
-        <p className="font-normal text-black/40 text-[14px] leading-[19.6px] tracking-[-0.4px] m-0" style={{
+        <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal'
         }}>
