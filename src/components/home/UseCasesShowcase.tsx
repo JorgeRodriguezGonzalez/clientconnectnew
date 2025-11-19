@@ -61,7 +61,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         />
         <svg 
           className="absolute inset-0 w-full h-full"
-          style={{ transform: 'translateY(-65%)' }}
+          style={{ transform: 'translateY(-65%) rotate(-90deg)' }}
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
         >
@@ -74,7 +74,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             stroke="#e5e7eb"
             strokeWidth="0.1"
             strokeDasharray="55 100"
-            strokeDashoffset="22.5"
+            strokeDashoffset="0"
           />
         </svg>
       </div>
