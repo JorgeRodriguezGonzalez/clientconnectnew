@@ -20,9 +20,12 @@ export const SavingsCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[310px] bg-white shadow-lg rounded-[16px] p-1.5 overflow-hidden"
+      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[310px] rounded-[16px] overflow-hidden"
       style={{
-        border: '0.7px solid #DAE6FE'
+        backgroundColor: '#FFFFFF',
+        border: '0.8px solid #DAE6FE',
+        padding: '16px',
+        boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)'
       }}
       initial={{
         opacity: 0,
@@ -44,7 +47,7 @@ export const SavingsCard = ({
       }}
       onHoverEnd={() => setIsHovered(false)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[314.6px] h-[192px] bg-[#f5f5f5] rounded-[12px] overflow-hidden">
+      <div className="relative flex flex-col items-center justify-center w-[294.6px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#F7FCFF' }}>
         <div className="absolute inset-0 w-full h-full overflow-hidden" style={{
           maskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)',
           WebkitMaskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)'
@@ -113,14 +116,15 @@ export const SavingsCard = ({
         </div>
       </div>
 
-      <div className="flex flex-col items-start justify-start gap-2 w-[314.6px] h-[100px] px-4 pt-4 pb-6">
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[20px] font-semibold leading-[28px] tracking-[0.5px] text-black/80" style={{
+      <div className="flex flex-col items-start justify-start gap-2 w-[294.6px] h-[100px] px-4 pt-4 pb-6">
+        <h2 className="m-0 w-[262.6px] break-words border-0 p-0 text-[22px] font-semibold leading-[30px] text-black/90" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
-          fontStyle: 'normal'
+          fontStyle: 'normal',
+          letterSpacing: '0px'
         }}>
           {amount}
-        </p>
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px] text-black/40" style={{
+        </h2>
+        <p className="m-0 w-[262.6px] break-words border-0 p-0 text-[16px] font-normal leading-[22.4px] tracking-[-0.4px] text-black/60" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif'
         }}>
           {description}

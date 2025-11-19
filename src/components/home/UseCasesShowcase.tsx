@@ -19,11 +19,11 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  const ctrl1 = useAnimationControls();
-  const ctrl2 = useAnimationControls();
-  const ctrl3 = useAnimationControls();
-  const ctrl4 = useAnimationControls();
-  const ctrl5 = useAnimationControls();
+  const ctrl1 = useAnimationControls(); // top.svg
+  const ctrl2 = useAnimationControls(); // client.svg (pequeña)
+  const ctrl3 = useAnimationControls(); // right.svg
+  const ctrl4 = useAnimationControls(); // logo (se mantiene)
+  const ctrl5 = useAnimationControls(); // down.svg
 
   React.useEffect(() => {
     if (isInView) {
@@ -52,17 +52,18 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
           {/* LEFT PART - IMÁGENES */}
           <div className="relative flex-1 max-w-[495px] z-10 w-full">
+            {/* Imagen principal */}
             <div className="overflow-hidden rounded-[20px]">
               <img
-                src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c444_kloudera-home-one-cases-image.svg"
-                alt="Main showcase"
+                src="/images/background.svg"
+                alt="Main background"
                 className="w-full h-auto object-cover"
                 width={495}
                 height={660}
               />
             </div>
 
-            {/* 1. Izquierda */}
+            {/* 1. Izquierda → top.svg */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={ctrl1}
@@ -70,10 +71,10 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
+              <img src="/images/top.svg" alt="Top overlay" className="w-full h-auto object-cover" />
             </motion.div>
 
-            {/* 2. Pequeña */}
+            {/* 2. Pequeña → client.svg */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={ctrl2}
@@ -81,10 +82,10 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               className="absolute top-[106px] right-[-30px] w-[69px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c446_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
+              <img src="/images/client.svg" alt="Client icon" className="w-full h-auto object-cover" />
             </motion.div>
 
-            {/* 3. Derecha → URL CORREGIDA */}
+            {/* 3. Derecha → right.svg */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={ctrl3}
@@ -92,14 +93,14 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               className="absolute top-[238px] right-[-104px] w-[431px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c447_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
+              <img src="/images/right.svg" alt="Right overlay" className="w-full h-auto object-cover" />
             </motion.div>
 
-            {/* 4. Logo */}
+            {/* 4. Logo (se mantiene tu logo original) */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
+              initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
               animate={ctrl4}
-              onMouseEnter={() => replayAnimation(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 }, 0.8)}
+              onMouseEnter={() => replayAnimation(ctrl4, { opacity: 0, scale: 0.8, rotate: -180 }, { opacity: 1, scale: 1, rotate: 0 }, 0.8)}
               className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
@@ -108,7 +109,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               </div>
             </motion.div>
 
-            {/* 5. Inferior */}
+            {/* 5. Inferior → down.svg */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={ctrl5}
@@ -116,11 +117,11 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               className="absolute bottom-0 left-0 w-[406px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c449_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
+              <img src="/images/down.svg" alt="Bottom overlay" className="w-full h-auto object-cover" />
             </motion.div>
           </div>
 
-          {/* RIGHT PART */}
+          {/* RIGHT PART - Texto */}
           <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
             <div>
               <motion.div
