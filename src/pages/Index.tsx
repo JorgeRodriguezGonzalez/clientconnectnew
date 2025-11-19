@@ -14,13 +14,16 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
-        {/* Solución definitiva: envolvemos FinalHero para controlar el z-index sin errores */}
+
+        {/* FinalHero debajo de todo */}
         <div className="relative z-0">
           <FinalHero />
         </div>
 
-        {/* UseCasesShowcase con arco blanco superpuesto encima del hero */}
-        <UseCasesShowcase />
+        {/* UseCasesShowcase con margen negativo para superponerse */}
+        <div className="-mt-[200px] relative z-[99999]">
+          <UseCasesShowcase />
+        </div>
 
         {/* Resto de secciones */}
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
