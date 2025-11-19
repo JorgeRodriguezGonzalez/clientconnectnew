@@ -31,7 +31,13 @@ export const SkillsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[16px] p-1.5 shadow-lg bg-white"
+      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[16px] shadow-lg"
+      style={{
+        backgroundColor: '#FFFFFF',
+        border: '0.8px solid #DAE6FE',
+        padding: '16px',
+        boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)'
+      }}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
@@ -41,7 +47,7 @@ export const SkillsShowcaseCard = ({
       }}
       onHoverEnd={() => setIsHovered(false)}
     >
-      <div className="relative flex h-[192px] w-[314.6px] items-center justify-center overflow-hidden rounded-[12px] bg-[#f5f5f5]">
+      <div className="relative flex h-[192px] w-[314.6px] items-center justify-center overflow-hidden rounded-[12px]" style={{ backgroundColor: '#F7FCFF' }}>
         <div className="absolute inset-0 flex items-center justify-center">
           <img 
             src={logoSrc} 
@@ -49,7 +55,6 @@ export const SkillsShowcaseCard = ({
             className="w-[180px] h-auto object-contain opacity-20"
           />
         </div>
-
         {skills.map((skill, index) => (
           <motion.div
             key={`${skill.text}-${hoverCount}`}
@@ -75,15 +80,15 @@ export const SkillsShowcaseCard = ({
           </motion.div>
         ))}
       </div>
-
       <div className="flex w-[314.6px] h-[100px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[20px] font-semibold leading-[28px] tracking-[0.5px] text-black/80" style={{
+        <h2 className="m-0 w-[282.6px] break-words border-0 p-0 text-[22px] font-semibold leading-[30px] text-black/90" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
-          fontStyle: 'normal'
+          fontStyle: 'normal',
+          letterSpacing: '0px'
         }}>
           {title}
-        </p>
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px] text-black/40" style={{
+        </h2>
+        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[16px] font-normal leading-[22.4px] tracking-[-0.4px] text-black/60" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif'
         }}>
           {subtitle}
