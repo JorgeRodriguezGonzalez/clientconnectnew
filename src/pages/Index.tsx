@@ -1,4 +1,3 @@
-filepath: src/app/page.tsx (o donde tengas tu index.tsx)
 import Footer from "@/components/layout/Footer";
 import { FinalHero } from "@/components/home/FinalHero";
 import { BentoGrid } from "@/components/home/BentoGrid";
@@ -21,7 +20,7 @@ const Index = () => {
           <FinalHero />
         </div>
 
-        {/* UseCasesShowcase superpuesto con arco perfecto */}
+        {/* UseCasesShowcase con el arco perfecto superpuesto */}
         <div className="-mt-64 z-50">
           <UseCasesShowcase />
         </div>
