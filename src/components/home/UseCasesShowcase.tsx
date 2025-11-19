@@ -1,19 +1,11 @@
 import React from 'react';
 import { motion, useInView, useAnimationControls } from 'framer-motion';
 
-type UseCaseItem = {
-  id: number;
-  icon: string;
-  title: string;
-  description: string;
-};
-
 type UseCasesShowcaseProps = {
   subText?: string;
   heading?: string;
   highlightText?: string;
   description?: string;
-  useCases?: UseCaseItem[];
 };
 
 export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
@@ -123,7 +115,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             </motion.div>
           </div>
 
-          {/* RIGHT PART - Solo título y descripción (sin los dos bloques) */}
+          {/* RIGHT PART - Solo título y descripción */}
           <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
             <div>
               <motion.div
@@ -145,7 +137,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               >
                 {heading}{' '}
                 <span
-                  className="bg-gradient-to-r from-[#3CA1FF] via-[#6E24FB] via-[#C61EE8] to-[#FF6948] bg-clip-text text-transparent"
+                  className="bg-gradient-to-r from-[#0F4C81] via-[#0066CC] to-[#00D4FF] bg-clip-text text-transparent font-bold"
                   style={{ WebkitTextFillColor: 'transparent' }}
                 >
                   {highlightText}
@@ -162,8 +154,6 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 {description}
               </motion.p>
             </div>
-
-            {/* ← Aquí hemos eliminado todo el bloque de useCases */}
           </div>
         </div>
       </div>
