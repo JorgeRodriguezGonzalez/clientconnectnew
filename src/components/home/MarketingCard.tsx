@@ -27,7 +27,13 @@ export const MarketingCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-row items-center justify-between gap-8 w-[685.2px] h-[310px] rounded-[16px] p-8 overflow-hidden shadow-lg bg-white"
+      className="relative flex flex-row items-center justify-between gap-8 w-[685.2px] h-[310px] rounded-[16px] overflow-hidden"
+      style={{
+        backgroundColor: '#FFFFFF',
+        border: '0.8px solid #DAE6FE',
+        padding: '16px',
+        boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)'
+      }}
       initial={{
         opacity: 0,
         y: 20
@@ -45,9 +51,10 @@ export const MarketingCard = ({
     >
       {/* Contenido izquierdo */}
       <div className="flex flex-col items-start justify-center gap-6 flex-1">
-        <h2 className="font-semibold text-black/80 text-[20px] leading-[28px] tracking-[0.5px] m-0 text-left" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif',
-          fontStyle: 'normal'
+        <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
+          fontFamily: 'Inter, sans-serif',
+          fontStyle: 'normal',
+          letterSpacing: '0px'
         }}>
           {title}
         </h2>
@@ -55,9 +62,9 @@ export const MarketingCard = ({
         <ul className="flex flex-col gap-3 m-0 p-0 list-none">
           {bulletPoints.map((point, index) => (
             <li key={index} className="flex items-start gap-3">
-              <span className="text-black/40 font-bold">✓</span>
-              <p className="font-normal text-black/40 text-[14px] leading-[19.6px] tracking-[-0.4px] m-0" style={{
-                fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+              <span className="text-black/60 font-bold">✓</span>
+              <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
+                fontFamily: 'Inter, sans-serif',
                 fontStyle: 'normal'
               }}>
                 {point}
@@ -192,7 +199,6 @@ const Sparkles = () => {
   );
 };
 
-// Logos exactos del componente original
 const ClaudeLogo = ({ className }: { className?: string }) => {
   return (
     <svg
@@ -331,3 +337,12 @@ const MetaIconOutline = ({ className }: { className?: string }) => {
     </svg>
   );
 };
+
+// Demo
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
+      <MarketingCard />
+    </div>
+  );
+}
