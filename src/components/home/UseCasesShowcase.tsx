@@ -69,7 +69,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
+              <img src="https://cdn.prod.website-files.com/6814558f14d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="" className="w-full h-auto object-cover" />
             </motion.div>
 
             <motion.div
@@ -115,7 +115,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             </motion.div>
           </div>
 
-          {/* RIGHT PART - Solo título y descripción */}
+          {/* RIGHT PART */}
           <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
             <div>
               <motion.div
@@ -137,7 +137,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               >
                 {heading}{' '}
                 <span
-                  className="bg-gradient-to-r from-[#0F4C81] via-[#0066CC] to-[#00D4FF] bg-clip-text text-transparent font-bold"
+                  className="bg-gradient-to-r from-[#0F4C81] via-[#0066CC] to-[#00D4FF] bg-clip-text text-transparent"
                   style={{ WebkitTextFillColor: 'transparent' }}
                 >
                   {highlightText}
