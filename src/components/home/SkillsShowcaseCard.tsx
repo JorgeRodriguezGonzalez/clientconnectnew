@@ -31,7 +31,7 @@ export const SkillsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden"
+      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[8px]"
       style={{
         backgroundColor: '#FFFFFF',
         border: '0.8px solid #DAE6FE',
