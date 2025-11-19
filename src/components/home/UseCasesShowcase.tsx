@@ -46,23 +46,26 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   };
 
   return (
-    <section ref={ref} className="relative">
-      {/* === ARCO SUPERIOR PERFECTO (parte alta de un círculo blanco) === */}
-      <div className="absolute inset-x-0 top-0 h-64 -translate-y-48">
+    <section ref={ref} className="relative overflow-hidden">
+
+      {/* ARCO SUPERIOR PERFECTO Y PRONUNCIADO */}
+      <div className="absolute inset-x-0 top-0 h-96 -translate-y-72 pointer-events-none">
         <div
-          className="w-full h-full bg-white rounded-[100%] scale-y-50 origin-bottom"
+          className="w-full h-full bg-white"
           style={{
-            borderRadius: '50% 50% 0 0 / 100% 100% 0 0',
+            borderRadius: '50% 50% 0 0 / 380% 380% 0 0',
+            transform: 'scaleY(0.9)',
+            transformOrigin: 'bottom',
           }}
         />
       </div>
 
-      {/* === CONTENIDO DEL COMPONENTE (empieza justo debajo del arco) === */}
-      <div className="relative z-10 bg-white pt-32 pb-28 px-4">
+      {/* CONTENIDO CON FONDO BLANCO DESDE EL ARCO HACIA ABAJO */}
+      <div className="relative z-10 bg-white pt-64 pb-28 px-4">
         <div className="max-w-[1225px] mx-auto">
-          <div className="flex items-center justify-between gap-20 relative flex-col lg:flex-row">
+          <div className="flex items-center justify-between gap-20 flex-col lg:flex-row">
 
-            {/* IMÁGENES IZQUIERDA - Acercadas al texto */}
+            {/* IMÁGENES IZQUIERDA */}
             <div className="relative flex-1 max-w-[495px] z-10 w-full translate-x-[80px]">
               <div className="overflow-hidden rounded-[20px]">
                 <img src="/images/background.svg" alt="Background" className="w-full h-auto object-cover" />
@@ -98,6 +101,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 <img src="/images/right.svg" alt="" className="w-full h-auto" />
               </motion.div>
 
+              {/* Logo - rotación 90° */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
                 animate={ctrl4}
