@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useInView, useAnimationControls } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 type UseCaseItem = {
   id: number;
@@ -27,7 +27,7 @@ const defaultUseCases: UseCaseItem[] = [
     id: 2,
     icon: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
     title: 'Data-Driven Optimization',
-    description: 'Gain clarity with advanced analytics and insights to track performance, optimize campaigns, and maximize your marketing ROI continuously.'
+    description: 'Gain clarity with advanced analytics and  insights to track performance, optimize campaigns, and maximize your marketing ROI continuously.'
   }
 ];
 
@@ -40,52 +40,18 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     useCases = defaultUseCases
   } = props;
 
-  const ref = React.useRef(null);
+  const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  // Controles individuales para cada overlay
-  const controls1 = useAnimationControls();
-  const controls2 = useAnimationControls();
-  const controls3 = useAnimationControls();
-  const controls4 = useAnimationControls();
-  const controls5 = useAnimationControls();
-
-  const overlays = [
-    { controls: controls1, from: { opacity: 0, x: -50 }, to: { opacity: 1, x: 0 }, delay: 0.6 },
-    { controls: controls2, from: { opacity: 0, scale: 0.8 }, to: { opacity: 1, scale: 1 }, delay: 0.7 },
-    { controls: controls3, from: { opacity: 0, x: 50 }, to: { opacity: 1, x: 0 }, delay: 0.8 },
-    { controls: controls4, from: { opacity: 0, scale: 0.8, rotate: -180 }, to: { opacity: 1, scale: 1, rotate: 0 }, delay: 0.9, duration: 0.8 },
-    { controls: controls5, from: { opacity: 0, y: 50 }, to: { opacity: 1, y: 0 }, delay: 1.0 },
-  ];
-
-  React.useEffect(() => {
-    if (isInView) {
-      overlays.forEach((item, i) => {
-        item.controls.start({
-          ...item.to,
-          transition: { delay: item.delay ?? 0.6 + i * 0.1, duration: item.duration ?? 0.6 }
-        });
-      });
-    }
-  }, [isInView]);
-
-  const handleHover = (controls: any, from: any, to: any, duration = 0.6) => {
-    controls.start({
-      ...from,
-      transition: { duration: 0 }
-    }).then(() => {
-      controls.start({
-        ...to,
-        transition: { duration, delay: 0 }
-      });
-    });
-  };
+  // Forzamos reinicio de animación con una key que cambia al hover
+  const [hoverKey, setHoverKey] = React.useState<string>('');
 
   return (
     <section ref={ref} className="relative overflow-hidden py-28 px-4 w-full bg-white mb-[50px]">
       <div className="max-w-[1225px] mx-auto">
         <div className="flex items-center justify-between gap-20 relative flex-col lg:flex-row">
 
+          {/* LEFT PART */}
           <div className="relative flex-1 max-w-[495px] z-10 w-full">
             <div className="overflow-hidden rounded-[20px]">
               <img
@@ -99,9 +65,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 1. Izquierda */}
             <motion.div
-              initial={overlays[0].from}
-              animate={controls1}
-              onMouseEnter={() => handleHover(controls1, overlays[0].from, overlays[0].to)}
+              key={hoverKey === 'left' ? 'left-hover' : 'left'}
+              initial={{ opacity: 0, x: -50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+              transition={{ duration: 0.6, delay: hoverKey === 'left' ? 0 : 0.6 }}
+              onMouseEnter={() => setHoverKey('left')}
+              onMouseLeave={() => setHoverKey('')}
               className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
@@ -110,9 +79,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 2. Pequeña */}
             <motion.div
-              initial={overlays[1].from}
-              animate={controls2}
-              onMouseEnter={() => handleHover(controls2, overlays[1].from, overlays[1].to)}
+              key={hoverKey === 'small' ? 'small-hover' : 'small'}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.6, delay: hoverKey === 'small' ? 0 : 0.7 }}
+              onMouseEnter={() => setHoverKey('small')}
+              onMouseLeave={() => setHoverKey('')}
               className="absolute top-[106px] right-[-30px] w-[69px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
@@ -121,9 +93,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 3. Derecha */}
             <motion.div
-              initial={overlays[2].from}
-              animate={controls3}
-              onMouseEnter={() => handleHover(controls3, overlays[2].from, overlays[2].to)}
+              key={hoverKey === 'right' ? 'right-hover' : 'right'}
+              initial={{ opacity: 0, x: 50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+              transition={{ duration: 0.6, delay: hoverKey === 'right' ? 0 : 0.8 }}
+              onMouseEnter={() => setHoverKey('right')}
+              onMouseLeave={() => setHoverKey('')}
               className="absolute top-[238px] right-[-104px] w-[431px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
@@ -132,9 +107,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 4. Logo */}
             <motion.div
-              initial={overlays[3].from}
-              animate={controls4}
-              onMouseEnter={() => handleHover(controls4, overlays[3].from, overlays[3].to, 0.8)}
+              key={hoverKey === 'logo' ? 'logo-hover' : 'logo'}
+              initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
+              animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.8, rotate: -180 }}
+              transition={{ duration: 0.8, delay: hoverKey === 'logo' ? 0 : 0.9 }}
+              onMouseEnter={() => setHoverKey('logo')}
+              onMouseLeave={() => setHoverKey('')}
               className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
@@ -145,9 +123,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
             {/* 5. Inferior */}
             <motion.div
-              initial={overlays[4].from}
-              animate={controls5}
-              onMouseEnter={() => handleHover(controls5, overlays[4].from, overlays[4].to)}
+              key={hoverKey === 'bottom' ? 'bottom-hover' : 'bottom'}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.6, delay: hoverKey === 'bottom' ? 0 : 1.0 }}
+              onMouseEnter={() => setHoverKey('bottom')}
+              onMouseLeave={() => setHoverKey('')}
               className="absolute bottom-0 left-0 w-[406px] cursor-pointer"
               style={{ transformStyle: 'preserve-3d' }}
             >
@@ -155,28 +136,39 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             </motion.div>
           </div>
 
-          {/* DERECHA - 100% original */}
+          {/* RIGHT PART - 100% ORIGINAL */}
           <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
             <div>
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
                 className="font-['Inter_Tight',sans-serif] text-[#5200EE] text-sm font-medium tracking-[2.2px] uppercase mb-2.5"
-                style={{ transformStyle: 'preserve-3d' }}>
+                style={{ transformStyle: 'preserve-3d' }}
+              >
                 {subText}
               </motion.div>
 
-              <motion.h2 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}
+              <motion.h2
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.5 }}
                 className="m-0 mb-5 font-medium text-[40px] leading-[50px] font-['Inter_Tight',sans-serif] text-[#071332] tracking-[-0.8px]"
-                style={{ transformStyle: 'preserve-3d' }}>
+                style={{ transformStyle: 'preserve-3d' }}
+              >
                 {heading}{' '}
-                <span className="bg-gradient-to-r from-[#3CA1FF] via-[#6E24FB] via-[#C61EE8] to-[#FF6948] bg-clip-text text-transparent"
-                  style={{ WebkitTextFillColor: 'transparent' }}>
+                <span className="bg-gradient-to-r from-[#3CA1FF] via-[#6E24FB] via-[#C61EE8] to-[#FF6948] bg-clip-text text-transparent" style={{ WebkitTextFillColor: 'transparent' }}>
                   {highlightText}
                 </span>
               </motion.h2>
 
-              <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
                 className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]"
-                style={{ transformStyle: 'preserve-3d' }}>
+                style={{ transformStyle: 'preserve-3d' }}
+              >
                 {description}
               </motion.p>
             </div>
