@@ -21,7 +21,7 @@ const Index = () => {
         </div>
 
         {/* UseCasesShowcase con el arco perfecto superpuesto */}
-        <div className="-mt-24 z-999999">
+        <div className="z-999999">
           <UseCasesShowcase />
         </div>
 
