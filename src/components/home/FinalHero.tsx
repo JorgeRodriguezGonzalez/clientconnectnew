@@ -225,11 +225,11 @@ export function FinalHero() {
                 How we do it
               </p>
             </a>
-            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-cyan-300/80 rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]">
+            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-[#F6941D]/80 rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(246,148,29,0.5)] relative z-[100] will-change-[background-color,box-shadow]">
               <div className="w-[18px] h-[14px] relative overflow-hidden">
-                <Calendar className="w-[17px] h-[14px] text-cyan-300" />
+                <Calendar className="w-[17px] h-[14px] text-[#F6941D]" />
               </div>
-              <p className="text-[14px] font-medium leading-5 text-cyan-300 whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+              <p className="text-[14px] font-medium leading-5 text-[#F6941D] whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
                 Book Free Consultation
               </p>
             </a>
