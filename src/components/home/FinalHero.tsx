@@ -101,7 +101,7 @@ export function FinalHero() {
                 animate={{ opacity: 1, width: "30rem" }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
                 style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
-                className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-[#F6941D] via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
+                className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-[#FFF8E1] via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
               >
                 <motion.div
                   className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
@@ -118,7 +118,7 @@ export function FinalHero() {
                 animate={{ opacity: 1, width: "30rem" }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
                 style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
-                className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-[#F6941D] text-white [--conic-position:from_290deg_at_center_top]"
+                className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-[#FFF8E1] text-white [--conic-position:from_290deg_at_center_top]"
               >
                 <motion.div
                   className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]"
@@ -144,21 +144,21 @@ export function FinalHero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.5 }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-[#F6941D] blur-3xl"
+                className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-[#FFF8E1] blur-3xl"
               />
 
               <motion.div
                 initial={{ opacity: 0, width: "8rem" }}
                 animate={{ opacity: 1, width: "16rem" }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-[#F6941D] blur-2xl"
+                className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-[#FFF8E1] blur-2xl"
               ></motion.div>
 
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
                 animate={{ opacity: 1, width: "30rem" }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-[#F6941D]"
+                className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-[#FFF8E1]"
               ></motion.div>
 
               <motion.div
@@ -270,13 +270,6 @@ export function FinalHero() {
             {/* Contenedor Sparkles - Arco y Sparkles */}
             <div className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
-              <motion.div 
-                className="absolute -left-1/2 top-1/2 aspect-[1/0.7] z-[9999] w-[200%] rounded-[100%] border-t"
-                style={{ 
-                  backgroundColor: arcBackground,
-                  borderTopColor: arcBorderColor
-                }}
-              />
               <Sparkles
                 density={1200}
                 className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
