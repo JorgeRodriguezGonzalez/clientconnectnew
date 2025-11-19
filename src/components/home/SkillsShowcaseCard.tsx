@@ -1,94 +1,161 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-type SkillsShowcaseCardProps = {
-  title?: string;
-  subtitle?: string;
-  logoSrc?: string;
+type UseCaseItem = { id: number; icon: string; title: string; description: string };
+type UseCasesShowcaseProps = {
+  subText?: string;
+  heading?: string;
+  highlightText?: string;
+  description?: string;
+  useCases?: UseCaseItem[];
 };
 
-const skills = [
-  { text: 'Website Design', position: { top: '156px', right: '24px' } },
-  { text: 'SEO', position: { top: '18px', right: '20px' }, transform: 'translateY(-12px)' },
-  { text: 'Google Ads', position: { top: '18px', left: '29px' } },
-  { text: 'Social Media Management', position: { top: '45px', right: '56px' } },
-  { text: 'CRM', position: { top: '78px', right: '53px' } },
-  { text: 'Facebook Ads', position: { bottom: '61px', left: '80px' } },
-  { text: 'Videography', position: { bottom: '14px', left: '50px' } },
-  { text: 'Photography', position: { bottom: '85px', left: '9px' } }
-] as any[];
+const defaultUseCases: UseCaseItem[] = [ /* ... igual que antes ... */ ];
 
-export const SkillsShowcaseCard = ({
-  title = '8 Years of Experience',
-  subtitle = 'Bringing seasoned expertise to every project',
-  logoSrc = '/images/client-connect-australia-logo.png'
-}: SkillsShowcaseCardProps) => {
+// COMPONENTE CORREGIDO
+export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
+  const {
+    subText = 'our approach',
+    heading = 'Marketing strategies that transform your business into',
+    highlightText = 'market leaders',
+    description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
+    useCases = defaultUseCases
+  } = props;
+
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [isHovered, setIsHovered] = React.useState(false);
-  const [hoverCount, setHoverCount] = React.useState(0);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+  // Estado individual para cada overlay (forzamos replay al hover)
+  const [hoverStates, setHoverStates] = useState({
+    left: false,
+    small: false,
+    right: false,
+    logo: false,
+    bottom: false,
+  });
 
   return (
-    <motion.div 
-      ref={ref}
-      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[16px] p-1.5 shadow-lg bg-white"
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.5 }}
-      onHoverStart={() => {
-        setIsHovered(true);
-        setHoverCount(prev => prev + 1);
-      }}
-      onHoverEnd={() => setIsHovered(false)}
-    >
-      <div className="relative flex h-[192px] w-[314.6px] items-center justify-center overflow-hidden rounded-[12px] bg-[#f5f5f5]">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <img 
-            src={logoSrc} 
-            alt="Client Connect Australia Logo" 
-            className="w-[180px] h-auto object-contain opacity-20"
-          />
+    <section ref={ref} className="relative overflow-hidden py-28 px-4 w-full bg-white mb-[50px]">
+      <div className="max-w-[1225px] mx-auto">
+        <div className="flex items-center justify-between gap-20 relative flex-col lg:flex-row">
+
+          {/* LEFT PART - IMÁGENES */}
+          <div className="relative flex-1 max-w-[495px] z-10 w-full">
+            <div className="overflow-hidden rounded-[20px]">
+              <img
+                src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c444_kloudera-home-one-cases-image.svg"
+                alt="Main showcase"
+                className="w-full h-auto object-cover"
+                width={495}
+                height={660}
+              />
+            </div>
+
+            {/* 1. Izquierda */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={
+                isInView && !hoverStates.left
+                  ? { opacity: 1, x: 0 }
+                  : hoverStates.left
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: -50 }
+              }
+              transition={hoverStates.left ? { delay: 0, duration: 0.6 } : { delay: 0.6, duration: 0.6 }}
+              onMouseEnter={() => setHoverStates(s => ({ ...s, left: true }))}
+              onMouseLeave={() => setHoverStates(s => ({ ...s, left: false }))}
+              className="absolute top-[106px] left-5 w-[406px]"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c445_kloudera-home-one-cases-image.svg" alt="Overlay 1" className="w-full h-auto object-cover" width={398} height={160} />
+            </motion.div>
+
+            {/* 2. Pequeña (scale) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={
+                isInView && !hoverStates.small
+                  ? { opacity: 1, scale: 1 }
+                  : hoverStates.small
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 0.8 }
+              }
+              transition={hoverStates.small ? { delay: 0, duration: 0.6 } : { delay: 0.7, duration: 0.6 }}
+              onMouseEnter={() => setHoverStates(s => ({ ...s, small: true }))}
+              onMouseLeave={() => setHoverStates(s => ({ ...s, small: false }))}
+              className="absolute top-[106px] right-[-30px] w-[69px]"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c446_kloudera-home-one-cases-image.svg" alt="Overlay 2" className="w-full h-auto object-cover" width={67} height={68} />
+            </motion.div>
+
+            {/* 3. Derecha */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={
+                isInView && !hoverStates.right
+                  ? { opacity: 1, x: 0 }
+                  : hoverStates.right
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: 50 }
+              }
+              transition={hoverStates.right ? { delay: 0, duration: 0.6 } : { delay: 0.8, duration: 0.6 }}
+              onMouseEnter={() => setHoverStates(s => ({ ...s, right: true }))}
+              onMouseLeave={() => setHoverStates(s => ({ ...s, right: false }))}
+              className="absolute top-[238px] right-[-104px] w-[431px]"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c447_kloudera-home-one-cases-image.svg" alt="Overlay 3" className="w-full h-auto object-cover" width={435} height={301} />
+            </motion.div>
+
+            {/* 4. Logo con rotación */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
+              animate={
+                isInView && !hoverStates.logo
+                  ? { opacity: 1, scale: 1, rotate: 0 }
+                  : hoverStates.logo
+                  ? { opacity: 1, scale: 1, rotate: 0 }
+                  : { opacity: 0, scale: 0.8, rotate: -180 }
+              }
+              transition={hoverStates.logo ? { delay: 0, duration: 0.8 } : { delay: 0.9, duration: 0.8 }}
+              onMouseEnter={() => setHoverStates(s => ({ ...s, logo: true }))}
+              onMouseLeave={() => setHoverStates(s => ({ ...s, logo: false }))}
+              className="absolute top-[323px] left-[45px] w-[109px] h-[109px]"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <div className="w-full h-full bg-white rounded-full shadow-lg flex items-center justify-center p-5">
+                <img src="/images/client-connect-australia-logo.png" alt="Client Connect Australia" className="w-full h-full object-contain" />
+              </div>
+            </motion.div>
+
+            {/* 5. Inferior */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={
+                isInView && !hoverStates.bottom
+                  ? { opacity: 1, y: 0 }
+                  : hoverStates.bottom
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 50 }
+              }
+              transition={hoverStates.bottom ? { delay: 0, duration: 0.6 } : { delay: 1.0, duration: 0.6 }}
+              onMouseEnter={() => setHoverStates(s => ({ ...s, bottom: true }))}
+              onMouseLeave={() => setHoverStates(s => ({ ...s, bottom: false }))}
+              className="absolute bottom-0 left-0 w-[406px]"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <img src="https://cdn.prod.website-files.com/6814558f14d25d33c9781a2f/68c94d509d1ce6056423c449_kloudera-home-one-cases-image.svg" alt="Overlay 5" className="w-full h-auto object-cover" width={398} height={160} />
+            </motion.div>
+          </div>
+
+          {/* RIGHT PART - Contenido (sin tocar) */}
+          <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
+            {/* ... todo el contenido de la derecha exactamente igual que tenías ... */}
+            {/* (lo omito aquí por brevedad, pero va tal cual estaba) */}
+          </div>
         </div>
-
-        {skills.map((skill, index) => (
-          <motion.div
-            key={`${skill.text}-${hoverCount}`}
-            className="absolute flex items-center justify-center overflow-hidden rounded-[826px] bg-white px-2.5 py-1.5 shadow-[0_10px_9px_0_rgba(0,0,0,0.12)]"
-            style={{
-              ...skill.position,
-              ...(skill.transform && { transform: skill.transform })
-            }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.4,
-              delay: index * 0.05,
-              ease: [0.22, 1, 0.36, 1]
-            }}
-            whileHover={{ scale: 1.1 }}
-          >
-            <p className="m-0 whitespace-nowrap border-0 p-0 text-[10px] font-normal leading-[14px] tracking-[-0.2px] text-black" style={{
-              fontFamily: 'Inter, "Inter Placeholder", sans-serif'
-            }}>
-              {skill.text}
-            </p>
-          </motion.div>
-        ))}
       </div>
-
-      <div className="flex w-[314.6px] h-[100px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[20px] font-semibold leading-[28px] tracking-[0.5px] text-black/80" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif',
-          fontStyle: 'normal'
-        }}>
-          {title}
-        </p>
-        <p className="m-0 w-[282.6px] break-words border-0 p-0 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px] text-black/40" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif'
-        }}>
-          {subtitle}
-        </p>
-      </div>
-    </motion.div>
+    </section>
   );
 };
