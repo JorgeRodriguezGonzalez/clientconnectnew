@@ -51,7 +51,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       {/* TU ARCO PERFECTO - SIN CAMBIOS, SOLO SIN SOMBRA (ya no tiene ninguna) */}
       <div className="absolute inset-x-0 top-0 h-80 pointer-events-none">
         <div
-          className="w-full h-full bg-white rounded-[100%] border-t border-red-200"
+          className="w-full h-full bg-black rounded-[100%] border-t border-red-200"
           style={{
             transform: 'translateY(-65%)',
             borderBottomLeftRadius: 0,
