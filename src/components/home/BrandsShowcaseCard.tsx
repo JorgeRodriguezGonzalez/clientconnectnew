@@ -40,7 +40,7 @@ export const BrandsShowcaseCard = ({
       }} 
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[653.2px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#FAFDFF' }}>
+      <div className="relative flex flex-col items-center justify-center w-[653.2px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#F7FCFF' }}>
         <div className="relative w-full h-full">
           {/* Imagen 1 - Izquierda (desde la izquierda) */}
           <motion.div 
