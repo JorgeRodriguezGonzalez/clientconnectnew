@@ -52,18 +52,14 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       
       <div className="absolute inset-x-0 top-0 h-[400px] pointer-events-none">
         <div
-          className="w-full h-full bg-black rounded-[100%]"
+          className="w-full h-full bg-black rounded-[100%] border-t-[0.8px] border-gray-200"
           style={{
             transform: 'translateY(-65%)',
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
-            borderTop: '0.5px solid transparent',
-            borderImage: 'linear-gradient(to right, transparent 0%, transparent 32.5%, #e5e7eb 32.5%, #e5e7eb 67.5%, transparent 67.5%, transparent 100%) 1',
-            borderImageSlice: '1 0 0 0',
           }}
         />
       </div>
-      
 
       {/* CONTENIDO SUBIDO MÁS ARRIBA (más pegado al arco) */}
       <div className="relative pt-48 pb-32 px-4"> {/* ← pt-48 en vez de pt-64 */}
