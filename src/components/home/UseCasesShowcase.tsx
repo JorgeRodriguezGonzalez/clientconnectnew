@@ -50,33 +50,18 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     <section ref={ref} className="relative bg-white -mt-16">
       {/* TU ARCO PERFECTO - SIN CAMBIOS, SOLO SIN SOMBRA (ya no tiene ninguna) */}
       
-      <div className="absolute inset-x-0 top-0 h-80 pointer-events-none">
+      <div className="absolute inset-x-0 top-0 h-[400px] pointer-events-none">
         <div
           className="w-full h-full bg-black rounded-[100%]"
           style={{
             transform: 'translateY(-65%)',
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
+            borderTop: '0.5px solid transparent',
+            borderImage: 'linear-gradient(to right, transparent 0%, transparent 32.5%, #e5e7eb 32.5%, #e5e7eb 67.5%, transparent 67.5%, transparent 100%) 1',
+            borderImageSlice: '1 0 0 0',
           }}
         />
-        <svg 
-          className="absolute inset-0 w-full h-full"
-          style={{ transform: 'translateY(-65%) rotate(-90deg)' }}
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <ellipse
-            cx="50"
-            cy="50"
-            rx="50"
-            ry="50"
-            fill="none"
-            stroke="#e5e7eb"
-            strokeWidth="0.1"
-            strokeDasharray="100 100"
-            strokeDashoffset="22.5"
-          />
-        </svg>
       </div>
       
 
