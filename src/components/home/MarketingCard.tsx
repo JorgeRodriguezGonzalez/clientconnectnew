@@ -31,7 +31,6 @@ export const MarketingCard = ({
       style={{
         backgroundColor: '#FFFFFF',
         border: '0.8px solid #DAE6FE',
-        padding: '16px',
         boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)'
       }}
       initial={{
@@ -49,8 +48,8 @@ export const MarketingCard = ({
         duration: 0.5
       }}
     >
-      {/* Contenedor interno que respeta el padding */}
-      <div className="flex flex-row items-center justify-between h-full gap-8">
+      {/* Contenedor interno con padding de 16px */}
+      <div className="w-full h-full p-4 flex flex-row items-center justify-between gap-8">
         {/* Contenido izquierdo */}
         <div className="flex flex-col items-start justify-center gap-6 flex-1">
           <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
