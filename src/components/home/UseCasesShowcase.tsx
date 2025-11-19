@@ -19,11 +19,11 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  const ctrl1 = useAnimationControls(); // top.svg
-  const ctrl2 = useAnimationControls(); // client.svg (pequeña)
-  const ctrl3 = useAnimationControls(); // right.svg
-  const ctrl4 = useAnimationControls(); // logo (se mantiene)
-  const ctrl5 = useAnimationControls(); // down.svg
+  const ctrl1 = useAnimationControls();
+  const ctrl2 = useAnimationControls();
+  const ctrl3 = useAnimationControls();
+  const ctrl4 = useAnimationControls();
+  const ctrl5 = useAnimationControls();
 
   React.useEffect(() => {
     if (isInView) {
@@ -52,18 +52,10 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
           {/* LEFT PART - IMÁGENES */}
           <div className="relative flex-1 max-w-[495px] z-10 w-full">
-            {/* Imagen principal */}
             <div className="overflow-hidden rounded-[20px]">
-              <img
-                src="/images/background.svg"
-                alt="Main background"
-                className="w-full h-auto object-cover"
-                width={495}
-                height={660}
-              />
+              <img src="/images/background.svg" alt="Main background" className="w-full h-auto object-cover" />
             </div>
 
-            {/* 1. Izquierda → top.svg */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={ctrl1}
@@ -74,7 +66,6 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <img src="/images/top.svg" alt="Top overlay" className="w-full h-auto object-cover" />
             </motion.div>
 
-            {/* 2. Pequeña → client.svg */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={ctrl2}
@@ -85,7 +76,6 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <img src="/images/client.svg" alt="Client icon" className="w-full h-auto object-cover" />
             </motion.div>
 
-            {/* 3. Derecha → right.svg */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={ctrl3}
@@ -96,7 +86,6 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               <img src="/images/right.svg" alt="Right overlay" className="w-full h-auto object-cover" />
             </motion.div>
 
-            {/* 4. Logo (se mantiene tu logo original) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
               animate={ctrl4}
@@ -109,7 +98,6 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               </div>
             </motion.div>
 
-            {/* 5. Inferior → down.svg */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={ctrl5}
@@ -121,14 +109,15 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             </motion.div>
           </div>
 
-          {/* RIGHT PART - Texto */}
+          {/* RIGHT PART */}
           <div className="flex flex-col items-start gap-3 flex-1 max-w-[520px] w-full">
             <div>
+              {/* CAMBIO AQUÍ → naranja #F6941D */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="font-['Inter_Tight',sans-serif] text-[#5200EE] text-sm font-medium tracking-[2.2px] uppercase mb-2.5"
+                className="font-['Inter_Tight',sans-serif] text-[#F6941D] text-sm font-medium tracking-[2.2px] uppercase mb-2.5"
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {subText}
