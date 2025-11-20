@@ -28,13 +28,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   // Scroll animation para el border-radius (círculo a cuadrado) - LO PRIMERO QUE OCURRE
   const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
     target: ref,
-    offset: ["start 120vh", "start 100vh"]
+    offset: ["start 130vh", "start 100vh"]
   });
 
   // Scroll animation para la expansión de la elipse (después del border-radius)
   const { scrollYProgress: scrollYProgressEllipse } = useScroll({
     target: ref,
-    offset: ["start 130vh", "start 80vh"]
+    offset: ["start 120vh", "start 80vh"]
   });
 
   // Scroll animation para el color del borde - empieza antes
@@ -63,23 +63,23 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["100%", "0%"]
   );
 
-  // Animación de expansión de la elipse - 50% MÁS LENTO
+  // Animación de expansión de la elipse - MÁS LENTO (tarda más en terminar)
   const ellipseWidth = useTransform(
     scrollYProgressEllipse,
-    [0, 0.225],
+    [0, 0.35],  // Era 0.225, ahora 0.35 para que tarde más
     [40, 100]
   );
 
-  // Transición del fade: cuando la elipse crece, el fade desaparece - 50% MÁS LENTO
+  // Transición del fade: cuando la elipse crece, el fade desaparece - MÁS LENTO
   const fadeStart = useTransform(
     scrollYProgressEllipse,
-    [0, 0.225],
+    [0, 0.35],  // Era 0.225, ahora 0.35
     [40, 100]
   );
 
   const fadeEnd = useTransform(
     scrollYProgressEllipse,
-    [0, 0.225],
+    [0, 0.35],  // Era 0.225, ahora 0.35
     [90, 100]
   );
 
