@@ -6,7 +6,8 @@ type UseCasesShowcaseProps = {
   heading?: string;
   highlightText?: string;
   description?: string;
-  title?: string;
+  badge?: string;
+  mainTitle?: string;
 };
 
 export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
@@ -15,7 +16,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     heading = 'Marketing strategies that transform your business into',
     highlightText = 'market leaders',
     description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
-    title = 'Our Services',
+    badge = 'Built for shopify',
+    mainTitle = 'Our Services',
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -139,17 +141,35 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           />
         </div>
 
-        {/* TÍTULO EN ROJO - DENTRO DEL CÍRCULO/CUADRADO - PERFECTAMENTE CENTRADO */}
+        {/* TÍTULO ESTILO SHOPIFY - DENTRO DEL CÍRCULO/CUADRADO - PERFECTAMENTE CENTRADO */}
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
-            <motion.h1
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-red-600 text-4xl font-bold font-['Inter_Tight',sans-serif] tracking-tight text-center"
-            >
-              {title}
-            </motion.h1>
+            <div className="flex flex-col items-center gap-6">
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
+              >
+                <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" fill="#000000" />
+                </svg>
+                <span className="text-sm font-normal text-[#242424] tracking-[-0.3px] capitalize">
+                  {badge}
+                </span>
+              </motion.div>
+
+              {/* Main Title */}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-[50px] font-bold leading-[55px] tracking-[-2.5px] text-center text-black"
+              >
+                {mainTitle}
+              </motion.h1>
+            </div>
           </div>
         </div>
 
