@@ -37,17 +37,23 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     offset: ["start 120vh", "start 80vh"]
   });
 
+  // Scroll animation para el color del borde (empieza gris, luego negro→azul→blanco)
+  const { scrollYProgress: scrollYProgressBorder } = useScroll({
+    target: ref,
+    offset: ["start 110vh", "start center"]
+  });
+
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.2, 0.4],
     ["#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
-  // Color del borde - MISMO que backgroundColor
+  // Color del borde - empieza gris, luego negro→azul→blanco
   const borderColor = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.4],
-    ["#000000", "rgb(20, 35, 90)", "#ffffff"]
+    scrollYProgressBorder,
+    [0, 0.1, 0.3, 0.5],
+    ["#e5e7eb", "#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
   // Animación del border-radius: de 100% (círculo) a 0% (cuadrado) - PRIMERO - 50% MÁS LENTO
