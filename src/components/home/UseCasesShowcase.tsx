@@ -140,14 +140,18 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         </div>
 
         {/* TÍTULO EN ROJO - DENTRO DEL CÍRCULO/CUADRADO - PERFECTAMENTE CENTRADO */}
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="absolute -top-[254px] left-1/2 -translate-x-1/2 z-50 text-red-600 text-4xl font-bold font-['Inter_Tight',sans-serif] tracking-tight text-center"
-        >
-          {title}
-        </motion.h1>
+        <div className="absolute -top-[254px] left-0 right-0 z-50">
+          <div className="max-w-[1225px] mx-auto px-4">
+            <motion.h1
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-red-600 text-4xl font-bold font-['Inter_Tight',sans-serif] tracking-tight text-center"
+            >
+              {title}
+            </motion.h1>
+          </div>
+        </div>
 
         {/* CONTENIDO SUBIDO MÁS ARRIBA (más pegado al arco) */}
         <div className="relative pt-48 pb-32 px-4">
