@@ -61,7 +61,7 @@ const ComparisonSection = () => {
               <h3 className="font-bold text-lg text-white">Traditional Way</h3>
               <p className="text-sm text-muted-foreground-pricing mt-1">Manual & Time-Consuming</p>
             </div>
-            <div className="text-center p-6 rounded-t-2xl glass-card border-2 border-primary glow-primary shadow-lg shadow-primary/20">
+            <div className="text-center p-6 rounded-t-2xl glass-card border-2 border-primary hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/30 transition-all duration-300">
               <Check className="h-8 w-8 mx-auto mb-2 text-primary" />
               <h3 className="font-bold text-lg gradient-text">PromptGenius</h3>
               <p className="text-sm text-muted-foreground-pricing mt-1">AI-Powered & Instant</p>
