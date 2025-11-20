@@ -61,7 +61,7 @@ const ComparisonSection = () => {
               <h3 className="font-bold text-lg text-white">Traditional Way</h3>
               <p className="text-sm text-muted-foreground-pricing mt-1">Manual & Time-Consuming</p>
             </div>
-            <div className="text-center p-6 rounded-t-2xl glass-card border-2 border-primary glow-primary">
+            <div className="text-center p-6 rounded-t-2xl glass-card border-2 border-primary glow-primary shadow-lg shadow-primary/20">
               <Check className="h-8 w-8 mx-auto mb-2 text-primary" />
               <h3 className="font-bold text-lg gradient-text">PromptGenius</h3>
               <p className="text-sm text-muted-foreground-pricing mt-1">AI-Powered & Instant</p>
@@ -90,7 +90,7 @@ const ComparisonSection = () => {
                 </div>
 
                 {/* PromptGenius */}
-                <div className="flex items-center p-4 rounded-lg glass-card border border-primary/30 group-hover:border-primary group-hover:glow-primary transition-all duration-300">
+                <div className="flex items-center p-4 rounded-lg glass-card border border-primary/30 group-hover:border-primary group-hover:glow-primary group-hover:shadow-lg group-hover:shadow-primary/20 group-hover:scale-[1.02] transition-all duration-300">
                   <div className="flex items-center gap-3 w-full">
                     <Check className="h-5 w-5 text-primary flex-shrink-0" />
                     <span className="text-white text-sm font-medium">{item.promptgenius}</span>
