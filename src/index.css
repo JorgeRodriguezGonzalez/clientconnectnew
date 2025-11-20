@@ -92,7 +92,7 @@ All colors MUST be HSL.
   }
 
   .text-muted-foreground-pricing {
-    color: hsl(0 0% 85%);
+    color: hsl(0 0% 65%);
   }
 
   /* Blue to Cyan gradient for PromptGenius branding */
@@ -113,6 +113,15 @@ All colors MUST be HSL.
   /* Glow effect for primary color */
   .glow-primary {
     box-shadow: 0 0 20px rgba(50, 85, 210, 0.3);
+  }
+
+  /* Shadow variations with primary color */
+  .shadow-primary {
+    box-shadow: 0 10px 15px -3px rgba(50, 85, 210, 0.2), 0 4px 6px -4px rgba(50, 85, 210, 0.1);
+  }
+
+  .shadow-primary-lg {
+    box-shadow: 0 20px 25px -5px rgba(50, 85, 210, 0.3), 0 8px 10px -6px rgba(50, 85, 210, 0.2);
   }
 
   .container-custom {
