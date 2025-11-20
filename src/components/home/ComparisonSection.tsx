@@ -45,7 +45,7 @@ const ComparisonSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white">
             Why Switch to <span className="gradient-text">PromptGenius</span>?
           </h2>
           <p className="text-lg text-muted-foreground">
@@ -60,7 +60,7 @@ const ComparisonSection = () => {
             <div></div>
             <div className="text-center p-6 rounded-t-2xl bg-destructive/10 border-2 border-destructive/30">
               <X className="h-8 w-8 mx-auto mb-2 text-destructive" />
-              <h3 className="font-bold text-lg">Traditional Way</h3>
+              <h3 className="font-bold text-lg text-white">Traditional Way</h3>
               <p className="text-sm text-muted-foreground mt-1">Manual & Time-Consuming</p>
             </div>
             <div className="text-center p-6 rounded-t-2xl glass-card border-2 border-primary glow-primary">
@@ -80,7 +80,7 @@ const ComparisonSection = () => {
               >
                 {/* Category */}
                 <div className="flex items-center p-4 rounded-lg bg-secondary/50 group-hover:bg-secondary transition-colors duration-300">
-                  <span className="font-semibold">{item.category}</span>
+                  <span className="font-semibold text-white">{item.category}</span>
                 </div>
 
                 {/* Traditional */}
@@ -95,7 +95,7 @@ const ComparisonSection = () => {
                 <div className="flex items-center p-4 rounded-lg glass-card border border-primary/30 group-hover:border-primary group-hover:glow-primary transition-all duration-300">
                   <div className="flex items-center gap-3 w-full">
                     <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-foreground text-sm font-medium">{item.promptgenius}</span>
+                    <span className="text-white text-sm font-medium">{item.promptgenius}</span>
                   </div>
                 </div>
               </div>
