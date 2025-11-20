@@ -87,7 +87,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   return (
     <motion.section 
       ref={ref} 
-      className="relative mt-0"
+      className="relative pt-16"
       style={{ backgroundColor }}
     >
       {/* TU ARCO PERFECTO - SIN CAMBIOS, SOLO SIN SOMBRA (ya no tiene ninguna) */}
