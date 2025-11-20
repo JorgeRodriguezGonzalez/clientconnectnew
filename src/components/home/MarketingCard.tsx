@@ -1,33 +1,20 @@
 import React from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 
-type MarketingCardProps = {
-  title?: string;
-  bulletPoints?: string[];
-};
-
 const sizeMap = {
   sm: "h-8 w-8",
   md: "h-12 w-12",
   lg: "h-16 w-16",
 };
 
-export const MarketingCard = ({
-  title = 'Digital Marketing Excellence',
-  bulletPoints = [
-    'Data-driven strategies that amplify your brand',
-    'Targeted campaigns for your ideal audience',
-    'Measurable results across all digital channels',
-    'Continuous optimization for maximum ROI'
-  ]
-}: MarketingCardProps) => {
+export const MarketingCard = () => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 rounded-[4px] overflow-hidden"
+      className="relative rounded-[4px] overflow-hidden"
       style={{
         width: '685.2px',
         height: '310px',
@@ -50,15 +37,7 @@ export const MarketingCard = ({
         duration: 0.5
       }}
     >
-      {/* Wrapper con padding forzado */}
-      <div style={{ 
-        padding: '16px',
-        width: '100%',
-        height: '100%',
-        boxSizing: 'border-box',
-        backgroundColor: '#FFE5E5' // Fondo temporal ROSADO para ver el padding
-      }}>
-        <div className="relative flex flex-row items-center justify-between w-full h-full">
+      <div className="relative flex flex-row items-center justify-between h-full" style={{ margin: '16px' }}>
           {/* Contenido izquierdo */}
           <div className="flex flex-col items-start justify-center gap-6 flex-1 pr-8">
           <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
@@ -84,10 +63,9 @@ export const MarketingCard = ({
           </ul>
         </div>
 
-          {/* Logos animados derecha */}
-          <div className="w-[240px] h-full flex-shrink-0">
-            <AnimatedIcons />
-          </div>
+        {/* Logos animados derecha */}
+        <div className="w-[240px] h-full flex-shrink-0">
+          <AnimatedIcons />
         </div>
       </div>
     </motion.div>
