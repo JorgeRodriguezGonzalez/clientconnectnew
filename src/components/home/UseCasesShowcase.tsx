@@ -25,7 +25,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     offset: ["start end", "start center"]
   });
 
-  // Scroll animation para la expansión de la elipse (empieza ANTES)
+  // Scroll animation para el border-radius (círculo a cuadrado) - LO PRIMERO QUE OCURRE
+  const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
+    target: ref,
+    offset: ["start 130vh", "start 100vh"]
+  });
+
+  // Scroll animation para la expansión de la elipse (después del border-radius)
   const { scrollYProgress: scrollYProgressEllipse } = useScroll({
     target: ref,
     offset: ["start 120vh", "start 80vh"]
@@ -35,6 +41,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     scrollYProgress,
     [0, 0.2, 0.4],
     ["#000000", "rgb(20, 35, 90)", "#ffffff"]
+  );
+
+  // Animación del border-radius: de 100% (círculo) a 0% (cuadrado) - PRIMERO
+  const borderRadius = useTransform(
+    scrollYProgressBorderRadius,
+    [0, 0.15],
+    ["100%", "0%"]
   );
 
   // Animación de expansión de la elipse - usa scrollYProgressEllipse
@@ -55,13 +68,6 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     scrollYProgressEllipse,
     [0, 0.15],
     [90, 100]
-  );
-
-  // Animación del border-radius: de 100% (círculo) a 0% (cuadrado)
-  const borderRadius = useTransform(
-    scrollYProgressEllipse,
-    [0, 0.15],
-    ["100%", "0%"]
   );
 
   const maskImage = useTransform(
@@ -118,9 +124,9 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         </div>
 
         {/* CONTENIDO SUBIDO MÁS ARRIBA (más pegado al arco) */}
-        <div className="relative pt-48 pb-32 px-4"> {/* ← pt-48 en vez de pt-64 */}
+        <div className="relative pt-48 pb-32 px-4">
           <div className="max-w-[1225px] mx-auto">
-            <div className="flex flex-col lg:flex-row items-start justify-between gap-20"> {/* ← items-start */}
+            <div className="flex flex-col lg:flex-row items-start justify-between gap-20">
 
               {/* IMÁGENES IZQUIERDA */}
               <div className="relative flex-1 max-w-[495px] translate-x-[80px]">
@@ -202,7 +208,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.2, duration: 0.5 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
                   className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]"
                 >
                   {description}
