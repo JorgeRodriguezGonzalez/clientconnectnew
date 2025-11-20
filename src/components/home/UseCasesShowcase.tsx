@@ -37,7 +37,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     offset: ["start 120vh", "start 80vh"]
   });
 
-  // Scroll animation para el color del borde - SINCRONIZADO con la expansión de elipse
+  // Scroll animation para el color del borde - empieza antes
   const { scrollYProgress: scrollYProgressBorder } = useScroll({
     target: ref,
     offset: ["start 120vh", "start center"]
@@ -49,10 +49,10 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
-  // Color del borde - gris→negro (rápido, junto con expansión), luego azul→blanco
+  // Color del borde - gris→negro MÁS RÁPIDO, luego azul→blanco
   const borderColor = useTransform(
     scrollYProgressBorder,
-    [0, 0.225, 0.4, 0.6],
+    [0, 0.15, 0.4, 0.6],
     ["#e5e7eb", "#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
