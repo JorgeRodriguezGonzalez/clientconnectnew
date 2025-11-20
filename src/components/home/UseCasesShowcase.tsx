@@ -34,7 +34,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   // Scroll animation para la expansión de la elipse (después del border-radius)
   const { scrollYProgress: scrollYProgressEllipse } = useScroll({
     target: ref,
-    offset: ["start 120vh", "start 80vh"]
+    offset: ["start 130vh", "start 80vh"]
   });
 
   // Scroll animation para el color del borde - empieza antes
