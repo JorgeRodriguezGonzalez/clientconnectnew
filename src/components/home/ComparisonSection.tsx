@@ -59,12 +59,12 @@ const ComparisonSection = () => {
             <div className="text-center p-6 rounded-t-2xl bg-destructive/10 border-2 border-destructive/30">
               <X className="h-8 w-8 mx-auto mb-2 text-destructive" />
               <h3 className="font-bold text-lg text-white">Traditional Way</h3>
-              <p className="text-sm text-muted-foreground mt-1">Manual & Time-Consuming</p>
+              <p className="text-sm text-muted-foreground-pricing mt-1">Manual & Time-Consuming</p>
             </div>
             <div className="text-center p-6 rounded-t-2xl glass-card border-2 border-primary glow-primary">
               <Check className="h-8 w-8 mx-auto mb-2 text-primary" />
               <h3 className="font-bold text-lg gradient-text">PromptGenius</h3>
-              <p className="text-sm text-muted-foreground mt-1">AI-Powered & Instant</p>
+              <p className="text-sm text-muted-foreground-pricing mt-1">AI-Powered & Instant</p>
             </div>
           </div>
 
@@ -85,7 +85,7 @@ const ComparisonSection = () => {
                 <div className="flex items-center p-4 rounded-lg bg-destructive/5 border border-destructive/20 group-hover:border-destructive/40 transition-all duration-300">
                   <div className="flex items-center gap-3 w-full">
                     <X className="h-5 w-5 text-destructive flex-shrink-0" />
-                    <span className="text-muted-foreground text-sm">{item.traditional}</span>
+                    <span className="text-muted-foreground-pricing text-sm">{item.traditional}</span>
                   </div>
                 </div>
 
@@ -105,7 +105,7 @@ const ComparisonSection = () => {
             <p className="text-lg font-semibold gradient-text mb-2">
               10x Faster. 100x Easier. Infinitely Better.
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground-pricing">
               Join 500,000+ professionals who've made the switch
             </p>
           </div>
