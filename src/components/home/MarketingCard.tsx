@@ -79,7 +79,7 @@ export const MarketingCard = ({
         </div>
 
         {/* Logos animados derecha */}
-        <div className="w-[250px] h-full flex-shrink-0">
+        <div className="w-[200px] h-full flex-shrink-0">
           <AnimatedIcons />
         </div>
       </div>
