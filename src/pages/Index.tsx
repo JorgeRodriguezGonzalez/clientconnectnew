@@ -9,6 +9,8 @@ import { WhySubscribeBento } from "@/components/home/WhySubscribeBento";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
 import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
+import ComparisonSection from "@/components/home/ComparisonSection";
+import Pricing from "@/components/home/Pricing";
 
 const Index = () => {
   return (
@@ -31,6 +33,8 @@ const Index = () => {
         </div>
 
         <HowWeWork />
+        <ComparisonSection />
+        <Pricing />
         <AnimatedGallerySection />
         <ServicesSection />
         <WhyUsSection />
