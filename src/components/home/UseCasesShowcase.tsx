@@ -40,21 +40,28 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   // Animación de expansión de la elipse - usa scrollYProgressEllipse
   const ellipseWidth = useTransform(
     scrollYProgressEllipse,
-    [0, 0.25],
+    [0, 0.15],
     [40, 100]
   );
 
   // Transición del fade: cuando la elipse crece, el fade desaparece
   const fadeStart = useTransform(
     scrollYProgressEllipse,
-    [0, 0.25],
+    [0, 0.15],
     [40, 100]
   );
 
   const fadeEnd = useTransform(
     scrollYProgressEllipse,
-    [0, 0.25],
+    [0, 0.15],
     [90, 100]
+  );
+
+  // Animación del border-radius: de 100% (círculo) a 0% (cuadrado)
+  const borderRadius = useTransform(
+    scrollYProgressEllipse,
+    [0, 0.15],
+    ["100%", "0%"]
   );
 
   const maskImage = useTransform(
@@ -97,11 +104,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         
         <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none">
           <motion.div
-            className="w-full h-full rounded-[100%] border-t-[1px] border-gray-200"
+            className="w-full h-full border-t-[1px] border-gray-200"
             style={{
               transform: 'translateY(-65%)',
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0,
+              borderRadius: borderRadius,
               WebkitMaskImage: maskImage,
               maskImage: maskImage,
               backgroundColor: backgroundColor,
@@ -194,7 +202,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
+  transition={{ delay: 0.2, duration: 0.5 }}
                   className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]"
                 >
                   {description}
