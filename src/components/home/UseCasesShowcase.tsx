@@ -38,9 +38,23 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     [40, 100]
   );
 
+  // Transición del fade: cuando la elipse crece, el fade desaparece
+  const fadeStart = useTransform(
+    scrollYProgress,
+    [0, 0.4],
+    [40, 100]
+  );
+
+  const fadeEnd = useTransform(
+    scrollYProgress,
+    [0, 0.4],
+    [90, 100]
+  );
+
   const maskImage = useTransform(
-    ellipseWidth,
-    (width) => `radial-gradient(ellipse ${width}% 100% at center, black 0%, black 40%, transparent 90%, transparent 100%)`
+    [ellipseWidth, fadeStart, fadeEnd],
+    ([width, start, end]) => 
+      `radial-gradient(ellipse ${width}% 100% at center, black 0%, black ${start}%, transparent ${end}%, transparent 100%)`
   );
 
   // Controles individuales + animaciones hover perfectas (como antes)
