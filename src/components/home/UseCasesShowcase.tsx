@@ -50,15 +50,15 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     <section ref={ref} className="relative bg-white -mt-16">
       {/* TU ARCO PERFECTO - SIN CAMBIOS, SOLO SIN SOMBRA (ya no tiene ninguna) */}
       
-      <div className="absolute inset-x-0 top-0 h-[500px] pointer-events-none">
+      <div className="absolute inset-x-0 top-0 h-[400px] pointer-events-none">
         <div
           className="w-full h-full bg-black rounded-[100%] border-t-[1px] border-gray-200"
           style={{
             transform: 'translateY(-65%)',
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%)',
-            maskImage: 'linear-gradient(to right, transparent 0%, black 49.5%, black 50.5%, transparent 100%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 60% 100% at center, black 0%, black 70%, transparent 90%, transparent 100%)',
+            maskImage: 'radial-gradient(ellipse 60% 100% at center, black 0%, black 70%, transparent 90%, transparent 100%)',
           }}
         />
       </div>
