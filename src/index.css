@@ -26,6 +26,7 @@ All colors MUST be HSL.
 
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 40%;
+    --muted-foreground-pricing: 0 0% 65%; /* Lighter gray for pricing section */
 
     --accent: 223 67% 50%;
     --accent-foreground: 0 0% 100%;
@@ -88,6 +89,10 @@ All colors MUST be HSL.
   
   .text-gradient-secondary {
     @apply bg-gradient-to-r from-secondary to-secondary/80 bg-clip-text text-transparent;
+  }
+
+  .text-muted-foreground-pricing {
+    color: hsl(var(--muted-foreground-pricing));
   }
 
   /* Blue to Cyan gradient for PromptGenius branding */

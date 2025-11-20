@@ -55,7 +55,7 @@ const Pricing = () => {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
             Simple, <span className="gradient-text">Transparent</span> Pricing
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-muted-foreground-pricing">
             Choose the perfect plan for your needs. Upgrade, downgrade, or cancel anytime.
           </p>
         </div>
@@ -77,10 +77,10 @@ const Pricing = () => {
 
               <div className="mb-8">
                 <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
+                <p className="text-muted-foreground-pricing text-sm mb-4">{plan.description}</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-bold gradient-text">{plan.price}</span>
-                  {plan.price !== "Custom" && <span className="text-muted-foreground">/month</span>}
+                  {plan.price !== "Custom" && <span className="text-muted-foreground-pricing">/month</span>}
                 </div>
               </div>
 
@@ -98,7 +98,7 @@ const Pricing = () => {
                     <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 mt-0.5">
                       <Check className="h-3 w-3 text-primary" />
                     </div>
-                    <span className="text-sm text-muted-foreground">{feature}</span>
+                    <span className="text-sm text-muted-foreground-pricing">{feature}</span>
                   </li>
                 ))}
               </ul>
