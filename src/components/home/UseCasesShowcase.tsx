@@ -6,6 +6,7 @@ type UseCasesShowcaseProps = {
   heading?: string;
   highlightText?: string;
   description?: string;
+  title?: string;
 };
 
 export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
@@ -14,6 +15,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     heading = 'Marketing strategies that transform your business into',
     highlightText = 'market leaders',
     description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
+    title = 'Our Services',
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -136,6 +138,16 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             }}
           />
         </div>
+
+        {/* TÍTULO EN ROJO - DENTRO DEL CÍRCULO/CUADRADO */}
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="absolute top-16 left-1/2 -translate-x-1/2 z-50 text-red-600 text-4xl font-bold font-['Inter_Tight',sans-serif] tracking-tight"
+        >
+          {title}
+        </motion.h1>
 
         {/* CONTENIDO SUBIDO MÁS ARRIBA (más pegado al arco) */}
         <div className="relative pt-48 pb-32 px-4">
