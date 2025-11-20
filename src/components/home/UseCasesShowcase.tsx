@@ -28,7 +28,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   // Scroll animation para la expansión de la elipse (empieza ANTES)
   const { scrollYProgress: scrollYProgressEllipse } = useScroll({
     target: ref,
-    offset: ["start bottom", "start 80vh"]
+    offset: ["start 120vh", "start 80vh"]
   });
 
   const backgroundColor = useTransform(
