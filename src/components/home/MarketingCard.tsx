@@ -27,11 +27,10 @@ export const MarketingCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[685.2px] h-[310px] rounded-[4px] overflow-hidden"
+      className="relative flex flex-col items-center gap-1.5 w-[685.2px] h-[310px] rounded-[4px] overflow-hidden p-4"
       style={{
         backgroundColor: '#FFFFFF',
         border: '0.8px solid #DAE6FE',
-        padding: '16px',
         boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)'
       }}
       initial={{
@@ -50,7 +49,7 @@ export const MarketingCard = ({
       }}
     >
       {/* Área de contenido principal */}
-      <div className="relative flex flex-row items-center justify-between w-[653.2px] h-[278px]">
+      <div className="relative flex flex-row items-center justify-between w-full h-full">
         {/* Contenido izquierdo */}
         <div className="flex flex-col items-start justify-center gap-6 flex-1 pr-8">
           <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
