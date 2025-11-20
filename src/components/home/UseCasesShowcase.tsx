@@ -52,7 +52,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   // Color del borde - empieza gris, luego negro→azul→blanco
   const borderColor = useTransform(
     scrollYProgressBorder,
-    [0, 0.1, 0.3, 0.5],
+    [0, 0.05, 0.3, 0.5],
     ["#e5e7eb", "#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
