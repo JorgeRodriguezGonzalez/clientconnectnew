@@ -19,16 +19,16 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  // Scroll animation para el color del arco
+  // Scroll animation para el color del arco - cambio más rápido
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end start"]
+    offset: ["start end", "center center"]
   });
 
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
-    ["#000000", "#808080", "#ffffff"]
+    [0, 0.3, 0.6],
+    ["#000000", "#888888", "#ffffff"]
   );
 
   // Controles individuales + animaciones hover perfectas (como antes)
