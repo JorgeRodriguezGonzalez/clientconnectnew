@@ -57,8 +57,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             transform: 'translateY(-65%)',
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
-            WebkitMaskImage: 'radial-gradient(ellipse 30% 100% at center, black 0%, black 50%, transparent 85%, transparent 100%)',
-            maskImage: 'radial-gradient(ellipse 30% 100% at center, black 0%, black 50%, transparent 85%, transparent 100%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 40% 100% at center, black 0%, black 50%, transparent 85%, transparent 100%)',
+            maskImage: 'radial-gradient(ellipse 40% 100% at center, black 0%, black 50%, transparent 85%, transparent 100%)',
           }}
         />
       </div>
