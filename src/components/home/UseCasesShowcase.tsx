@@ -28,7 +28,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   // Scroll animation para el border-radius (círculo a cuadrado) - LO PRIMERO QUE OCURRE
   const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
     target: ref,
-    offset: ["start 120vh", "start 80vh"]
+    offset: ["start 120vh", "start 100vh"]
   });
 
   // Scroll animation para la expansión de la elipse (después del border-radius)
