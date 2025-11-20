@@ -92,7 +92,7 @@ All colors MUST be HSL.
   }
 
   .text-muted-foreground-pricing {
-    color: hsl(var(--muted-foreground-pricing));
+    color: hsl(0 0% 65%);
   }
 
   /* Blue to Cyan gradient for PromptGenius branding */
