@@ -46,7 +46,7 @@ const ComparisonSection = () => {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white">
             Why Switch to <span className="gradient-text">PromptGenius</span>?
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-muted-foreground-pricing">
             See the dramatic difference between traditional prompt engineering and our AI-powered solution.
           </p>
         </div>
