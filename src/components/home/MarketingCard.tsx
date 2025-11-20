@@ -50,10 +50,16 @@ export const MarketingCard = ({
         duration: 0.5
       }}
     >
-      {/* Área de contenido principal con padding */}
-      <div className="relative flex flex-row items-center justify-between w-full h-full p-4">
-        {/* Contenido izquierdo */}
-        <div className="flex flex-col items-start justify-center gap-6 flex-1 pr-8">
+      {/* Wrapper con padding forzado */}
+      <div style={{ 
+        padding: '16px',
+        width: '100%',
+        height: '100%',
+        boxSizing: 'border-box'
+      }}>
+        <div className="relative flex flex-row items-center justify-between w-full h-full">
+          {/* Contenido izquierdo */}
+          <div className="flex flex-col items-start justify-center gap-6 flex-1 pr-8">
           <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
             fontFamily: 'Inter, sans-serif',
             fontStyle: 'normal',
@@ -77,9 +83,10 @@ export const MarketingCard = ({
           </ul>
         </div>
 
-        {/* Logos animados derecha */}
-        <div className="w-[240px] h-full flex-shrink-0">
-          <AnimatedIcons />
+          {/* Logos animados derecha */}
+          <div className="w-[240px] h-full flex-shrink-0">
+            <AnimatedIcons />
+          </div>
         </div>
       </div>
     </motion.div>
