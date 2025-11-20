@@ -43,30 +43,37 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
+  // Color del borde - MISMO que backgroundColor
+  const borderColor = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.4],
+    ["#000000", "rgb(20, 35, 90)", "#ffffff"]
+  );
+
   // Animación del border-radius: de 100% (círculo) a 0% (cuadrado) - PRIMERO - 50% MÁS LENTO
   const borderRadius = useTransform(
     scrollYProgressBorderRadius,
-    [0, 0.225],  // Era 0.15, ahora 0.15 * 1.5 = 0.225 (50% más lento)
+    [0, 0.225],
     ["100%", "0%"]
   );
 
   // Animación de expansión de la elipse - 50% MÁS LENTO
   const ellipseWidth = useTransform(
     scrollYProgressEllipse,
-    [0, 0.225],  // Era 0.15, ahora 0.15 * 1.5 = 0.225
+    [0, 0.225],
     [40, 100]
   );
 
   // Transición del fade: cuando la elipse crece, el fade desaparece - 50% MÁS LENTO
   const fadeStart = useTransform(
     scrollYProgressEllipse,
-    [0, 0.225],  // Era 0.15, ahora 0.15 * 1.5 = 0.225
+    [0, 0.225],
     [40, 100]
   );
 
   const fadeEnd = useTransform(
     scrollYProgressEllipse,
-    [0, 0.225],  // Era 0.15, ahora 0.15 * 1.5 = 0.225
+    [0, 0.225],
     [90, 100]
   );
 
@@ -110,12 +117,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         
         <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none">
           <motion.div
-            className="w-full h-full border-t-[1px] border-gray-200"
+            className="w-full h-full border-t-[1px]"
             style={{
               transform: 'translateY(-65%)',
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0,
               borderRadius: borderRadius,
+              borderTopColor: borderColor,
               WebkitMaskImage: maskImage,
               maskImage: maskImage,
               backgroundColor: backgroundColor,
