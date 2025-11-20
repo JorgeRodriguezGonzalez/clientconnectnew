@@ -55,7 +55,8 @@ export const MarketingCard = ({
         padding: '16px',
         width: '100%',
         height: '100%',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        backgroundColor: '#FFE5E5' // Fondo temporal ROSADO para ver el padding
       }}>
         <div className="relative flex flex-row items-center justify-between w-full h-full">
           {/* Contenido izquierdo */}
