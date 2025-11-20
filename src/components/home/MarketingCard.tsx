@@ -14,13 +14,15 @@ export const MarketingCard = () => {
   return (
     <motion.div 
       ref={ref}
-      className="relative rounded-[4px] overflow-hidden"
+      className="relative rounded-[4px] overflow-hidden flex items-center justify-center"
       style={{
         width: '685.2px',
         height: '310px',
         backgroundColor: '#FFFFFF',
         border: '0.8px solid #DAE6FE',
-        boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)'
+        boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)',
+        padding: '16px',
+        boxSizing: 'border-box'
       }}
       initial={{
         opacity: 0,
@@ -37,36 +39,9 @@ export const MarketingCard = () => {
         duration: 0.5
       }}
     >
-      <div className="relative flex flex-row items-center justify-between h-full" style={{ margin: '16px' }}>
-          {/* Contenido izquierdo */}
-          <div className="flex flex-col items-start justify-center gap-6 flex-1 pr-8">
-          <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
-            fontFamily: 'Inter, sans-serif',
-            fontStyle: 'normal',
-            letterSpacing: '0px'
-          }}>
-            {title}
-          </h2>
-
-          <ul className="flex flex-col gap-3 m-0 p-0 list-none">
-            {bulletPoints.map((point, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <span className="text-black/60 font-bold">✓</span>
-                <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontStyle: 'normal'
-                }}>
-                  {point}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Logos animados derecha */}
-        <div className="w-[240px] h-full flex-shrink-0">
-          <AnimatedIcons />
-        </div>
+      {/* Logos animados centrados */}
+      <div className="w-[240px]">
+        <AnimatedIcons />
       </div>
     </motion.div>
   );
