@@ -90,6 +90,26 @@ All colors MUST be HSL.
     @apply bg-gradient-to-r from-secondary to-secondary/80 bg-clip-text text-transparent;
   }
 
+  /* Blue to Cyan gradient for PromptGenius branding */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(223 67% 50%), hsl(180 100% 50%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass card effect */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Glow effect for primary color */
+  .glow-primary {
+    box-shadow: 0 0 20px rgba(50, 85, 210, 0.3);
+  }
+
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
@@ -111,4 +131,35 @@ All colors MUST be HSL.
 
 .animate-move-horizontal {
   animation: move-horizontal 5s linear infinite;
+}
+
+/* Floating animation for background elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+  opacity: 0;
 }
