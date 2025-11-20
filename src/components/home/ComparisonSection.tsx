@@ -38,8 +38,6 @@ const ComparisonSection = () => {
     <section className="py-24 sm:py-32 relative overflow-hidden bg-[#0a0e1a]">
       {/* Animated background */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-destructive/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }} />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
