@@ -139,12 +139,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           />
         </div>
 
-        {/* TÍTULO EN ROJO - DENTRO DEL CÍRCULO/CUADRADO - MUCHO MÁS ARRIBA */}
+        {/* TÍTULO EN ROJO - DENTRO DEL CÍRCULO/CUADRADO - PERFECTAMENTE CENTRADO */}
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="absolute -top-[284px] left-1/2 -translate-x-1/2 z-50 text-red-600 text-4xl font-bold font-['Inter_Tight',sans-serif] tracking-tight"
+          className="absolute -top-[254px] left-1/2 -translate-x-1/2 z-50 text-red-600 text-4xl font-bold font-['Inter_Tight',sans-serif] tracking-tight text-center"
         >
           {title}
         </motion.h1>
