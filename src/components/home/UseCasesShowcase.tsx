@@ -1,4 +1,5 @@
 import React from 'react';
+import { Sparkles } from 'lucide-react';
 import { motion, useInView, useAnimationControls, useScroll, useTransform } from 'framer-motion';
 
 type UseCasesShowcaseProps = {
@@ -8,6 +9,10 @@ type UseCasesShowcaseProps = {
   description?: string;
   badge?: string;
   mainTitle?: string;
+  mainTitleHighlight?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
 };
 
 export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
@@ -17,7 +22,11 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     highlightText = 'market leaders',
     description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
     badge = 'Built for shopify',
-    mainTitle = 'Our Services',
+    mainTitle = 'Turn Your Shoppers into',
+    mainTitleHighlight = 'Subscribers',
+    subtitle = 'From setup to scale: everything you need to grow subscriptions on autopilot.',
+    ctaText = 'Book a Call',
+    ctaHref = '#',
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -141,10 +150,10 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           />
         </div>
 
-        {/* TÍTULO ESTILO SHOPIFY - DENTRO DEL CÍRCULO/CUADRADO - PERFECTAMENTE CENTRADO */}
+        {/* TÍTULO ESTILO SHOPIFY COMPLETO - DENTRO DEL CÍRCULO/CUADRADO */}
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
-            <div className="flex flex-col items-center gap-6">
+            <div className="flex flex-col items-center gap-8">
               {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
@@ -161,14 +170,71 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               </motion.div>
 
               {/* Main Title */}
-              <motion.h1
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-[50px] font-bold leading-[55px] tracking-[-2.5px] text-center text-black"
+                className="w-full"
               >
-                {mainTitle}
-              </motion.h1>
+                <h1 className="text-[50px] font-bold leading-[55px] tracking-[-2.5px] text-center text-black">
+                  {mainTitle}{' '}
+                  <span className="inline-block">
+                    <span className="bg-gradient-to-r from-[#11B2F8] to-[#504DF9] bg-clip-text text-transparent">
+                      {mainTitleHighlight}
+                    </span>
+                  </span>
+                </h1>
+              </motion.div>
+
+              {/* Subtitle */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="w-full max-w-[500px]"
+              >
+                <p className="text-lg font-normal leading-[26px] tracking-[-0.2px] text-center text-[#696969]">
+                  {subtitle}
+                </p>
+              </motion.div>
+
+              {/* CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <a 
+                  href={ctaHref} 
+                  onClick={e => e.preventDefault()} 
+                  className="relative inline-flex items-center justify-center gap-2.5 px-5 py-[14px] bg-gradient-to-r from-[#11B2F8] to-[#504DF9] rounded-xl shadow-[inset_0_2.4px_1.2px_0_rgba(255,255,255,0.25),inset_0_1.2px_1.2px_0_rgba(0,0,0,0.1),inset_0_-2.4px_0_0_rgba(0,0,0,0.1),inset_0_0_9.6px_4.8px_rgba(255,255,255,0.16),0_8px_20px_-4px_rgba(0,0,0,0.2)] overflow-hidden group"
+                >
+                  <div className="absolute -left-[100px] top-[-21px] bottom-[-21px] w-[76px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <motion.div 
+                      animate={{ x: [0, 285] }} 
+                      transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }} 
+                      className="relative w-full h-full"
+                    >
+                      <div 
+                        className="absolute top-[1.4px] left-[33px] w-[10px] h-[100px] bg-white/20 blur-[6px] shadow-[0_1px_2px_0_rgba(0,0,0,0.25)]" 
+                        style={{ transform: 'rotate(-30deg)' }} 
+                      />
+                      <div 
+                        className="absolute top-[1.4px] left-[23px] w-[30px] h-[100px] bg-white/20 blur-[10px]" 
+                        style={{ transform: 'rotate(-30deg)' }} 
+                      />
+                    </motion.div>
+                  </div>
+                  
+                  <span className="text-base font-medium leading-6 tracking-[-0.5px] text-white z-10">
+                    {ctaText}
+                  </span>
+                  
+                  <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center z-10">
+                    <Sparkles className="w-3 h-3 text-black" />
+                  </div>
+                </a>
+              </motion.div>
             </div>
           </div>
         </div>
