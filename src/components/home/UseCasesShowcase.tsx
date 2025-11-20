@@ -19,10 +19,16 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  // Scroll animation para el color del arco - cambio más rápido con azul
+  // Scroll animation para el color del arco
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "start center"]
+  });
+
+  // Scroll animation para la expansión de la elipse (empieza ANTES)
+  const { scrollYProgress: scrollYProgressEllipse } = useScroll({
+    target: ref,
+    offset: ["start bottom", "start 80vh"]
   });
 
   const backgroundColor = useTransform(
@@ -31,23 +37,23 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
-  // Animación de expansión de la elipse - MUCHO MÁS RÁPIDA (termina en 0.15 en vez de 0.3)
+  // Animación de expansión de la elipse - usa scrollYProgressEllipse
   const ellipseWidth = useTransform(
-    scrollYProgress,
-    [0, 0.01],
+    scrollYProgressEllipse,
+    [0, 0.15],
     [40, 100]
   );
 
-  // Transición del fade: cuando la elipse crece, el fade desaparece - MUCHO MÁS RÁPIDA
+  // Transición del fade: cuando la elipse crece, el fade desaparece
   const fadeStart = useTransform(
-    scrollYProgress,
-    [0, 0.01],
+    scrollYProgressEllipse,
+    [0, 0.15],
     [40, 100]
   );
 
   const fadeEnd = useTransform(
-    scrollYProgress,
-    [0, 0.01],
+    scrollYProgressEllipse,
+    [0, 0.15],
     [90, 100]
   );
 
