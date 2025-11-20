@@ -58,7 +58,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
             WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%)',
-            maskImage: 'linear-gradient(to right, transparent 0%, black 45%, black 55%, transparent 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 49.5%, black 50.5%, transparent 100%)',
           }}
         />
       </div>
