@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useInView, useAnimationControls } from 'framer-motion';
+import { motion, useInView, useAnimationControls, useScroll, useTransform } from 'framer-motion';
 
 type UseCasesShowcaseProps = {
   subText?: string;
@@ -18,6 +18,18 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+  // Scroll animation para el color del arco
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    ["#000000", "#808080", "#ffffff"]
+  );
 
   // Controles individuales + animaciones hover perfectas (como antes)
   const ctrl1 = useAnimationControls();
@@ -51,14 +63,15 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       {/* TU ARCO PERFECTO - SIN CAMBIOS, SOLO SIN SOMBRA (ya no tiene ninguna) */}
       
       <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none">
-        <div
-          className="w-full h-full bg-black rounded-[100%] border-t-[1px] border-gray-200"
+        <motion.div
+          className="w-full h-full rounded-[100%] border-t-[1px] border-gray-200"
           style={{
             transform: 'translateY(-65%)',
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
             WebkitMaskImage: 'radial-gradient(ellipse 40% 100% at center, black 0%, black 40%, transparent 90%, transparent 100%)',
             maskImage: 'radial-gradient(ellipse 40% 100% at center, black 0%, black 40%, transparent 90%, transparent 100%)',
+            backgroundColor: backgroundColor,
           }}
         />
       </div>
