@@ -79,7 +79,7 @@ const ComparisonSection = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Category */}
-                <div className="flex items-center p-4 rounded-lg bg-secondary/50 group-hover:bg-secondary transition-colors duration-300">
+                <div className="flex items-center p-4 rounded-lg glass-card border border-primary/20 group-hover:border-primary/40 transition-all duration-300">
                   <span className="font-semibold text-white">{item.category}</span>
                 </div>
 
