@@ -1,27 +1,39 @@
 import React from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 
+type MarketingCardProps = {
+  title?: string;
+  bulletPoints?: string[];
+};
+
 const sizeMap = {
   sm: "h-8 w-8",
   md: "h-12 w-12",
   lg: "h-16 w-16",
 };
 
-export const MarketingCard = () => {
+export const MarketingCard = ({
+  title = 'Digital Marketing Excellence',
+  bulletPoints = [
+    'Data-driven strategies that amplify your brand',
+    'Targeted campaigns for your ideal audience',
+    'Measurable results across all digital channels'
+  ]
+}: MarketingCardProps) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
     <motion.div 
       ref={ref}
-      className="relative rounded-[4px] overflow-hidden flex items-center justify-center"
+      className="relative rounded-[4px]"
       style={{
         width: '685.2px',
         height: '310px',
         backgroundColor: '#FFFFFF',
         border: '0.8px solid #DAE6FE',
         boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)',
-        padding: '16px',
+        padding: '36px',
         boxSizing: 'border-box'
       }}
       initial={{
@@ -39,9 +51,37 @@ export const MarketingCard = () => {
         duration: 0.5
       }}
     >
-      {/* Logos animados centrados */}
-      <div className="w-[240px]">
-        <AnimatedIcons />
+      {/* Área de contenido principal */}
+      <div className="relative flex flex-row items-center justify-between h-full">
+        {/* Contenido izquierdo */}
+        <div className="flex flex-col items-start justify-center gap-6 flex-1 pr-8">
+          <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
+            fontFamily: 'Inter, sans-serif',
+            fontStyle: 'normal',
+            letterSpacing: '0px'
+          }}>
+            {title}
+          </h2>
+
+          <ul className="flex flex-col gap-3 m-0 p-0 list-none">
+            {bulletPoints.map((point, index) => (
+              <li key={index} className="flex items-start gap-3">
+                <span className="text-black/60 font-bold">✓</span>
+                <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontStyle: 'normal'
+                }}>
+                  {point}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Logos animados derecha */}
+        <div className="w-[240px] h-full flex-shrink-0">
+          <AnimatedIcons />
+        </div>
       </div>
     </motion.div>
   );
