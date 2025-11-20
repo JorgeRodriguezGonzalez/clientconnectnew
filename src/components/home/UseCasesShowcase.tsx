@@ -85,121 +85,119 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   };
 
   return (
-    <motion.section 
-      ref={ref} 
-      className="relative pt-16"
-      style={{ backgroundColor }}
-    >
-      {/* TU ARCO PERFECTO - SIN CAMBIOS, SOLO SIN SOMBRA (ya no tiene ninguna) */}
-      
-      <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none">
-        <motion.div
-          className="w-full h-full rounded-[100%] border-t-[1px] border-gray-200"
-          style={{
-            transform: 'translateY(-65%)',
-            borderBottomLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            WebkitMaskImage: maskImage,
-            maskImage: maskImage,
-            backgroundColor: backgroundColor,
-          }}
-        />
-      </div>
+    <motion.div className="pt-16" style={{ backgroundColor }}>
+      <section ref={ref} className="relative">
+        {/* TU ARCO PERFECTO - SIN CAMBIOS, SOLO SIN SOMBRA (ya no tiene ninguna) */}
+        
+        <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none">
+          <motion.div
+            className="w-full h-full rounded-[100%] border-t-[1px] border-gray-200"
+            style={{
+              transform: 'translateY(-65%)',
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              WebkitMaskImage: maskImage,
+              maskImage: maskImage,
+              backgroundColor: backgroundColor,
+            }}
+          />
+        </div>
 
-      {/* CONTENIDO SUBIDO MÁS ARRIBA (más pegado al arco) */}
-      <div className="relative pt-48 pb-32 px-4"> {/* ← pt-48 en vez de pt-64 */}
-        <div className="max-w-[1225px] mx-auto">
-          <div className="flex flex-col lg:flex-row items-start justify-between gap-20"> {/* ← items-start */}
+        {/* CONTENIDO SUBIDO MÁS ARRIBA (más pegado al arco) */}
+        <div className="relative pt-48 pb-32 px-4"> {/* ← pt-48 en vez de pt-64 */}
+          <div className="max-w-[1225px] mx-auto">
+            <div className="flex flex-col lg:flex-row items-start justify-between gap-20"> {/* ← items-start */}
 
-            {/* IMÁGENES IZQUIERDA */}
-            <div className="relative flex-1 max-w-[495px] translate-x-[80px]">
-              <div className="overflow-hidden rounded-2xl shadow-2xl">
-                <img src="/images/background.svg" alt="" className="w-full" />
+              {/* IMÁGENES IZQUIERDA */}
+              <div className="relative flex-1 max-w-[495px] translate-x-[80px]">
+                <div className="overflow-hidden rounded-2xl shadow-2xl">
+                  <img src="/images/background.svg" alt="" className="w-full" />
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={ctrl1}
+                  onMouseEnter={() => replayAnimation(ctrl1, { opacity: 0, x: -50 }, { opacity: 1, x: 0 })}
+                  className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
+                >
+                  <img src="/images/top.svg" alt="" className="w-full" />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={ctrl2}
+                  onMouseEnter={() => replayAnimation(ctrl2, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1 })}
+                  className="absolute top-[106px] -right-8 w-[69px] cursor-pointer"
+                >
+                  <img src="/images/client.svg" alt="" className="w-full" />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={ctrl3}
+                  onMouseEnter={() => replayAnimation(ctrl3, { opacity: 0, x: 50 }, { opacity: 1, x: 0 })}
+                  className="absolute top-[238px] -right-24 w-[431px] cursor-pointer"
+                >
+                  <img src="/images/right.svg" alt="" className="w-full" />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
+                  animate={ctrl4}
+                  onMouseEnter={() => replayAnimation(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 }, 0.8)}
+                  className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
+                >
+                  <div className="w-full h-full bg-white rounded-full shadow-xl flex items-center justify-center p-5">
+                    <img src="/images/client-connect-australia-logo.png" alt="" className="w-full h-full object-contain" />
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={ctrl5}
+                  onMouseEnter={() => replayAnimation(ctrl5, { opacity: 0, y: 50 }, { opacity: 1, y: 0 })}
+                  className="absolute bottom-0 left-0 w-[406px] cursor-pointer"
+                >
+                  <img src="/images/down.svg" alt="" className="w-full" />
+                </motion.div>
               </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={ctrl1}
-                onMouseEnter={() => replayAnimation(ctrl1, { opacity: 0, x: -50 }, { opacity: 1, x: 0 })}
-                className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
-              >
-                <img src="/images/top.svg" alt="" className="w-full" />
-              </motion.div>
+              {/* TEXTO DERECHA - 100% COMO ANTES (tamaños, fuentes, tracking, etc.) */}
+              <div className="flex-1 max-w-[520px]">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="font-['Inter_Tight',sans-serif] text-[#F6941D] text-sm font-medium tracking-[2.2px] uppercase mb-2.5"
+                >
+                  {subText}
+                </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={ctrl2}
-                onMouseEnter={() => replayAnimation(ctrl2, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1 })}
-                className="absolute top-[106px] -right-8 w-[69px] cursor-pointer"
-              >
-                <img src="/images/client.svg" alt="" className="w-full" />
-              </motion.div>
+                <motion.h2
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.5 }}
+                  className="m-0 mb-5 font-medium text-[40px] leading-[50px] font-['Inter_Tight',sans-serif] text-[#071332] tracking-[-0.8px]"
+                >
+                  {heading}{' '}
+                  <span className="bg-gradient-to-r from-[#0F4C81] via-[#0066CC] to-[#00D4FF] bg-clip-text text-transparent">
+                    {highlightText}
+                  </span>
+                </motion.h2>
 
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={ctrl3}
-                onMouseEnter={() => replayAnimation(ctrl3, { opacity: 0, x: 50 }, { opacity: 1, x: 0 })}
-                className="absolute top-[238px] -right-24 w-[431px] cursor-pointer"
-              >
-                <img src="/images/right.svg" alt="" className="w-full" />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
-                animate={ctrl4}
-                onMouseEnter={() => replayAnimation(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 }, 0.8)}
-                className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
-              >
-                <div className="w-full h-full bg-white rounded-full shadow-xl flex items-center justify-center p-5">
-                  <img src="/images/client-connect-australia-logo.png" alt="" className="w-full h-full object-contain" />
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={ctrl5}
-                onMouseEnter={() => replayAnimation(ctrl5, { opacity: 0, y: 50 }, { opacity: 1, y: 0 })}
-                className="absolute bottom-0 left-0 w-[406px] cursor-pointer"
-              >
-                <img src="/images/down.svg" alt="" className="w-full" />
-              </motion.div>
-            </div>
-
-            {/* TEXTO DERECHA - 100% COMO ANTES (tamaños, fuentes, tracking, etc.) */}
-            <div className="flex-1 max-w-[520px]">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="font-['Inter_Tight',sans-serif] text-[#F6941D] text-sm font-medium tracking-[2.2px] uppercase mb-2.5"
-              >
-                {subText}
-              </motion.div>
-
-              <motion.h2
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.5 }}
-                className="m-0 mb-5 font-medium text-[40px] leading-[50px] font-['Inter_Tight',sans-serif] text-[#071332] tracking-[-0.8px]"
-              >
-                {heading}{' '}
-                <span className="bg-gradient-to-r from-[#0F4C81] via-[#0066CC] to-[#00D4FF] bg-clip-text text-transparent">
-                  {highlightText}
-                </span>
-              </motion.h2>
-
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]"
-              >
-                {description}
-              </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]"
+                >
+                  {description}
+                </motion.p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </motion.section>
+      </section>
+    </motion.div>
   );
 };
