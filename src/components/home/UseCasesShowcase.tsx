@@ -31,6 +31,12 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     offset: ["start 120vh", "start 80vh"]
   });
 
+  // Scroll animation para el border-radius (círculo a cuadrado) - ocurre MÁS TARDE
+  const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
+    target: ref,
+    offset: ["start 90vh", "start 60vh"]
+  });
+
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.2, 0.4],
@@ -57,9 +63,9 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     [90, 100]
   );
 
-  // Animación del border-radius: de 100% (círculo) a 0% (cuadrado)
+  // Animación del border-radius: de 100% (círculo) a 0% (cuadrado) - usa scrollYProgressBorderRadius
   const borderRadius = useTransform(
-    scrollYProgressEllipse,
+    scrollYProgressBorderRadius,
     [0, 0.15],
     ["100%", "0%"]
   );
@@ -202,7 +208,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.2, duration: 0.5 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
                   className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]"
                 >
                   {description}
