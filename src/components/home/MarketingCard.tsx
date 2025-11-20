@@ -79,7 +79,7 @@ export const MarketingCard = ({
         </div>
 
         {/* Logos animados derecha */}
-        <div className="w-[240px] h-full flex-shrink-0">
+        <div className="w-[280px] h-full flex-shrink-0">
           <AnimatedIcons />
         </div>
       </div>
@@ -131,7 +131,7 @@ function AnimatedIcons() {
   }, []);
 
   return (
-    <div className="overflow-hidden h-full relative flex items-center justify-center">
+    <div className="h-full relative flex items-center justify-center">
       <div className="flex flex-row flex-shrink-0 justify-center items-center gap-2">
         {icons.map((icon, index) => (
           <Container
