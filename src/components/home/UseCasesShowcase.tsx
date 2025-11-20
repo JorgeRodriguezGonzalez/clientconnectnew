@@ -43,30 +43,30 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
-  // Animación del border-radius: de 100% (círculo) a 0% (cuadrado) - PRIMERO
+  // Animación del border-radius: de 100% (círculo) a 0% (cuadrado) - PRIMERO - 50% MÁS LENTO
   const borderRadius = useTransform(
     scrollYProgressBorderRadius,
-    [0, 0.15],
+    [0, 0.225],  // Era 0.15, ahora 0.15 * 1.5 = 0.225 (50% más lento)
     ["100%", "0%"]
   );
 
-  // Animación de expansión de la elipse - usa scrollYProgressEllipse
+  // Animación de expansión de la elipse - 50% MÁS LENTO
   const ellipseWidth = useTransform(
     scrollYProgressEllipse,
-    [0, 0.15],
+    [0, 0.225],  // Era 0.15, ahora 0.15 * 1.5 = 0.225
     [40, 100]
   );
 
-  // Transición del fade: cuando la elipse crece, el fade desaparece
+  // Transición del fade: cuando la elipse crece, el fade desaparece - 50% MÁS LENTO
   const fadeStart = useTransform(
     scrollYProgressEllipse,
-    [0, 0.15],
+    [0, 0.225],  // Era 0.15, ahora 0.15 * 1.5 = 0.225
     [40, 100]
   );
 
   const fadeEnd = useTransform(
     scrollYProgressEllipse,
-    [0, 0.15],
+    [0, 0.225],  // Era 0.15, ahora 0.15 * 1.5 = 0.225
     [90, 100]
   );
 
