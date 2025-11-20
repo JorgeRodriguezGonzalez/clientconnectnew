@@ -31,6 +31,18 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
+  // Animación de expansión de la elipse
+  const ellipseWidth = useTransform(
+    scrollYProgress,
+    [0, 0.4],
+    [40, 100]
+  );
+
+  const maskImage = useTransform(
+    ellipseWidth,
+    (width) => `radial-gradient(ellipse ${width}% 100% at center, black 0%, black 40%, transparent 90%, transparent 100%)`
+  );
+
   // Controles individuales + animaciones hover perfectas (como antes)
   const ctrl1 = useAnimationControls();
   const ctrl2 = useAnimationControls();
@@ -69,8 +81,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             transform: 'translateY(-65%)',
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
-            WebkitMaskImage: 'radial-gradient(ellipse 40% 100% at center, black 0%, black 40%, transparent 90%, transparent 100%)',
-            maskImage: 'radial-gradient(ellipse 40% 100% at center, black 0%, black 40%, transparent 90%, transparent 100%)',
+            WebkitMaskImage: maskImage,
+            maskImage: maskImage,
             backgroundColor: backgroundColor,
           }}
         />
