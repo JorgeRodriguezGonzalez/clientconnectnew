@@ -31,23 +31,23 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
-  // Animación de expansión de la elipse
+  // Animación de expansión de la elipse - MÁS RÁPIDA (termina en 0.3 en vez de 0.4)
   const ellipseWidth = useTransform(
     scrollYProgress,
-    [0, 0.4],
+    [0, 0.3],
     [40, 100]
   );
 
-  // Transición del fade: cuando la elipse crece, el fade desaparece
+  // Transición del fade: cuando la elipse crece, el fade desaparece - MÁS RÁPIDA
   const fadeStart = useTransform(
     scrollYProgress,
-    [0, 0.4],
+    [0, 0.3],
     [40, 100]
   );
 
   const fadeEnd = useTransform(
     scrollYProgress,
-    [0, 0.4],
+    [0, 0.3],
     [90, 100]
   );
 
