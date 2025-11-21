@@ -212,7 +212,7 @@ export const ProductShowcase = () => {
                   </div>
 
                   {/* Pagination Bars */}
-                  <div className="flex space-x-2" style={{ marginTop: '70px' }}>
+                  <div className="flex space-x-2" style={{ marginTop: '170px' }}>
                     {CONTENT_SLIDES.map((_, index) => (
                       <button
                         key={index}
