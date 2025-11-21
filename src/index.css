@@ -96,18 +96,18 @@ All colors MUST be HSL.
   }
 
   /* Red corner shadow for Traditional Way card */
+
   .corner-shadow-red::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(circle at top left, rgba(239, 68, 68, 0.25) 0%, rgba(239, 68, 68, 0.15) 30%, rgba(239, 68, 68, 0.05) 50%, transparent 70%);
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(circle at top left, rgba(239, 68, 68, 0.25) 0%, rgba(239, 68, 68, 0.15) 25%, rgba(239, 68, 68, 0.08) 40%, rgba(239, 68, 68, 0.03) 55%, transparent 70%);
     border-radius: 0.75rem 0 0 0;
     pointer-events: none;
   }
-
   /* Blue to Cyan gradient for PromptGenius branding */
   .gradient-text {
     background: linear-gradient(135deg, hsl(223 67% 50%), hsl(180 100% 50%));
