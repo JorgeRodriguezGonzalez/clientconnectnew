@@ -58,7 +58,7 @@ const FadeInImage = ({
   }} transition={{
     duration: 0.6,
     ease: "easeOut"
-  }} className="relative w-full max-w-[620px] aspect-[3/4] flex-shrink-0 feature-image">
+  }} className="relative w-full max-w-[620px] aspect-[3/4] flex-shrink-0">
       <img src={src} alt={`Feature ${index + 1}`} className="w-full h-full object-contain" loading="lazy" />
     </motion.div>;
 };
