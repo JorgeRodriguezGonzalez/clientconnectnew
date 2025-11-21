@@ -122,21 +122,27 @@ export const ProductShowcase = () => {
       const images = container.querySelectorAll('.feature-image');
       if (images.length === 0) return;
 
-      const windowHeight = window.innerHeight;
-      const stickyTop = windowHeight * 0.15; // Aproximadamente donde está el sticky top-32
-
-      // Find which image is in the "sticky zone"
-      let activeIndex = 0;
+      // Find the image that's most visible in the viewport
+      let maxVisibleArea = 0;
+      let mostVisibleIndex = 0;
 
       images.forEach((img, index) => {
         const rect = img.getBoundingClientRect();
-        // Check if image top is near or past the sticky element position
-        if (rect.top <= stickyTop + 200 && rect.bottom >= stickyTop) {
-          activeIndex = index;
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate how much of the image is visible
+        const visibleTop = Math.max(0, rect.top);
+        const visibleBottom = Math.min(viewportHeight, rect.bottom);
+        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+        
+        if (visibleHeight > maxVisibleArea) {
+          maxVisibleArea = visibleHeight;
+          mostVisibleIndex = index;
         }
       });
 
-      setActiveSlideIndex(activeIndex);
+      console.log('Active slide index:', mostVisibleIndex); // Debug log
+      setActiveSlideIndex(mostVisibleIndex);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
