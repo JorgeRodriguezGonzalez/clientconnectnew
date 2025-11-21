@@ -172,26 +172,6 @@ export const ProductShowcase = () => {
                 
                 {/* Left Column: Text Content & Pagination */}
                 <div className="relative flex flex-col justify-center p-8 md:p-16">
-                  {/* Pagination Bars */}
-                  <div className="absolute top-16 left-16 flex space-x-2">
-                    {CONTENT_SLIDES.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => {
-                            const container = scrollContainerRef.current;
-                            if(container){
-                                const scrollableHeight = container.scrollHeight - window.innerHeight;
-                                const stepHeight = scrollableHeight / CONTENT_SLIDES.length;
-                                container.scrollTo({ top: stepHeight * index, behavior: 'smooth' });
-                            }
-                        }}
-                        className={`h-1 rounded-full transition-all duration-500 ease-in-out ${
-                          index === activeIndex ? 'w-12 bg-white' : 'w-6 bg-white/30'
-                        }`}
-                        aria-label={`Go to slide ${index + 1}`}
-                      />
-                    ))}
-                  </div>
                   
                   <div className="relative h-64 w-full">
                     {CONTENT_SLIDES.map((slide, index) => (
@@ -230,6 +210,28 @@ export const ProductShowcase = () => {
                       </div>
                     ))}
                   </div>
+
+                  {/* Pagination Bars */}
+                  <div className="flex space-x-2 mt-8">
+                    {CONTENT_SLIDES.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                            const container = scrollContainerRef.current;
+                            if(container){
+                                const scrollableHeight = container.scrollHeight - window.innerHeight;
+                                const stepHeight = scrollableHeight / CONTENT_SLIDES.length;
+                                container.scrollTo({ top: stepHeight * index, behavior: 'smooth' });
+                            }
+                        }}
+                        className={`h-1 rounded-full transition-all duration-500 ease-in-out ${
+                          index === activeIndex ? 'w-12 bg-white' : 'w-6 bg-white/30'
+                        }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+
                 </div>
 
                 {/* Right Column: Image Content */}
