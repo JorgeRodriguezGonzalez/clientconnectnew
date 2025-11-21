@@ -1,0 +1,106 @@
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+
+// Non-exported helpers and constants
+const FEATURE_IMAGES = ["https://framerusercontent.com/images/4mjO0OJA9HtnNRv5wqa7Sct5SI.png?width=2618&height=2618", "https://framerusercontent.com/images/4C2xtl8JRiHhF1SC96bbFToa6X8.png?width=2347&height=2347", "https://framerusercontent.com/images/gIa2LVqt1UUbQ2Gp8vCamuTFM8.png?width=1991&height=2143", "https://framerusercontent.com/images/UC6nHuSzN060lUKnMZgv9p0794.png?width=2347&height=2347", "https://framerusercontent.com/images/TkDQuT7AJX6TcnqHuE2fmHQAs.png?width=2347&height=2347", "https://framerusercontent.com/images/InLO1TNnl0DIc9r9qiQzrfyL2eQ.png?width=2347&height=2347"];
+const FadeInImage = ({
+  src,
+  index
+}: {
+  src: string;
+  index: number;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, {
+    margin: "-20% 0px -20% 0px",
+    once: false
+  });
+  return <motion.div ref={ref} initial={{
+    opacity: 0.1,
+    scale: 0.95
+  }} animate={{
+    opacity: isInView ? 1 : 0.1,
+    scale: isInView ? 1 : 0.95
+  }} transition={{
+    duration: 0.6,
+    ease: "easeOut"
+  }} className="relative w-full max-w-[620px] aspect-[3/4] flex-shrink-0">
+      <img src={src} alt={`Feature ${index + 1}`} className="w-full h-full object-contain" loading="lazy" />
+    </motion.div>;
+};
+
+// @component: ProductShowcase
+export const ProductShowcase = () => {
+  // @return
+  return <div className="w-full bg-black text-white min-h-screen flex flex-col items-center overflow-hidden pb-32">
+      
+      {/* Problem Statement Section */}
+      <section className="w-full max-w-[1240px] px-5 pt-32 pb-20 flex flex-col items-center text-center md:text-left">
+        <div className="w-full max-w-[930px] flex flex-col gap-8 md:gap-12">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-tight tracking-tight text-white">
+            Kinso brings together all of your conversations, which uses AI to understand your goals and lets you focus on the most important messages and contacts.
+          </h3>
+          
+          <h4 className="text-lg md:text-xl font-medium leading-relaxed text-neutral-400 max-w-[930px]">
+            <span className="text-neutral-200">Whether you’re circling back over email,</span>{" "}
+            digging for opportunities on LinkedIn, or buried under messages on Slack,{" "}
+            <span className="text-neutral-200">business communication happens on too many platforms.</span>
+          </h4>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="w-full max-w-[1240px] px-5 flex flex-col items-center">
+        
+        {/* Section Separator */}
+        <div className="w-full flex items-center justify-center gap-4 opacity-70 py-12 md:py-24">
+          <div className="h-[1px] w-24 md:w-48 bg-neutral-800" />
+          <div className="border border-neutral-800 rounded-full px-4 py-2 bg-black">
+            <span className="text-xs tracking-wider text-neutral-400 font-medium">FEATURES</span>
+          </div>
+          <div className="h-[1px] w-24 md:w-48 bg-neutral-800" />
+        </div>
+
+        {/* Sticky Scroll Layout */}
+        <div className="w-full flex flex-col md:flex-row justify-between relative items-start gap-10 md:gap-0">
+          
+          {/* Sticky Sidebar (Text) */}
+          <div className="w-full md:w-[450px] md:sticky md:top-32 flex flex-col justify-center h-fit md:h-[calc(100vh-16rem)] z-10">
+            <div className="flex flex-col gap-8">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight">
+                Start every day knowing{' '}
+                <span className="bg-gradient-to-r from-[#edbf86] via-[#de8363] to-[#67bcb7] bg-clip-text text-transparent animate-gradient-x bg-[length:200%_auto]">
+                  what matters.
+                </span>
+              </h2>
+              
+              <p className="text-lg md:text-xl text-neutral-400 leading-relaxed">
+                Kinso serves you a morning briefing that summarises crucial messages and action items. Whether it's the urgent client request or time-sensitive approval, you’ll see it in order of what needs your attention first.
+              </p>
+            </div>
+          </div>
+
+          {/* Scrollable Content (Images) */}
+          <div className="w-full md:w-[620px] flex flex-col gap-24 md:gap-32 pb-32">
+            {FEATURE_IMAGES.map((src, index) => <FadeInImage key={index} src={src} index={index} />)}
+          </div>
+
+        </div>
+      </section>
+      
+      <style dangerouslySetInnerHTML={{
+      __html: `
+          @keyframes gradient-x {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+          .animate-gradient-x {
+            animation: gradient-x 8s ease infinite;
+          }
+        `
+    }} />
+    </div>;
+};
+
+export default ProductShowcase;

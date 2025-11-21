@@ -11,6 +11,7 @@ import CTASection from "@/components/home/CTASection";
 import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
 import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
+import ProductShowcase from "@/components/home/ProductShowcase";
 
 const Index = () => {
   return (
@@ -33,6 +34,7 @@ const Index = () => {
         </div>
 
         <HowWeWork />
+        <ProductShowcase />
         <ComparisonSection />
         <Pricing />
         <AnimatedGallerySection />
