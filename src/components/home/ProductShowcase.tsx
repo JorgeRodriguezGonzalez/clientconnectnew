@@ -166,7 +166,7 @@ export const ProductShowcase = () => {
           ref={scrollContainerRef}
           className="hide-scrollbar h-screen w-screen overflow-y-auto"
         >
-          <div style={{ height: `${CONTENT_SLIDES.length * 70}vh` }}>
+          <div style={{ height: `${CONTENT_SLIDES.length * 50}vh` }}>
             <div ref={stickyPanelRef} className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-transparent text-white">
               <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full max-w-7xl mx-auto">
                 
