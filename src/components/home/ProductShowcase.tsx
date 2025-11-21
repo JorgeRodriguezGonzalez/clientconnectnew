@@ -131,10 +131,10 @@ export const ProductShowcase = () => {
       </section>
 
       {/* Features Section */}
-      <section className="w-full max-w-[1240px] px-5 flex flex-col items-center">
+      <section className="w-full flex flex-col items-center">
         
         {/* Section Separator */}
-        <div className="w-full flex items-center justify-center gap-4 py-12 md:py-24">
+        <div className="w-full max-w-[1240px] px-5 flex items-center justify-center gap-4 py-12 md:py-24">
           <FadeInText delay={0.4} direction="left">
             <div className="h-[1px] w-24 md:w-48 bg-white" />
           </FadeInText>
@@ -164,7 +164,7 @@ export const ProductShowcase = () => {
         }} />
         <div 
           ref={scrollContainerRef}
-          className="hide-scrollbar h-screen w-full overflow-y-auto"
+          className="hide-scrollbar h-screen w-screen overflow-y-auto"
         >
           <div style={{ height: `${CONTENT_SLIDES.length * 100}vh` }}>
             <div ref={stickyPanelRef} className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-transparent text-white">
