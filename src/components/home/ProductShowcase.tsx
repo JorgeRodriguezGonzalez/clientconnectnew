@@ -38,15 +38,25 @@ export const ProductShowcase = () => {
       {/* Problem Statement Section */}
       <section className="w-full max-w-[1240px] px-5 pt-32 pb-20 flex flex-col items-center text-center md:text-left">
         <div className="w-full max-w-[930px] flex flex-col gap-8 md:gap-12">
-          <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight text-white">
+          <motion.h3 
+            initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+            animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            className="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight text-white"
+          >
             Kinso brings together all of your conversations, which uses AI to understand your goals and lets you focus on the most important messages and contacts.
-          </h3>
+          </motion.h3>
           
-          <h4 className="text-base md:text-lg font-medium leading-relaxed text-neutral-400 max-w-[930px]">
+          <motion.h4 
+            initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+            animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            className="text-base md:text-lg font-medium leading-relaxed text-neutral-400 max-w-[930px]"
+          >
             <span className="text-neutral-200">Whether you're circling back over email,</span>{" "}
             digging for opportunities on LinkedIn, or buried under messages on Slack,{" "}
             <span className="text-neutral-200">business communication happens on too many platforms.</span>
-          </h4>
+          </motion.h4>
         </div>
       </section>
 
@@ -55,11 +65,26 @@ export const ProductShowcase = () => {
         
         {/* Section Separator */}
         <div className="w-full flex items-center justify-center gap-4 py-12 md:py-24">
-          <div className="h-[1px] w-24 md:w-48 bg-white" />
-          <div className="border border-white rounded-full px-4 py-2 bg-black">
+          <motion.div 
+            initial={{ opacity: 0, filter: "blur(10px)", x: -20 }}
+            animate={{ opacity: 1, filter: "blur(0px)", x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+            className="h-[1px] w-24 md:w-48 bg-white" 
+          />
+          <motion.div 
+            initial={{ opacity: 0, filter: "blur(10px)", scale: 0.95 }}
+            animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+            className="border border-white rounded-full px-4 py-2 bg-black"
+          >
             <span className="text-xs tracking-wider text-white font-medium">FEATURES</span>
-          </div>
-          <div className="h-[1px] w-24 md:w-48 bg-white" />
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, filter: "blur(10px)", x: 20 }}
+            animate={{ opacity: 1, filter: "blur(0px)", x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+            className="h-[1px] w-24 md:w-48 bg-white" 
+          />
         </div>
 
         {/* Sticky Scroll Layout */}
@@ -68,7 +93,12 @@ export const ProductShowcase = () => {
           {/* Sticky Sidebar (Text) */}
           <div className="w-full md:w-[450px] md:sticky md:top-32 flex flex-col justify-center h-fit md:h-[calc(100vh-16rem)] z-10">
             <div className="flex flex-col gap-8">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
+              <motion.h2 
+                initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight"
+              >
                 <span className="text-white">Start every day knowing </span>
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}
@@ -90,11 +120,16 @@ export const ProductShowcase = () => {
                 >
                   what matters.
                 </motion.span>
-              </h2>
+              </motion.h2>
               
-              <p className="text-base md:text-lg text-neutral-400 leading-relaxed">
+              <motion.p 
+                initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+                className="text-base md:text-lg text-neutral-400 leading-relaxed"
+              >
                 Kinso serves you a morning briefing that summarises crucial messages and action items. Whether it's the urgent client request or time-sensitive approval, you'll see it in order of what needs your attention first.
-              </p>
+              </motion.p>
             </div>
           </div>
 
