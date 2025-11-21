@@ -71,10 +71,10 @@ export const ProductShowcase = () => {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
                 <span className="text-white">Start every day knowing </span>
                 <motion.span
-                  initial={{ backgroundPosition: "0% 50%" }}
-                  animate={{ backgroundPosition: ["0% 50%", "400% 50%"] }}
+                  initial={{ backgroundPosition: "400% 50%" }}
+                  animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
                   transition={{
-                    duration: 8,
+                    duration: 12,
                     ease: "linear",
                     repeat: Infinity
                   }}
