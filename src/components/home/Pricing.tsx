@@ -1,173 +1,121 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { Button } from "@/components/ui/button";
+import { Check, ArrowRight } from "lucide-react";
 
-// Non-exported helpers and constants
-const FEATURE_IMAGES = ["https://framerusercontent.com/images/4mjO0OJA9HtnNRv5wqa7Sct5SI.png?width=2618&height=2618", "https://framerusercontent.com/images/4C2xtl8JRiHhF1SC96bbFToa6X8.png?width=2347&height=2347", "https://framerusercontent.com/images/gIa2LVqt1UUbQ2Gp8vCamuTFM8.png?width=1991&height=2143", "https://framerusercontent.com/images/UC6nHuSzN060lUKnMZgv9p0794.com?width=2347&height=2347", "https://framerusercontent.com/images/TkDQuT7AJX6TcnqHuE2fmHQAs.png?width=2347&height=2347", "https://framerusercontent.com/images/InLO1TNnl0DIc9r9qiQzrfyL2eQ.png?width=2347&height=2347"];
+const plans = [
+  {
+    name: "Starter",
+    price: "$29",
+    description: "Perfect for individuals and small projects",
+    features: [
+      "100 prompts per month",
+      "Basic templates",
+      "Email support",
+      "API access",
+      "Usage analytics",
+    ],
+    highlighted: false,
+  },
+  {
+    name: "Professional",
+    price: "$99",
+    description: "For teams and growing businesses",
+    features: [
+      "Unlimited prompts",
+      "Advanced templates",
+      "Priority support",
+      "Advanced API access",
+      "Team collaboration",
+      "Custom integrations",
+      "Advanced analytics",
+    ],
+    highlighted: true,
+  },
+  {
+    name: "Enterprise",
+    price: "Custom",
+    description: "For large organizations",
+    features: [
+      "Everything in Professional",
+      "Dedicated account manager",
+      "Custom AI training",
+      "SLA guarantee",
+      "Advanced security",
+      "Custom deployment",
+    ],
+    highlighted: false,
+  },
+];
 
-const FadeInImage = ({
-  src,
-  index
-}: {
-  src: string;
-  index: number;
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, {
-    margin: "-20% 0px -20% 0px",
-    once: false
-  });
-  return <motion.div ref={ref} initial={{
-    opacity: 0.1,
-    scale: 0.95
-  }} animate={{
-    opacity: isInView ? 1 : 0.1,
-    scale: isInView ? 1 : 0.95
-  }} transition={{
-    duration: 0.6,
-    ease: "easeOut"
-  }} className="relative w-full max-w-[620px] aspect-[3/4] flex-shrink-0">
-      <img src={src} alt={`Feature ${index + 1}`} className="w-full h-full object-contain" loading="lazy" />
-    </motion.div>;
-};
-
-const FadeInText = ({ 
-  children, 
-  delay = 0, 
-  className = "",
-  direction = "up"
-}: { 
-  children: React.ReactNode; 
-  delay?: number;
-  className?: string;
-  direction?: "up" | "left" | "right";
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  
-  const directionOffset = {
-    up: { y: 10, x: 0 },
-    left: { y: 0, x: -20 },
-    right: { y: 0, x: 20 }
-  };
-
+const Pricing = () => {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ 
-        opacity: 0, 
-        filter: "blur(10px)",
-        ...directionOffset[direction]
-      }}
-      animate={{ 
-        opacity: isInView ? 1 : 0, 
-        filter: isInView ? "blur(0px)" : "blur(10px)",
-        y: isInView ? 0 : directionOffset[direction].y,
-        x: isInView ? 0 : directionOffset[direction].x
-      }}
-      transition={{ 
-        duration: 0.6, 
-        ease: "easeOut", 
-        delay 
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
+    <section id="pricing" className="py-24 sm:py-32 relative bg-[#0a0e1a]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white">
+            Simple, <span className="gradient-text">Transparent</span> Pricing
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            Choose the perfect plan for your needs. Upgrade, downgrade, or cancel anytime.
+          </p>
+        </div>
+
+        {/* Pricing Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {plans.map((plan, index) => (
+            <div
+              key={index}
+              className={`glass-card p-8 rounded-2xl relative cursor-pointer animate-scale-in transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] ${
+                plan.highlighted 
+                  ? 'border-2 border-primary scale-[1.05] hover:scale-[1.02]' 
+                  : 'hover:scale-[1.03]'
+              }`}
+              style={{ animationDelay: `${index * 0.15}s` }}
+            >
+              {plan.highlighted && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-primary to-accent rounded-full text-xs font-semibold text-primary-foreground animate-bounce-slow">
+                  Most Popular
+                </div>
+              )}
+
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold mb-2 text-white">{plan.name}</h3>
+                <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-bold gradient-text">{plan.price}</span>
+                  {plan.price !== "Custom" && <span className="text-muted-foreground">/month</span>}
+                </div>
+              </div>
+
+              <Button
+                variant={plan.highlighted ? "default" : "outline"}
+                className={`w-full mb-8 group ${
+                  plan.highlighted 
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 border-0' 
+                    : 'bg-transparent hover:bg-transparent'
+                }`}
+                size="lg"
+              >
+                {plan.price === "Custom" ? "Contact Sales" : "Get Started"}
+                <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+              </Button>
+
+              <ul className="space-y-4">
+                {plan.features.map((feature, fIndex) => (
+                  <li key={fIndex} className="flex items-start gap-3 group/item">
+                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 mt-0.5 group-hover/item:bg-primary/20 group-hover/item:scale-110 transition-all duration-300">
+                      <Check className="h-3 w-3 text-primary" />
+                    </div>
+                    <span className="text-sm text-muted-foreground group-hover/item:text-foreground transition-colors duration-300">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
-// @component: ProductShowcase
-export const ProductShowcase = () => {
-  // @return
-  return <div className="w-full bg-black text-white min-h-screen flex flex-col items-center overflow-hidden pb-32">
-      
-      {/* Problem Statement Section */}
-      <section className="w-full max-w-[1240px] px-5 pt-32 pb-20 flex flex-col items-center text-center md:text-left">
-        <div className="w-full max-w-[930px] flex flex-col gap-8 md:gap-12">
-          <FadeInText delay={0.2}>
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight text-white">
-              Kinso brings together all of your conversations, which uses AI to understand your goals and lets you focus on the most important messages and contacts.
-            </h3>
-          </FadeInText>
-          
-          <FadeInText delay={0.3}>
-            <h4 className="text-base md:text-lg font-medium leading-relaxed text-neutral-400 max-w-[930px]">
-              <span className="text-neutral-200">Whether you're circling back over email,</span>{" "}
-              digging for opportunities on LinkedIn, or buried under messages on Slack,{" "}
-              <span className="text-neutral-200">business communication happens on too many platforms.</span>
-            </h4>
-          </FadeInText>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="w-full max-w-[1240px] px-5 flex flex-col items-center">
-        
-        {/* Section Separator */}
-        <div className="w-full flex items-center justify-center gap-4 py-12 md:py-24">
-          <FadeInText delay={0.4} direction="left">
-            <div className="h-[1px] w-24 md:w-48 bg-white" />
-          </FadeInText>
-          
-          <FadeInText delay={0.5}>
-            <div className="border border-white rounded-full px-4 py-2 bg-black">
-              <span className="text-xs tracking-wider text-white font-medium">FEATURES</span>
-            </div>
-          </FadeInText>
-          
-          <FadeInText delay={0.4} direction="right">
-            <div className="h-[1px] w-24 md:w-48 bg-white" />
-          </FadeInText>
-        </div>
-
-        {/* Sticky Scroll Layout */}
-        <div className="w-full flex flex-col md:flex-row justify-between relative items-start gap-10 md:gap-0">
-          
-          {/* Sticky Sidebar (Text) */}
-          <div className="w-full md:w-[450px] md:sticky md:top-32 flex flex-col justify-center h-fit md:h-[calc(100vh-16rem)] z-10">
-            <div className="flex flex-col gap-8">
-              <FadeInText delay={0.6}>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
-                  <span className="text-white">Start every day knowing </span>
-                  <motion.span
-                    initial={{ backgroundPosition: "400% 50%" }}
-                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                    transition={{
-                      duration: 12,
-                      ease: "linear",
-                      repeat: Infinity
-                    }}
-                    style={{
-                      display: "inline-block",
-                      backgroundImage: "linear-gradient(45deg, rgba(0, 0, 0, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(0, 0, 0, 0))",
-                      backgroundSize: "400% 100%",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      color: "transparent"
-                    }}
-                  >
-                    what matters.
-                  </motion.span>
-                </h2>
-              </FadeInText>
-              
-              <FadeInText delay={0.7}>
-                <p className="text-base md:text-lg text-neutral-400 leading-relaxed">
-                  Kinso serves you a morning briefing that summarises crucial messages and action items. Whether it's the urgent client request or time-sensitive approval, you'll see it in order of what needs your attention first.
-                </p>
-              </FadeInText>
-            </div>
-          </div>
-
-          {/* Scrollable Content (Images) */}
-          <div className="w-full md:w-[620px] flex flex-col gap-24 md:gap-32 pb-32">
-            {FEATURE_IMAGES.map((src, index) => <FadeInImage key={index} src={src} index={index} />)}
-          </div>
-
-        </div>
-      </section>
-    </div>;
-};
-
-export default ProductShowcase;
+export default Pricing;
