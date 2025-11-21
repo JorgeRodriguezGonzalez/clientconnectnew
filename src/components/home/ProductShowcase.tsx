@@ -105,7 +105,9 @@ export const ProductShowcase = () => {
         
         {/* Section Separator */}
         <div className="w-full flex items-center justify-center gap-4 py-12 md:py-24">
-          <FadeInText delay={0.3} direction="left" className="h-[1px] w-24 md:w-48 bg-white" />
+          <FadeInText delay={0.3} direction="left">
+            <div className="h-[1px] w-24 md:w-48 bg-white" />
+          </FadeInText>
           
           <FadeInText delay={0.4}>
             <div className="border border-white rounded-full px-4 py-2 bg-black">
@@ -113,7 +115,9 @@ export const ProductShowcase = () => {
             </div>
           </FadeInText>
           
-          <FadeInText delay={0.3} direction="right" className="h-[1px] w-24 md:w-48 bg-white" />
+          <FadeInText delay={0.3} direction="right">
+            <div className="h-[1px] w-24 md:w-48 bg-white" />
+          </FadeInText>
         </div>
 
         {/* Sticky Scroll Layout */}
