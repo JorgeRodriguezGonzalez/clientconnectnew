@@ -115,35 +115,31 @@ export const ProductShowcase = () => {
   const imagesContainerRef = useRef(null);
 
   useEffect(() => {
-    const container = imagesContainerRef.current;
-    if (!container) return;
-
     const handleScroll = () => {
+      const container = imagesContainerRef.current;
+      if (!container) return;
+
       const images = container.querySelectorAll('.feature-image');
       if (images.length === 0) return;
 
       const windowHeight = window.innerHeight;
-      const windowCenter = windowHeight / 2;
+      const stickyTop = windowHeight * 0.15; // Aproximadamente donde está el sticky top-32
 
-      // Find which image is closest to the center of the viewport
-      let closestIndex = 0;
-      let closestDistance = Infinity;
+      // Find which image is in the "sticky zone"
+      let activeIndex = 0;
 
       images.forEach((img, index) => {
         const rect = img.getBoundingClientRect();
-        const imgCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(imgCenter - windowCenter);
-
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestIndex = index;
+        // Check if image top is near or past the sticky element position
+        if (rect.top <= stickyTop + 200 && rect.bottom >= stickyTop) {
+          activeIndex = index;
         }
       });
 
-      setActiveSlideIndex(closestIndex);
+      setActiveSlideIndex(activeIndex);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial check
     
     return () => window.removeEventListener('scroll', handleScroll);
