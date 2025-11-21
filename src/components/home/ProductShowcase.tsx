@@ -115,29 +115,28 @@ export const ProductShowcase = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
+      const images = document.querySelectorAll('.feature-image');
+      if (images.length === 0) return;
+
       const windowHeight = window.innerHeight;
-      
-      // Find the features section
-      const featuresSection = document.querySelector('.features-scroll-section') as HTMLElement;
-      if (!featuresSection) return;
-      
-      const sectionTop = featuresSection.offsetTop;
-      const sectionHeight = featuresSection.offsetHeight;
-      
-      // Calculate progress through the section (0 to 1)
-      const progress = Math.max(0, Math.min(1, 
-        (scrollPosition - sectionTop) / (sectionHeight - windowHeight)
-      ));
-      
-      // Calculate which slide should be active
-      const newIndex = Math.min(
-        CONTENT_SLIDES.length - 1,
-        Math.floor(progress * CONTENT_SLIDES.length)
-      );
-      
-      console.log('Active slide index:', newIndex); // Debug log
-      setActiveSlideIndex(newIndex);
+      const windowCenter = windowHeight / 2;
+
+      // Find which image is closest to the center of the viewport
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      images.forEach((img, index) => {
+        const rect = img.getBoundingClientRect();
+        const imgCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(imgCenter - windowCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveSlideIndex(closestIndex);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -188,12 +187,12 @@ export const ProductShowcase = () => {
           </FadeInText>
         </div>
 
-        {/* Sticky Scroll Layout - NEW APPROACH */}
-        <div className="features-scroll-section w-full relative" style={{ height: `${CONTENT_SLIDES.length * 100}vh` }}>
-          <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row justify-between items-start gap-10 md:gap-0">
-            
-            {/* Sticky Sidebar (Text) */}
-            <div className="w-full md:w-[450px] flex flex-col justify-center z-10">
+        {/* Sticky Scroll Layout */}
+        <div className="w-full flex flex-col md:flex-row justify-between relative items-start gap-10 md:gap-0">
+          
+          {/* Sticky Sidebar (Text) */}
+          <div className="w-full md:w-[450px]">
+            <div className="sticky top-32 max-h-[80vh] flex flex-col justify-center z-10">
               <div className="flex flex-col gap-8">
                 <div className="relative h-80 w-full">
                   {CONTENT_SLIDES.map((slide, index) => (
@@ -242,34 +241,13 @@ export const ProductShowcase = () => {
                 </div>
               </div>
             </div>
-
-            {/* Scrollable Content (Images) - Hidden in sticky layout */}
-            <div className="hidden md:block w-full md:w-[620px]">
-              <div className="relative w-full" style={{ height: '80vh' }}>
-                {FEATURE_IMAGES.slice(0, CONTENT_SLIDES.length).map((src, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: `translate(-50%, -50%) scale(${index === activeSlideIndex ? 1 : 0.95})`,
-                      width: '100%',
-                      maxWidth: '620px',
-                      opacity: index === activeSlideIndex ? 1 : 0,
-                      transition: 'opacity 0.7s ease-in-out, transform 0.7s ease-in-out',
-                      zIndex: index === activeSlideIndex ? 10 : 1
-                    }}
-                  >
-                    <div className="relative w-full aspect-[3/4]">
-                      <img src={src} alt={`Feature ${index + 1}`} className="w-full h-full object-contain" loading="lazy" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
+
+          {/* Scrollable Content (Images) */}
+          <div className="w-full md:w-[620px] flex flex-col gap-24 md:gap-32 pb-32">
+            {FEATURE_IMAGES.slice(0, CONTENT_SLIDES.length).map((src, index) => <FadeInImage key={index} src={src} index={index} />)}
+          </div>
+
         </div>
       </section>
     </div>;
