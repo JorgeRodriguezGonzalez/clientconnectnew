@@ -199,15 +199,20 @@ export const ProductShowcase = () => {
           {/* Sticky Sidebar (Text) */}
           <div className="w-full md:w-[450px] md:sticky md:top-32 flex flex-col justify-center h-fit md:h-[calc(100vh-16rem)] z-10">
             <div className="flex flex-col gap-8">
-              <div className="relative h-64 w-full">
+              <div className="relative h-80 w-full">
                 {CONTENT_SLIDES.map((slide, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-                      index === activeSlideIndex
-                        ? 'opacity-100 translate-y-0'
-                        : 'opacity-0 translate-y-10'
-                    }`}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      opacity: index === activeSlideIndex ? 1 : 0,
+                      transform: index === activeSlideIndex ? 'translateY(0)' : 'translateY(10px)',
+                      transition: 'opacity 0.7s ease-in-out, transform 0.7s ease-in-out',
+                      pointerEvents: index === activeSlideIndex ? 'auto' : 'none'
+                    }}
                   >
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
                       <span className="text-white">{slide.title}</span>
