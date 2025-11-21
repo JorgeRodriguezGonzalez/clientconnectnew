@@ -58,7 +58,7 @@ const FadeInImage = ({
   }} transition={{
     duration: 0.6,
     ease: "easeOut"
-  }} className="relative w-full max-w-[620px] aspect-[3/4] flex-shrink-0">
+  }} className="relative w-full max-w-[620px] aspect-[3/4] flex-shrink-0 feature-image">
       <img src={src} alt={`Feature ${index + 1}`} className="w-full h-full object-contain" loading="lazy" />
     </motion.div>;
 };
@@ -119,20 +119,28 @@ export const ProductShowcase = () => {
     if (!container) return;
 
     const handleScroll = () => {
-      const containerTop = container.getBoundingClientRect().top;
-      const containerHeight = container.offsetHeight;
+      const images = container.querySelectorAll('.feature-image');
+      if (images.length === 0) return;
+
       const windowHeight = window.innerHeight;
-      
-      // Calculate scroll progress within the images container
-      const scrollProgress = Math.max(0, Math.min(1, (windowHeight / 2 - containerTop) / (containerHeight - windowHeight / 2)));
-      
-      // Calculate which slide should be active based on scroll progress
-      const slideIndex = Math.min(
-        CONTENT_SLIDES.length - 1,
-        Math.floor(scrollProgress * CONTENT_SLIDES.length)
-      );
-      
-      setActiveSlideIndex(slideIndex);
+      const windowCenter = windowHeight / 2;
+
+      // Find which image is closest to the center of the viewport
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      images.forEach((img, index) => {
+        const rect = img.getBoundingClientRect();
+        const imgCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(imgCenter - windowCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      setActiveSlideIndex(closestIndex);
     };
 
     window.addEventListener('scroll', handleScroll);
