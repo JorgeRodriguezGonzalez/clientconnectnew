@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 // Non-exported helpers and constants
@@ -36,32 +36,6 @@ const CONTENT_SLIDES = [
     description: "Receive detailed monthly reports showing exactly how your investment translates to growth. Real metrics, real KPIs, real accountability."
   }
 ];
-
-const FadeInImage = ({
-  src,
-  index
-}: {
-  src: string;
-  index: number;
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, {
-    margin: "-20% 0px -20% 0px",
-    once: false
-  });
-  return <motion.div ref={ref} initial={{
-    opacity: 0.1,
-    scale: 0.95
-  }} animate={{
-    opacity: isInView ? 1 : 0.1,
-    scale: isInView ? 1 : 0.95
-  }} transition={{
-    duration: 0.6,
-    ease: "easeOut"
-  }} className="relative w-full max-w-[620px] aspect-[3/4] flex-shrink-0">
-      <img src={src} alt={`Feature ${index + 1}`} className="w-full h-full object-contain" loading="lazy" />
-    </motion.div>;
-};
 
 const FadeInText = ({ 
   children, 
@@ -112,6 +86,27 @@ const FadeInText = ({
 // @component: ProductShowcase
 export const ProductShowcase = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const scrollContainerRef = useRef(null);
+  const stickyPanelRef = useRef(null);
+
+  // --- Scroll Handler ---
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const scrollableHeight = container.scrollHeight - window.innerHeight;
+      const stepHeight = scrollableHeight / CONTENT_SLIDES.length;
+      const newActiveIndex = Math.min(
+        CONTENT_SLIDES.length - 1,
+        Math.floor(container.scrollTop / stepHeight)
+      );
+      setActiveIndex(newActiveIndex);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // @return
   return <div className="w-full bg-black text-white min-h-screen flex flex-col items-center overflow-hidden pb-32">
@@ -155,66 +150,103 @@ export const ProductShowcase = () => {
           </FadeInText>
         </div>
 
-        {/* Pagination Bars */}
-        <div className="flex space-x-2 mb-12">
-          {CONTENT_SLIDES.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`h-1 rounded-full transition-all duration-500 ease-in-out ${
-                index === activeIndex ? 'w-12 bg-white' : 'w-6 bg-white/30'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Features Grid Layout */}
-        <div className="w-full flex flex-col gap-24 md:gap-32">
-          
-          {CONTENT_SLIDES.map((slide, index) => (
-            <div key={index} className="w-full flex flex-col md:flex-row justify-between items-center gap-10 md:gap-16">
-              
-              {/* Text Content */}
-              <div className="w-full md:w-[450px] flex flex-col gap-6">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
-                  <span className="text-white">{slide.title}</span>
-                  <motion.span
-                    initial={{ backgroundPosition: "400% 50%" }}
-                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                    transition={{
-                      duration: 12,
-                      ease: "linear",
-                      repeat: Infinity
-                    }}
-                    style={{
-                      display: "inline-block",
-                      backgroundImage: "linear-gradient(45deg, rgba(0, 0, 0, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(0, 0, 0, 0))",
-                      backgroundSize: "400% 100%",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      color: "transparent"
-                    }}
-                  >
-                    {slide.highlightText}
-                  </motion.span>
-                </h2>
+        {/* Scrolling Feature Showcase */}
+        <div 
+          ref={scrollContainerRef}
+          className="h-screen w-full overflow-y-auto"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          <div style={{ height: `${CONTENT_SLIDES.length * 100}vh` }}>
+            <div ref={stickyPanelRef} className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-transparent text-white">
+              <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full max-w-7xl mx-auto">
                 
-                <p className="text-base md:text-lg text-neutral-400 leading-relaxed">
-                  {slide.description}
-                </p>
-              </div>
+                {/* Left Column: Text Content & Pagination */}
+                <div className="relative flex flex-col justify-center p-8 md:p-16">
+                  {/* Pagination Bars */}
+                  <div className="absolute top-16 left-16 flex space-x-2">
+                    {CONTENT_SLIDES.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                            const container = scrollContainerRef.current;
+                            if(container){
+                                const scrollableHeight = container.scrollHeight - window.innerHeight;
+                                const stepHeight = scrollableHeight / CONTENT_SLIDES.length;
+                                container.scrollTo({ top: stepHeight * index, behavior: 'smooth' });
+                            }
+                        }}
+                        className={`h-1 rounded-full transition-all duration-500 ease-in-out ${
+                          index === activeIndex ? 'w-12 bg-white' : 'w-6 bg-white/30'
+                        }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                  
+                  <div className="relative h-64 w-full">
+                    {CONTENT_SLIDES.map((slide, index) => (
+                      <div
+                        key={index}
+                        className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                          index === activeIndex
+                            ? 'opacity-100 translate-y-0'
+                            : 'opacity-0 translate-y-10'
+                        }`}
+                      >
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
+                          <span className="text-white">{slide.title}</span>
+                          <motion.span
+                            initial={{ backgroundPosition: "400% 50%" }}
+                            animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                            transition={{
+                              duration: 12,
+                              ease: "linear",
+                              repeat: Infinity
+                            }}
+                            style={{
+                              display: "inline-block",
+                              backgroundImage: "linear-gradient(45deg, rgba(0, 0, 0, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(0, 0, 0, 0))",
+                              backgroundSize: "400% 100%",
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                              backgroundClip: "text",
+                              color: "transparent"
+                            }}
+                          >
+                            {slide.highlightText}
+                          </motion.span>
+                        </h2>
+                        <p className="mt-6 text-base md:text-lg text-neutral-400 leading-relaxed max-w-md">{slide.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-              {/* Image */}
-              <div className="w-full md:w-[620px]">
-                <FadeInImage src={FEATURE_IMAGES[index]} index={index} />
+                {/* Right Column: Image Content */}
+                <div className="hidden md:flex items-center justify-center p-8">
+                  <div className="relative w-[80%] h-[80vh] rounded-2xl overflow-hidden">
+                    <div 
+                      className="absolute top-0 left-0 w-full h-full transition-transform duration-700 ease-in-out"
+                      style={{ transform: `translateY(-${activeIndex * 100}%)` }}
+                    >
+                      {CONTENT_SLIDES.map((slide, index) => (
+                        <div key={index} className="w-full h-full">
+                          <img
+                            src={FEATURE_IMAGES[index]}
+                            alt={slide.title}
+                            className="h-full w-full object-contain"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-
             </div>
-          ))}
-
+          </div>
         </div>
+
       </section>
     </div>;
 };
