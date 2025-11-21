@@ -197,7 +197,7 @@ export const ProductShowcase = () => {
         <div className="w-full flex flex-col md:flex-row justify-between relative items-start gap-10 md:gap-0">
           
           {/* Sticky Sidebar (Text) */}
-          <div className="w-full md:w-[450px] md:sticky md:top-32 flex flex-col justify-center h-fit md:h-[calc(100vh-16rem)] z-10">
+          <div className="w-full md:w-[450px] md:sticky md:top-32 flex flex-col justify-center h-fit z-10" style={{ alignSelf: 'flex-start' }}>
             <div className="flex flex-col gap-8">
               <div className="relative h-80 w-full">
                 {CONTENT_SLIDES.map((slide, index) => (
