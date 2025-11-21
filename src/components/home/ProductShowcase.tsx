@@ -86,8 +86,33 @@ const FadeInText = ({
 // @component: ProductShowcase
 export const ProductShowcase = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [canScroll, setCanScroll] = useState(false);
   const scrollContainerRef = useRef(null);
   const stickyPanelRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  // --- Check if section is in position to enable scroll ---
+  useEffect(() => {
+    const handleWindowScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      // Enable scroll when section top reaches top of viewport (or adjust threshold as needed)
+      const threshold = 0; // Adjust this value (e.g., 100 means section needs to be 100px from top)
+      
+      if (rect.top <= threshold) {
+        setCanScroll(true);
+      } else {
+        setCanScroll(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleWindowScroll);
+    handleWindowScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleWindowScroll);
+  }, []);
 
   // --- Scroll Handler ---
   useEffect(() => {
@@ -95,6 +120,11 @@ export const ProductShowcase = () => {
     if (!container) return;
 
     const handleScroll = () => {
+      if (!canScroll) {
+        container.scrollTop = 0; // Reset scroll if not allowed
+        return;
+      }
+
       const scrollableHeight = container.scrollHeight - window.innerHeight;
       const stepHeight = scrollableHeight / CONTENT_SLIDES.length;
       const newActiveIndex = Math.min(
@@ -106,7 +136,7 @@ export const ProductShowcase = () => {
 
     container.addEventListener('scroll', handleScroll);
     return () => container.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [canScroll]);
 
   // @return
   return <div className="w-full bg-black text-white min-h-screen flex flex-col items-center overflow-hidden pb-32">
@@ -134,7 +164,7 @@ export const ProductShowcase = () => {
       <section className="w-full flex flex-col items-center">
         
         {/* Section Separator */}
-        <div className="w-full max-w-[1240px] px-5 flex items-center justify-center gap-4 py-12 md:py-24" style={{ marginBottom: '-170px' }}>
+        <div className="w-full max-w-[1240px] px-5 flex items-center justify-center gap-4 py-12 md:py-24" style={{ marginBottom: '-300px' }}>
           <FadeInText delay={0.4} direction="left">
             <div className="h-[1px] w-24 md:w-48 bg-white" />
           </FadeInText>
