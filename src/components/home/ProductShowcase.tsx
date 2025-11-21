@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 // Non-exported helpers and constants
 const FEATURE_IMAGES = ["https://framerusercontent.com/images/4mjO0OJA9HtnNRv5wqa7Sct5SI.png?width=2618&height=2618", "https://framerusercontent.com/images/4C2xtl8JRiHhF1SC96bbFToa6X8.png?width=2347&height=2347", "https://framerusercontent.com/images/gIa2LVqt1UUbQ2Gp8vCamuTFM8.png?width=1991&height=2143", "https://framerusercontent.com/images/UC6nHuSzN060lUKnMZgv9p0794.png?width=2347&height=2347", "https://framerusercontent.com/images/TkDQuT7AJX6TcnqHuE2fmHQAs.png?width=2347&height=2347", "https://framerusercontent.com/images/InLO1TNnl0DIc9r9qiQzrfyL2eQ.png?width=2347&height=2347"];
+
 const FadeInImage = ({
   src,
   index
@@ -69,9 +70,26 @@ export const ProductShowcase = () => {
             <div className="flex flex-col gap-8">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
                 <span className="text-white">Start every day knowing </span>
-                <span className="bg-gradient-to-r from-[#edbf86] via-[#de8363] to-[#67bcb7] bg-clip-text text-transparent animate-gradient-x bg-[length:200%_auto]">
+                <motion.span
+                  initial={{ backgroundPosition: "0% 50%" }}
+                  animate={{ backgroundPosition: ["0% 50%", "400% 50%"] }}
+                  transition={{
+                    duration: 8,
+                    ease: "linear",
+                    repeat: Infinity
+                  }}
+                  style={{
+                    display: "inline-block",
+                    backgroundImage: "linear-gradient(45deg, rgba(0, 0, 0, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(0, 0, 0, 0))",
+                    backgroundSize: "400% 100%",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    color: "transparent"
+                  }}
+                >
                   what matters.
-                </span>
+                </motion.span>
               </h2>
               
               <p className="text-base md:text-lg text-neutral-400 leading-relaxed">
@@ -87,19 +105,6 @@ export const ProductShowcase = () => {
 
         </div>
       </section>
-      
-      <style dangerouslySetInnerHTML={{
-      __html: `
-          @keyframes gradient-x {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-          }
-          .animate-gradient-x {
-            animation: gradient-x 8s ease infinite;
-          }
-        `
-    }} />
     </div>;
 };
 
