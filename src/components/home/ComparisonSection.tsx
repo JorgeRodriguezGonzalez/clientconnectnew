@@ -56,7 +56,7 @@ const ComparisonSection = () => {
           {/* Header Row */}
           <div className="grid grid-cols-3 gap-4 mb-4 animate-fade-in">
             <div></div>
-            <div className="text-center p-6 rounded-t-2xl bg-destructive/10 border-2 border-destructive/30">
+            <div className="text-center p-6 rounded-t-2xl bg-destructive/10 border-2 border-destructive/30 shadow-[inset_-8px_-8px_20px_rgba(239,68,68,0.15)]">
               <X className="h-8 w-8 mx-auto mb-2 text-destructive" />
               <h3 className="font-bold text-lg text-white">Traditional Way</h3>
               <p className="text-sm text-muted-foreground-pricing mt-1">Manual & Time-Consuming</p>
