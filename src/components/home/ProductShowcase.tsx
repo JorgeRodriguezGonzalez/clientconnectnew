@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 // Non-exported helpers and constants
-const FEATURE_IMAGES = ["https://framerusercontent.com/images/4mjO0OJA9HtnNRv5wqa7Sct5SI.png?width=2618&height=2618", "https://framerusercontent.com/images/4C2xtl8JRiHhF1SC96bbFToa6X8.png?width=2347&height=2347", "https://framerusercontent.com/images/gIa2LVqt1UUbQ2Gp8vCamuTFM8.png?width=1991&height=2143", "https://framerusercontent.com/images/UC6nHuSzN060lUKnMZgv9p0794.com?width=2347&height=2347", "https://framerusercontent.com/images/TkDQuT7AJX6TcnqHuE2fmHQAs.png?width=2347&height=2347", "https://framerusercontent.com/images/InLO1TNnl0DIc9r9qiQzrfyL2eQ.png?width=2347&height=2347"];
+const FEATURE_IMAGES = ["https://framerusercontent.com/images/4mjO0OJA9HtnNRv5wqa7Sct5SI.png?width=2618&height=2618", "https://framerusercontent.com/images/4C2xtl8JRiHhF1SC96bbFToa6X8.png?width=2347&height=2347", "https://framerusercontent.com/images/gIa2LVqt1UUbQ2Gp8vCamuTFM8.png?width=1991&height=2143", "https://framerusercontent.com/images/UC6nHuSzN060lUKnMZgv9p0794.png?width=2347&height=2347", "https://framerusercontent.com/images/TkDQuT7AJX6TcnqHuE2fmHQAs.png?width=2347&height=2347", "https://framerusercontent.com/images/InLO1TNnl0DIc9r9qiQzrfyL2eQ.png?width=2347&height=2347"];
 
 const FadeInImage = ({
   src,
