@@ -111,6 +111,46 @@ const FadeInText = ({
 
 // @component: ProductShowcase
 export const ProductShowcase = () => {
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const sectionTop = rect.top;
+      const sectionHeight = rect.height;
+      const windowHeight = window.innerHeight;
+
+      // Calculate scroll progress within the section (0 to 1)
+      const scrollProgress = Math.max(0, Math.min(1, 
+        (windowHeight / 2 - sectionTop) / sectionHeight
+      ));
+
+      // Determine active slide based on scroll thresholds
+      if (scrollProgress < 0.25) {
+        setActiveSlideIndex(0);
+      } else if (scrollProgress < 0.40) {
+        setActiveSlideIndex(1);
+      } else if (scrollProgress < 0.55) {
+        setActiveSlideIndex(2);
+      } else if (scrollProgress < 0.70) {
+        setActiveSlideIndex(3);
+      } else if (scrollProgress < 0.85) {
+        setActiveSlideIndex(4);
+      } else {
+        setActiveSlideIndex(5);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // @return
   return <div className="w-full bg-black text-white min-h-screen flex flex-col items-center overflow-hidden pb-32">
       
@@ -134,7 +174,7 @@ export const ProductShowcase = () => {
       </section>
 
       {/* Features Section */}
-      <section className="w-full max-w-[1240px] px-5 flex flex-col items-center">
+      <section ref={sectionRef} className="w-full max-w-[1240px] px-5 flex flex-col items-center">
         
         {/* Section Separator */}
         <div className="w-full flex items-center justify-center gap-4 py-12 md:py-24">
@@ -154,49 +194,65 @@ export const ProductShowcase = () => {
         </div>
 
         {/* Features Grid Layout */}
-        <div className="w-full flex flex-col gap-24 md:gap-32">
+        <div className="w-full flex flex-col md:flex-row justify-between items-start gap-10 md:gap-0">
           
-          {CONTENT_SLIDES.map((slide, index) => (
-            <div key={index} className="w-full flex flex-col md:flex-row justify-between items-center gap-10 md:gap-16">
-              
-              {/* Text Content */}
-              <div className="w-full md:w-[450px] flex flex-col gap-6">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
-                  <span className="text-white">{slide.title}</span>
-                  <motion.span
-                    initial={{ backgroundPosition: "400% 50%" }}
-                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                    transition={{
-                      duration: 12,
-                      ease: "linear",
-                      repeat: Infinity
-                    }}
-                    style={{
-                      display: "inline-block",
-                      backgroundImage: "linear-gradient(45deg, rgba(0, 0, 0, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(0, 0, 0, 0))",
-                      backgroundSize: "400% 100%",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      color: "transparent"
-                    }}
-                  >
-                    {slide.highlightText}
-                  </motion.span>
-                </h2>
-                
-                <p className="text-base md:text-lg text-neutral-400 leading-relaxed">
-                  {slide.description}
-                </p>
-              </div>
+          {/* Sticky Text Content - Left Side */}
+          <div className="w-full md:w-[450px] md:sticky md:top-32 z-10">
+            <div className="relative h-80 w-full">
+              {CONTENT_SLIDES.map((slide, index) => (
+                <div
+                  key={index}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    opacity: index === activeSlideIndex ? 1 : 0,
+                    transform: index === activeSlideIndex ? 'translateY(0)' : 'translateY(20px)',
+                    transition: 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out',
+                    pointerEvents: index === activeSlideIndex ? 'auto' : 'none'
+                  }}
+                >
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
+                    <span className="text-white">{slide.title}</span>
+                    <motion.span
+                      initial={{ backgroundPosition: "400% 50%" }}
+                      animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                      transition={{
+                        duration: 12,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                      style={{
+                        display: "inline-block",
+                        backgroundImage: "linear-gradient(45deg, rgba(0, 0, 0, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(0, 0, 0, 0))",
+                        backgroundSize: "400% 100%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        color: "transparent"
+                      }}
+                    >
+                      {slide.highlightText}
+                    </motion.span>
+                  </h2>
+                  
+                  <p className="text-base md:text-lg text-neutral-400 leading-relaxed mt-6">
+                    {slide.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
 
-              {/* Image */}
-              <div className="w-full md:w-[620px]">
+          {/* Images - Right Side */}
+          <div className="w-full md:w-[620px] flex flex-col gap-24 md:gap-32">
+            {CONTENT_SLIDES.map((slide, index) => (
+              <div key={index} className="w-full">
                 <FadeInImage src={FEATURE_IMAGES[index]} index={index} />
               </div>
-
-            </div>
-          ))}
+            ))}
+          </div>
 
         </div>
       </section>
