@@ -65,7 +65,7 @@ const Pricing = () => {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`glass-card p-8 rounded-2xl relative hover-lift hover-glow cursor-pointer animate-scale-in ${
+              className={`glass-card p-8 rounded-2xl relative cursor-pointer animate-scale-in transition-all duration-300 hover:scale-105 hover-glow ${
                 plan.highlighted ? 'border-2 border-primary scale-105' : ''
               }`}
               style={{ animationDelay: `${index * 0.15}s` }}
