@@ -151,22 +151,21 @@ export const ProductShowcase = () => {
         </div>
 
         {/* Scrolling Feature Showcase */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            .hide-scrollbar {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+            .hide-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+          `
+        }} />
         <div 
           ref={scrollContainerRef}
-          className="h-screen w-full overflow-y-auto"
-          style={{ 
-            scrollbarWidth: 'none', 
-            msOverflowStyle: 'none',
-            WebkitOverflowScrolling: 'touch'
-          }}
+          className="hide-scrollbar h-screen w-full overflow-y-auto"
         >
-          <style dangerouslySetInnerHTML={{
-            __html: `
-              div[ref]::-webkit-scrollbar {
-                display: none;
-              }
-            `
-          }} />
           <div style={{ height: `${CONTENT_SLIDES.length * 100}vh` }}>
             <div ref={stickyPanelRef} className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-transparent text-white">
               <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full max-w-7xl mx-auto">
