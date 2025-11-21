@@ -86,33 +86,52 @@ const FadeInText = ({
 // @component: ProductShowcase
 export const ProductShowcase = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [canScroll, setCanScroll] = useState(false);
+  const [isScrollLocked, setIsScrollLocked] = useState(true);
   const scrollContainerRef = useRef(null);
   const stickyPanelRef = useRef(null);
   const sectionRef = useRef(null);
 
-  // --- Check if section is in position to enable scroll ---
+  // --- Monitor section position to lock/unlock scroll ---
   useEffect(() => {
     const handleWindowScroll = () => {
       const section = sectionRef.current;
       if (!section) return;
 
       const rect = section.getBoundingClientRect();
-      // Enable scroll when section top reaches top of viewport (or adjust threshold as needed)
-      const threshold = 0; // Adjust this value (e.g., 100 means section needs to be 100px from top)
-      
-      if (rect.top <= threshold) {
-        setCanScroll(true);
+      // Unlock when section reaches 170px from top (accounting for the -170px margin)
+      if (rect.top <= 170) {
+        setIsScrollLocked(false);
       } else {
-        setCanScroll(false);
+        setIsScrollLocked(true);
       }
     };
 
-    window.addEventListener('scroll', handleWindowScroll);
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
     handleWindowScroll(); // Initial check
     
     return () => window.removeEventListener('scroll', handleWindowScroll);
   }, []);
+
+  // --- Prevent wheel/touch scroll when locked ---
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const preventScroll = (e: WheelEvent | TouchEvent) => {
+      if (isScrollLocked) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    container.addEventListener('wheel', preventScroll, { passive: false });
+    container.addEventListener('touchmove', preventScroll, { passive: false });
+    
+    return () => {
+      container.removeEventListener('wheel', preventScroll);
+      container.removeEventListener('touchmove', preventScroll);
+    };
+  }, [isScrollLocked]);
 
   // --- Scroll Handler ---
   useEffect(() => {
@@ -120,11 +139,6 @@ export const ProductShowcase = () => {
     if (!container) return;
 
     const handleScroll = () => {
-      if (!canScroll) {
-        container.scrollTop = 0; // Reset scroll if not allowed
-        return;
-      }
-
       const scrollableHeight = container.scrollHeight - window.innerHeight;
       const stepHeight = scrollableHeight / CONTENT_SLIDES.length;
       const newActiveIndex = Math.min(
@@ -136,7 +150,7 @@ export const ProductShowcase = () => {
 
     container.addEventListener('scroll', handleScroll);
     return () => container.removeEventListener('scroll', handleScroll);
-  }, [canScroll]);
+  }, []);
 
   // @return
   return <div className="w-full bg-black text-white min-h-screen flex flex-col items-center overflow-hidden pb-32">
@@ -161,7 +175,7 @@ export const ProductShowcase = () => {
       </section>
 
       {/* Features Section */}
-      <section className="w-full flex flex-col items-center">
+      <section ref={sectionRef} className="w-full flex flex-col items-center">
         
         {/* Section Separator */}
         <div className="w-full max-w-[1240px] px-5 flex items-center justify-center gap-4 py-12 md:py-24" style={{ marginBottom: '-300px' }}>
