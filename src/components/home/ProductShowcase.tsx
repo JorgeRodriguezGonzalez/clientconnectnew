@@ -112,37 +112,32 @@ const FadeInText = ({
 // @component: ProductShowcase
 export const ProductShowcase = () => {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const imagesContainerRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      const container = imagesContainerRef.current;
-      if (!container) return;
-
-      const images = container.querySelectorAll('.feature-image');
-      if (images.length === 0) return;
-
-      // Find the image that's most visible in the viewport
-      let maxVisibleArea = 0;
-      let mostVisibleIndex = 0;
-
-      images.forEach((img, index) => {
-        const rect = img.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-        
-        // Calculate how much of the image is visible
-        const visibleTop = Math.max(0, rect.top);
-        const visibleBottom = Math.min(viewportHeight, rect.bottom);
-        const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-        
-        if (visibleHeight > maxVisibleArea) {
-          maxVisibleArea = visibleHeight;
-          mostVisibleIndex = index;
-        }
-      });
-
-      console.log('Active slide index:', mostVisibleIndex); // Debug log
-      setActiveSlideIndex(mostVisibleIndex);
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      // Find the features section
+      const featuresSection = document.querySelector('.features-scroll-section') as HTMLElement;
+      if (!featuresSection) return;
+      
+      const sectionTop = featuresSection.offsetTop;
+      const sectionHeight = featuresSection.offsetHeight;
+      
+      // Calculate progress through the section (0 to 1)
+      const progress = Math.max(0, Math.min(1, 
+        (scrollPosition - sectionTop) / (sectionHeight - windowHeight)
+      ));
+      
+      // Calculate which slide should be active
+      const newIndex = Math.min(
+        CONTENT_SLIDES.length - 1,
+        Math.floor(progress * CONTENT_SLIDES.length)
+      );
+      
+      console.log('Active slide index:', newIndex); // Debug log
+      setActiveSlideIndex(newIndex);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -193,12 +188,12 @@ export const ProductShowcase = () => {
           </FadeInText>
         </div>
 
-        {/* Sticky Scroll Layout */}
-        <div className="w-full flex flex-col md:flex-row justify-between relative items-start gap-10 md:gap-0">
-          
-          {/* Sticky Sidebar (Text) */}
-          <div className="w-full md:w-[450px] z-10">
-            <div className="sticky top-32 flex flex-col justify-center">
+        {/* Sticky Scroll Layout - NEW APPROACH */}
+        <div className="features-scroll-section w-full relative" style={{ height: `${CONTENT_SLIDES.length * 100}vh` }}>
+          <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row justify-between items-start gap-10 md:gap-0">
+            
+            {/* Sticky Sidebar (Text) */}
+            <div className="w-full md:w-[450px] flex flex-col justify-center z-10">
               <div className="flex flex-col gap-8">
                 <div className="relative h-80 w-full">
                   {CONTENT_SLIDES.map((slide, index) => (
@@ -247,13 +242,33 @@ export const ProductShowcase = () => {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Scrollable Content (Images) */}
-          <div ref={imagesContainerRef} className="w-full md:w-[620px] flex flex-col gap-24 md:gap-32 pb-32">
-            {FEATURE_IMAGES.map((src, index) => <FadeInImage key={index} src={src} index={index} />)}
-          </div>
+            {/* Scrollable Content (Images) - Hidden in sticky layout */}
+            <div className="hidden md:block w-full md:w-[620px]">
+              <div className="relative w-full h-[80vh] flex items-center justify-center">
+                {FEATURE_IMAGES.slice(0, CONTENT_SLIDES.length).map((src, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      opacity: index === activeSlideIndex ? 1 : 0,
+                      transform: index === activeSlideIndex ? 'scale(1)' : 'scale(0.95)',
+                      transition: 'opacity 0.7s ease-in-out, transform 0.7s ease-in-out'
+                    }}
+                  >
+                    <div className="relative w-full max-w-[620px] aspect-[3/4] mx-auto">
+                      <img src={src} alt={`Feature ${index + 1}`} className="w-full h-full object-contain" loading="lazy" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
+          </div>
         </div>
       </section>
     </div>;
