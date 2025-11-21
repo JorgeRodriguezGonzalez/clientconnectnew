@@ -67,8 +67,8 @@ const Pricing = () => {
               key={index}
               className={`glass-card p-8 rounded-2xl relative cursor-pointer animate-scale-in transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] ${
                 plan.highlighted 
-                  ? 'border-2 border-primary scale-[1.05] hover:scale-[1.05]' 
-                  : 'hover:scale-[1.01]'
+                  ? 'border-2 border-primary scale-[1.06] hover:scale-[1.05]' 
+                  : 'hover:scale-[1.02]'
               }`}
               style={{ animationDelay: `${index * 0.15}s` }}
             >
