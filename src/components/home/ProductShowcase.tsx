@@ -245,22 +245,23 @@ export const ProductShowcase = () => {
 
             {/* Scrollable Content (Images) - Hidden in sticky layout */}
             <div className="hidden md:block w-full md:w-[620px]">
-              <div className="relative w-full h-[80vh] flex items-center justify-center">
+              <div className="relative w-full" style={{ height: '80vh' }}>
                 {FEATURE_IMAGES.slice(0, CONTENT_SLIDES.length).map((src, index) => (
                   <div
                     key={index}
                     style={{
                       position: 'absolute',
-                      top: 0,
-                      left: 0,
+                      top: '50%',
+                      left: '50%',
+                      transform: `translate(-50%, -50%) scale(${index === activeSlideIndex ? 1 : 0.95})`,
                       width: '100%',
-                      height: '100%',
+                      maxWidth: '620px',
                       opacity: index === activeSlideIndex ? 1 : 0,
-                      transform: index === activeSlideIndex ? 'scale(1)' : 'scale(0.95)',
-                      transition: 'opacity 0.7s ease-in-out, transform 0.7s ease-in-out'
+                      transition: 'opacity 0.7s ease-in-out, transform 0.7s ease-in-out',
+                      zIndex: index === activeSlideIndex ? 10 : 1
                     }}
                   >
-                    <div className="relative w-full max-w-[620px] aspect-[3/4] mx-auto">
+                    <div className="relative w-full aspect-[3/4]">
                       <img src={src} alt={`Feature ${index + 1}`} className="w-full h-full object-contain" loading="lazy" />
                     </div>
                   </div>
