@@ -134,7 +134,7 @@ export const ProductShowcase = () => {
       <section className="w-full flex flex-col items-center">
         
         {/* Section Separator */}
-        <div className="w-full max-w-[1240px] px-5 flex items-center justify-center gap-4 py-12 md:py-24" style={{ marginBottom: '-200px' }}>
+        <div className="w-full max-w-[1240px] px-5 flex items-center justify-center gap-4 py-12 md:py-24" style={{ marginBottom: '-100px' }}>
           <FadeInText delay={0.4} direction="left">
             <div className="h-[1px] w-24 md:w-48 bg-white" />
           </FadeInText>
