@@ -188,11 +188,11 @@ export const ProductShowcase = () => {
         </div>
 
         {/* Sticky Scroll Layout */}
-        <div className="w-full flex flex-col md:flex-row justify-between relative items-start gap-10 md:gap-0">
+        <div className="w-full flex flex-col md:flex-row justify-between relative items-start gap-10 md:gap-0" style={{ minHeight: `${CONTENT_SLIDES.length * 100}vh` }}>
           
           {/* Sticky Sidebar (Text) */}
           <div className="w-full md:w-[450px]">
-            <div className="sticky top-32 max-h-[80vh] flex flex-col justify-center z-10">
+            <div className="sticky top-32 flex flex-col justify-center z-10">
               <div className="flex flex-col gap-8">
                 <div className="relative h-80 w-full">
                   {CONTENT_SLIDES.map((slide, index) => (
@@ -243,8 +243,8 @@ export const ProductShowcase = () => {
             </div>
           </div>
 
-          {/* Scrollable Content (Images) */}
-          <div className="w-full md:w-[620px] flex flex-col gap-24 md:gap-32 pb-32">
+          {/* Scrollable Content (Images) - Creates the scroll height */}
+          <div className="w-full md:w-[620px] flex flex-col gap-24 md:gap-32">
             {FEATURE_IMAGES.slice(0, CONTENT_SLIDES.length).map((src, index) => <FadeInImage key={index} src={src} index={index} />)}
           </div>
 
