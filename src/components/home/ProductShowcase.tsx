@@ -112,26 +112,25 @@ export const ProductShowcase = () => {
     return () => window.removeEventListener('scroll', handleWindowScroll);
   }, []);
 
-  // --- Prevent wheel/touch scroll when locked, but allow page scroll ---
+  // --- Handle scroll behavior based on lock state ---
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
       if (isScrollLocked) {
-        // Allow page scroll by not preventing default
-        // Just prevent the container from scrolling
-        if (container.scrollTop > 0) {
-          container.scrollTop = 0;
-        }
+        // When locked, don't prevent - allow page scroll to continue
         return;
       }
       
-      // When unlocked, prevent page scroll if container can scroll
-      const atTop = container.scrollTop === 0 && e.deltaY < 0;
-      const atBottom = container.scrollTop >= container.scrollHeight - container.clientHeight && e.deltaY > 0;
+      // When unlocked, manage container scroll and prevent page scroll appropriately
+      const scrollingUp = e.deltaY < 0;
+      const scrollingDown = e.deltaY > 0;
+      const atTop = container.scrollTop === 0;
+      const atBottom = container.scrollTop >= container.scrollHeight - container.clientHeight;
       
-      if (!atTop && !atBottom) {
+      // Only prevent page scroll if we're scrolling within the container bounds
+      if ((scrollingDown && !atBottom) || (scrollingUp && !atTop)) {
         e.preventDefault();
         e.stopPropagation();
       }
