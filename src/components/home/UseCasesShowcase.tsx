@@ -176,13 +176,28 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="w-full"
               >
-                <h1 className="text-[50px] font-bold leading-[55px] tracking-[-2.5px] text-center text-black">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-center text-black">
                   {mainTitle}{' '}
-                  <span className="inline-block">
-                    <span className="bg-gradient-to-r from-[#11B2F8] to-[#504DF9] bg-clip-text text-transparent">
-                      {mainTitleHighlight}
-                    </span>
-                  </span>
+                  <motion.span
+                    initial={{ backgroundPosition: "400% 50%" }}
+                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                    transition={{
+                      duration: 12,
+                      ease: "linear",
+                      repeat: Infinity
+                    }}
+                    style={{
+                      display: "inline-block",
+                      backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                      backgroundSize: "400% 100%",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      color: "transparent"
+                    }}
+                  >
+                    {mainTitleHighlight}
+                  </motion.span>
                 </h1>
               </motion.div>
 
@@ -193,7 +208,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="w-full max-w-[500px]"
               >
-                <p className="text-lg font-normal leading-[26px] tracking-[-0.2px] text-center text-[#696969]">
+                <p className="text-base md:text-lg font-medium leading-relaxed tracking-tight text-center text-gray-600">
                   {subtitle}
                 </p>
               </motion.div>
@@ -298,13 +313,13 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </motion.div>
               </div>
 
-              {/* TEXTO DERECHA - 100% COMO ANTES (tamaños, fuentes, tracking, etc.) */}
+              {/* TEXTO DERECHA - Actualizado con el estilo de ProductShowcase */}
               <div className="flex-1 max-w-[520px]">
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="font-['Inter_Tight',sans-serif] text-[#F6941D] text-sm font-medium tracking-[2.2px] uppercase mb-2.5"
+                  className="text-sm font-medium tracking-[2.2px] uppercase mb-2.5 text-gray-500"
                 >
                   {subText}
                 </motion.div>
@@ -313,19 +328,36 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.5 }}
-                  className="m-0 mb-5 font-medium text-[40px] leading-[50px] font-['Inter_Tight',sans-serif] text-[#071332] tracking-[-0.8px]"
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-gray-900 mb-6"
                 >
                   {heading}{' '}
-                  <span className="bg-gradient-to-r from-[#0F4C81] via-[#0066CC] to-[#00D4FF] bg-clip-text text-transparent">
+                  <motion.span
+                    initial={{ backgroundPosition: "400% 50%" }}
+                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                    transition={{
+                      duration: 12,
+                      ease: "linear",
+                      repeat: Infinity
+                    }}
+                    style={{
+                      display: "inline-block",
+                      backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                      backgroundSize: "400% 100%",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      color: "transparent"
+                    }}
+                  >
                     {highlightText}
-                  </span>
+                  </motion.span>
                 </motion.h2>
 
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.5 }}
-                  className="m-0 font-['DM_Sans',sans-serif] text-[#4B497E] text-base leading-[25px] font-medium tracking-[-0.2px]"
+                  className="text-base md:text-lg font-medium leading-relaxed text-gray-600 tracking-tight"
                 >
                   {description}
                 </motion.p>
