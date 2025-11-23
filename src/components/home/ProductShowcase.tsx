@@ -156,7 +156,7 @@ export const ProductShowcase = () => {
   return <div className="w-full bg-black text-white min-h-screen flex flex-col items-center overflow-hidden pb-32">
       
       {/* Problem Statement Section */}
-      <section className="w-full max-w-[1240px] px-5 pt-32 pb-8 flex flex-col items-center text-center md:text-left">
+      <section className="w-full max-w-[1240px] px-5 pt-32 pb-4 flex flex-col items-center text-center md:text-left">
         <div className="w-full max-w-[930px] flex flex-col gap-8 md:gap-12">
           <FadeInText delay={0.2}>
             <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight text-white">
@@ -178,7 +178,7 @@ export const ProductShowcase = () => {
       <section ref={sectionRef} className="w-full flex flex-col items-center">
         
         {/* Section Separator */}
-        <div className="w-full max-w-[1240px] px-5 flex items-center justify-center gap-4 py-12 md:py-24" style={{ marginBottom: '-100px' }}>
+        <div className="w-full max-w-[1240px] px-5 flex items-center justify-center gap-4 py-12 md:py-24" style={{ marginBottom: '-150px' }}>
           <FadeInText delay={0.4} direction="left">
             <div className="h-[1px] w-24 md:w-48 bg-white" />
           </FadeInText>
