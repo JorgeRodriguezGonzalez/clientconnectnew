@@ -112,38 +112,6 @@ export const ProductShowcase = () => {
     return () => window.removeEventListener('scroll', handleWindowScroll);
   }, []);
 
-  // --- Handle scroll behavior based on lock state ---
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      // When locked, allow page scroll - do nothing
-      if (isScrollLocked) {
-        return;
-      }
-      
-      // When unlocked, normal container scroll happens automatically
-      // Only prevent if we're in the middle of scrolling the container
-      const atTop = container.scrollTop <= 0;
-      const atBottom = container.scrollTop >= container.scrollHeight - container.clientHeight - 1;
-      
-      const shouldPrevent = 
-        (e.deltaY > 0 && !atBottom) || // scrolling down and not at bottom
-        (e.deltaY < 0 && !atTop);       // scrolling up and not at top
-      
-      if (shouldPrevent) {
-        e.preventDefault();
-      }
-    };
-
-    container.addEventListener('wheel', handleWheel, { passive: false });
-    
-    return () => {
-      container.removeEventListener('wheel', handleWheel);
-    };
-  }, [isScrollLocked]);
-
   // --- Scroll Handler ---
   useEffect(() => {
     const container = scrollContainerRef.current;
