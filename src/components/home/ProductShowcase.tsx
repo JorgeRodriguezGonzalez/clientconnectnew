@@ -156,7 +156,7 @@ export const ProductShowcase = () => {
   return <div className="w-full bg-black text-white min-h-screen flex flex-col items-center overflow-hidden pb-32">
       
       {/* Problem Statement Section */}
-      <section className="w-full max-w-[1240px] px-5 pt-32 pb-20 flex flex-col items-center text-center md:text-left">
+      <section className="w-full max-w-[1240px] px-5 pt-32 pb-8 flex flex-col items-center text-center md:text-left">
         <div className="w-full max-w-[930px] flex flex-col gap-8 md:gap-12">
           <FadeInText delay={0.2}>
             <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight text-white">
