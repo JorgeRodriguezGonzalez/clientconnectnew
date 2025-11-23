@@ -1,6 +1,6 @@
 import React from 'react';
-import { Sparkles } from 'lucide-react';
-import { motion, useInView, useAnimationControls, useScroll, useTransform } from 'framer-motion';
+import { Sparkles, Clock, Zap, Mountain, ArrowRight } from 'lucide-react';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 type UseCasesShowcaseProps = {
   subText?: string;
@@ -13,6 +13,80 @@ type UseCasesShowcaseProps = {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
+  // Props para el AnimatedHikeCard
+  cardTitle?: string;
+  cardImages?: string[];
+  cardStats?: Array<{ icon: React.ReactNode; label: string }>;
+  cardDescription?: string;
+  cardHref?: string;
+};
+
+// Componente AnimatedHikeCard integrado
+const AnimatedHikeCard = ({ 
+  title, 
+  images, 
+  stats, 
+  description, 
+  href 
+}: {
+  title: string;
+  images: string[];
+  stats: Array<{ icon: React.ReactNode; label: string }>;
+  description: string;
+  href: string;
+}) => {
+  return (
+    <a
+      href={href}
+      onClick={(e) => e.preventDefault()}
+      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg lg:max-w-md"
+    >
+      <div className="flex flex-col">
+        {/* Card Header: Title and Arrow */}
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-3xl font-bold tracking-tighter text-gray-900">{title}</h2>
+          <ArrowRight className="h-6 w-6 transition-transform duration-300 ease-in-out group-hover:translate-x-1 text-gray-900" />
+        </div>
+        
+        {/* Stacked Images with Hover Animation */}
+        <div className="relative mb-6 h-32">
+          {images.map((src, index) => (
+            <div
+              key={index}
+              className="absolute h-full w-[40%] overflow-hidden rounded-lg border-2 border-white shadow-md transition-all duration-300 ease-in-out group-hover:translate-x-[var(--tx)] group-hover:rotate-[var(--r)]"
+              style={{
+                transform: `translateX(${index * 32}px)`,
+                '--tx': `${index * 80}px`,
+                '--r': `${index * 5 - 5}deg`,
+                zIndex: images.length - index,
+              } as React.CSSProperties}
+            >
+              <img
+                src={src}
+                alt={`${title} view ${index + 1}`}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+        
+        {/* Stats Section */}
+        <div className="mb-4 flex items-center space-x-4 text-sm text-gray-500">
+          {stats.map((stat, index) => (
+            <div key={index} className="flex items-center space-x-1.5">
+              {stat.icon}
+              <span>{stat.label}</span>
+            </div>
+          ))}
+        </div>
+        
+        {/* Description */}
+        <p className="text-sm leading-relaxed text-gray-600">
+          {description}
+        </p>
+      </div>
+    </a>
+  );
 };
 
 export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
@@ -27,6 +101,20 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     subtitle = 'From setup to scale: everything you need to grow subscriptions on autopilot.',
     ctaText = 'Book a Call',
     ctaHref = '#',
+    // Valores por defecto para el card
+    cardTitle = 'Mountain Hike',
+    cardImages = [
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop',
+    ],
+    cardStats = [
+      { icon: <Clock className="h-4 w-4" />, label: '~6 Hours' },
+      { icon: <Mountain className="h-4 w-4" />, label: '8 km' },
+      { icon: <Zap className="h-4 w-4" />, label: 'Medium' },
+    ],
+    cardDescription = 'Hiking on a mountain blends physical challenge with natural beauty, offering sweeping views and a profound sense of accomplishment.',
+    cardHref = '#',
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -38,19 +126,19 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     offset: ["start end", "start center"]
   });
 
-  // Scroll animation para el border-radius (círculo a cuadrado) - LO PRIMERO QUE OCURRE
+  // Scroll animation para el border-radius (círculo a cuadrado)
   const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
     target: ref,
     offset: ["start 130vh", "start 100vh"]
   });
 
-  // Scroll animation para la expansión de la elipse (después del border-radius)
+  // Scroll animation para la expansión de la elipse
   const { scrollYProgress: scrollYProgressEllipse } = useScroll({
     target: ref,
     offset: ["start 120vh", "start 80vh"]
   });
 
-  // Scroll animation para el color del borde - empieza antes
+  // Scroll animation para el color del borde
   const { scrollYProgress: scrollYProgressBorder } = useScroll({
     target: ref,
     offset: ["start 120vh", "start center"]
@@ -62,28 +150,24 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
-  // Color del borde - gris→negro MÁS RÁPIDO, luego azul→blanco
   const borderColor = useTransform(
     scrollYProgressBorder,
     [0, 0.15, 0.4, 0.6],
     ["#e5e7eb", "#000000", "rgb(20, 35, 90)", "#ffffff"]
   );
 
-  // Animación del border-radius: de 100% (círculo) a 0% (cuadrado) - 30% MÁS LENTO
   const borderRadius = useTransform(
     scrollYProgressBorderRadius,
-    [0, 0.2925],  // Era 0.225, ahora 0.225 * 1.3 = 0.2925 (30% más lento)
+    [0, 0.2925],
     ["100%", "0%"]
   );
 
-  // Animación de expansión de la elipse - MÁS LENTO (tarda más en terminar)
   const ellipseWidth = useTransform(
     scrollYProgressEllipse,
     [0, 0.35],
     [40, 100]
   );
 
-  // Transición del fade: cuando la elipse crece, el fade desaparece - MÁS LENTO
   const fadeStart = useTransform(
     scrollYProgressEllipse,
     [0, 0.35],
@@ -102,38 +186,10 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       `radial-gradient(ellipse ${width}% 100% at center, black 0%, black ${start}%, transparent ${end}%, transparent 100%)`
   );
 
-  // Controles individuales + animaciones hover perfectas (como antes)
-  const ctrl1 = useAnimationControls();
-  const ctrl2 = useAnimationControls();
-  const ctrl3 = useAnimationControls();
-  const ctrl4 = useAnimationControls();
-  const ctrl5 = useAnimationControls();
-
-  React.useEffect(() => {
-    if (isInView) {
-      ctrl1.start({ opacity: 1, x: 0, transition: { delay: 0.6, duration: 0.6 } });
-      ctrl2.start({ opacity: 1, scale: 1, transition: { delay: 0.7, duration: 0.6 } });
-      ctrl3.start({ opacity: 1, x: 0, transition: { delay: 0.8, duration: 0.6 } });
-      ctrl4.start({ opacity: 1, scale: 1, rotate: 0, transition: { delay: 0.9, duration: 0.8 } });
-      ctrl5.start({ opacity: 1, y: 0, transition: { delay: 1.0, duration: 0.6 } });
-    }
-  }, [isInView]);
-
-  const replayAnimation = (
-    controls: ReturnType<typeof useAnimationControls>,
-    from: any,
-    to: any,
-    duration = 0.6
-  ) => {
-    controls.set(from);
-    controls.start({ ...to, transition: { duration, delay: 0 } });
-  };
-
   return (
     <motion.div className="pt-16" style={{ backgroundColor }}>
       <section ref={ref} className="relative">
-        {/* TU ARCO PERFECTO - SIN CAMBIOS, SOLO SIN SOMBRA (ya no tiene ninguna) */}
-        
+        {/* ARCO */}
         <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none">
           <motion.div
             className="w-full h-full border-t-[1px]"
@@ -150,7 +206,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           />
         </div>
 
-        {/* TÍTULO ESTILO SHOPIFY COMPLETO - DENTRO DEL CÍRCULO/CUADRADO */}
+        {/* TÍTULO ESTILO SHOPIFY */}
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
             <div className="flex flex-col items-center gap-8">
@@ -237,66 +293,28 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* CONTENIDO SUBIDO MÁS ARRIBA (más pegado al arco) */}
+        {/* CONTENIDO */}
         <div className="relative pt-48 pb-32 px-4">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-start justify-between gap-20">
 
-              {/* IMÁGENES IZQUIERDA */}
-              <div className="relative flex-1 max-w-[495px] translate-x-[80px]">
-                <div className="overflow-hidden rounded-2xl shadow-2xl">
-                  <img src="/images/background.svg" alt="" className="w-full" />
-                </div>
+              {/* COLUMNA IZQUIERDA - AnimatedHikeCard */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="relative flex-1 max-w-[495px] flex items-center justify-center"
+              >
+                <AnimatedHikeCard
+                  title={cardTitle}
+                  images={cardImages}
+                  stats={cardStats}
+                  description={cardDescription}
+                  href={cardHref}
+                />
+              </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={ctrl1}
-                  onMouseEnter={() => replayAnimation(ctrl1, { opacity: 0, x: -50 }, { opacity: 1, x: 0 })}
-                  className="absolute top-[106px] left-5 w-[406px] cursor-pointer"
-                >
-                  <img src="/images/top.svg" alt="" className="w-full" />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={ctrl2}
-                  onMouseEnter={() => replayAnimation(ctrl2, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1 })}
-                  className="absolute top-[106px] -right-8 w-[69px] cursor-pointer"
-                >
-                  <img src="/images/client.svg" alt="" className="w-full" />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={ctrl3}
-                  onMouseEnter={() => replayAnimation(ctrl3, { opacity: 0, x: 50 }, { opacity: 1, x: 0 })}
-                  className="absolute top-[238px] -right-24 w-[431px] cursor-pointer"
-                >
-                  <img src="/images/right.svg" alt="" className="w-full" />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
-                  animate={ctrl4}
-                  onMouseEnter={() => replayAnimation(ctrl4, { opacity: 0, scale: 0.8, rotate: -90 }, { opacity: 1, scale: 1, rotate: 0 }, 0.8)}
-                  className="absolute top-[323px] left-[45px] w-[109px] h-[109px] cursor-pointer"
-                >
-                  <div className="w-full h-full bg-white rounded-full shadow-xl flex items-center justify-center p-5">
-                    <img src="/images/client-connect-australia-logo.png" alt="" className="w-full h-full object-contain" />
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={ctrl5}
-                  onMouseEnter={() => replayAnimation(ctrl5, { opacity: 0, y: 50 }, { opacity: 1, y: 0 })}
-                  className="absolute bottom-0 left-0 w-[406px] cursor-pointer"
-                >
-                  <img src="/images/down.svg" alt="" className="w-full" />
-                </motion.div>
-              </div>
-
-              {/* TEXTO DERECHA - Actualizado con el estilo de ProductShowcase */}
+              {/* COLUMNA DERECHA - Texto y Calendario */}
               <div className="flex-1 max-w-[520px]">
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
