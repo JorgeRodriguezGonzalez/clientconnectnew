@@ -176,7 +176,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="w-full"
               >
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-center text-black">
+                <h1 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-center text-black">
                   {mainTitle}{' '}
                   <motion.span
                     initial={{ backgroundPosition: "400% 50%" }}
@@ -222,25 +222,8 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 <a 
                   href={ctaHref} 
                   onClick={e => e.preventDefault()} 
-                  className="relative inline-flex items-center justify-center gap-2.5 px-5 py-[14px] bg-gradient-to-r from-[#11B2F8] to-[#504DF9] rounded-xl shadow-[inset_0_2.4px_1.2px_0_rgba(255,255,255,0.25),inset_0_1.2px_1.2px_0_rgba(0,0,0,0.1),inset_0_-2.4px_0_0_rgba(0,0,0,0.1),inset_0_0_9.6px_4.8px_rgba(255,255,255,0.16),0_8px_20px_-4px_rgba(0,0,0,0.2)] overflow-hidden group"
+                  className="relative inline-flex items-center justify-center gap-2.5 px-5 py-[14px] bg-black rounded-xl shadow-[0_8px_20px_-4px_rgba(0,0,0,0.3)] overflow-hidden group hover:bg-gray-900 transition-colors"
                 >
-                  <div className="absolute -left-[100px] top-[-21px] bottom-[-21px] w-[76px] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <motion.div 
-                      animate={{ x: [0, 285] }} 
-                      transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }} 
-                      className="relative w-full h-full"
-                    >
-                      <div 
-                        className="absolute top-[1.4px] left-[33px] w-[10px] h-[100px] bg-white/20 blur-[6px] shadow-[0_1px_2px_0_rgba(0,0,0,0.25)]" 
-                        style={{ transform: 'rotate(-30deg)' }} 
-                      />
-                      <div 
-                        className="absolute top-[1.4px] left-[23px] w-[30px] h-[100px] bg-white/20 blur-[10px]" 
-                        style={{ transform: 'rotate(-30deg)' }} 
-                      />
-                    </motion.div>
-                  </div>
-                  
                   <span className="text-base font-medium leading-6 tracking-[-0.5px] text-white z-10">
                     {ctaText}
                   </span>
@@ -328,7 +311,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.5 }}
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-gray-900 mb-6"
+                  className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900 mb-6"
                 >
                   {heading}{' '}
                   <motion.span
