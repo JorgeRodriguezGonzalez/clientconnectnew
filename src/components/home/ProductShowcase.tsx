@@ -118,21 +118,22 @@ export const ProductShowcase = () => {
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
+      // When locked, allow page scroll - do nothing
       if (isScrollLocked) {
-        // When locked, don't prevent - allow page scroll to continue
         return;
       }
       
-      // When unlocked, manage container scroll and prevent page scroll appropriately
-      const scrollingUp = e.deltaY < 0;
-      const scrollingDown = e.deltaY > 0;
-      const atTop = container.scrollTop === 0;
-      const atBottom = container.scrollTop >= container.scrollHeight - container.clientHeight;
+      // When unlocked, normal container scroll happens automatically
+      // Only prevent if we're in the middle of scrolling the container
+      const atTop = container.scrollTop <= 0;
+      const atBottom = container.scrollTop >= container.scrollHeight - container.clientHeight - 1;
       
-      // Only prevent page scroll if we're scrolling within the container bounds
-      if ((scrollingDown && !atBottom) || (scrollingUp && !atTop)) {
+      const shouldPrevent = 
+        (e.deltaY > 0 && !atBottom) || // scrolling down and not at bottom
+        (e.deltaY < 0 && !atTop);       // scrolling up and not at top
+      
+      if (shouldPrevent) {
         e.preventDefault();
-        e.stopPropagation();
       }
     };
 
