@@ -340,10 +340,103 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.5 }}
-                  className="text-base md:text-lg font-medium leading-relaxed text-gray-600 tracking-tight"
+                  className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight mb-8"
                 >
                   {description}
                 </motion.p>
+
+                {/* Calendar Component */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  className="bg-white rounded-3xl shadow-lg p-6 max-w-[420px]"
+                >
+                  {/* Calendar Header */}
+                  <div className="flex items-center justify-between mb-6">
+                    <button className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <h3 className="text-lg font-bold text-gray-900">November 2025</h3>
+                    <button className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Calendar Grid */}
+                  <div className="grid grid-cols-7 gap-2">
+                    {/* Day Headers */}
+                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, i) => (
+                      <div key={i} className="text-center text-sm font-medium text-gray-400 py-2">
+                        {day}
+                      </div>
+                    ))}
+
+                    {/* Previous Month Days */}
+                    {[26, 27, 28, 29, 30, 31].map((day) => (
+                      <div key={`prev-${day}`} className="text-center py-3 text-sm text-gray-300">
+                        {day}
+                      </div>
+                    ))}
+
+                    {/* Current Month Days */}
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">1</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">2</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">3</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">4</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">5</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">6</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">7</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">8</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">9</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">10</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">11</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">12</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">13</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">14</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">15</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">16</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">17</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">18</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">19</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">20</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">21</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">22</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">23</div>
+                    
+                    {/* Selected Day - 24 */}
+                    <div className="flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-2xl bg-gray-900 flex items-center justify-center text-sm font-bold text-white shadow-lg">
+                        24
+                      </div>
+                    </div>
+                    
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">25</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">26</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">27</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">28</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">29</div>
+                    <div className="text-center py-3 text-sm font-semibold text-gray-900">30</div>
+
+                    {/* Next Month Days */}
+                    <div className="text-center py-3 text-sm text-gray-300 relative">
+                      1
+                      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 flex gap-0.5">
+                        <div className="w-1 h-1 rounded-full bg-pink-400"></div>
+                        <div className="w-1 h-1 rounded-full bg-pink-400"></div>
+                      </div>
+                    </div>
+                    {[2, 3, 4, 5, 6].map((day) => (
+                      <div key={`next-${day}`} className="text-center py-3 text-sm text-gray-300">
+                        {day}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
               </div>
             </div>
           </div>
