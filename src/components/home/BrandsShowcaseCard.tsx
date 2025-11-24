@@ -91,7 +91,7 @@ export const BrandsShowcaseCard = ({
               delay: 0.15
             }}
           >
-            <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ60.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
+            <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
               objectPosition: '50% 50%'
             }} />
           </motion.div>
@@ -173,7 +173,7 @@ export const BrandsShowcaseCard = ({
               delay: 0.3
             }}
           >
-            <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ60.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
+            <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
               objectPosition: '50% 50%'
             }} />
           </motion.div>
