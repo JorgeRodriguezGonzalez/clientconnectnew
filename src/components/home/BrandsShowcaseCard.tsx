@@ -27,12 +27,12 @@ export const BrandsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[800px] h-[310px] rounded-2xl overflow-hidden border shadow-lg transition-all duration-500"
+      className="relative flex flex-col items-center gap-1.5 w-[700px] h-[400px] rounded-2xl overflow-hidden border shadow-lg transition-all duration-500"
       style={{ 
         padding: '16px',
         background: isHovered 
-          ? 'linear-gradient(135deg, rgba(103, 188, 183, 0.15) 0%, rgba(222, 131, 99, 0.15) 100%)'
-          : '#FFFFFF'
+          ? '#000000'
+          : 'linear-gradient(135deg, rgba(103, 188, 183, 0.2) 0%, rgba(222, 131, 99, 0.1) 50%, rgba(255, 255, 255, 0.95) 100%)'
       }}
       initial={{
         opacity: 0,
@@ -63,7 +63,7 @@ export const BrandsShowcaseCard = ({
         />
       )}
 
-      <div className="relative flex flex-col items-center justify-center w-[768px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#FAFAF9' }}>
+      <div className="relative flex flex-col items-center justify-center w-[668px] h-[260px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#FAFAF9' }}>
         <div className="relative w-full h-full">
           {/* Imagen 1 - Izquierda (desde la izquierda) */}
           <motion.div 
@@ -125,7 +125,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[136px] h-[250px] overflow-visible rounded-[9px]" 
             style={{
               top: '8px',
-              left: '316px',
+              left: '266px',
               transformOrigin: '68px 125px',
               boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px'
             }} 
@@ -153,7 +153,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[120px] h-[204px] overflow-visible" 
             style={{
               top: '51px',
-              left: '508px',
+              left: '408px',
               transformOrigin: '60px 102px'
             }} 
             initial={{
@@ -180,7 +180,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[120px] h-[204px] overflow-visible" 
             style={{
               top: '51px',
-              left: '642px',
+              left: '542px',
               transformOrigin: '60px 102px'
             }} 
             initial={{
@@ -203,11 +203,15 @@ export const BrandsShowcaseCard = ({
         </div>
       </div>
       
-      <div className="flex flex-col items-start justify-start gap-2 w-[768px] h-[100px] px-4 pt-4 pb-6">
-        <h2 className="text-[6px] md:text-[12px] lg:text-[22px] font-bold leading-[1.1] tracking-tight text-gray-900 m-0">
+      <div className="flex flex-col items-start justify-start gap-2 w-[668px] h-[120px] px-4 pt-4 pb-6">
+        <h2 className={`text-[6px] md:text-[12px] lg:text-[22px] font-bold leading-[1.1] tracking-tight m-0 transition-colors duration-500 ${
+          isHovered ? 'text-white' : 'text-gray-900'
+        }`}>
           {title}
         </h2>
-        <p className="text-[14px] md:text-[16px] font-medium leading-relaxed tracking-tight text-gray-600 m-0">
+        <p className={`text-[14px] md:text-[16px] font-medium leading-relaxed tracking-tight m-0 transition-colors duration-500 ${
+          isHovered ? 'text-white' : 'text-gray-600'
+        }`}>
           {description}
         </p>
       </div>
