@@ -148,7 +148,7 @@ const TaskTimeline = () => {
   const circumference = 2 * Math.PI * 12;
 
   return (
-    <div className="w-full max-w-[280px] bg-white rounded-2xl border border-gray-200 p-4 shadow-lg">
+    <div className="w-full max-w-[320px] bg-white rounded-2xl border border-gray-200 p-5 shadow-lg">
       <div className="space-y-0">
         {tasks.map((task, index) => (
           <div key={task.id} className="flex gap-3">
@@ -303,7 +303,7 @@ const AnimatedHikeCard = ({
       </div>
 
       {/* TaskTimeline superpuesta en la esquina inferior derecha */}
-      <div className="absolute -bottom-8 -right-8 z-10">
+      <div className="absolute -bottom-8 -right-12 z-10">
         <TaskTimeline />
       </div>
     </motion.a>
