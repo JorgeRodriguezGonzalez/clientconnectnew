@@ -98,10 +98,21 @@ export function FinalHero() {
             <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
-                animate={{ opacity: 1, width: "30rem" }}
-                transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
-                className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] bg-gradient-conic from-cyan-500 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
+                animate={{ 
+                  opacity: 1, 
+                  width: "30rem",
+                  "--gradient-color": ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                }}
+                transition={{ 
+                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  "--gradient-color": { duration: 12, ease: "linear", repeat: Infinity }
+                }}
+                style={{ 
+                  backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`,
+                  "--gradient-color": "#edbf86"
+                } as any}
+                className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
               >
                 <motion.div
                   className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
@@ -115,10 +126,21 @@ export function FinalHero() {
 
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
-                animate={{ opacity: 1, width: "30rem" }}
-                transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))` }}
-                className="absolute inset-auto left-1/2 h-56 w-[30rem] bg-gradient-conic from-transparent via-transparent to-cyan-500 text-white [--conic-position:from_290deg_at_center_top]"
+                animate={{ 
+                  opacity: 1, 
+                  width: "30rem",
+                  "--gradient-color": ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                }}
+                transition={{ 
+                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  "--gradient-color": { duration: 12, ease: "linear", repeat: Infinity }
+                }}
+                style={{ 
+                  backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`,
+                  "--gradient-color": "#edbf86"
+                } as any}
+                className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
               >
                 <motion.div
                   className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]"
@@ -142,23 +164,45 @@ export function FinalHero() {
               />
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.5 }}
-                transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-cyan-500 blur-3xl"
+                animate={{ 
+                  opacity: 0.5,
+                  backgroundColor: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                }}
+                transition={{ 
+                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  backgroundColor: { duration: 12, ease: "linear", repeat: Infinity }
+                }}
+                className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl"
               />
 
               <motion.div
                 initial={{ opacity: 0, width: "8rem" }}
-                animate={{ opacity: 1, width: "16rem" }}
-                transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full bg-cyan-400 blur-2xl"
+                animate={{ 
+                  opacity: 1, 
+                  width: "16rem",
+                  backgroundColor: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                }}
+                transition={{ 
+                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  backgroundColor: { duration: 12, ease: "linear", repeat: Infinity }
+                }}
+                className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl"
               ></motion.div>
 
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
-                animate={{ opacity: 1, width: "30rem" }}
-                transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem] bg-cyan-400"
+                animate={{ 
+                  opacity: 1, 
+                  width: "30rem",
+                  backgroundColor: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                }}
+                transition={{ 
+                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  backgroundColor: { duration: 12, ease: "linear", repeat: Infinity }
+                }}
+                className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]"
               ></motion.div>
 
               <motion.div
@@ -169,11 +213,11 @@ export function FinalHero() {
 
             {/* Título principal */}
             <motion.h1
-              initial={{ opacity: 0, y: 80 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-              className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
-              style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.5px' }}
+              className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center text-white relative z-50"
+              style={{ fontFamily: '"Inter Display", sans-serif' }}
             >
               We Bring{" "}
               <motion.span
@@ -185,7 +229,7 @@ export function FinalHero() {
                 {words.map((word, index) => (
                   <motion.span
                     key={index}
-                    className="font-light"
+                    className="font-bold"
                     initial={{ opacity: 0, y: -100 }}
                     transition={{ type: "spring", stiffness: 50, opacity: { duration: 0.2 } }}
                     animate={
@@ -204,8 +248,8 @@ export function FinalHero() {
 
           {/* Subtítulo */}
           <motion.p
-            initial={{ opacity: 0, y: 80 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
             style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
@@ -215,8 +259,8 @@ export function FinalHero() {
 
           {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 80 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
           >
@@ -237,15 +281,15 @@ export function FinalHero() {
 
           {/* Trusted Brands */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
             transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-12 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
               <motion.div 
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
                 className="text-center text-2xl md:text-[16px] leading-tight"
               >
@@ -254,8 +298,8 @@ export function FinalHero() {
                 <span className="text-white">Used by the leaders.</span>
               </motion.div>
               <motion.div 
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ delay: 4.2, duration: 0.8, ease: "easeOut" }}
                 className="mt-6 grid grid-cols-5 text-white"
               >
