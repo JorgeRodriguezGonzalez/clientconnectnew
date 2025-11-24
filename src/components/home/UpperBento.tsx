@@ -65,7 +65,7 @@ export const UpperBento = (_props: UpperBentoProps) => {
       </div>
 
       {/* Cards Grid */}
-      <div className="flex flex-wrap items-start justify-center gap-8 w-full max-w-[1200px]">
+      <div className="flex flex-wrap items-start justify-center gap-4 w-full max-w-[1200px]">
         <BrandsShowcaseCard />
         <SkillsShowcaseCard />
       </div>
