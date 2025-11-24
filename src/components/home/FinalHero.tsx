@@ -30,8 +30,8 @@ export function FinalHero() {
     scrollYProgress,
     [0, 1],
     [
-      "rgb(5, 10, 25)",
-      "rgb(20, 35, 90)"
+      "rgb(0, 0, 0)",
+      "#de8363"
     ]
   );
 

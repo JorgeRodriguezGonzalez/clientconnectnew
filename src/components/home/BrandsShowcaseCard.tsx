@@ -17,12 +17,9 @@ export const BrandsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[800px] h-[310px] rounded-[8px] overflow-hidden"
+      className="relative flex flex-col items-center gap-1.5 w-[800px] h-[310px] rounded-2xl overflow-hidden border bg-white shadow-lg"
       style={{ 
-        backgroundColor: '#FFFFFF',
-        border: '0.8px solid #DAE6FE',
-        padding: '16px',
-        boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)'
+        padding: '16px'
       }}
       initial={{
         opacity: 0,
