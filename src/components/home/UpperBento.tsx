@@ -41,7 +41,7 @@ const FadeInText = ({
         x: isInView ? 0 : directionOffset[direction].x
       }}
       transition={{ 
-        duration: 0.6, 
+        duration: 0.8, 
         ease: "easeOut", 
         delay 
       }}
