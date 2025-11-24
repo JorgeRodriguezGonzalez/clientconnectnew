@@ -285,7 +285,7 @@ const AnimatedHikeCard = ({
   return (
     <div className="relative">
       {/* Overlay difuminado diagonal - FUERA de la tarjeta para cubrir borde y sombra */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/90 via-white/50 via-30% to-transparent to-60% pointer-events-none z-[10]" />
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white via-white/60 via-20% to-transparent to-40% pointer-events-none z-[10]" />
       
       <motion.a
         ref={cardRef}
