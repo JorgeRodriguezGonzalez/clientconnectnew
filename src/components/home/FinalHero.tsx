@@ -106,7 +106,7 @@ export function FinalHero() {
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
                   width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  "--gradient-color": { duration: 12, ease: "linear", repeat: Infinity }
+                  "--gradient-color": { duration: 8, ease: "linear", repeat: Infinity }
                 }}
                 style={{ 
                   backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`,
@@ -134,7 +134,7 @@ export function FinalHero() {
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
                   width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  "--gradient-color": { duration: 12, ease: "linear", repeat: Infinity }
+                  "--gradient-color": { duration: 8, ease: "linear", repeat: Infinity }
                 }}
                 style={{ 
                   backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`,
@@ -170,7 +170,7 @@ export function FinalHero() {
                 }}
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  backgroundColor: { duration: 12, ease: "linear", repeat: Infinity }
+                  backgroundColor: { duration: 8, ease: "linear", repeat: Infinity }
                 }}
                 className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl"
               />
@@ -185,7 +185,7 @@ export function FinalHero() {
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
                   width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  backgroundColor: { duration: 12, ease: "linear", repeat: Infinity }
+                  backgroundColor: { duration: 8, ease: "linear", repeat: Infinity }
                 }}
                 className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl"
               ></motion.div>
@@ -200,7 +200,7 @@ export function FinalHero() {
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
                   width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  backgroundColor: { duration: 12, ease: "linear", repeat: Infinity }
+                  backgroundColor: { duration: 8, ease: "linear", repeat: Infinity }
                 }}
                 className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]"
               ></motion.div>
@@ -269,14 +269,46 @@ export function FinalHero() {
                 How we do it
               </p>
             </a>
-            <a href="#contact" className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-cyan-300/80 rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]">
-              <div className="w-[18px] h-[14px] relative overflow-hidden">
-                <Calendar className="w-[17px] h-[14px] text-cyan-300" />
-              </div>
-              <p className="text-[14px] font-medium leading-5 text-cyan-300 whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+            <motion.a 
+              href="#contact"
+              animate={{
+                borderColor: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+              }}
+              transition={{
+                duration: 8,
+                ease: "linear",
+                repeat: Infinity
+              }}
+              className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]"
+            >
+              <motion.div 
+                className="w-[18px] h-[14px] relative overflow-hidden"
+                animate={{
+                  color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                }}
+                transition={{
+                  duration: 8,
+                  ease: "linear",
+                  repeat: Infinity
+                }}
+              >
+                <Calendar className="w-[17px] h-[14px]" />
+              </motion.div>
+              <motion.p 
+                className="text-[14px] font-medium leading-5 whitespace-nowrap z-[1]" 
+                style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
+                animate={{
+                  color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                }}
+                transition={{
+                  duration: 8,
+                  ease: "linear",
+                  repeat: Infinity
+                }}
+              >
                 Book Free Consultation
-              </p>
-            </a>
+              </motion.p>
+            </motion.a>
           </motion.div>
 
           {/* Trusted Brands */}
@@ -293,7 +325,18 @@ export function FinalHero() {
                 transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
                 className="text-center text-2xl md:text-[16px] leading-tight"
               >
-                <span className="text-cyan-300">Trusted by experts.</span>
+                <motion.span 
+                  animate={{
+                    color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                  }}
+                  transition={{
+                    duration: 8,
+                    ease: "linear",
+                    repeat: Infinity
+                  }}
+                >
+                  Trusted by experts.
+                </motion.span>
                 <br />
                 <span className="text-white">Used by the leaders.</span>
               </motion.div>

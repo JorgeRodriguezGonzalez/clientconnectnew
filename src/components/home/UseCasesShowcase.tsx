@@ -407,27 +407,27 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.301],
+    [0, 0.15, 0.151],
     ["#000000", "#1a1a1a", "#ffffff"]
   );
 
   const borderColor = useTransform(
     scrollYProgressBorder,
-    [0, 0.15, 0.3, 0.301],
+    [0, 0.15, 0.15, 0.151],
     ["#e5e7eb", "#000000", "#1a1a1a", "#ffffff"]
   );
 
   // Color de texto para badge y título principal
   const textColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.301],
+    [0, 0.15, 0.151],
     ["#ffffff", "#ffffff", "#000000"]
   );
 
   // Color para el subtitle
   const subtitleColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.301],
+    [0, 0.15, 0.151],
     ["#d1d5db", "#d1d5db", "#6b7280"]
   );
 
@@ -492,7 +492,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   style={{ 
                     backgroundColor: useTransform(
                       scrollYProgress,
-                      [0, 0.3, 0.301],
+                      [0, 0.15, 0.151],
                       ["#1a1a1a", "#1a1a1a", "#ffffff"]
                     )
                   }}
@@ -503,7 +503,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                       style={{ 
                         fill: useTransform(
                           scrollYProgress,
-                          [0, 0.3, 0.301],
+                          [0, 0.15, 0.151],
                           ["#ffffff", "#ffffff", "#000000"]
                         )
                       }}
@@ -514,7 +514,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                     style={{ 
                       color: useTransform(
                         scrollYProgress,
-                        [0, 0.3, 0.301],
+                        [0, 0.15, 0.151],
                         ["#ffffff", "#ffffff", "#242424"]
                       )
                     }}

@@ -40,7 +40,7 @@ export const SkillsShowcaseCard = ({
   return (
     <motion.div 
       ref={ref}
-      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-2xl border shadow-lg transition-all duration-500"
+      className="relative flex h-[400px] w-[450px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-2xl border shadow-lg transition-all duration-500"
       style={{
         padding: '16px',
         background: isHovered 
@@ -65,12 +65,12 @@ export const SkillsShowcaseCard = ({
         />
       )}
 
-      <div className="relative flex h-[192px] w-[294.6px] items-center justify-center overflow-hidden rounded-[12px]" style={{ backgroundColor: '#FAFAF9' }}>
+      <div className="relative flex h-[260px] w-[418px] items-center justify-center overflow-hidden rounded-[12px]" style={{ backgroundColor: '#FAFAF9' }}>
         <div className="absolute inset-0 flex items-center justify-center">
           <img 
             src={logoSrc} 
             alt="Client Connect Australia Logo" 
-            className="w-[180px] h-auto object-contain opacity-20"
+            className="w-[240px] h-auto object-contain opacity-20"
           />
         </div>
         {skills.map((skill, index) => (
@@ -98,7 +98,7 @@ export const SkillsShowcaseCard = ({
           </motion.div>
         ))}
       </div>
-      <div className="flex w-[294.6px] h-[100px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
+      <div className="flex w-[418px] h-[120px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
         <h2 className={`text-[6px] md:text-[12px] lg:text-[22px] font-bold leading-[1.1] tracking-tight m-0 transition-colors duration-500 ${
           isHovered ? 'text-white' : 'text-gray-900'
         }`}>
