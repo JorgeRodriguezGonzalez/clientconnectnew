@@ -130,22 +130,6 @@ function FeaturesSectionMinimal() {
     return () => observer.disconnect();
   }, []);
 
-  const toggleTheme = () => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-    const current = getRootTheme();
-    const next = current === "dark" ? "light" : "dark";
-    root.classList.toggle("dark", next === "dark");
-    root.classList.toggle("light", next === "light");
-    root.setAttribute("data-theme", next);
-    setTheme(next);
-    try {
-      window.localStorage?.setItem("bento-theme", next);
-    } catch (_err) {
-      /* ignore */
-    }
-  };
-
   const features = [
     {
       title: "Strategic Growth",
@@ -323,14 +307,14 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
         </div>
 
         {isStrategicGrowth && (
-          <div className="relative w-full h-[200px] mt-2 overflow-hidden">
+          <div className="relative w-full h-[160px] mt-2 overflow-hidden">
             <motion.div 
               key={`img1-${hoverCount}`}
               className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '80px',
+                top: '40px',
                 left: '50%',
-                marginLeft: '-280px',
+                marginLeft: '-260px',
                 transformOrigin: '60px 102px'
               }} 
               initial={{ x: -20, opacity: 0.8 }} 
@@ -348,7 +332,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               key={`img2-${hoverCount}`}
               className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '80px',
+                top: '40px',
                 left: '50%',
                 marginLeft: '-140px',
                 transformOrigin: '60px 102px'
@@ -368,7 +352,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               key={`img3-${hoverCount}`}
               className="absolute w-[136px] h-[250px]" 
               style={{
-                top: '30px',
+                top: '10px',
                 left: '50%',
                 marginLeft: '-68px',
                 transformOrigin: '68px 125px',
@@ -390,7 +374,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               key={`img4-${hoverCount}`}
               className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '80px',
+                top: '40px',
                 left: '50%',
                 marginLeft: '76px',
                 transformOrigin: '60px 102px'
@@ -410,9 +394,9 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               key={`img5-${hoverCount}`}
               className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '80px',
+                top: '40px',
                 left: '50%',
-                marginLeft: '216px',
+                marginLeft: '196px',
                 transformOrigin: '60px 102px'
               }} 
               initial={{ x: 20, opacity: 0.8 }} 
