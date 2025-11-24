@@ -40,7 +40,7 @@ export const BrandsShowcaseCard = ({
       }} 
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[653.2px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#F7FCFF' }}>
+      <div className="relative flex flex-col items-center justify-center w-[768px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#F7FCFF' }}>
         <div className="relative w-full h-full">
           {/* Imagen 1 - Izquierda (desde la izquierda) */}
           <motion.div 
@@ -91,7 +91,7 @@ export const BrandsShowcaseCard = ({
               delay: 0.15
             }}
           >
-            <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
+            <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ60.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
               objectPosition: '50% 50%'
             }} />
           </motion.div>
@@ -102,7 +102,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[136px] h-[250px] overflow-visible rounded-[9px]" 
             style={{
               top: '8px',
-              left: '258.6px',
+              left: '316px',
               transformOrigin: '68px 125px',
               boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px'
             }} 
@@ -130,7 +130,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[120px] h-[204px] overflow-visible" 
             style={{
               top: '51px',
-              left: '405px',
+              left: '508px',
               transformOrigin: '60px 102px'
             }} 
             initial={{
@@ -157,7 +157,7 @@ export const BrandsShowcaseCard = ({
             className="absolute w-[120px] h-[204px] overflow-visible" 
             style={{
               top: '51px',
-              left: '527.6px',
+              left: '642px',
               transformOrigin: '60px 102px'
             }} 
             initial={{
@@ -173,14 +173,14 @@ export const BrandsShowcaseCard = ({
               delay: 0.3
             }}
           >
-            <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
+            <img src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ60.png?scale-down-to=512" alt="Website preview" className="w-full h-full object-cover" style={{
               objectPosition: '50% 50%'
             }} />
           </motion.div>
         </div>
       </div>
       
-      <div className="flex flex-col items-start justify-start gap-2 w-[653.2px] h-[100px] px-4 pt-4 pb-6">
+      <div className="flex flex-col items-start justify-start gap-2 w-[768px] h-[100px] px-4 pt-4 pb-6">
         <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0" style={{
           fontFamily: 'Inter, "Inter Placeholder", sans-serif',
           fontStyle: 'normal',
