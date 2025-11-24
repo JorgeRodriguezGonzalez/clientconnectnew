@@ -4,11 +4,7 @@ import { Send, Calendar } from 'lucide-react';
 import { motion } from "framer-motion";
 import { Sparkles } from "@/components/ui/sparkles";
 
-type FinalHeroProps = {
-  nextSectionRef?: React.RefObject<HTMLDivElement>;
-};
-
-export function FinalHero({ nextSectionRef }: FinalHeroProps) {
+export function FinalHero() {
   const ref = React.useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [titleNumber, setTitleNumber] = useState(0);
@@ -30,12 +26,6 @@ export function FinalHero({ nextSectionRef }: FinalHeroProps) {
     offset: ["start start", "end end"],
   });
 
-  // Scroll basado en el siguiente componente
-  const { scrollYProgress: nextSectionProgress } = useScroll({
-    target: nextSectionRef || ref,
-    offset: ["start end", "start start"],
-  });
-
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 1],
@@ -43,67 +33,6 @@ export function FinalHero({ nextSectionRef }: FinalHeroProps) {
       "rgb(0, 0, 0)",
       "rgb(25, 25, 25)"
     ]
-  );
-
-  // Fade out individual para cada elemento basado en nextSectionProgress
-  const lampOpacity = useTransform(
-    nextSectionProgress,
-    [0, 0.2],
-    [1, 0]
-  );
-
-  const lampBlur = useTransform(
-    nextSectionProgress,
-    [0, 0.2],
-    [0, 10]
-  );
-
-  const titleOpacity = useTransform(
-    nextSectionProgress,
-    [0.1, 0.3],
-    [1, 0]
-  );
-
-  const titleBlur = useTransform(
-    nextSectionProgress,
-    [0.1, 0.3],
-    [0, 10]
-  );
-
-  const subtitleOpacity = useTransform(
-    nextSectionProgress,
-    [0.2, 0.4],
-    [1, 0]
-  );
-
-  const subtitleBlur = useTransform(
-    nextSectionProgress,
-    [0.2, 0.4],
-    [0, 10]
-  );
-
-  const ctaOpacity = useTransform(
-    nextSectionProgress,
-    [0.3, 0.5],
-    [1, 0]
-  );
-
-  const ctaBlur = useTransform(
-    nextSectionProgress,
-    [0.3, 0.5],
-    [0, 10]
-  );
-
-  const trustedOpacity = useTransform(
-    nextSectionProgress,
-    [0.4, 0.6],
-    [1, 0]
-  );
-
-  const trustedBlur = useTransform(
-    nextSectionProgress,
-    [0.4, 0.6],
-    [0, 10]
   );
 
   // Transform para el color del arco (igual que tenía el círculo)
@@ -166,13 +95,7 @@ export function FinalHero({ nextSectionRef }: FinalHeroProps) {
           {/* LAMP + TÍTULO */}
           <div className="flex flex-col items-center gap-[-20px]">
             {/* Lamp Effect */}
-            <motion.div 
-              className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible"
-              style={{
-                opacity: lampOpacity,
-                filter: useTransform(lampBlur, (value) => `blur(${value}px)`)
-              }}
-            >
+            <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
                 animate={{ 
@@ -286,19 +209,15 @@ export function FinalHero({ nextSectionRef }: FinalHeroProps) {
                 className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]"
                 style={{ backgroundColor }}
               />
-            </motion.div>
+            </div>
 
             {/* Título principal */}
             <motion.h1
               initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-              style={{ 
-                fontFamily: '"Inter Display", sans-serif',
-                opacity: titleOpacity,
-                filter: useTransform(titleBlur, (value) => `blur(${value}px)`)
-              }}
               className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center text-white relative z-50"
+              style={{ fontFamily: '"Inter Display", sans-serif' }}
             >
               We Bring{" "}
               <motion.span
@@ -333,12 +252,7 @@ export function FinalHero({ nextSectionRef }: FinalHeroProps) {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
-            style={{ 
-              fontFamily: '"Inter Display", sans-serif', 
-              letterSpacing: '0.2px',
-              opacity: subtitleOpacity,
-              filter: useTransform(subtitleBlur, (value) => `blur(${value}px)`)
-            }}
+            style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
           </motion.p>
@@ -349,10 +263,6 @@ export function FinalHero({ nextSectionRef }: FinalHeroProps) {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
-            style={{
-              opacity: ctaOpacity,
-              filter: useTransform(ctaBlur, (value) => `blur(${value}px)`)
-            }}
           >
             <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
               <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
@@ -407,10 +317,6 @@ export function FinalHero({ nextSectionRef }: FinalHeroProps) {
             animate={{ opacity: 1, filter: "blur(0px)" }}
             transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-12 relative z-50"
-            style={{
-              opacity: trustedOpacity,
-              filter: useTransform(trustedBlur, (value) => `blur(${value}px)`)
-            }}
           >
             <div className="mx-auto w-full max-w-2xl">
               <motion.div 
