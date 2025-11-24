@@ -27,27 +27,45 @@ export const SkillsShowcaseCard = ({
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [isHovered, setIsHovered] = React.useState(false);
   const [hoverCount, setHoverCount] = React.useState(0);
+  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
 
   return (
     <motion.div 
       ref={ref}
-      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-[8px]"
+      className="relative flex h-[310px] w-[326.6px] max-w-full flex-col items-center gap-1.5 overflow-hidden rounded-2xl border shadow-lg transition-all duration-500"
       style={{
-        backgroundColor: '#FFFFFF',
-        border: '0.8px solid #DAE6FE',
         padding: '16px',
-        boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)'
+        background: isHovered 
+          ? 'linear-gradient(135deg, rgba(103, 188, 183, 0.15) 0%, rgba(222, 131, 99, 0.15) 100%)'
+          : '#FFFFFF'
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
-      onHoverStart={() => {
-        setIsHovered(true);
-        setHoverCount(prev => prev + 1);
-      }}
-      onHoverEnd={() => setIsHovered(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={handleMouseMove}
+      onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex h-[192px] w-[294.6px] items-center justify-center overflow-hidden rounded-[12px]" style={{ backgroundColor: '#F7FCFF' }}>
+      {/* Spotlight Effect */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none opacity-50 transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(circle 200px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.8), transparent 80%)`
+          }}
+        />
+      )}
+
+      <div className="relative flex h-[192px] w-[294.6px] items-center justify-center overflow-hidden rounded-[12px]" style={{ backgroundColor: '#FAFAF9' }}>
         <div className="absolute inset-0 flex items-center justify-center">
           <img 
             src={logoSrc} 
@@ -81,16 +99,10 @@ export const SkillsShowcaseCard = ({
         ))}
       </div>
       <div className="flex w-[294.6px] h-[100px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
-        <h2 className="m-0 w-[262.6px] break-words border-0 p-0 text-[22px] font-semibold leading-[30px] text-black/90" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif',
-          fontStyle: 'normal',
-          letterSpacing: '0px'
-        }}>
+        <h2 className="text-[6px] md:text-[12px] lg:text-[22px] font-bold leading-[1.1] tracking-tight text-gray-900 m-0">
           {title}
         </h2>
-        <p className="m-0 w-[262.6px] break-words border-0 p-0 text-[16px] font-normal leading-[22.4px] tracking-[-0.4px] text-black/60" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif'
-        }}>
+        <p className="text-[14px] md:text-[16px] font-medium leading-relaxed tracking-tight text-gray-600 m-0">
           {subtitle}
         </p>
       </div>

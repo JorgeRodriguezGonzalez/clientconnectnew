@@ -151,21 +151,8 @@ const TaskTimeline = () => {
   const circumference = 2 * Math.PI * 12;
 
   return (
-    <motion.div 
+    <div 
       ref={timelineRef}
-      initial={{ 
-        opacity: 0, 
-        filter: "blur(10px)"
-      }}
-      animate={{ 
-        opacity: isTimelineInView ? 1 : 0, 
-        filter: isTimelineInView ? "blur(0px)" : "blur(10px)"
-      }}
-      transition={{ 
-        duration: 0.8, 
-        delay: 1.0,
-        ease: "easeOut" 
-      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`w-[340px] rounded-2xl border p-6 transition-all duration-300 ${
@@ -173,6 +160,12 @@ const TaskTimeline = () => {
           ? 'bg-white border-gray-200 shadow-lg' 
           : 'bg-black border-gray-800 shadow-sm'
       }`}
+      style={{
+        opacity: isTimelineInView ? 1 : 0,
+        filter: isTimelineInView ? 'blur(0px)' : 'blur(10px)',
+        transform: 'translateZ(0)',
+        transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s'
+      }}
     >
       <div className="space-y-0">
         {tasks.map((task, index) => (
@@ -260,7 +253,7 @@ const TaskTimeline = () => {
           </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 };
 
