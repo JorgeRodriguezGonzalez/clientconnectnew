@@ -68,8 +68,8 @@ const FadeInText = ({
   );
 };
 
-// Componente TaskTimeline integrado
-const TaskTimeline = () => {
+// Componente TaskTimeline integrado con fade in glass blur
+const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
   type TaskStatus = 'pending' | 'active' | 'complete';
   type TaskItem = {
     id: string;
@@ -148,7 +148,22 @@ const TaskTimeline = () => {
   const circumference = 2 * Math.PI * 12;
 
   return (
-    <div className="w-[380px] bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+    <motion.div 
+      initial={{ 
+        opacity: 0, 
+        filter: "blur(10px)"
+      }}
+      animate={{ 
+        opacity: isInView ? 1 : 0, 
+        filter: isInView ? "blur(0px)" : "blur(10px)"
+      }}
+      transition={{ 
+        duration: 0.8, 
+        delay: 1.3,
+        ease: "easeOut" 
+      }}
+      className="w-[380px] bg-white rounded-2xl border border-gray-200 p-6 shadow-lg"
+    >
       <div className="space-y-0">
         {tasks.map((task, index) => (
           <div key={task.id} className="flex gap-3">
@@ -209,7 +224,7 @@ const TaskTimeline = () => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -253,19 +268,22 @@ const AnimatedHikeCard = ({
         delay: 0.3, 
         ease: "easeOut" 
       }}
-      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg hover:translate-y-0 hover:shadow-sm lg:max-w-md"
+      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg hover:translate-y-0 hover:shadow-sm lg:max-w-md overflow-hidden"
       style={{
         transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
       }}
     >
       <div className="flex flex-col">
+        {/* Overlay difuminado en el lado izquierdo */}
+        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white/80 to-transparent pointer-events-none z-[1]" />
+        
         {/* Card Header: Title */}
-        <div className="mb-3">
-          <h2 className="text-[10px] md:text-[16px] lg:text-[26px] font-[500] leading-[1.1] tracking-tight text-gray-900">{title}</h2>
+        <div className="mb-3 relative z-[2]">
+          <h2 className="text-[2px] md:text-[8px] lg:text-[18px] font-[500] leading-[1.1] tracking-tight text-gray-900">{title}</h2>
         </div>
 
         {/* Stats Section - Moved here */}
-        <div className="mb-6 flex items-center space-x-4 text-sm text-gray-600">
+        <div className="mb-6 flex items-center space-x-4 text-sm text-gray-600 relative z-[2]">
           {stats.map((stat, index) => (
             <div key={index} className="flex items-center space-x-1.5">
               {stat.icon}
@@ -275,7 +293,7 @@ const AnimatedHikeCard = ({
         </div>
         
         {/* Stacked Images with Hover Animation */}
-        <div className="relative mb-6 h-32">
+        <div className="relative mb-6 h-32 z-[2]">
           {images.map((src, index) => (
             <div
               key={index}
@@ -297,14 +315,14 @@ const AnimatedHikeCard = ({
         </div>
         
         {/* Description */}
-        <p className="text-[12px] md:text-[14px] font-normal leading-relaxed text-gray-600 tracking-tight">
+        <p className="text-[12px] md:text-[14px] font-normal leading-relaxed text-gray-600 tracking-tight relative z-[2]">
           {description}
         </p>
       </div>
 
       {/* TaskTimeline superpuesta en la esquina inferior derecha */}
       <div className="absolute -bottom-8 -right-24 z-10" style={{ transform: 'translate(80px, 30px)' }}>
-        <TaskTimeline />
+        <TaskTimeline isInView={isInView} />
       </div>
     </motion.a>
   );
@@ -317,13 +335,13 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     highlightText = 'market leaders',
     description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
     badge = 'Digital Marketing Excellence',
-    mainTitle = 'Transform Your Business into',
-    mainTitleHighlight = 'Market Leaders',
+    mainTitle = 'Elevate Your Brand with',
+    mainTitleHighlight = 'Data-Driven Marketing',
     subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
     ctaText = 'Book a Call',
     ctaHref = '#',
     // Valores por defecto para el card
-    cardTitle = 'Q4 Strategy Update',
+    cardTitle = 'Subject: Q4 Strategy Update',
     cardImages = [
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2070&auto=format&fit=crop',
@@ -446,28 +464,11 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               {/* Main Title */}
               <FadeInText delay={0.3}>
                 <div className="w-full">
-                  <h1 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-center text-black">
+                  <h1 className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center text-black">
                     {mainTitle}{' '}
-                    <motion.span
-                      initial={{ backgroundPosition: "400% 50%" }}
-                      animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                      transition={{
-                        duration: 12,
-                        ease: "linear",
-                        repeat: Infinity
-                      }}
-                      style={{
-                        display: "inline-block",
-                        backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
-                        backgroundSize: "400% 100%",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                        color: "transparent"
-                      }}
-                    >
+                    <span className="text-black">
                       {mainTitleHighlight}
-                    </motion.span>
+                    </span>
                   </h1>
                 </div>
               </FadeInText>
