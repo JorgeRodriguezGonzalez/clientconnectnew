@@ -74,20 +74,21 @@ const AnimatedHikeCard = ({
   images, 
   stats, 
   description, 
-  href,
-  isInView 
+  href
 }: {
   title: string;
   images: string[];
   stats: Array<{ icon: React.ReactNode; label: string }>;
   description: string;
   href: string;
-  isInView: boolean;
 }) => {
   const [isHovered, setIsHovered] = React.useState(false);
+  const cardRef = React.useRef(null);
+  const isInView = useInView(cardRef, { once: true, amount: 0.3 });
 
   return (
     <motion.a
+      ref={cardRef}
       href={href}
       onClick={(e) => e.preventDefault()}
       onMouseEnter={() => setIsHovered(true)}
