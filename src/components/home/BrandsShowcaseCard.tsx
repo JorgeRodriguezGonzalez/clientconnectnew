@@ -40,7 +40,7 @@ export const BrandsShowcaseCard = ({
       }} 
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[768px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#F7FCFF' }}>
+      <div className="relative flex flex-col items-center justify-center w-[768px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#FFF5F1' }}>
         <div className="relative w-full h-full">
           {/* Imagen 1 - Izquierda (desde la izquierda) */}
           <motion.div 
@@ -181,17 +181,10 @@ export const BrandsShowcaseCard = ({
       </div>
       
       <div className="flex flex-col items-start justify-start gap-2 w-[768px] h-[100px] px-4 pt-4 pb-6">
-        <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif',
-          fontStyle: 'normal',
-          letterSpacing: '0px'
-        }}>
+        <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900 m-0">
           {title}
         </h2>
-        <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif',
-          fontStyle: 'normal'
-        }}>
+        <p className="text-[14px] md:text-[16px] font-medium leading-relaxed tracking-tight text-gray-600 m-0">
           {description}
         </p>
       </div>
