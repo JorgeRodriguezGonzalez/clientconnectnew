@@ -44,8 +44,8 @@ export const SkillsShowcaseCard = ({
       style={{
         padding: '16px',
         background: isHovered 
-          ? 'linear-gradient(135deg, rgba(103, 188, 183, 0.2) 0%, rgba(222, 131, 99, 0.1) 50%, rgba(255, 255, 255, 0.95) 100%)'
-          : '#FFFFFF'
+          ? '#000000'
+          : 'linear-gradient(135deg, rgba(103, 188, 183, 0.2) 0%, rgba(222, 131, 99, 0.1) 50%, rgba(255, 255, 255, 0.95) 100%)'
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -99,10 +99,14 @@ export const SkillsShowcaseCard = ({
         ))}
       </div>
       <div className="flex w-[294.6px] h-[100px] flex-col items-start justify-start gap-2 overflow-hidden px-4 pb-6 pt-4">
-        <h2 className="text-[6px] md:text-[12px] lg:text-[22px] font-bold leading-[1.1] tracking-tight text-gray-900 m-0">
+        <h2 className={`text-[6px] md:text-[12px] lg:text-[22px] font-bold leading-[1.1] tracking-tight m-0 transition-colors duration-500 ${
+          isHovered ? 'text-white' : 'text-gray-900'
+        }`}>
           {title}
         </h2>
-        <p className="text-[14px] md:text-[16px] font-medium leading-relaxed tracking-tight text-gray-600 m-0">
+        <p className={`text-[14px] md:text-[16px] font-medium leading-relaxed tracking-tight m-0 transition-colors duration-500 ${
+          isHovered ? 'text-white' : 'text-gray-600'
+        }`}>
           {subtitle}
         </p>
       </div>
