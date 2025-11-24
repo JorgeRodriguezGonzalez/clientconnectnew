@@ -87,7 +87,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
     {
       id: '1',
       title: 'Planning Design',
-      time: '04:41 PM',
+      time: 'Jan 15',
       status: 'pending',
       actions: '1 more action'
     },
@@ -101,7 +101,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
     {
       id: '3',
       title: 'Complete Design',
-      time: '05:36 PM',
+      time: 'Feb 23',
       status: 'pending',
       actions: ''
     }
@@ -307,8 +307,8 @@ const AnimatedHikeCard = ({
       }}
     >
       <div className="flex flex-col">
-        {/* Overlay difuminado en el lado izquierdo */}
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white/80 to-transparent pointer-events-none z-[1]" />
+        {/* Overlay difuminado en el lado izquierdo - más transparente a la izquierda */}
+        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white/60 via-white/30 to-transparent pointer-events-none z-[1]" />
         
         {/* Card Header: Title */}
         <div className="mb-3 relative z-[2]">
