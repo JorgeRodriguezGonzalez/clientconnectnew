@@ -486,7 +486,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           <div className="max-w-[1225px] mx-auto px-4">
             <div className="flex flex-col items-center gap-8">
               {/* Badge */}
-              <FadeInText delay={0.2}>
+              <FadeInText delay={1.2}>
                 <motion.div 
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
                   style={{ 
