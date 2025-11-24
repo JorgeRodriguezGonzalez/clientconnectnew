@@ -4,7 +4,11 @@ import { Send, Calendar } from 'lucide-react';
 import { motion } from "framer-motion";
 import { Sparkles } from "@/components/ui/sparkles";
 
-export function FinalHero() {
+type FinalHeroProps = {
+  nextSectionRef?: React.RefObject<HTMLDivElement>;
+};
+
+export function FinalHero({ nextSectionRef }: FinalHeroProps) {
   const ref = React.useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [titleNumber, setTitleNumber] = useState(0);
@@ -26,6 +30,12 @@ export function FinalHero() {
     offset: ["start start", "end end"],
   });
 
+  // Scroll basado en el siguiente componente
+  const { scrollYProgress: nextSectionProgress } = useScroll({
+    target: nextSectionRef || ref,
+    offset: ["start end", "start start"],
+  });
+
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 1],
@@ -35,64 +45,64 @@ export function FinalHero() {
     ]
   );
 
-  // Fade out individual para cada elemento
+  // Fade out individual para cada elemento basado en nextSectionProgress
   const lampOpacity = useTransform(
-    scrollYProgress,
-    [0.75, 0.85],
+    nextSectionProgress,
+    [0, 0.2],
     [1, 0]
   );
 
   const lampBlur = useTransform(
-    scrollYProgress,
-    [0.75, 0.85],
+    nextSectionProgress,
+    [0, 0.2],
     [0, 10]
   );
 
   const titleOpacity = useTransform(
-    scrollYProgress,
-    [0.78, 0.88],
+    nextSectionProgress,
+    [0.1, 0.3],
     [1, 0]
   );
 
   const titleBlur = useTransform(
-    scrollYProgress,
-    [0.78, 0.88],
+    nextSectionProgress,
+    [0.1, 0.3],
     [0, 10]
   );
 
   const subtitleOpacity = useTransform(
-    scrollYProgress,
-    [0.81, 0.91],
+    nextSectionProgress,
+    [0.2, 0.4],
     [1, 0]
   );
 
   const subtitleBlur = useTransform(
-    scrollYProgress,
-    [0.81, 0.91],
+    nextSectionProgress,
+    [0.2, 0.4],
     [0, 10]
   );
 
   const ctaOpacity = useTransform(
-    scrollYProgress,
-    [0.88, 0.96],
+    nextSectionProgress,
+    [0.3, 0.5],
     [1, 0]
   );
 
   const ctaBlur = useTransform(
-    scrollYProgress,
-    [0.88, 0.96],
+    nextSectionProgress,
+    [0.3, 0.5],
     [0, 10]
   );
 
   const trustedOpacity = useTransform(
-    scrollYProgress,
-    [0.92, 0.99],
+    nextSectionProgress,
+    [0.4, 0.6],
     [1, 0]
   );
 
   const trustedBlur = useTransform(
-    scrollYProgress,
-    [0.92, 0.99],
+    nextSectionProgress,
+    [0.4, 0.6],
     [0, 10]
   );
 
