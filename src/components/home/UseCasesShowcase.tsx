@@ -148,7 +148,7 @@ const TaskTimeline = () => {
   const circumference = 2 * Math.PI * 12;
 
   return (
-    <div className="w-[450px] bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
+    <div className="w-[400px] bg-white rounded-2xl border border-gray-200 p-6 shadow-lg">
       <div className="space-y-0">
         {tasks.map((task, index) => (
           <div key={task.id} className="flex gap-3">
