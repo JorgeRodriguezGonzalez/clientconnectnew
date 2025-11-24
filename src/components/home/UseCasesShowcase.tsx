@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Clock, Zap, Mountain } from 'lucide-react';
+import { Sparkles, Clock, Zap, Mountain, Check } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 type UseCasesShowcaseProps = {
@@ -65,6 +65,151 @@ const FadeInText = ({
     >
       {children}
     </motion.div>
+  );
+};
+
+// Componente TaskTimeline integrado
+const TaskTimeline = () => {
+  type TaskStatus = 'pending' | 'active' | 'complete';
+  type TaskItem = {
+    id: string;
+    title: string;
+    time: string;
+    status: TaskStatus;
+    actions: string;
+  };
+
+  const [currentTaskIndex, setCurrentTaskIndex] = React.useState(0);
+  const [progress, setProgress] = React.useState(0);
+  
+  const tasksData: TaskItem[] = [
+    {
+      id: '1',
+      title: 'Planning Design',
+      time: '04:41 PM',
+      status: 'pending',
+      actions: '1 more action'
+    },
+    {
+      id: '2',
+      title: 'Designing...',
+      time: '',
+      status: 'pending',
+      actions: '2 more action'
+    },
+    {
+      id: '3',
+      title: 'Complete Design',
+      time: '05:36 PM',
+      status: 'pending',
+      actions: ''
+    }
+  ];
+
+  const [tasks, setTasks] = React.useState<TaskItem[]>(tasksData);
+
+  React.useEffect(() => {
+    if (currentTaskIndex >= tasks.length) {
+      const resetTimer = setTimeout(() => {
+        setTasks(tasksData);
+        setCurrentTaskIndex(0);
+        setProgress(0);
+      }, 1000);
+      return () => clearTimeout(resetTimer);
+    }
+
+    const duration = 2000;
+    const startTime = Date.now();
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const newProgress = Math.min(elapsed / duration * 100, 100);
+      setProgress(newProgress);
+      if (newProgress < 100) {
+        requestAnimationFrame(animate);
+      } else {
+        setTimeout(() => {
+          setTasks(prev => prev.map((task, idx) => idx === currentTaskIndex ? {
+            ...task,
+            status: 'complete' as TaskStatus
+          } : task));
+          setCurrentTaskIndex(prev => prev + 1);
+          setProgress(0);
+        }, 300);
+      }
+    };
+
+    setTasks(prev => prev.map((task, idx) => idx === currentTaskIndex ? {
+      ...task,
+      status: 'active' as TaskStatus
+    } : task));
+    requestAnimationFrame(animate);
+  }, [currentTaskIndex, tasks.length]);
+
+  const circumference = 2 * Math.PI * 12;
+
+  return (
+    <div className="w-full max-w-[280px] bg-white rounded-2xl border border-gray-200 p-4 shadow-lg">
+      <div className="space-y-0">
+        {tasks.map((task, index) => (
+          <div key={task.id} className="flex gap-3">
+            <div className="flex flex-col items-center">
+              <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-500 relative">
+                {task.status === 'complete' && (
+                  <div className="w-full h-full rounded-full border-[3px] border-[#de8363] bg-[#de8363] flex items-center justify-center">
+                    <Check className="w-4 h-4 text-white stroke-[3]" />
+                  </div>
+                )}
+                {task.status === 'active' && (
+                  <div className="w-full h-full relative">
+                    <div className="w-full h-full rounded-full border-[3px] border-gray-200 bg-white absolute inset-0" />
+                    <svg className="w-full h-full -rotate-90 absolute inset-0" viewBox="0 0 40 40">
+                      <circle 
+                        cx="20" 
+                        cy="20" 
+                        r="12" 
+                        fill="none" 
+                        stroke="#de8363" 
+                        strokeWidth="3" 
+                        strokeDasharray={circumference} 
+                        strokeDashoffset={circumference - progress / 100 * circumference} 
+                        strokeLinecap="round" 
+                        className="transition-all duration-100" 
+                      />
+                    </svg>
+                  </div>
+                )}
+                {task.status === 'pending' && (
+                  <div className="w-full h-full rounded-full border-[3px] border-gray-300 bg-white" />
+                )}
+              </div>
+              {index < tasks.length - 1 && (
+                <div className={`w-0.5 h-8 my-1 transition-all duration-500 ${
+                  task.status === 'complete' ? 'bg-[#de8363]' : 'bg-gray-300'
+                }`} />
+              )}
+            </div>
+
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-1">
+                <h3 className={`text-sm font-medium transition-colors duration-500 ${
+                  task.status === 'active' || task.status === 'complete' ? 'text-[#de8363]' : 'text-gray-400'
+                }`}>
+                  {task.title}
+                </h3>
+                {task.time && (
+                  <span className={`text-xs font-medium transition-colors duration-500 ${
+                    task.status === 'active' || task.status === 'complete' ? 'text-[#de8363]' : 'text-gray-400'
+                  }`}>
+                    {task.time}
+                  </span>
+                )}
+              </div>
+              {task.actions && <p className="text-gray-500 text-xs">{task.actions}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
@@ -155,6 +300,11 @@ const AnimatedHikeCard = ({
         <p className="text-[12px] md:text-[14px] font-normal leading-relaxed text-gray-600 tracking-tight">
           {description}
         </p>
+      </div>
+
+      {/* TaskTimeline superpuesta en la esquina inferior derecha */}
+      <div className="absolute -bottom-8 -right-8 z-10">
+        <TaskTimeline />
       </div>
     </motion.a>
   );
