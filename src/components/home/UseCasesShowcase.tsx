@@ -167,8 +167,8 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
       onMouseLeave={() => setIsHovered(false)}
       className={`w-[380px] rounded-2xl border p-6 transition-all duration-300 ${
         isHovered 
-          ? 'bg-black border-gray-800 shadow-sm' 
-          : 'bg-white border-gray-200 shadow-lg'
+          ? 'bg-white border-gray-200 shadow-lg' 
+          : 'bg-black border-gray-800 shadow-sm'
       }`}
     >
       <div className="space-y-0">
@@ -179,11 +179,11 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
                 {task.status === 'complete' && (
                   <div className={`w-full h-full rounded-full border-[3px] flex items-center justify-center transition-colors duration-300 ${
                     isHovered 
-                      ? 'border-white bg-white' 
-                      : 'border-[#de8363] bg-[#de8363]'
+                      ? 'border-[#de8363] bg-[#de8363]'
+                      : 'border-white bg-white' 
                   }`}>
                     <Check className={`w-4 h-4 stroke-[3] transition-colors duration-300 ${
-                      isHovered ? 'text-black' : 'text-white'
+                      isHovered ? 'text-white' : 'text-black'
                     }`} />
                   </div>
                 )}
@@ -191,8 +191,8 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
                   <div className="w-full h-full relative">
                     <div className={`w-full h-full rounded-full border-[3px] absolute inset-0 transition-colors duration-300 ${
                       isHovered 
-                        ? 'border-gray-700 bg-black' 
-                        : 'border-gray-200 bg-white'
+                        ? 'border-gray-200 bg-white'
+                        : 'border-gray-700 bg-black' 
                     }`} />
                     <svg className="w-full h-full -rotate-90 absolute inset-0" viewBox="0 0 40 40">
                       <circle 
@@ -200,7 +200,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
                         cy="20" 
                         r="12" 
                         fill="none" 
-                        stroke={isHovered ? 'white' : '#de8363'}
+                        stroke={isHovered ? '#de8363' : 'white'}
                         strokeWidth="3" 
                         strokeDasharray={circumference} 
                         strokeDashoffset={circumference - progress / 100 * circumference} 
@@ -213,16 +213,16 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
                 {task.status === 'pending' && (
                   <div className={`w-full h-full rounded-full border-[3px] transition-colors duration-300 ${
                     isHovered 
-                      ? 'border-gray-700 bg-black' 
-                      : 'border-gray-300 bg-white'
+                      ? 'border-gray-300 bg-white'
+                      : 'border-gray-700 bg-black' 
                   }`} />
                 )}
               </div>
               {index < tasks.length - 1 && (
                 <div className={`w-0.5 h-8 my-1 transition-all duration-500 ${
                   task.status === 'complete' 
-                    ? (isHovered ? 'bg-white' : 'bg-[#de8363]')
-                    : (isHovered ? 'bg-gray-700' : 'bg-gray-300')
+                    ? (isHovered ? 'bg-[#de8363]' : 'bg-white')
+                    : (isHovered ? 'bg-gray-300' : 'bg-gray-700')
                 }`} />
               )}
             </div>
@@ -231,16 +231,16 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
               <div className="flex items-center justify-between mb-1">
                 <h3 className={`text-sm font-medium transition-colors duration-300 ${
                   task.status === 'active' || task.status === 'complete' 
-                    ? (isHovered ? 'text-white' : 'text-[#de8363]')
-                    : (isHovered ? 'text-gray-500' : 'text-gray-400')
+                    ? (isHovered ? 'text-[#de8363]' : 'text-white')
+                    : (isHovered ? 'text-gray-400' : 'text-gray-500')
                 }`}>
                   {task.title}
                 </h3>
                 {task.time && (
                   <span className={`text-xs font-medium transition-colors duration-300 ${
                     task.status === 'active' || task.status === 'complete' 
-                      ? (isHovered ? 'text-white' : 'text-[#de8363]')
-                      : (isHovered ? 'text-gray-500' : 'text-gray-400')
+                      ? (isHovered ? 'text-[#de8363]' : 'text-white')
+                      : (isHovered ? 'text-gray-400' : 'text-gray-500')
                   }`}>
                     {task.time}
                   </span>
@@ -248,7 +248,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
               </div>
               {task.actions && (
                 <p className={`text-xs transition-colors duration-300 ${
-                  isHovered ? 'text-gray-400' : 'text-gray-500'
+                  isHovered ? 'text-gray-500' : 'text-gray-400'
                 }`}>
                   {task.actions}
                 </p>
