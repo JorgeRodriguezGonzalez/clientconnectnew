@@ -275,7 +275,6 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
       : "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(148,163,184,0.32), transparent 72%)";
   const animationDelay = `${Math.max(index * 0.12, 0)}s`;
 
-  // Check if this is the Strategic Growth card (first card)
   const isStrategicGrowth = index === 0;
 
   return (
@@ -323,32 +322,20 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
           </div>
         </div>
 
-        {/* Images section for Strategic Growth card only */}
         {isStrategicGrowth && (
-          <div className="relative w-full h-[280px] mt-2 flex items-center justify-center">
-            {/* Image 1 - Left (from left) */}
+          <div className="relative w-full h-[200px] mt-2 overflow-hidden">
             <motion.div 
               key={`img1-${hoverCount}`}
-              className="absolute w-[120px] h-[204px] overflow-visible" 
+              className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '50%',
+                top: '80px',
                 left: '50%',
                 marginLeft: '-280px',
-                marginTop: '-102px',
                 transformOrigin: '60px 102px'
               }} 
-              initial={{
-                x: -20,
-                opacity: 0.8
-              }} 
-              animate={{
-                x: 0,
-                opacity: 1
-              }} 
-              transition={{
-                duration: 0.6,
-                delay: 0.1
-              }}
+              initial={{ x: -20, opacity: 0.8 }} 
+              animate={{ x: 0, opacity: 1 }} 
+              transition={{ duration: 0.6, delay: 0.1 }}
             >
               <img 
                 src="https://framerusercontent.com/images/Cs7myyCzaXS8LyQHqBxdAlCZ8.png?scale-down-to=512" 
@@ -357,29 +344,18 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               />
             </motion.div>
             
-            {/* Image 2 - Second from left (from top) */}
             <motion.div 
               key={`img2-${hoverCount}`}
-              className="absolute w-[120px] h-[204px] overflow-visible" 
+              className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '50%',
+                top: '80px',
                 left: '50%',
                 marginLeft: '-140px',
-                marginTop: '-102px',
                 transformOrigin: '60px 102px'
               }} 
-              initial={{
-                y: -20,
-                opacity: 0.8
-              }} 
-              animate={{
-                y: 0,
-                opacity: 1
-              }} 
-              transition={{
-                duration: 0.6,
-                delay: 0.15
-              }}
+              initial={{ y: -20, opacity: 0.8 }} 
+              animate={{ y: 0, opacity: 1 }} 
+              transition={{ duration: 0.6, delay: 0.15 }}
             >
               <img 
                 src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" 
@@ -388,30 +364,20 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               />
             </motion.div>
             
-            {/* Image 3 - Center (from bottom) */}
             <motion.div 
               key={`img3-${hoverCount}`}
-              className="absolute w-[136px] h-[250px] overflow-visible" 
+              className="absolute w-[136px] h-[250px]" 
               style={{
-                top: '50%',
+                top: '30px',
                 left: '50%',
                 marginLeft: '-68px',
-                marginTop: '-125px',
                 transformOrigin: '68px 125px',
-                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px'
+                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px',
+                zIndex: 10
               }} 
-              initial={{
-                y: 20,
-                opacity: 0
-              }} 
-              animate={{
-                y: 0,
-                opacity: 1
-              }} 
-              transition={{
-                duration: 0.6,
-                delay: 0.2
-              }}
+              initial={{ y: 20, opacity: 0 }} 
+              animate={{ y: 0, opacity: 1 }} 
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
               <img 
                 src="https://framerusercontent.com/images/pb1l1eWieWRyif3smeXnmDu1jnY.png?scale-down-to=512" 
@@ -420,29 +386,18 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               />
             </motion.div>
             
-            {/* Image 4 - Second from right (from top) */}
             <motion.div 
               key={`img4-${hoverCount}`}
-              className="absolute w-[120px] h-[204px] overflow-visible" 
+              className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '50%',
+                top: '80px',
                 left: '50%',
                 marginLeft: '76px',
-                marginTop: '-102px',
                 transformOrigin: '60px 102px'
               }} 
-              initial={{
-                y: -20,
-                opacity: 0.8
-              }} 
-              animate={{
-                y: 0,
-                opacity: 1
-              }} 
-              transition={{
-                duration: 0.6,
-                delay: 0.25
-              }}
+              initial={{ y: -20, opacity: 0.8 }} 
+              animate={{ y: 0, opacity: 1 }} 
+              transition={{ duration: 0.6, delay: 0.25 }}
             >
               <img 
                 src="https://framerusercontent.com/images/Cs7myyCzaXS8LyQHqBxdAlCZ8.png?scale-down-to=512" 
@@ -451,29 +406,18 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               />
             </motion.div>
             
-            {/* Image 5 - Right (from right) */}
             <motion.div 
               key={`img5-${hoverCount}`}
-              className="absolute w-[120px] h-[204px] overflow-visible" 
+              className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '50%',
+                top: '80px',
                 left: '50%',
                 marginLeft: '216px',
-                marginTop: '-102px',
                 transformOrigin: '60px 102px'
               }} 
-              initial={{
-                x: 20,
-                opacity: 0.8
-              }} 
-              animate={{
-                x: 0,
-                opacity: 1
-              }} 
-              transition={{
-                duration: 0.6,
-                delay: 0.3
-              }}
+              initial={{ x: 20, opacity: 0.8 }} 
+              animate={{ x: 0, opacity: 1 }} 
+              transition={{ duration: 0.6, delay: 0.3 }}
             >
               <img 
                 src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" 
@@ -502,6 +446,4 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
 
 export default FeaturesSectionMinimal;
 export { FeaturesSectionMinimal };
-
-// Export con el nombre BentoGrid para usar en la home
 export { FeaturesSectionMinimal as BentoGrid };
