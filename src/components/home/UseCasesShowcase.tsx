@@ -311,7 +311,7 @@ const AnimatedHikeCard = ({
     >
       <div className="flex flex-col">
         {/* Overlay difuminado en el lado izquierdo - blanco opaco a transparente */}
-        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-white/90 via-white/50 to-transparent pointer-events-none z-[5]" />
+        <div className="absolute inset-y-0 left-0 w-40 rounded-l-2xl bg-gradient-to-r from-white/90 via-white/50 to-transparent pointer-events-none z-[5]" />
         
         {/* Card Header: Title */}
         <div className="mb-3 relative z-[2]">
@@ -354,11 +354,6 @@ const AnimatedHikeCard = ({
         <p className="text-[12px] md:text-[14px] font-normal leading-relaxed text-gray-600 tracking-tight relative z-[2]">
           {description}
         </p>
-      </div>
-
-      {/* TaskTimeline superpuesta en la esquina inferior derecha */}
-      <div className="absolute -bottom-8 -right-24 z-10" style={{ transform: 'translate(80px, 30px)' }}>
-        <TaskTimeline />
       </div>
     </motion.a>
   );
@@ -552,6 +547,11 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   description={cardDescription}
                   href={cardHref}
                 />
+                
+                {/* TaskTimeline superpuesta - fuera del AnimatedHikeCard */}
+                <div className="absolute -bottom-8 -right-24 z-10" style={{ transform: 'translate(80px, 30px)' }}>
+                  <TaskTimeline />
+                </div>
               </div>
 
               {/* COLUMNA DERECHA - Texto */}
