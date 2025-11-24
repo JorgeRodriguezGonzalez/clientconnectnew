@@ -64,8 +64,15 @@ function FeaturesSectionMinimal() {
         100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
       }
       @keyframes bento2-gradient-shift {
-        0% { background-position: 400% 50%; }
-        100% { background-position: 0% 50%; }
+        0%, 100% { 
+          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%);
+        }
+        33% { 
+          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(103,188,183,0.32), transparent 72%);
+        }
+        66% { 
+          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(148,163,184,0.32), transparent 72%);
+        }
       }
     `;
     document.head.appendChild(style);
@@ -280,15 +287,8 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
           style={{ 
             background: theme === "dark"
               ? "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(59,130,246,0.24), transparent 72%)"
-              : "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
-            backgroundSize: theme === "dark" ? "100% 100%" : "400% 100%",
-            animation: theme === "dark" ? "none" : "bento2-gradient-shift 12s linear infinite",
-            maskImage: theme === "dark" 
-              ? "none" 
-              : "radial-gradient(ellipse 60% 120% at 12% 0%, black, transparent 72%)",
-            WebkitMaskImage: theme === "dark" 
-              ? "none" 
-              : "radial-gradient(ellipse 60% 120% at 12% 0%, black, transparent 72%)"
+              : "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%)",
+            animation: theme === "dark" ? "none" : "bento2-gradient-shift 12s ease-in-out infinite"
           }}
         />
       </div>
