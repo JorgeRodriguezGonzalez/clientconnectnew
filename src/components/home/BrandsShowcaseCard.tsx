@@ -22,7 +22,7 @@ export const BrandsShowcaseCard = ({
       style={{ 
         padding: '16px',
         background: isHovered 
-          ? 'linear-gradient(135deg, rgb(103, 188, 183) 0%, #de8363 100%)'
+          ? 'linear-gradient(135deg, rgba(103, 188, 183, 0.15) 0%, rgba(222, 131, 99, 0.15) 100%)'
           : '#FFFFFF'
       }}
       initial={{
