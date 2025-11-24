@@ -7,7 +7,7 @@ type BrandsShowcaseCardProps = {
 };
 
 export const BrandsShowcaseCard = ({
-  title = '95+ Brands Served',
+  title = '+95 Local Brands Served',
   description = 'Helping businesses across various industries achieve their goals'
 }: BrandsShowcaseCardProps) => {
   const ref = React.useRef(null);
@@ -181,7 +181,7 @@ export const BrandsShowcaseCard = ({
       </div>
       
       <div className="flex flex-col items-start justify-start gap-2 w-[768px] h-[100px] px-4 pt-4 pb-6">
-        <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900 m-0">
+        <h2 className="text-[6px] md:text-[12px] lg:text-[22px] font-bold leading-[1.1] tracking-tight text-gray-900 m-0">
           {title}
         </h2>
         <p className="text-[14px] md:text-[16px] font-medium leading-relaxed tracking-tight text-gray-600 m-0">
