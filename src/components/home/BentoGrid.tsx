@@ -63,28 +63,19 @@ function FeaturesSectionMinimal() {
         0% { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.96); }
         100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
       }
-      @keyframes bento2-gradient-shift {
-        0% { 
-          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%);
-        }
-        25% { 
-          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%);
-        }
-        33% { 
-          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(103,188,183,0.32), transparent 72%);
-        }
-        58% { 
-          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(103,188,183,0.32), transparent 72%);
-        }
-        66% { 
-          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(148,163,184,0.32), transparent 72%);
-        }
-        91% { 
-          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(148,163,184,0.32), transparent 72%);
-        }
-        100% { 
-          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%);
-        }
+      @keyframes bento2-gradient-fade1 {
+        0%, 25% { opacity: 0.32; }
+        33%, 100% { opacity: 0; }
+      }
+      @keyframes bento2-gradient-fade2 {
+        0%, 25% { opacity: 0; }
+        33%, 58% { opacity: 0.32; }
+        66%, 100% { opacity: 0; }
+      }
+      @keyframes bento2-gradient-fade3 {
+        0%, 58% { opacity: 0; }
+        66%, 91% { opacity: 0.32; }
+        100% { opacity: 0; }
       }
     `;
     document.head.appendChild(style);
@@ -294,15 +285,38 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
     >
       <div className="absolute inset-0 -z-10 overflow-hidden rounded-2xl">
         <div className="absolute inset-0 bg-white/85 transition-colors duration-500 dark:bg-white/8" />
-        <div
-          className="absolute inset-0 opacity-70 transition-opacity duration-500 dark:opacity-60"
-          style={{ 
-            background: theme === "dark"
-              ? "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(59,130,246,0.24), transparent 72%)"
-              : "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%)",
-            animation: theme === "dark" ? "none" : "bento2-gradient-shift 12s ease-in-out infinite"
-          }}
-        />
+        {theme === "dark" ? (
+          <div
+            className="absolute inset-0 opacity-70 transition-opacity duration-500"
+            style={{ 
+              background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(59,130,246,0.24), transparent 72%)"
+            }}
+          />
+        ) : (
+          <>
+            <div
+              className="absolute inset-0"
+              style={{ 
+                background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(237,191,134), transparent 72%)",
+                animation: "bento2-gradient-fade1 12s ease-in-out infinite"
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{ 
+                background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(103,188,183), transparent 72%)",
+                animation: "bento2-gradient-fade2 12s ease-in-out infinite"
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{ 
+                background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(148,163,184), transparent 72%)",
+                animation: "bento2-gradient-fade3 12s ease-in-out infinite"
+              }}
+            />
+          </>
+        )}
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex items-start gap-4">
