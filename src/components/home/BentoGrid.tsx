@@ -323,7 +323,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
         </div>
 
         {isStrategicGrowth && (
-          <div className="relative w-full h-[200px] mt-2 overflow-hidden">
+          <div className="relative w-full h-[160px] mt-2 overflow-hidden">
             <motion.div 
               key={`img1-${hoverCount}`}
               className="absolute w-[120px] h-[204px]" 
