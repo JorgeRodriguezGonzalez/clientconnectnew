@@ -283,45 +283,41 @@ const AnimatedHikeCard = ({
   const isInView = useInView(cardRef, { once: true, amount: 0.3 });
 
   return (
-    <div className="relative">
-      {/* Overlay difuminado diagonal con glass blur - expandido para cubrir borde y sombra */}
-      <div className="absolute -inset-1 bg-gradient-to-tr from-white via-white/60 via-20% to-transparent to-40% pointer-events-none z-[10]" style={{ backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }} />
-      
-      <motion.a
-        ref={cardRef}
-        href={href}
-        onClick={(e) => e.preventDefault()}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        initial={{ 
-          opacity: 0, 
-          x: -50,
-          filter: "blur(10px)"
-        }}
-        animate={{ 
-          opacity: isInView ? 1 : 0, 
-          x: isInView ? 0 : -50,
-          filter: isInView ? "blur(0px)" : "blur(10px)"
-        }}
-        transition={{ 
-          duration: 0.8, 
-          delay: 0.3, 
-          ease: "easeOut" 
-        }}
-        className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg hover:translate-y-0 hover:shadow-sm lg:max-w-md"
-        style={{
-          transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
-        }}
-      >
-        <div className="flex flex-col">
+    <motion.a
+      ref={cardRef}
+      href={href}
+      onClick={(e) => e.preventDefault()}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      initial={{ 
+        opacity: 0, 
+        x: -50,
+        filter: "blur(10px)"
+      }}
+      animate={{ 
+        opacity: isInView ? 1 : 0, 
+        x: isInView ? 0 : -50,
+        filter: isInView ? "blur(0px)" : "blur(10px)"
+      }}
+      transition={{ 
+        duration: 0.8, 
+        delay: 0.3, 
+        ease: "easeOut" 
+      }}
+      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg hover:translate-y-0 hover:shadow-sm lg:max-w-md"
+      style={{
+        transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
+      }}
+    >
+      <div className="flex flex-col">
         
         {/* Card Header: Title */}
-        <div className="mb-3 relative z-[2]">
+        <div className="mb-3">
           <h2 className="text-[2px] md:text-[8px] lg:text-[18px] font-[500] leading-[1.1] tracking-tight text-gray-900">{title}</h2>
         </div>
 
         {/* Stats Section - Moved here */}
-        <div className="mb-6 flex items-center space-x-4 text-sm text-gray-600 relative z-[2]">
+        <div className="mb-6 flex items-center space-x-4 text-sm text-gray-600">
           {stats.map((stat, index) => (
             <div key={index} className="flex items-center space-x-1.5">
               {stat.icon}
@@ -331,7 +327,7 @@ const AnimatedHikeCard = ({
         </div>
         
         {/* Stacked Images with Hover Animation */}
-        <div className="relative mb-6 h-32 z-[2]">
+        <div className="relative mb-6 h-32">
           {images.map((src, index) => (
             <div
               key={index}
@@ -353,12 +349,11 @@ const AnimatedHikeCard = ({
         </div>
         
         {/* Description */}
-        <p className="text-[12px] md:text-[14px] font-normal leading-relaxed text-gray-600 tracking-tight relative z-[2]">
+        <p className="text-[12px] md:text-[14px] font-normal leading-relaxed text-gray-600 tracking-tight">
           {description}
         </p>
       </div>
     </motion.a>
-    </div>
   );
 };
 
