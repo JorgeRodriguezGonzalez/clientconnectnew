@@ -8,6 +8,7 @@ export function FinalHero() {
   const ref = React.useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [titleNumber, setTitleNumber] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const words = useMemo(
     () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales"],
@@ -33,6 +34,19 @@ export function FinalHero() {
       "rgb(0, 0, 0)",
       "rgb(25, 25, 25)"
     ]
+  );
+
+  // Fade out para el contenido
+  const contentOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.5],
+    [1, 1, 0]
+  );
+
+  const contentBlur = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.5],
+    [0, 0, 10]
   );
 
   // Transform para el color del arco (igual que tenía el círculo)
@@ -90,7 +104,13 @@ export function FinalHero() {
       className="h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
     >
       <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
-        <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
+        <motion.div 
+          className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative"
+          style={{
+            opacity: contentOpacity,
+            filter: useTransform(contentBlur, (value) => `blur(${value}px)`)
+          }}
+        >
 
           {/* LAMP + TÍTULO */}
           <div className="flex flex-col items-center gap-[-20px]">
@@ -271,25 +291,31 @@ export function FinalHero() {
             </a>
             <motion.a 
               href="#contact"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
               animate={{
-                borderColor: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                borderColor: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"],
+                backgroundColor: isHovered 
+                  ? ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                  : "rgba(255, 255, 255, 0)"
               }}
               transition={{
-                duration: 8,
-                ease: "linear",
-                repeat: Infinity
+                borderColor: { duration: 8, ease: "linear", repeat: Infinity },
+                backgroundColor: { duration: 8, ease: "linear", repeat: Infinity }
               }}
-              className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]"
+              className="flex items-center justify-center gap-1.5 h-[42px] backdrop-blur-sm border rounded-[50px] px-5 py-3 transition-shadow duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]"
             >
               <motion.div 
                 className="w-[18px] h-[14px] relative overflow-hidden"
                 animate={{
-                  color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                  color: isHovered 
+                    ? "#000000"
+                    : ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
                 }}
                 transition={{
-                  duration: 8,
-                  ease: "linear",
-                  repeat: Infinity
+                  color: isHovered 
+                    ? { duration: 0.3 }
+                    : { duration: 8, ease: "linear", repeat: Infinity }
                 }}
               >
                 <Calendar className="w-[17px] h-[14px]" />
@@ -298,12 +324,14 @@ export function FinalHero() {
                 className="text-[14px] font-medium leading-5 whitespace-nowrap z-[1]" 
                 style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
                 animate={{
-                  color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                  color: isHovered 
+                    ? "#000000"
+                    : ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
                 }}
                 transition={{
-                  duration: 8,
-                  ease: "linear",
-                  repeat: Infinity
+                  color: isHovered 
+                    ? { duration: 0.3 }
+                    : { duration: 8, ease: "linear", repeat: Infinity }
                 }}
               >
                 Book Free Consultation
@@ -364,7 +392,7 @@ export function FinalHero() {
               />
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );
