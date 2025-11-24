@@ -21,13 +21,60 @@ type UseCasesShowcaseProps = {
   cardHref?: string;
 };
 
-// Componente AnimatedHikeCard integrado
+// Componente FadeInText con glass blur
+const FadeInText = ({ 
+  children, 
+  delay = 0, 
+  className = "",
+  direction = "up"
+}: { 
+  children: React.ReactNode; 
+  delay?: number;
+  className?: string;
+  direction?: "up" | "left" | "right";
+}) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  
+  const directionOffset = {
+    up: { y: 10, x: 0 },
+    left: { y: 0, x: -20 },
+    right: { y: 0, x: 20 }
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ 
+        opacity: 0, 
+        filter: "blur(10px)",
+        ...directionOffset[direction]
+      }}
+      animate={{ 
+        opacity: isInView ? 1 : 0, 
+        filter: isInView ? "blur(0px)" : "blur(10px)",
+        y: isInView ? 0 : directionOffset[direction].y,
+        x: isInView ? 0 : directionOffset[direction].x
+      }}
+      transition={{ 
+        duration: 0.6, 
+        ease: "easeOut", 
+        delay 
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Componente AnimatedHikeCard integrado con glass blur
 const AnimatedHikeCard = ({ 
   title, 
   images, 
   stats, 
   description, 
-  href 
+  href
 }: {
   title: string;
   images: string[];
@@ -36,13 +83,31 @@ const AnimatedHikeCard = ({
   href: string;
 }) => {
   const [isHovered, setIsHovered] = React.useState(false);
+  const cardRef = React.useRef(null);
+  const isInView = useInView(cardRef, { once: true, amount: 0.3 });
 
   return (
-    <a
+    <motion.a
+      ref={cardRef}
       href={href}
       onClick={(e) => e.preventDefault()}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      initial={{ 
+        opacity: 0, 
+        x: -50,
+        filter: "blur(10px)"
+      }}
+      animate={{ 
+        opacity: isInView ? 1 : 0, 
+        x: isInView ? 0 : -50,
+        filter: isInView ? "blur(0px)" : "blur(10px)"
+      }}
+      transition={{ 
+        duration: 0.8, 
+        delay: 0.3, 
+        ease: "easeOut" 
+      }}
       className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg transition-all duration-300 ease-in-out hover:translate-y-0 hover:shadow-sm lg:max-w-md"
       style={{
         transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
@@ -91,7 +156,7 @@ const AnimatedHikeCard = ({
           {description}
         </p>
       </div>
-    </a>
+    </motion.a>
   );
 };
 
@@ -119,7 +184,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       { icon: <Mountain className="h-4 w-4" />, label: '3 Phases' },
       { icon: <Zap className="h-4 w-4" />, label: 'High Priority' },
     ],
-    cardDescription = 'Hi Team, we\'re excited to implement your new SEO strategy. Starting next week, we\'ll optimize 15 key pages, enhance site speed, and launch targeted content campaigns. Expected completion: 30 days. Let\'s drive growth together!',
+    cardDescription = 'We\'re implementing your new SEO strategy starting next week. We\'ll optimize 15 key pages, enhance site speed, and launch targeted content campaigns. Timeline: 30 days. Let\'s drive measurable growth!',
     cardHref = '#',
   } = props;
 
@@ -217,70 +282,57 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           <div className="max-w-[1225px] mx-auto px-4">
             <div className="flex flex-col items-center gap-8">
               {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
-              >
-                <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" fill="#000000" />
-                </svg>
-                <span className="text-[16px] font-normal text-[#242424] tracking-[-0.3px] capitalize">
-                  {badge}
-                </span>
-              </motion.div>
+              <FadeInText delay={0.2}>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]">
+                  <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" fill="#000000" />
+                  </svg>
+                  <span className="text-[16px] font-normal text-[#242424] tracking-[-0.3px] capitalize">
+                    {badge}
+                  </span>
+                </div>
+              </FadeInText>
 
               {/* Main Title */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="w-full"
-              >
-                <h1 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-center text-black">
-                  {mainTitle}{' '}
-                  <motion.span
-                    initial={{ backgroundPosition: "400% 50%" }}
-                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                    transition={{
-                      duration: 12,
-                      ease: "linear",
-                      repeat: Infinity
-                    }}
-                    style={{
-                      display: "inline-block",
-                      backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
-                      backgroundSize: "400% 100%",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      color: "transparent"
-                    }}
-                  >
-                    {mainTitleHighlight}
-                  </motion.span>
-                </h1>
-              </motion.div>
+              <FadeInText delay={0.3}>
+                <div className="w-full">
+                  <h1 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-center text-black">
+                    {mainTitle}{' '}
+                    <motion.span
+                      initial={{ backgroundPosition: "400% 50%" }}
+                      animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                      transition={{
+                        duration: 12,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                      style={{
+                        display: "inline-block",
+                        backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                        backgroundSize: "400% 100%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        color: "transparent"
+                      }}
+                    >
+                      {mainTitleHighlight}
+                    </motion.span>
+                  </h1>
+                </div>
+              </FadeInText>
 
               {/* Subtitle */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="w-full max-w-[500px]"
-              >
-                <p className="text-base md:text-lg font-medium leading-relaxed tracking-tight text-center text-gray-600">
-                  {subtitle}
-                </p>
-              </motion.div>
+              <FadeInText delay={0.4}>
+                <div className="w-full max-w-[500px]">
+                  <p className="text-base md:text-lg font-medium leading-relaxed tracking-tight text-center text-gray-600">
+                    {subtitle}
+                  </p>
+                </div>
+              </FadeInText>
 
               {/* CTA Button */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
+              <FadeInText delay={0.5}>
                 <a 
                   href={ctaHref} 
                   onClick={e => e.preventDefault()} 
@@ -294,7 +346,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                     <Sparkles className="w-3 h-3 text-black" />
                   </div>
                 </a>
-              </motion.div>
+              </FadeInText>
             </div>
           </div>
         </div>

@@ -84,7 +84,7 @@ const FadeInText = ({
 };
 
 // @component: ProductShowcase
-const ProductShowcase = () => {
+export const ProductShowcase = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isScrollLocked, setIsScrollLocked] = useState(true);
   const scrollContainerRef = useRef(null);
@@ -286,5 +286,4 @@ const ProductShowcase = () => {
     </div>;
 };
 
-export { ProductShowcase };
 export default ProductShowcase;
