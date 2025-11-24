@@ -14,6 +14,15 @@ export const BrandsShowcaseCard = ({
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [hoverCount, setHoverCount] = React.useState(0);
   const [isHovered, setIsHovered] = React.useState(false);
+  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
 
   return (
     <motion.div 
@@ -41,8 +50,19 @@ export const BrandsShowcaseCard = ({
       }} 
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={handleMouseMove}
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
+      {/* Spotlight Effect */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none opacity-50 transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(circle 200px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.8), transparent 80%)`
+          }}
+        />
+      )}
+
       <div className="relative flex flex-col items-center justify-center w-[768px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#FAFAF9' }}>
         <div className="relative w-full h-full">
           {/* Imagen 1 - Izquierda (desde la izquierda) */}
