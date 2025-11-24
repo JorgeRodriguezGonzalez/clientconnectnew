@@ -64,14 +64,26 @@ function FeaturesSectionMinimal() {
         100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
       }
       @keyframes bento2-gradient-shift {
-        0%, 100% { 
+        0% { 
+          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%);
+        }
+        25% { 
           background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%);
         }
         33% { 
           background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(103,188,183,0.32), transparent 72%);
         }
+        58% { 
+          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(103,188,183,0.32), transparent 72%);
+        }
         66% { 
           background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(148,163,184,0.32), transparent 72%);
+        }
+        91% { 
+          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(148,163,184,0.32), transparent 72%);
+        }
+        100% { 
+          background: radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%);
         }
       }
     `;
