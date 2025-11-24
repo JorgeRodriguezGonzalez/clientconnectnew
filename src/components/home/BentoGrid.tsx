@@ -63,6 +63,10 @@ function FeaturesSectionMinimal() {
         0% { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.96); }
         100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
       }
+      @keyframes bento2-gradient-shift {
+        0% { background-position: 400% 50%; }
+        100% { background-position: 0% 50%; }
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -253,10 +257,6 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
   const [hoverCount, setHoverCount] = useState(0);
   const [cardHovered, setCardHovered] = useState(false);
   
-  const gradientFill =
-    theme === "dark"
-      ? "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(59,130,246,0.24), transparent 72%)"
-      : "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%)";
   const animationDelay = `${Math.max(index * 0.12, 0)}s`;
 
   const isStrategicGrowth = index === 0;
@@ -277,7 +277,13 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
         <div className="absolute inset-0 bg-white/85 transition-colors duration-500 dark:bg-white/8" />
         <div
           className="absolute inset-0 opacity-70 transition-opacity duration-500 dark:opacity-60"
-          style={{ background: gradientFill }}
+          style={{ 
+            background: theme === "dark"
+              ? "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(59,130,246,0.24), transparent 72%)"
+              : "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+            backgroundSize: theme === "dark" ? "100% 100%" : "400% 100%",
+            animation: theme === "dark" ? "none" : "bento2-gradient-shift 12s linear infinite"
+          }}
         />
       </div>
       <div className="flex flex-col gap-4">
