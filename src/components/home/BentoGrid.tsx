@@ -282,7 +282,13 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               ? "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(59,130,246,0.24), transparent 72%)"
               : "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
             backgroundSize: theme === "dark" ? "100% 100%" : "400% 100%",
-            animation: theme === "dark" ? "none" : "bento2-gradient-shift 12s linear infinite"
+            animation: theme === "dark" ? "none" : "bento2-gradient-shift 12s linear infinite",
+            maskImage: theme === "dark" 
+              ? "none" 
+              : "radial-gradient(ellipse 60% 120% at 12% 0%, black, transparent 72%)",
+            WebkitMaskImage: theme === "dark" 
+              ? "none" 
+              : "radial-gradient(ellipse 60% 120% at 12% 0%, black, transparent 72%)"
           }}
         />
       </div>
