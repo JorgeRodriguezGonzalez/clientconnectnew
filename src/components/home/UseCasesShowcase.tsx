@@ -108,7 +108,7 @@ const AnimatedHikeCard = ({
         delay: 0.3, 
         ease: "easeOut" 
       }}
-      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg transition-all duration-300 ease-in-out hover:translate-y-0 hover:shadow-sm lg:max-w-md"
+      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg hover:translate-y-0 hover:shadow-sm lg:max-w-md"
       style={{
         transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
       }}
