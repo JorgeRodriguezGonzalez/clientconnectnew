@@ -168,7 +168,7 @@ const TaskTimeline = () => {
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`w-[350px] rounded-2xl border p-6 transition-all duration-300 ${
+      className={`w-[380px] rounded-2xl border p-6 transition-all duration-300 ${
         isHovered 
           ? 'bg-white border-gray-200 shadow-lg' 
           : 'bg-black border-gray-800 shadow-sm'
@@ -310,8 +310,8 @@ const AnimatedHikeCard = ({
       }}
     >
       <div className="flex flex-col">
-        {/* Overlay difuminado en el lado izquierdo - blanco opaco a transparente */}
-        <div className="absolute inset-y-0 left-0 w-40 rounded-l-2xl bg-gradient-to-r from-white/90 via-white/50 to-transparent pointer-events-none z-[5]" />
+        {/* Overlay difuminado diagonal - de abajo izquierda a arriba derecha */}
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/90 via-white/50 via-30% to-transparent to-60% pointer-events-none z-[5]" />
         
         {/* Card Header: Title */}
         <div className="mb-3 relative z-[2]">
