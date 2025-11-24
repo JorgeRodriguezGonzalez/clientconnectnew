@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Clock, Zap, Mountain, ArrowRight } from 'lucide-react';
+import { Sparkles, Clock, Zap, Mountain } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 type UseCasesShowcaseProps = {
@@ -160,7 +160,7 @@ const AnimatedHikeCard = ({
   );
 };
 
-export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
+const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const {
     subText = 'our approach',
     heading = 'Marketing strategies that transform your business into',
@@ -357,12 +357,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             <div className="flex flex-col lg:flex-row items-start justify-between gap-20">
 
               {/* COLUMNA IZQUIERDA - AnimatedHikeCard */}
-              <motion.div 
-                initial={{ opacity: 0, x: -50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                className="relative flex-1 max-w-[495px] flex items-center justify-center"
-              >
+              <div className="relative flex-1 max-w-[495px] flex items-center justify-center">
                 <AnimatedHikeCard
                   title={cardTitle}
                   images={cardImages}
@@ -370,56 +365,47 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   description={cardDescription}
                   href={cardHref}
                 />
-              </motion.div>
+              </div>
 
-              {/* COLUMNA DERECHA - Texto y Calendario */}
+              {/* COLUMNA DERECHA - Texto */}
               <div className="flex-1 max-w-[520px]">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-sm font-medium tracking-[2.2px] uppercase mb-2.5 text-gray-500"
-                >
-                  {subText}
-                </motion.div>
+                <FadeInText delay={0.5} direction="up">
+                  <div className="text-sm font-medium tracking-[2.2px] uppercase mb-2.5 text-gray-500">
+                    {subText}
+                  </div>
+                </FadeInText>
 
-                <motion.h2
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.5 }}
-                  className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900 mb-6"
-                >
-                  {heading}{' '}
-                  <motion.span
-                    initial={{ backgroundPosition: "400% 50%" }}
-                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                    transition={{
-                      duration: 12,
-                      ease: "linear",
-                      repeat: Infinity
-                    }}
-                    style={{
-                      display: "inline-block",
-                      backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
-                      backgroundSize: "400% 100%",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      color: "transparent"
-                    }}
-                  >
-                    {highlightText}
-                  </motion.span>
-                </motion.h2>
+                <FadeInText delay={0.6} direction="up">
+                  <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900 mb-6">
+                    {heading}{' '}
+                    <motion.span
+                      initial={{ backgroundPosition: "400% 50%" }}
+                      animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                      transition={{
+                        duration: 12,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                      style={{
+                        display: "inline-block",
+                        backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                        backgroundSize: "400% 100%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        color: "transparent"
+                      }}
+                    >
+                      {highlightText}
+                    </motion.span>
+                  </h2>
+                </FadeInText>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
-                  className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight"
-                >
-                  {description}
-                </motion.p>
+                <FadeInText delay={0.7} direction="up">
+                  <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
+                    {description}
+                  </p>
+                </FadeInText>
               </div>
             </div>
           </div>
@@ -428,3 +414,6 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     </motion.div>
   );
 };
+
+export { UseCasesShowcase };
+export default UseCasesShowcase;
