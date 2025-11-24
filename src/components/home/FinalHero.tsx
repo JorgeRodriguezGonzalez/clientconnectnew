@@ -38,61 +38,61 @@ export function FinalHero() {
   // Fade out individual para cada elemento
   const lampOpacity = useTransform(
     scrollYProgress,
-    [0.65, 0.8],
+    [0.75, 0.85],
     [1, 0]
   );
 
   const lampBlur = useTransform(
     scrollYProgress,
-    [0.65, 0.8],
+    [0.75, 0.85],
     [0, 10]
   );
 
   const titleOpacity = useTransform(
     scrollYProgress,
-    [0.7, 0.85],
+    [0.78, 0.88],
     [1, 0]
   );
 
   const titleBlur = useTransform(
     scrollYProgress,
-    [0.7, 0.85],
+    [0.78, 0.88],
     [0, 10]
   );
 
   const subtitleOpacity = useTransform(
     scrollYProgress,
-    [0.75, 0.9],
+    [0.81, 0.91],
     [1, 0]
   );
 
   const subtitleBlur = useTransform(
     scrollYProgress,
-    [0.75, 0.9],
+    [0.81, 0.91],
     [0, 10]
   );
 
   const ctaOpacity = useTransform(
     scrollYProgress,
-    [0.8, 0.95],
+    [0.88, 0.96],
     [1, 0]
   );
 
   const ctaBlur = useTransform(
     scrollYProgress,
-    [0.8, 0.95],
+    [0.88, 0.96],
     [0, 10]
   );
 
   const trustedOpacity = useTransform(
     scrollYProgress,
-    [0.85, 1],
+    [0.92, 0.99],
     [1, 0]
   );
 
   const trustedBlur = useTransform(
     scrollYProgress,
-    [0.85, 1],
+    [0.92, 0.99],
     [0, 10]
   );
 
