@@ -168,7 +168,7 @@ const TaskTimeline = () => {
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`w-[360px] rounded-2xl border p-6 transition-all duration-300 ${
+      className={`w-[340px] rounded-2xl border p-6 transition-all duration-300 ${
         isHovered 
           ? 'bg-white border-gray-200 shadow-lg' 
           : 'bg-black border-gray-800 shadow-sm'
@@ -547,7 +547,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 />
                 
                 {/* TaskTimeline superpuesta - fuera del AnimatedHikeCard */}
-                <div className="absolute -bottom-8 -right-24 z-10" style={{ transform: 'translate(60px, 30px)' }}>
+                <div className="absolute -bottom-8 -right-24 z-10" style={{ transform: 'translate(40px, 30px)' }}>
                   <TaskTimeline />
                 </div>
               </div>
