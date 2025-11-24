@@ -325,15 +325,17 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
 
         {/* Images section for Strategic Growth card only */}
         {isStrategicGrowth && (
-          <div className="relative w-full h-[180px] mt-2">
+          <div className="relative w-full h-[280px] mt-2 flex items-center justify-center">
             {/* Image 1 - Left (from left) */}
             <motion.div 
               key={`img1-${hoverCount}`}
-              className="absolute w-[60px] h-[102px] overflow-visible" 
+              className="absolute w-[120px] h-[204px] overflow-visible" 
               style={{
-                top: '40px',
-                left: '10px',
-                transformOrigin: '30px 51px'
+                top: '50%',
+                left: '50%',
+                marginLeft: '-280px',
+                marginTop: '-102px',
+                transformOrigin: '60px 102px'
               }} 
               initial={{
                 x: -20,
@@ -358,11 +360,13 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
             {/* Image 2 - Second from left (from top) */}
             <motion.div 
               key={`img2-${hoverCount}`}
-              className="absolute w-[60px] h-[102px] overflow-visible" 
+              className="absolute w-[120px] h-[204px] overflow-visible" 
               style={{
-                top: '40px',
-                left: '80px',
-                transformOrigin: '30px 51px'
+                top: '50%',
+                left: '50%',
+                marginLeft: '-140px',
+                marginTop: '-102px',
+                transformOrigin: '60px 102px'
               }} 
               initial={{
                 y: -20,
@@ -387,12 +391,14 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
             {/* Image 3 - Center (from bottom) */}
             <motion.div 
               key={`img3-${hoverCount}`}
-              className="absolute w-[68px] h-[125px] overflow-visible" 
+              className="absolute w-[136px] h-[250px] overflow-visible" 
               style={{
-                top: '15px',
-                left: '150px',
-                transformOrigin: '34px 62.5px',
-                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 28px 24px 0px'
+                top: '50%',
+                left: '50%',
+                marginLeft: '-68px',
+                marginTop: '-125px',
+                transformOrigin: '68px 125px',
+                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px'
               }} 
               initial={{
                 y: 20,
@@ -417,11 +423,13 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
             {/* Image 4 - Second from right (from top) */}
             <motion.div 
               key={`img4-${hoverCount}`}
-              className="absolute w-[60px] h-[102px] overflow-visible" 
+              className="absolute w-[120px] h-[204px] overflow-visible" 
               style={{
-                top: '40px',
-                left: '228px',
-                transformOrigin: '30px 51px'
+                top: '50%',
+                left: '50%',
+                marginLeft: '76px',
+                marginTop: '-102px',
+                transformOrigin: '60px 102px'
               }} 
               initial={{
                 y: -20,
@@ -446,11 +454,13 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
             {/* Image 5 - Right (from right) */}
             <motion.div 
               key={`img5-${hoverCount}`}
-              className="absolute w-[60px] h-[102px] overflow-visible" 
+              className="absolute w-[120px] h-[204px] overflow-visible" 
               style={{
-                top: '40px',
-                left: '298px',
-                transformOrigin: '30px 51px'
+                top: '50%',
+                left: '50%',
+                marginLeft: '216px',
+                marginTop: '-102px',
+                transformOrigin: '60px 102px'
               }} 
               initial={{
                 x: 20,
