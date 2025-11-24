@@ -256,7 +256,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
   const gradientFill =
     theme === "dark"
       ? "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(59,130,246,0.24), transparent 72%)"
-      : "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(148,163,184,0.32), transparent 72%)";
+      : "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(237,191,134,0.32), transparent 72%)";
   const animationDelay = `${Math.max(index * 0.12, 0)}s`;
 
   const isStrategicGrowth = index === 0;
