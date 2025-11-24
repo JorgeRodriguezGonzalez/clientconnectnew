@@ -1,27 +1,42 @@
-import React from 'react';
-import { Sparkles, Clock, Zap, Mountain, ArrowRight } from 'lucide-react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-type UseCasesShowcaseProps = {
-  subText?: string;
-  heading?: string;
-  highlightText?: string;
-  description?: string;
-  badge?: string;
-  mainTitle?: string;
-  mainTitleHighlight?: string;
-  subtitle?: string;
-  ctaText?: string;
-  ctaHref?: string;
-  // Props para el AnimatedHikeCard
-  cardTitle?: string;
-  cardImages?: string[];
-  cardStats?: Array<{ icon: React.ReactNode; label: string }>;
-  cardDescription?: string;
-  cardHref?: string;
-};
+// Non-exported helpers and constants
+const FEATURE_IMAGES = ["https://framerusercontent.com/images/4mjO0OJA9HtnNRv5wqa7Sct5SI.png?width=2618&height=2618", "https://framerusercontent.com/images/4C2xtl8JRiHhF1SC96bbFToa6X8.png?width=2347&height=2347", "https://framerusercontent.com/images/gIa2LVqt1UUbQ2Gp8vCamuTFM8.png?width=1991&height=2143", "https://framerusercontent.com/images/UC6nHuSzN060lUKnMZgv9p0794.png?width=2347&height=2347", "https://framerusercontent.com/images/TkDQuT7AJX6TcnqHuE2fmHQAs.png?width=2347&height=2347", "https://framerusercontent.com/images/InLO1TNnl0DIc9r9qiQzrfyL2eQ.png?width=2347&height=2347"];
 
-// Componente FadeInText con glass blur
+const CONTENT_SLIDES = [
+  {
+    title: "Partner with Australia's top ",
+    highlightText: "digital marketing agency.",
+    description: "We specialize in SEO, Google Ads, web design, and social media management. Let us transform your online presence and drive real results for your business."
+  },
+  {
+    title: "Start receiving qualified ",
+    highlightText: "leads daily.",
+    description: "Our targeted campaigns connect you with customers actively searching for your services. Watch your inbox fill with genuine opportunities ready to convert."
+  },
+  {
+    title: "Expand across all ",
+    highlightText: "digital channels.",
+    description: "From Google to social media, we create cohesive strategies that maximize your visibility. Your brand deserves to be seen everywhere your customers are."
+  },
+  {
+    title: "Get a customized audit with ",
+    highlightText: "actionable improvements.",
+    description: "We analyze your current digital presence and provide a clear roadmap. Every recommendation comes with our commitment to implement the changes for you."
+  },
+  {
+    title: "Close more deals with ",
+    highlightText: "high-intent prospects.",
+    description: "Our lead generation strategies target customers ready to buy. We optimize every touchpoint to turn interest into revenue for your business."
+  },
+  {
+    title: "Track your success with ",
+    highlightText: "transparent reporting.",
+    description: "Receive detailed monthly reports showing exactly how your investment translates to growth. Real metrics, real KPIs, real accountability."
+  }
+];
+
 const FadeInText = ({ 
   children, 
   delay = 0, 
@@ -33,7 +48,7 @@ const FadeInText = ({
   className?: string;
   direction?: "up" | "left" | "right";
 }) => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   
   const directionOffset = {
@@ -68,363 +83,208 @@ const FadeInText = ({
   );
 };
 
-// Componente AnimatedHikeCard integrado con glass blur
-const AnimatedHikeCard = ({ 
-  title, 
-  images, 
-  stats, 
-  description, 
-  href
-}: {
-  title: string;
-  images: string[];
-  stats: Array<{ icon: React.ReactNode; label: string }>;
-  description: string;
-  href: string;
-}) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-  const cardRef = React.useRef(null);
-  const isInView = useInView(cardRef, { once: true, amount: 0.3 });
+// @component: ProductShowcase
+const ProductShowcase = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isScrollLocked, setIsScrollLocked] = useState(true);
+  const scrollContainerRef = useRef(null);
+  const stickyPanelRef = useRef(null);
+  const sectionRef = useRef(null);
 
-  return (
-    <motion.a
-      ref={cardRef}
-      href={href}
-      onClick={(e) => e.preventDefault()}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      initial={{ 
-        opacity: 0, 
-        x: -50,
-        filter: "blur(10px)"
-      }}
-      animate={{ 
-        opacity: isInView ? 1 : 0, 
-        x: isInView ? 0 : -50,
-        filter: isInView ? "blur(0px)" : "blur(10px)"
-      }}
-      transition={{ 
-        duration: 0.8, 
-        delay: 0.3, 
-        ease: "easeOut" 
-      }}
-      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg transition-all duration-300 ease-in-out hover:translate-y-0 hover:shadow-sm lg:max-w-md"
-      style={{
-        transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
-      }}
-    >
-      <div className="flex flex-col">
-        {/* Card Header: Title */}
-        <div className="mb-3">
-          <h2 className="text-[10px] md:text-[16px] lg:text-[26px] font-[500] leading-[1.1] tracking-tight text-gray-900">{title}</h2>
-        </div>
+  // --- Monitor section position to lock/unlock scroll ---
+  useEffect(() => {
+    const handleWindowScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
 
-        {/* Stats Section - Moved here */}
-        <div className="mb-6 flex items-center space-x-4 text-sm text-gray-600">
-          {stats.map((stat, index) => (
-            <div key={index} className="flex items-center space-x-1.5">
-              {stat.icon}
-              <span className="font-medium">{stat.label}</span>
-            </div>
-          ))}
+      const rect = section.getBoundingClientRect();
+      // Unlock when section reaches 170px from top (accounting for the -170px margin)
+      if (rect.top <= 170) {
+        setIsScrollLocked(false);
+      } else {
+        setIsScrollLocked(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
+    handleWindowScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleWindowScroll);
+  }, []);
+
+  // --- Scroll Handler ---
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const scrollableHeight = container.scrollHeight - window.innerHeight;
+      const stepHeight = scrollableHeight / CONTENT_SLIDES.length;
+      const newActiveIndex = Math.min(
+        CONTENT_SLIDES.length - 1,
+        Math.floor(container.scrollTop / stepHeight)
+      );
+      setActiveIndex(newActiveIndex);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // @return
+  return <div className="w-full bg-black text-white min-h-screen flex flex-col items-center overflow-hidden pb-32">
+      
+      {/* Problem Statement Section */}
+      <section className="w-full max-w-[1240px] px-5 pt-32 pb-8 flex flex-col items-center text-center md:text-left">
+        <div className="w-full max-w-[930px] flex flex-col gap-8 md:gap-12">
+          <FadeInText delay={0.2}>
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium leading-tight tracking-tight text-white">
+              Kinso brings together all of your conversations, which uses AI to understand your goals and lets you focus on the most important messages and contacts.
+            </h3>
+          </FadeInText>
+          
+          <FadeInText delay={0.3}>
+            <h4 className="text-base md:text-lg font-medium leading-relaxed text-neutral-400 max-w-[930px]">
+              <span className="text-neutral-200">Whether you're circling back over email,</span>{" "}
+              digging for opportunities on LinkedIn, or buried under messages on Slack,{" "}
+              <span className="text-neutral-200">business communication happens on too many platforms.</span>
+            </h4>
+          </FadeInText>
         </div>
+      </section>
+
+      {/* Features Section */}
+      <section ref={sectionRef} className="w-full flex flex-col items-center">
         
-        {/* Stacked Images with Hover Animation */}
-        <div className="relative mb-6 h-32">
-          {images.map((src, index) => (
-            <div
-              key={index}
-              className="absolute h-full w-[40%] overflow-hidden rounded-lg border-2 border-white shadow-md transition-all duration-300 ease-in-out"
-              style={{
-                transform: isHovered 
-                  ? `translateX(${index * 32}px)`
-                  : `translateX(${index * 80}px) rotate(${index * 5 - 5}deg)`,
-                zIndex: images.length - index,
-              }}
-            >
-              <img
-                src={src}
-                alt={`${title} view ${index + 1}`}
-                className="h-full w-full object-cover"
-              />
+        {/* Section Separator */}
+        <div className="w-full max-w-[1240px] px-5 flex items-center justify-center gap-4 py-12 md:py-24" style={{ marginBottom: '-100px' }}>
+          <FadeInText delay={0.4} direction="left">
+            <div className="h-[1px] w-24 md:w-48 bg-white" />
+          </FadeInText>
+          
+          <FadeInText delay={0.5}>
+            <div className="border border-white rounded-full px-4 py-2 bg-black">
+              <span className="text-xs tracking-wider text-white font-medium">FEATURES</span>
             </div>
-          ))}
-        </div>
-        
-        {/* Description */}
-        <p className="text-[12px] md:text-[14px] font-normal leading-relaxed text-gray-600 tracking-tight">
-          {description}
-        </p>
-      </div>
-    </motion.a>
-  );
-};
-
-export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
-  const {
-    subText = 'our approach',
-    heading = 'Marketing strategies that transform your business into',
-    highlightText = 'market leaders',
-    description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
-    badge = 'Digital Marketing Excellence',
-    mainTitle = 'Transform Your Business into',
-    mainTitleHighlight = 'Market Leaders',
-    subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
-    ctaText = 'Book a Call',
-    ctaHref = '#',
-    // Valores por defecto para el card
-    cardTitle = 'Q4 Strategy Update',
-    cardImages = [
-      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop',
-    ],
-    cardStats = [
-      { icon: <Clock className="h-4 w-4" />, label: 'Next 30 Days' },
-      { icon: <Mountain className="h-4 w-4" />, label: '3 Phases' },
-      { icon: <Zap className="h-4 w-4" />, label: 'High Priority' },
-    ],
-    cardDescription = 'We\'re implementing your new SEO strategy starting next week. We\'ll optimize 15 key pages, enhance site speed, and launch targeted content campaigns. Timeline: 30 days. Let\'s drive measurable growth!',
-    cardHref = '#',
-  } = props;
-
-  const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-
-  // Scroll animation para el color del arco
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "start center"]
-  });
-
-  // Scroll animation para el border-radius (círculo a cuadrado)
-  const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
-    target: ref,
-    offset: ["start 130vh", "start 100vh"]
-  });
-
-  // Scroll animation para la expansión de la elipse
-  const { scrollYProgress: scrollYProgressEllipse } = useScroll({
-    target: ref,
-    offset: ["start 120vh", "start 80vh"]
-  });
-
-  // Scroll animation para el color del borde
-  const { scrollYProgress: scrollYProgressBorder } = useScroll({
-    target: ref,
-    offset: ["start 120vh", "start center"]
-  });
-
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.4],
-    ["#000000", "rgb(20, 35, 90)", "#ffffff"]
-  );
-
-  const borderColor = useTransform(
-    scrollYProgressBorder,
-    [0, 0.15, 0.4, 0.6],
-    ["#e5e7eb", "#000000", "rgb(20, 35, 90)", "#ffffff"]
-  );
-
-  const borderRadius = useTransform(
-    scrollYProgressBorderRadius,
-    [0, 0.2925],
-    ["100%", "0%"]
-  );
-
-  const ellipseWidth = useTransform(
-    scrollYProgressEllipse,
-    [0, 0.35],
-    [40, 100]
-  );
-
-  const fadeStart = useTransform(
-    scrollYProgressEllipse,
-    [0, 0.35],
-    [40, 100]
-  );
-
-  const fadeEnd = useTransform(
-    scrollYProgressEllipse,
-    [0, 0.35],
-    [90, 100]
-  );
-
-  const maskImage = useTransform(
-    [ellipseWidth, fadeStart, fadeEnd],
-    ([width, start, end]) => 
-      `radial-gradient(ellipse ${width}% 100% at center, black 0%, black ${start}%, transparent ${end}%, transparent 100%)`
-  );
-
-  return (
-    <motion.div className="pt-16" style={{ backgroundColor }}>
-      <section ref={ref} className="relative">
-        {/* ARCO */}
-        <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none">
-          <motion.div
-            className="w-full h-full border-t-[1px]"
-            style={{
-              transform: 'translateY(-65%)',
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0,
-              borderRadius: borderRadius,
-              borderTopColor: borderColor,
-              WebkitMaskImage: maskImage,
-              maskImage: maskImage,
-              backgroundColor: backgroundColor,
-            }}
-          />
+          </FadeInText>
+          
+          <FadeInText delay={0.4} direction="right">
+            <div className="h-[1px] w-24 md:w-48 bg-white" />
+          </FadeInText>
         </div>
 
-        {/* TÍTULO ESTILO SHOPIFY */}
-        <div className="absolute -top-[254px] left-0 right-0 z-50">
-          <div className="max-w-[1225px] mx-auto px-4">
-            <div className="flex flex-col items-center gap-8">
-              {/* Badge */}
-              <FadeInText delay={0.2}>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]">
-                  <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" fill="#000000" />
-                  </svg>
-                  <span className="text-[16px] font-normal text-[#242424] tracking-[-0.3px] capitalize">
-                    {badge}
-                  </span>
-                </div>
-              </FadeInText>
-
-              {/* Main Title */}
-              <FadeInText delay={0.3}>
-                <div className="w-full">
-                  <h1 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-center text-black">
-                    {mainTitle}{' '}
-                    <motion.span
-                      initial={{ backgroundPosition: "400% 50%" }}
-                      animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                      transition={{
-                        duration: 12,
-                        ease: "linear",
-                        repeat: Infinity
-                      }}
-                      style={{
-                        display: "inline-block",
-                        backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
-                        backgroundSize: "400% 100%",
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                        backgroundClip: "text",
-                        color: "transparent"
-                      }}
-                    >
-                      {mainTitleHighlight}
-                    </motion.span>
-                  </h1>
-                </div>
-              </FadeInText>
-
-              {/* Subtitle */}
-              <FadeInText delay={0.4}>
-                <div className="w-full max-w-[500px]">
-                  <p className="text-base md:text-lg font-medium leading-relaxed tracking-tight text-center text-gray-600">
-                    {subtitle}
-                  </p>
-                </div>
-              </FadeInText>
-
-              {/* CTA Button */}
-              <FadeInText delay={0.5}>
-                <a 
-                  href={ctaHref} 
-                  onClick={e => e.preventDefault()} 
-                  className="relative inline-flex items-center justify-center gap-2.5 px-5 py-[14px] bg-black rounded-xl shadow-[0_8px_20px_-4px_rgba(0,0,0,0.3)] overflow-hidden group hover:bg-gray-900 transition-colors"
-                >
-                  <span className="text-base font-medium leading-6 tracking-[-0.5px] text-white z-10">
-                    {ctaText}
-                  </span>
+        {/* Scrolling Feature Showcase */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            .hide-scrollbar {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+            .hide-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+          `
+        }} />
+        <div 
+          ref={scrollContainerRef}
+          className="hide-scrollbar h-screen w-screen overflow-y-auto"
+        >
+          <div style={{ height: `${CONTENT_SLIDES.length * 50}vh` }}>
+            <div ref={stickyPanelRef} className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-transparent text-white">
+              <div className="grid grid-cols-1 md:grid-cols-2 h-full w-full max-w-7xl mx-auto">
+                
+                {/* Left Column: Text Content & Pagination */}
+                <div className="relative flex flex-col justify-center p-8 md:p-16">
                   
-                  <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center z-10">
-                    <Sparkles className="w-3 h-3 text-black" />
+                  <div className="relative h-64 w-full">
+                    {CONTENT_SLIDES.map((slide, index) => (
+                      <div
+                        key={index}
+                        className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                          index === activeIndex
+                            ? 'opacity-100 translate-y-0'
+                            : 'opacity-0 translate-y-10'
+                        }`}
+                      >
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
+                          <span className="text-white">{slide.title}</span>
+                          <motion.span
+                            initial={{ backgroundPosition: "400% 50%" }}
+                            animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                            transition={{
+                              duration: 12,
+                              ease: "linear",
+                              repeat: Infinity
+                            }}
+                            style={{
+                              display: "inline-block",
+                              backgroundImage: "linear-gradient(45deg, rgba(0, 0, 0, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(0, 0, 0, 0))",
+                              backgroundSize: "400% 100%",
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                              backgroundClip: "text",
+                              color: "transparent"
+                            }}
+                          >
+                            {slide.highlightText}
+                          </motion.span>
+                        </h2>
+                        <p className="mt-6 text-base md:text-lg text-neutral-400 leading-relaxed max-w-md">{slide.description}</p>
+                      </div>
+                    ))}
                   </div>
-                </a>
-              </FadeInText>
-            </div>
-          </div>
-        </div>
 
-        {/* CONTENIDO */}
-        <div className="relative pt-48 pb-32 px-4">
-          <div className="max-w-[1225px] mx-auto">
-            <div className="flex flex-col lg:flex-row items-start justify-between gap-20">
+                  {/* Pagination Bars */}
+                  <div className="flex space-x-2" style={{ marginTop: '170px' }}>
+                    {CONTENT_SLIDES.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                            const container = scrollContainerRef.current;
+                            if(container){
+                                const scrollableHeight = container.scrollHeight - window.innerHeight;
+                                const stepHeight = scrollableHeight / CONTENT_SLIDES.length;
+                                container.scrollTo({ top: stepHeight * index, behavior: 'smooth' });
+                            }
+                        }}
+                        className={`h-1 rounded-full transition-all duration-500 ease-in-out ${
+                          index === activeIndex ? 'w-12 bg-white' : 'w-6 bg-white/30'
+                        }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
 
-              {/* COLUMNA IZQUIERDA - AnimatedHikeCard */}
-              <motion.div 
-                initial={{ opacity: 0, x: -50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                className="relative flex-1 max-w-[495px] flex items-center justify-center"
-              >
-                <AnimatedHikeCard
-                  title={cardTitle}
-                  images={cardImages}
-                  stats={cardStats}
-                  description={cardDescription}
-                  href={cardHref}
-                />
-              </motion.div>
+                </div>
 
-              {/* COLUMNA DERECHA - Texto y Calendario */}
-              <div className="flex-1 max-w-[520px]">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-sm font-medium tracking-[2.2px] uppercase mb-2.5 text-gray-500"
-                >
-                  {subText}
-                </motion.div>
-
-                <motion.h2
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.5 }}
-                  className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900 mb-6"
-                >
-                  {heading}{' '}
-                  <motion.span
-                    initial={{ backgroundPosition: "400% 50%" }}
-                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                    transition={{
-                      duration: 12,
-                      ease: "linear",
-                      repeat: Infinity
-                    }}
-                    style={{
-                      display: "inline-block",
-                      backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
-                      backgroundSize: "400% 100%",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      color: "transparent"
-                    }}
-                  >
-                    {highlightText}
-                  </motion.span>
-                </motion.h2>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
-                  className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight"
-                >
-                  {description}
-                </motion.p>
+                {/* Right Column: Image Content */}
+                <div className="hidden md:flex items-center justify-center p-8">
+                  <div className="relative w-[80%] h-[80vh] rounded-2xl overflow-hidden">
+                    <div 
+                      className="absolute top-0 left-0 w-full h-full transition-transform duration-700 ease-in-out"
+                      style={{ transform: `translateY(-${activeIndex * 100}%)` }}
+                    >
+                      {CONTENT_SLIDES.map((slide, index) => (
+                        <div key={index} className="w-full h-full">
+                          <img
+                            src={FEATURE_IMAGES[index]}
+                            alt={slide.title}
+                            className="h-full w-full object-contain"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
       </section>
-    </motion.div>
-  );
+    </div>;
 };
+
+export { ProductShowcase };
+export default ProductShowcase;
