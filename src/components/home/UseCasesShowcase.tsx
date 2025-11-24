@@ -81,6 +81,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
 
   const [currentTaskIndex, setCurrentTaskIndex] = React.useState(0);
   const [progress, setProgress] = React.useState(0);
+  const [isHovered, setIsHovered] = React.useState(false);
   
   const tasksData: TaskItem[] = [
     {
@@ -162,7 +163,13 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
         delay: 1.3,
         ease: "easeOut" 
       }}
-      className="w-[380px] bg-white rounded-2xl border border-gray-200 p-6 shadow-lg"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`w-[380px] rounded-2xl border p-6 transition-all duration-300 ${
+        isHovered 
+          ? 'bg-black border-gray-800 shadow-sm' 
+          : 'bg-white border-gray-200 shadow-lg'
+      }`}
     >
       <div className="space-y-0">
         {tasks.map((task, index) => (
@@ -170,56 +177,80 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
             <div className="flex flex-col items-center">
               <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-500 relative">
                 {task.status === 'complete' && (
-                  <div className="w-full h-full rounded-full border-[3px] border-[#de8363] bg-[#de8363] flex items-center justify-center">
+                  <div className={`w-full h-full rounded-full border-[3px] flex items-center justify-center transition-colors duration-300 ${
+                    isHovered 
+                      ? 'border-[rgb(103,188,183)] bg-[rgb(103,188,183)]' 
+                      : 'border-[#de8363] bg-[#de8363]'
+                  }`}>
                     <Check className="w-4 h-4 text-white stroke-[3]" />
                   </div>
                 )}
                 {task.status === 'active' && (
                   <div className="w-full h-full relative">
-                    <div className="w-full h-full rounded-full border-[3px] border-gray-200 bg-white absolute inset-0" />
+                    <div className={`w-full h-full rounded-full border-[3px] absolute inset-0 transition-colors duration-300 ${
+                      isHovered 
+                        ? 'border-gray-700 bg-black' 
+                        : 'border-gray-200 bg-white'
+                    }`} />
                     <svg className="w-full h-full -rotate-90 absolute inset-0" viewBox="0 0 40 40">
                       <circle 
                         cx="20" 
                         cy="20" 
                         r="12" 
                         fill="none" 
-                        stroke="#de8363" 
+                        stroke={isHovered ? 'rgb(103, 188, 183)' : '#de8363'}
                         strokeWidth="3" 
                         strokeDasharray={circumference} 
                         strokeDashoffset={circumference - progress / 100 * circumference} 
                         strokeLinecap="round" 
-                        className="transition-all duration-100" 
+                        className="transition-all duration-300" 
                       />
                     </svg>
                   </div>
                 )}
                 {task.status === 'pending' && (
-                  <div className="w-full h-full rounded-full border-[3px] border-gray-300 bg-white" />
+                  <div className={`w-full h-full rounded-full border-[3px] transition-colors duration-300 ${
+                    isHovered 
+                      ? 'border-gray-700 bg-black' 
+                      : 'border-gray-300 bg-white'
+                  }`} />
                 )}
               </div>
               {index < tasks.length - 1 && (
                 <div className={`w-0.5 h-8 my-1 transition-all duration-500 ${
-                  task.status === 'complete' ? 'bg-[#de8363]' : 'bg-gray-300'
+                  task.status === 'complete' 
+                    ? (isHovered ? 'bg-[rgb(103,188,183)]' : 'bg-[#de8363]')
+                    : (isHovered ? 'bg-gray-700' : 'bg-gray-300')
                 }`} />
               )}
             </div>
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1">
-                <h3 className={`text-sm font-medium transition-colors duration-500 ${
-                  task.status === 'active' || task.status === 'complete' ? 'text-[#de8363]' : 'text-gray-400'
+                <h3 className={`text-sm font-medium transition-colors duration-300 ${
+                  task.status === 'active' || task.status === 'complete' 
+                    ? (isHovered ? 'text-[rgb(103,188,183)]' : 'text-[#de8363]')
+                    : (isHovered ? 'text-gray-500' : 'text-gray-400')
                 }`}>
                   {task.title}
                 </h3>
                 {task.time && (
-                  <span className={`text-xs font-medium transition-colors duration-500 ${
-                    task.status === 'active' || task.status === 'complete' ? 'text-[#de8363]' : 'text-gray-400'
+                  <span className={`text-xs font-medium transition-colors duration-300 ${
+                    task.status === 'active' || task.status === 'complete' 
+                      ? (isHovered ? 'text-[rgb(103,188,183)]' : 'text-[#de8363]')
+                      : (isHovered ? 'text-gray-500' : 'text-gray-400')
                   }`}>
                     {task.time}
                   </span>
                 )}
               </div>
-              {task.actions && <p className="text-gray-500 text-xs">{task.actions}</p>}
+              {task.actions && (
+                <p className={`text-xs transition-colors duration-300 ${
+                  isHovered ? 'text-gray-400' : 'text-gray-500'
+                }`}>
+                  {task.actions}
+                </p>
+              )}
             </div>
           </div>
         ))}
