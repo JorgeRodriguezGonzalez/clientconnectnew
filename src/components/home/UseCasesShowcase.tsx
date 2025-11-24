@@ -168,7 +168,7 @@ const TaskTimeline = () => {
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`w-[360px] rounded-2xl border p-6 transition-all duration-300 ${
+      className={`w-[380px] rounded-2xl border p-6 transition-all duration-300 ${
         isHovered 
           ? 'bg-white border-gray-200 shadow-lg' 
           : 'bg-black border-gray-800 shadow-sm'
@@ -283,35 +283,37 @@ const AnimatedHikeCard = ({
   const isInView = useInView(cardRef, { once: true, amount: 0.3 });
 
   return (
-    <motion.a
-      ref={cardRef}
-      href={href}
-      onClick={(e) => e.preventDefault()}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      initial={{ 
-        opacity: 0, 
-        x: -50,
-        filter: "blur(10px)"
-      }}
-      animate={{ 
-        opacity: isInView ? 1 : 0, 
-        x: isInView ? 0 : -50,
-        filter: isInView ? "blur(0px)" : "blur(10px)"
-      }}
-      transition={{ 
-        duration: 0.8, 
-        delay: 0.3, 
-        ease: "easeOut" 
-      }}
-      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg hover:translate-y-0 hover:shadow-sm lg:max-w-md"
-      style={{
-        transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
-      }}
-    >
-      <div className="flex flex-col">
-        {/* Overlay difuminado diagonal - de abajo izquierda a arriba derecha */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/90 via-white/50 via-30% to-transparent to-60% pointer-events-none z-[5]" />
+    <div className="relative">
+      {/* Overlay difuminado diagonal - FUERA de la tarjeta para cubrir borde y sombra */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/90 via-white/50 via-30% to-transparent to-60% pointer-events-none z-[10]" />
+      
+      <motion.a
+        ref={cardRef}
+        href={href}
+        onClick={(e) => e.preventDefault()}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        initial={{ 
+          opacity: 0, 
+          x: -50,
+          filter: "blur(10px)"
+        }}
+        animate={{ 
+          opacity: isInView ? 1 : 0, 
+          x: isInView ? 0 : -50,
+          filter: isInView ? "blur(0px)" : "blur(10px)"
+        }}
+        transition={{ 
+          duration: 0.8, 
+          delay: 0.3, 
+          ease: "easeOut" 
+        }}
+        className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg hover:translate-y-0 hover:shadow-sm lg:max-w-md"
+        style={{
+          transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
+        }}
+      >
+        <div className="flex flex-col">
         
         {/* Card Header: Title */}
         <div className="mb-3 relative z-[2]">
@@ -356,6 +358,7 @@ const AnimatedHikeCard = ({
         </p>
       </div>
     </motion.a>
+    </div>
   );
 };
 
