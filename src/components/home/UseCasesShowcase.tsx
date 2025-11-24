@@ -431,6 +431,13 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#ffffff", "#ffffff", "#000000"]
   );
 
+  // Color para el subtitle
+  const subtitleColor = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.301],
+    ["#d1d5db", "#d1d5db", "#6b7280"]
+  );
+
   const borderRadius = useTransform(
     scrollYProgressBorderRadius,
     [0, 0.2925],
@@ -488,8 +495,14 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               {/* Badge */}
               <FadeInText delay={0.2}>
                 <motion.div 
-                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
-                  style={{ backgroundColor: textColor }}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
+                  style={{ 
+                    backgroundColor: useTransform(
+                      scrollYProgress,
+                      [0, 0.3, 0.301],
+                      ["#1a1a1a", "#1a1a1a", "#ffffff"]
+                    )
+                  }}
                 >
                   <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <motion.path 
@@ -498,7 +511,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                         fill: useTransform(
                           scrollYProgress,
                           [0, 0.3, 0.301],
-                          ["#000000", "#000000", "#000000"]
+                          ["#ffffff", "#ffffff", "#000000"]
                         )
                       }}
                     />
@@ -509,7 +522,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                       color: useTransform(
                         scrollYProgress,
                         [0, 0.3, 0.301],
-                        ["#000000", "#000000", "#242424"]
+                        ["#ffffff", "#ffffff", "#242424"]
                       )
                     }}
                   >
@@ -536,9 +549,12 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               {/* Subtitle */}
               <FadeInText delay={0.4}>
                 <div className="w-full max-w-[500px]">
-                  <p className="text-base md:text-lg font-medium leading-relaxed tracking-tight text-center text-gray-600">
+                  <motion.p 
+                    className="text-base md:text-lg font-medium leading-relaxed tracking-tight text-center"
+                    style={{ color: subtitleColor }}
+                  >
                     {subtitle}
-                  </p>
+                  </motion.p>
                 </div>
               </FadeInText>
 
