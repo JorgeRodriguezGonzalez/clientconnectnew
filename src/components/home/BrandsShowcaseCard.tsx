@@ -13,13 +13,17 @@ export const BrandsShowcaseCard = ({
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [hoverCount, setHoverCount] = React.useState(0);
+  const [isHovered, setIsHovered] = React.useState(false);
 
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[800px] h-[310px] rounded-2xl overflow-hidden border bg-white shadow-lg"
+      className="relative flex flex-col items-center gap-1.5 w-[800px] h-[310px] rounded-2xl overflow-hidden border shadow-lg transition-all duration-500"
       style={{ 
-        padding: '16px'
+        padding: '16px',
+        background: isHovered 
+          ? 'linear-gradient(135deg, rgb(103, 188, 183) 0%, #de8363 100%)'
+          : '#FFFFFF'
       }}
       initial={{
         opacity: 0,
@@ -35,6 +39,8 @@ export const BrandsShowcaseCard = ({
       transition={{
         duration: 0.5
       }} 
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
       <div className="relative flex flex-col items-center justify-center w-[768px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#FAFAF9' }}>

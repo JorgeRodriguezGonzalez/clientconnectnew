@@ -414,14 +414,21 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.2, 0.4],
-    ["#000000", "rgb(20, 35, 90)", "#ffffff"]
+    [0, 0.3, 0.301],
+    ["#000000", "#1a1a1a", "#ffffff"]
   );
 
   const borderColor = useTransform(
     scrollYProgressBorder,
-    [0, 0.15, 0.4, 0.6],
-    ["#e5e7eb", "#000000", "rgb(20, 35, 90)", "#ffffff"]
+    [0, 0.15, 0.3, 0.301],
+    ["#e5e7eb", "#000000", "#1a1a1a", "#ffffff"]
+  );
+
+  // Color de texto para badge y título principal
+  const textColor = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.301],
+    ["#ffffff", "#ffffff", "#000000"]
   );
 
   const borderRadius = useTransform(
@@ -480,25 +487,49 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             <div className="flex flex-col items-center gap-8">
               {/* Badge */}
               <FadeInText delay={0.2}>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]">
+                <motion.div 
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
+                  style={{ backgroundColor: textColor }}
+                >
                   <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" fill="#000000" />
+                    <motion.path 
+                      d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" 
+                      style={{ 
+                        fill: useTransform(
+                          scrollYProgress,
+                          [0, 0.3, 0.301],
+                          ["#000000", "#000000", "#000000"]
+                        )
+                      }}
+                    />
                   </svg>
-                  <span className="text-[16px] font-normal text-[#242424] tracking-[-0.3px] capitalize">
+                  <motion.span 
+                    className="text-[16px] font-normal tracking-[-0.3px] capitalize"
+                    style={{ 
+                      color: useTransform(
+                        scrollYProgress,
+                        [0, 0.3, 0.301],
+                        ["#000000", "#000000", "#242424"]
+                      )
+                    }}
+                  >
                     {badge}
-                  </span>
-                </div>
+                  </motion.span>
+                </motion.div>
               </FadeInText>
 
               {/* Main Title */}
               <FadeInText delay={0.3}>
                 <div className="w-full">
-                  <h1 className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center text-black">
+                  <motion.h1 
+                    className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center"
+                    style={{ color: textColor }}
+                  >
                     {mainTitle}{' '}
-                    <span className="text-black">
+                    <motion.span style={{ color: textColor }}>
                       {mainTitleHighlight}
-                    </span>
-                  </h1>
+                    </motion.span>
+                  </motion.h1>
                 </div>
               </FadeInText>
 
