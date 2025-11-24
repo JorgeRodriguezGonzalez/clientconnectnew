@@ -69,7 +69,7 @@ const FadeInText = ({
 };
 
 // Componente TaskTimeline integrado con fade in glass blur
-const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
+const TaskTimeline = () => {
   type TaskStatus = 'pending' | 'active' | 'complete';
   type TaskItem = {
     id: string;
@@ -82,6 +82,8 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
   const [currentTaskIndex, setCurrentTaskIndex] = React.useState(0);
   const [progress, setProgress] = React.useState(0);
   const [isHovered, setIsHovered] = React.useState(false);
+  const timelineRef = React.useRef(null);
+  const isTimelineInView = useInView(timelineRef, { once: true, amount: 0.3 });
   
   const tasksData: TaskItem[] = [
     {
@@ -101,7 +103,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
     {
       id: '3',
       title: 'Complete Design',
-      time: 'Feb 23',
+      time: 'Feb 28',
       status: 'pending',
       actions: ''
     }
@@ -150,17 +152,18 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
 
   return (
     <motion.div 
+      ref={timelineRef}
       initial={{ 
         opacity: 0, 
         filter: "blur(10px)"
       }}
       animate={{ 
-        opacity: isInView ? 1 : 0, 
-        filter: isInView ? "blur(0px)" : "blur(10px)"
+        opacity: isTimelineInView ? 1 : 0, 
+        filter: isTimelineInView ? "blur(0px)" : "blur(10px)"
       }}
       transition={{ 
         duration: 0.8, 
-        delay: 1.3,
+        delay: 1.0,
         ease: "easeOut" 
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -307,8 +310,8 @@ const AnimatedHikeCard = ({
       }}
     >
       <div className="flex flex-col">
-        {/* Overlay difuminado en el lado izquierdo - más transparente a la izquierda */}
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white/60 via-white/30 to-transparent pointer-events-none z-[1]" />
+        {/* Overlay difuminado en el lado izquierdo - blanco opaco a transparente */}
+        <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-white/90 via-white/50 to-transparent pointer-events-none z-[5]" />
         
         {/* Card Header: Title */}
         <div className="mb-3 relative z-[2]">
@@ -355,7 +358,7 @@ const AnimatedHikeCard = ({
 
       {/* TaskTimeline superpuesta en la esquina inferior derecha */}
       <div className="absolute -bottom-8 -right-24 z-10" style={{ transform: 'translate(80px, 30px)' }}>
-        <TaskTimeline isInView={isInView} />
+        <TaskTimeline />
       </div>
     </motion.a>
   );
