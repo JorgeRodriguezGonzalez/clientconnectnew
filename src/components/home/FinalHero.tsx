@@ -8,7 +8,6 @@ export function FinalHero() {
   const ref = React.useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [titleNumber, setTitleNumber] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
 
   const words = useMemo(
     () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales"],
@@ -36,17 +35,65 @@ export function FinalHero() {
     ]
   );
 
-  // Fade out para el contenido
-  const contentOpacity = useTransform(
+  // Fade out individual para cada elemento
+  const lampOpacity = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.5],
-    [1, 1, 0]
+    [0.4, 0.6],
+    [1, 0]
   );
 
-  const contentBlur = useTransform(
+  const lampBlur = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.5],
-    [0, 0, 10]
+    [0.4, 0.6],
+    [0, 10]
+  );
+
+  const titleOpacity = useTransform(
+    scrollYProgress,
+    [0.45, 0.65],
+    [1, 0]
+  );
+
+  const titleBlur = useTransform(
+    scrollYProgress,
+    [0.45, 0.65],
+    [0, 10]
+  );
+
+  const subtitleOpacity = useTransform(
+    scrollYProgress,
+    [0.5, 0.7],
+    [1, 0]
+  );
+
+  const subtitleBlur = useTransform(
+    scrollYProgress,
+    [0.5, 0.7],
+    [0, 10]
+  );
+
+  const ctaOpacity = useTransform(
+    scrollYProgress,
+    [0.55, 0.75],
+    [1, 0]
+  );
+
+  const ctaBlur = useTransform(
+    scrollYProgress,
+    [0.55, 0.75],
+    [0, 10]
+  );
+
+  const trustedOpacity = useTransform(
+    scrollYProgress,
+    [0.6, 0.8],
+    [1, 0]
+  );
+
+  const trustedBlur = useTransform(
+    scrollYProgress,
+    [0.6, 0.8],
+    [0, 10]
   );
 
   // Transform para el color del arco (igual que tenía el círculo)
@@ -104,18 +151,18 @@ export function FinalHero() {
       className="h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
     >
       <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
-        <motion.div 
-          className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative"
-          style={{
-            opacity: contentOpacity,
-            filter: useTransform(contentBlur, (value) => `blur(${value}px)`)
-          }}
-        >
+        <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
 
           {/* LAMP + TÍTULO */}
           <div className="flex flex-col items-center gap-[-20px]">
             {/* Lamp Effect */}
-            <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
+            <motion.div 
+              className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible"
+              style={{
+                opacity: lampOpacity,
+                filter: useTransform(lampBlur, (value) => `blur(${value}px)`)
+              }}
+            >
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
                 animate={{ 
@@ -229,15 +276,19 @@ export function FinalHero() {
                 className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]"
                 style={{ backgroundColor }}
               />
-            </div>
+            </motion.div>
 
             {/* Título principal */}
             <motion.h1
               initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
+              style={{ 
+                fontFamily: '"Inter Display", sans-serif',
+                opacity: titleOpacity,
+                filter: useTransform(titleBlur, (value) => `blur(${value}px)`)
+              }}
               className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center text-white relative z-50"
-              style={{ fontFamily: '"Inter Display", sans-serif' }}
             >
               We Bring{" "}
               <motion.span
@@ -272,7 +323,12 @@ export function FinalHero() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
-            style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
+            style={{ 
+              fontFamily: '"Inter Display", sans-serif', 
+              letterSpacing: '0.2px',
+              opacity: subtitleOpacity,
+              filter: useTransform(subtitleBlur, (value) => `blur(${value}px)`)
+            }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
           </motion.p>
@@ -283,6 +339,10 @@ export function FinalHero() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
+            style={{
+              opacity: ctaOpacity,
+              filter: useTransform(ctaBlur, (value) => `blur(${value}px)`)
+            }}
           >
             <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
               <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
@@ -291,31 +351,25 @@ export function FinalHero() {
             </a>
             <motion.a 
               href="#contact"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
               animate={{
-                borderColor: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"],
-                backgroundColor: isHovered 
-                  ? ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
-                  : "rgba(255, 255, 255, 0)"
+                borderColor: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
               }}
               transition={{
-                borderColor: { duration: 8, ease: "linear", repeat: Infinity },
-                backgroundColor: { duration: 8, ease: "linear", repeat: Infinity }
+                duration: 8,
+                ease: "linear",
+                repeat: Infinity
               }}
-              className="flex items-center justify-center gap-1.5 h-[42px] backdrop-blur-sm border rounded-[50px] px-5 py-3 transition-shadow duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]"
+              className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]"
             >
               <motion.div 
                 className="w-[18px] h-[14px] relative overflow-hidden"
                 animate={{
-                  color: isHovered 
-                    ? "#000000"
-                    : ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                  color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
                 }}
                 transition={{
-                  color: isHovered 
-                    ? { duration: 0.3 }
-                    : { duration: 8, ease: "linear", repeat: Infinity }
+                  duration: 8,
+                  ease: "linear",
+                  repeat: Infinity
                 }}
               >
                 <Calendar className="w-[17px] h-[14px]" />
@@ -324,14 +378,12 @@ export function FinalHero() {
                 className="text-[14px] font-medium leading-5 whitespace-nowrap z-[1]" 
                 style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
                 animate={{
-                  color: isHovered 
-                    ? "#000000"
-                    : ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
+                  color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
                 }}
                 transition={{
-                  color: isHovered 
-                    ? { duration: 0.3 }
-                    : { duration: 8, ease: "linear", repeat: Infinity }
+                  duration: 8,
+                  ease: "linear",
+                  repeat: Infinity
                 }}
               >
                 Book Free Consultation
@@ -345,6 +397,10 @@ export function FinalHero() {
             animate={{ opacity: 1, filter: "blur(0px)" }}
             transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-12 relative z-50"
+            style={{
+              opacity: trustedOpacity,
+              filter: useTransform(trustedBlur, (value) => `blur(${value}px)`)
+            }}
           >
             <div className="mx-auto w-full max-w-2xl">
               <motion.div 
@@ -392,7 +448,7 @@ export function FinalHero() {
               />
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );

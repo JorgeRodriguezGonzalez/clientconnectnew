@@ -16,16 +16,25 @@ export const SavingsCard = ({
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [hoverCount, setHoverCount] = React.useState(0);
   const [isHovered, setIsHovered] = React.useState(false);
+  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
 
   return (
     <motion.div 
       ref={ref}
-      className="relative flex flex-col items-center gap-1.5 w-[326.6px] h-[310px] rounded-[8px] overflow-hidden"
+      className="relative flex flex-col items-center gap-1.5 w-[450px] h-[400px] rounded-2xl overflow-hidden border shadow-lg transition-all duration-500"
       style={{
-        backgroundColor: '#FFFFFF',
-        border: '0.8px solid #DAE6FE',
         padding: '16px',
-        boxShadow: '0 10px 15px -3px rgba(218, 230, 254, 0.3), 0 4px 6px -4px rgba(218, 230, 254, 0.3)'
+        background: isHovered 
+          ? '#000000'
+          : 'linear-gradient(135deg, rgba(103, 188, 183, 0.2) 0%, rgba(222, 131, 99, 0.1) 50%, rgba(255, 255, 255, 0.95) 100%)'
       }}
       initial={{
         opacity: 0,
@@ -41,19 +50,30 @@ export const SavingsCard = ({
       transition={{
         duration: 0.5
       }}
-      onHoverStart={() => {
-        setHoverCount(prev => prev + 1);
-        setIsHovered(true);
-      }}
-      onHoverEnd={() => setIsHovered(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={handleMouseMove}
+      onHoverStart={() => setHoverCount(prev => prev + 1)}
     >
-      <div className="relative flex flex-col items-center justify-center w-[294.6px] h-[192px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#F7FCFF' }}>
+      {/* Spotlight Effect */}
+      {isHovered && (
+        <div
+          className="absolute inset-0 pointer-events-none opacity-50 transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(circle 200px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.8), transparent 80%)`
+          }}
+        />
+      )}
+
+      <div className="relative flex flex-col items-center justify-center w-[418px] h-[260px] rounded-[12px] overflow-hidden" style={{ backgroundColor: '#FAFAF9' }}>
         <div className="absolute inset-0 w-full h-full overflow-hidden" style={{
           maskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)',
           WebkitMaskImage: 'linear-gradient(rgb(0, 0, 0) 68.3541%, rgba(0, 0, 0, 0) 100%)'
         }}>
           <div className="absolute top-[21px] left-[22px]">
-            <p className="text-[20px] font-semibold text-black/80 leading-[28px] tracking-[0.5px] whitespace-nowrap" style={{
+            <p className={`text-[20px] font-semibold leading-[28px] tracking-[0.5px] whitespace-nowrap transition-colors duration-500 ${
+              isHovered ? 'text-white' : 'text-black/80'
+            }`} style={{
               fontFamily: 'Inter, "Inter Placeholder", sans-serif',
               fontStyle: 'normal'
             }}>
@@ -116,17 +136,15 @@ export const SavingsCard = ({
         </div>
       </div>
 
-      <div className="flex flex-col items-start justify-start gap-2 w-[294.6px] h-[100px] px-4 pt-4 pb-6">
-        <h2 className="m-0 w-[262.6px] break-words border-0 p-0 text-[22px] font-semibold leading-[30px] text-black/90" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif',
-          fontStyle: 'normal',
-          letterSpacing: '0px'
-        }}>
+      <div className="flex flex-col items-start justify-start gap-2 w-[418px] h-[120px] px-4 pt-4 pb-6">
+        <h2 className={`text-[6px] md:text-[12px] lg:text-[22px] font-bold leading-[1.1] tracking-tight m-0 transition-colors duration-500 ${
+          isHovered ? 'text-white' : 'text-gray-900'
+        }`}>
           {amount}
         </h2>
-        <p className="m-0 w-[262.6px] break-words border-0 p-0 text-[16px] font-normal leading-[22.4px] tracking-[-0.4px] text-black/60" style={{
-          fontFamily: 'Inter, "Inter Placeholder", sans-serif'
-        }}>
+        <p className={`text-[14px] md:text-[16px] font-medium leading-relaxed tracking-tight m-0 transition-colors duration-500 ${
+          isHovered ? 'text-white' : 'text-gray-600'
+        }`}>
           {description}
         </p>
       </div>
