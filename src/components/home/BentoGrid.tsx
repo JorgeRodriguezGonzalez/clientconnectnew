@@ -328,7 +328,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               key={`img1-${hoverCount}`}
               className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '80px',
+                top: '40px',
                 left: '50%',
                 marginLeft: '-280px',
                 transformOrigin: '60px 102px'
@@ -348,7 +348,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               key={`img2-${hoverCount}`}
               className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '80px',
+                top: '40px',
                 left: '50%',
                 marginLeft: '-140px',
                 transformOrigin: '60px 102px'
@@ -368,7 +368,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               key={`img3-${hoverCount}`}
               className="absolute w-[136px] h-[250px]" 
               style={{
-                top: '30px',
+                top: '10px',
                 left: '50%',
                 marginLeft: '-68px',
                 transformOrigin: '68px 125px',
@@ -390,7 +390,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               key={`img4-${hoverCount}`}
               className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '80px',
+                top: '40px',
                 left: '50%',
                 marginLeft: '76px',
                 transformOrigin: '60px 102px'
@@ -410,7 +410,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               key={`img5-${hoverCount}`}
               className="absolute w-[120px] h-[204px]" 
               style={{
-                top: '80px',
+                top: '40px',
                 left: '50%',
                 marginLeft: '216px',
                 transformOrigin: '60px 102px'
