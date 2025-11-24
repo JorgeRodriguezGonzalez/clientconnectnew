@@ -168,7 +168,7 @@ const TaskTimeline = () => {
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`w-[380px] rounded-2xl border p-6 transition-all duration-300 ${
+      className={`w-[360px] rounded-2xl border p-6 transition-all duration-300 ${
         isHovered 
           ? 'bg-white border-gray-200 shadow-lg' 
           : 'bg-black border-gray-800 shadow-sm'
