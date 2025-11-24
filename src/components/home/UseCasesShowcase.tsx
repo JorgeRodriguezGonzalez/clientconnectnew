@@ -35,10 +35,14 @@ const AnimatedHikeCard = ({
   description: string;
   href: string;
 }) => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
   return (
     <a
       href={href}
       onClick={(e) => e.preventDefault()}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg lg:max-w-md"
     >
       <div className="flex flex-col">
@@ -53,13 +57,13 @@ const AnimatedHikeCard = ({
           {images.map((src, index) => (
             <div
               key={index}
-              className="absolute h-full w-[40%] overflow-hidden rounded-lg border-2 border-white shadow-md transition-all duration-300 ease-in-out group-hover:translate-x-[var(--tx)] group-hover:rotate-[var(--r)]"
+              className="absolute h-full w-[40%] overflow-hidden rounded-lg border-2 border-white shadow-md transition-all duration-300 ease-in-out"
               style={{
-                transform: `translateX(${index * 32}px)`,
-                '--tx': `${index * 80}px`,
-                '--r': `${index * 5 - 5}deg`,
+                transform: isHovered 
+                  ? `translateX(${index * 80}px) rotate(${index * 5 - 5}deg)`
+                  : `translateX(${index * 32}px)`,
                 zIndex: images.length - index,
-              } as React.CSSProperties}
+              }}
             >
               <img
                 src={src}
