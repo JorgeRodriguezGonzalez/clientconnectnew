@@ -179,10 +179,12 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
                 {task.status === 'complete' && (
                   <div className={`w-full h-full rounded-full border-[3px] flex items-center justify-center transition-colors duration-300 ${
                     isHovered 
-                      ? 'border-[rgb(103,188,183)] bg-[rgb(103,188,183)]' 
+                      ? 'border-white bg-white' 
                       : 'border-[#de8363] bg-[#de8363]'
                   }`}>
-                    <Check className="w-4 h-4 text-white stroke-[3]" />
+                    <Check className={`w-4 h-4 stroke-[3] transition-colors duration-300 ${
+                      isHovered ? 'text-black' : 'text-white'
+                    }`} />
                   </div>
                 )}
                 {task.status === 'active' && (
@@ -198,7 +200,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
                         cy="20" 
                         r="12" 
                         fill="none" 
-                        stroke={isHovered ? 'rgb(103, 188, 183)' : '#de8363'}
+                        stroke={isHovered ? 'white' : '#de8363'}
                         strokeWidth="3" 
                         strokeDasharray={circumference} 
                         strokeDashoffset={circumference - progress / 100 * circumference} 
@@ -219,7 +221,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
               {index < tasks.length - 1 && (
                 <div className={`w-0.5 h-8 my-1 transition-all duration-500 ${
                   task.status === 'complete' 
-                    ? (isHovered ? 'bg-[rgb(103,188,183)]' : 'bg-[#de8363]')
+                    ? (isHovered ? 'bg-white' : 'bg-[#de8363]')
                     : (isHovered ? 'bg-gray-700' : 'bg-gray-300')
                 }`} />
               )}
@@ -229,7 +231,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
               <div className="flex items-center justify-between mb-1">
                 <h3 className={`text-sm font-medium transition-colors duration-300 ${
                   task.status === 'active' || task.status === 'complete' 
-                    ? (isHovered ? 'text-[rgb(103,188,183)]' : 'text-[#de8363]')
+                    ? (isHovered ? 'text-white' : 'text-[#de8363]')
                     : (isHovered ? 'text-gray-500' : 'text-gray-400')
                 }`}>
                   {task.title}
@@ -237,7 +239,7 @@ const TaskTimeline = ({ isInView }: { isInView: boolean }) => {
                 {task.time && (
                   <span className={`text-xs font-medium transition-colors duration-300 ${
                     task.status === 'active' || task.status === 'complete' 
-                      ? (isHovered ? 'text-[rgb(103,188,183)]' : 'text-[#de8363]')
+                      ? (isHovered ? 'text-white' : 'text-[#de8363]')
                       : (isHovered ? 'text-gray-500' : 'text-gray-400')
                   }`}>
                     {task.time}
