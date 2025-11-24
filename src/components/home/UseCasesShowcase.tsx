@@ -108,18 +108,18 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ctaText = 'Book a Call',
     ctaHref = '#',
     // Valores por defecto para el card
-    cardTitle = 'Marketing Strategy',
+    cardTitle = 'Q4 Strategy Update',
     cardImages = [
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop',
     ],
     cardStats = [
-      { icon: <Clock className="h-4 w-4" />, label: 'Fast Results' },
-      { icon: <Mountain className="h-4 w-4" />, label: 'Scalable' },
-      { icon: <Zap className="h-4 w-4" />, label: 'Data-Driven' },
+      { icon: <Clock className="h-4 w-4" />, label: 'Next 30 Days' },
+      { icon: <Mountain className="h-4 w-4" />, label: '3 Phases' },
+      { icon: <Zap className="h-4 w-4" />, label: 'High Priority' },
     ],
-    cardDescription = 'We combine creative excellence with analytical precision to deliver marketing campaigns that not only capture attention but drive meaningful business growth.',
+    cardDescription = 'Hi Team, we\'re excited to implement your new SEO strategy. Starting next week, we\'ll optimize 15 key pages, enhance site speed, and launch targeted content campaigns. Expected completion: 30 days. Let\'s drive growth together!',
     cardHref = '#',
   } = props;
 
@@ -306,9 +306,9 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
               {/* COLUMNA IZQUIERDA - AnimatedHikeCard */}
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                initial={{ opacity: 0, x: -50 }}
+                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                 className="relative flex-1 max-w-[495px] flex items-center justify-center"
               >
                 <AnimatedHikeCard
