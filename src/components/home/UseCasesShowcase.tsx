@@ -48,7 +48,7 @@ const AnimatedHikeCard = ({
       <div className="flex flex-col">
         {/* Card Header: Title and Arrow */}
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-3xl font-bold tracking-tighter text-gray-900">{title}</h2>
+          <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">{title}</h2>
           <ArrowRight className="h-6 w-6 transition-transform duration-300 ease-in-out group-hover:translate-x-1 text-gray-900" />
         </div>
         
@@ -75,17 +75,17 @@ const AnimatedHikeCard = ({
         </div>
         
         {/* Stats Section */}
-        <div className="mb-4 flex items-center space-x-4 text-sm text-gray-500">
+        <div className="mb-4 flex items-center space-x-4 text-sm text-gray-600">
           {stats.map((stat, index) => (
             <div key={index} className="flex items-center space-x-1.5">
               {stat.icon}
-              <span>{stat.label}</span>
+              <span className="font-medium">{stat.label}</span>
             </div>
           ))}
         </div>
         
         {/* Description */}
-        <p className="text-sm leading-relaxed text-gray-600">
+        <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
           {description}
         </p>
       </div>
@@ -99,25 +99,25 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     heading = 'Marketing strategies that transform your business into',
     highlightText = 'market leaders',
     description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
-    badge = 'Built for shopify',
-    mainTitle = 'Turn Your Shoppers into',
-    mainTitleHighlight = 'Subscribers',
-    subtitle = 'From setup to scale: everything you need to grow subscriptions on autopilot.',
+    badge = 'Digital Marketing Excellence',
+    mainTitle = 'Transform Your Business into',
+    mainTitleHighlight = 'Market Leaders',
+    subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
     ctaText = 'Book a Call',
     ctaHref = '#',
     // Valores por defecto para el card
-    cardTitle = 'Mountain Hike',
+    cardTitle = 'Marketing Strategy',
     cardImages = [
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop',
     ],
     cardStats = [
-      { icon: <Clock className="h-4 w-4" />, label: '~6 Hours' },
-      { icon: <Mountain className="h-4 w-4" />, label: '8 km' },
-      { icon: <Zap className="h-4 w-4" />, label: 'Medium' },
+      { icon: <Clock className="h-4 w-4" />, label: 'Fast Results' },
+      { icon: <Mountain className="h-4 w-4" />, label: 'Scalable' },
+      { icon: <Zap className="h-4 w-4" />, label: 'Data-Driven' },
     ],
-    cardDescription = 'Hiking on a mountain blends physical challenge with natural beauty, offering sweeping views and a profound sense of accomplishment.',
+    cardDescription = 'We combine creative excellence with analytical precision to deliver marketing campaigns that not only capture attention but drive meaningful business growth.',
     cardHref = '#',
   } = props;
 
@@ -224,7 +224,7 @@ export const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" fill="#000000" />
                 </svg>
-                <span className="text-sm font-normal text-[#242424] tracking-[-0.3px] capitalize">
+                <span className="text-[16px] font-normal text-[#242424] tracking-[-0.3px] capitalize">
                   {badge}
                 </span>
               </motion.div>
