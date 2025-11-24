@@ -44,7 +44,7 @@ export const SkillsShowcaseCard = ({
       style={{
         padding: '16px',
         background: isHovered 
-          ? 'linear-gradient(135deg, rgba(103, 188, 183, 0.15) 0%, rgba(222, 131, 99, 0.15) 100%)'
+          ? 'linear-gradient(135deg, rgba(218, 230, 254, 0.4) 0%, rgba(222, 131, 99, 0.15) 50%, rgba(255, 255, 255, 1) 100%)'
           : '#FFFFFF'
       }}
       initial={{ opacity: 0, y: 20 }}
