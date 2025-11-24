@@ -31,7 +31,7 @@ export function FinalHero() {
     [0, 1],
     [
       "rgb(0, 0, 0)",
-      "#de8363"
+      "#6f4232"
     ]
   );
 
