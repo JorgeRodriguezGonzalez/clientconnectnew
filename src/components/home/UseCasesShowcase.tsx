@@ -43,13 +43,15 @@ const AnimatedHikeCard = ({
       onClick={(e) => e.preventDefault()}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg lg:max-w-md"
+      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg transition-all duration-300 ease-in-out hover:translate-y-0 hover:shadow-sm lg:max-w-md"
+      style={{
+        transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
+      }}
     >
       <div className="flex flex-col">
-        {/* Card Header: Title and Arrow */}
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">{title}</h2>
-          <ArrowRight className="h-6 w-6 transition-transform duration-300 ease-in-out group-hover:translate-x-1 text-gray-900" />
+        {/* Card Header: Title */}
+        <div className="mb-6">
+          <h2 className="text-[16px] md:text-[22px] lg:text-[32px] font-bold leading-[1.1] tracking-tight text-gray-900">{title}</h2>
         </div>
         
         {/* Stacked Images with Hover Animation */}
@@ -60,8 +62,8 @@ const AnimatedHikeCard = ({
               className="absolute h-full w-[40%] overflow-hidden rounded-lg border-2 border-white shadow-md transition-all duration-300 ease-in-out"
               style={{
                 transform: isHovered 
-                  ? `translateX(${index * 80}px) rotate(${index * 5 - 5}deg)`
-                  : `translateX(${index * 32}px)`,
+                  ? `translateX(${index * 32}px)`
+                  : `translateX(${index * 80}px) rotate(${index * 5 - 5}deg)`,
                 zIndex: images.length - index,
               }}
             >
@@ -85,7 +87,7 @@ const AnimatedHikeCard = ({
         </div>
         
         {/* Description */}
-        <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
+        <p className="text-[10px] md:text-[12px] font-normal leading-relaxed text-gray-600 tracking-tight">
           {description}
         </p>
       </div>
