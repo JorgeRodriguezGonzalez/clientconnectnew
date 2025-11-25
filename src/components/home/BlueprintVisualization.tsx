@@ -360,7 +360,7 @@ export const BlueprintVisualization = () => {
       // 1 = elemento centrado o totalmente visible
       // Puedes ajustar el divisor (windowHeight) para que la animación sea más rápida o lenta.
       const pixelsToStart = 550; 
-      const scrollDistance = windowHeight * 0.6; 
+      const scrollDistance = windowHeight * 0.4; 
 
       let value = (windowHeight - rect.top - pixelsToStart) / scrollDistance;
       
