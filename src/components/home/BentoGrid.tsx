@@ -79,8 +79,8 @@ function FeaturesSectionMinimal() {
         75%, 100% { opacity: 0; }
       }
       @keyframes bento2-title-gradient {
-        0% { background-position: 400% 50%; }
-        100% { background-position: 0% 50%; }
+        0% { background-position: 200% 50%; }
+        100% { background-position: -100% 50%; }
       }
     `;
     document.head.appendChild(style);
@@ -240,13 +240,13 @@ function FeaturesSectionMinimal() {
               <span
                 style={{
                   display: "inline-block",
-                  backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 20%, rgb(237, 191, 134) 35%, rgb(222, 131, 99) 50%, rgb(103, 188, 183) 65%, rgba(255, 255, 255, 0) 80%, rgba(255, 255, 255, 0) 100%)",
-                  backgroundSize: "400% 100%",
+                  backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(237,191,134,0.2) 15%, rgba(237,191,134,0.5) 25%, rgb(237,191,134) 35%, rgb(222,131,99) 50%, rgb(103,188,183) 65%, rgba(103,188,183,0.5) 75%, rgba(103,188,183,0.2) 85%, rgba(255,255,255,0) 100%)",
+                  backgroundSize: "300% 100%",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
                   color: "transparent",
-                  animation: "bento2-title-gradient 12s linear infinite"
+                  animation: "bento2-title-gradient 8s ease-in-out infinite"
                 }}
               >
                 .
