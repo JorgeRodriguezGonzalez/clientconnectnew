@@ -12,9 +12,10 @@ import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
 import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
+import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 
 // ← NUEVA IMPORTACIÓN
-import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
+import CloudHero from "@/components/home/section-layers";
 
 const Index = () => {
   return (
@@ -35,6 +36,9 @@ const Index = () => {
         </div>
 
         <BlueprintVisualization />
+        
+        {/* ← NUEVO COMPONENTE */}
+        <CloudHero />
         
         <ProductShowcase />
         <HowWeWork />
