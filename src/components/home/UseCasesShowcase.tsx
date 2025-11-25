@@ -526,7 +526,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
               {/* Main Title */}
               <FadeInText delay={0.3}>
-                <div className="w-full">
+                <div className="w-full max-w-[600px] mx-auto">
                   <motion.h1 
                     className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center"
                     style={{ color: textColor }}
