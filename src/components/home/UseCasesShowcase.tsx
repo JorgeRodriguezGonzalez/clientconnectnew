@@ -148,7 +148,7 @@ const TaskTimeline = () => {
     requestAnimationFrame(animate);
   }, [currentTaskIndex, tasks.length]);
 
-  const circumference = 2 * Math.PI * 12;
+  const circumference = 2 * Math.PI * 14;
 
   return (
     <div 
@@ -171,21 +171,21 @@ const TaskTimeline = () => {
         {tasks.map((task, index) => (
           <div key={task.id} className="flex gap-3">
             <div className="flex flex-col items-center">
-              <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-500 relative">
+              <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-500 relative">
                 {task.status === 'complete' && (
-                  <div className={`w-full h-full rounded-full border-[3px] flex items-center justify-center transition-colors duration-300 ${
+                  <div className={`w-full h-full rounded-full border-[2px] flex items-center justify-center transition-colors duration-300 ${
                     isHovered 
                       ? 'border-[#de8363] bg-[#de8363]'
                       : 'border-white bg-white' 
                   }`}>
-                    <Check className={`w-4 h-4 stroke-[3] transition-colors duration-300 ${
+                    <Check className={`w-3 h-3 stroke-[3] transition-colors duration-300 ${
                       isHovered ? 'text-white' : 'text-black'
                     }`} />
                   </div>
                 )}
                 {task.status === 'active' && (
                   <div className="w-full h-full relative">
-                    <div className={`w-full h-full rounded-full border-[3px] absolute inset-0 transition-colors duration-300 ${
+                    <div className={`w-full h-full rounded-full border-[2px] absolute inset-0 transition-colors duration-300 ${
                       isHovered 
                         ? 'border-gray-200 bg-white'
                         : 'border-gray-700 bg-black' 
@@ -194,10 +194,10 @@ const TaskTimeline = () => {
                       <circle 
                         cx="20" 
                         cy="20" 
-                        r="12" 
+                        r="14" 
                         fill="none" 
                         stroke={isHovered ? '#de8363' : 'white'}
-                        strokeWidth="3" 
+                        strokeWidth="2" 
                         strokeDasharray={circumference} 
                         strokeDashoffset={circumference - progress / 100 * circumference} 
                         strokeLinecap="round" 
@@ -207,7 +207,7 @@ const TaskTimeline = () => {
                   </div>
                 )}
                 {task.status === 'pending' && (
-                  <div className={`w-full h-full rounded-full border-[3px] transition-colors duration-300 ${
+                  <div className={`w-full h-full rounded-full border-[2px] transition-colors duration-300 ${
                     isHovered 
                       ? 'border-gray-300 bg-white'
                       : 'border-gray-700 bg-black' 
@@ -621,6 +621,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                     >
                       {highlightText}
                     </motion.span>
+                    <span className="text-gray-900">.</span>
                   </h2>
                 </FadeInText>
 
