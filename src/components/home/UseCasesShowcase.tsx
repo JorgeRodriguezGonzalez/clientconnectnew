@@ -487,41 +487,18 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             <div className="flex flex-col items-center gap-8">
               {/* Badge */}
               <FadeInText delay={1.2}>
-                <motion.div 
+                <div 
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
                   style={{ 
-                    backgroundColor: useTransform(
-                      scrollYProgress,
-                      [0, 0.15, 0.151],
-                      ["#1a1a1a", "#1a1a1a", "#ffffff"]
-                    )
+                    background: 'linear-gradient(135deg, #67bcb7 0%, #de8363 100%)'
                   }}
                 >
-                  <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <motion.path 
-                      d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" 
-                      style={{ 
-                        fill: useTransform(
-                          scrollYProgress,
-                          [0, 0.15, 0.151],
-                          ["#ffffff", "#ffffff", "#000000"]
-                        )
-                      }}
-                    />
-                  </svg>
-                  <motion.span 
-                    className="text-[16px] font-normal tracking-[-0.3px] capitalize"
-                    style={{ 
-                      color: useTransform(
-                        scrollYProgress,
-                        [0, 0.15, 0.151],
-                        ["#ffffff", "#ffffff", "#242424"]
-                      )
-                    }}
+                  <span 
+                    className="text-[16px] font-normal tracking-[-0.3px] capitalize text-white"
                   >
                     {badge}
-                  </motion.span>
-                </motion.div>
+                  </span>
+                </div>
               </FadeInText>
 
               {/* Main Title */}
