@@ -64,18 +64,19 @@ function FeaturesSectionMinimal() {
         100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
       }
       @keyframes bento2-gradient-fade1 {
-        0%, 25% { opacity: 0.32; }
-        33%, 100% { opacity: 0; }
+        0%, 16% { opacity: 0.32; }
+        25%, 75% { opacity: 0; }
+        84%, 100% { opacity: 0.32; }
       }
       @keyframes bento2-gradient-fade2 {
-        0%, 25% { opacity: 0; }
-        33%, 58% { opacity: 0.32; }
-        66%, 100% { opacity: 0; }
+        0%, 16% { opacity: 0; }
+        25%, 41% { opacity: 0.32; }
+        50%, 100% { opacity: 0; }
       }
       @keyframes bento2-gradient-fade3 {
-        0%, 58% { opacity: 0; }
-        66%, 91% { opacity: 0.32; }
-        100% { opacity: 0; }
+        0%, 41% { opacity: 0; }
+        50%, 66% { opacity: 0.32; }
+        75%, 100% { opacity: 0; }
       }
     `;
     document.head.appendChild(style);
