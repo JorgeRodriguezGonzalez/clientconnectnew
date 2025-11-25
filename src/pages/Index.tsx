@@ -35,10 +35,8 @@ const Index = () => {
           <BentoGrid />
         </div>
         <CloudHero />
-        <BlueprintVisualization />
         
         {/* ← NUEVO COMPONENTE */}
-        
         
         <ProductShowcase />
         <HowWeWork />
