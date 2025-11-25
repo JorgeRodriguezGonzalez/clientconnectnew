@@ -78,6 +78,10 @@ function FeaturesSectionMinimal() {
         50%, 66% { opacity: 0.32; }
         75%, 100% { opacity: 0; }
       }
+      @keyframes bento2-title-gradient {
+        0% { background-position: 400% 50%; }
+        100% { background-position: 0% 50%; }
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -233,6 +237,20 @@ function FeaturesSectionMinimal() {
             </span>
             <h2 className="text-3xl font-black tracking-tight text-neutral-900 transition-colors duration-500 md:text-5xl dark:text-white">
               Why Choose Us
+              <span
+                style={{
+                  display: "inline-block",
+                  backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                  backgroundSize: "400% 100%",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  color: "transparent",
+                  animation: "bento2-title-gradient 12s linear infinite"
+                }}
+              >
+                .
+              </span>
             </h2>
           </div>
           <div className="flex flex-col items-start gap-4 md:items-end">
