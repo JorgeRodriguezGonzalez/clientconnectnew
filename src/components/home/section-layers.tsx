@@ -9,15 +9,13 @@ const CloudHero = () => {
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
-      <div className="relative z-[1] w-full max-w-[1280px] mx-auto">
+      <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
           {/* Left Column: BlueprintVisualization */}
           <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
-            <div className="w-full h-full m-0 p-0" style={{ width: '100%', maxWidth: '100%' }}>
-              <div className="w-full h-full scale-110 origin-left">
-                <BlueprintVisualization />
-              </div>
+            <div className="w-full h-full flex items-center justify-start m-0 p-0">
+              <BlueprintVisualization />
             </div>
           </div>
 
