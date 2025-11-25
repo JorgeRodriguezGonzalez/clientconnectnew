@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Sparkles, Clock, Zap, Mountain, Check } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
@@ -13,73 +13,12 @@ type UseCasesShowcaseProps = {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
+  // Props para el AnimatedHikeCard
   cardTitle?: string;
   cardImages?: string[];
   cardStats?: Array<{ icon: React.ReactNode; label: string }>;
   cardDescription?: string;
   cardHref?: string;
-};
-
-// Simple Badge Component with animated gradient
-const SimpleBadge = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="simple-badge">
-      <style>{`
-        .simple-badge {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 12px;
-          border-radius: 12px;
-          overflow: hidden;
-          background: linear-gradient(90deg, 
-            rgb(237,191,134) 0%, 
-            rgb(230,161,117) 7%, 
-            rgb(222,131,99) 14%, 
-            rgb(163,159,141) 21%, 
-            rgb(133,173,162) 28%, 
-            rgb(103,188,183) 35%, 
-            rgb(133,173,162) 42%, 
-            rgb(163,159,141) 49%, 
-            rgb(222,131,99) 56%, 
-            rgb(230,161,117) 63%, 
-            rgb(237,191,134) 70%, 
-            rgb(230,161,117) 77%, 
-            rgb(222,131,99) 84%, 
-            rgb(163,159,141) 91%, 
-            rgb(237,191,134) 100%
-          );
-          background-size: 300% 100%;
-          animation: gradientFlow 16s linear infinite;
-          box-shadow: 0 2px 5px 0 rgba(0,0,0,0.07), 0 8px 8px 0 rgba(0,0,0,0.06);
-        }
-
-        @keyframes gradientFlow {
-          0% {
-            background-position: 200% 50%;
-          }
-          100% {
-            background-position: -100% 50%;
-          }
-        }
-
-        .badge-text {
-          position: relative;
-          z-index: 1;
-          color: white;
-          font-size: 16px;
-          font-weight: 400;
-          letter-spacing: -0.3px;
-          text-transform: capitalize;
-        }
-      `}</style>
-      
-      <span className="badge-text">
-        {children}
-      </span>
-    </div>
-  );
 };
 
 // Componente FadeInText con glass blur
@@ -423,6 +362,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
     ctaText = 'Book a Call',
     ctaHref = '#',
+    // Valores por defecto para el card
     cardTitle = 'Subject: Q4 Strategy Update',
     cardImages = [
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
@@ -441,21 +381,25 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
+  // Scroll animation para el color del arco
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "start center"]
   });
 
+  // Scroll animation para el border-radius (círculo a cuadrado)
   const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
     target: ref,
     offset: ["start 130vh", "start 100vh"]
   });
 
+  // Scroll animation para la expansión de la elipse
   const { scrollYProgress: scrollYProgressEllipse } = useScroll({
     target: ref,
     offset: ["start 120vh", "start 80vh"]
   });
 
+  // Scroll animation para el color del borde
   const { scrollYProgress: scrollYProgressBorder } = useScroll({
     target: ref,
     offset: ["start 120vh", "start center"]
@@ -473,12 +417,14 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#e5e7eb", "#000000", "#1a1a1a", "#ffffff"]
   );
 
+  // Color de texto para badge y título principal
   const textColor = useTransform(
     scrollYProgress,
     [0, 0.15, 0.151],
     ["#ffffff", "#ffffff", "#000000"]
   );
 
+  // Color para el subtitle
   const subtitleColor = useTransform(
     scrollYProgress,
     [0, 0.15, 0.151],
@@ -541,7 +487,41 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             <div className="flex flex-col items-center gap-8">
               {/* Badge */}
               <FadeInText delay={1.2}>
-                <SimpleBadge>{badge}</SimpleBadge>
+                <motion.div 
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
+                  style={{ 
+                    backgroundColor: useTransform(
+                      scrollYProgress,
+                      [0, 0.15, 0.151],
+                      ["#1a1a1a", "#1a1a1a", "#ffffff"]
+                    )
+                  }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <motion.path 
+                      d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" 
+                      style={{ 
+                        fill: useTransform(
+                          scrollYProgress,
+                          [0, 0.15, 0.151],
+                          ["#ffffff", "#ffffff", "#000000"]
+                        )
+                      }}
+                    />
+                  </svg>
+                  <motion.span 
+                    className="text-[16px] font-normal tracking-[-0.3px] capitalize"
+                    style={{ 
+                      color: useTransform(
+                        scrollYProgress,
+                        [0, 0.15, 0.151],
+                        ["#ffffff", "#ffffff", "#242424"]
+                      )
+                    }}
+                  >
+                    {badge}
+                  </motion.span>
+                </motion.div>
               </FadeInText>
 
               {/* Main Title */}
