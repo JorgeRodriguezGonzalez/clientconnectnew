@@ -332,7 +332,7 @@ export const BlueprintVisualization = () => {
       <div className="absolute inset-4 flex items-center justify-center lg:justify-end">
         <div className={cn(
           "hidden md:flex absolute inset-0 items-center justify-center lg:justify-end transition-transform duration-500 ease-out",
-          isHovered ? "-rotate-[10deg]" : "rotate-[10deg]"
+          isHovered ? "-rotate-[5deg]" : "rotate-[5deg]"
         )}>
           <LayerBlueTop idPrefix={idPrefix} isHovered={isHovered} />
           <LayerZinc isHovered={isHovered} />
