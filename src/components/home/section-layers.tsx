@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Cloud } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 // @component: CloudHero
 const CloudHero = () => {
@@ -24,38 +24,41 @@ const CloudHero = () => {
 
           {/* Right Column: Content */}
           <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10">
-            <div className="flex flex-col gap-3 max-w-[640px]">
-              {/* Badge */}
-              <div className="flex gap-2 items-center text-sm font-medium text-zinc-900">
-                <div className="w-4 h-4 text-blue-500 flex items-center justify-center">
-                  <Cloud size={16} fill="currentColor" className="text-blue-100" stroke="currentColor" strokeWidth={2} />
-                </div>
-                <p>Cloud</p>
+            <div className="flex flex-col gap-6 max-w-[520px]">
+              {/* OUR APPROACH */}
+              <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
+                OUR APPROACH
               </div>
 
-              {/* Header */}
-              <h2 className="text-[40px] leading-[46px] font-medium tracking-tight text-zinc-900">
-                Tailored infrastructure
-                <br />
-                for your project
+              {/* Main Heading with gradient highlight */}
+              <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
+                Marketing strategies that transform your business into{' '}
+                <motion.span
+                  initial={{ backgroundPosition: "400% 50%" }}
+                  animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                  transition={{
+                    duration: 12,
+                    ease: "linear",
+                    repeat: Infinity
+                  }}
+                  style={{
+                    display: "inline-block",
+                    backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                    backgroundSize: "400% 100%",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    color: "transparent"
+                  }}
+                >
+                  market leaders
+                </motion.span>
               </h2>
-            </div>
 
-            {/* Description */}
-            <div className="max-w-[640px] text-base lg:text-lg leading-6 text-zinc-500 font-normal mt-2">
-              <p>
-                Pre-configured infrastructure to launch and operate your Medusa applications. 
-                Link with GitHub to automatically build and deploy on push and access 
-                instant preview environments for every PR.
+              {/* Description */}
+              <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
+                We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.
               </p>
-            </div>
-
-            {/* CTA Link */}
-            <div className="flex gap-3 mt-4">
-              <a href="#" className="flex items-center gap-1 text-blue-500 hover:text-blue-600 font-medium transition-colors group text-base">
-                Get started with Cloud
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
             </div>
           </div>
 
