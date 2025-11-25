@@ -488,7 +488,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               {/* Badge */}
               <FadeInText delay={1.2}>
                 <div 
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
                   style={{ 
                     background: 'linear-gradient(135deg, #67bcb7 0%, #de8363 100%)'
                   }}
