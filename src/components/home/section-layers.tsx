@@ -8,6 +8,9 @@ const BACKGROUND_PATTERN = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAA
 const CloudHero = () => {
   return (
     <section id="cloud" className="grow relative w-full overflow-hidden bg-white flex flex-col">
+      {/* Top Border */}
+      <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
+      
       {/* Background Pattern */}
       <div 
         className="pointer-events-none absolute inset-0 z-0 opacity-[0.04] w-full h-full object-none" 
