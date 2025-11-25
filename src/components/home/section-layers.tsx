@@ -11,8 +11,19 @@ const CloudHero = () => {
       <div className="container mx-auto px-6 lg:px-16 relative z-[1] max-w-[1280px]">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column: Content */}
-          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pr-16 relative z-10">
+          {/* Left Column: Empty */}
+          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-center overflow-hidden self-stretch">
+            {/* Vacío - solo mantiene el espacio */}
+          </div>
+
+          {/* Vertical Divider (Desktop only) */}
+          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10" />
+
+          {/* Horizontal Divider (Mobile only) */}
+          <div className="lg:hidden w-screen -ml-6 h-[1px] bg-zinc-200 mb-0" />
+
+          {/* Right Column: Content */}
+          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10">
             <div className="flex flex-col gap-3 max-w-[640px]">
               {/* Badge */}
               <div className="flex gap-2 items-center text-sm font-medium text-zinc-900">
@@ -46,17 +57,6 @@ const CloudHero = () => {
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </a>
             </div>
-          </div>
-
-          {/* Vertical Divider (Desktop only) */}
-          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10" />
-
-          {/* Horizontal Divider (Mobile only) */}
-          <div className="lg:hidden w-screen -ml-6 h-[1px] bg-zinc-200 mb-0" />
-
-          {/* Right Column: Empty */}
-          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-center overflow-hidden self-stretch">
-            {/* Vacío - solo mantiene el espacio */}
           </div>
 
         </div>
