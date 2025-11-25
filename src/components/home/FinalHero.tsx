@@ -35,26 +35,12 @@ export function FinalHero() {
     ]
   );
 
-  // Transform para el color del arco (igual que tenía el círculo)
-  const arcBackground = useTransform(
+  // --- NUEVO: Scale vertical para las sparkles ---
+  // Comienza en escala 1 (tamaño original) y crece hasta 2.5 veces su altura
+  const sparklesScale = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
-    [
-      "rgb(5, 10, 25)",
-      "rgb(5, 10, 25)",
-      "rgb(255, 255, 255)"
-    ]
-  );
-
-  // Transform para el color del borde del arco
-  const arcBorderColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [
-      "rgba(255, 255, 255, 0.2)",
-      "rgba(255, 255, 255, 0.2)",
-      "rgba(255, 255, 255, 1)"
-    ]
+    [0, 1],
+    [1, 2.5]
   );
 
   useEffect(() => {
@@ -354,15 +340,22 @@ export function FinalHero() {
               </motion.div>
             </div>
 
-            {/* Contenedor Sparkles - Arco y Sparkles */}
-            <div className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
+            {/* Contenedor Sparkles - MODIFICADO CON SCALE */}
+            {/* Se mantiene en el mismo lugar del DOM, pero se escala hacia arriba */}
+            <motion.div 
+              style={{ 
+                scaleY: sparklesScale, // Aplicamos la escala dependiente del scroll
+                transformOrigin: "bottom" // Fijamos la base abajo para que crezca hacia arriba
+              }}
+              className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]"
+            >
               <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
               <Sparkles
                 density={1200}
                 className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
                 color="#ffffff"
               />
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
