@@ -30,6 +30,10 @@ const Index = () => {
           <UseCasesShowcase />
         </div>
 
+        <div className="w-full flex justify-center pb-16 relative z-[999999]">
+          <BentoGrid />
+        </div>
+
         {/* ← NUEVA SECCIÓN: Blueprint 3D con hover */}
         <section className="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-background to-muted/30">
           <div className="container mx-auto px-6">
@@ -52,9 +56,7 @@ const Index = () => {
         </section>
 
         {/* ← El resto sigue exactamente igual */}
-        <div className="w-full flex justify-center pb-16 relative z-[999999]">
-          <BentoGrid />
-        </div>
+        
 
         <ProductShowcase />
         <HowWeWork />
