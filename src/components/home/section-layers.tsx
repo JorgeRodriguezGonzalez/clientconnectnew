@@ -9,11 +9,11 @@ const CloudHero = () => {
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
-      <div className="container mx-auto px-6 lg:px-16 relative z-[1] max-w-[1280px]">
+      <div className="container mx-auto px-0 lg:px-0 relative z-[1] max-w-[1280px]">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
           {/* Left Column: BlueprintVisualization */}
-          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-center overflow-hidden self-stretch">
+          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-center overflow-hidden self-stretch pl-0">
             <div className="w-full h-full flex items-center justify-center">
               <BlueprintVisualization />
             </div>
@@ -26,7 +26,7 @@ const CloudHero = () => {
           <div className="lg:hidden w-screen -ml-6 h-[1px] bg-zinc-200 mb-0" />
 
           {/* Right Column: Content */}
-          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10">
+          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0">
             <div className="flex flex-col gap-6 max-w-[520px]">
               {/* OUR APPROACH */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
