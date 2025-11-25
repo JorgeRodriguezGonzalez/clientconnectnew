@@ -34,30 +34,8 @@ const Index = () => {
           <BentoGrid />
         </div>
 
-        {/* ← NUEVA SECCIÓN: Blueprint 3D con hover */}
-        <section className="relative py-24 lg:py-32 overflow-hidden bg-gradient-to-b from-background to-muted/30">
-          <div className="container mx-auto px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-                Arquitectura moderna desde cero
-              </h2>
-              <p className="text-xl text-muted-foreground">
-                Diseñado con las mejores prácticas y tecnologías actuales para un rendimiento imbatible.
-              </p>
-            </div>
-
-            {/* Aquí va la ilustración interactiva */}
-            <div className="flex justify-center">
-              <div className="w-full max-w-5xl">
-                <BlueprintVisualization />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ← El resto sigue exactamente igual */}
+        <BlueprintVisualization />
         
-
         <ProductShowcase />
         <HowWeWork />
         <ComparisonSection />
