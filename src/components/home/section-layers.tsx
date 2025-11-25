@@ -1,24 +1,12 @@
 import React from 'react';
 import { ArrowRight, Cloud } from 'lucide-react';
 
-// Background pattern from the original design
-const BACKGROUND_PATTERN = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC`;
-
 // @component: CloudHero
 const CloudHero = () => {
   return (
     <section id="cloud" className="grow relative w-full overflow-hidden bg-white flex flex-col">
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
-      
-      {/* Background Pattern */}
-      <div 
-        className="pointer-events-none absolute inset-0 z-0 opacity-[0.04] w-full h-full object-none" 
-        style={{
-          backgroundImage: `url("${BACKGROUND_PATTERN}")`,
-          backgroundRepeat: 'repeat'
-        }} 
-      />
 
       <div className="container mx-auto px-6 lg:px-16 relative z-[1] max-w-[1280px]">
         <div className="relative flex flex-col lg:flex-row items-stretch">
