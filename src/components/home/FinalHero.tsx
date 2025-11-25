@@ -35,26 +35,11 @@ export function FinalHero() {
     ]
   );
 
-  // Transform para el color del arco (igual que tenía el círculo)
-  const arcBackground = useTransform(
+  // Transform para la altura de las sparkles
+  const sparklesHeight = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
-    [
-      "rgb(5, 10, 25)",
-      "rgb(5, 10, 25)",
-      "rgb(255, 255, 255)"
-    ]
-  );
-
-  // Transform para el color del borde del arco
-  const arcBorderColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [
-      "rgba(255, 255, 255, 0.2)",
-      "rgba(255, 255, 255, 0.2)",
-      "rgba(255, 255, 255, 1)"
-    ]
+    [0, 1],
+    ["24rem", "60rem"]
   );
 
   useEffect(() => {
@@ -90,12 +75,14 @@ export function FinalHero() {
       className="h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
     >
       <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
-        <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
+        <div className="z-10 flex flex-col items-center justify-center gap-2 w-full h-full px-5 relative">
 
           {/* LAMP + TÍTULO */}
           <div className="flex flex-col items-center gap-[-20px]">
             {/* Lamp Effect */}
             <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
+              
+              {/* LUZ DERECHA - Corrección aplicada: 'as any' */}
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
                 animate={{ 
@@ -111,7 +98,7 @@ export function FinalHero() {
                 style={{ 
                   backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`,
                   "--gradient-color": "#edbf86"
-                } as any}
+                } as any} 
                 className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
               >
                 <motion.div
@@ -124,6 +111,7 @@ export function FinalHero() {
                 />
               </motion.div>
 
+              {/* LUZ IZQUIERDA - Corrección aplicada: 'as any' */}
               <motion.div
                 initial={{ opacity: 0, width: "15rem" }}
                 animate={{ 
@@ -353,17 +341,21 @@ export function FinalHero() {
                 <div className="w-full flex items-center justify-center text-white text-lg font-medium">Raycast</div>
               </motion.div>
             </div>
-
-            {/* Contenedor Sparkles - Arco y Sparkles */}
-            <div className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]">
-              <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
-              <Sparkles
-                density={1200}
-                className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
-                color="#ffffff"
-              />
-            </div>
           </motion.div>
+
+          {/* Contenedor Sparkles - CRECEN HACIA ARRIBA */}
+          <motion.div 
+            style={{ height: sparklesHeight }}
+            className="absolute bottom-0 inset-x-0 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)] z-0"
+          >
+            <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
+            <Sparkles
+              density={1200}
+              className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+              color="#ffffff"
+            />
+          </motion.div>
+
         </div>
       </div>
     </motion.div>
