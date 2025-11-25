@@ -535,6 +535,27 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                     <motion.span style={{ color: textColor }}>
                       {mainTitleHighlight}
                     </motion.span>
+                    <motion.span
+                      style={{
+                        display: "inline-block",
+                        backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(237,191,134,0.2) 15%, rgba(237,191,134,0.5) 25%, rgb(237,191,134) 35%, rgb(222,131,99) 50%, rgb(103,188,183) 65%, rgba(103,188,183,0.5) 75%, rgba(103,188,183,0.2) 85%, rgba(255,255,255,0) 100%)",
+                        backgroundSize: "300% 100%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        color: "transparent",
+                      }}
+                      animate={{
+                        backgroundPosition: ["200% 50%", "-100% 50%"]
+                      }}
+                      transition={{
+                        duration: 8,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                    >
+                      .
+                    </motion.span>
                   </motion.h1>
                 </div>
               </FadeInText>
