@@ -16,7 +16,7 @@ const LayerBlueTop = ({
     className="absolute transition-transform duration-500 ease-out" 
     style={{
       zIndex: 5,
-      transform: `matrix(1, 0, 0, 1, 0, ${isHovered ? -60 : -1.6404})`
+      transform: `matrix(1, 0, 0, 1, 0, ${isHovered ? -80 : -1.6404})`
     }}
   >
       <div style={{
@@ -128,7 +128,7 @@ const LayerZinc = ({ isHovered }: { isHovered: boolean }) => <div
   className="absolute transition-transform duration-500 ease-out" 
   style={{
     zIndex: 4,
-    transform: `matrix(1, 0, 0, 1, 0, ${isHovered ? -30 : -2.62899})`
+    transform: `matrix(1, 0, 0, 1, 0, ${isHovered ? -40 : -2.62899})`
   }}
 >
     <div style={{
@@ -172,7 +172,7 @@ const LayerBlueBottom = ({ isHovered }: { isHovered: boolean }) => <div
   className="absolute transition-transform duration-500 ease-out" 
   style={{
     zIndex: 2,
-    transform: `matrix(1, 0, 0, 1, 0, ${isHovered ? 30 : 2.62899})`
+    transform: `matrix(1, 0, 0, 1, 0, ${isHovered ? 40 : 2.62899})`
   }}
 >
     <div style={{
@@ -206,7 +206,7 @@ const LayerBlueBase = ({
     className="absolute transition-transform duration-500 ease-out" 
     style={{
       zIndex: 1,
-      transform: `matrix(1, 0, 0, 1, 0, ${isHovered ? 60 : 1.6404})`
+      transform: `matrix(1, 0, 0, 1, 0, ${isHovered ? 80 : 1.6404})`
     }}
   >
       <div style={{
