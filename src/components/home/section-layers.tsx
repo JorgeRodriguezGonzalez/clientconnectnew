@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { BlueprintVisualization } from '@/components/home/BlueprintVisualization';
 
 // @component: CloudHero
 const CloudHero = () => {
@@ -11,9 +12,11 @@ const CloudHero = () => {
       <div className="container mx-auto px-6 lg:px-16 relative z-[1] max-w-[1280px]">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column: Empty */}
+          {/* Left Column: BlueprintVisualization */}
           <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-center overflow-hidden self-stretch">
-            {/* Vacío - solo mantiene el espacio */}
+            <div className="w-full h-full flex items-center justify-center">
+              <BlueprintVisualization />
+            </div>
           </div>
 
           {/* Vertical Divider (Desktop only) */}
