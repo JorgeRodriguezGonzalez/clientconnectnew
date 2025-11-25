@@ -34,11 +34,11 @@ const Index = () => {
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
-
+        <CloudHero />
         <BlueprintVisualization />
         
         {/* ← NUEVO COMPONENTE */}
-        <CloudHero />
+        
         
         <ProductShowcase />
         <HowWeWork />
