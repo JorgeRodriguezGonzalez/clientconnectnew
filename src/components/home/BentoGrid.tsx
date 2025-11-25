@@ -240,7 +240,7 @@ function FeaturesSectionMinimal() {
               <span
                 style={{
                   display: "inline-block",
-                  backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                  backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 20%, rgb(237, 191, 134) 35%, rgb(222, 131, 99) 50%, rgb(103, 188, 183) 65%, rgba(255, 255, 255, 0) 80%, rgba(255, 255, 255, 0) 100%)",
                   backgroundSize: "400% 100%",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
