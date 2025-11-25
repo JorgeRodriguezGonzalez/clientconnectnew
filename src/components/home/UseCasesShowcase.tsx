@@ -1,12 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import { Sparkles, Clock, Zap, Mountain, Check } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { gsap } from 'gsap';
-import * as THREE from 'three';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 
 type UseCasesShowcaseProps = {
   subText?: string;
@@ -26,539 +20,53 @@ type UseCasesShowcaseProps = {
   cardHref?: string;
 };
 
-// Film grain shader
-const FilmGrainShader = {
-  uniforms: {
-    tDiffuse: { value: null },
-    time: { value: 0 },
-    intensity: { value: 0 },
-    grainSize: { value: 1.5 }
-  },
-  vertexShader: `
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-  fragmentShader: `
-    uniform sampler2D tDiffuse;
-    uniform float time;
-    uniform float intensity;
-    uniform float grainSize;
-    varying vec2 vUv;
-    
-    float random(vec2 p) {
-      return fract(sin(dot(p.xy, vec2(12.9898, 78.233))) * 43758.5453);
-    }
-    
-    void main() {
-      vec4 color = texture2D(tDiffuse, vUv);
-      
-      vec2 grainUV = vUv * grainSize;
-      float grain = random(grainUV + time * 0.1);
-      grain = (grain - 0.5) * intensity;
-      
-      color.rgb += grain;
-      
-      float vignette = 1.0 - length(vUv - 0.5) * 0.3 * intensity;
-      color.rgb *= vignette;
-      
-      gl_FragColor = color;
-    }
-  `
-};
-
-// Gradient distortion shader
-const GradientDistortionShader = {
-  uniforms: {
-    tDiffuse: { value: null },
-    time: { value: 0 },
-    distortion: { value: 0 },
-    mouseX: { value: 0.5 },
-    mouseY: { value: 0.5 },
-    gradientShift: { value: 0 },
-    bloomThreshold: { value: 0.8 }
-  },
-  vertexShader: `
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-  fragmentShader: `
-    uniform sampler2D tDiffuse;
-    uniform float time;
-    uniform float distortion;
-    uniform float mouseX;
-    uniform float mouseY;
-    uniform float gradientShift;
-    uniform float bloomThreshold;
-    varying vec2 vUv;
-    
-    vec3 hsv2rgb(vec3 c) {
-      vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-      vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-      return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-    }
-    
-    void main() {
-      vec2 uv = vUv;
-      vec2 mouse = vec2(mouseX, mouseY);
-      float dist = distance(uv, mouse);
-      
-      float wave = sin(dist * 10.0 - time * 2.0) * distortion;
-      uv += normalize(uv - mouse) * wave * 0.02;
-      
-      vec4 color = texture2D(tDiffuse, uv);
-      
-      float gradientAngle = time * 0.5 + gradientShift;
-      float gradientPos = uv.x * cos(gradientAngle) + uv.y * sin(gradientAngle);
-      vec3 gradientColor = hsv2rgb(vec3(gradientPos + time * 0.1, 0.7, 1.0));
-      
-      color.rgb = mix(color.rgb, gradientColor, 0.3 * distortion);
-      
-      float brightness = dot(color.rgb, vec3(0.299, 0.587, 0.114));
-      if (brightness > bloomThreshold * (1.0 - distortion * 0.3)) {
-        color.rgb *= 1.0 + distortion * 0.5;
-      }
-      
-      float r = texture2D(tDiffuse, uv + vec2(0.002, 0.0) * distortion).r;
-      float g = texture2D(tDiffuse, uv).g;
-      float b = texture2D(tDiffuse, uv - vec2(0.002, 0.0) * distortion).b;
-      
-      vec3 finalColor = vec3(r, g, b);
-      finalColor = mix(finalColor, gradientColor, 0.2 * distortion);
-      
-      gl_FragColor = vec4(finalColor, color.a);
-    }
-  `
-};
-
-// Advanced Badge Component
-const AdvancedBadge = ({ children }: { children: React.ReactNode }) => {
-  const badgeRef = useRef(null);
-  const canvasRef = useRef(null);
-  const textRef = useRef(null);
-  const glowRef = useRef(null);
-  const gradientRef = useRef(null);
-  const filmGrainRef = useRef(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
-  
-  const sceneRef = useRef(null);
-  const rendererRef = useRef(null);
-  const composerRef = useRef(null);
-  const distortionPassRef = useRef(null);
-  const bloomPassRef = useRef(null);
-  const filmGrainPassRef = useRef(null);
-  const meshRef = useRef(null);
-  const animationIdRef = useRef(null);
-
-  useEffect(() => {
-    if (!canvasRef.current) return;
-
-    const scene = new THREE.Scene();
-    sceneRef.current = scene;
-
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    
-    const renderer = new THREE.WebGLRenderer({
-      canvas: canvasRef.current,
-      alpha: true,
-      antialias: true,
-      powerPreference: "high-performance"
-    });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
-    rendererRef.current = renderer;
-
-    const composer = new EffectComposer(renderer);
-    composerRef.current = composer;
-
-    const renderPass = new RenderPass(scene, camera);
-    composer.addPass(renderPass);
-
-    const bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
-      0.0,
-      0.6,
-      0.7
-    );
-    bloomPassRef.current = bloomPass;
-    composer.addPass(bloomPass);
-
-    const distortionPass = new ShaderPass(GradientDistortionShader);
-    distortionPassRef.current = distortionPass;
-    composer.addPass(distortionPass);
-
-    const filmGrainPass = new ShaderPass(FilmGrainShader);
-    filmGrainPassRef.current = filmGrainPass;
-    composer.addPass(filmGrainPass);
-
-    const geometry = new THREE.PlaneGeometry(2, 2, 32, 32);
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        color1: { value: new THREE.Color(0xedbf86) },
-        color2: { value: new THREE.Color(0xde8363) },
-        color3: { value: new THREE.Color(0x67bcb7) },
-        time: { value: 0 },
-        mouseX: { value: 0.5 },
-        mouseY: { value: 0.5 },
-        hover: { value: 0 },
-        bloomStrength: { value: 0 }
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        uniform float time;
-        uniform float hover;
-        
-        void main() {
-          vUv = uv;
-          vec3 pos = position;
-          
-          float displacement = sin(pos.x * 10.0 + time) * sin(pos.y * 10.0 + time) * 0.02 * hover;
-          pos.z += displacement;
-          
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 color1;
-        uniform vec3 color2;
-        uniform vec3 color3;
-        uniform float time;
-        uniform float mouseX;
-        uniform float mouseY;
-        uniform float hover;
-        uniform float bloomStrength;
-        varying vec2 vUv;
-        
-        vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-        vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-        vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
-        
-        float snoise(vec2 v) {
-          const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
-          vec2 i  = floor(v + dot(v, C.yy));
-          vec2 x0 = v - i + dot(i, C.xx);
-          vec2 i1;
-          i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-          vec4 x12 = x0.xyxy + C.xxzz;
-          x12.xy -= i1;
-          i = mod289(i);
-          vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
-          vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
-          m = m*m;
-          m = m*m;
-          vec3 x = 2.0 * fract(p * C.www) - 1.0;
-          vec3 h = abs(x) - 0.5;
-          vec3 ox = floor(x + 0.5);
-          vec3 a0 = x - ox;
-          m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
-          vec3 g;
-          g.x  = a0.x  * x0.x  + h.x  * x0.y;
-          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-          return 130.0 * dot(m, g);
-        }
-        
-        void main() {
-          vec2 uv = vUv;
-          vec2 mouse = vec2(mouseX, mouseY);
-          
-          float mouseDist = distance(uv, mouse);
-          float mouseInfluence = 1.0 - smoothstep(0.0, 0.5, mouseDist);
-          
-          float noise = snoise(uv * 3.0 + time * 0.2) * 0.5 + 0.5;
-          float gradientNoise = snoise(uv * 2.0 - time * 0.1) * 0.5 + 0.5;
-          
-          vec3 gradient = mix(color1, color2, uv.x + sin(time * 0.5) * 0.2);
-          gradient = mix(gradient, color3, uv.y + cos(time * 0.3) * 0.2);
-          
-          gradient = mix(gradient, color3, noise * 0.3);
-          
-          vec3 mouseGradient = mix(color2, color3, mouseInfluence);
-          gradient = mix(gradient, mouseGradient, hover * 0.5);
-          
-          float radial = 1.0 - length(uv - 0.5) * 2.0;
-          radial = smoothstep(0.0, 1.0, radial);
-          gradient *= 0.8 + radial * 0.2;
-          
-          float shimmer = sin(uv.x * 20.0 - time * 3.0) * sin(uv.y * 20.0 + time * 2.0);
-          shimmer = shimmer * 0.05 * hover;
-          gradient += shimmer;
-          
-          float bloomBoost = 1.0 + bloomStrength * mouseInfluence * 2.0;
-          gradient *= bloomBoost;
-          
-          float hotSpot = smoothstep(0.3, 0.0, mouseDist) * hover;
-          gradient += vec3(hotSpot * 0.5);
-          
-          gl_FragColor = vec4(gradient, 1.0);
-        }
-      `,
-      transparent: true
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    meshRef.current = mesh;
-    scene.add(mesh);
-
-    const animate = () => {
-      animationIdRef.current = requestAnimationFrame(animate);
-      
-      const time = performance.now() * 0.001;
-      
-      if (meshRef.current && meshRef.current.material) {
-        meshRef.current.material.uniforms.time.value = time;
-        meshRef.current.material.uniforms.hover.value = gsap.utils.interpolate(
-          meshRef.current.material.uniforms.hover.value,
-          isHovered ? 1 : 0,
-          0.1
-        );
-        meshRef.current.material.uniforms.bloomStrength.value = gsap.utils.interpolate(
-          meshRef.current.material.uniforms.bloomStrength.value,
-          isHovered ? 1 : 0,
-          0.1
-        );
-      }
-      
-      if (bloomPassRef.current) {
-        bloomPassRef.current.strength = gsap.utils.interpolate(
-          bloomPassRef.current.strength,
-          isHovered ? 1.5 : 0,
-          0.1
-        );
-      }
-      
-      if (filmGrainPassRef.current && filmGrainPassRef.current.uniforms) {
-        filmGrainPassRef.current.uniforms.time.value = time;
-        filmGrainPassRef.current.uniforms.intensity.value = gsap.utils.interpolate(
-          filmGrainPassRef.current.uniforms.intensity.value,
-          isHovered ? 0.3 : 0,
-          0.1
-        );
-      }
-      
-      if (distortionPassRef.current && distortionPassRef.current.uniforms) {
-        distortionPassRef.current.uniforms.time.value = time;
-        distortionPassRef.current.uniforms.distortion.value = gsap.utils.interpolate(
-          distortionPassRef.current.uniforms.distortion.value,
-          isHovered ? 1 : 0,
-          0.1
-        );
-        distortionPassRef.current.uniforms.gradientShift.value = mousePos.x * Math.PI * 2;
-      }
-      
-      if (composerRef.current) {
-        composerRef.current.render();
-      }
-    };
-
-    const handleResize = () => {
-      const rect = badgeRef.current?.getBoundingClientRect();
-      if (rect) {
-        renderer.setSize(rect.width, rect.height);
-        composer.setSize(rect.width, rect.height);
-      }
-    };
-
-    handleResize();
-    animate();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (animationIdRef.current) {
-        cancelAnimationFrame(animationIdRef.current);
-      }
-      renderer.dispose();
-      material.dispose();
-      geometry.dispose();
-    };
-  }, [isHovered, mousePos]);
-
-  useEffect(() => {
-    const tl = gsap.timeline({ paused: true });
-    
-    tl.to(badgeRef.current, {
-      scale: 1.05,
-      duration: 0.3,
-      ease: 'power2.out'
-    })
-    .to(textRef.current, {
-      letterSpacing: '0.05em',
-      duration: 0.3,
-      ease: 'power2.out'
-    }, 0)
-    .to(glowRef.current, {
-      opacity: 1,
-      scale: 1.2,
-      duration: 0.3,
-      ease: 'power2.out'
-    }, 0)
-    .to(gradientRef.current, {
-      opacity: 1,
-      duration: 0.3,
-      ease: 'power2.out'
-    }, 0);
-
-    if (filmGrainRef.current) {
-      tl.to(filmGrainRef.current, {
-        opacity: 1,
-        duration: 0.3,
-        ease: 'power2.out'
-      }, 0);
-    }
-
-    if (badgeRef.current) {
-      badgeRef.current._timeline = tl;
-    }
-
-    return () => {
-      tl.kill();
-    };
-  }, []);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    
-    if (badgeRef.current && badgeRef.current._timeline) {
-      badgeRef.current._timeline.play();
-    }
-
-    if (glowRef.current) {
-      gsap.to(glowRef.current, {
-        filter: 'blur(40px)',
-        duration: 0.4,
-        ease: 'power2.out'
-      });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    
-    if (badgeRef.current && badgeRef.current._timeline) {
-      badgeRef.current._timeline.reverse();
-    }
-
-    if (glowRef.current) {
-      gsap.to(glowRef.current, {
-        filter: 'blur(20px)',
-        duration: 0.3,
-        ease: 'power2.in'
-      });
-    }
-  };
-
-  const handleMouseMove = (e) => {
-    if (!badgeRef.current) return;
-    
-    const rect = badgeRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    
-    setMousePos({ x, y });
-    
-    if (distortionPassRef.current && distortionPassRef.current.uniforms) {
-      distortionPassRef.current.uniforms.mouseX.value = x;
-      distortionPassRef.current.uniforms.mouseY.value = y;
-    }
-
-    if (meshRef.current && meshRef.current.material && meshRef.current.material.uniforms) {
-      meshRef.current.material.uniforms.mouseX.value = x;
-      meshRef.current.material.uniforms.mouseY.value = y;
-    }
-
-    badgeRef.current.style.setProperty('--mouse-x', `${x * 100}%`);
-    badgeRef.current.style.setProperty('--mouse-y', `${y * 100}%`);
-  };
-
+// Simple Badge Component with animated gradient
+const SimpleBadge = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div
-      ref={badgeRef}
-      className="advanced-badge"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
-      style={{
-        '--mouse-x': '50%',
-        '--mouse-y': '50%'
-      } as React.CSSProperties}
-    >
+    <div className="simple-badge">
       <style>{`
-        .advanced-badge {
+        .simple-badge {
           position: relative;
           display: inline-flex;
           align-items: center;
           gap: 8px;
           padding: 6px 12px;
           border-radius: 12px;
-          cursor: pointer;
           overflow: hidden;
-          background: linear-gradient(135deg, #edbf86 0%, #de8363 50%, #67bcb7 100%);
+          background: linear-gradient(90deg, 
+            rgba(237,191,134,0.3) 0%, 
+            rgba(237,191,134,0.6) 7.5%, 
+            rgb(237,191,134) 12.5%, 
+            rgb(230,161,117) 17.5%, 
+            rgb(222,131,99) 22.5%, 
+            rgb(163,159,141) 27.5%, 
+            rgb(133,173,162) 32.5%, 
+            rgb(103,188,183) 37.5%, 
+            rgba(103,188,183,0.6) 42.5%, 
+            rgba(103,188,183,0.3) 47.5%, 
+            rgba(103,188,183,0.3) 52.5%, 
+            rgba(103,188,183,0.6) 57.5%, 
+            rgb(103,188,183) 62.5%, 
+            rgb(133,173,162) 67.5%, 
+            rgb(163,159,141) 72.5%, 
+            rgb(222,131,99) 77.5%, 
+            rgb(230,161,117) 82.5%, 
+            rgb(237,191,134) 87.5%, 
+            rgba(237,191,134,0.6) 92.5%, 
+            rgba(237,191,134,0.3) 100%
+          );
+          background-size: 300% 100%;
+          animation: gradientFlow 16s linear infinite;
           box-shadow: 0 2px 5px 0 rgba(0,0,0,0.07), 0 8px 8px 0 rgba(0,0,0,0.06);
         }
 
-        .badge-canvas {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          opacity: 0.8;
-          mix-blend-mode: screen;
-        }
-
-        .film-grain-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          opacity: 0;
-          background: repeating-linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.03) 0px,
-            transparent 1px,
-            transparent 2px,
-            rgba(255, 255, 255, 0.03) 3px
-          );
-          mix-blend-mode: overlay;
-        }
-
-        .badge-gradient {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          opacity: 0;
-          background: radial-gradient(
-            circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-            rgba(255, 255, 255, 0.2) 0%,
-            transparent 50%
-          );
-          pointer-events: none;
-        }
-
-        .badge-glow {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 100%;
-          height: 100%;
-          background: radial-gradient(circle, rgba(237, 191, 134, 0.6) 0%, transparent 70%);
-          opacity: 0;
-          filter: blur(20px);
-          pointer-events: none;
+        @keyframes gradientFlow {
+          0% {
+            background-position: 200% 50%;
+          }
+          100% {
+            background-position: -100% 50%;
+          }
         }
 
         .badge-text {
@@ -580,14 +88,6 @@ const AdvancedBadge = ({ children }: { children: React.ReactNode }) => {
         }
       `}</style>
 
-      <canvas ref={canvasRef} className="badge-canvas" />
-      
-      <div ref={filmGrainRef} className="film-grain-overlay" />
-      
-      <div ref={gradientRef} className="badge-gradient" />
-      
-      <div ref={glowRef} className="badge-glow" />
-      
       <div className="badge-icon">
         <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path 
@@ -597,7 +97,7 @@ const AdvancedBadge = ({ children }: { children: React.ReactNode }) => {
         </svg>
       </div>
       
-      <span ref={textRef} className="badge-text">
+      <span className="badge-text">
         {children}
       </span>
     </div>
@@ -1063,7 +563,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             <div className="flex flex-col items-center gap-8">
               {/* Badge */}
               <FadeInText delay={1.2}>
-                <AdvancedBadge>{badge}</AdvancedBadge>
+                <SimpleBadge>{badge}</SimpleBadge>
               </FadeInText>
 
               {/* Main Title */}
