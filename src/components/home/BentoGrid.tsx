@@ -64,19 +64,19 @@ function FeaturesSectionMinimal() {
         100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
       }
       @keyframes bento2-gradient-fade1 {
-        0%, 20% { opacity: 0.32; }
-        28%, 72% { opacity: 0; }
-        80%, 100% { opacity: 0.32; }
+        0%, 10% { opacity: 0.32; }
+        26.67%, 73.33% { opacity: 0; }
+        88.1%, 100% { opacity: 0.32; }
       }
       @keyframes bento2-gradient-fade2 {
-        0%, 20% { opacity: 0; }
-        28%, 44% { opacity: 0.32; }
-        52%, 100% { opacity: 0; }
+        0%, 10% { opacity: 0; }
+        26.67%, 50% { opacity: 0.32; }
+        69.05%, 100% { opacity: 0; }
       }
       @keyframes bento2-gradient-fade3 {
-        0%, 44% { opacity: 0; }
-        52%, 60% { opacity: 0.32; }
-        68%, 100% { opacity: 0; }
+        0%, 50% { opacity: 0; }
+        69.05%, 73.81% { opacity: 0.32; }
+        88.1%, 100% { opacity: 0; }
       }
       @keyframes bento2-title-gradient {
         0% { background-position: 200% 50%; }
@@ -317,21 +317,21 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               className="absolute inset-0"
               style={{ 
                 background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(237,191,134), transparent 72%)",
-                animation: "bento2-gradient-fade1 12s ease-in-out infinite"
+                animation: "bento2-gradient-fade1 10.5s ease-in-out infinite"
               }}
             />
             <div
               className="absolute inset-0"
               style={{ 
                 background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(103,188,183), transparent 72%)",
-                animation: "bento2-gradient-fade2 12s ease-in-out infinite"
+                animation: "bento2-gradient-fade2 10.5s ease-in-out infinite"
               }}
             />
             <div
               className="absolute inset-0"
               style={{ 
                 background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(148,163,184), transparent 72%)",
-                animation: "bento2-gradient-fade3 12s ease-in-out infinite"
+                animation: "bento2-gradient-fade3 10.5s ease-in-out infinite"
               }}
             />
           </>
