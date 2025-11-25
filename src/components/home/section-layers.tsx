@@ -5,16 +5,16 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 // @component: CloudHero
 const CloudHero = () => {
   return (
-    <section id="cloud" className="grow relative w-full overflow-hidden bg-white flex flex-col">
+    <section id="cloud" className="grow relative w-full overflow-visible bg-white flex flex-col">
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
-      <div className="container mx-auto px-0 lg:px-0 relative z-[1] max-w-[1280px]">
+      <div className="relative z-[1] w-full max-w-[1280px] mx-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
           {/* Left Column: BlueprintVisualization */}
-          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-center overflow-hidden self-stretch pl-0">
-            <div className="w-full h-full flex items-center justify-center">
+          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
+            <div className="w-full h-full flex items-center justify-start m-0 p-0">
               <BlueprintVisualization />
             </div>
           </div>
@@ -23,7 +23,7 @@ const CloudHero = () => {
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10" />
 
           {/* Horizontal Divider (Mobile only) */}
-          <div className="lg:hidden w-screen -ml-6 h-[1px] bg-zinc-200 mb-0" />
+          <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
           {/* Right Column: Content */}
           <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0">
