@@ -508,7 +508,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                       backgroundPosition: ["200% 50%", "-100% 50%"]
                     }}
                     transition={{
-                      duration: 8,
+                      duration: 16,
                       ease: "linear",
                       repeat: Infinity
                     }}
