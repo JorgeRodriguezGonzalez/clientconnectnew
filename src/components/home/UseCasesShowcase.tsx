@@ -34,26 +34,30 @@ const SimpleBadge = ({ children }: { children: React.ReactNode }) => {
           border-radius: 12px;
           overflow: hidden;
           background: linear-gradient(90deg, 
-            rgba(237,191,134,0.3) 0%, 
-            rgba(237,191,134,0.6) 7.5%, 
-            rgb(237,191,134) 12.5%, 
-            rgb(230,161,117) 17.5%, 
-            rgb(222,131,99) 22.5%, 
-            rgb(163,159,141) 27.5%, 
-            rgb(133,173,162) 32.5%, 
-            rgb(103,188,183) 37.5%, 
-            rgba(103,188,183,0.6) 42.5%, 
-            rgba(103,188,183,0.3) 47.5%, 
-            rgba(103,188,183,0.3) 52.5%, 
-            rgba(103,188,183,0.6) 57.5%, 
-            rgb(103,188,183) 62.5%, 
-            rgb(133,173,162) 67.5%, 
-            rgb(163,159,141) 72.5%, 
-            rgb(222,131,99) 77.5%, 
-            rgb(230,161,117) 82.5%, 
-            rgb(237,191,134) 87.5%, 
-            rgba(237,191,134,0.6) 92.5%, 
-            rgba(237,191,134,0.3) 100%
+            rgba(255,255,255,0) 0%, 
+            rgba(237,191,134,0.2) 3%, 
+            rgba(237,191,134,0.5) 5%, 
+            rgb(237,191,134) 7%, 
+            rgb(230,161,117) 11%, 
+            rgb(222,131,99) 15%, 
+            rgb(163,159,141) 19%, 
+            rgb(133,173,162) 23%, 
+            rgb(103,188,183) 27%, 
+            rgba(103,188,183,0.5) 31%, 
+            rgba(103,188,183,0.2) 33%, 
+            rgba(255,255,255,0) 35%, 
+            rgba(255,255,255,0) 65%, 
+            rgba(103,188,183,0.2) 67%, 
+            rgba(103,188,183,0.5) 69%, 
+            rgb(103,188,183) 73%, 
+            rgb(133,173,162) 77%, 
+            rgb(163,159,141) 81%, 
+            rgb(222,131,99) 85%, 
+            rgb(230,161,117) 89%, 
+            rgb(237,191,134) 93%, 
+            rgba(237,191,134,0.5) 95%, 
+            rgba(237,191,134,0.2) 97%, 
+            rgba(255,255,255,0) 100%
           );
           background-size: 300% 100%;
           animation: gradientFlow 16s linear infinite;
@@ -78,24 +82,7 @@ const SimpleBadge = ({ children }: { children: React.ReactNode }) => {
           letter-spacing: -0.3px;
           text-transform: capitalize;
         }
-
-        .badge-icon {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
       `}</style>
-
-      <div className="badge-icon">
-        <svg width="16" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path 
-            d="M14.5 0L17.5 5L23 6L18.5 10.5L19.5 16L14.5 13L9.5 16L10.5 10.5L6 6L11.5 5L14.5 0Z" 
-            fill="white"
-          />
-        </svg>
-      </div>
       
       <span className="badge-text">
         {children}
