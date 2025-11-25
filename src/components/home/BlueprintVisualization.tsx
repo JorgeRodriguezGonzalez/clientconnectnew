@@ -330,7 +330,10 @@ export const BlueprintVisualization = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="absolute inset-4 flex items-center justify-center lg:justify-end">
-        <div className="hidden md:flex absolute inset-0 items-center justify-center lg:justify-end">
+        <div className={cn(
+          "hidden md:flex absolute inset-0 items-center justify-center lg:justify-end transition-transform duration-500 ease-out",
+          isHovered && "-rotate-180"
+        )}>
           <LayerBlueTop idPrefix={idPrefix} isHovered={isHovered} />
           <LayerZinc isHovered={isHovered} />
           <LayerMiddle isHovered={isHovered} />
