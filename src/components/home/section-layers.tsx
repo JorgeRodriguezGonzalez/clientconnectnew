@@ -26,7 +26,7 @@ const CloudHero = () => {
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
           {/* Right Column: Content */}
-          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0">
+          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px]">
               {/* OUR APPROACH */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
@@ -56,6 +56,7 @@ const CloudHero = () => {
                 >
                   market leaders
                 </motion.span>
+                <span className="text-gray-900">.</span>
               </h2>
 
               {/* Description */}
