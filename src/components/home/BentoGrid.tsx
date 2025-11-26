@@ -189,8 +189,8 @@ function FeaturesSectionMinimal() {
   ];
 
   const customStyles = [
-    { gridColumn: 'span 4 / span 4', maxWidth: 'calc(66.666% - 10px)', maxHeight: 'calc(100% - 60px)' },
-    { gridColumn: 'span 2 / span 2', maxWidth: 'calc(33.333% + 10px)', maxHeight: 'calc(100% - 60px)' },
+    { gridColumn: 'span 4 / span 4', maxWidth: 'calc(66.666% - 10px)', maxHeight: 'calc(100% - 70px)' },
+    { gridColumn: 'span 2 / span 2', maxWidth: 'calc(33.333% + 10px)', maxHeight: 'calc(100% - 70px)' },
     {},
     {}
   ];
