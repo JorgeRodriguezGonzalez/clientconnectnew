@@ -155,16 +155,17 @@ const TaskTimeline = () => {
       ref={timelineRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`w-[340px] rounded-2xl border p-6 transition-all duration-300 ${
-        isHovered 
-          ? 'bg-white border-gray-200 shadow-lg' 
-          : 'bg-black border-gray-800 shadow-sm'
-      }`}
+      className="w-[340px] rounded-2xl border p-6 shadow-sm"
       style={{
         opacity: isTimelineInView ? 1 : 0,
         filter: isTimelineInView ? 'blur(0px)' : 'blur(10px)',
         transform: 'translateZ(0)',
-        transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s'
+        transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s, background 0.5s, border-color 0.3s, box-shadow 0.3s',
+        background: isHovered 
+          ? 'radial-gradient(110.24% 110.2% at 0% 95.51%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)'
+          : 'radial-gradient(circle at center, #000022 0%, #1f3f6d 40%, #469396 70%, #f1ffa5 100%)',
+        borderColor: isHovered ? '#d1d5db' : '#1f2937',
+        boxShadow: isHovered ? '0 10px 15px -3px rgba(0, 0, 0, 0.1)' : '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
       }}
     >
       <div className="space-y-0">

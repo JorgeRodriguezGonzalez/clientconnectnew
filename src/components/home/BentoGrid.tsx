@@ -182,10 +182,17 @@ function FeaturesSectionMinimal() {
   ];
 
   const spans = [
-    "md:col-span-[3.67] md:row-span-2",
-    "md:col-span-[2.33] md:row-span-2",
+    "md:col-span-4 md:row-span-2",
+    "md:col-span-2 md:row-span-2",
     "md:col-span-3 md:row-span-1",
     "md:col-span-3 md:row-span-1",
+  ];
+
+  const customStyles = [
+    { gridColumn: 'span 4 / span 4', maxWidth: 'calc(66.666% - 10px)' },
+    { gridColumn: 'span 2 / span 2', maxWidth: 'calc(33.333% + 10px)' },
+    {},
+    {}
   ];
 
   return (
@@ -270,6 +277,7 @@ function FeaturesSectionMinimal() {
               theme={theme}
               index={index}
               isVisible={sectionVisible}
+              customStyle={customStyles[index]}
             />
           ))}
         </div>
@@ -282,7 +290,7 @@ function FeaturesSectionMinimal() {
   );
 }
 
-function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible = false }) {
+function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible = false, customStyle = {} }) {
   const { icon: Icon, animation, title, blurb, meta, showSkills } = feature;
   const [hoverCount, setHoverCount] = useState(0);
   const [cardHovered, setCardHovered] = useState(false);
@@ -308,7 +316,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
       className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-neutral-900/10 bg-white/80 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] motion-safe:opacity-0 ${
         isVisible ? "motion-safe:animate-[bento2-card_0.8s_ease-out_forwards]" : ""
       } dark:border-white/10 dark:bg-white/5 dark:shadow-[0_18px_40px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_28px_70px_rgba(0,0,0,0.55)] ${span}`}
-      style={{ animationDelay }}
+      style={{ animationDelay, ...customStyle }}
       onMouseEnter={() => {
         setCardHovered(true);
         setHoverCount(prev => prev + 1);
