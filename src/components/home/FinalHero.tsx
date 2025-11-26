@@ -32,7 +32,7 @@ export function FinalHero() {
     [0, 1],
     [
       "rgb(0, 0, 0)",
-      "rgb(50, 50, 50)"
+      "rgb(80, 80, 80)"
     ]
   );
 
