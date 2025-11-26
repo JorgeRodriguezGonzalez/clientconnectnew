@@ -483,7 +483,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
     { text: 'Website Design', position: { top: '80px', right: '12px' } },
     { text: 'SEO', position: { top: '9px', right: '10px' } },
     { text: 'Google Ads', position: { top: '9px', left: '15px' } },
-    { text: 'Social Media', position: { top: '23px', right: '28px' } },
+    { text: 'Social Media', position: { top: '23px', right: '108px' } },
     { text: 'CRM', position: { top: '39px', right: '27px' } },
     { text: 'Facebook Ads', position: { bottom: '31px', left: '120px' } },
     { text: 'Videography', position: { bottom: '7px', left: '65px' } },
