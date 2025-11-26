@@ -182,8 +182,8 @@ function FeaturesSectionMinimal() {
   ];
 
   const spans = [
-    "md:col-span-4 md:row-span-2",
-    "md:col-span-2 md:row-span-2",
+    "md:col-span-[3.67] md:row-span-2",
+    "md:col-span-[2.33] md:row-span-2",
     "md:col-span-3 md:row-span-1",
     "md:col-span-3 md:row-span-1",
   ];
