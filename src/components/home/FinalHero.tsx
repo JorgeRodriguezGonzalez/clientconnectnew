@@ -40,7 +40,7 @@ export function FinalHero() {
   const sparklesScale = useTransform(
     scrollYProgress,
     [0, 1], 
-    [1, 2] // Crece hasta 4 veces su tamaño
+    [1, 2.5] // Crece hasta 2.5 veces su tamaño
   );
 
   useEffect(() => {
