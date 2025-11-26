@@ -258,7 +258,7 @@ const TaskTimeline = () => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
