@@ -150,35 +150,37 @@ const TaskTimeline = () => {
 
   const circumference = 2 * Math.PI * 14;
 
+  // Animación del gradiente con Framer Motion
+  const gradientPosX = isHovered ? '150%' : '-10%';
+  const gradientPosY = isHovered ? '-200%' : '150%';
+  const gradientSpreadX = isHovered ? '100%' : '110.24%';
+  const gradientSpreadY = isHovered ? '100%' : '110.2%';
+
   return (
-    <div 
+    <motion.div 
       ref={timelineRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="w-[340px] rounded-2xl p-6 shadow-sm"
-      style={{
+      initial={false}
+      animate={{
         opacity: isTimelineInView ? 1 : 0,
         filter: isTimelineInView ? 'blur(0px)' : 'blur(10px)',
+        boxShadow: isHovered 
+          ? '0 1px 2px 0 rgba(0, 0, 0, 0.05)' 
+          : '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+      }}
+      transition={{
+        opacity: { duration: 0.8, delay: 1.0, ease: 'easeOut' },
+        filter: { duration: 0.8, delay: 1.0, ease: 'easeOut' },
+        boxShadow: { duration: 0.3 }
+      }}
+      style={{
         transform: 'translateZ(0)',
-        transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s, box-shadow 0.3s, --pos-x 0.8s ease, --pos-y 0.8s ease, --spread-x 0.8s ease, --spread-y 0.8s ease, --color-1 0.8s ease, --color-2 0.8s ease, --color-3 0.8s ease, --color-4 0.8s ease, --color-5 0.8s ease, --stop-1 0.8s ease, --stop-2 0.8s ease, --stop-3 0.8s ease, --stop-4 0.8s ease, --stop-5 0.8s ease',
-        // Variables CSS para estado normal (ahora es el hover anterior)
-        '--pos-x': isHovered ? '150%' : '-10%',
-        '--pos-y': isHovered ? '-200%' : '150%',
-        '--spread-x': isHovered ? '100%' : '110.24%',
-        '--spread-y': isHovered ? '100%' : '110.2%',
-        '--color-1': isHovered ? '#000022' : '#000020',
-        '--color-2': isHovered ? '#1f3f6d' : '#f1ffa5',
-        '--color-3': isHovered ? '#469396' : '#469396',
-        '--color-4': isHovered ? '#f1ffa5' : '#1f3f6d',
-        '--color-5': isHovered ? '#f1ffa5' : '#000',
-        '--stop-1': isHovered ? '0%' : '0%',
-        '--stop-2': isHovered ? '40%' : '10%',
-        '--stop-3': isHovered ? '70%' : '35.44%',
-        '--stop-4': isHovered ? '100%' : '71.34%',
-        '--stop-5': isHovered ? '100%' : '90.76%',
-        background: 'radial-gradient(var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y), var(--color-1) var(--stop-1), var(--color-2) var(--stop-2), var(--color-3) var(--stop-3), var(--color-4) var(--stop-4), var(--color-5) var(--stop-5))',
-        boxShadow: isHovered ? '0 1px 2px 0 rgba(0, 0, 0, 0.05)' : '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-      } as React.CSSProperties}
+        background: isHovered
+          ? `radial-gradient(${gradientSpreadX} ${gradientSpreadY} at ${gradientPosX} ${gradientPosY}, #000022 0%, #1f3f6d 40%, #469396 70%, #f1ffa5 100%)`
+          : `radial-gradient(${gradientSpreadX} ${gradientSpreadY} at ${gradientPosX} ${gradientPosY}, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)`
+      }}
     >
       <div className="space-y-0">
         {tasks.map((task, index) => (
@@ -260,7 +262,7 @@ const TaskTimeline = () => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
