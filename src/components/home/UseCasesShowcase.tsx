@@ -160,12 +160,25 @@ const TaskTimeline = () => {
         opacity: isTimelineInView ? 1 : 0,
         filter: isTimelineInView ? 'blur(0px)' : 'blur(10px)',
         transform: 'translateZ(0)',
-        transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s, background 0.5s, box-shadow 0.3s',
-        background: isHovered 
-          ? 'radial-gradient(110.24% 110.2% at -10% 110%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)'
-          : 'radial-gradient(circle at -20% -60%, #000022 0%, #1f3f6d 40%, #469396 70%, #f1ffa5 100%)',
-        boxShadow: isHovered ? '0 10px 15px -3px rgba(0, 0, 0, 0.1)' : '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
-      }}
+        transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s, box-shadow 0.3s, --pos-x 0.8s ease, --pos-y 0.8s ease, --spread-x 0.8s ease, --spread-y 0.8s ease, --color-1 0.8s ease, --color-2 0.8s ease, --color-3 0.8s ease, --color-4 0.8s ease, --color-5 0.8s ease, --stop-1 0.8s ease, --stop-2 0.8s ease, --stop-3 0.8s ease, --stop-4 0.8s ease, --stop-5 0.8s ease',
+        // Variables CSS para estado normal (ahora es el hover anterior)
+        '--pos-x': isHovered ? '-20%' : '-10%',
+        '--pos-y': isHovered ? '-160%' : '150%',
+        '--spread-x': isHovered ? '100%' : '110.24%',
+        '--spread-y': isHovered ? '100%' : '110.2%',
+        '--color-1': isHovered ? '#000022' : '#000020',
+        '--color-2': isHovered ? '#1f3f6d' : '#f1ffa5',
+        '--color-3': isHovered ? '#469396' : '#469396',
+        '--color-4': isHovered ? '#f1ffa5' : '#1f3f6d',
+        '--color-5': isHovered ? '#f1ffa5' : '#000',
+        '--stop-1': isHovered ? '0%' : '0%',
+        '--stop-2': isHovered ? '40%' : '10%',
+        '--stop-3': isHovered ? '70%' : '35.44%',
+        '--stop-4': isHovered ? '100%' : '71.34%',
+        '--stop-5': isHovered ? '100%' : '90.76%',
+        background: 'radial-gradient(var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y), var(--color-1) var(--stop-1), var(--color-2) var(--stop-2), var(--color-3) var(--stop-3), var(--color-4) var(--stop-4), var(--color-5) var(--stop-5))',
+        boxShadow: isHovered ? '0 1px 2px 0 rgba(0, 0, 0, 0.05)' : '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+      } as React.CSSProperties}
     >
       <div className="space-y-0">
         {tasks.map((task, index) => (
