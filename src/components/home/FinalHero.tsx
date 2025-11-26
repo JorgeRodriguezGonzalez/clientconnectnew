@@ -23,7 +23,8 @@ export function FinalHero() {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end end"],
+    // MODIFICADO: Ahora el scroll trackea hasta que el elemento sale por arriba
+    offset: ["start start", "end start"], 
   });
 
   const backgroundColor = useTransform(
@@ -35,12 +36,11 @@ export function FinalHero() {
     ]
   );
 
-  // --- NUEVO: Scale vertical para las sparkles ---
-  // Comienza en escala 1 (tamaño original) y crece hasta 2.5 veces su altura
+  // MODIFICADO: Ajustado para el nuevo rango de scroll
   const sparklesScale = useTransform(
     scrollYProgress,
-    [0, 1],
-    [1, 1.5]
+    [0, 1], 
+    [1, 4] // Crece hasta 4 veces su tamaño
   );
 
   useEffect(() => {
@@ -340,12 +340,11 @@ export function FinalHero() {
               </motion.div>
             </div>
 
-            {/* Contenedor Sparkles - MODIFICADO CON SCALE */}
-            {/* Se mantiene en el mismo lugar del DOM, pero se escala hacia arriba */}
+            {/* Contenedor Sparkles */}
             <motion.div 
               style={{ 
-                scaleY: sparklesScale, // Aplicamos la escala dependiente del scroll
-                transformOrigin: "bottom" // Fijamos la base abajo para que crezca hacia arriba
+                scaleY: sparklesScale, 
+                transformOrigin: "bottom" 
               }}
               className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]"
             >
