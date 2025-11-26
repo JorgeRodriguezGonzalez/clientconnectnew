@@ -483,7 +483,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
         )}
 
         {isQualifiedLeads && (
-          <div className="relative w-full h-[120px] mt-2 bg-neutral-50 dark:bg-neutral-900 rounded-lg">
+          <div className="relative w-full h-[120px] mt-2">
             {skills.map((skill, idx) => (
               <motion.div
                 key={`${skill.text}-${hoverCount}`}
