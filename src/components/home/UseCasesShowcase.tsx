@@ -484,7 +484,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         {/* TÍTULO ESTILO SHOPIFY */}
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
-            <div className="flex flex-col items-center gap-8">
+            <div className="flex flex-col items-center gap-[38px]">
               {/* Badge */}
               <FadeInText delay={1.2}>
                 <div 
