@@ -162,8 +162,8 @@ const TaskTimeline = () => {
         transform: 'translateZ(0)',
         transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s, background 0.5s, box-shadow 0.3s',
         background: isHovered 
-          ? 'radial-gradient(110.24% 110.2% at -10% 150%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)'
-          : 'radial-gradient(circle at -20% -160%, #000022 0%, #1f3f6d 40%, #469396 70%, #f1ffa5 100%)',
+          ? 'radial-gradient(110.24% 110.2% at -10% 110%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)'
+          : 'radial-gradient(circle at -20% -60%, #000022 0%, #1f3f6d 40%, #469396 70%, #f1ffa5 100%)',
         boxShadow: isHovered ? '0 10px 15px -3px rgba(0, 0, 0, 0.1)' : '0 1px 2px 0 rgba(0, 0, 0, 0.05)'
       }}
     >
