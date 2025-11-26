@@ -13,6 +13,7 @@ import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
+import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
 
 // ← NUEVA IMPORTACIÓN
 import CloudHero from "@/components/home/section-layers";
@@ -35,6 +36,7 @@ const Index = () => {
           <BentoGrid />
         </div>
         <CloudHero />
+        <InteractiveCardStack />
         
         {/* ← NUEVO COMPONENTE */}
         
