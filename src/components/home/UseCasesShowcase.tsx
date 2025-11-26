@@ -484,11 +484,11 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         {/* TÍTULO ESTILO SHOPIFY */}
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
-            <div className="flex flex-col items-center gap-[38px]">
+            <div className="flex flex-col items-center gap-8">
               {/* Badge */}
               <FadeInText delay={1.2}>
                 <div 
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)]"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)] mb-[6px]"
                   style={{ 
                     background: 'linear-gradient(135deg, #67bcb7 0%, #de8363 100%)'
                   }}
