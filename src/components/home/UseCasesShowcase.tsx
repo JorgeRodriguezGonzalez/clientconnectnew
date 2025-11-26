@@ -180,7 +180,7 @@ const TaskTimeline = () => {
       <div 
         className="absolute inset-0 rounded-2xl"
         style={{
-          background: 'radial-gradient(110.24% 110.2% at 110% 10%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)',
+          background: 'radial-gradient(110.24% 110.2% at 130% 1%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)',
           opacity: isHovered ? 1 : 0,
           transition: 'opacity 0.8s ease'
         }}
