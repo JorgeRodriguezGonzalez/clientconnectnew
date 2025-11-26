@@ -486,8 +486,8 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
     { text: 'Social Media', position: { top: '23px', right: '108px' } },
     { text: 'CRM', position: { top: '39px', right: '27px' } },
     { text: 'Facebook Ads', position: { bottom: '31px', left: '120px' } },
-    { text: 'Videography', position: { bottom: '7px', left: '65px' } },
-    { text: 'Photography', position: { bottom: '43px', left: '5px' } }
+    { text: 'Videography', position: { bottom: '7px', left: '25px' } },
+    { text: 'Photography', position: { bottom: '43px', left: '55px' } }
   ];
 
   return (
