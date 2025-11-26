@@ -368,10 +368,10 @@ function FeaturesSectionMinimal() {
   ];
 
   const customStyles = [
-    { maxHeight: 'calc(100% - 60px)' },
-    { maxHeight: 'calc(100% - 60px)' },
-    { marginTop: '-60px' },
-    { marginTop: '-60px' }
+    { maxHeight: 'calc(100% - 30px)' },
+    { maxHeight: 'calc(100% - 30px)' },
+    { marginTop: '-30px' },
+    { marginTop: '-30px' }
   ];
 
   return (
@@ -485,9 +485,9 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
     { text: 'Google Ads', position: { top: '9px', left: '15px' } },
     { text: 'Social Media', position: { top: '23px', right: '28px' } },
     { text: 'CRM', position: { top: '39px', right: '27px' } },
-    { text: 'Facebook Ads', position: { bottom: '80px', left: '70px' } },
-    { text: 'Videography', position: { bottom: '70px', left: '25px' } },
-    { text: 'Photography', position: { bottom: '60px', left: '5px' } }
+    { text: 'Facebook Ads', position: { bottom: '31px', left: '40px' } },
+    { text: 'Videography', position: { bottom: '7px', left: '25px' } },
+    { text: 'Photography', position: { bottom: '43px', left: '5px' } }
   ];
 
   return (
