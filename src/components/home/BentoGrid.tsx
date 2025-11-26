@@ -1,6 +1,185 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Aperture, BarChart3, Activity, Layers } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, animate } from "framer-motion";
+
+const cn = (...classes: (string | undefined | null | false)[]) => {
+  return classes.filter(Boolean).join(' ');
+};
+
+const GlowingEffect = React.memo(
+  ({
+    blur = 0,
+    inactiveZone = 0.7,
+    proximity = 0,
+    spread = 20,
+    variant = "default",
+    glow = false,
+    className,
+    movementDuration = 2,
+    borderWidth = 1,
+    disabled = true,
+  }: {
+    blur?: number;
+    inactiveZone?: number;
+    proximity?: number;
+    spread?: number;
+    variant?: "default" | "white";
+    glow?: boolean;
+    className?: string;
+    disabled?: boolean;
+    movementDuration?: number;
+    borderWidth?: number;
+  }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const lastPosition = useRef({ x: 0, y: 0 });
+    const animationFrameRef = useRef<number>(0);
+
+    const handleMove = React.useCallback(
+      (e?: MouseEvent | { x: number; y: number }) => {
+        if (!containerRef.current) return;
+
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+
+        animationFrameRef.current = requestAnimationFrame(() => {
+          const element = containerRef.current;
+          if (!element) return;
+
+          const { left, top, width, height } = element.getBoundingClientRect();
+          const mouseX = e?.x ?? lastPosition.current.x;
+          const mouseY = e?.y ?? lastPosition.current.y;
+
+          if (e) {
+            lastPosition.current = { x: mouseX, y: mouseY };
+          }
+
+          const center = [left + width * 0.5, top + height * 0.5];
+          const distanceFromCenter = Math.hypot(
+            mouseX - center[0],
+            mouseY - center[1]
+          );
+          const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
+
+          if (distanceFromCenter < inactiveRadius) {
+            element.style.setProperty("--active", "0");
+            return;
+          }
+
+          const isActive =
+            mouseX > left - proximity &&
+            mouseX < left + width + proximity &&
+            mouseY > top - proximity &&
+            mouseY < top + height + proximity;
+
+          element.style.setProperty("--active", isActive ? "1" : "0");
+
+          if (!isActive) return;
+
+          const currentAngle =
+            parseFloat(element.style.getPropertyValue("--start")) || 0;
+          let targetAngle =
+            (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
+              Math.PI +
+            90;
+
+          const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
+          const newAngle = currentAngle + angleDiff;
+
+          animate(currentAngle, newAngle, {
+            duration: movementDuration,
+            ease: [0.16, 1, 0.3, 1],
+            onUpdate: (value) => {
+              element.style.setProperty("--start", String(value));
+            },
+          });
+        });
+      },
+      [inactiveZone, proximity, movementDuration]
+    );
+
+    useEffect(() => {
+      if (disabled) return;
+
+      const handleScroll = () => handleMove();
+      const handlePointerMove = (e: PointerEvent) => handleMove(e as any);
+
+      window.addEventListener("scroll", handleScroll, { passive: true } as any);
+      document.body.addEventListener("pointermove", handlePointerMove, {
+        passive: true,
+      } as any);
+
+      return () => {
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+        window.removeEventListener("scroll", handleScroll);
+        document.body.removeEventListener("pointermove", handlePointerMove);
+      };
+    }, [handleMove, disabled]);
+
+    return (
+      <>
+        <div
+          className={cn(
+            "pointer-events-none absolute -inset-px hidden rounded-[inherit] border opacity-0 transition-opacity",
+            glow && "opacity-100",
+            variant === "white" && "border-white",
+            disabled && "!block"
+          )}
+        />
+        <div
+          ref={containerRef}
+          style={
+            {
+              "--blur": `${blur}px`,
+              "--spread": spread,
+              "--start": "0",
+              "--active": "0",
+              "--glowingeffect-border-width": `${borderWidth}px`,
+              "--repeating-conic-gradient-times": "5",
+              "--gradient": `radial-gradient(circle, #EDBF86 10%, #EDBF8600 20%),
+                radial-gradient(circle at 40% 40%, #DE8363 5%, #DE836300 15%),
+                radial-gradient(circle at 60% 60%, #67BCB7 10%, #67BCB700 20%), 
+                radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
+                repeating-conic-gradient(
+                  from 236.84deg at 50% 50%,
+                  #EDBF86 0%,
+                  #DE8363 calc(25% / var(--repeating-conic-gradient-times)),
+                  #67BCB7 calc(50% / var(--repeating-conic-gradient-times)), 
+                  #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
+                  #EDBF86 calc(100% / var(--repeating-conic-gradient-times))
+                )`,
+            } as React.CSSProperties
+          }
+          className={cn(
+            "pointer-events-none absolute inset-0 rounded-[inherit] opacity-100 transition-opacity",
+            glow && "opacity-100",
+            blur > 0 && "blur-[var(--blur)] ",
+            className,
+            disabled && "!hidden"
+          )}
+        >
+          <div
+            className={cn(
+              "glow",
+              "rounded-[inherit]",
+              'after:content-[""] after:rounded-[inherit] after:absolute after:inset-[calc(-1*var(--glowingeffect-border-width))]',
+              "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
+              "after:[background:var(--gradient)] after:[background-attachment:fixed]",
+              "after:opacity-[var(--active)] after:transition-opacity after:duration-300",
+              "after:[mask-clip:padding-box,border-box]",
+              "after:[mask-composite:intersect]",
+              "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
+            )}
+          />
+        </div>
+      </>
+    );
+  }
+);
+
+GlowingEffect.displayName = "GlowingEffect";
 
 const getRootTheme = () => {
   if (typeof document === "undefined") {
@@ -189,8 +368,8 @@ function FeaturesSectionMinimal() {
   ];
 
   const customStyles = [
-    { gridColumn: 'span 4 / span 4', maxWidth: 'calc(66.666% - 10px)', maxHeight: 'calc(100% - 70px)' },
-    { gridColumn: 'span 2 / span 2', maxWidth: 'calc(33.333% + 10px)', maxHeight: 'calc(100% - 70px)' },
+    { gridColumn: 'span 4 / span 4', maxWidth: 'calc(66.666% - 10px)', maxHeight: 'calc(100% - 60px)' },
+    { gridColumn: 'span 2 / span 2', maxWidth: 'calc(33.333% + 10px)', maxHeight: 'calc(100% - 60px)' },
     {},
     {}
   ];
@@ -312,223 +491,235 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
   ];
 
   return (
-    <article
-      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-neutral-900/10 bg-white/80 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] motion-safe:opacity-0 ${
-        isVisible ? "motion-safe:animate-[bento2-card_0.8s_ease-out_forwards]" : ""
-      } dark:border-white/10 dark:bg-white/5 dark:shadow-[0_18px_40px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_28px_70px_rgba(0,0,0,0.55)] ${span}`}
-      style={{ animationDelay, ...customStyle }}
-      onMouseEnter={() => {
-        setCardHovered(true);
-        setHoverCount(prev => prev + 1);
-      }}
-      onMouseLeave={() => setCardHovered(false)}
-    >
-      <div className="absolute inset-0 -z-10 overflow-hidden rounded-2xl">
-        <div className="absolute inset-0 bg-white/85 transition-colors duration-500 dark:bg-white/8" />
-        {theme === "dark" ? (
-          <div
-            className="absolute inset-0 opacity-70 transition-opacity duration-500"
-            style={{ 
-              background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(59,130,246,0.24), transparent 72%)"
-            }}
-          />
-        ) : (
-          <>
-            <div
-              className="absolute inset-0"
-              style={{ 
-                background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(237,191,134), transparent 72%)",
-                animation: "bento2-gradient-fade1 10.5s ease-in-out infinite"
-              }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{ 
-                background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(103,188,183), transparent 72%)",
-                animation: "bento2-gradient-fade2 10.5s ease-in-out infinite"
-              }}
-            />
-            <div
-              className="absolute inset-0"
-              style={{ 
-                background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(148,163,184), transparent 72%)",
-                animation: "bento2-gradient-fade3 10.5s ease-in-out infinite"
-              }}
-            />
-          </>
-        )}
-      </div>
-      <div className="flex flex-col gap-4">
-        <div className="flex items-start gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full border border-neutral-900/15 bg-white transition-colors duration-500 dark:border-white/15 dark:bg-white/10">
-            <Icon
-              className="h-7 w-7 text-neutral-900 transition-colors duration-500 dark:text-white"
-              strokeWidth={1.5}
-              style={{ animation }}
-            />
-          </div>
-          <div className="flex-1">
-            <header className="flex items-start gap-3">
-              <h3 className="text-base font-semibold uppercase tracking-wide text-neutral-900 transition-colors duration-500 dark:text-white">
-                {title}
-              </h3>
-              {meta && (
-                <span className="ml-auto rounded-full border border-neutral-900/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.3em] text-neutral-500 transition-colors duration-500 dark:border-white/15 dark:text-white/60">
-                  {meta}
-                </span>
-              )}
-            </header>
-            <p className="mt-2 text-sm leading-relaxed text-neutral-600 transition-colors duration-500 dark:text-white/60">
-              {blurb}
-            </p>
-          </div>
-        </div>
-
-        {isStrategicGrowth && (
-          <div className="relative w-full h-[160px] mt-2 overflow-hidden">
-            <motion.div 
-              key={`img1-${hoverCount}`}
-              className="absolute w-[120px] h-[204px]" 
-              style={{
-                top: '40px',
-                left: '50%',
-                marginLeft: '-260px',
-                transformOrigin: '60px 102px'
-              }} 
-              initial={{ x: -20, opacity: 0.8 }} 
-              animate={{ x: 0, opacity: 1 }} 
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <img 
-                src="https://framerusercontent.com/images/Cs7myyCzaXS8LyQHqBxdAlCZ8.png?scale-down-to=512" 
-                alt="Website preview" 
-                className="w-full h-full object-cover rounded-md shadow-lg" 
-              />
-            </motion.div>
-            
-            <motion.div 
-              key={`img2-${hoverCount}`}
-              className="absolute w-[120px] h-[204px]" 
-              style={{
-                top: '40px',
-                left: '50%',
-                marginLeft: '-140px',
-                transformOrigin: '60px 102px'
-              }} 
-              initial={{ y: -20, opacity: 0.8 }} 
-              animate={{ y: 0, opacity: 1 }} 
-              transition={{ duration: 0.6, delay: 0.15 }}
-            >
-              <img 
-                src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" 
-                alt="Website preview" 
-                className="w-full h-full object-cover rounded-md shadow-lg" 
-              />
-            </motion.div>
-            
-            <motion.div 
-              key={`img3-${hoverCount}`}
-              className="absolute w-[136px] h-[250px]" 
-              style={{
-                top: '10px',
-                left: '50%',
-                marginLeft: '-68px',
-                transformOrigin: '68px 125px',
-                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px',
-                zIndex: 10
-              }} 
-              initial={{ y: 20, opacity: 0 }} 
-              animate={{ y: 0, opacity: 1 }} 
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <img 
-                src="https://framerusercontent.com/images/pb1l1eWieWRyif3smeXnmDu1jnY.png?scale-down-to=512" 
-                alt="Website preview" 
-                className="w-full h-full object-cover rounded-md" 
-              />
-            </motion.div>
-            
-            <motion.div 
-              key={`img4-${hoverCount}`}
-              className="absolute w-[120px] h-[204px]" 
-              style={{
-                top: '40px',
-                left: '50%',
-                marginLeft: '76px',
-                transformOrigin: '60px 102px'
-              }} 
-              initial={{ y: -20, opacity: 0.8 }} 
-              animate={{ y: 0, opacity: 1 }} 
-              transition={{ duration: 0.6, delay: 0.25 }}
-            >
-              <img 
-                src="https://framerusercontent.com/images/Cs7myyCzaXS8LyQHqBxdAlCZ8.png?scale-down-to=512" 
-                alt="Website preview" 
-                className="w-full h-full object-cover rounded-md shadow-lg" 
-              />
-            </motion.div>
-            
-            <motion.div 
-              key={`img5-${hoverCount}`}
-              className="absolute w-[120px] h-[204px]" 
-              style={{
-                top: '40px',
-                left: '50%',
-                marginLeft: '196px',
-                transformOrigin: '60px 102px'
-              }} 
-              initial={{ x: 20, opacity: 0.8 }} 
-              animate={{ x: 0, opacity: 1 }} 
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <img 
-                src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" 
-                alt="Website preview" 
-                className="w-full h-full object-cover rounded-md shadow-lg" 
-              />
-            </motion.div>
-          </div>
-        )}
-
-        {isQualifiedLeads && (
-          <div className="relative w-full h-[120px] mt-2">
-            {skills.map((skill, idx) => (
-              <motion.div
-                key={`${skill.text}-${hoverCount}`}
-                className="absolute flex items-center justify-center overflow-hidden rounded-full bg-white dark:bg-neutral-800 px-2 py-1 shadow-md"
-                style={{
-                  ...skill.position
-                }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.4,
-                  delay: isVisible ? idx * 0.05 + 0.3 : 0,
-                  ease: [0.22, 1, 0.36, 1]
-                }}
-                whileHover={{ scale: 1.1 }}
-              >
-                <p className="m-0 whitespace-nowrap text-[9px] font-medium text-neutral-900 dark:text-white">
-                  {skill.text}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <div
-          className="absolute inset-0 rounded-2xl border border-neutral-900/10 transition-colors duration-500 dark:border-white/10"
-          style={{
-            maskImage:
-              "radial-gradient(220px_220px_at_var(--x,50%)_var(--y,50%), black, transparent)",
-            WebkitMaskImage:
-              "radial-gradient(220px_220px_at_var(--x,50%)_var(--y,50%), black, transparent)",
-          }}
+    <div className={`relative ${span}`} style={customStyle}>
+      <div className="relative h-full rounded-2xl p-[2px]">
+        <GlowingEffect
+          spread={40}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+          borderWidth={2}
         />
+        <article
+          className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-neutral-900/10 bg-white/80 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] motion-safe:opacity-0 ${
+            isVisible ? "motion-safe:animate-[bento2-card_0.8s_ease-out_forwards]" : ""
+          } dark:border-white/10 dark:bg-white/5 dark:shadow-[0_18px_40px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_28px_70px_rgba(0,0,0,0.55)]`}
+          style={{ animationDelay }}
+          onMouseEnter={() => {
+            setCardHovered(true);
+            setHoverCount(prev => prev + 1);
+          }}
+          onMouseLeave={() => setCardHovered(false)}
+        >
+          <div className="absolute inset-0 -z-10 overflow-hidden rounded-2xl">
+            <div className="absolute inset-0 bg-white/85 transition-colors duration-500 dark:bg-white/8" />
+            {theme === "dark" ? (
+              <div
+                className="absolute inset-0 opacity-70 transition-opacity duration-500"
+                style={{ 
+                  background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgba(59,130,246,0.24), transparent 72%)"
+                }}
+              />
+            ) : (
+              <>
+                <div
+                  className="absolute inset-0"
+                  style={{ 
+                    background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(237,191,134), transparent 72%)",
+                    animation: "bento2-gradient-fade1 10.5s ease-in-out infinite"
+                  }}
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{ 
+                    background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(103,188,183), transparent 72%)",
+                    animation: "bento2-gradient-fade2 10.5s ease-in-out infinite"
+                  }}
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{ 
+                    background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(148,163,184), transparent 72%)",
+                    animation: "bento2-gradient-fade3 10.5s ease-in-out infinite"
+                  }}
+                />
+              </>
+            )}
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-start gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-neutral-900/15 bg-white transition-colors duration-500 dark:border-white/15 dark:bg-white/10">
+                <Icon
+                  className="h-7 w-7 text-neutral-900 transition-colors duration-500 dark:text-white"
+                  strokeWidth={1.5}
+                  style={{ animation }}
+                />
+              </div>
+              <div className="flex-1">
+                <header className="flex items-start gap-3">
+                  <h3 className="text-base font-semibold uppercase tracking-wide text-neutral-900 transition-colors duration-500 dark:text-white">
+                    {title}
+                  </h3>
+                  {meta && (
+                    <span className="ml-auto rounded-full border border-neutral-900/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.3em] text-neutral-500 transition-colors duration-500 dark:border-white/15 dark:text-white/60">
+                      {meta}
+                    </span>
+                  )}
+                </header>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600 transition-colors duration-500 dark:text-white/60">
+                  {blurb}
+                </p>
+              </div>
+            </div>
+
+            {isStrategicGrowth && (
+              <div className="relative w-full h-[160px] mt-2 overflow-hidden">
+                <motion.div 
+                  key={`img1-${hoverCount}`}
+                  className="absolute w-[120px] h-[204px]" 
+                  style={{
+                    top: '40px',
+                    left: '50%',
+                    marginLeft: '-260px',
+                    transformOrigin: '60px 102px'
+                  }} 
+                  initial={{ x: -20, opacity: 0.8 }} 
+                  animate={{ x: 0, opacity: 1 }} 
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                  <img 
+                    src="https://framerusercontent.com/images/Cs7myyCzaXS8LyQHqBxdAlCZ8.png?scale-down-to=512" 
+                    alt="Website preview" 
+                    className="w-full h-full object-cover rounded-md shadow-lg" 
+                  />
+                </motion.div>
+                
+                <motion.div 
+                  key={`img2-${hoverCount}`}
+                  className="absolute w-[120px] h-[204px]" 
+                  style={{
+                    top: '40px',
+                    left: '50%',
+                    marginLeft: '-140px',
+                    transformOrigin: '60px 102px'
+                  }} 
+                  initial={{ y: -20, opacity: 0.8 }} 
+                  animate={{ y: 0, opacity: 1 }} 
+                  transition={{ duration: 0.6, delay: 0.15 }}
+                >
+                  <img 
+                    src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" 
+                    alt="Website preview" 
+                    className="w-full h-full object-cover rounded-md shadow-lg" 
+                  />
+                </motion.div>
+                
+                <motion.div 
+                  key={`img3-${hoverCount}`}
+                  className="absolute w-[136px] h-[250px]" 
+                  style={{
+                    top: '10px',
+                    left: '50%',
+                    marginLeft: '-68px',
+                    transformOrigin: '68px 125px',
+                    boxShadow: 'rgba(0, 0, 0, 0.25) 0px 56px 47px 0px',
+                    zIndex: 10
+                  }} 
+                  initial={{ y: 20, opacity: 0 }} 
+                  animate={{ y: 0, opacity: 1 }} 
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  <img 
+                    src="https://framerusercontent.com/images/pb1l1eWieWRyif3smeXnmDu1jnY.png?scale-down-to=512" 
+                    alt="Website preview" 
+                    className="w-full h-full object-cover rounded-md" 
+                  />
+                </motion.div>
+                
+                <motion.div 
+                  key={`img4-${hoverCount}`}
+                  className="absolute w-[120px] h-[204px]" 
+                  style={{
+                    top: '40px',
+                    left: '50%',
+                    marginLeft: '76px',
+                    transformOrigin: '60px 102px'
+                  }} 
+                  initial={{ y: -20, opacity: 0.8 }} 
+                  animate={{ y: 0, opacity: 1 }} 
+                  transition={{ duration: 0.6, delay: 0.25 }}
+                >
+                  <img 
+                    src="https://framerusercontent.com/images/Cs7myyCzaXS8LyQHqBxdAlCZ8.png?scale-down-to=512" 
+                    alt="Website preview" 
+                    className="w-full h-full object-cover rounded-md shadow-lg" 
+                  />
+                </motion.div>
+                
+                <motion.div 
+                  key={`img5-${hoverCount}`}
+                  className="absolute w-[120px] h-[204px]" 
+                  style={{
+                    top: '40px',
+                    left: '50%',
+                    marginLeft: '196px',
+                    transformOrigin: '60px 102px'
+                  }} 
+                  initial={{ x: 20, opacity: 0.8 }} 
+                  animate={{ x: 0, opacity: 1 }} 
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                >
+                  <img 
+                    src="https://framerusercontent.com/images/QhYCPWusAHYNzw5EQ6zVaQ50.png?scale-down-to=512" 
+                    alt="Website preview" 
+                    className="w-full h-full object-cover rounded-md shadow-lg" 
+                  />
+                </motion.div>
+              </div>
+            )}
+
+            {isQualifiedLeads && (
+              <div className="relative w-full h-[120px] mt-2">
+                {skills.map((skill, idx) => (
+                  <motion.div
+                    key={`${skill.text}-${hoverCount}`}
+                    className="absolute flex items-center justify-center overflow-hidden rounded-full bg-white dark:bg-neutral-800 px-2 py-1 shadow-md"
+                    style={{
+                      ...skill.position
+                    }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: isVisible ? idx * 0.05 + 0.3 : 0,
+                      ease: [0.22, 1, 0.36, 1]
+                    }}
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <p className="m-0 whitespace-nowrap text-[9px] font-medium text-neutral-900 dark:text-white">
+                      {skill.text}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <div
+              className="absolute inset-0 rounded-2xl border border-neutral-900/10 transition-colors duration-500 dark:border-white/10"
+              style={{
+                maskImage:
+                  "radial-gradient(220px_220px_at_var(--x,50%)_var(--y,50%), black, transparent)",
+                WebkitMaskImage:
+                  "radial-gradient(220px_220px_at_var(--x,50%)_var(--y,50%), black, transparent)",
+              }}
+            />
+          </div>
+        </article>
       </div>
-    </article>
+    </div>
   );
 }
 

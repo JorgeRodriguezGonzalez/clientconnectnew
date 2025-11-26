@@ -162,8 +162,8 @@ const TaskTimeline = () => {
         transform: 'translateZ(0)',
         transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s, box-shadow 0.3s, --pos-x 0.8s ease, --pos-y 0.8s ease, --spread-x 0.8s ease, --spread-y 0.8s ease, --color-1 0.8s ease, --color-2 0.8s ease, --color-3 0.8s ease, --color-4 0.8s ease, --color-5 0.8s ease, --stop-1 0.8s ease, --stop-2 0.8s ease, --stop-3 0.8s ease, --stop-4 0.8s ease, --stop-5 0.8s ease',
         // Variables CSS para estado normal (ahora es el hover anterior)
-        '--pos-x': isHovered ? '-20%' : '-10%',
-        '--pos-y': isHovered ? '-160%' : '150%',
+        '--pos-x': isHovered ? '150%' : '-10%',
+        '--pos-y': isHovered ? '-200%' : '150%',
         '--spread-x': isHovered ? '100%' : '110.24%',
         '--spread-y': isHovered ? '100%' : '110.2%',
         '--color-1': isHovered ? '#000022' : '#000020',
