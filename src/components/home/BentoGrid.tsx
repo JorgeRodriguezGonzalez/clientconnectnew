@@ -163,6 +163,7 @@ function FeaturesSectionMinimal() {
       meta: "Results",
       icon: BarChart3,
       animation: "bento2-pulse 4s ease-in-out infinite",
+      showSkills: true,
     },
     {
       title: "Transparent Reporting",
@@ -282,13 +283,25 @@ function FeaturesSectionMinimal() {
 }
 
 function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible = false }) {
-  const { icon: Icon, animation, title, blurb, meta } = feature;
+  const { icon: Icon, animation, title, blurb, meta, showSkills } = feature;
   const [hoverCount, setHoverCount] = useState(0);
   const [cardHovered, setCardHovered] = useState(false);
   
   const animationDelay = `${Math.max(index * 0.12, 0)}s`;
 
   const isStrategicGrowth = index === 0;
+  const isQualifiedLeads = showSkills === true;
+
+  const skills = [
+    { text: 'Website Design', position: { top: '80px', right: '12px' } },
+    { text: 'SEO', position: { top: '9px', right: '10px' } },
+    { text: 'Google Ads', position: { top: '9px', left: '15px' } },
+    { text: 'Social Media', position: { top: '23px', right: '28px' } },
+    { text: 'CRM', position: { top: '39px', right: '27px' } },
+    { text: 'Facebook Ads', position: { bottom: '31px', left: '40px' } },
+    { text: 'Videography', position: { bottom: '7px', left: '25px' } },
+    { text: 'Photography', position: { bottom: '43px', left: '5px' } }
+  ];
 
   return (
     <article
@@ -466,6 +479,32 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                 className="w-full h-full object-cover rounded-md shadow-lg" 
               />
             </motion.div>
+          </div>
+        )}
+
+        {isQualifiedLeads && (
+          <div className="relative w-full h-[120px] mt-2 bg-neutral-50 dark:bg-neutral-900 rounded-lg">
+            {skills.map((skill, idx) => (
+              <motion.div
+                key={`${skill.text}-${hoverCount}`}
+                className="absolute flex items-center justify-center overflow-hidden rounded-full bg-white dark:bg-neutral-800 px-2 py-1 shadow-md"
+                style={{
+                  ...skill.position
+                }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.4,
+                  delay: isVisible ? idx * 0.05 + 0.3 : 0,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                whileHover={{ scale: 1.1 }}
+              >
+                <p className="m-0 whitespace-nowrap text-[9px] font-medium text-neutral-900 dark:text-white">
+                  {skill.text}
+                </p>
+              </motion.div>
+            ))}
           </div>
         )}
       </div>
