@@ -150,34 +150,44 @@ const TaskTimeline = () => {
 
   const circumference = 2 * Math.PI * 14;
 
-  // Animación del gradiente con Framer Motion - mismo gradiente, solo cambia posición
-  const gradientPosX = isHovered ? '120%' : '-10%';
-  const gradientPosY = isHovered ? '-160%' : '150%';
-
   return (
-    <motion.div 
+    <div 
       ref={timelineRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="w-[340px] rounded-2xl p-6 shadow-sm"
-      initial={false}
-      animate={{
+      className="w-[340px] rounded-2xl p-6 shadow-sm relative overflow-hidden"
+      style={{
         opacity: isTimelineInView ? 1 : 0,
         filter: isTimelineInView ? 'blur(0px)' : 'blur(10px)',
+        transform: 'translateZ(0)',
+        transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s, box-shadow 0.3s',
         boxShadow: isHovered 
           ? '0 1px 2px 0 rgba(0, 0, 0, 0.05)' 
           : '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
       }}
-      transition={{
-        opacity: { duration: 0.8, delay: 1.0, ease: 'easeOut' },
-        filter: { duration: 0.8, delay: 1.0, ease: 'easeOut' },
-        boxShadow: { duration: 0.3 }
-      }}
-      style={{
-        transform: 'translateZ(0)',
-        background: `radial-gradient(110.24% 110.2% at ${gradientPosX} ${gradientPosY}, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)`
-      }}
     >
+      {/* Gradiente base (abajo-izquierda) */}
+      <div 
+        className="absolute inset-0 rounded-2xl"
+        style={{
+          background: 'radial-gradient(110.24% 110.2% at -10% 150%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)',
+          opacity: 1,
+          transition: 'opacity 0.8s ease'
+        }}
+      />
+      
+      {/* Gradiente hover (arriba-derecha) */}
+      <div 
+        className="absolute inset-0 rounded-2xl"
+        style={{
+          background: 'radial-gradient(110.24% 110.2% at 120% -160%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)',
+          opacity: isHovered ? 1 : 0,
+          transition: 'opacity 0.8s ease'
+        }}
+      />
+      
+      {/* Contenido por encima de los gradientes */}
+      <div className="relative z-10">
       <div className="space-y-0">
         {tasks.map((task, index) => (
           <div key={task.id} className="flex gap-3">
@@ -258,7 +268,8 @@ const TaskTimeline = () => {
           </div>
         ))}
       </div>
-    </motion.div>
+    </div>
+    </div>
   );
 };
 
