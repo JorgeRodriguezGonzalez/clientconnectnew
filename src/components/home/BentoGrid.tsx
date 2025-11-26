@@ -447,7 +447,7 @@ function FeaturesSectionMinimal() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 gap-3 md:auto-rows-[minmax(120px,auto)] md:grid-cols-6 md:gap-y-3">
+        <div className="grid grid-cols-1 gap-3 md:auto-rows-[minmax(120px,auto)] md:grid-cols-6 md:gap-y-[-48px]">
           {features.map((feature, index) => (
             <BentoItem
               key={feature.title}
