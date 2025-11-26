@@ -370,8 +370,8 @@ function FeaturesSectionMinimal() {
   const customStyles = [
     { maxHeight: 'calc(100% - 60px)' },
     { maxHeight: 'calc(100% - 60px)' },
-    {},
-    {}
+    { marginTop: '-60px' },
+    { marginTop: '-60px' }
   ];
 
   return (
@@ -447,7 +447,7 @@ function FeaturesSectionMinimal() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 gap-3 md:auto-rows-[minmax(120px,auto)] md:grid-cols-6 md:gap-y-[-48px]">
+        <div className="grid grid-cols-1 gap-3 md:auto-rows-[minmax(120px,auto)] md:grid-cols-6">
           {features.map((feature, index) => (
             <BentoItem
               key={feature.title}
