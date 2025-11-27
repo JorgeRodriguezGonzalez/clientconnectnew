@@ -183,39 +183,40 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-[#FCF9F4] min-h-screen py-16 px-4 md:px-8 font-sans text-stone-900 selection:bg-stone-200">
-      <div className="max-w-[1377px] mx-auto">
+    <div className="w-full bg-[#FCF9F4] min-h-screen py-20 px-4 md:px-8 font-sans text-neutral-900 selection:bg-neutral-200">
+      <div className="max-w-6xl mx-auto">
         
-        {/* Header Section */}
-        <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16">
-          <div className="lg:w-1/2">
-            <h2 className="text-[3.5rem] leading-[1.1] md:text-[5.4rem] md:leading-[1] font-normal tracking-tight">
-              Gain insights into <br />
+        {/* Header Section - Matched to Bento Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
+          <div className="lg:w-1/2 flex flex-col gap-2">
+             <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
+               Vital Analysis
+            </span>
+            <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-5xl">
+              Insights into <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#9E4952] via-[#B76D57] to-[#DC926E] pb-2">
                 10 vital areas
               </span>{" "}
-              of <br />
-              your health
             </h2>
           </div>
           <div className="lg:w-[427px] lg:ml-auto lg:pb-4">
-            <p className="text-xl leading-relaxed text-stone-900 mb-2">
+            <p className="text-sm font-semibold uppercase tracking-wide text-neutral-900 mb-2">
               Measure what matters.
             </p>
-            <p className="text-xl leading-relaxed text-stone-500">
-              Gain a holistic, in-depth view of how your heart, metabolism, and vital systems work together. In each test, an understanding of what matters for your long-term health.
+            <p className="text-sm leading-relaxed text-neutral-600 md:text-base">
+              Gain a holistic, in-depth view of how your heart, metabolism, and vital systems work together.
             </p>
           </div>
         </div>
 
-        {/* Tabs Navigation */}
+        {/* Tabs Navigation - Matched to Bento Meta/Tags */}
         <div className="relative mb-12">
           <div ref={tabsContainerRef} className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right" style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none'
         }}>
             {VITAL_AREAS.map(area => (
-              <button key={area.id} id={`tab-${area.id}`} onClick={() => scrollToCard(area.id)} className={cn("relative px-6 py-4 rounded-full text-base font-medium whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === area.id ? "text-stone-900" : "text-stone-500 hover:text-stone-900")}>
+              <button key={area.id} id={`tab-${area.id}`} onClick={() => scrollToCard(area.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === area.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
                 {activeTab === area.id && <motion.div layoutId="activeTab" className="absolute inset-0 bg-white rounded-full shadow-[0_6px_16px_rgba(0,0,0,0.08)] -z-10" transition={{
               type: "spring",
               bounce: 0.2,
@@ -236,7 +237,7 @@ export const Services = () => {
       }}>
           {VITAL_AREAS.map(area => (
             <div key={area.id} id={`card-${area.id}`} className="flex-shrink-0 snap-start w-[345px] sm:w-[380px] md:w-[440px]">
-              <div className="group relative h-[520px] w-full overflow-hidden rounded-2xl bg-stone-900 text-white transition-transform duration-500">
+              <div className="group relative h-[520px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
                 {/* Background Image */}
                 <div className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" style={{
               backgroundImage: `url('${area.imageUrl}')`,
@@ -246,31 +247,33 @@ export const Services = () => {
             }} />
                 
                 {/* Content Overlay */}
-                <div className="relative h-full flex flex-col justify-between p-6 z-10 bg-gradient-to-t from-black/60 via-transparent to-transparent">
+                <div className="relative h-full flex flex-col justify-between p-6 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
                   {/* Card Header */}
                   <div className="space-y-3 pt-2">
-                    <h3 className="text-[2.75rem] font-medium leading-[1] tracking-tight">
+                    {/* Matched to Bento Main Title Style but for cards */}
+                    <h3 className="text-3xl font-black tracking-tight leading-none text-white">
                       {area.title === "Inflammation & Stress" ? <>Inflammation<br />& Stress</> : area.title}
                     </h3>
-                    <p className="text-lg md:text-xl font-normal text-white/90 leading-snug tracking-tight max-w-[90%]">
+                    <p className="text-sm leading-relaxed text-white/80 max-w-[90%]">
                       {area.description}
                     </p>
                   </div>
 
                   {/* Card Footer */}
                   <div className="space-y-4 pb-2">
-                    <div className="text-[11px] font-medium tracking-wide uppercase text-white/90 px-1">
+                    {/* Matched to Bento Small Tags */}
+                    <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/90 px-1">
                       Includes {area.biomarkerCount} biomarkers
                     </div>
                     
                     <div className="flex flex-wrap gap-1.5">
                       {/* Check Icon Circle */}
-                      <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center mr-1">
-                        <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+                      <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center mr-1 border border-white/10">
+                        <Check className="w-3.5 h-3.5 text-white" strokeWidth={2} />
                       </div>
                       
                       {area.biomarkers.map((tag, idx) => (
-                        <span key={idx} className="inline-flex items-center px-3 py-1.5 rounded-2xl text-[11px] font-medium bg-white/20 backdrop-blur-md border border-white/15 text-white">
+                        <span key={idx} className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md border border-white/10 text-white">
                           {tag}
                         </span>
                       ))}
@@ -285,11 +288,11 @@ export const Services = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="flex justify-center mt-8 md:mt-16">
-          <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-stone-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-stone-100/50" onClick={e => e.preventDefault()}>
-            <span className="text-base font-normal">Meet the biomarkers</span>
-            <div className="w-7 h-7 bg-black rounded-full flex items-center justify-center text-white transition-transform duration-300 group-hover:translate-x-1">
-              <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+        <div className="flex justify-center mt-8 md:mt-16 border-t border-neutral-900/10 pt-8">
+          <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
+            <span className="text-xs font-semibold uppercase tracking-wide">Meet the biomarkers</span>
+            <div className="w-6 h-6 bg-neutral-900 rounded-full flex items-center justify-center text-white transition-transform duration-300 group-hover:translate-x-1">
+              <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
             </div>
           </a>
         </div>
