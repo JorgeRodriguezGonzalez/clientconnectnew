@@ -205,7 +205,7 @@ export function FinalHero() {
               className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center text-white relative z-50"
               style={{ fontFamily: '"Inter Display", sans-serif' }}
             >
-              We Brong{" "}
+              We Bring{" "}
               <motion.span
                 className="relative inline-flex items-center overflow-hidden"
                 animate={{ width: currentWidth }}

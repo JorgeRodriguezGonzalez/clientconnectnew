@@ -14,16 +14,16 @@ import Pricing from "@/components/home/Pricing";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
-
-// ← NUEVA IMPORTACIÓN
 import CloudHero from "@/components/home/section-layers";
+
+// 1. IMPORTAR EL NUEVO COMPONENTE "Services"
+import { Services } from "@/components/home/Services";
 
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
 
-        {/* Todo lo que ya tenías arriba */}
         <div className="relative z-0">
           <FinalHero />
         </div>
@@ -32,19 +32,22 @@ const Index = () => {
           <UseCasesShowcase />
         </div>
 
+        {/* 2. COMPONENTE SERVICES ANTES DEL BENTO */}
+        <Services />
+
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
+        
         <CloudHero />
         <InteractiveCardStack />
-        
-        {/* ← NUEVO COMPONENTE */}
-        
         <ProductShowcase />
         <HowWeWork />
         <ComparisonSection />
         <Pricing />
         <AnimatedGallerySection />
+        {/* Aquí sigue estando tu "ServicesSection" original, 
+            si querías borrarlo elimínalo de aquí y de las importaciones */}
         <ServicesSection />
         <WhyUsSection />
         <WhySubscribeBento />
