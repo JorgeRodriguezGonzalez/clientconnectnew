@@ -4,99 +4,112 @@ import { ArrowRight, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // Types
-type Biomarker = string;
-type VitalArea = {
+type ServiceTag = string;
+type ServiceItem = {
   id: string;
   title: string;
   description: string;
-  biomarkerCount: number;
-  biomarkers: Biomarker[];
+  capabilityCount: number;
+  tags: ServiceTag[];
   imageUrl: string;
   imagePosition?: 'left' | 'right' | 'center';
 };
 
-// Data
-const VITAL_AREAS: VitalArea[] = [{
-  id: 'heart-health',
-  title: 'Heart Health',
-  description: 'Assess how well your heart is pumping oxygen and nutrients throughout your body.',
-  biomarkerCount: 9,
-  biomarkers: ['LDL Cholesterol', 'HDL Cholesterol', 'Non-HDL Cholesterol', 'Apolipoprotein B'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-1--large',
-  imagePosition: 'left'
-}, {
-  id: 'metabolism-health',
-  title: 'Metabolism',
-  description: 'Make sure every organ is getting the energy supply and cell repair it needs.',
-  biomarkerCount: 4,
-  biomarkers: ['Hemoglobin A1c', 'Fasting Insulin', 'Uric Acid', 'Glucose'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-1--large',
-  imagePosition: 'right'
-}, {
-  id: 'hormone-health',
-  title: 'Hormones',
-  description: 'See if your endocrine system is in balance through energy, mood, and sexual health markers.',
-  biomarkerCount: 8,
-  biomarkers: ['Estradiol', 'Luteinizing Hormone', 'Follicle Stimulating Hormone', 'SHBG'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-2--large',
-  imagePosition: 'left'
-}, {
-  id: 'inflammation-stress',
-  title: 'Inflammation & Stress',
-  description: 'Check inflammation markers to see if your body is responding well to stress.',
-  biomarkerCount: 2,
-  biomarkers: ['Cortisol', 'DHEA-Sulfate'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-2--large',
-  imagePosition: 'center'
-}, {
-  id: 'thyroid',
-  title: 'Thyroid',
-  description: 'Spot any hormonal imbalances through markers that show an over- or under-active thyroid.',
-  biomarkerCount: 5,
-  biomarkers: ['Thyroid-Stimulating Hormone', 'Thyroxine (T4)', 'Free Triiodothyronine (T3)'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-2--large',
-  imagePosition: 'right'
-}, {
-  id: 'kidney-health',
-  title: 'Kidney',
-  description: 'See if your kidneys are filtering waste efficiently with protein byproduct markers.',
-  biomarkerCount: 4,
-  biomarkers: ['Blood Urea Nitrogen', 'BUN/Creatinine Ratio', 'Creatinine', 'eGFR'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-3--large',
-  imagePosition: 'left'
-}, {
-  id: 'liver-health',
-  title: 'Liver',
-  description: 'Check liver enzymes to assess how well it’s working for digestion and detoxification.',
-  biomarkerCount: 9,
-  biomarkers: ['Albumin', 'Alanine Transaminase', 'Alkaline Phosphatase', 'Total Protein'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-3--large',
-  imagePosition: 'right'
-}, {
-  id: 'immune-defense',
-  title: 'Immune Defense',
-  description: 'Get a read on your body’s readiness to fight infections and recover.',
-  biomarkerCount: 12,
-  biomarkers: ['White Blood Cell Count', 'Basophils', 'Eosinophils', 'Lymphocytes'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-4--large',
-  imagePosition: 'left'
-}, {
-  id: 'nutrients',
-  title: 'Nutrients',
-  description: 'See if your nutrient levels are what they should be for your overall health.',
-  biomarkerCount: 16,
-  biomarkers: ['Vitamin D', 'Homocysteine', 'Iron', 'Magnesium', 'Sodium', 'Potassium'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-4--large',
-  imagePosition: 'center'
-}, {
-  id: 'blood-health',
-  title: 'Blood',
-  description: 'Assess cellular function by looking at red blood cell and platelet counts.',
-  biomarkerCount: 9,
-  biomarkers: ['Hematocrit', 'Hemoglobin', 'Platelet Count', 'Red Blood Cell Count'],
-  imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-4--large',
-  imagePosition: 'right'
-}];
+// Data: Marketing Digital Services
+// Group 1 (1-2): Strategy & Foundation
+// Group 2 (3-4-5): Traffic & Acquisition
+// Group 3 (6-7): Content & Creative
+// Group 4 (8-9-10): Retention & Analytics
+const SERVICES: ServiceItem[] = [
+  // --- GROUP 1 ---
+  {
+    id: 'digital-strategy',
+    title: 'Digital Strategy',
+    description: 'Build a roadmap for growth with data-driven market analysis and competitive positioning.',
+    capabilityCount: 4,
+    tags: ['Market Analysis', 'Competitor Research', 'KPI Definition', 'Growth Roadmap'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-1--large',
+    imagePosition: 'left'
+  }, {
+    id: 'brand-identity',
+    title: 'Brand Identity',
+    description: 'Define your visual language and voice to create a lasting impression in the market.',
+    capabilityCount: 4,
+    tags: ['Logo Design', 'Visual Guidelines', 'Tone of Voice', 'Brand Assets'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-1--large',
+    imagePosition: 'right'
+  }, 
+  // --- GROUP 2 ---
+  {
+    id: 'seo',
+    title: 'SEO',
+    description: 'Dominate search results and drive organic traffic with technical and on-page optimization.',
+    capabilityCount: 4,
+    tags: ['Technical Audit', 'Keyword Strategy', 'Link Building', 'Local SEO'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-2--large',
+    imagePosition: 'left'
+  }, {
+    id: 'paid-media',
+    title: 'Paid Media',
+    description: 'Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.',
+    capabilityCount: 4,
+    tags: ['Google Ads', 'Social Ads', 'Retargeting', 'Display Network'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-2--large',
+    imagePosition: 'center'
+  }, {
+    id: 'social-media',
+    title: 'Social Media',
+    description: 'Build community and engagement with strategic content calendars and management.',
+    capabilityCount: 4,
+    tags: ['Content Strategy', 'Community Mgmt', 'Influencer Marketing', 'Trend Analysis'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-2--large',
+    imagePosition: 'right'
+  }, 
+  // --- GROUP 3 ---
+  {
+    id: 'content-marketing',
+    title: 'Content Marketing',
+    description: 'Attract and convert your audience with value-driven storytelling and copywriting.',
+    capabilityCount: 4,
+    tags: ['Blog Writing', 'Whitepapers', 'Case Studies', 'Copywriting'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-3--large',
+    imagePosition: 'left'
+  }, {
+    id: 'video-production',
+    title: 'Video Production',
+    description: 'Captivate your audience with high-end motion graphics and video storytelling.',
+    capabilityCount: 4,
+    tags: ['Motion Graphics', 'Video Editing', 'Scriptwriting', 'Post-Production'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-3--large',
+    imagePosition: 'right'
+  }, 
+  // --- GROUP 4 ---
+  {
+    id: 'email-marketing',
+    title: 'Email Marketing',
+    description: 'Nurture leads and retain customers with personalized automated email flows.',
+    capabilityCount: 4,
+    tags: ['Automation Flows', 'Newsletter', 'List Segmentation', 'A/B Testing'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-4--large',
+    imagePosition: 'left'
+  }, {
+    id: 'cro',
+    title: 'CRO',
+    description: 'Maximize the value of every visitor by optimizing your conversion funnels.',
+    capabilityCount: 4,
+    tags: ['User Testing', 'Heatmaps', 'Funnel Analysis', 'UX Optimization'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-4--large',
+    imagePosition: 'center'
+  }, {
+    id: 'data-analytics',
+    title: 'Data Analytics',
+    description: 'Make informed decisions with custom reporting and real-time performance tracking.',
+    capabilityCount: 4,
+    tags: ['GA4 Setup', 'Looker Studio', 'Attribution Models', 'ROI Tracking'],
+    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-4--large',
+    imagePosition: 'right'
+  }
+];
 
 // Helper to determine background position based on index or prop
 const getBackgroundPosition = (position: string) => {
@@ -113,7 +126,7 @@ const getBackgroundPosition = (position: string) => {
 };
 
 export const Services = () => {
-  const [activeTab, setActiveTab] = useState(VITAL_AREAS[0].id);
+  const [activeTab, setActiveTab] = useState(SERVICES[0].id);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
 
@@ -141,15 +154,15 @@ export const Services = () => {
       // Find the card closest to the center
       let closestCardId = activeTab;
       let minDistance = Infinity;
-      VITAL_AREAS.forEach(area => {
-        const card = document.getElementById(`card-${area.id}`);
+      SERVICES.forEach(service => {
+        const card = document.getElementById(`card-${service.id}`);
         if (card) {
           const rect = card.getBoundingClientRect();
           const cardCenter = rect.left + rect.width / 2;
           const distance = Math.abs(cardCenter - containerCenter);
           if (distance < minDistance && distance < rect.width) {
             minDistance = distance;
-            closestCardId = area.id;
+            closestCardId = service.id;
           }
         }
       });
@@ -186,43 +199,61 @@ export const Services = () => {
     <div className="w-full bg-[#FCF9F4] min-h-screen py-20 px-4 md:px-8 font-sans text-neutral-900 selection:bg-neutral-200">
       <div className="max-w-6xl mx-auto">
         
-        {/* Header Section - Matched to Bento Header */}
+        {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
-               Vital Analysis
+               Digital Ecosystem
             </span>
             <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-5xl">
-              Insights into <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#9E4952] via-[#B76D57] to-[#DC926E] pb-2">
-                10 vital areas
-              </span>{" "}
+              Specialized in <br />
+              <motion.span
+                initial={{ backgroundPosition: "400% 50%" }}
+                animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                transition={{
+                  duration: 12,
+                  ease: "linear",
+                  repeat: Infinity
+                }}
+                style={{
+                  display: "inline-block",
+                  backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                  backgroundSize: "400% 100%",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  color: "transparent"
+                }}
+              >
+                10 vital services
+              </motion.span>
+              {" "}
             </h2>
           </div>
           <div className="lg:w-[427px] lg:ml-auto lg:pb-4">
             <p className="text-sm font-semibold uppercase tracking-wide text-neutral-900 mb-2">
-              Measure what matters.
+              Transform your business.
             </p>
             <p className="text-sm leading-relaxed text-neutral-600 md:text-base">
-              Gain a holistic, in-depth view of how your heart, metabolism, and vital systems work together.
+              From initial strategy to final conversion, we cover every aspect of the digital landscape to ensure sustainable growth and measurable results.
             </p>
           </div>
         </div>
 
-        {/* Tabs Navigation - Matched to Bento Meta/Tags */}
+        {/* Tabs Navigation */}
         <div className="relative mb-12">
           <div ref={tabsContainerRef} className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right" style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none'
         }}>
-            {VITAL_AREAS.map(area => (
-              <button key={area.id} id={`tab-${area.id}`} onClick={() => scrollToCard(area.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === area.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
-                {activeTab === area.id && <motion.div layoutId="activeTab" className="absolute inset-0 bg-white rounded-full shadow-[0_6px_16px_rgba(0,0,0,0.08)] -z-10" transition={{
+            {SERVICES.map(service => (
+              <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
+                {activeTab === service.id && <motion.div layoutId="activeTab" className="absolute inset-0 bg-white rounded-full shadow-[0_6px_16px_rgba(0,0,0,0.08)] -z-10" transition={{
               type: "spring",
               bounce: 0.2,
               duration: 0.6
             }} />}
-                {area.title}
+                {service.title}
               </button>
             ))}
             {/* Background track for tabs */}
@@ -235,14 +266,14 @@ export const Services = () => {
         scrollbarWidth: 'none',
         msOverflowStyle: 'none'
       }}>
-          {VITAL_AREAS.map(area => (
-            <div key={area.id} id={`card-${area.id}`} className="flex-shrink-0 snap-start w-[345px] sm:w-[380px] md:w-[440px]">
+          {SERVICES.map(service => (
+            <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[345px] sm:w-[380px] md:w-[440px]">
               <div className="group relative h-[520px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
                 {/* Background Image */}
                 <div className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" style={{
-              backgroundImage: `url('${area.imageUrl}')`,
+              backgroundImage: `url('${service.imageUrl}')`,
               backgroundSize: 'auto 100%',
-              backgroundPosition: getBackgroundPosition(area.imagePosition || 'center'),
+              backgroundPosition: getBackgroundPosition(service.imagePosition || 'center'),
               backgroundRepeat: 'no-repeat'
             }} />
                 
@@ -250,20 +281,18 @@ export const Services = () => {
                 <div className="relative h-full flex flex-col justify-between p-6 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
                   {/* Card Header */}
                   <div className="space-y-3 pt-2">
-                    {/* Matched to Bento Main Title Style but for cards */}
                     <h3 className="text-3xl font-black tracking-tight leading-none text-white">
-                      {area.title === "Inflammation & Stress" ? <>Inflammation<br />& Stress</> : area.title}
+                      {service.title}
                     </h3>
                     <p className="text-sm leading-relaxed text-white/80 max-w-[90%]">
-                      {area.description}
+                      {service.description}
                     </p>
                   </div>
 
                   {/* Card Footer */}
                   <div className="space-y-4 pb-2">
-                    {/* Matched to Bento Small Tags */}
                     <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/90 px-1">
-                      Includes {area.biomarkerCount} biomarkers
+                      Includes {service.capabilityCount} capabilities
                     </div>
                     
                     <div className="flex flex-wrap gap-1.5">
@@ -272,7 +301,7 @@ export const Services = () => {
                         <Check className="w-3.5 h-3.5 text-white" strokeWidth={2} />
                       </div>
                       
-                      {area.biomarkers.map((tag, idx) => (
+                      {service.tags.map((tag, idx) => (
                         <span key={idx} className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md border border-white/10 text-white">
                           {tag}
                         </span>
@@ -290,7 +319,7 @@ export const Services = () => {
         {/* Bottom CTA */}
         <div className="flex justify-center mt-8 md:mt-16 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
-            <span className="text-xs font-semibold uppercase tracking-wide">Meet the biomarkers</span>
+            <span className="text-xs font-semibold uppercase tracking-wide">Explore services</span>
             <div className="w-6 h-6 bg-neutral-900 rounded-full flex items-center justify-center text-white transition-transform duration-300 group-hover:translate-x-1">
               <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
             </div>
