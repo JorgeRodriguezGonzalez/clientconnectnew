@@ -279,7 +279,7 @@ export const Services = () => {
         </div>
 
         {/* 2. Tabs (Centrado) */}
-        <div className="relative mb-12" style={{ marginLeft: '2vw' }}>
+        <div className="relative mb-12" style={{ marginLeft: '0vw' }}>
           <div 
             ref={tabsContainerRef} 
             className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right scrollbar-hide"
