@@ -143,11 +143,8 @@ export const Services = () => {
       }
     };
 
-    // Calcular al montar y en resize
     calculatePadding();
     window.addEventListener('resize', calculatePadding);
-    
-    // Pequeño delay para asegurar que todo está renderizado
     const timer = setTimeout(calculatePadding, 100);
 
     return () => {
@@ -156,58 +153,31 @@ export const Services = () => {
     };
   }, []);
 
-  // Inyectar estilos para scrollbar oculta y animaciones
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const id = "bento-services-styles";
-    if (document.getElementById(id)) return;
-    const style = document.createElement("style");
-    style.id = id;
-    style.innerHTML = `
-      @keyframes bento2-gradient-fade1 { 0%, 10% { opacity: 0.5; } 26.67%, 73.33% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
-      @keyframes bento2-gradient-fade2 { 0%, 10% { opacity: 0; } 26.67%, 50% { opacity: 0.5; } 69.05%, 100% { opacity: 0; } }
-      @keyframes bento2-gradient-fade3 { 0%, 50% { opacity: 0; } 69.05%, 73.81% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
-      
-      /* Ocultar Scrollbar agresivamente */
-      .scrollbar-hide::-webkit-scrollbar { display: none !important; }
-      .scrollbar-hide { -ms-overflow-style: none !important; scrollbar-width: none !important; }
-      
-      /* Ocultar SOLO la barra de scroll horizontal visible, pero permitir el scroll */
-      html::-webkit-scrollbar-track { background: transparent; }
-      html::-webkit-scrollbar-thumb { background: transparent; }
-      html::-webkit-scrollbar { height: 0px !important; }
-      body::-webkit-scrollbar { height: 0px !important; }
-      #root::-webkit-scrollbar { height: 0px !important; }
-    `;
-    document.head.appendChild(style);
-  }, []);
+  // NOTA: He eliminado el useEffect que inyectaba estilos y lo he movido a una etiqueta <style> abajo
+  // para garantizar que funcione en todos los navegadores.
 
   const scrollToCard = (id: string) => {
     setActiveTab(id);
     const element = document.getElementById(`card-${id}`);
     if (element && scrollContainerRef.current) {
-      // Ajuste simple: centrar el elemento o llevarlo al inicio
       const elementLeft = element.offsetLeft;
       scrollContainerRef.current.scrollTo({
-        left: elementLeft - 20, // Un pequeño offset visual
+        left: elementLeft - 20,
         behavior: 'smooth'
       });
     }
   };
 
-  // Sincronización de scroll
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
       const container = scrollContainerRef.current;
-      // Aproximación del centro
       const containerCenter = container.scrollLeft + container.offsetWidth / 2;
 
       let closestCardId = activeTab;
       let minDistance = Infinity;
       SERVICES.forEach(service => {
         const card = document.getElementById(`card-${service.id}`);
-        // Usamos offsetLeft para la posición relativa dentro del contenedor scrollable
         if (card) {
           const cardCenter = card.offsetLeft + card.offsetWidth / 2;
           const distance = Math.abs(cardCenter - containerCenter);
@@ -241,8 +211,33 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200" style={{ marginLeft: '8vw' }}>
+    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200" style={{ marginLeft: '8vw', overflowX: 'hidden' }}>
       
+      {/* 
+        ESTILOS CSS FORZADOS PARA OCULTAR BARRAS DE SCROLL 
+        Esto funciona mejor que la inyección por JS o clases de Tailwind
+      */}
+      <style>{`
+        /* Chrome, Safari, Edge */
+        .hide-scroll::-webkit-scrollbar {
+          display: none !important;
+          width: 0 !important;
+          height: 0 !important;
+          background: transparent !important;
+        }
+        
+        /* Firefox & Standard */
+        .hide-scroll {
+          -ms-overflow-style: none !important;  /* IE and Edge */
+          scrollbar-width: none !important;     /* Firefox */
+        }
+
+        /* Animaciones */
+        @keyframes bento2-gradient-fade1 { 0%, 10% { opacity: 0.5; } 26.67%, 73.33% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
+        @keyframes bento2-gradient-fade2 { 0%, 10% { opacity: 0; } 26.67%, 50% { opacity: 0.5; } 69.05%, 100% { opacity: 0; } }
+        @keyframes bento2-gradient-fade3 { 0%, 50% { opacity: 0; } 69.05%, 73.81% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
+      `}</style>
+
       {/* 1. Header (Centrado) */}
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
@@ -289,7 +284,7 @@ export const Services = () => {
         <div className="relative mb-12" style={{ marginLeft: '0vw' }}>
           <div 
             ref={tabsContainerRef} 
-            className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right scrollbar-hide"
+            className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right hide-scroll" // Añadida clase hide-scroll
           >
             {SERVICES.map(service => (
               <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
@@ -314,10 +309,10 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 3. CAROUSEL (Full Width con Padding Lateral) */}
+      {/* 3. CAROUSEL */}
       <div 
         ref={scrollContainerRef} 
-        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full scrollbar-hide"
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll" // Añadida clase hide-scroll
         style={{ 
           paddingLeft: carouselPadding,
           paddingRight: '2rem'
@@ -374,11 +369,10 @@ export const Services = () => {
             </div>
           </div>
         ))}
-        {/* Spacer at the end */}
         <div className="flex-shrink-0 w-4 md:w-8" /> 
       </div>
 
-      {/* 4. CTA (Centrado) */}
+      {/* 4. CTA */}
       <div className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
         <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
