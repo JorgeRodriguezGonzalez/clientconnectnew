@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -129,11 +129,22 @@ export const Services = () => {
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
+  // --- NUEVA LÓGICA DE FRAMER MOTION PARA EL PADDING ---
+  const { scrollX } = useScroll({ container: scrollContainerRef });
+  
+  // Transforma el scroll: cuando el usuario scrollea de 0px a 400px, 
+  // el padding pasa del valor calculado (paddingLeft) a 0.
+  const animatedPadding = useTransform(
+    scrollX, 
+    [0, 400], 
+    [paddingLeft, 0]
+  );
+  // -----------------------------------------------------
+
   useEffect(() => {
     const calculatePadding = () => {
       if (headerRef.current) {
         const rect = headerRef.current.getBoundingClientRect();
-        // rect.left será correcto incluso con el padding del padre
         setPaddingLeft(rect.left);
       }
     };
@@ -153,7 +164,7 @@ export const Services = () => {
     const card = document.getElementById(`card-${id}`);
     
     if (card && scrollContainerRef.current) {
-      // Usamos offsetLeft y restamos un pequeño margen para asegurar la alineación visual
+      // Ajustamos el scroll considerando que el padding dinámico afecta la posición visual
       const scrollPos = card.offsetLeft;
       
       scrollContainerRef.current.scrollTo({
@@ -173,11 +184,9 @@ export const Services = () => {
       let closestCardId = activeTab;
       let minDistance = Infinity;
 
-      // Buscamos la tarjeta cuyo borde izquierdo esté más cerca del borde izquierdo del scroll
       SERVICES.forEach(service => {
         const card = document.getElementById(`card-${service.id}`);
         if (card) {
-          // La distancia física absoluta entre el inicio de la tarjeta y el inicio del scroll
           const distance = Math.abs(card.offsetLeft - scrollPosition);
           
           if (distance < minDistance) {
@@ -214,10 +223,6 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    // CORRECCIÓN PRINCIPAL:
-    // 1. Eliminado 'marginLeft: 8vw' del estilo.
-    // 2. Añadido 'pl-[8vw]' en className (padding en lugar de margin evita el overflow).
-    // 3. 'overflow-x-hidden' asegura que no haya scroll global.
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden pl-[8vw]">
       
       <style>{`
@@ -298,15 +303,13 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* CAROUSEL */}
-      <div 
+      {/* CAROUSEL - CAMBIADO A MOTION.DIV Y PADDING ANIMADO */}
+      <motion.div 
         ref={scrollContainerRef} 
         className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
         style={{ 
-          // paddingLeft dinámico calculado con JS para alinear con el título
-          paddingLeft: `${paddingLeft}px`,
-          // CORRECCIÓN FINAL CARD: Aumentado a 85vw para garantizar que el último elemento
-          // pueda llegar hasta el extremo izquierdo de la pantalla.
+          // paddingLeft ahora es dinámico: comienza igualado al título y termina en 0
+          paddingLeft: animatedPadding,
           paddingRight: '85vw' 
         }}
       >
@@ -356,7 +359,7 @@ export const Services = () => {
             </div>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {/* CTA */}
       <div className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
