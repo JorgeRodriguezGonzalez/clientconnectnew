@@ -18,13 +18,16 @@ type ServiceItem = {
 
 // IMÁGENES PANORÁMICAS (Wide aspect ratio)
 const PANORAMIC_IMAGES = {
-  // Grupo 1: Strategy & Branding
+  // Grupo 1: Strategy & Branding (Team/Planning) - Mantenida
   strategy: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop",
-  // Grupo 2: Traffic
-  traffic: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2600&auto=format&fit=crop",
-  // Grupo 3: Creative
-  creative: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2600&auto=format&fit=crop",
-  // Grupo 4: Data & Retention
+  
+  // Grupo 2 (NUEVA): Traffic (Abstract Digital/Connection/Speed)
+  traffic: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2600&auto=format&fit=crop",
+  
+  // Grupo 3 (NUEVA): Creative (Studio/Camera/Lighting dark vibe)
+  creative: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2600&auto=format&fit=crop",
+  
+  // Grupo 4: Data & Retention (Abstract Network) - Mantenida
   data: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2600&auto=format&fit=crop", 
 };
 
@@ -51,7 +54,7 @@ const SERVICES: ServiceItem[] = [
     bgPosition: "100% 50%"
   }, 
   
-  // --- GROUP 2 (3 Cards) ---
+  // --- GROUP 2 (3 Cards) - NUEVA IMAGEN ---
   {
     id: 'seo',
     title: 'SEO',
@@ -81,7 +84,7 @@ const SERVICES: ServiceItem[] = [
     bgPosition: "100% 50%"
   }, 
   
-  // --- GROUP 3 (2 Cards) ---
+  // --- GROUP 3 (2 Cards) - NUEVA IMAGEN ---
   {
     id: 'content-marketing',
     title: 'Content Marketing',
@@ -138,7 +141,6 @@ export const Services = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
 
-  // Inject styles for the Bento animations
   useEffect(() => {
     if (typeof document === "undefined") return;
     const id = "bento-gradients-services";
@@ -182,14 +184,12 @@ export const Services = () => {
     }
   };
 
-  // Update active tab on scroll
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
       const container = scrollContainerRef.current;
       const containerCenter = container.getBoundingClientRect().left + container.offsetWidth / 2;
 
-      // Find the card closest to the center
       let closestCardId = activeTab;
       let minDistance = Infinity;
       SERVICES.forEach(service => {
@@ -207,7 +207,6 @@ export const Services = () => {
       if (closestCardId !== activeTab) {
         setActiveTab(closestCardId);
 
-        // Also scroll the tab into view
         const tabBtn = document.getElementById(`tab-${closestCardId}`);
         if (tabBtn && tabsContainerRef.current) {
           tabBtn.scrollIntoView({
@@ -223,7 +222,6 @@ export const Services = () => {
       container.addEventListener('scroll', handleScroll, {
         passive: true
       });
-      // Initial check
       handleScroll();
     }
     return () => {
@@ -287,7 +285,6 @@ export const Services = () => {
             {SERVICES.map(service => (
               <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
                 
-                {/* Active Tab Background with Bento Animation */}
                 {activeTab === service.id && (
                   <motion.div 
                     layoutId="activeTab" 
@@ -295,8 +292,6 @@ export const Services = () => {
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   >
                     <div className="absolute inset-0 bg-white" />
-                    
-                    {/* Animated Gradients */}
                     <div
                       className="absolute inset-0"
                       style={{ 
@@ -330,11 +325,8 @@ export const Services = () => {
         {/* Carousel Section Container */}
         <div className="relative -mx-4 md:-mx-8">
           
-          {/* Glass Blur Morph - Left Side */}
-          <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 z-20 bg-gradient-to-r from-white via-white/80 to-transparent backdrop-blur-[2px] pointer-events-none" />
-          
-          {/* Glass Blur Morph - Right Side */}
-          <div className="absolute right-0 top-0 bottom-0 w-12 md:w-24 z-20 bg-gradient-to-l from-white via-white/80 to-transparent backdrop-blur-[2px] pointer-events-none" />
+          {/* Glass Blur Morph - Right Side Only (Narrower & Softer) */}
+          <div className="absolute right-0 top-0 bottom-0 w-16 z-20 bg-gradient-to-l from-white via-white/50 to-transparent backdrop-blur-[1px] pointer-events-none" />
 
           {/* Scrolling Container */}
           <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-12 pt-4 px-4 md:px-8 snap-x snap-mandatory scrollbar-hide" style={{
@@ -356,7 +348,7 @@ export const Services = () => {
                     }} 
                   />
                   
-                  {/* NEW: Dark Overlay for better text contrast */}
+                  {/* Dark Overlay for better text contrast */}
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
                   
                   {/* Content Overlay */}
@@ -366,7 +358,8 @@ export const Services = () => {
                       <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
                         {service.title}
                       </h3>
-                      <p className="text-xs leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
+                      {/* Font size increased to text-sm (+2px approx from xs) */}
+                      <p className="text-sm leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
                         {service.description}
                       </p>
                     </div>
@@ -378,7 +371,6 @@ export const Services = () => {
                       </div>
                       
                       <div className="flex flex-wrap gap-1">
-                        {/* Check Icon Circle */}
                         <div className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center mr-1 border border-white/20">
                           <Check className="w-3 h-3 text-white" strokeWidth={2} />
                         </div>
@@ -394,7 +386,6 @@ export const Services = () => {
                 </div>
               </div>
             ))}
-            {/* Spacer to allow last card to be centered/visible properly if needed */}
             <div className="flex-shrink-0 w-4 md:w-8" /> 
           </div>
         </div>
