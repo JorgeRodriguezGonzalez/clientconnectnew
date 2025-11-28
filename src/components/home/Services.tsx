@@ -152,8 +152,12 @@ export const Services = () => {
     const card = document.getElementById(`card-${id}`);
     
     if (card && scrollContainerRef.current) {
-      // AJUSTE SCROLL: Restamos 20px para que la tarjeta no quede oculta bajo el blur
-      const scrollPos = card.offsetLeft - 20;
+      // CORRECCIÓN SCROLL CLICK:
+      // Si es el primer elemento, vamos a 0 para preservar el margen visible de 20px.
+      // Si no, alineamos la tarjeta con el inicio del contenedor (offsetLeft).
+      const isFirst = id === SERVICES[0].id;
+      const scrollPos = isFirst ? 0 : card.offsetLeft;
+      
       scrollContainerRef.current.scrollTo({
         left: scrollPos, 
         behavior: 'smooth'
@@ -171,11 +175,13 @@ export const Services = () => {
       let closestCardId = activeTab;
       let minDistance = Infinity;
 
-      SERVICES.forEach(service => {
+      SERVICES.forEach((service, index) => {
         const card = document.getElementById(`card-${service.id}`);
         if (card) {
-          // Ajustamos la detección restando también los 20px para mayor precisión
-          const distance = Math.abs((card.offsetLeft - 20) - scrollPosition);
+          // Ajuste de lógica para considerar el margen en el primer elemento
+          // offsetLeft ya incluye el margen si está aplicado al elemento
+          let distance = Math.abs(card.offsetLeft - scrollPosition);
+          
           if (distance < minDistance) {
             minDistance = distance;
             closestCardId = service.id;
@@ -300,16 +306,20 @@ export const Services = () => {
           ref={scrollContainerRef} 
           className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
           style={{ 
-            // AJUSTE PADDING: Añadimos +20px para crear el espacio solicitado
-            paddingLeft: `${paddingLeft + 20}px`,
+            // Restaurado el padding normal. El margen de la tarjeta hace el trabajo extra.
+            paddingLeft: `${paddingLeft}px`,
             paddingRight: '85vw' 
           }}
         >
-          {SERVICES.map((service) => (
+          {SERVICES.map((service, index) => (
             <div 
               key={service.id} 
               id={`card-${service.id}`} 
-              className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
+              className={cn(
+                "flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]",
+                // CORRECCIÓN CLAVE: Margen izquierdo SOLO en la primera tarjeta
+                index === 0 && "ml-[20px]"
+              )}
             >
               <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
                 <div 
