@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Connect Australia - Facebook Ads Strategy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+        }
+
+        .presentation {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 12px;
+            padding: 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 2px solid #f0f0f0;
+        }
+
+        .slide-title {
+            font-size: 2.5em;
+            color: #00897b;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #ff6f61;
+            padding-bottom: 20px;
+        }
+
+        .slide-subtitle {
+            font-size: 1.8em;
+            color: #26a69a;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .slide-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: #fff8e1;
+            border-left: 5px solid #ff6f61;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        .quote-box {
+            background: #e0f2f1;
+            border-left: 5px solid #26a69a;
+            padding: 25px;
+            margin: 25px 0;
+            font-style: italic;
+            border-radius: 5px;
+            font-size: 1.15em;
+        }
+
+        .success-box {
+            background: #e0f7fa;
+            border-left: 5px solid #00acc1;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .title-slide {
+            background: linear-gradient(135deg, #26a69a 0%, #00897b 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .title-slide .slide-title {
+            color: white;
+            border-bottom: 4px solid #ff6f61;
+            font-size: 3.5em;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #fff8e1;
+        }
+
+        .step-number {
+            background: #ff6f61;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .metric {
+            display: inline-block;
+            background: #26a69a;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 5px;
+            font-weight: 600;
+        }
+
+        strong {
+            color: #00897b;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .column {
+            padding: 20px;
+        }
+
+        em {
+            color: #ff6f61;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+
+            .slide-title {
+                font-size: 2em;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        
+        <!-- Title Slide -->
+        <div class="slide title-slide">
+            <h1 class="slide-title">Facebook Ads Strategy</h1>
+            <p class="subtitle">For Client Connect Australia</p>
+            <p class="subtitle">Marketing Agency Built by Tradies, for Tradies</p>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">1</span>Hyper-Segmented Conversion Campaigns by Trade Type</h2>
+            <div class="slide-content">
+                <p><strong>Create separate campaigns for each niche:</strong></p>
+                <ul>
+                    <li>Pool builders</li>
+                    <li>Fence contractors</li>
+                    <li>Pergola builders</li>
+                    <li>Bathroom renovators</li>
+                    <li>Deck builders</li>
+                    <li>Landscapers</li>
+                    <li>Roofers</li>
+                    <li>Carpenters</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h3 class="slide-subtitle">Detailed Targeting:</h3>
+                    <ul>
+                        <li><strong>Interests:</strong> Business management, Small business, Entrepreneurship</li>
+                        <li><strong>Behaviors:</strong> Small business owners</li>
+                        <li><strong>Pages they follow:</strong> Material suppliers (Bunnings Trade, Reece, etc.), tradie associations</li>
+                        <li><strong>Job titles:</strong> Owner, Director, Manager + specific trade type</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">2</span>Implement the Pixel and Track Key Events</h2>
+            <div class="slide-content">
+                <p><strong>Set up conversions for:</strong></p>
+                <ul>
+                    <li>Free audit request</li>
+                    <li>Case study download</li>
+                    <li>Call scheduled</li>
+                    <li>Contact form completed</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>Proper tracking is essential to identify which audiences and creatives are actually driving qualified leads, not just clicks.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">3</span>Creatives That Speak THEIR Language</h2>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <h3 class="slide-subtitle">Your Unique Advantage:</h3>
+                    <p>You're still tradies who run a roofing business - you know their real pain points because you're living them</p>
+                </div>
+
+                <h3 class="slide-subtitle">Winning Creative Angles:</h3>
+                
+                <div class="quote-box">
+                    <p>"We're tradies just like you. Started as home builders and chippies, now we run a roofing business. A few years back, we spent $15K with a marketing agency that had never been on the tools. Three months later: 2 shithouse leads.</p>
+                    <p style="margin-top: 15px;">Now we help tradies like us get 20-30 qualified leads per month - while still running our roofing company. Because we understand your client isn't just anyone - whether it's someone with $15K for a new roof or $80K for a pool, we know how to find them."</p>
+                </div>
+
+                <div class="quote-box">
+                    <p><strong>Alternative angle:</strong></p>
+                    <p>"We're not ex-tradies who left the tools behind. We're home builders and carpenters who now run a roofing business AND help other tradies get leads. We learned marketing because agencies kept ripping us off. Now we do both - and we only work with tradies because we ARE tradies."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 Continued - Content Formats -->
+        <div class="slide">
+            <h2 class="slide-title">Content Formats</h2>
+            <div class="slide-content">
+                <ul>
+                    <li><strong>Video testimonial:</strong> You or your partner on site at your roofing job or in the workshop - showing you're STILL tradies (authenticity is everything)</li>
+                    <li><strong>Before/after carousel:</strong> Show real client results (lead dashboard, ROI, closed projects)</li>
+                    <li><strong>Video case study:</strong> "How we helped [Name] Fencing go from 3 to 18 jobs per month"</li>
+                    <li><strong>Meme/text image:</strong> "Your marketing agency: 'We need to do brand awareness' / You: 'Mate, I need jobs for next week, not likes on Instagram'"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">4</span>Trade-Specific Landing Pages</h2>
+            <div class="slide-content">
+                <p><strong>Don't send everyone to the same page. Create:</strong></p>
+                <ul>
+                    <li>clientconnectaustralia.com.au/pool-builders</li>
+                    <li>clientconnectaustralia.com.au/roofers</li>
+                    <li>clientconnectaustralia.com.au/bathroom-renovators</li>
+                </ul>
+
+                <h3 class="slide-subtitle">Specific Language for Each:</h3>
+                <ul>
+                    <li><strong>Pool builders:</strong> "Leads who actually want to spend $50K-100K on a pool"</li>
+                    <li><strong>Roofers:</strong> "Homeowners ready to spend $10K-25K on a roof replacement, not tyre kickers"</li>
+                    <li><strong>Bathroom renovators:</strong> "Qualified leads for $15K-40K bathroom renos"</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h3 class="slide-subtitle">Include:</h3>
+                    <ul>
+                        <li>Testimonials from OTHER tradies in that specific industry</li>
+                        <li>Case studies with real numbers</li>
+                        <li>"We're still tradies running our own roofing business" founder story</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">5</span>Identify Which Type of Tradie Converts Best</h2>
+            <div class="slide-content">
+                <p><strong>After 3-4 weeks, analyze:</strong></p>
+                <ul>
+                    <li>Do pool builders have better LTV than roofers?</li>
+                    <li>Which industry has the best close rate?</li>
+                    <li>Which age ranges/locations convert best?</li>
+                    <li>Are certain trades more profitable for you?</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>This data will inform where you double down your ad spend and which trades to prioritize in your scaling efforts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">6</span>Powerful Retargeting with Social Proof</h2>
+            <div class="slide-content">
+                <h3 class="slide-subtitle">Create Audiences Of:</h3>
+                <ul>
+                    <li>Those who watched 50%+ of your founder story video</li>
+                    <li>Visitors to specific case study pages</li>
+                    <li>Engagement with posts about "agencies that don't understand tradies"</li>
+                    <li>People who've interacted with your "still on the tools" content</li>
+                </ul>
+
+                <h3 class="slide-subtitle">Retargeting Ads:</h3>
+                <ul>
+                    <li>Video testimonials from tradie clients in different industries</li>
+                    <li>"Free audit of your current ads - we'll show you where you're losing money (we've seen it all, we're tradies too)"</li>
+                    <li>"We're still running our roofing business while helping other tradies get jobs. Here's how."</li>
+                    <li>Detailed case study in downloadable PDF</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">7</span>Scale with Advantage+ Towards Lookalikes</h2>
+            <div class="slide-content">
+                <p>Once you identify your best clients (e.g., pool builders in QLD with $70K average ticket, or roofers in NSW doing insurance work), create:</p>
+                
+                <ul>
+                    <li>Lookalike 1-3% of paying clients</li>
+                    <li>Lookalike of clients with best LTV</li>
+                    <li>Lookalike segmented by trade type</li>
+                    <li>Advantage+ campaigns that find more like them</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>Advantage+ uses machine learning to find users similar to your best converters across all Meta properties (Facebook, Instagram, Messenger, Audience Network), optimizing automatically towards quality conversions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 8 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">8</span>Organic Content That Builds Authority</h2>
+            <div class="slide-content">
+                <p><strong>Post content that proves you KNOW the tradie life because you're LIVING IT:</strong></p>
+                
+                <h3 class="slide-subtitle">Content Ideas:</h3>
+                <ul>
+                    <li>"3 mistakes fence contractors make on Facebook Ads (and how we fix them)"</li>
+                    <li>"Why your current agency doesn't understand the difference between a $5K deck job and a $60K pool project"</li>
+                    <li>Short videos from your roofing jobs showing you're still on the tools</li>
+                    <li>"What we learned about marketing while still running our roofing business"</li>
+                    <li>Behind-the-scenes of you at a roofing job in the morning, then reviewing a client's leads in the arvo</li>
+                    <li>"Red flags your marketing agency has never worked with tradies" (e.g., they talk about 'brand awareness' when you need jobs next week)</li>
+                    <li>Photos/videos in work gear with caption: "Morning: on the roof. Afternoon: getting our clients more roofing jobs"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 9 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">9</span>Test Creative Angles Around Your Unique Story</h2>
+            <div class="slide-content">
+                <h3 class="slide-subtitle">Founder Story Angles to Test:</h3>
+                
+                <div class="quote-box">
+                    <p>"We're home builders and carpenters who now run a roofing business. And yeah, we also do marketing for tradies."</p>
+                </div>
+
+                <div class="quote-box">
+                    <p>"Most marketers have never held a spirit level. We're literally on roofs every week. That's the difference."</p>
+                </div>
+
+                <div class="quote-box">
+                    <p>"We started Client Connect because agencies kept ripping us off. Now we run our roofing business AND help other tradies - because we get it"</p>
+                </div>
+
+                <ul>
+                    <li>Split screen: You on a job site / You checking client lead dashboards</li>
+                    <li>"Still tradies. Just tradies who learned marketing the hard way."</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Step 10 -->
+        <div class="slide">
+            <h2 class="slide-title"><span class="step-number">10</span>Monthly Creative Testing (20+ Variations)</h2>
+            <div class="slide-content">
+                <p><strong>Test combinations of:</strong></p>
+                <ul>
+                    <li>Different "still on the tools" angles</li>
+                    <li>Industry-specific pain points</li>
+                    <li>Client testimonials (video + text)</li>
+                    <li>Results screenshots (actual dashboards, lead notifications)</li>
+                    <li>Memes about marketers who've never been tradies</li>
+                    <li>Educational content about lead quality vs. quantity</li>
+                    <li>Behind-the-scenes of your roofing work + marketing work</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>Constant creative testing is essential. The market fatigues quickly, and what works this month might not work next month. Always be testing new angles.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Realistic Numbers -->
+        <div class="slide">
+            <h2 class="slide-title">Realistic Numbers to Expect</h2>
+            <div class="slide-content">
+                <div class="success-box">
+                    <h3 class="slide-subtitle">Cost Per Lead:</h3>
+                    <p><span class="metric">Cold audiences: $15-30 per qualified lead</span></p>
+                    <p><span class="metric">Retargeting: $5-12 per qualified lead</span></p>
+                </div>
+
+                <div class="success-box">
+                    <h3 class="slide-subtitle">Return on Investment:</h3>
+                    <p><span class="metric">Target ROI: Every $1 invested = $3-5 in client fees</span></p>
+                </div>
+
+                <div class="success-box">
+                    <h3 class="slide-subtitle">Client Strategy:</h3>
+                    <p><span class="metric">Client LTV: Focus on trades with higher ticket items (pools, major renos) for better LTV</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Message -->
+        <div class="slide">
+            <h2 class="slide-title">Your Core Differentiating Message</h2>
+            <div class="slide-content">
+                <div class="quote-box" style="font-size: 1.3em; padding: 40px;">
+                    <p>"We're not marketers pretending to understand tradies. We ARE tradies. We were home builders and carpenters, now we run a roofing business. We learned marketing because agencies kept ripping us off, and now we help other tradies get quality leads - while still being on the tools ourselves. We speak your language because we live your life."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bonus Section -->
+        <div class="slide">
+            <h2 class="slide-title">Bonus: Leverage That You're STILL Active Tradies</h2>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <p><strong>This is your MASSIVE differentiator:</strong></p>
+                </div>
+
+                <ul>
+                    <li>Show photos/videos of you actually working on roofing jobs</li>
+                    <li>Post about tradie problems you're experiencing RIGHT NOW (material delays, weather issues, difficult clients)</li>
+                    <li>Reference your current roofing work in client calls: "Mate, I was on a job this morning dealing with the same council bullshit"</li>
+                    <li>Create content comparing your day: "6am-12pm: Roofing job. 1pm-5pm: Getting leads for clients"</li>
+                    <li>This builds INSTANT trust - you're not some suit who used to be a tradie, you're a tradie who happens to also do marketing</li>
+                </ul>
+
+                <div class="success-box">
+                    <p style="font-size: 1.2em; font-weight: 600;">You're not ex-tradies turned marketers. You're tradies who also do marketing. That's the golden difference that no other agency can claim.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Slide -->
+        <div class="slide">
+            <h2 class="slide-title">Strategy Summary</h2>
+            <div class="slide-content">
+                <div class="two-column">
+                    <div class="column">
+                        <h3 class="slide-subtitle">Campaign Structure:</h3>
+                        <ul>
+                            <li>Hyper-segmented by trade type</li>
+                            <li>Trade-specific landing pages</li>
+                            <li>Proper conversion tracking</li>
+                            <li>Data-driven optimization</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3 class="slide-subtitle">Creative Approach:</h3>
+                        <ul>
+                            <li>Authentic founder story</li>
+                            <li>"Still on the tools" messaging</li>
+                            <li>20+ creative tests monthly</li>
+                            <li>Industry-specific pain points</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="column">
+                        <h3 class="slide-subtitle">Scaling Strategy:</h3>
+                        <ul>
+                            <li>Powerful retargeting</li>
+                            <li>Lookalike audiences</li>
+                            <li>Advantage+ campaigns</li>
+                            <li>Continuous testing</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3 class="slide-subtitle">Authority Building:</h3>
+                        <ul>
+                            <li>Organic content strategy</li>
+                            <li>Behind-the-scenes footage</li>
+                            <li>Client success stories</li>
+                            <li>Educational posts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Slide -->
+        <div class="slide title-slide">
+            <h2 class="slide-title">Ready to Get Started?</h2>
+            <p class="subtitle" style="font-size: 1.8em; margin-top: 40px;">Client Connect Australia</p>
+            <p class="subtitle">Tradies Marketing for Tradies</p>
+            <p class="subtitle" style="margin-top: 60px; font-size: 1.3em;">Because we're not just marketers.<br>We're tradies who get it.</p>
+        </div>
+
+    </div>
+</body>
+</html>
