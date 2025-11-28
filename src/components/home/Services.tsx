@@ -160,6 +160,20 @@ export const Services = () => {
         69.05%, 73.81% { opacity: 0.5; }
         88.1%, 100% { opacity: 0; }
       }
+      
+      /* Dynamic Padding Calculation */
+      .carousel-container {
+        padding-left: 1rem; /* Fallback for mobile (px-4) */
+      }
+      @media (min-width: 768px) {
+        .carousel-container {
+          /* 
+             Logic: (Viewport Width - Container Max Width) / 2 + Container Padding 
+             (100vw - 72rem) / 2 + 2rem
+          */
+          padding-left: max(2rem, calc((100vw - 72rem) / 2 + 2rem));
+        }
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -304,29 +318,15 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 2. FULL WIDTH CAROUSEL */}
-      {/* 
-          Logic: 
-          - We use 'w-full' to span the whole screen.
-          - We calculate 'padding-left' to align the first card with the 'max-w-6xl' container above.
-          - max-w-6xl is 72rem (1152px).
-          - Padding logic: max(standard_padding, (viewport_width - container_width) / 2 + standard_padding)
-      */}
+      {/* 2. FULL WIDTH CAROUSEL with DYNAMIC PADDING */}
       <div 
         ref={scrollContainerRef} 
-        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide"
+        className="carousel-container flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          // Mobile/Tablet padding (matching px-4 / px-8)
-          // Desktop calculation: (100vw - 72rem) / 2 + 2rem (px-8)
-          paddingLeft: 'max(1rem, calc((100vw - 72rem) / 2 + 1rem))',
         }}
       >
-        {/* Helper class for responsive adjustment on bigger screens if style above needs overrides, 
-            but inline style is robust here for the calc */}
-        <div className="hidden md:block" style={{ display: 'none', paddingLeft: 'max(2rem, calc((100vw - 72rem) / 2 + 2rem))' }}></div> 
-
         {SERVICES.map(service => (
           <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
             <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
@@ -392,22 +392,6 @@ export const Services = () => {
           </a>
         </div>
       </div>
-      
-      <style>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .mask-gradient-right {
-          mask-image: linear-gradient(to right, black 90%, transparent 100%);
-          -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-        }
-        /* Mobile override for padding if needed specifically via CSS */
-        @media (min-width: 768px) {
-          .carousel-container {
-             padding-left: max(2rem, calc((100vw - 72rem) / 2 + 2rem));
-          }
-        }
-      `}</style>
     </div>
   );
 };
