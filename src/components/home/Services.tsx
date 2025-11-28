@@ -124,25 +124,22 @@ const SERVICES: ServiceItem[] = [
 
 export const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
-  const [paddingLeft, setPaddingLeft] = useState(0); // Guardamos el valor numérico
+  const [paddingLeft, setPaddingLeft] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  // 1. Calcular padding izquierdo exacto basado en el header
   useEffect(() => {
     const calculatePadding = () => {
       if (headerRef.current) {
         const rect = headerRef.current.getBoundingClientRect();
-        // Usamos rect.left para alinear exactamente con el contenido
+        // rect.left será correcto incluso con el padding del padre
         setPaddingLeft(rect.left);
       }
     };
 
     calculatePadding();
     window.addEventListener('resize', calculatePadding);
-    
-    // Pequeño delay para asegurar que el DOM está estable
     const timer = setTimeout(calculatePadding, 100);
 
     return () => {
@@ -151,23 +148,12 @@ export const Services = () => {
     };
   }, []);
 
-  // 2. Función Click en Tab
   const scrollToCard = (id: string) => {
     setActiveTab(id);
     const card = document.getElementById(`card-${id}`);
     
     if (card && scrollContainerRef.current) {
-      // offsetLeft nos da la posición relativa al contenedor scrolleable.
-      // Al restar 'paddingLeft', nos aseguramos de que no incluya el padding 
-      // del propio contenedor en el cálculo, sino que lo alinee visualmente.
-      
-      // NOTA: Dependiendo del box-model, a veces offsetLeft empieza tras el padding.
-      // Pero para alinear a la izquierda visualmente, simplemente restamos el paddingLeft 
-      // que hemos aplicado al contenedor para "anularlo" y que el elemento quede al borde.
-      
-      // Sin embargo, como el contenedor tiene 'padding-left', el scroll 0 empieza
-      // donde empieza el padding. La forma más segura es usar offsetLeft menos el padding del contenedor.
-      
+      // Usamos offsetLeft y restamos un pequeño margen para asegurar la alineación visual
       const scrollPos = card.offsetLeft;
       
       scrollContainerRef.current.scrollTo({
@@ -177,25 +163,21 @@ export const Services = () => {
     }
   };
 
-  // 3. Detectar Scroll y Activar Tab (LÓGICA CORREGIDA: IZQUIERDA vs CENTRO)
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
       
-      // Punto de referencia: El borde izquierdo del contenedor visible + un pequeño margen de tolerancia
-      // Como el contenedor tiene padding-left, las tarjetas se "snapean" ahí.
-      // Queremos saber qué tarjeta está más cerca de esa posición visual izquierda.
       const container = scrollContainerRef.current;
       const scrollPosition = container.scrollLeft;
       
       let closestCardId = activeTab;
       let minDistance = Infinity;
 
+      // Buscamos la tarjeta cuyo borde izquierdo esté más cerca del borde izquierdo del scroll
       SERVICES.forEach(service => {
         const card = document.getElementById(`card-${service.id}`);
         if (card) {
-          // La distancia es la diferencia entre la posición de la tarjeta y el scroll actual.
-          // card.offsetLeft es la distancia física desde el borde izquierdo del contenido total.
+          // La distancia física absoluta entre el inicio de la tarjeta y el inicio del scroll
           const distance = Math.abs(card.offsetLeft - scrollPosition);
           
           if (distance < minDistance) {
@@ -208,7 +190,6 @@ export const Services = () => {
       if (closestCardId !== activeTab) {
         setActiveTab(closestCardId);
         
-        // Auto-scroll del botón de tab
         const tabBtn = document.getElementById(`tab-${closestCardId}`);
         if (tabBtn && tabsContainerRef.current) {
           tabBtn.scrollIntoView({
@@ -223,7 +204,6 @@ export const Services = () => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll, { passive: true });
-      // Disparar una vez para asegurar estado inicial
       handleScroll(); 
     }
     return () => {
@@ -234,7 +214,11 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200" style={{ marginLeft: '8vw', overflowX: 'hidden' }}>
+    // CORRECCIÓN PRINCIPAL:
+    // 1. Eliminado 'marginLeft: 8vw' del estilo.
+    // 2. Añadido 'pl-[8vw]' en className (padding en lugar de margin evita el overflow).
+    // 3. 'overflow-x-hidden' asegura que no haya scroll global.
+    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden pl-[8vw]">
       
       <style>{`
         .hide-scroll::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; background: transparent !important; }
@@ -319,11 +303,11 @@ export const Services = () => {
         ref={scrollContainerRef} 
         className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
         style={{ 
-          // Usamos el estado paddingLeft para alinear el primer elemento con el header
+          // paddingLeft dinámico calculado con JS para alinear con el título
           paddingLeft: `${paddingLeft}px`,
-          // Usamos un padding derecho MUY grande (viewport width - ancho de tarjeta aprox)
-          // para permitir que el último elemento pueda scrollear hasta el principio (izquierda).
-          paddingRight: '65vw' 
+          // CORRECCIÓN FINAL CARD: Aumentado a 85vw para garantizar que el último elemento
+          // pueda llegar hasta el extremo izquierdo de la pantalla.
+          paddingRight: '85vw' 
         }}
       >
         {SERVICES.map((service) => (
