@@ -171,6 +171,9 @@ export const Services = () => {
       /* Ocultar Scrollbar agresivamente */
       .scrollbar-hide::-webkit-scrollbar { display: none !important; }
       .scrollbar-hide { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+      
+      /* Ocultar scrollbar horizontal del body y html */
+      html, body { overflow-x: hidden !important; }
     `;
     document.head.appendChild(style);
   }, []);
@@ -237,7 +240,7 @@ export const Services = () => {
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200" style={{ marginLeft: '8vw', overflowX: 'hidden' }}>
       
       {/* 1. Header (Centrado) */}
-      <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
+      <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '-8vw' }}>
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
@@ -279,7 +282,7 @@ export const Services = () => {
         </div>
 
         {/* 2. Tabs (Centrado) */}
-        <div className="relative mb-12" style={{ marginLeft: '0vw' }}>
+        <div className="relative mb-12" style={{ marginLeft: '-8vw' }}>
           <div 
             ref={tabsContainerRef} 
             className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right scrollbar-hide"
@@ -372,7 +375,7 @@ export const Services = () => {
       </div>
 
       {/* 4. CTA (Centrado) */}
-      <div className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
+      <div className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '-8vw' }}>
         <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
             <span className="text-xs font-semibold uppercase tracking-wide">Explore services</span>
