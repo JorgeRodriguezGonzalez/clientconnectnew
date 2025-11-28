@@ -181,6 +181,7 @@ export const Services = () => {
     }
   };
 
+  // Scroll sync logic
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
@@ -203,7 +204,6 @@ export const Services = () => {
       });
       if (closestCardId !== activeTab) {
         setActiveTab(closestCardId);
-
         const tabBtn = document.getElementById(`tab-${closestCardId}`);
         if (tabBtn && tabsContainerRef.current) {
           tabBtn.scrollIntoView({
@@ -229,8 +229,10 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white min-h-screen py-20 px-4 md:px-8 font-sans text-neutral-900 selection:bg-neutral-200">
-      <div className="max-w-6xl mx-auto">
+    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-hidden">
+      
+      {/* 1. CENTERED CONTAINER: Header & Tabs */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8">
         
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
@@ -276,9 +278,9 @@ export const Services = () => {
         {/* Tabs Navigation */}
         <div className="relative mb-12">
           <div ref={tabsContainerRef} className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right" style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none'
-        }}>
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}>
             {SERVICES.map(service => (
               <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
                 
@@ -289,27 +291,9 @@ export const Services = () => {
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   >
                     <div className="absolute inset-0 bg-white" />
-                    <div
-                      className="absolute inset-0"
-                      style={{ 
-                        background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(237,191,134), transparent 72%)",
-                        animation: "bento2-gradient-fade1 10.5s ease-in-out infinite"
-                      }}
-                    />
-                    <div
-                      className="absolute inset-0"
-                      style={{ 
-                        background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(103,188,183), transparent 72%)",
-                        animation: "bento2-gradient-fade2 10.5s ease-in-out infinite"
-                      }}
-                    />
-                    <div
-                      className="absolute inset-0"
-                      style={{ 
-                        background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(148,163,184), transparent 72%)",
-                        animation: "bento2-gradient-fade3 10.5s ease-in-out infinite"
-                      }}
-                    />
+                    <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(237,191,134), transparent 72%)", animation: "bento2-gradient-fade1 10.5s ease-in-out infinite" }} />
+                    <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(103,188,183), transparent 72%)", animation: "bento2-gradient-fade2 10.5s ease-in-out infinite" }} />
+                    <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(148,163,184), transparent 72%)", animation: "bento2-gradient-fade3 10.5s ease-in-out infinite" }} />
                     <div className="absolute inset-0 rounded-full border border-neutral-200/50" />
                   </motion.div>
                 )}
@@ -318,76 +302,87 @@ export const Services = () => {
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Carousel Section Container */}
-        <div className="relative -mx-4 md:-mx-8">
-          
-          {/* Glass Blur Morph - Right Side Only (Narrow & Super Soft) */}
-          <div className="absolute right-0 top-0 bottom-0 w-8 z-20 bg-gradient-to-l from-white via-white/20 to-transparent backdrop-blur-[1px] pointer-events-none" />
+      {/* 2. FULL WIDTH CAROUSEL */}
+      {/* 
+          Logic: 
+          - We use 'w-full' to span the whole screen.
+          - We calculate 'padding-left' to align the first card with the 'max-w-6xl' container above.
+          - max-w-6xl is 72rem (1152px).
+          - Padding logic: max(standard_padding, (viewport_width - container_width) / 2 + standard_padding)
+      */}
+      <div 
+        ref={scrollContainerRef} 
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide"
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          // Mobile/Tablet padding (matching px-4 / px-8)
+          // Desktop calculation: (100vw - 72rem) / 2 + 2rem (px-8)
+          paddingLeft: 'max(1rem, calc((100vw - 72rem) / 2 + 1rem))',
+        }}
+      >
+        {/* Helper class for responsive adjustment on bigger screens if style above needs overrides, 
+            but inline style is robust here for the calc */}
+        <div className="hidden md:block" style={{ display: 'none', paddingLeft: 'max(2rem, calc((100vw - 72rem) / 2 + 2rem))' }}></div> 
 
-          {/* Scrolling Container */}
-          <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-12 pt-4 px-4 md:px-8 snap-x snap-mandatory scrollbar-hide" style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
-          }}>
-            {SERVICES.map(service => (
-              <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
-                <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
+        {SERVICES.map(service => (
+          <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
+            <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
+              
+              {/* Background Image with Panoramic Split */}
+              <div 
+                className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
+                style={{
+                  backgroundImage: `url('${service.imageUrl}')`,
+                  backgroundSize: service.bgSize,
+                  backgroundPosition: service.bgPosition,
+                  backgroundRepeat: 'no-repeat'
+                }} 
+              />
+              
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
+              
+              {/* Content Overlay */}
+              <div className="relative h-full flex flex-col justify-between p-5 z-10">
+                <div className="space-y-2 pt-1">
+                  <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
+                    {service.description}
+                  </p>
+                </div>
+
+                <div className="space-y-3 pb-1">
+                  <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1 drop-shadow-sm">
+                    Includes {service.capabilityCount} capabilities
+                  </div>
                   
-                  {/* Background Image with Panoramic Split */}
-                  <div 
-                    className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
-                    style={{
-                      backgroundImage: `url('${service.imageUrl}')`,
-                      backgroundSize: service.bgSize,
-                      backgroundPosition: service.bgPosition,
-                      backgroundRepeat: 'no-repeat'
-                    }} 
-                  />
-                  
-                  {/* Dark Overlay */}
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
-                  
-                  {/* Content Overlay */}
-                  <div className="relative h-full flex flex-col justify-between p-5 z-10">
-                    {/* Card Header */}
-                    <div className="space-y-2 pt-1">
-                      <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
-                        {service.title}
-                      </h3>
-                      {/* Description Text Size */}
-                      <p className="text-sm leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
-                        {service.description}
-                      </p>
+                  <div className="flex flex-wrap gap-1">
+                    <div className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center mr-1 border border-white/20">
+                      <Check className="w-3 h-3 text-white" strokeWidth={2} />
                     </div>
-
-                    {/* Card Footer */}
-                    <div className="space-y-3 pb-1">
-                      <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1 drop-shadow-sm">
-                        Includes {service.capabilityCount} capabilities
-                      </div>
-                      
-                      <div className="flex flex-wrap gap-1">
-                        <div className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center mr-1 border border-white/20">
-                          <Check className="w-3 h-3 text-white" strokeWidth={2} />
-                        </div>
-                        
-                        {service.tags.map((tag, idx) => (
-                          <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-black/30 backdrop-blur-md border border-white/10 text-white shadow-sm">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                    
+                    {service.tags.map((tag, idx) => (
+                      <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-black/30 backdrop-blur-md border border-white/10 text-white shadow-sm">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
-            ))}
-            <div className="flex-shrink-0 w-4 md:w-8" /> 
+            </div>
           </div>
-        </div>
+        ))}
+        {/* Right side spacer to ensure last card isn't stuck to edge */}
+        <div className="flex-shrink-0 w-4 md:w-8" /> 
+      </div>
 
-        {/* Bottom CTA */}
+      {/* 3. CENTERED CONTAINER: Bottom CTA */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
             <span className="text-xs font-semibold uppercase tracking-wide">Explore services</span>
@@ -396,7 +391,6 @@ export const Services = () => {
             </div>
           </a>
         </div>
-
       </div>
       
       <style>{`
@@ -406,6 +400,12 @@ export const Services = () => {
         .mask-gradient-right {
           mask-image: linear-gradient(to right, black 90%, transparent 100%);
           -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+        }
+        /* Mobile override for padding if needed specifically via CSS */
+        @media (min-width: 768px) {
+          .carousel-container {
+             padding-left: max(2rem, calc((100vw - 72rem) / 2 + 2rem));
+          }
         }
       `}</style>
     </div>
