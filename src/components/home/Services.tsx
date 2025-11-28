@@ -171,7 +171,7 @@ export const Services = () => {
         const paddingLeft = parseFloat(computedStyle.paddingLeft);
         
         // El padding total que necesita el carrusel es: Margen Izquierdo Ventana + Padding Interno Contenedor
-        setCarouselPadding(rect.left + paddingLeft);
+        setCarouselPadding(rect.left + paddingLeft + 100);
       }
     };
 
