@@ -133,6 +133,7 @@ export const Services = () => {
     const calculatePadding = () => {
       if (headerRef.current) {
         const rect = headerRef.current.getBoundingClientRect();
+        // rect.left será correcto incluso con el padding del padre
         setPaddingLeft(rect.left);
       }
     };
@@ -152,11 +153,8 @@ export const Services = () => {
     const card = document.getElementById(`card-${id}`);
     
     if (card && scrollContainerRef.current) {
-      // CORRECCIÓN SCROLL CLICK:
-      // Si es el primer elemento, vamos a 0 para preservar el margen visible de 20px.
-      // Si no, alineamos la tarjeta con el inicio del contenedor (offsetLeft).
-      const isFirst = id === SERVICES[0].id;
-      const scrollPos = isFirst ? 0 : card.offsetLeft;
+      // Usamos offsetLeft y restamos un pequeño margen para asegurar la alineación visual
+      const scrollPos = card.offsetLeft;
       
       scrollContainerRef.current.scrollTo({
         left: scrollPos, 
@@ -175,12 +173,12 @@ export const Services = () => {
       let closestCardId = activeTab;
       let minDistance = Infinity;
 
-      SERVICES.forEach((service, index) => {
+      // Buscamos la tarjeta cuyo borde izquierdo esté más cerca del borde izquierdo del scroll
+      SERVICES.forEach(service => {
         const card = document.getElementById(`card-${service.id}`);
         if (card) {
-          // Ajuste de lógica para considerar el margen en el primer elemento
-          // offsetLeft ya incluye el margen si está aplicado al elemento
-          let distance = Math.abs(card.offsetLeft - scrollPosition);
+          // La distancia física absoluta entre el inicio de la tarjeta y el inicio del scroll
+          const distance = Math.abs(card.offsetLeft - scrollPosition);
           
           if (distance < minDistance) {
             minDistance = distance;
@@ -216,6 +214,10 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
+    // CORRECCIÓN PRINCIPAL:
+    // 1. Eliminado 'marginLeft: 8vw' del estilo.
+    // 2. Añadido 'pl-[8vw]' en className (padding en lugar de margin evita el overflow).
+    // 3. 'overflow-x-hidden' asegura que no haya scroll global.
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden pl-[8vw]">
       
       <style>{`
@@ -296,72 +298,64 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* CAROUSEL WRAPPER + GLASS OVERLAY */}
-      <div className="relative w-full">
-        
-        {/* Glassmorphism Blur Overlay (20px) */}
-        <div className="absolute top-0 bottom-0 left-0 z-20 w-[20px] bg-gradient-to-r from-white to-transparent pointer-events-none backdrop-blur-sm" />
+      {/* CAROUSEL */}
+      <div 
+        ref={scrollContainerRef} 
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
+        style={{ 
+          // paddingLeft dinámico calculado con JS para alinear con el título
+          paddingLeft: `${paddingLeft}px`,
+          // CORRECCIÓN FINAL CARD: Aumentado a 85vw para garantizar que el último elemento
+          // pueda llegar hasta el extremo izquierdo de la pantalla.
+          paddingRight: '85vw' 
+        }}
+      >
+        {SERVICES.map((service) => (
+          <div 
+            key={service.id} 
+            id={`card-${service.id}`} 
+            className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
+          >
+            <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
+              <div 
+                className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
+                style={{
+                  backgroundImage: `url('${service.imageUrl}')`,
+                  backgroundSize: service.bgSize,
+                  backgroundPosition: service.bgPosition,
+                  backgroundRepeat: 'no-repeat'
+                }} 
+              />
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
+              <div className="relative h-full flex flex-col justify-between p-5 z-10">
+                <div className="space-y-2 pt-1">
+                  <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
+                    {service.description}
+                  </p>
+                </div>
 
-        <div 
-          ref={scrollContainerRef} 
-          className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
-          style={{ 
-            // Restaurado el padding normal. El margen de la tarjeta hace el trabajo extra.
-            paddingLeft: `${paddingLeft}px`,
-            paddingRight: '85vw' 
-          }}
-        >
-          {SERVICES.map((service, index) => (
-            <div 
-              key={service.id} 
-              id={`card-${service.id}`} 
-              className={cn(
-                "flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]",
-                // CORRECCIÓN CLAVE: Margen izquierdo SOLO en la primera tarjeta
-                index === 0 && "ml-[20px]"
-              )}
-            >
-              <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
-                <div 
-                  className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
-                  style={{
-                    backgroundImage: `url('${service.imageUrl}')`,
-                    backgroundSize: service.bgSize,
-                    backgroundPosition: service.bgPosition,
-                    backgroundRepeat: 'no-repeat'
-                  }} 
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
-                <div className="relative h-full flex flex-col justify-between p-5 z-10">
-                  <div className="space-y-2 pt-1">
-                    <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
-                      {service.description}
-                    </p>
+                <div className="space-y-3 pb-1">
+                  <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1 drop-shadow-sm">
+                    Includes {service.capabilityCount} capabilities
                   </div>
-
-                  <div className="space-y-3 pb-1">
-                    <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1 drop-shadow-sm">
-                      Includes {service.capabilityCount} capabilities
+                  <div className="flex flex-wrap gap-1">
+                    <div className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center mr-1 border border-white/20">
+                      <Check className="w-3 h-3 text-white" strokeWidth={2} />
                     </div>
-                    <div className="flex flex-wrap gap-1">
-                      <div className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center mr-1 border border-white/20">
-                        <Check className="w-3 h-3 text-white" strokeWidth={2} />
-                      </div>
-                      {service.tags.map((tag, idx) => (
-                        <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-black/30 backdrop-blur-md border border-white/10 text-white shadow-sm">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                    {service.tags.map((tag, idx) => (
+                      <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-black/30 backdrop-blur-md border border-white/10 text-white shadow-sm">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
       {/* CTA */}
