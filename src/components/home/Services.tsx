@@ -140,6 +140,8 @@ export const Services = () => {
     if (document.getElementById(id)) return;
     const style = document.createElement("style");
     style.id = id;
+    
+    // Aquí definimos la clase CSS exacta para el padding
     style.innerHTML = `
       @keyframes bento2-gradient-fade1 {
         0%, 10% { opacity: 0.5; }
@@ -156,13 +158,29 @@ export const Services = () => {
         69.05%, 73.81% { opacity: 0.5; }
         88.1%, 100% { opacity: 0; }
       }
-      /* Ensure scrollbars are hidden strictly */
+
+      /* Hide Scrollbars */
       .scrollbar-hide::-webkit-scrollbar {
           display: none;
       }
       .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
+      }
+
+      /* ALINEACIÓN PERFECTA */
+      /* Mobile: Padding estándar (1rem / 16px) */
+      .carousel-padding {
+         padding-left: 1rem;
+      }
+
+      /* Desktop: Padding calculado */
+      /* max-w-6xl es 72rem. El padding interno es 2rem (px-8) */
+      /* Formula: (AnchoPantalla - AnchoContenido) / 2 + PaddingInterno */
+      @media (min-width: 768px) {
+        .carousel-padding {
+           padding-left: max(2rem, calc((100vw - 72rem) / 2 + 2rem));
+        }
       }
     `;
     document.head.appendChild(style);
@@ -280,11 +298,7 @@ export const Services = () => {
         <div className="relative mb-12">
           <div 
             ref={tabsContainerRef} 
-            className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right" 
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none'
-            }}
+            className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right"
           >
             {SERVICES.map(service => (
               <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
@@ -309,27 +323,16 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 3. CAROUSEL (Full Width with Dynamic Padding) */}
-      {/* 
-          Hemos añadido un padding-left dinámico:
-          - En móviles: 1rem (16px)
-          - En escritorio: Calculamos el espacio sobrante a la izquierda del contenedor de 72rem (max-w-6xl)
-          - Fórmula: (100vw - 72rem) / 2 + 2rem (padding interno del header)
-      */}
+      {/* 3. CAROUSEL (Full Width + Dynamic Padding Class) */}
       <div 
         ref={scrollContainerRef} 
-        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide w-full"
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          paddingLeft: 'max(1rem, calc((100vw - 72rem) / 2 + 2rem))', // <-- Aquí está la magia del alineado
-          paddingRight: '2rem'
-        }}
+        className="carousel-padding flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide w-full"
       >
         {SERVICES.map(service => (
           <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
             <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
               
+              {/* Background Image with Panoramic Split */}
               <div 
                 className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
                 style={{
@@ -340,8 +343,10 @@ export const Services = () => {
                 }} 
               />
               
+              {/* Dark Overlay */}
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
               
+              {/* Content Overlay */}
               <div className="relative h-full flex flex-col justify-between p-5 z-10">
                 <div className="space-y-2 pt-1">
                   <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
@@ -373,7 +378,7 @@ export const Services = () => {
             </div>
           </div>
         ))}
-        {/* Spacer at the end */}
+        {/* Right side spacer */}
         <div className="flex-shrink-0 w-4 md:w-8" /> 
       </div>
 
