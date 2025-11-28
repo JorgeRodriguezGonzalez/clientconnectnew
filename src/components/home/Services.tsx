@@ -26,7 +26,6 @@ const PANORAMIC_IMAGES = {
 
 // Data
 const SERVICES: ServiceItem[] = [
-  // --- GROUP 1 (2 Cards) ---
   {
     id: 'digital-strategy',
     title: 'Digital Strategy',
@@ -46,7 +45,6 @@ const SERVICES: ServiceItem[] = [
     bgSize: "200% 100%",
     bgPosition: "100% 50%"
   }, 
-  // --- GROUP 2 (3 Cards) ---
   {
     id: 'seo',
     title: 'SEO',
@@ -75,7 +73,6 @@ const SERVICES: ServiceItem[] = [
     bgSize: "300% 100%",
     bgPosition: "100% 50%"
   }, 
-  // --- GROUP 3 (2 Cards) ---
   {
     id: 'content-marketing',
     title: 'Content Marketing',
@@ -95,7 +92,6 @@ const SERVICES: ServiceItem[] = [
     bgSize: "200% 100%",
     bgPosition: "100% 50%"
   }, 
-  // --- GROUP 4 (3 Cards) ---
   {
     id: 'email-marketing',
     title: 'Email Marketing',
@@ -128,23 +124,25 @@ const SERVICES: ServiceItem[] = [
 
 export const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
-  const [carouselPadding, setCarouselPadding] = useState('1rem');
+  const [paddingLeft, setPaddingLeft] = useState(0); // Guardamos el valor numérico
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  // Calcular padding izquierdo basado en la posición real del contenedor centrado
+  // 1. Calcular padding izquierdo exacto basado en el header
   useEffect(() => {
     const calculatePadding = () => {
       if (headerRef.current) {
         const rect = headerRef.current.getBoundingClientRect();
-        const leftOffset = rect.left;
-        setCarouselPadding(`${leftOffset}px`);
+        // Usamos rect.left para alinear exactamente con el contenido
+        setPaddingLeft(rect.left);
       }
     };
 
     calculatePadding();
     window.addEventListener('resize', calculatePadding);
+    
+    // Pequeño delay para asegurar que el DOM está estable
     const timer = setTimeout(calculatePadding, 100);
 
     return () => {
@@ -153,42 +151,64 @@ export const Services = () => {
     };
   }, []);
 
-  // NOTA: He eliminado el useEffect que inyectaba estilos y lo he movido a una etiqueta <style> abajo
-  // para garantizar que funcione en todos los navegadores.
-
+  // 2. Función Click en Tab
   const scrollToCard = (id: string) => {
     setActiveTab(id);
-    const element = document.getElementById(`card-${id}`);
-    if (element && scrollContainerRef.current) {
-      const elementLeft = element.offsetLeft;
+    const card = document.getElementById(`card-${id}`);
+    
+    if (card && scrollContainerRef.current) {
+      // offsetLeft nos da la posición relativa al contenedor scrolleable.
+      // Al restar 'paddingLeft', nos aseguramos de que no incluya el padding 
+      // del propio contenedor en el cálculo, sino que lo alinee visualmente.
+      
+      // NOTA: Dependiendo del box-model, a veces offsetLeft empieza tras el padding.
+      // Pero para alinear a la izquierda visualmente, simplemente restamos el paddingLeft 
+      // que hemos aplicado al contenedor para "anularlo" y que el elemento quede al borde.
+      
+      // Sin embargo, como el contenedor tiene 'padding-left', el scroll 0 empieza
+      // donde empieza el padding. La forma más segura es usar offsetLeft menos el padding del contenedor.
+      
+      const scrollPos = card.offsetLeft;
+      
       scrollContainerRef.current.scrollTo({
-        left: elementLeft - 20,
+        left: scrollPos, 
         behavior: 'smooth'
       });
     }
   };
 
+  // 3. Detectar Scroll y Activar Tab (LÓGICA CORREGIDA: IZQUIERDA vs CENTRO)
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
+      
+      // Punto de referencia: El borde izquierdo del contenedor visible + un pequeño margen de tolerancia
+      // Como el contenedor tiene padding-left, las tarjetas se "snapean" ahí.
+      // Queremos saber qué tarjeta está más cerca de esa posición visual izquierda.
       const container = scrollContainerRef.current;
-      const containerCenter = container.scrollLeft + container.offsetWidth / 2;
-
+      const scrollPosition = container.scrollLeft;
+      
       let closestCardId = activeTab;
       let minDistance = Infinity;
+
       SERVICES.forEach(service => {
         const card = document.getElementById(`card-${service.id}`);
         if (card) {
-          const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-          const distance = Math.abs(cardCenter - containerCenter);
+          // La distancia es la diferencia entre la posición de la tarjeta y el scroll actual.
+          // card.offsetLeft es la distancia física desde el borde izquierdo del contenido total.
+          const distance = Math.abs(card.offsetLeft - scrollPosition);
+          
           if (distance < minDistance) {
             minDistance = distance;
             closestCardId = service.id;
           }
         }
       });
+
       if (closestCardId !== activeTab) {
         setActiveTab(closestCardId);
+        
+        // Auto-scroll del botón de tab
         const tabBtn = document.getElementById(`tab-${closestCardId}`);
         if (tabBtn && tabsContainerRef.current) {
           tabBtn.scrollIntoView({
@@ -199,9 +219,12 @@ export const Services = () => {
         }
       }
     };
+
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll, { passive: true });
+      // Disparar una vez para asegurar estado inicial
+      handleScroll(); 
     }
     return () => {
       if (container) {
@@ -213,32 +236,15 @@ export const Services = () => {
   return (
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200" style={{ marginLeft: '8vw', overflowX: 'hidden' }}>
       
-      {/* 
-        ESTILOS CSS FORZADOS PARA OCULTAR BARRAS DE SCROLL 
-        Esto funciona mejor que la inyección por JS o clases de Tailwind
-      */}
       <style>{`
-        /* Chrome, Safari, Edge */
-        .hide-scroll::-webkit-scrollbar {
-          display: none !important;
-          width: 0 !important;
-          height: 0 !important;
-          background: transparent !important;
-        }
-        
-        /* Firefox & Standard */
-        .hide-scroll {
-          -ms-overflow-style: none !important;  /* IE and Edge */
-          scrollbar-width: none !important;     /* Firefox */
-        }
-
-        /* Animaciones */
+        .hide-scroll::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; background: transparent !important; }
+        .hide-scroll { -ms-overflow-style: none !important; scrollbar-width: none !important; }
         @keyframes bento2-gradient-fade1 { 0%, 10% { opacity: 0.5; } 26.67%, 73.33% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
         @keyframes bento2-gradient-fade2 { 0%, 10% { opacity: 0; } 26.67%, 50% { opacity: 0.5; } 69.05%, 100% { opacity: 0; } }
         @keyframes bento2-gradient-fade3 { 0%, 50% { opacity: 0; } 69.05%, 73.81% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
       `}</style>
 
-      {/* 1. Header (Centrado) */}
+      {/* Header */}
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
@@ -250,11 +256,7 @@ export const Services = () => {
               <motion.span
                 initial={{ backgroundPosition: "400% 50%" }}
                 animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                transition={{
-                  duration: 12,
-                  ease: "linear",
-                  repeat: Infinity
-                }}
+                transition={{ duration: 12, ease: "linear", repeat: Infinity }}
                 style={{
                   display: "inline-block",
                   backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
@@ -267,7 +269,6 @@ export const Services = () => {
               >
                 10 vital services
               </motion.span>
-              {" "}
             </h2>
           </div>
           <div className="lg:w-[427px] lg:ml-auto lg:pb-4">
@@ -280,15 +281,19 @@ export const Services = () => {
           </div>
         </div>
 
-        {/* 2. Tabs (Centrado) */}
+        {/* Tabs */}
         <div className="relative mb-12" style={{ marginLeft: '0vw' }}>
           <div 
             ref={tabsContainerRef} 
-            className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right hide-scroll" // Añadida clase hide-scroll
+            className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right hide-scroll"
           >
             {SERVICES.map(service => (
-              <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
-                
+              <button 
+                key={service.id} 
+                id={`tab-${service.id}`} 
+                onClick={() => scrollToCard(service.id)} 
+                className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}
+              >
                 {activeTab === service.id && (
                   <motion.div 
                     layoutId="activeTab" 
@@ -309,13 +314,16 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 3. CAROUSEL */}
+      {/* CAROUSEL */}
       <div 
         ref={scrollContainerRef} 
-        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll" // Añadida clase hide-scroll
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
         style={{ 
-          paddingLeft: carouselPadding,
-          paddingRight: '2rem'
+          // Usamos el estado paddingLeft para alinear el primer elemento con el header
+          paddingLeft: `${paddingLeft}px`,
+          // Usamos un padding derecho MUY grande (viewport width - ancho de tarjeta aprox)
+          // para permitir que el último elemento pueda scrollear hasta el principio (izquierda).
+          paddingRight: '65vw' 
         }}
       >
         {SERVICES.map((service) => (
@@ -325,7 +333,6 @@ export const Services = () => {
             className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
           >
             <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
-              
               <div 
                 className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
                 style={{
@@ -335,9 +342,7 @@ export const Services = () => {
                   backgroundRepeat: 'no-repeat'
                 }} 
               />
-              
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
-              
               <div className="relative h-full flex flex-col justify-between p-5 z-10">
                 <div className="space-y-2 pt-1">
                   <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
@@ -352,12 +357,10 @@ export const Services = () => {
                   <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1 drop-shadow-sm">
                     Includes {service.capabilityCount} capabilities
                   </div>
-                  
                   <div className="flex flex-wrap gap-1">
                     <div className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center mr-1 border border-white/20">
                       <Check className="w-3 h-3 text-white" strokeWidth={2} />
                     </div>
-                    
                     {service.tags.map((tag, idx) => (
                       <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-black/30 backdrop-blur-md border border-white/10 text-white shadow-sm">
                         {tag}
@@ -369,10 +372,9 @@ export const Services = () => {
             </div>
           </div>
         ))}
-        <div className="flex-shrink-0 w-4 md:w-8" /> 
       </div>
 
-      {/* 4. CTA */}
+      {/* CTA */}
       <div className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
         <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
