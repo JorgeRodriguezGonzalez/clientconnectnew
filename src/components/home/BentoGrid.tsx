@@ -708,14 +708,13 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
 
             {isTransparentReporting && (
                <div className="relative w-full h-[160px] mt-2 overflow-hidden">
-                <div className="absolute left-0 top-0 bottom-0 w-[10px] z-10 bg-gradient-to-r from-white to-transparent backdrop-blur-[2px] dark:from-black dark:to-transparent" />
-                <div className="absolute right-0 top-0 bottom-0 w-[10px] z-10 bg-gradient-to-l from-white to-transparent backdrop-blur-[2px] dark:from-black dark:to-transparent" />
-                
                 <div 
                   className="absolute inset-0 w-full h-full overflow-hidden" 
                   style={{
-                    maskImage: 'linear-gradient(rgb(0, 0, 0) 60%, rgba(0, 0, 0, 0) 100%)',
-                    WebkitMaskImage: 'linear-gradient(rgb(0, 0, 0) 60%, rgba(0, 0, 0, 0) 100%)'
+                    maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
+                    maskComposite: 'intersect',
+                    WebkitMaskComposite: 'source-in'
                   }}
                 >
                   <svg 
