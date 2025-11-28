@@ -171,6 +171,12 @@ export const Services = () => {
       /* Ocultar Scrollbar agresivamente */
       .scrollbar-hide::-webkit-scrollbar { display: none !important; }
       .scrollbar-hide { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+      
+      /* Ocultar scrollbar horizontal en ABSOLUTAMENTE TODO */
+      * { overflow-x: hidden !important; }
+      html { overflow-x: hidden !important; max-width: 100vw !important; }
+      body { overflow-x: hidden !important; max-width: 100vw !important; }
+      #root { overflow-x: hidden !important; max-width: 100vw !important; }
     `;
     document.head.appendChild(style);
   }, []);
@@ -234,7 +240,7 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200" style={{ marginLeft: '8vw', overflowX: 'hidden' }}>
+    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden" style={{ marginLeft: '8vw' }}>
       
       {/* 1. Header (Centrado) */}
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
@@ -283,10 +289,6 @@ export const Services = () => {
           <div 
             ref={tabsContainerRef} 
             className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right scrollbar-hide"
-            style={{ 
-              scrollbarWidth: 'none',  /* Firefox */
-              msOverflowStyle: 'none'  /* IE and Edge */
-            }}
           >
             {SERVICES.map(service => (
               <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
@@ -317,9 +319,7 @@ export const Services = () => {
         className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full scrollbar-hide"
         style={{ 
           paddingLeft: carouselPadding,
-          paddingRight: '2rem',
-          scrollbarWidth: 'none',  /* Firefox */
-          msOverflowStyle: 'none'  /* IE and Edge */
+          paddingRight: '2rem'
         }}
       >
         {SERVICES.map((service) => (
