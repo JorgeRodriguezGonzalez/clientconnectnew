@@ -128,8 +128,33 @@ const SERVICES: ServiceItem[] = [
 
 export const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
+  const [carouselPadding, setCarouselPadding] = useState('1rem');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  // Calcular padding izquierdo basado en la posición real del contenedor centrado
+  useEffect(() => {
+    const calculatePadding = () => {
+      if (headerRef.current) {
+        const rect = headerRef.current.getBoundingClientRect();
+        const leftOffset = rect.left;
+        setCarouselPadding(`${leftOffset}px`);
+      }
+    };
+
+    // Calcular al montar y en resize
+    calculatePadding();
+    window.addEventListener('resize', calculatePadding);
+    
+    // Pequeño delay para asegurar que todo está renderizado
+    const timer = setTimeout(calculatePadding, 100);
+
+    return () => {
+      window.removeEventListener('resize', calculatePadding);
+      clearTimeout(timer);
+    };
+  }, []);
 
   // Inyectar estilos para scrollbar oculta y animaciones
   useEffect(() => {
@@ -212,7 +237,7 @@ export const Services = () => {
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-hidden">
       
       {/* 1. Header (Centrado) */}
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+      <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
@@ -285,8 +310,9 @@ export const Services = () => {
       {/* 3. CAROUSEL (Full Width con Padding Lateral) */}
       <div 
         ref={scrollContainerRef} 
-        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full scrollbar-hide pl-4 md:pl-8 lg:pl-[calc((100vw-72rem)/2+2rem)]"
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full scrollbar-hide"
         style={{ 
+          paddingLeft: carouselPadding,
           paddingRight: '2rem'
         }}
       >
