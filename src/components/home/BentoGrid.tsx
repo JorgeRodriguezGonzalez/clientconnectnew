@@ -447,7 +447,8 @@ function FeaturesSectionMinimal() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 gap-3 md:auto-rows-[minmax(120px,auto)] md:grid-cols-6">
+        {/* CHANGED: Increased min-height for rows from 120px to 220px to increase card height by 100px */}
+        <div className="grid grid-cols-1 gap-3 md:auto-rows-[minmax(220px,auto)] md:grid-cols-6">
           {features.map((feature, index) => (
             <BentoItem
               key={feature.title}
@@ -558,7 +559,8 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               </div>
               <div className="flex-1">
                 <header className="flex items-start gap-3">
-                  <h3 className="text-base font-semibold uppercase tracking-wide text-neutral-900 transition-colors duration-500 dark:text-white">
+                  {/* CHANGED: Added pt-[20px] for top padding on title */}
+                  <h3 className="pt-[20px] text-base font-semibold uppercase tracking-wide text-neutral-900 transition-colors duration-500 dark:text-white">
                     {title}
                   </h3>
                   {meta && (
