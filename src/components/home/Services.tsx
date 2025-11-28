@@ -172,11 +172,12 @@ export const Services = () => {
       .scrollbar-hide::-webkit-scrollbar { display: none !important; }
       .scrollbar-hide { -ms-overflow-style: none !important; scrollbar-width: none !important; }
       
-      /* Ocultar scrollbar horizontal en ABSOLUTAMENTE TODO */
-      * { overflow-x: hidden !important; }
-      html { overflow-x: hidden !important; max-width: 100vw !important; }
-      body { overflow-x: hidden !important; max-width: 100vw !important; }
-      #root { overflow-x: hidden !important; max-width: 100vw !important; }
+      /* Ocultar SOLO la barra de scroll horizontal visible, pero permitir el scroll */
+      html::-webkit-scrollbar-track { background: transparent; }
+      html::-webkit-scrollbar-thumb { background: transparent; }
+      html::-webkit-scrollbar { height: 0px !important; }
+      body::-webkit-scrollbar { height: 0px !important; }
+      #root::-webkit-scrollbar { height: 0px !important; }
     `;
     document.head.appendChild(style);
   }, []);
@@ -240,7 +241,7 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden" style={{ marginLeft: '8vw' }}>
+    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200" style={{ marginLeft: '8vw' }}>
       
       {/* 1. Header (Centrado) */}
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
