@@ -156,13 +156,13 @@ export const Services = () => {
         69.05%, 73.81% { opacity: 0.5; }
         88.1%, 100% { opacity: 0; }
       }
-      /* Ensure scrollbars are hidden in all browsers */
+      /* Ensure scrollbars are hidden strictly */
       .scrollbar-hide::-webkit-scrollbar {
           display: none;
       }
       .scrollbar-hide {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
+          -ms-overflow-style: none;
+          scrollbar-width: none;
       }
     `;
     document.head.appendChild(style);
@@ -185,7 +185,6 @@ export const Services = () => {
     }
   };
 
-  // Scroll sync logic
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
@@ -235,7 +234,7 @@ export const Services = () => {
   return (
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-hidden">
       
-      {/* 1. CENTERED CONTAINER: Header */}
+      {/* 1. HEADER (Centered) */}
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
@@ -277,7 +276,7 @@ export const Services = () => {
           </div>
         </div>
 
-        {/* 2. TABS NAVIGATION (Aligned with Header) */}
+        {/* 2. TABS (Centered) */}
         <div className="relative mb-12">
           <div 
             ref={tabsContainerRef} 
@@ -310,27 +309,27 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 3. FULL WIDTH CAROUSEL with PRECISE ALIGNMENT */}
+      {/* 3. CAROUSEL (Full Width with Dynamic Padding) */}
+      {/* 
+          Hemos añadido un padding-left dinámico:
+          - En móviles: 1rem (16px)
+          - En escritorio: Calculamos el espacio sobrante a la izquierda del contenedor de 72rem (max-w-6xl)
+          - Fórmula: (100vw - 72rem) / 2 + 2rem (padding interno del header)
+      */}
       <div 
         ref={scrollContainerRef} 
-        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide"
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide w-full"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          // CALCULATION LOGIC:
-          // Center container is max-w-6xl (72rem).
-          // Padding is 2rem (px-8) on desktop.
-          // Formula: (Screen Width - Container Width) / 2 + Container Padding
-          // Use max() to ensure on small screens it defaults to a safe padding (1rem/16px)
-          paddingLeft: 'max(16px, calc((100% - 72rem) / 2 + 32px))',
-          paddingRight: '32px' // Some space at the end
+          paddingLeft: 'max(1rem, calc((100vw - 72rem) / 2 + 2rem))', // <-- Aquí está la magia del alineado
+          paddingRight: '2rem'
         }}
       >
         {SERVICES.map(service => (
           <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
             <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
               
-              {/* Background Image with Panoramic Split */}
               <div 
                 className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
                 style={{
@@ -341,10 +340,8 @@ export const Services = () => {
                 }} 
               />
               
-              {/* Dark Overlay */}
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
               
-              {/* Content Overlay */}
               <div className="relative h-full flex flex-col justify-between p-5 z-10">
                 <div className="space-y-2 pt-1">
                   <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
@@ -376,11 +373,11 @@ export const Services = () => {
             </div>
           </div>
         ))}
-        {/* Right side spacer */}
+        {/* Spacer at the end */}
         <div className="flex-shrink-0 w-4 md:w-8" /> 
       </div>
 
-      {/* 4. CENTERED CONTAINER: Bottom CTA */}
+      {/* 4. CTA (Centered) */}
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
