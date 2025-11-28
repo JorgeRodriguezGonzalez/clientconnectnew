@@ -12,122 +12,131 @@ type ServiceItem = {
   capabilityCount: number;
   tags: ServiceTag[];
   imageUrl: string;
-  imagePosition?: 'left' | 'right' | 'center';
+  // Propiedades nuevas para el efecto panorámico
+  bgSize: string;      // ej: "200% 100%" para grupo de 2, "300% 100%" para grupo de 3
+  bgPosition: string;  // ej: "0% 50%", "50% 50%", "100% 50%"
 };
 
-// Image Constants (4 Recurring Digital Marketing Images)
-const IMAGES = {
-  img1: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop", // Analytics/Growth
-  img2: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop", // Strategy/Team
-  img3: "https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=2076&auto=format&fit=crop", // Creative/Marketing
-  img4: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop", // Data/Tech
+// IMÁGENES PANORÁMICAS (Wide aspect ratio)
+const PANORAMIC_IMAGES = {
+  // Grupo 1 (2 cartas): Strategy & Branding (Team/Planning)
+  strategy: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop",
+  // Grupo 2 (3 cartas): Traffic (Abstract Motion/Speed/Data)
+  traffic: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2600&auto=format&fit=crop",
+  // Grupo 3 (2 cartas): Creative (Studio/Production)
+  creative: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2600&auto=format&fit=crop",
+  // Grupo 4 (3 cartas): Data & Retention (Abstract Network/Tech)
+  data: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2600&auto=format&fit=crop", 
 };
 
 // Data: Marketing Digital Services
 const SERVICES: ServiceItem[] = [
-  // --- GROUP 1 (Strategy) ---
+  // --- GROUP 1 (2 Cards) ---
+  // Image Split: 200% Width | Positions: 0% (Left), 100% (Right)
   {
     id: 'digital-strategy',
     title: 'Digital Strategy',
     description: 'Build a roadmap for growth with data-driven market analysis and competitive positioning.',
     capabilityCount: 4,
     tags: ['Market Analysis', 'Competitor Research', 'KPI Definition', 'Growth Roadmap'],
-    imageUrl: IMAGES.img1,
-    imagePosition: 'left'
+    imageUrl: PANORAMIC_IMAGES.strategy,
+    bgSize: "200% 100%", 
+    bgPosition: "0% 50%"
   }, {
     id: 'brand-identity',
     title: 'Brand Identity',
     description: 'Define your visual language and voice to create a lasting impression in the market.',
     capabilityCount: 4,
     tags: ['Logo Design', 'Visual Guidelines', 'Tone of Voice', 'Brand Assets'],
-    imageUrl: IMAGES.img2,
-    imagePosition: 'right'
+    imageUrl: PANORAMIC_IMAGES.strategy,
+    bgSize: "200% 100%",
+    bgPosition: "100% 50%"
   }, 
-  // --- GROUP 2 (Traffic) ---
+  
+  // --- GROUP 2 (3 Cards) ---
+  // Image Split: 300% Width | Positions: 0% (Left), 50% (Center), 100% (Right)
   {
     id: 'seo',
     title: 'SEO',
     description: 'Dominate search results and drive organic traffic with technical and on-page optimization.',
     capabilityCount: 4,
     tags: ['Technical Audit', 'Keyword Strategy', 'Link Building', 'Local SEO'],
-    imageUrl: IMAGES.img3,
-    imagePosition: 'left'
+    imageUrl: PANORAMIC_IMAGES.traffic,
+    bgSize: "300% 100%",
+    bgPosition: "0% 50%"
   }, {
     id: 'paid-media',
     title: 'Paid Media',
     description: 'Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.',
     capabilityCount: 4,
     tags: ['Google Ads', 'Social Ads', 'Retargeting', 'Display Network'],
-    imageUrl: IMAGES.img4,
-    imagePosition: 'center'
+    imageUrl: PANORAMIC_IMAGES.traffic,
+    bgSize: "300% 100%",
+    bgPosition: "50% 50%"
   }, {
     id: 'social-media',
     title: 'Social Media',
     description: 'Build community and engagement with strategic content calendars and management.',
     capabilityCount: 4,
     tags: ['Content Strategy', 'Community Mgmt', 'Influencer Marketing', 'Trend Analysis'],
-    imageUrl: IMAGES.img1, // Repeating sequence
-    imagePosition: 'right'
+    imageUrl: PANORAMIC_IMAGES.traffic,
+    bgSize: "300% 100%",
+    bgPosition: "100% 50%"
   }, 
-  // --- GROUP 3 (Content) ---
+  
+  // --- GROUP 3 (2 Cards) ---
+  // Image Split: 200% Width
   {
     id: 'content-marketing',
     title: 'Content Marketing',
     description: 'Attract and convert your audience with value-driven storytelling and copywriting.',
     capabilityCount: 4,
     tags: ['Blog Writing', 'Whitepapers', 'Case Studies', 'Copywriting'],
-    imageUrl: IMAGES.img2,
-    imagePosition: 'left'
+    imageUrl: PANORAMIC_IMAGES.creative,
+    bgSize: "200% 100%",
+    bgPosition: "0% 50%"
   }, {
     id: 'video-production',
     title: 'Video Production',
     description: 'Captivate your audience with high-end motion graphics and video storytelling.',
     capabilityCount: 4,
     tags: ['Motion Graphics', 'Video Editing', 'Scriptwriting', 'Post-Production'],
-    imageUrl: IMAGES.img3,
-    imagePosition: 'right'
+    imageUrl: PANORAMIC_IMAGES.creative,
+    bgSize: "200% 100%",
+    bgPosition: "100% 50%"
   }, 
-  // --- GROUP 4 (Retention/Data) ---
+  
+  // --- GROUP 4 (3 Cards) ---
+  // Image Split: 300% Width
   {
     id: 'email-marketing',
     title: 'Email Marketing',
     description: 'Nurture leads and retain customers with personalized automated email flows.',
     capabilityCount: 4,
     tags: ['Automation Flows', 'Newsletter', 'List Segmentation', 'A/B Testing'],
-    imageUrl: IMAGES.img4,
-    imagePosition: 'left'
+    imageUrl: PANORAMIC_IMAGES.data,
+    bgSize: "300% 100%",
+    bgPosition: "0% 50%"
   }, {
     id: 'cro',
     title: 'CRO',
     description: 'Maximize the value of every visitor by optimizing your conversion funnels.',
     capabilityCount: 4,
     tags: ['User Testing', 'Heatmaps', 'Funnel Analysis', 'UX Optimization'],
-    imageUrl: IMAGES.img1,
-    imagePosition: 'center'
+    imageUrl: PANORAMIC_IMAGES.data,
+    bgSize: "300% 100%",
+    bgPosition: "50% 50%"
   }, {
     id: 'data-analytics',
     title: 'Data Analytics',
     description: 'Make informed decisions with custom reporting and real-time performance tracking.',
     capabilityCount: 4,
     tags: ['GA4 Setup', 'Looker Studio', 'Attribution Models', 'ROI Tracking'],
-    imageUrl: IMAGES.img2,
-    imagePosition: 'right'
+    imageUrl: PANORAMIC_IMAGES.data,
+    bgSize: "300% 100%",
+    bgPosition: "100% 50%"
   }
 ];
-
-// Helper to determine background position based on index or prop
-const getBackgroundPosition = (position: string) => {
-  switch (position) {
-    case 'left':
-      return '20% 50%'; // Adjusted for landscape images
-    case 'right':
-      return '80% 50%'; // Adjusted for landscape images
-    case 'center':
-      return '50% 50%';
-    default:
-      return 'center';
-  }
-};
 
 export const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
@@ -274,9 +283,8 @@ export const Services = () => {
           </div>
         </div>
 
-        {/* Tabs Navigation */}
+        {/* Tabs Navigation - Without background strip */}
         <div className="relative mb-12">
-          {/* REMOVED BACKGROUND STRIP HERE */}
           <div ref={tabsContainerRef} className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right" style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none'
@@ -333,13 +341,17 @@ export const Services = () => {
           {SERVICES.map(service => (
             <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
               <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
-                {/* Background Image */}
-                <div className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" style={{
-              backgroundImage: `url('${service.imageUrl}')`,
-              backgroundSize: 'cover', // Changed to cover for landscape images
-              backgroundPosition: getBackgroundPosition(service.imagePosition || 'center'),
-              backgroundRepeat: 'no-repeat'
-            }} />
+                
+                {/* Background Image with Panoramic Split Effect */}
+                <div 
+                  className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
+                  style={{
+                    backgroundImage: `url('${service.imageUrl}')`,
+                    backgroundSize: service.bgSize,        // Key for the effect
+                    backgroundPosition: service.bgPosition, // Key for the effect
+                    backgroundRepeat: 'no-repeat'
+                  }} 
+                />
                 
                 {/* Content Overlay */}
                 <div className="relative h-full flex flex-col justify-between p-5 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
