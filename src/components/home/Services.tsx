@@ -16,10 +16,6 @@ type ServiceItem = {
 };
 
 // Data: Marketing Digital Services
-// Group 1 (1-2): Strategy & Foundation
-// Group 2 (3-4-5): Traffic & Acquisition
-// Group 3 (6-7): Content & Creative
-// Group 4 (8-9-10): Retention & Analytics
 const SERVICES: ServiceItem[] = [
   // --- GROUP 1 ---
   {
@@ -130,6 +126,36 @@ export const Services = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
 
+  // Inject styles for the Bento animations
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const id = "bento-gradients-services";
+    if (document.getElementById(id)) return;
+    const style = document.createElement("style");
+    style.id = id;
+    style.innerHTML = `
+      @keyframes bento2-gradient-fade1 {
+        0%, 10% { opacity: 0.5; }
+        26.67%, 73.33% { opacity: 0; }
+        88.1%, 100% { opacity: 0.5; }
+      }
+      @keyframes bento2-gradient-fade2 {
+        0%, 10% { opacity: 0; }
+        26.67%, 50% { opacity: 0.5; }
+        69.05%, 100% { opacity: 0; }
+      }
+      @keyframes bento2-gradient-fade3 {
+        0%, 50% { opacity: 0; }
+        69.05%, 73.81% { opacity: 0.5; }
+        88.1%, 100% { opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      style.remove();
+    };
+  }, []);
+
   const scrollToCard = (id: string) => {
     setActiveTab(id);
     const element = document.getElementById(`card-${id}`);
@@ -196,7 +222,7 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-[#FCF9F4] min-h-screen py-20 px-4 md:px-8 font-sans text-neutral-900 selection:bg-neutral-200">
+    <div className="w-full bg-white min-h-screen py-20 px-4 md:px-8 font-sans text-neutral-900 selection:bg-neutral-200">
       <div className="max-w-6xl mx-auto">
         
         {/* Header Section */}
@@ -205,7 +231,7 @@ export const Services = () => {
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
                Digital Ecosystem
             </span>
-            <h2 className="text-3xl font-black tracking-tight text-neutral-900 md:text-5xl">
+            <h2 className="text-3xl font-extrabold tracking-tight text-neutral-900 md:text-5xl">
               Specialized in <br />
               <motion.span
                 initial={{ backgroundPosition: "400% 50%" }}
@@ -248,16 +274,47 @@ export const Services = () => {
         }}>
             {SERVICES.map(service => (
               <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
-                {activeTab === service.id && <motion.div layoutId="activeTab" className="absolute inset-0 bg-white rounded-full shadow-[0_6px_16px_rgba(0,0,0,0.08)] -z-10" transition={{
-              type: "spring",
-              bounce: 0.2,
-              duration: 0.6
-            }} />}
+                
+                {/* Active Tab Background with Bento Animation */}
+                {activeTab === service.id && (
+                  <motion.div 
+                    layoutId="activeTab" 
+                    className="absolute inset-0 rounded-full -z-10 overflow-hidden" 
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  >
+                    <div className="absolute inset-0 bg-white" /> {/* White base */}
+                    
+                    {/* Animated Gradients from BentoGrid */}
+                    <div
+                      className="absolute inset-0"
+                      style={{ 
+                        background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(237,191,134), transparent 72%)",
+                        animation: "bento2-gradient-fade1 10.5s ease-in-out infinite"
+                      }}
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{ 
+                        background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(103,188,183), transparent 72%)",
+                        animation: "bento2-gradient-fade2 10.5s ease-in-out infinite"
+                      }}
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{ 
+                        background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(148,163,184), transparent 72%)",
+                        animation: "bento2-gradient-fade3 10.5s ease-in-out infinite"
+                      }}
+                    />
+                    {/* Subtle border for definition */}
+                    <div className="absolute inset-0 rounded-full border border-neutral-200/50" />
+                  </motion.div>
+                )}
                 {service.title}
               </button>
             ))}
             {/* Background track for tabs */}
-            <div className="absolute inset-0 bg-[#F5F0E8] rounded-full -z-20 h-full w-[970px] max-w-full pointer-events-none" />
+            <div className="absolute inset-0 bg-[#F5F0E8] opacity-50 rounded-full -z-20 h-full w-[970px] max-w-full pointer-events-none" />
           </div>
         </div>
 
@@ -267,8 +324,10 @@ export const Services = () => {
         msOverflowStyle: 'none'
       }}>
           {SERVICES.map(service => (
-            <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[345px] sm:w-[380px] md:w-[440px]">
-              <div className="group relative h-[520px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
+            // Cards reduced by ~20%
+            <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
+              {/* Height reduced by ~20% (from 520px to 420px) */}
+              <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
                 {/* Background Image */}
                 <div className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" style={{
               backgroundImage: `url('${service.imageUrl}')`,
@@ -278,31 +337,31 @@ export const Services = () => {
             }} />
                 
                 {/* Content Overlay */}
-                <div className="relative h-full flex flex-col justify-between p-6 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+                <div className="relative h-full flex flex-col justify-between p-5 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
                   {/* Card Header */}
-                  <div className="space-y-3 pt-2">
-                    <h3 className="text-3xl font-black tracking-tight leading-none text-white">
+                  <div className="space-y-2 pt-1">
+                    <h3 className="text-2xl font-black tracking-tight leading-none text-white">
                       {service.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-white/80 max-w-[90%]">
+                    <p className="text-xs leading-relaxed text-white/80 max-w-[95%]">
                       {service.description}
                     </p>
                   </div>
 
                   {/* Card Footer */}
-                  <div className="space-y-4 pb-2">
-                    <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/90 px-1">
+                  <div className="space-y-3 pb-1">
+                    <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1">
                       Includes {service.capabilityCount} capabilities
                     </div>
                     
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-wrap gap-1">
                       {/* Check Icon Circle */}
-                      <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center mr-1 border border-white/10">
-                        <Check className="w-3.5 h-3.5 text-white" strokeWidth={2} />
+                      <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center mr-1 border border-white/10">
+                        <Check className="w-3 h-3 text-white" strokeWidth={2} />
                       </div>
                       
                       {service.tags.map((tag, idx) => (
-                        <span key={idx} className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md border border-white/10 text-white">
+                        <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md border border-white/10 text-white">
                           {tag}
                         </span>
                       ))}
@@ -317,7 +376,7 @@ export const Services = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="flex justify-center mt-8 md:mt-16 border-t border-neutral-900/10 pt-8">
+        <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
             <span className="text-xs font-semibold uppercase tracking-wide">Explore services</span>
             <div className="w-6 h-6 bg-neutral-900 rounded-full flex items-center justify-center text-white transition-transform duration-300 group-hover:translate-x-1">
