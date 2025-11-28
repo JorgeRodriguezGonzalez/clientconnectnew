@@ -368,10 +368,10 @@ function FeaturesSectionMinimal() {
   ];
 
   const customStyles = [
-    { maxHeight: 'calc(100% - 120px)' }, // CHANGED: reduced by another 20px (total -120px)
-    { maxHeight: 'calc(100% - 120px)' }, // CHANGED: reduced by another 20px (total -120px)
-    { marginTop: '-120px' }, // CHANGED: matched negative margin to keep distance constant
-    { marginTop: '-120px' }  // CHANGED: matched negative margin to keep distance constant
+    { maxHeight: 'calc(100% - 120px)' }, 
+    { maxHeight: 'calc(100% - 120px)' }, 
+    { marginTop: '-120px' }, 
+    { marginTop: '-120px' }  
   ];
 
   return (
@@ -558,7 +558,8 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               </div>
               <div className="flex-1">
                 <header className="flex items-start gap-3">
-                  <h3 className="text-base font-semibold uppercase tracking-wide text-neutral-900 transition-colors duration-500 dark:text-white">
+                  {/* CHANGED: Re-added 20px padding to title only. Badge remains at top. */}
+                  <h3 className="pt-[20px] text-base font-semibold uppercase tracking-wide text-neutral-900 transition-colors duration-500 dark:text-white">
                     {title}
                   </h3>
                   {meta && (
