@@ -24,7 +24,7 @@ const PANORAMIC_IMAGES = {
   data: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2600&auto=format&fit=crop", 
 };
 
-// Data: Marketing Digital Services
+// Data
 const SERVICES: ServiceItem[] = [
   // --- GROUP 1 (2 Cards) ---
   {
@@ -46,7 +46,6 @@ const SERVICES: ServiceItem[] = [
     bgSize: "200% 100%",
     bgPosition: "100% 50%"
   }, 
-  
   // --- GROUP 2 (3 Cards) ---
   {
     id: 'seo',
@@ -76,7 +75,6 @@ const SERVICES: ServiceItem[] = [
     bgSize: "300% 100%",
     bgPosition: "100% 50%"
   }, 
-  
   // --- GROUP 3 (2 Cards) ---
   {
     id: 'content-marketing',
@@ -97,7 +95,6 @@ const SERVICES: ServiceItem[] = [
     bgSize: "200% 100%",
     bgPosition: "100% 50%"
   }, 
-  
   // --- GROUP 4 (3 Cards) ---
   {
     id: 'email-marketing',
@@ -131,57 +128,47 @@ const SERVICES: ServiceItem[] = [
 
 export const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
+  const [leftOffset, setLeftOffset] = useState(20); // Default padding fallback
+  
+  // Refs
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null); // Ref para medir la alineación
 
+  // Efecto para calcular el padding izquierdo exacto
+  useEffect(() => {
+    const updateOffset = () => {
+      if (headerRef.current) {
+        // Obtenemos la posición del contenedor del header
+        const rect = headerRef.current.getBoundingClientRect();
+        const styles = window.getComputedStyle(headerRef.current);
+        const paddingLeft = parseFloat(styles.paddingLeft);
+        
+        // El offset es la distancia desde la izquierda de la ventana hasta el borde + el padding interno
+        // Esto alinea el contenido del carrusel con el TEXTO del header
+        setLeftOffset(rect.left + paddingLeft);
+      }
+    };
+
+    // Calcular al inicio y al redimensionar
+    updateOffset();
+    window.addEventListener('resize', updateOffset);
+    return () => window.removeEventListener('resize', updateOffset);
+  }, []);
+
+  // Estilos globales para animaciones y scrollbars
   useEffect(() => {
     if (typeof document === "undefined") return;
     const id = "bento-services-styles";
     if (document.getElementById(id)) return;
     const style = document.createElement("style");
     style.id = id;
-    
-    // Aquí definimos la clase CSS exacta para el padding
     style.innerHTML = `
-      @keyframes bento2-gradient-fade1 {
-        0%, 10% { opacity: 0.5; }
-        26.67%, 73.33% { opacity: 0.5; }
-        88.1%, 100% { opacity: 0.5; }
-      }
-      @keyframes bento2-gradient-fade2 {
-        0%, 10% { opacity: 0; }
-        26.67%, 50% { opacity: 0.5; }
-        69.05%, 100% { opacity: 0; }
-      }
-      @keyframes bento2-gradient-fade3 {
-        0%, 50% { opacity: 0; }
-        69.05%, 73.81% { opacity: 0.5; }
-        88.1%, 100% { opacity: 0; }
-      }
-
-      /* Hide Scrollbars */
-      .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-      }
-      .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-      }
-
-      /* ALINEACIÓN PERFECTA */
-      /* Mobile: Padding estándar (1rem / 16px) */
-      .carousel-padding {
-         padding-left: 1rem;
-      }
-
-      /* Desktop: Padding calculado */
-      /* max-w-6xl es 72rem. El padding interno es 2rem (px-8) */
-      /* Formula: (AnchoPantalla - AnchoContenido) / 2 + PaddingInterno */
-      @media (min-width: 768px) {
-        .carousel-padding {
-           padding-left: max(2rem, calc((100vw - 72rem) / 2 + 2rem));
-        }
-      }
+      @keyframes bento2-gradient-fade1 { 0%, 10% { opacity: 0.5; } 26.67%, 73.33% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
+      @keyframes bento2-gradient-fade2 { 0%, 10% { opacity: 0; } 26.67%, 50% { opacity: 0.5; } 69.05%, 100% { opacity: 0; } }
+      @keyframes bento2-gradient-fade3 { 0%, 50% { opacity: 0; } 69.05%, 73.81% { opacity: 0.5; } 88.1%, 100% { opacity: 0; } }
+      .scrollbar-hide::-webkit-scrollbar { display: none; }
+      .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     `;
     document.head.appendChild(style);
     return () => {
@@ -193,16 +180,21 @@ export const Services = () => {
     setActiveTab(id);
     const element = document.getElementById(`card-${id}`);
     if (element && scrollContainerRef.current) {
-      const containerLeft = scrollContainerRef.current.getBoundingClientRect().left;
+      // Ajustamos el cálculo del scroll para tener en cuenta el offset dinámico
       const elementLeft = element.getBoundingClientRect().left;
-      const offset = elementLeft - containerLeft + scrollContainerRef.current.scrollLeft;
+      const currentScroll = scrollContainerRef.current.scrollLeft;
+      // Queremos que el elemento quede en la posición 'leftOffset'
+      // Nueva posición = ScrollActual + (PosiciónElemento - OffsetDeseado)
+      const targetScroll = currentScroll + (elementLeft - leftOffset);
+      
       scrollContainerRef.current.scrollTo({
-        left: offset,
+        left: targetScroll,
         behavior: 'smooth'
       });
     }
   };
 
+  // Scroll sync logic
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
@@ -237,9 +229,7 @@ export const Services = () => {
     };
     const container = scrollContainerRef.current;
     if (container) {
-      container.addEventListener('scroll', handleScroll, {
-        passive: true
-      });
+      container.addEventListener('scroll', handleScroll, { passive: true });
       handleScroll();
     }
     return () => {
@@ -252,8 +242,9 @@ export const Services = () => {
   return (
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-hidden">
       
-      {/* 1. HEADER (Centered) */}
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+      {/* 1. HEADER & TABS (Centrados) */}
+      {/* Asignamos la ref aquí para medir dónde empieza realmente el contenido */}
+      <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
@@ -294,7 +285,6 @@ export const Services = () => {
           </div>
         </div>
 
-        {/* 2. TABS (Centered) */}
         <div className="relative mb-12">
           <div 
             ref={tabsContainerRef} 
@@ -323,16 +313,22 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 3. CAROUSEL (Full Width + Dynamic Padding Class) */}
+      {/* 3. FULL WIDTH CAROUSEL */}
+      {/* Usamos el leftOffset calculado dinámicamente */}
       <div 
         ref={scrollContainerRef} 
-        className="carousel-padding flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide w-full"
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide w-full"
+        style={{
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          paddingLeft: `${leftOffset}px`, // ALINEACIÓN MÁGICA
+          paddingRight: '2rem'
+        }}
       >
         {SERVICES.map(service => (
           <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
             <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
               
-              {/* Background Image with Panoramic Split */}
               <div 
                 className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
                 style={{
@@ -343,10 +339,8 @@ export const Services = () => {
                 }} 
               />
               
-              {/* Dark Overlay */}
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
               
-              {/* Content Overlay */}
               <div className="relative h-full flex flex-col justify-between p-5 z-10">
                 <div className="space-y-2 pt-1">
                   <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
@@ -378,11 +372,11 @@ export const Services = () => {
             </div>
           </div>
         ))}
-        {/* Right side spacer */}
+        {/* Espaciador final para que la última tarjeta no se pegue al borde derecho */}
         <div className="flex-shrink-0 w-4 md:w-8" /> 
       </div>
 
-      {/* 4. CTA (Centered) */}
+      {/* 4. CTA (Centrado) */}
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
