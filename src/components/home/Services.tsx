@@ -15,16 +15,24 @@ type ServiceItem = {
   imagePosition?: 'left' | 'right' | 'center';
 };
 
+// Image Constants (4 Recurring Digital Marketing Images)
+const IMAGES = {
+  img1: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop", // Analytics/Growth
+  img2: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop", // Strategy/Team
+  img3: "https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=2076&auto=format&fit=crop", // Creative/Marketing
+  img4: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop", // Data/Tech
+};
+
 // Data: Marketing Digital Services
 const SERVICES: ServiceItem[] = [
-  // --- GROUP 1 ---
+  // --- GROUP 1 (Strategy) ---
   {
     id: 'digital-strategy',
     title: 'Digital Strategy',
     description: 'Build a roadmap for growth with data-driven market analysis and competitive positioning.',
     capabilityCount: 4,
     tags: ['Market Analysis', 'Competitor Research', 'KPI Definition', 'Growth Roadmap'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-1--large',
+    imageUrl: IMAGES.img1,
     imagePosition: 'left'
   }, {
     id: 'brand-identity',
@@ -32,17 +40,17 @@ const SERVICES: ServiceItem[] = [
     description: 'Define your visual language and voice to create a lasting impression in the market.',
     capabilityCount: 4,
     tags: ['Logo Design', 'Visual Guidelines', 'Tone of Voice', 'Brand Assets'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-1--large',
+    imageUrl: IMAGES.img2,
     imagePosition: 'right'
   }, 
-  // --- GROUP 2 ---
+  // --- GROUP 2 (Traffic) ---
   {
     id: 'seo',
     title: 'SEO',
     description: 'Dominate search results and drive organic traffic with technical and on-page optimization.',
     capabilityCount: 4,
     tags: ['Technical Audit', 'Keyword Strategy', 'Link Building', 'Local SEO'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-2--large',
+    imageUrl: IMAGES.img3,
     imagePosition: 'left'
   }, {
     id: 'paid-media',
@@ -50,7 +58,7 @@ const SERVICES: ServiceItem[] = [
     description: 'Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.',
     capabilityCount: 4,
     tags: ['Google Ads', 'Social Ads', 'Retargeting', 'Display Network'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-2--large',
+    imageUrl: IMAGES.img4,
     imagePosition: 'center'
   }, {
     id: 'social-media',
@@ -58,17 +66,17 @@ const SERVICES: ServiceItem[] = [
     description: 'Build community and engagement with strategic content calendars and management.',
     capabilityCount: 4,
     tags: ['Content Strategy', 'Community Mgmt', 'Influencer Marketing', 'Trend Analysis'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-2--large',
+    imageUrl: IMAGES.img1, // Repeating sequence
     imagePosition: 'right'
   }, 
-  // --- GROUP 3 ---
+  // --- GROUP 3 (Content) ---
   {
     id: 'content-marketing',
     title: 'Content Marketing',
     description: 'Attract and convert your audience with value-driven storytelling and copywriting.',
     capabilityCount: 4,
     tags: ['Blog Writing', 'Whitepapers', 'Case Studies', 'Copywriting'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-3--large',
+    imageUrl: IMAGES.img2,
     imagePosition: 'left'
   }, {
     id: 'video-production',
@@ -76,17 +84,17 @@ const SERVICES: ServiceItem[] = [
     description: 'Captivate your audience with high-end motion graphics and video storytelling.',
     capabilityCount: 4,
     tags: ['Motion Graphics', 'Video Editing', 'Scriptwriting', 'Post-Production'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-3--large',
+    imageUrl: IMAGES.img3,
     imagePosition: 'right'
   }, 
-  // --- GROUP 4 ---
+  // --- GROUP 4 (Retention/Data) ---
   {
     id: 'email-marketing',
     title: 'Email Marketing',
     description: 'Nurture leads and retain customers with personalized automated email flows.',
     capabilityCount: 4,
     tags: ['Automation Flows', 'Newsletter', 'List Segmentation', 'A/B Testing'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-4--large',
+    imageUrl: IMAGES.img4,
     imagePosition: 'left'
   }, {
     id: 'cro',
@@ -94,7 +102,7 @@ const SERVICES: ServiceItem[] = [
     description: 'Maximize the value of every visitor by optimizing your conversion funnels.',
     capabilityCount: 4,
     tags: ['User Testing', 'Heatmaps', 'Funnel Analysis', 'UX Optimization'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-4--large',
+    imageUrl: IMAGES.img1,
     imagePosition: 'center'
   }, {
     id: 'data-analytics',
@@ -102,7 +110,7 @@ const SERVICES: ServiceItem[] = [
     description: 'Make informed decisions with custom reporting and real-time performance tracking.',
     capabilityCount: 4,
     tags: ['GA4 Setup', 'Looker Studio', 'Attribution Models', 'ROI Tracking'],
-    imageUrl: 'https://res.cloudinary.com/forhims/image/upload/q_auto,f_auto,dpr_2/v1761690556/dba/herbarium/cat/hims/hims--vital-areas-item-4--large',
+    imageUrl: IMAGES.img2,
     imagePosition: 'right'
   }
 ];
@@ -111,9 +119,9 @@ const SERVICES: ServiceItem[] = [
 const getBackgroundPosition = (position: string) => {
   switch (position) {
     case 'left':
-      return '0% 50%';
+      return '20% 50%'; // Adjusted for landscape images
     case 'right':
-      return '100% 50%';
+      return '80% 50%'; // Adjusted for landscape images
     case 'center':
       return '50% 50%';
     default:
@@ -231,7 +239,7 @@ export const Services = () => {
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
                Digital Ecosystem
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-neutral-900 md:text-5xl">
+            <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 md:text-5xl">
               Specialized in <br />
               <motion.span
                 initial={{ backgroundPosition: "400% 50%" }}
@@ -268,6 +276,7 @@ export const Services = () => {
 
         {/* Tabs Navigation */}
         <div className="relative mb-12">
+          {/* REMOVED BACKGROUND STRIP HERE */}
           <div ref={tabsContainerRef} className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right" style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none'
@@ -313,8 +322,6 @@ export const Services = () => {
                 {service.title}
               </button>
             ))}
-            {/* Background track for tabs */}
-            <div className="absolute inset-0 bg-[#F5F0E8] opacity-50 rounded-full -z-20 h-full w-[970px] max-w-full pointer-events-none" />
           </div>
         </div>
 
@@ -324,14 +331,12 @@ export const Services = () => {
         msOverflowStyle: 'none'
       }}>
           {SERVICES.map(service => (
-            // Cards reduced by ~20%
             <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
-              {/* Height reduced by ~20% (from 520px to 420px) */}
               <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
                 {/* Background Image */}
                 <div className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" style={{
               backgroundImage: `url('${service.imageUrl}')`,
-              backgroundSize: 'auto 100%',
+              backgroundSize: 'cover', // Changed to cover for landscape images
               backgroundPosition: getBackgroundPosition(service.imagePosition || 'center'),
               backgroundRepeat: 'no-repeat'
             }} />
