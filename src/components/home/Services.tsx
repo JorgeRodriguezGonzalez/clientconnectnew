@@ -171,6 +171,10 @@ export const Services = () => {
       /* Ocultar Scrollbar agresivamente */
       .scrollbar-hide::-webkit-scrollbar { display: none !important; }
       .scrollbar-hide { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+      
+      /* Ocultar scrollbar horizontal en todo */
+      body { overflow-x: hidden !important; max-width: 100vw !important; }
+      html { overflow-x: hidden !important; }
     `;
     document.head.appendChild(style);
   }, []);
@@ -234,7 +238,7 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200" style={{ marginLeft: '8vw', overflowX: 'hidden' }}>
+    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden" style={{ marginLeft: '8vw' }}>
       
       {/* 1. Header (Centrado) */}
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '2vw' }}>
