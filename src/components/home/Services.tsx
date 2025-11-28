@@ -152,7 +152,8 @@ export const Services = () => {
     const card = document.getElementById(`card-${id}`);
     
     if (card && scrollContainerRef.current) {
-      const scrollPos = card.offsetLeft;
+      // AJUSTE SCROLL: Restamos 20px para que la tarjeta no quede oculta bajo el blur
+      const scrollPos = card.offsetLeft - 20;
       scrollContainerRef.current.scrollTo({
         left: scrollPos, 
         behavior: 'smooth'
@@ -173,7 +174,8 @@ export const Services = () => {
       SERVICES.forEach(service => {
         const card = document.getElementById(`card-${service.id}`);
         if (card) {
-          const distance = Math.abs(card.offsetLeft - scrollPosition);
+          // Ajustamos la detección restando también los 20px para mayor precisión
+          const distance = Math.abs((card.offsetLeft - 20) - scrollPosition);
           if (distance < minDistance) {
             minDistance = distance;
             closestCardId = service.id;
@@ -291,14 +293,15 @@ export const Services = () => {
       {/* CAROUSEL WRAPPER + GLASS OVERLAY */}
       <div className="relative w-full">
         
-        {/* CORREGIDO: Blur overlay reducido a 20px de ancho */}
+        {/* Glassmorphism Blur Overlay (20px) */}
         <div className="absolute top-0 bottom-0 left-0 z-20 w-[20px] bg-gradient-to-r from-white to-transparent pointer-events-none backdrop-blur-sm" />
 
         <div 
           ref={scrollContainerRef} 
           className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
           style={{ 
-            paddingLeft: `${paddingLeft}px`,
+            // AJUSTE PADDING: Añadimos +20px para crear el espacio solicitado
+            paddingLeft: `${paddingLeft + 20}px`,
             paddingRight: '85vw' 
           }}
         >

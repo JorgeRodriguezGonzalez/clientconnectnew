@@ -367,9 +367,10 @@ function FeaturesSectionMinimal() {
     "md:col-span-3 md:row-span-1",
   ];
 
+  // CHANGED: Increased the subtraction from 30px to 80px for the first 2 cards to reduce their height by 50px
   const customStyles = [
-    { maxHeight: 'calc(100% - 30px)' },
-    { maxHeight: 'calc(100% - 30px)' },
+    { maxHeight: 'calc(100% - 80px)' },
+    { maxHeight: 'calc(100% - 80px)' },
     { marginTop: '-30px' },
     { marginTop: '-30px' }
   ];
@@ -447,7 +448,6 @@ function FeaturesSectionMinimal() {
           </div>
         </header>
 
-        {/* CHANGED: Increased min-height for rows from 120px to 220px to increase card height by 100px */}
         <div className="grid grid-cols-1 gap-3 md:auto-rows-[minmax(220px,auto)] md:grid-cols-6">
           {features.map((feature, index) => (
             <BentoItem
@@ -559,8 +559,8 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               </div>
               <div className="flex-1">
                 <header className="flex items-start gap-3">
-                  {/* CHANGED: Added pt-[20px] for top padding on title */}
-                  <h3 className="pt-[20px] text-base font-semibold uppercase tracking-wide text-neutral-900 transition-colors duration-500 dark:text-white">
+                  {/* CHANGED: Reduced top padding from 20px to 10px */}
+                  <h3 className="pt-[10px] text-base font-semibold uppercase tracking-wide text-neutral-900 transition-colors duration-500 dark:text-white">
                     {title}
                   </h3>
                   {meta && (
