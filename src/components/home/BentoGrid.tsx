@@ -711,9 +711,9 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                 <div 
                   className="absolute inset-0 w-full h-full overflow-hidden" 
                   style={{
-                    // CAMBIO AQUÍ: Ahora el gradiente transparente->negro ocupa el 40% del ancho inicial (0% a 40%)
-                    maskImage: 'linear-gradient(to right, transparent 0%, black 40%, black 90%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%, black 90%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
+                    // AUMENTADO AQUÍ: De 40% a 65% para que la transparencia izquierda sea mucho mayor
+                    maskImage: 'linear-gradient(to right, transparent 0%, black 65%, black 90%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 65%, black 90%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
                     maskComposite: 'intersect',
                     WebkitMaskComposite: 'source-in'
                   }}
