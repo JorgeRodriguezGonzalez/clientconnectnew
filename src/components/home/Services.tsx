@@ -24,7 +24,7 @@ const PANORAMIC_IMAGES = {
   data: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2600&auto=format&fit=crop", 
 };
 
-// Data
+// Data: Marketing Digital Services
 const SERVICES: ServiceItem[] = [
   // --- GROUP 1 (2 Cards) ---
   {
@@ -128,35 +128,13 @@ const SERVICES: ServiceItem[] = [
 
 export const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
-  const [leftOffset, setLeftOffset] = useState(20); // Default padding fallback
+  const [carouselPadding, setCarouselPadding] = useState(20); // Valor inicial seguro
   
-  // Refs
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null); // Ref para medir la alineación
+  const titleContainerRef = useRef<HTMLDivElement>(null);
 
-  // Efecto para calcular el padding izquierdo exacto
-  useEffect(() => {
-    const updateOffset = () => {
-      if (headerRef.current) {
-        // Obtenemos la posición del contenedor del header
-        const rect = headerRef.current.getBoundingClientRect();
-        const styles = window.getComputedStyle(headerRef.current);
-        const paddingLeft = parseFloat(styles.paddingLeft);
-        
-        // El offset es la distancia desde la izquierda de la ventana hasta el borde + el padding interno
-        // Esto alinea el contenido del carrusel con el TEXTO del header
-        setLeftOffset(rect.left + paddingLeft);
-      }
-    };
-
-    // Calcular al inicio y al redimensionar
-    updateOffset();
-    window.addEventListener('resize', updateOffset);
-    return () => window.removeEventListener('resize', updateOffset);
-  }, []);
-
-  // Estilos globales para animaciones y scrollbars
+  // 1. INYECTAR ESTILOS PARA BENTO + OCULTAR SCROLLBAR
   useEffect(() => {
     if (typeof document === "undefined") return;
     const id = "bento-services-styles";
@@ -167,39 +145,68 @@ export const Services = () => {
       @keyframes bento2-gradient-fade1 { 0%, 10% { opacity: 0.5; } 26.67%, 73.33% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
       @keyframes bento2-gradient-fade2 { 0%, 10% { opacity: 0; } 26.67%, 50% { opacity: 0.5; } 69.05%, 100% { opacity: 0; } }
       @keyframes bento2-gradient-fade3 { 0%, 50% { opacity: 0; } 69.05%, 73.81% { opacity: 0.5; } 88.1%, 100% { opacity: 0; } }
-      .scrollbar-hide::-webkit-scrollbar { display: none; }
-      .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      
+      /* Ocultar Scrollbar de forma agresiva */
+      .hide-scroll::-webkit-scrollbar {
+          display: none !important;
+      }
+      .hide-scroll {
+          -ms-overflow-style: none !important;
+          scrollbar-width: none !important;
+      }
     `;
     document.head.appendChild(style);
-    return () => {
-      style.remove();
+  }, []);
+
+  // 2. CALCULAR ALINEACIÓN EXACTA
+  // Medimos dónde empieza el contenedor del título y aplicamos ese valor como padding-left al carrusel
+  useEffect(() => {
+    const calculatePadding = () => {
+      if (titleContainerRef.current) {
+        // Obtenemos la distancia desde la izquierda de la ventana al contenedor
+        const rect = titleContainerRef.current.getBoundingClientRect();
+        
+        // Obtenemos el padding interno aplicado por Tailwind (px-4 o px-8)
+        const computedStyle = window.getComputedStyle(titleContainerRef.current);
+        const paddingLeft = parseFloat(computedStyle.paddingLeft);
+        
+        // El padding total que necesita el carrusel es: Margen Izquierdo Ventana + Padding Interno Contenedor
+        setCarouselPadding(rect.left + paddingLeft);
+      }
     };
+
+    calculatePadding();
+    // Recalcular si cambia el tamaño de la ventana
+    window.addEventListener('resize', calculatePadding);
+    // Timeout pequeño para asegurar que el DOM está listo
+    setTimeout(calculatePadding, 100);
+
+    return () => window.removeEventListener('resize', calculatePadding);
   }, []);
 
   const scrollToCard = (id: string) => {
     setActiveTab(id);
     const element = document.getElementById(`card-${id}`);
     if (element && scrollContainerRef.current) {
-      // Ajustamos el cálculo del scroll para tener en cuenta el offset dinámico
       const elementLeft = element.getBoundingClientRect().left;
       const currentScroll = scrollContainerRef.current.scrollLeft;
-      // Queremos que el elemento quede en la posición 'leftOffset'
-      // Nueva posición = ScrollActual + (PosiciónElemento - OffsetDeseado)
-      const targetScroll = currentScroll + (elementLeft - leftOffset);
+      // Ajustamos el scroll restando el padding para que quede alineado al inicio visual
+      const offset = elementLeft + currentScroll - carouselPadding;
       
       scrollContainerRef.current.scrollTo({
-        left: targetScroll,
+        left: offset,
         behavior: 'smooth'
       });
     }
   };
 
-  // Scroll sync logic
+  // Sincronización de Tabs al hacer Scroll
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
       const container = scrollContainerRef.current;
-      const containerCenter = container.getBoundingClientRect().left + container.offsetWidth / 2;
+      // Punto medio visual ajustado por el padding
+      const containerCenter = carouselPadding + (container.offsetWidth - carouselPadding) / 2;
 
       let closestCardId = activeTab;
       let minDistance = Infinity;
@@ -230,21 +237,25 @@ export const Services = () => {
     const container = scrollContainerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll();
     }
     return () => {
       if (container) {
         container.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [activeTab]);
+  }, [activeTab, carouselPadding]);
 
   return (
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-hidden">
       
-      {/* 1. HEADER & TABS (Centrados) */}
-      {/* Asignamos la ref aquí para medir dónde empieza realmente el contenido */}
-      <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8">
+      {/* 
+        CONTENEDOR DE REFERENCIA 
+        Usamos este div para medir exactamente dónde debe empezar el contenido.
+        ref={titleContainerRef}
+      */}
+      <div ref={titleContainerRef} className="max-w-6xl mx-auto px-4 md:px-8">
+        
+        {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
@@ -285,10 +296,11 @@ export const Services = () => {
           </div>
         </div>
 
+        {/* Tabs Navigation */}
         <div className="relative mb-12">
           <div 
             ref={tabsContainerRef} 
-            className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right"
+            className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right hide-scroll"
           >
             {SERVICES.map(service => (
               <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
@@ -313,15 +325,17 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 3. FULL WIDTH CAROUSEL */}
-      {/* Usamos el leftOffset calculado dinámicamente */}
+      {/* 
+          3. CAROUSEL (Full Width)
+          Aplicamos el 'paddingLeft' calculado dinámicamente mediante inline style.
+          Esto garantiza que el primer elemento se alinee visualmente con el contenedor de arriba,
+          pero el contenedor en sí ocupa todo el ancho de la pantalla (w-full).
+      */}
       <div 
         ref={scrollContainerRef} 
-        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide w-full"
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
         style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          paddingLeft: `${leftOffset}px`, // ALINEACIÓN MÁGICA
+          paddingLeft: `${carouselPadding}px`, // ¡Aquí aplicamos la alineación calculada!
           paddingRight: '2rem'
         }}
       >
@@ -372,11 +386,11 @@ export const Services = () => {
             </div>
           </div>
         ))}
-        {/* Espaciador final para que la última tarjeta no se pegue al borde derecho */}
+        {/* Spacer at the end */}
         <div className="flex-shrink-0 w-4 md:w-8" /> 
       </div>
 
-      {/* 4. CTA (Centrado) */}
+      {/* 4. CTA (Centered) */}
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
