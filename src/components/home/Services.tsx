@@ -18,13 +18,9 @@ type ServiceItem = {
 
 // IMÁGENES PANORÁMICAS
 const PANORAMIC_IMAGES = {
-  // Grupo 1: Strategy & Branding
   strategy: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop",
-  // Grupo 2: Traffic
   traffic: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2600&auto=format&fit=crop",
-  // Grupo 3: Creative
   creative: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2600&auto=format&fit=crop",
-  // Grupo 4: Data & Retention
   data: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2600&auto=format&fit=crop", 
 };
 
@@ -140,7 +136,7 @@ export const Services = () => {
 
   useEffect(() => {
     if (typeof document === "undefined") return;
-    const id = "bento-gradients-services";
+    const id = "bento-services-styles";
     if (document.getElementById(id)) return;
     const style = document.createElement("style");
     style.id = id;
@@ -160,19 +156,13 @@ export const Services = () => {
         69.05%, 73.81% { opacity: 0.5; }
         88.1%, 100% { opacity: 0; }
       }
-      
-      /* Dynamic Padding Calculation */
-      .carousel-container {
-        padding-left: 1rem; /* Fallback for mobile (px-4) */
+      /* Ensure scrollbars are hidden in all browsers */
+      .scrollbar-hide::-webkit-scrollbar {
+          display: none;
       }
-      @media (min-width: 768px) {
-        .carousel-container {
-          /* 
-             Logic: (Viewport Width - Container Max Width) / 2 + Container Padding 
-             (100vw - 72rem) / 2 + 2rem
-          */
-          padding-left: max(2rem, calc((100vw - 72rem) / 2 + 2rem));
-        }
+      .scrollbar-hide {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
       }
     `;
     document.head.appendChild(style);
@@ -245,10 +235,8 @@ export const Services = () => {
   return (
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-hidden">
       
-      {/* 1. CENTERED CONTAINER: Header & Tabs */}
+      {/* 1. CENTERED CONTAINER: Header */}
       <div className="max-w-6xl mx-auto px-4 md:px-8">
-        
-        {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
@@ -289,12 +277,16 @@ export const Services = () => {
           </div>
         </div>
 
-        {/* Tabs Navigation */}
+        {/* 2. TABS NAVIGATION (Aligned with Header) */}
         <div className="relative mb-12">
-          <div ref={tabsContainerRef} className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right" style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
-          }}>
+          <div 
+            ref={tabsContainerRef} 
+            className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right" 
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }}
+          >
             {SERVICES.map(service => (
               <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
                 
@@ -318,13 +310,20 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 2. FULL WIDTH CAROUSEL with DYNAMIC PADDING */}
+      {/* 3. FULL WIDTH CAROUSEL with PRECISE ALIGNMENT */}
       <div 
         ref={scrollContainerRef} 
-        className="carousel-container flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide"
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory scrollbar-hide"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
+          // CALCULATION LOGIC:
+          // Center container is max-w-6xl (72rem).
+          // Padding is 2rem (px-8) on desktop.
+          // Formula: (Screen Width - Container Width) / 2 + Container Padding
+          // Use max() to ensure on small screens it defaults to a safe padding (1rem/16px)
+          paddingLeft: 'max(16px, calc((100% - 72rem) / 2 + 32px))',
+          paddingRight: '32px' // Some space at the end
         }}
       >
         {SERVICES.map(service => (
@@ -377,11 +376,11 @@ export const Services = () => {
             </div>
           </div>
         ))}
-        {/* Right side spacer to ensure last card isn't stuck to edge */}
+        {/* Right side spacer */}
         <div className="flex-shrink-0 w-4 md:w-8" /> 
       </div>
 
-      {/* 3. CENTERED CONTAINER: Bottom CTA */}
+      {/* 4. CENTERED CONTAINER: Bottom CTA */}
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
