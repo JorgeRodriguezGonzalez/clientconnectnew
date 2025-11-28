@@ -237,7 +237,7 @@ export const Services = () => {
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200" style={{ marginLeft: '8vw', overflowX: 'hidden' }}>
       
       {/* 1. Header (Centrado) */}
-      <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '-8vw' }}>
+      <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: '-2vw' }}>
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
