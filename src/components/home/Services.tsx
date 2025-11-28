@@ -291,9 +291,8 @@ export const Services = () => {
       {/* CAROUSEL WRAPPER + GLASS OVERLAY */}
       <div className="relative w-full">
         
-        {/* NEW: Left Glassmorphism Blur Overlay */}
-        {/* from-white (opaque) -> via-white/80 (semi) -> to-transparent */}
-        <div className="absolute top-0 bottom-0 left-0 z-20 w-24 md:w-48 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none backdrop-blur-sm" />
+        {/* CORREGIDO: Blur overlay reducido a 20px de ancho */}
+        <div className="absolute top-0 bottom-0 left-0 z-20 w-[20px] bg-gradient-to-r from-white to-transparent pointer-events-none backdrop-blur-sm" />
 
         <div 
           ref={scrollContainerRef} 
