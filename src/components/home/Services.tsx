@@ -16,7 +16,6 @@ type ServiceItem = {
   bgPosition: string;
 };
 
-// IMÁGENES PANORÁMICAS
 const PANORAMIC_IMAGES = {
   strategy: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop",
   traffic: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2600&auto=format&fit=crop",
@@ -24,9 +23,8 @@ const PANORAMIC_IMAGES = {
   data: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2600&auto=format&fit=crop", 
 };
 
-// Data
 const SERVICES: ServiceItem[] = [
-  // --- GROUP 1 (2 Cards) ---
+  // --- GROUP 1 ---
   {
     id: 'digital-strategy',
     title: 'Digital Strategy',
@@ -34,8 +32,7 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['Market Analysis', 'Competitor Research', 'KPI Definition', 'Growth Roadmap'],
     imageUrl: PANORAMIC_IMAGES.strategy,
-    bgSize: "200% 100%", 
-    bgPosition: "0% 50%"
+    bgSize: "200% 100%", bgPosition: "0% 50%"
   }, {
     id: 'brand-identity',
     title: 'Brand Identity',
@@ -43,10 +40,9 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['Logo Design', 'Visual Guidelines', 'Tone of Voice', 'Brand Assets'],
     imageUrl: PANORAMIC_IMAGES.strategy,
-    bgSize: "200% 100%",
-    bgPosition: "100% 50%"
+    bgSize: "200% 100%", bgPosition: "100% 50%"
   }, 
-  // --- GROUP 2 (3 Cards) ---
+  // --- GROUP 2 ---
   {
     id: 'seo',
     title: 'SEO',
@@ -54,8 +50,7 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['Technical Audit', 'Keyword Strategy', 'Link Building', 'Local SEO'],
     imageUrl: PANORAMIC_IMAGES.traffic,
-    bgSize: "300% 100%",
-    bgPosition: "0% 50%"
+    bgSize: "300% 100%", bgPosition: "0% 50%"
   }, {
     id: 'paid-media',
     title: 'Paid Media',
@@ -63,8 +58,7 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['Google Ads', 'Social Ads', 'Retargeting', 'Display Network'],
     imageUrl: PANORAMIC_IMAGES.traffic,
-    bgSize: "300% 100%",
-    bgPosition: "50% 50%"
+    bgSize: "300% 100%", bgPosition: "50% 50%"
   }, {
     id: 'social-media',
     title: 'Social Media',
@@ -72,10 +66,9 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['Content Strategy', 'Community Mgmt', 'Influencer Marketing', 'Trend Analysis'],
     imageUrl: PANORAMIC_IMAGES.traffic,
-    bgSize: "300% 100%",
-    bgPosition: "100% 50%"
+    bgSize: "300% 100%", bgPosition: "100% 50%"
   }, 
-  // --- GROUP 3 (2 Cards) ---
+  // --- GROUP 3 ---
   {
     id: 'content-marketing',
     title: 'Content Marketing',
@@ -83,8 +76,7 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['Blog Writing', 'Whitepapers', 'Case Studies', 'Copywriting'],
     imageUrl: PANORAMIC_IMAGES.creative,
-    bgSize: "200% 100%",
-    bgPosition: "0% 50%"
+    bgSize: "200% 100%", bgPosition: "0% 50%"
   }, {
     id: 'video-production',
     title: 'Video Production',
@@ -92,10 +84,9 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['Motion Graphics', 'Video Editing', 'Scriptwriting', 'Post-Production'],
     imageUrl: PANORAMIC_IMAGES.creative,
-    bgSize: "200% 100%",
-    bgPosition: "100% 50%"
+    bgSize: "200% 100%", bgPosition: "100% 50%"
   }, 
-  // --- GROUP 4 (3 Cards) ---
+  // --- GROUP 4 ---
   {
     id: 'email-marketing',
     title: 'Email Marketing',
@@ -103,8 +94,7 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['Automation Flows', 'Newsletter', 'List Segmentation', 'A/B Testing'],
     imageUrl: PANORAMIC_IMAGES.data,
-    bgSize: "300% 100%",
-    bgPosition: "0% 50%"
+    bgSize: "300% 100%", bgPosition: "0% 50%"
   }, {
     id: 'cro',
     title: 'CRO',
@@ -112,8 +102,7 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['User Testing', 'Heatmaps', 'Funnel Analysis', 'UX Optimization'],
     imageUrl: PANORAMIC_IMAGES.data,
-    bgSize: "300% 100%",
-    bgPosition: "50% 50%"
+    bgSize: "300% 100%", bgPosition: "50% 50%"
   }, {
     id: 'data-analytics',
     title: 'Data Analytics',
@@ -121,17 +110,47 @@ const SERVICES: ServiceItem[] = [
     capabilityCount: 4,
     tags: ['GA4 Setup', 'Looker Studio', 'Attribution Models', 'ROI Tracking'],
     imageUrl: PANORAMIC_IMAGES.data,
-    bgSize: "300% 100%",
-    bgPosition: "100% 50%"
+    bgSize: "300% 100%", bgPosition: "100% 50%"
   }
 ];
 
 export const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
+  const [paddingLeft, setPaddingLeft] = useState(20); // Valor inicial seguro
+  
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const alignmentMarkerRef = useRef<HTMLDivElement>(null); // EL MARCADOR INVISIBLE
 
-  // Inyectar estilos para scrollbar oculta y animaciones
+  // 1. LÓGICA DE ALINEACIÓN INFALIBLE
+  useEffect(() => {
+    const calculateAlignment = () => {
+      if (alignmentMarkerRef.current) {
+        // Obtenemos la distancia exacta desde el borde izquierdo de la pantalla hasta nuestro marcador
+        const rect = alignmentMarkerRef.current.getBoundingClientRect();
+        // Si el valor es razonable (>0), lo aplicamos
+        if (rect.left > 0) {
+          setPaddingLeft(rect.left);
+        }
+      }
+    };
+
+    // Calcular inmediatamente
+    calculateAlignment();
+    
+    // Calcular cuando se redimensiona la ventana
+    window.addEventListener('resize', calculateAlignment);
+    
+    // Calcular un poco después por si la fuente o el layout tarda en cargar
+    const timeout = setTimeout(calculateAlignment, 100);
+
+    return () => {
+      window.removeEventListener('resize', calculateAlignment);
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  // 2. ESTILOS GLOBALES (Bento + Scrollbar Hide Force)
   useEffect(() => {
     if (typeof document === "undefined") return;
     const id = "bento-services-styles";
@@ -143,9 +162,14 @@ export const Services = () => {
       @keyframes bento2-gradient-fade2 { 0%, 10% { opacity: 0; } 26.67%, 50% { opacity: 0.5; } 69.05%, 100% { opacity: 0; } }
       @keyframes bento2-gradient-fade3 { 0%, 50% { opacity: 0; } 69.05%, 73.81% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
       
-      /* Ocultar Scrollbar agresivamente */
-      .scrollbar-hide::-webkit-scrollbar { display: none !important; }
-      .scrollbar-hide { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+      /* FORZAR ocultar barra de scroll */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none !important;
+      }
+      .no-scrollbar {
+          -ms-overflow-style: none !important;
+          scrollbar-width: none !important;
+      }
     `;
     document.head.appendChild(style);
   }, []);
@@ -154,32 +178,34 @@ export const Services = () => {
     setActiveTab(id);
     const element = document.getElementById(`card-${id}`);
     if (element && scrollContainerRef.current) {
-      // Ajuste simple: centrar el elemento o llevarlo al inicio
-      const elementLeft = element.offsetLeft;
+      const elementLeft = element.getBoundingClientRect().left;
+      const currentScroll = scrollContainerRef.current.scrollLeft;
+      // Ajuste: Posición actual + (Distancia elemento - Padding deseado)
+      const offset = currentScroll + (elementLeft - paddingLeft);
+      
       scrollContainerRef.current.scrollTo({
-        left: elementLeft - 20, // Un pequeño offset visual
+        left: offset,
         behavior: 'smooth'
       });
     }
   };
 
-  // Sincronización de scroll
+  // Scroll Sync Logic
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
       const container = scrollContainerRef.current;
-      // Aproximación del centro
-      const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+      const containerCenter = paddingLeft + (container.offsetWidth - paddingLeft) / 2;
 
       let closestCardId = activeTab;
       let minDistance = Infinity;
       SERVICES.forEach(service => {
         const card = document.getElementById(`card-${service.id}`);
-        // Usamos offsetLeft para la posición relativa dentro del contenedor scrollable
         if (card) {
-          const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.left + rect.width / 2;
           const distance = Math.abs(cardCenter - containerCenter);
-          if (distance < minDistance) {
+          if (distance < minDistance && distance < rect.width) {
             minDistance = distance;
             closestCardId = service.id;
           }
@@ -206,13 +232,21 @@ export const Services = () => {
         container.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [activeTab]);
+  }, [activeTab, paddingLeft]);
 
   return (
     <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-hidden">
       
-      {/* 1. Header (Centrado) */}
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+      {/* HEADER & TABS CONTAINER */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8 relative">
+        
+        {/* --- MARCADOR INVISIBLE --- 
+            Este div de 1px de altura no se ve, pero está alineado 
+            exactamente donde empieza el contenido. Usamos su posición 
+            para alinear el carrusel.
+        */}
+        <div ref={alignmentMarkerRef} className="absolute left-4 md:left-8 top-0 w-px h-px opacity-0 pointer-events-none" />
+
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
              <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">
@@ -253,11 +287,11 @@ export const Services = () => {
           </div>
         </div>
 
-        {/* 2. Tabs (Centrado) */}
+        {/* TABS */}
         <div className="relative mb-12">
           <div 
             ref={tabsContainerRef} 
-            className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right scrollbar-hide"
+            className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right no-scrollbar"
           >
             {SERVICES.map(service => (
               <button key={service.id} id={`tab-${service.id}`} onClick={() => scrollToCard(service.id)} className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}>
@@ -282,21 +316,22 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 3. CAROUSEL (Full Width con Padding Lateral) */}
+      {/* 
+          CAROUSEL
+          Aquí aplicamos el padding calculado dinámicamente con JS.
+          Al usar inline styles para paddingLeft, nos aseguramos de que coincida
+          exactamente con el marcador invisible.
+      */}
       <div 
         ref={scrollContainerRef} 
-        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full scrollbar-hide"
-        style={{ 
-          paddingLeft: 'max(1rem, calc((100vw - 72rem) / 2 + 2rem))',
+        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full no-scrollbar"
+        style={{
+          paddingLeft: `${paddingLeft}px`,
           paddingRight: '2rem'
         }}
       >
-        {SERVICES.map((service) => (
-          <div 
-            key={service.id} 
-            id={`card-${service.id}`} 
-            className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
-          >
+        {SERVICES.map((service, index) => (
+          <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
             <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
               
               <div 
@@ -342,11 +377,11 @@ export const Services = () => {
             </div>
           </div>
         ))}
-        {/* Spacer at the end */}
+        {/* Espaciador final */}
         <div className="flex-shrink-0 w-4 md:w-8" /> 
       </div>
 
-      {/* 4. CTA (Centrado) */}
+      {/* CTA */}
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
