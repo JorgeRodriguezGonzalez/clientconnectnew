@@ -12,27 +12,25 @@ type ServiceItem = {
   capabilityCount: number;
   tags: ServiceTag[];
   imageUrl: string;
-  // Propiedades nuevas para el efecto panorámico
-  bgSize: string;      // ej: "200% 100%" para grupo de 2, "300% 100%" para grupo de 3
-  bgPosition: string;  // ej: "0% 50%", "50% 50%", "100% 50%"
+  bgSize: string;
+  bgPosition: string;
 };
 
 // IMÁGENES PANORÁMICAS (Wide aspect ratio)
 const PANORAMIC_IMAGES = {
-  // Grupo 1 (2 cartas): Strategy & Branding (Team/Planning)
+  // Grupo 1: Strategy & Branding
   strategy: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop",
-  // Grupo 2 (3 cartas): Traffic (Abstract Motion/Speed/Data)
+  // Grupo 2: Traffic
   traffic: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2600&auto=format&fit=crop",
-  // Grupo 3 (2 cartas): Creative (Studio/Production)
+  // Grupo 3: Creative
   creative: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2600&auto=format&fit=crop",
-  // Grupo 4 (3 cartas): Data & Retention (Abstract Network/Tech)
+  // Grupo 4: Data & Retention
   data: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2600&auto=format&fit=crop", 
 };
 
 // Data: Marketing Digital Services
 const SERVICES: ServiceItem[] = [
   // --- GROUP 1 (2 Cards) ---
-  // Image Split: 200% Width | Positions: 0% (Left), 100% (Right)
   {
     id: 'digital-strategy',
     title: 'Digital Strategy',
@@ -54,7 +52,6 @@ const SERVICES: ServiceItem[] = [
   }, 
   
   // --- GROUP 2 (3 Cards) ---
-  // Image Split: 300% Width | Positions: 0% (Left), 50% (Center), 100% (Right)
   {
     id: 'seo',
     title: 'SEO',
@@ -85,7 +82,6 @@ const SERVICES: ServiceItem[] = [
   }, 
   
   // --- GROUP 3 (2 Cards) ---
-  // Image Split: 200% Width
   {
     id: 'content-marketing',
     title: 'Content Marketing',
@@ -107,7 +103,6 @@ const SERVICES: ServiceItem[] = [
   }, 
   
   // --- GROUP 4 (3 Cards) ---
-  // Image Split: 300% Width
   {
     id: 'email-marketing',
     title: 'Email Marketing',
@@ -283,7 +278,7 @@ export const Services = () => {
           </div>
         </div>
 
-        {/* Tabs Navigation - Without background strip */}
+        {/* Tabs Navigation */}
         <div className="relative mb-12">
           <div ref={tabsContainerRef} className="flex overflow-x-auto scrollbar-hide gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 mask-gradient-right" style={{
           scrollbarWidth: 'none',
@@ -299,9 +294,9 @@ export const Services = () => {
                     className="absolute inset-0 rounded-full -z-10 overflow-hidden" 
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   >
-                    <div className="absolute inset-0 bg-white" /> {/* White base */}
+                    <div className="absolute inset-0 bg-white" />
                     
-                    {/* Animated Gradients from BentoGrid */}
+                    {/* Animated Gradients */}
                     <div
                       className="absolute inset-0"
                       style={{ 
@@ -323,7 +318,6 @@ export const Services = () => {
                         animation: "bento2-gradient-fade3 10.5s ease-in-out infinite"
                       }}
                     />
-                    {/* Subtle border for definition */}
                     <div className="absolute inset-0 rounded-full border border-neutral-200/50" />
                   </motion.div>
                 )}
@@ -333,63 +327,76 @@ export const Services = () => {
           </div>
         </div>
 
-        {/* Carousel Section */}
-        <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-12 pt-4 -mx-4 px-4 md:-mx-8 md:px-8 snap-x snap-mandatory scrollbar-hide" style={{
-        scrollbarWidth: 'none',
-        msOverflowStyle: 'none'
-      }}>
-          {SERVICES.map(service => (
-            <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
-              <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
-                
-                {/* Background Image with Panoramic Split Effect */}
-                <div 
-                  className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
-                  style={{
-                    backgroundImage: `url('${service.imageUrl}')`,
-                    backgroundSize: service.bgSize,        // Key for the effect
-                    backgroundPosition: service.bgPosition, // Key for the effect
-                    backgroundRepeat: 'no-repeat'
-                  }} 
-                />
-                
-                {/* Content Overlay */}
-                <div className="relative h-full flex flex-col justify-between p-5 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-                  {/* Card Header */}
-                  <div className="space-y-2 pt-1">
-                    <h3 className="text-2xl font-black tracking-tight leading-none text-white">
-                      {service.title}
-                    </h3>
-                    <p className="text-xs leading-relaxed text-white/80 max-w-[95%]">
-                      {service.description}
-                    </p>
-                  </div>
+        {/* Carousel Section Container */}
+        <div className="relative -mx-4 md:-mx-8">
+          
+          {/* Glass Blur Morph - Left Side */}
+          <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 z-20 bg-gradient-to-r from-white via-white/80 to-transparent backdrop-blur-[2px] pointer-events-none" />
+          
+          {/* Glass Blur Morph - Right Side */}
+          <div className="absolute right-0 top-0 bottom-0 w-12 md:w-24 z-20 bg-gradient-to-l from-white via-white/80 to-transparent backdrop-blur-[2px] pointer-events-none" />
 
-                  {/* Card Footer */}
-                  <div className="space-y-3 pb-1">
-                    <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1">
-                      Includes {service.capabilityCount} capabilities
+          {/* Scrolling Container */}
+          <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-12 pt-4 px-4 md:px-8 snap-x snap-mandatory scrollbar-hide" style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}>
+            {SERVICES.map(service => (
+              <div key={service.id} id={`card-${service.id}`} className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]">
+                <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
+                  
+                  {/* Background Image with Panoramic Split */}
+                  <div 
+                    className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
+                    style={{
+                      backgroundImage: `url('${service.imageUrl}')`,
+                      backgroundSize: service.bgSize,
+                      backgroundPosition: service.bgPosition,
+                      backgroundRepeat: 'no-repeat'
+                    }} 
+                  />
+                  
+                  {/* NEW: Dark Overlay for better text contrast */}
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
+                  
+                  {/* Content Overlay */}
+                  <div className="relative h-full flex flex-col justify-between p-5 z-10">
+                    {/* Card Header */}
+                    <div className="space-y-2 pt-1">
+                      <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
+                        {service.title}
+                      </h3>
+                      <p className="text-xs leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
+                        {service.description}
+                      </p>
                     </div>
-                    
-                    <div className="flex flex-wrap gap-1">
-                      {/* Check Icon Circle */}
-                      <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center mr-1 border border-white/10">
-                        <Check className="w-3 h-3 text-white" strokeWidth={2} />
+
+                    {/* Card Footer */}
+                    <div className="space-y-3 pb-1">
+                      <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1 drop-shadow-sm">
+                        Includes {service.capabilityCount} capabilities
                       </div>
                       
-                      {service.tags.map((tag, idx) => (
-                        <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white/10 backdrop-blur-md border border-white/10 text-white">
-                          {tag}
-                        </span>
-                      ))}
+                      <div className="flex flex-wrap gap-1">
+                        {/* Check Icon Circle */}
+                        <div className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center mr-1 border border-white/20">
+                          <Check className="w-3 h-3 text-white" strokeWidth={2} />
+                        </div>
+                        
+                        {service.tags.map((tag, idx) => (
+                          <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-black/30 backdrop-blur-md border border-white/10 text-white shadow-sm">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-          {/* Spacer to allow last card to be centered/visible properly if needed */}
-          <div className="flex-shrink-0 w-4 md:w-8" /> 
+            ))}
+            {/* Spacer to allow last card to be centered/visible properly if needed */}
+            <div className="flex-shrink-0 w-4 md:w-8" /> 
+          </div>
         </div>
 
         {/* Bottom CTA */}
