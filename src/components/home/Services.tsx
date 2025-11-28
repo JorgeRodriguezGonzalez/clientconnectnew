@@ -282,23 +282,20 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* 3. CAROUSEL (Full Width con Margen Dinámico en la primera tarjeta) */}
+      {/* 3. CAROUSEL (Full Width con Padding Lateral) */}
       <div 
         ref={scrollContainerRef} 
         className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full scrollbar-hide"
-        style={{ paddingRight: '2rem' }} // Padding derecho fijo
+        style={{ 
+          paddingLeft: 'max(1rem, calc((100vw - 72rem) / 2 + 2rem))',
+          paddingRight: '2rem'
+        }}
       >
-        {SERVICES.map((service, index) => (
+        {SERVICES.map((service) => (
           <div 
             key={service.id} 
             id={`card-${service.id}`} 
             className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
-            style={{
-              // AQUI ESTÁ LA MAGIA: Solo la primera tarjeta tiene margen izquierdo calculado
-              // (Ancho Pantalla - Ancho Contenedor 72rem) / 2 + Padding Contenedor (2rem)
-              // Usamos max() para proteger pantallas móviles
-              marginLeft: index === 0 ? 'max(1rem, calc((100vw - 72rem) / 2 + 2rem))' : '0'
-            }}
           >
             <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
               
