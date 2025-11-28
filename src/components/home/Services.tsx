@@ -234,7 +234,7 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-hidden">
+    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-hidden" style={{ marginLeft: '50px' }}>
       
       {/* 1. Header (Centrado) */}
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8">
