@@ -16,18 +16,15 @@ type ServiceItem = {
   bgPosition: string;
 };
 
-// IMÁGENES PANORÁMICAS (Wide aspect ratio)
+// IMÁGENES PANORÁMICAS
 const PANORAMIC_IMAGES = {
-  // Grupo 1: Strategy & Branding (Team/Planning) - Mantenida
+  // Grupo 1: Strategy & Branding
   strategy: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop",
-  
-  // Grupo 2 (NUEVA): Traffic (Abstract Digital/Connection/Speed)
+  // Grupo 2: Traffic
   traffic: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2600&auto=format&fit=crop",
-  
-  // Grupo 3 (NUEVA): Creative (Studio/Camera/Lighting dark vibe)
+  // Grupo 3: Creative
   creative: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2600&auto=format&fit=crop",
-  
-  // Grupo 4: Data & Retention (Abstract Network) - Mantenida
+  // Grupo 4: Data & Retention
   data: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2600&auto=format&fit=crop", 
 };
 
@@ -54,7 +51,7 @@ const SERVICES: ServiceItem[] = [
     bgPosition: "100% 50%"
   }, 
   
-  // --- GROUP 2 (3 Cards) - NUEVA IMAGEN ---
+  // --- GROUP 2 (3 Cards) ---
   {
     id: 'seo',
     title: 'SEO',
@@ -84,7 +81,7 @@ const SERVICES: ServiceItem[] = [
     bgPosition: "100% 50%"
   }, 
   
-  // --- GROUP 3 (2 Cards) - NUEVA IMAGEN ---
+  // --- GROUP 3 (2 Cards) ---
   {
     id: 'content-marketing',
     title: 'Content Marketing',
@@ -150,7 +147,7 @@ export const Services = () => {
     style.innerHTML = `
       @keyframes bento2-gradient-fade1 {
         0%, 10% { opacity: 0.5; }
-        26.67%, 73.33% { opacity: 0; }
+        26.67%, 73.33% { opacity: 0.5; }
         88.1%, 100% { opacity: 0.5; }
       }
       @keyframes bento2-gradient-fade2 {
@@ -325,8 +322,8 @@ export const Services = () => {
         {/* Carousel Section Container */}
         <div className="relative -mx-4 md:-mx-8">
           
-          {/* Glass Blur Morph - Right Side Only (Narrower & Softer) */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 z-20 bg-gradient-to-l from-white via-white/50 to-transparent backdrop-blur-[1px] pointer-events-none" />
+          {/* Glass Blur Morph - Right Side Only (Narrow & Super Soft) */}
+          <div className="absolute right-0 top-0 bottom-0 w-8 z-20 bg-gradient-to-l from-white via-white/20 to-transparent backdrop-blur-[1px] pointer-events-none" />
 
           {/* Scrolling Container */}
           <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-12 pt-4 px-4 md:px-8 snap-x snap-mandatory scrollbar-hide" style={{
@@ -348,7 +345,7 @@ export const Services = () => {
                     }} 
                   />
                   
-                  {/* Dark Overlay for better text contrast */}
+                  {/* Dark Overlay */}
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
                   
                   {/* Content Overlay */}
@@ -358,7 +355,7 @@ export const Services = () => {
                       <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
                         {service.title}
                       </h3>
-                      {/* Font size increased to text-sm (+2px approx from xs) */}
+                      {/* Description Text Size */}
                       <p className="text-sm leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
                         {service.description}
                       </p>
