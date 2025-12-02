@@ -732,7 +732,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     </defs>
                     <motion.path 
                       key={`chart-${hoverCount}`}
-                      d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 220 C 120 205 160 185 200 170 C 240 155 260 150 280 155 C 300 160 320 155 340 135 C 360 115 380 80 410 50 C 440 25 465 12 489.248 5.489 Z" 
+                      d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489 Z" 
                       fill="url(#chartGradient)" 
                       stroke="#67BCB7" 
                       strokeWidth="1.77" 
@@ -743,7 +743,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     />
                     <motion.path 
                       key={`line-${hoverCount}`}
-                      d="M 80 220 C 120 205 160 185 200 170 C 240 155 260 150 280 155 C 300 160 320 155 340 135 C 360 115 380 80 410 50 C 440 25 465 12 489.248 5.489" 
+                      d="M 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489" 
                       fill="transparent" 
                       stroke="rgba(103, 188, 183, 0.5)" 
                       strokeWidth="2" 
