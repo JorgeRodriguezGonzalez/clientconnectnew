@@ -15,9 +15,6 @@ import Pricing from "@/components/home/Pricing";
 // 1. ELIMINAMOS ProductShowcase
 // import { ProductShowcase } from "@/components/home/ProductShowcase";
 
-// 2. IMPORTAMOS EL NUEVO COMPONENTE DE SCROLL
-// (Asegúrate de que el nombre del archivo coincida con donde guardaste el código anterior)
-import DecorativeCurve from "@/components/home/DecorativeCurve"; 
 
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
@@ -46,7 +43,7 @@ const Index = () => {
         <CloudHero />
         <InteractiveCardStack />
 
-        {/* 3. AQUÍ REEMPLAZAMOS EL PRODUCT SHOWCASE POR EL NUEVO EFECTO */}
+        
         <DecorativeCurve />
 
         <HowWeWork />
