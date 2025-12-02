@@ -11,12 +11,17 @@ import CTASection from "@/components/home/CTASection";
 import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
 import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
-import { ProductShowcase } from "@/components/home/ProductShowcase";
+
+// 1. ELIMINAMOS ProductShowcase
+// import { ProductShowcase } from "@/components/home/ProductShowcase";
+
+// 2. IMPORTAMOS EL NUEVO COMPONENTE DE SCROLL
+// (Asegúrate de que el nombre del archivo coincida con donde guardaste el código anterior)
+import DecorativeCurve from "@/components/home/DecorativeCurve"; 
+
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
 import CloudHero from "@/components/home/section-layers";
-
-// 1. IMPORTAR EL NUEVO COMPONENTE "Services"
 import { Services } from "@/components/home/Services";
 
 const Index = () => {
@@ -32,7 +37,6 @@ const Index = () => {
           <UseCasesShowcase />
         </div>
 
-        {/* 2. COMPONENTE SERVICES ANTES DEL BENTO */}
         <Services />
 
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
@@ -41,13 +45,15 @@ const Index = () => {
         
         <CloudHero />
         <InteractiveCardStack />
-        <ProductShowcase />
+
+        {/* 3. AQUÍ REEMPLAZAMOS EL PRODUCT SHOWCASE POR EL NUEVO EFECTO */}
+        <DecorativeCurve />
+
         <HowWeWork />
         <ComparisonSection />
         <Pricing />
         <AnimatedGallerySection />
-        {/* Aquí sigue estando tu "ServicesSection" original, 
-            si querías borrarlo elimínalo de aquí y de las importaciones */}
+        
         <ServicesSection />
         <WhyUsSection />
         <WhySubscribeBento />
