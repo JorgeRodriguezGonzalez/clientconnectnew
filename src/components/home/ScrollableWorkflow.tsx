@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { cn } from '@/lib/utils'; // Asegúrate de que esta ruta sea correcta en tu proyecto
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 
 // Types
 type Step = {
@@ -41,61 +40,28 @@ const GRADIENT_TEXT_STYLE = {
   backgroundClip: 'text'
 };
 
-// Sub-component to handle InView logic per step
-const StepItem = ({ 
-  step, 
-  isActive, 
-  setActiveStepId 
-}: { 
-  step: Step; 
-  isActive: boolean; 
-  setActiveStepId: (id: number) => void 
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  // Detects when the element is in the center of the viewport
-  const isInView = useInView(ref, { margin: "-50% 0px -50% 0px" });
-
-  useEffect(() => {
-    if (isInView) {
-      setActiveStepId(step.id);
-    }
-  }, [isInView, step.id, setActiveStepId]);
-
-  return (
-    <div 
-      ref={ref}
-      className={cn(
-        "flex flex-col gap-4 transition-opacity duration-300 ease-in-out py-24", // py-24 adds scroll space
-        isActive ? "opacity-100" : "opacity-30"
-      )}
-    >
-      {/* Title */}
-      <h3 className="text-2xl md:text-3xl font-medium leading-normal tracking-tight text-white cursor-pointer"
-          onClick={() => setActiveStepId(step.id)}>
-        {step.title}
-      </h3>
-
-      {/* Description */}
-      <motion.div 
-        initial={false} 
-        animate={{
-          height: isActive ? 'auto' : 'auto', // Keep auto to allow natural flow, opacity handles focus
-          opacity: isActive ? 1 : 0.5
-        }} 
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        <p className="text-lg md:text-xl leading-relaxed text-white/70 font-medium max-w-[500px]">
-          {step.description}
-        </p>
-      </motion.div>
-    </div>
-  );
-};
-
 // @component: ScrollableWorkflow
 export const ScrollableWorkflow = () => {
   const [activeStepId, setActiveStepId] = useState<number>(1);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // 1. Control del Scroll
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // 2. Actualizar el paso activo según el porcentaje de scroll
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    // Dividimos el scroll en 4 segmentos (0-0.25, 0.25-0.5, etc.)
+    const stepIndex = Math.floor(latest * steps.length);
+    // Aseguramos que el índice esté dentro de los límites (1 a 4)
+    const newStepId = Math.min(Math.max(stepIndex + 1, 1), steps.length);
+    
+    if (newStepId !== activeStepId) {
+      setActiveStepId(newStepId);
+    }
+  });
 
   // Preload videos
   useEffect(() => {
@@ -108,47 +74,77 @@ export const ScrollableWorkflow = () => {
     });
   }, []);
 
-  return (
-    <div className="w-full bg-black text-white font-sans flex flex-col items-center py-20 px-4 md:px-10 overflow-hidden">
-      
-      {/* Header */}
-      <div className="mb-20 max-w-[600px] w-full text-center z-10">
-        <h2 className="text-4xl md:text-[56px] leading-tight font-medium tracking-tight">
-          <span style={GRADIENT_TEXT_STYLE} className="inline-block py-2">
-            How Breez Works
-          </span>
-        </h2>
-      </div>
+  // Obtenemos el objeto del paso actual
+  const activeStep = steps.find(s => s.id === activeStepId) || steps[0];
 
-      {/* Main Content Area - Changed items-center to items-start for sticky behavior */}
-      <div className="w-full max-w-[1200px] flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-20 relative">
+  return (
+    // CONTENEDOR PRINCIPAL: Muy alto (400vh) para permitir scroll
+    <div ref={containerRef} className="relative w-full h-[400vh] bg-black">
+      
+      {/* CONTENEDOR STICKY: Se queda fijo en pantalla mientras scrolleas el contenedor principal */}
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10">
         
-        {/* Left Column: Steps (Scrollable) */}
-        <div className="w-full lg:w-[500px] flex flex-col">
-          {steps.map(step => (
-            <StepItem 
-              key={step.id} 
-              step={step} 
-              isActive={activeStepId === step.id} 
-              setActiveStepId={setActiveStepId} 
-            />
-          ))}
-          {/* Spacer to allow the last item to scroll up comfortably */}
-          <div className="h-[20vh]" />
+        {/* Header Fijo */}
+        <div className="absolute top-10 w-full text-center z-20">
+          <h2 className="text-4xl md:text-[56px] leading-tight font-medium tracking-tight text-white">
+            <span style={GRADIENT_TEXT_STYLE} className="inline-block py-2">
+              How Breez Works
+            </span>
+          </h2>
         </div>
 
-        {/* Right Column: Video Visuals (Sticky) */}
-        <div className="hidden lg:block sticky top-[25vh] w-full lg:w-[636px] h-[300px] sm:h-[405px] rounded-lg overflow-hidden flex-shrink-0">
+        {/* Área de Contenido Central */}
+        <div className="w-full max-w-[1200px] flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 mt-20">
           
-          {/* Mask container */}
-          <div className="absolute inset-0 w-full h-full z-10 pointer-events-none" style={{
-            background: 'radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.1) 100%)'
-          }} />
+          {/* IZQUIERDA: Texto Cambiante */}
+          <div className="w-full lg:w-[500px] flex flex-col justify-center min-h-[200px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeStep.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="flex flex-col gap-6"
+              >
+                <h3 className="text-3xl md:text-4xl font-medium leading-tight text-white">
+                  {activeStep.title}
+                </h3>
+                <p className="text-lg md:text-xl leading-relaxed text-white/70 font-medium">
+                  {activeStep.description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
 
-          <AnimatePresence mode="popLayout">
-            {steps.map(step => step.id === activeStepId && (
+            {/* Indicadores de progreso (opcional, puntos visuales) */}
+            <div className="flex gap-3 mt-8">
+              {steps.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => {
+                     // Nota: El scroll controla el estado, hacer click aquí requeriría 
+                     // lógica compleja de scrollTo, así que lo dejamos solo visual o 
+                     // como indicador pasivo.
+                  }}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    s.id === activeStepId ? "w-8 bg-white" : "w-2 bg-white/20"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* DERECHA: Video Cambiante */}
+          <div className="relative w-full lg:w-[636px] h-[300px] sm:h-[405px] rounded-lg overflow-hidden flex-shrink-0 bg-white/5 border border-white/10">
+            
+            {/* Máscara de brillo radial */}
+            <div className="absolute inset-0 w-full h-full z-10 pointer-events-none" style={{
+              background: 'radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.1) 100%)'
+            }} />
+
+            <AnimatePresence mode="popLayout">
               <motion.div 
-                key={step.id} 
+                key={activeStep.id} 
                 initial={{ opacity: 0, scale: 0.95 }} 
                 animate={{ opacity: 1, scale: 1 }} 
                 exit={{ opacity: 0 }} 
@@ -162,7 +158,7 @@ export const ScrollableWorkflow = () => {
                   maskRepeat: 'no-repeat'
                 }}>
                   <video 
-                    src={step.videoSrc} 
+                    src={activeStep.videoSrc} 
                     autoPlay 
                     loop 
                     muted 
@@ -172,12 +168,10 @@ export const ScrollableWorkflow = () => {
                   />
                 </div>
               </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+            </AnimatePresence>
+          </div>
 
-        {/* Mobile View Video (Optional Fallback if you want video between texts on mobile) */}
-        {/* Currently kept minimal for layout consistency, logic relies on desktop sticky view */}
+        </div>
       </div>
     </div>
   );
