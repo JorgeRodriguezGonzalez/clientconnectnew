@@ -1,43 +1,51 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 
-// Types
+// Types updated to match the split title structure
 type Step = {
   id: number;
   title: string;
+  highlightText: string;
   description: string;
   videoSrc: string;
 };
 
-// Data
-const steps: Step[] = [{
-  id: 1,
-  title: "01. Connect Your Providers",
-  description: "Plug in LLMs (like GPT or Gemini), voice engines (like ElevenLabs), and speech-to-text tools (like Deepgram). Breez works with all of them.",
-  videoSrc: "https://framerusercontent.com/assets/vYqmjipjjeLG5HeZvmQo9R9Y0Q.webm"
-}, {
-  id: 2,
-  title: "02. Design Your Workflow",
-  description: "Create custom flows for your agents to follow, ensuring they handle every conversation exactly how you want. Drag and drop nodes to build complex logic effortlessly.",
-  videoSrc: "https://framerusercontent.com/assets/9ZKSz7Ff4NGTGCYLeiZCgz9n1o0.webm"
-}, {
-  id: 3,
-  title: "03. Set Agent Roles & Logic",
-  description: "Define specific roles, personalities, and rules for your agents to ensure they represent your brand perfectly and handle edge cases with grace.",
-  // IMPORTANTE: He puesto el video 1 temporalmente porque el enlace original (video 3) estaba roto/caducado.
-  // Sube tus propios videos a la carpeta 'public' y cambia esto a: "/videos/tu-video-3.webm"
-  videoSrc: "https://framerusercontent.com/assets/vYqmjipjjeLG5HeZvmQo9R9Y0Q.webm" 
-}, {
-  id: 4,
-  title: "04. Launch Instantly",
-  description: "Deploy your agents with a single click and start handling calls immediately with zero downtime. Monitor performance and iterate in real-time.",
-  // IMPORTANTE: He puesto el video 2 temporalmente porque el enlace original (video 4) estaba roto/caducado.
-  // Cambia esto a: "/videos/tu-video-4.webm"
-  videoSrc: "https://framerusercontent.com/assets/9ZKSz7Ff4NGTGCYLeiZCgz9n1o0.webm"
-}];
+// Data: Steps 2, 3, 4, and 5 from ProductShowcase
+const steps: Step[] = [
+  {
+    id: 1,
+    title: "Start receiving qualified ",
+    highlightText: "leads daily.",
+    description: "Our targeted campaigns connect you with customers actively searching for your services. Watch your inbox fill with genuine opportunities ready to convert.",
+    videoSrc: "https://framerusercontent.com/assets/vYqmjipjjeLG5HeZvmQo9R9Y0Q.webm"
+  },
+  {
+    id: 2,
+    title: "Expand across all ",
+    highlightText: "digital channels.",
+    description: "From Google to social media, we create cohesive strategies that maximize your visibility. Your brand deserves to be seen everywhere your customers are.",
+    videoSrc: "https://framerusercontent.com/assets/9ZKSz7Ff4NGTGCYLeiZCgz9n1o0.webm"
+  },
+  {
+    id: 3,
+    title: "Get a customized audit with ",
+    highlightText: "actionable improvements.",
+    description: "We analyze your current digital presence and provide a clear roadmap. Every recommendation comes with our commitment to implement the changes for you.",
+    // Video temporal (el original estaba roto)
+    videoSrc: "https://framerusercontent.com/assets/vYqmjipjjeLG5HeZvmQo9R9Y0Q.webm" 
+  },
+  {
+    id: 4,
+    title: "Close more deals with ",
+    highlightText: "high-intent prospects.",
+    description: "Our lead generation strategies target customers ready to buy. We optimize every touchpoint to turn interest into revenue for your business.",
+    // Video temporal (el original estaba roto)
+    videoSrc: "https://framerusercontent.com/assets/9ZKSz7Ff4NGTGCYLeiZCgz9n1o0.webm"
+  }
+];
 
-// Constants
-const GRADIENT_TEXT_STYLE = {
+// Header Gradient (Manteniendo el estilo original del header principal)
+const HEADER_GRADIENT_STYLE = {
   background: 'linear-gradient(258deg, rgb(143, 51, 22) -94%, rgb(255, 255, 255) 95%)',
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
@@ -49,16 +57,14 @@ export const ScrollableWorkflow = () => {
   const [activeStepId, setActiveStepId] = useState<number>(1);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 1. Control del Scroll con un offset ajustado para que sea más reactivo
+  // 1. Control del Scroll
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  // 2. Cálculo matemático preciso para dividir el scroll en 4 partes iguales
+  // 2. Cálculo matemático
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // latest va de 0 a 1.
-    // Multiplicamos por el número de pasos. Si latest es 0.99 * 4 = 3.96 -> Math.floor = 3 -> Index 3 es el paso 4 (id 4).
     const stepIndex = Math.floor(latest * steps.length);
     const newStepId = Math.min(Math.max(stepIndex + 1, 1), steps.length);
     
@@ -67,7 +73,7 @@ export const ScrollableWorkflow = () => {
     }
   });
 
-  // Preload videos (optimización)
+  // Preload videos
   useEffect(() => {
     steps.forEach(step => {
       const link = document.createElement('link');
@@ -81,17 +87,16 @@ export const ScrollableWorkflow = () => {
   const activeStep = steps.find(s => s.id === activeStepId) || steps[0];
 
   return (
-    // Altura ajustada: 400vh da suficiente espacio para leer cada paso con calma
     <div ref={containerRef} className="relative w-full h-[400vh] bg-black">
       
-      {/* Contenedor Sticky: Se mantiene fijo y centrado */}
+      {/* Contenedor Sticky */}
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10">
         
-        {/* Header */}
+        {/* Header Principal */}
         <div className="absolute top-8 md:top-14 w-full text-center z-20">
           <h2 className="text-4xl md:text-[56px] leading-tight font-medium tracking-tight text-white">
-            <span style={GRADIENT_TEXT_STYLE} className="inline-block py-2">
-              How Breez Works
+            <span style={HEADER_GRADIENT_STYLE} className="inline-block py-2">
+              How We Work
             </span>
           </h2>
         </div>
@@ -99,7 +104,7 @@ export const ScrollableWorkflow = () => {
         {/* Contenido Central */}
         <div className="w-full max-w-[1200px] flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 mt-16 md:mt-0">
           
-          {/* IZQUIERDA: Texto (Animado) */}
+          {/* IZQUIERDA: Texto (Animado con nuevos estilos) */}
           <div className="w-full lg:w-[500px] flex flex-col justify-center min-h-[220px]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -107,20 +112,44 @@ export const ScrollableWorkflow = () => {
                 initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="flex flex-col gap-6"
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="flex flex-col"
               >
-                <h3 className="text-3xl md:text-4xl font-medium leading-tight text-white">
-                  {activeStep.title}
+                {/* Título con estilo importado de ProductShowcase */}
+                <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
+                  <span className="text-white">{activeStep.title}</span>
+                  <motion.span
+                    initial={{ backgroundPosition: "400% 50%" }}
+                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                    transition={{
+                      duration: 12,
+                      ease: "linear",
+                      repeat: Infinity
+                    }}
+                    style={{
+                      display: "inline-block",
+                      backgroundImage: "linear-gradient(45deg, rgba(0, 0, 0, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(0, 0, 0, 0))",
+                      backgroundSize: "400% 100%",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      color: "transparent" // Fallback
+                    }}
+                  >
+                    {activeStep.highlightText}
+                  </motion.span>
                 </h3>
-                <p className="text-lg md:text-xl leading-relaxed text-white/70 font-medium">
+
+                {/* Descripción con estilo importado de ProductShowcase */}
+                <p className="mt-6 text-base md:text-lg text-neutral-400 leading-relaxed max-w-md">
                   {activeStep.description}
                 </p>
+
               </motion.div>
             </AnimatePresence>
 
             {/* Barra de progreso visual */}
-            <div className="flex gap-2 mt-8">
+            <div className="flex gap-2 mt-10">
               {steps.map((s) => (
                 <div
                   key={s.id}
@@ -135,7 +164,6 @@ export const ScrollableWorkflow = () => {
           {/* DERECHA: Video (Animado) */}
           <div className="relative w-full lg:w-[636px] h-[300px] sm:h-[405px] rounded-xl overflow-hidden flex-shrink-0 bg-white/5 border border-white/10 shadow-2xl">
             
-            {/* Overlay sutil */}
             <div className="absolute inset-0 w-full h-full z-10 pointer-events-none mix-blend-overlay" style={{
               background: 'radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%)'
             }} />
@@ -154,7 +182,6 @@ export const ScrollableWorkflow = () => {
                   maskImage: 'radial-gradient(98% 98% at 50% 50%, black 0%, transparent 100%)',
                 }}>
                   <video 
-                    // Key fuerza al navegador a recargar el elemento video si la src cambia
                     key={activeStep.videoSrc} 
                     src={activeStep.videoSrc} 
                     autoPlay 
