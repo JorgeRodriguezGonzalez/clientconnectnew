@@ -730,6 +730,22 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                         <stop offset="1" stopColor="rgba(103, 188, 183, 0)" stopOpacity="0" />
                       </linearGradient>
                     </defs>
+                    
+                    {/* Línea horizontal de referencia */}
+                    <motion.line
+                      key={`reference-line-${hoverCount}`}
+                      x1="80"
+                      y1="150"
+                      x2="490"
+                      y2="150"
+                      stroke="rgba(103, 188, 183, 0.3)"
+                      strokeWidth="1"
+                      strokeDasharray="5,5"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.5 }}
+                    />
+                    
                     <motion.path 
                       key={`chart-${hoverCount}`}
                       d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489 Z" 
