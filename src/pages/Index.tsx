@@ -12,9 +12,9 @@ import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
 import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 
-// 1. ELIMINAMOS ProductShowcase
-// import { ProductShowcase } from "@/components/home/ProductShowcase";
-
+// IMPORTACIÓN DEL NUEVO COMPONENTE
+// (Ajusta la ruta si no lo guardaste en components/home/ScrollableWorkflow)
+import ScrollableWorkflow from "@/components/home/ScrollableWorkflow"; 
 
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
@@ -43,8 +43,8 @@ const Index = () => {
         <CloudHero />
         <InteractiveCardStack />
 
-        
-        <DecorativeCurve />
+        {/* AQUÍ ESTÁ EL COMPONENTE ACTUALIZADO CON SCROLL AUTOMÁTICO */}
+        <ScrollableWorkflow />
 
         <HowWeWork />
         <ComparisonSection />
