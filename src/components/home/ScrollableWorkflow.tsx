@@ -95,7 +95,7 @@ export const ScrollableWorkflow = () => {
             mt-12: Margen superior para separarlo del borde de la pantalla.
             mb-32: Margen inferior MUY amplio (128px) para separarlo del contenido de abajo.
         */}
-        <div className="relative w-full text-center z-20 mt-12 mb-32">
+        <div className="relative w-full text-center z-20 mt-12 mb-24">
           <h2 className="text-4xl md:text-[56px] leading-tight font-medium tracking-tight text-white">
             <span style={HEADER_GRADIENT_STYLE} className="inline-block py-2">
               How We Work
