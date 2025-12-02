@@ -31,7 +31,6 @@ const steps: Step[] = [
     title: "Get a customized audit with ",
     highlightText: "actionable improvements.",
     description: "We analyze your current digital presence and provide a clear roadmap. Every recommendation comes with our commitment to implement the changes for you.",
-    // Video temporal (asegúrate de cambiarlo por el tuyo)
     videoSrc: "https://framerusercontent.com/assets/vYqmjipjjeLG5HeZvmQo9R9Y0Q.webm" 
   },
   {
@@ -39,7 +38,6 @@ const steps: Step[] = [
     title: "Close more deals with ",
     highlightText: "high-intent prospects.",
     description: "Our lead generation strategies target customers ready to buy. We optimize every touchpoint to turn interest into revenue for your business.",
-    // Video temporal (asegúrate de cambiarlo por el tuyo)
     videoSrc: "https://framerusercontent.com/assets/9ZKSz7Ff4NGTGCYLeiZCgz9n1o0.webm"
   }
 ];
@@ -92,8 +90,12 @@ export const ScrollableWorkflow = () => {
       {/* Contenedor Sticky */}
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10">
         
-        {/* Header Principal - Ahora es relativo y tiene margen arriba y abajo (my-8 = 32px) */}
-        <div className="relative w-full text-center z-20 my-8">
+        {/* 
+            HEADER MODIFICADO:
+            mt-12: Margen superior para separarlo del borde de la pantalla.
+            mb-32: Margen inferior MUY amplio (128px) para separarlo del contenido de abajo.
+        */}
+        <div className="relative w-full text-center z-20 mt-12 mb-32">
           <h2 className="text-4xl md:text-[56px] leading-tight font-medium tracking-tight text-white">
             <span style={HEADER_GRADIENT_STYLE} className="inline-block py-2">
               How We Work
