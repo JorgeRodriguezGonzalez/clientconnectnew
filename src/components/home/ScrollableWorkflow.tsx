@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 
-// Types updated to match the split title structure
+// Types
 type Step = {
   id: number;
   title: string;
@@ -10,7 +10,7 @@ type Step = {
   videoSrc: string;
 };
 
-// Data: Steps 2, 3, 4, and 5 from ProductShowcase
+// Data
 const steps: Step[] = [
   {
     id: 1,
@@ -31,7 +31,7 @@ const steps: Step[] = [
     title: "Get a customized audit with ",
     highlightText: "actionable improvements.",
     description: "We analyze your current digital presence and provide a clear roadmap. Every recommendation comes with our commitment to implement the changes for you.",
-    // Video temporal (el original estaba roto)
+    // Video temporal (asegúrate de cambiarlo por el tuyo)
     videoSrc: "https://framerusercontent.com/assets/vYqmjipjjeLG5HeZvmQo9R9Y0Q.webm" 
   },
   {
@@ -39,12 +39,12 @@ const steps: Step[] = [
     title: "Close more deals with ",
     highlightText: "high-intent prospects.",
     description: "Our lead generation strategies target customers ready to buy. We optimize every touchpoint to turn interest into revenue for your business.",
-    // Video temporal (el original estaba roto)
+    // Video temporal (asegúrate de cambiarlo por el tuyo)
     videoSrc: "https://framerusercontent.com/assets/9ZKSz7Ff4NGTGCYLeiZCgz9n1o0.webm"
   }
 ];
 
-// Header Gradient (Manteniendo el estilo original del header principal)
+// Header Gradient
 const HEADER_GRADIENT_STYLE = {
   background: 'linear-gradient(258deg, rgb(143, 51, 22) -94%, rgb(255, 255, 255) 95%)',
   WebkitBackgroundClip: 'text',
@@ -63,7 +63,7 @@ export const ScrollableWorkflow = () => {
     offset: ["start start", "end end"]
   });
 
-  // 2. Cálculo matemático
+  // 2. Cálculo del paso activo
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const stepIndex = Math.floor(latest * steps.length);
     const newStepId = Math.min(Math.max(stepIndex + 1, 1), steps.length);
@@ -92,8 +92,8 @@ export const ScrollableWorkflow = () => {
       {/* Contenedor Sticky */}
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10">
         
-        {/* Header Principal */}
-        <div className="absolute top-8 md:top-14 w-full text-center z-20">
+        {/* Header Principal - Ahora es relativo y tiene margen arriba y abajo (my-8 = 32px) */}
+        <div className="relative w-full text-center z-20 my-8">
           <h2 className="text-4xl md:text-[56px] leading-tight font-medium tracking-tight text-white">
             <span style={HEADER_GRADIENT_STYLE} className="inline-block py-2">
               How We Work
@@ -102,9 +102,9 @@ export const ScrollableWorkflow = () => {
         </div>
 
         {/* Contenido Central */}
-        <div className="w-full max-w-[1200px] flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 mt-16 md:mt-0">
+        <div className="w-full max-w-[1200px] flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
           
-          {/* IZQUIERDA: Texto (Animado con nuevos estilos) */}
+          {/* IZQUIERDA: Texto */}
           <div className="w-full lg:w-[500px] flex flex-col justify-center min-h-[220px]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -115,7 +115,6 @@ export const ScrollableWorkflow = () => {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="flex flex-col"
               >
-                {/* Título con estilo importado de ProductShowcase */}
                 <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
                   <span className="text-white">{activeStep.title}</span>
                   <motion.span
@@ -133,14 +132,13 @@ export const ScrollableWorkflow = () => {
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
-                      color: "transparent" // Fallback
+                      color: "transparent"
                     }}
                   >
                     {activeStep.highlightText}
                   </motion.span>
                 </h3>
 
-                {/* Descripción con estilo importado de ProductShowcase */}
                 <p className="mt-6 text-base md:text-lg text-neutral-400 leading-relaxed max-w-md">
                   {activeStep.description}
                 </p>
@@ -148,7 +146,7 @@ export const ScrollableWorkflow = () => {
               </motion.div>
             </AnimatePresence>
 
-            {/* Barra de progreso visual */}
+            {/* Barra de progreso */}
             <div className="flex gap-2 mt-10">
               {steps.map((s) => (
                 <div
@@ -161,7 +159,7 @@ export const ScrollableWorkflow = () => {
             </div>
           </div>
 
-          {/* DERECHA: Video (Animado) */}
+          {/* DERECHA: Video */}
           <div className="relative w-full lg:w-[636px] h-[300px] sm:h-[405px] rounded-xl overflow-hidden flex-shrink-0 bg-white/5 border border-white/10 shadow-2xl">
             
             <div className="absolute inset-0 w-full h-full z-10 pointer-events-none mix-blend-overlay" style={{
