@@ -711,9 +711,8 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                 <div 
                   className="absolute inset-0 w-full h-full overflow-hidden" 
                   style={{
-                    // AUMENTADO AQUÍ: De 40% a 80% (Extreme Fade)
-                    maskImage: 'linear-gradient(to right, transparent 0%, black 80%, black 95%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 80%, black 95%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
+                    maskImage: 'linear-gradient(to right, transparent 0%, transparent 20%, black 50%, black 95%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, transparent 20%, black 50%, black 95%, transparent 100%), linear-gradient(to bottom, black 60%, transparent 100%)',
                     maskComposite: 'intersect',
                     WebkitMaskComposite: 'source-in'
                   }}
