@@ -729,6 +729,10 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                         <stop offset="0" stopColor="rgba(103, 188, 183, 0.6)" stopOpacity="0.6" />
                         <stop offset="1" stopColor="rgba(103, 188, 183, 0)" stopOpacity="0" />
                       </linearGradient>
+                      <linearGradient id="chartGradientCoral" x1="0.4994780349390567" x2="0.5005219650609433" y1="0" y2="1">
+                        <stop offset="0" stopColor="rgba(255, 127, 80, 0.6)" stopOpacity="0.6" />
+                        <stop offset="1" stopColor="rgba(255, 127, 80, 0)" stopOpacity="0" />
+                      </linearGradient>
                     </defs>
                     
                     {/* Línea horizontal de referencia */}
@@ -739,16 +743,17 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       x2="490"
                       y2="150"
                       stroke="rgba(103, 188, 183, 0.3)"
-                      strokeWidth="1"
+                      strokeWidth="2"
                       strokeDasharray="5,5"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.5 }}
                     />
                     
+                    {/* Parte turquesa - antes de cruzar la línea */}
                     <motion.path 
-                      key={`chart-${hoverCount}`}
-                      d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489 Z" 
+                      key={`chart-teal-${hoverCount}`}
+                      d="M 80 220 L 4.869 279.745 L 275 279.745 L 275 150 C 255 148 235 152 210 160 C 170 175 130 200 80 220 Z" 
                       fill="url(#chartGradient)" 
                       stroke="#67BCB7" 
                       strokeWidth="1.77" 
@@ -757,11 +762,40 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       animate={{ pathLength: 1, opacity: 1 }} 
                       transition={{ duration: 1.5, ease: 'easeInOut', delay: 0 }} 
                     />
+                    
+                    {/* Parte coral - después de cruzar la línea */}
                     <motion.path 
-                      key={`line-${hoverCount}`}
-                      d="M 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489" 
+                      key={`chart-coral-${hoverCount}`}
+                      d="M 489.248 5.489 L 489.248 283.23 L 275 279.745 L 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489 Z" 
+                      fill="url(#chartGradientCoral)" 
+                      stroke="#FF7F50" 
+                      strokeWidth="1.77" 
+                      strokeMiterlimit="10" 
+                      initial={{ pathLength: 0, opacity: 0 }} 
+                      animate={{ pathLength: 1, opacity: 1 }} 
+                      transition={{ duration: 1.5, ease: 'easeInOut', delay: 0 }} 
+                    />
+                    
+                    {/* Línea continua turquesa */}
+                    <motion.path 
+                      key={`line-teal-${hoverCount}`}
+                      d="M 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150" 
                       fill="transparent" 
                       stroke="rgba(103, 188, 183, 0.5)" 
+                      strokeWidth="2" 
+                      strokeMiterlimit="10" 
+                      strokeDasharray="9.07,9.07" 
+                      initial={{ pathLength: 0 }} 
+                      animate={{ pathLength: 1 }} 
+                      transition={{ duration: 1, ease: 'easeInOut', delay: 0.1 }} 
+                    />
+                    
+                    {/* Línea continua coral */}
+                    <motion.path 
+                      key={`line-coral-${hoverCount}`}
+                      d="M 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489" 
+                      fill="transparent" 
+                      stroke="rgba(255, 127, 80, 0.5)" 
                       strokeWidth="2" 
                       strokeMiterlimit="10" 
                       strokeDasharray="9.07,9.07" 
