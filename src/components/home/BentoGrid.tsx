@@ -473,6 +473,14 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
   const { icon: Icon, animation, title, blurb, meta, showSkills } = feature;
   const [hoverCount, setHoverCount] = useState(0);
   const [cardHovered, setCardHovered] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  
+  useEffect(() => {
+    if (isVisible && !hasAnimated) {
+      setHoverCount(prev => prev + 1);
+      setHasAnimated(true);
+    }
+  }, [isVisible, hasAnimated]);
   
   const animationDelay = `${Math.max(index * 0.12, 0)}s`;
 
