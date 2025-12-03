@@ -473,22 +473,22 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
   const { icon: Icon, animation, title, blurb, meta, showSkills } = feature;
   const [hoverCount, setHoverCount] = useState(0);
   const [cardHovered, setCardHovered] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const [showInternalAnimations, setShowInternalAnimations] = useState(false);
   
   useEffect(() => {
-    if (isVisible && !hasAnimated) {
+    if (isVisible && !showInternalAnimations) {
       const cardAnimationDuration = 800; // duración de la animación bento2-card en ms
       const cardDelay = Math.max(index * 0.12, 0) * 1000; // delay de la tarjeta en ms
       const totalDelay = cardAnimationDuration + cardDelay + 200; // 200ms extra después de que termine
       
       const timer = setTimeout(() => {
+        setShowInternalAnimations(true);
         setHoverCount(prev => prev + 1);
-        setHasAnimated(true);
       }, totalDelay);
       
       return () => clearTimeout(timer);
     }
-  }, [isVisible, hasAnimated, index]);
+  }, [isVisible, showInternalAnimations, index]);
   
   const animationDelay = `${Math.max(index * 0.12, 0)}s`;
 
@@ -525,7 +525,9 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
           style={{ animationDelay }}
           onMouseEnter={() => {
             setCardHovered(true);
-            setHoverCount(prev => prev + 1);
+            if (showInternalAnimations) {
+              setHoverCount(prev => prev + 1);
+            }
           }}
           onMouseLeave={() => setCardHovered(false)}
         >
@@ -590,7 +592,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               </div>
             </div>
 
-            {isStrategicGrowth && (
+            {isStrategicGrowth && showInternalAnimations && (
               <div className="relative w-full h-[160px] mt-2 overflow-hidden">
                 <motion.div 
                   key={`img1-${hoverCount}`}
@@ -696,7 +698,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               </div>
             )}
 
-            {isQualifiedLeads && (
+            {isQualifiedLeads && showInternalAnimations && (
               <div className="relative w-full h-[120px] mt-2">
                 {skills.map((skill, idx) => (
                   <motion.div
@@ -722,7 +724,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
               </div>
             )}
 
-            {isTransparentReporting && (
+            {isTransparentReporting && showInternalAnimations && (
                <div className="relative w-full h-[160px] mt-2 overflow-hidden">
                 <div 
                   className="absolute inset-0 w-full h-full overflow-hidden" 
