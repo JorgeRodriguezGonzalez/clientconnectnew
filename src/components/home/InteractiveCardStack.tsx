@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, { useId, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 // --- Matriz de Transformación 3D ---
@@ -7,17 +7,10 @@ const MATRIX_TRANSFORM_ALT = "matrix(0.865865, 0.500278, -0.871576, 0.490261, 18
 
 /**
  * CAPA SUPERIOR (NodeCardLayer) - DISEÑO TURQUESA
- * Paleta actualizada según instrucciones:
- * Stroke: #2E6B66
- * Acentos: #67BCB7
- * Relleno Principal: #8ED4D0
- * Relleno Claro/Caras: #D4F2F0
- * Relleno Más Claro/Brillos: #F0FDFA
  */
 const NodeCardLayer = ({ idPrefix }: { idPrefix: string }) => (
   <svg width="460" height="300" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="pointer-events-none align-middle">
     <defs>
-      {/* ClipPaths originales */}
       <clipPath id={`${idPrefix}clip0`}>
         <rect width="320" height="208" rx="16" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.105 20.9684)" fill="white" />
       </clipPath>
@@ -270,11 +263,6 @@ const NodeCardLayer = ({ idPrefix }: { idPrefix: string }) => (
 
 /**
  * CAPA BASE (WaveCardLayer) - DISEÑO CORAL
- * Revertida a la paleta Coral original que antes estaba en la capa superior.
- * Stroke: #9A4526
- * Relleno Principal: #E8A288
- * Acentos: #DE8363
- * Claro: #F4D3C6
  */
 const WaveCardLayer = ({ idPrefix }: { idPrefix: string }) => (
   <svg width="460" height="300" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -343,8 +331,29 @@ const GhostCardLayer = () => (
 // --- COMPONENTE PRINCIPAL EXPORTADO ---
 export const InteractiveCardStack = ({ className }: { className?: string }) => {
   const idPrefix = useId().replace(/:/g, ''); // Sanitizar ID
+  const [scrollY, setScrollY] = useState(0);
 
-  // Animación de flotación suave
+  // Manejador de scroll para el efecto de colapso
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    // Añadir listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Factor de "spread" (dispersión) basado en el scroll.
+  // Empieza en 1 (disperso) y tiende a 0.2 (colapsado) a medida que scrollY aumenta.
+  // 600 es la cantidad de píxeles de scroll necesarios para el efecto completo.
+  const stackFactor = Math.max(0.2, 1 - (scrollY / 600));
+
+  // Animación de flotación suave (sin cambios)
   const floatKeyframes = `
     @keyframes subtle-float {
       0% { transform: translateY(0px); }
@@ -361,10 +370,10 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       <style>{floatKeyframes}</style>
 
       {/* CAPA 4: FONDO (Wave Card - Diseño Ondas CORAL) */}
-      {/* CAMBIO: z-30 (Mayor Z-Index, superpuesta a todo) */}
+      {/* Z-Index Mayor (30). Posición base: -80px. Se multiplica por el factor de scroll. */}
       <div 
         className="absolute top-0 left-0 z-30 transition-transform duration-500 ease-out group-hover:-translate-y-[100px]"
-        style={{ transform: 'translateY(-80px)' }}
+        style={{ transform: `translateY(${-80 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0s' }}>
           <WaveCardLayer idPrefix={idPrefix + 'wave'} />
@@ -372,10 +381,10 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       </div>
 
       {/* CAPA 3: FANTASMA */}
-      {/* Mantiene z-10 */}
+      {/* Posición base: -20px */}
       <div 
         className="absolute top-0 left-0 z-10 transition-transform duration-500 ease-out group-hover:-translate-y-[35px]"
-        style={{ transform: 'translateY(-20px)' }}
+        style={{ transform: `translateY(${-20 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '1.5s' }}>
           <GhostCardLayer />
@@ -383,10 +392,10 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       </div>
 
       {/* CAPA 2: FANTASMA */}
-      {/* Mantiene z-20 */}
+      {/* Posición base: 40px */}
       <div 
         className="absolute top-0 left-0 z-20 transition-transform duration-500 ease-out group-hover:translate-y-[30px]"
-        style={{ transform: 'translateY(40px)' }}
+        style={{ transform: `translateY(${40 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '3s' }}>
           <GhostCardLayer />
@@ -394,10 +403,10 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       </div>
 
       {/* CAPA 1: FRENTE (Node Card - Diseño TURQUESA Completo) */}
-      {/* CAMBIO: z-0 (Menor Z-Index, debajo de todo) */}
+      {/* Z-Index Menor (0). Posición base: 100px. */}
       <div 
         className="absolute top-0 left-0 z-0 transition-transform duration-500 ease-out group-hover:translate-y-[100px] cursor-pointer"
-        style={{ transform: 'translateY(100px)' }}
+        style={{ transform: `translateY(${100 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0.5s' }}>
           <NodeCardLayer idPrefix={idPrefix + 'node'} />
