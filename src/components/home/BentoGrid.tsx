@@ -734,19 +734,19 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                         <stop offset="1" stopColor="rgba(255, 127, 80, 0)" stopOpacity="0" />
                       </linearGradient>
                       <clipPath id="clipBelowLine">
-                        <rect x="0" y="152.5" width="494" height="134" />
+                        <rect x="0" y="152" width="494" height="134" />
                       </clipPath>
                       <clipPath id="clipAboveLine">
-                        <rect x="0" y="0" width="494" height="152.5" />
+                        <rect x="0" y="0" width="494" height="152" />
                       </clipPath>
                     </defs>
                     
                     <motion.line
                       key={`reference-line-${hoverCount}`}
                       x1="80"
-                      y1="152.5"
+                      y1="152"
                       x2="490"
-                      y2="152.5"
+                      y2="152"
                       stroke="rgba(103, 188, 183, 0.3)"
                       strokeWidth="2"
                       strokeDasharray="5,5"
@@ -757,7 +757,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     
                     <g clipPath="url(#clipBelowLine)">
                       <path 
-                        d="M 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 L 489.248 283.23 Z" 
+                        d="M 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 153 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 L 489.248 283.23 Z" 
                         fill="url(#chartGradientTeal)" 
                         stroke="#67BCB7" 
                         strokeWidth="1.77" 
@@ -767,7 +767,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     
                     <g clipPath="url(#clipAboveLine)">
                       <path 
-                        d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 Z" 
+                        d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 153 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 Z" 
                         fill="url(#chartGradientCoral)" 
                         stroke="#FF7F50" 
                         strokeWidth="1.77" 
@@ -777,7 +777,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     
                     <g clipPath="url(#clipBelowLine)">
                       <path 
-                        d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
+                        d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 153 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
                         fill="transparent" 
                         stroke="rgba(103, 188, 183, 0.5)" 
                         strokeWidth="2" 
@@ -788,7 +788,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     
                     <g clipPath="url(#clipAboveLine)">
                       <path 
-                        d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
+                        d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 153 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
                         fill="transparent" 
                         stroke="rgba(255, 127, 80, 0.5)" 
                         strokeWidth="2" 
