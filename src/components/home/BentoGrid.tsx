@@ -756,6 +756,21 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.5 }}
                     />
                     
+                    {/* Línea horizontal de referencia */}
+                    <motion.line
+                      key={`reference-line-${hoverCount}`}
+                      x1="80"
+                      y1="152"
+                      x2="490"
+                      y2="152"
+                      stroke="rgba(103, 188, 183, 0.3)"
+                      strokeWidth="2"
+                      strokeDasharray="5,5"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.5 }}
+                    />
+                    
                     {/* Área TURQUESA (por debajo de y=152) */}
                     <g clipPath="url(#clipBelowLine)">
                       <motion.path 
