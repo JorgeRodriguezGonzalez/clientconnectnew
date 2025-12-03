@@ -23,7 +23,8 @@ const BoxCards = () => {
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
           {/* Left Column: Content */}
-          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pr-16 relative z-10 px-6 lg:px-0" style={{ paddingRight: 'calc(4rem + 20px)' }}>
+          {/* CAMBIO: Ancho aumentado a 55% en desktop (lg:w-[55%]) */}
+          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-[55%] shrink-0 lg:pr-16 relative z-10 px-6 lg:px-0" style={{ paddingRight: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px] ml-auto"> 
               {/* OUR APPROACH */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
@@ -64,14 +65,16 @@ const BoxCards = () => {
           </div>
 
           {/* Vertical Divider (Desktop only) */}
-          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10" />
+          {/* CAMBIO: La posición de la línea se mueve al 55% para coincidir con el corte de las columnas */}
+          <div className="hidden lg:block absolute left-[55%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10" />
 
           {/* Horizontal Divider (Mobile only) */}
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
           {/* Right Column: InteractiveCardStack & BackgroundStripes */}
           <div 
-            className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex flex-col justify-start items-center overflow-visible self-stretch m-0 p-0"
+            // CAMBIO: Ancho reducido al 45% en desktop (lg:w-[45%])
+            className="relative w-full lg:w-[45%] min-h-[480px] md:min-h-[640px] lg:min-h-auto flex flex-col justify-start items-center overflow-visible self-stretch m-0 p-0"
           >
             
             {/* Background (Breakout) */}
@@ -80,8 +83,7 @@ const BoxCards = () => {
             </div>
 
             {/* 
-                AQUÍ ESTÁ EL CAMBIO:
-                Punto intermedio: pt-24 (96px) y lg:pt-44 (176px).
+               CAMBIO FINAL: Padding ajustado a pt-24 lg:pt-40 como solicitaste.
             */}
             <div className="relative w-full h-full flex items-start justify-center pt-24 lg:pt-40 z-10">
               <InteractiveCardStack />
