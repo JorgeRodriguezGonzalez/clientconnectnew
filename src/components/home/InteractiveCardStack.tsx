@@ -7,7 +7,7 @@ const MATRIX_TRANSFORM_ALT = "matrix(0.865865, 0.500278, -0.871576, 0.490261, 18
 
 /**
  * CAPA NODECARD (Turquesa)
- * Ahora diseñada para estar AL FONDO.
+ * Z-Index: BAJO (Fondo)
  */
 const NodeCardLayer = ({ idPrefix }: { idPrefix: string }) => (
   <svg width="460" height="300" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="pointer-events-none align-middle">
@@ -264,7 +264,7 @@ const NodeCardLayer = ({ idPrefix }: { idPrefix: string }) => (
 
 /**
  * CAPA WAVECARD (Coral)
- * Ahora diseñada para estar AL FRENTE.
+ * Z-Index: ALTO (Frente)
  */
 const WaveCardLayer = ({ idPrefix }: { idPrefix: string }) => (
   <svg width="460" height="300" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -350,18 +350,16 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
     <div className={cn("relative w-[460px] h-[470px] select-none group mx-auto", className)}>
       <style>{floatKeyframes}</style>
 
-      {/* CAPA 4 (FONDO/ABAJO): NodeCardLayer (Turquesa) */}
-      {/* z-0 (menor) y translateY(-80px) para que esté físicamente al fondo */}
+      {/* CAPA 1 (FONDO): NodeCardLayer (Turquesa) */}
       <div 
         className="absolute top-0 left-0 z-0 transition-transform duration-500 ease-out group-hover:-translate-y-[100px]"
-        style={{ transform: 'translateY(-80px)' }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0s' }}>
           <NodeCardLayer idPrefix={idPrefix + 'node'} />
         </div>
       </div>
 
-      {/* CAPA 3: FANTASMA */}
+      {/* CAPA 2: FANTASMA */}
       <div 
         className="absolute top-0 left-0 z-10 transition-transform duration-500 ease-out group-hover:-translate-y-[35px]"
         style={{ transform: 'translateY(-20px)' }}
@@ -371,7 +369,7 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      {/* CAPA 2: FANTASMA */}
+      {/* CAPA 3: FANTASMA */}
       <div 
         className="absolute top-0 left-0 z-20 transition-transform duration-500 ease-out group-hover:translate-y-[30px]"
         style={{ transform: 'translateY(40px)' }}
@@ -381,11 +379,9 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      {/* CAPA 1 (FRENTE/ARRIBA): WaveCardLayer (Coral) */}
-      {/* z-30 (mayor) y translateY(100px) para que esté físicamente al frente */}
+      {/* CAPA 4 (FRENTE): WaveCardLayer (Coral) */}
       <div 
         className="absolute top-0 left-0 z-30 transition-transform duration-500 ease-out group-hover:translate-y-[100px] cursor-pointer"
-        style={{ transform: 'translateY(100px)' }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0.5s' }}>
           <WaveCardLayer idPrefix={idPrefix + 'wave'} />
