@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { InteractiveCardStack } from '@/components/home/InteractiveCardStack';
 
-// Componente de fondo (Sin cambios)
 const BackgroundStripes = () => (
   <div
     className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden opacity-[0.04]"
@@ -16,8 +15,6 @@ const BackgroundStripes = () => (
 // @component: BoxCards
 const BoxCards = () => {
   return (
-    // Mantenemos overflow-x-hidden para cortar las líneas que salen a la derecha.
-    // Al usar Margin en lugar de Translate abajo, el contenedor crecerá y no saldrá scroll vertical.
     <section id="box-cards" className="grow relative w-full overflow-x-hidden bg-white flex flex-col">
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
@@ -28,7 +25,6 @@ const BoxCards = () => {
           {/* Left Column: Content */}
           <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pr-16 relative z-10 px-6 lg:px-0" style={{ paddingRight: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px] ml-auto"> 
-              
               {/* OUR APPROACH */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
                 OUR APPROACH
@@ -74,21 +70,24 @@ const BoxCards = () => {
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
           {/* Right Column: InteractiveCardStack & BackgroundStripes */}
-          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
+          <div 
+            className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex flex-col justify-start items-center overflow-visible self-stretch m-0 p-0"
+            // SOLUCIÓN: Usamos padding-top en el estilo inline o clase para empujar todo hacia abajo desde el inicio.
+            // Esto asegura que la altura del contenedor se calcule sumando el padding + la altura del componente.
+          >
             
-            {/* Background que rompe los límites (Breakout) */}
+            {/* Background (Breakout) */}
             <div className="absolute inset-y-0 left-0 w-screen z-0">
               <BackgroundStripes />
             </div>
 
             {/* 
-                CORRECCIÓN AQUÍ:
-                1. Eliminado 'translate-y-...'
-                2. Añadido 'mt-12 lg:mt-24'
-                Esto empuja físicamente el contenido hacia abajo, haciendo que la sección padre
-                calcule correctamente la altura total, eliminando la barra de scroll vertical.
+                CAMBIOS AQUÍ:
+                1. Quitamos 'items-center' del padre y ponemos 'flex-col justify-start items-center' arriba.
+                2. Añadimos 'pt-12 lg:pt-24' para bajar el componente visualmente. 
+                3. Quitamos 'mt' y 'translate' para evitar desbordes fantasmas.
             */}
-            <div className="relative w-full h-full flex items-center justify-start m-0 p-0 mt-12 lg:mt-24 z-10">
+            <div className="relative w-full h-full flex items-start justify-center pt-12 lg:pt-24 z-10">
               <InteractiveCardStack />
             </div>
           </div>
