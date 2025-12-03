@@ -72,8 +72,6 @@ const BoxCards = () => {
           {/* Right Column: InteractiveCardStack & BackgroundStripes */}
           <div 
             className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex flex-col justify-start items-center overflow-visible self-stretch m-0 p-0"
-            // SOLUCIÓN: Usamos padding-top en el estilo inline o clase para empujar todo hacia abajo desde el inicio.
-            // Esto asegura que la altura del contenedor se calcule sumando el padding + la altura del componente.
           >
             
             {/* Background (Breakout) */}
@@ -82,12 +80,11 @@ const BoxCards = () => {
             </div>
 
             {/* 
-                CAMBIOS AQUÍ:
-                1. Quitamos 'items-center' del padre y ponemos 'flex-col justify-start items-center' arriba.
-                2. Añadimos 'pt-12 lg:pt-24' para bajar el componente visualmente. 
-                3. Quitamos 'mt' y 'translate' para evitar desbordes fantasmas.
+                AQUÍ ESTÁ EL CAMBIO:
+                Aumentado el padding-top para bajar más el componente.
+                De 'pt-12 lg:pt-24' pasamos a 'pt-20 lg:pt-36'.
             */}
-            <div className="relative w-full h-full flex items-start justify-center pt-12 lg:pt-24 z-10">
+            <div className="relative w-full h-full flex items-start justify-center pt-20 lg:pt-36 z-10">
               <InteractiveCardStack />
             </div>
           </div>
