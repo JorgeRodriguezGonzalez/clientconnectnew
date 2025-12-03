@@ -245,17 +245,18 @@ function FeaturesSectionMinimal() {
       @keyframes bento2-gradient-fade1 {
         0% { opacity: 0.32; }
         25% { opacity: 0; }
-        100% { opacity: 0; }
+        75% { opacity: 0; }
+        100% { opacity: 0.32; }
       }
       @keyframes bento2-gradient-fade2 {
         0% { opacity: 0; }
-        25% { opacity: 0; }
-        50% { opacity: 0.32; }
-        75% { opacity: 0; }
+        25% { opacity: 0.32; }
+        75% { opacity: 0.32; }
         100% { opacity: 0; }
       }
       @keyframes bento2-gradient-fade3 {
-        0% { opacity: 0; }
+        0% { opacity: 0.32; }
+        25% { opacity: 0; }
         75% { opacity: 0; }
         100% { opacity: 0.32; }
       }
