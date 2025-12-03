@@ -741,7 +741,6 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       </clipPath>
                     </defs>
                     
-                    {/* Línea horizontal de referencia */}
                     <motion.line
                       key={`reference-line-${hoverCount}`}
                       x1="80"
@@ -756,80 +755,45 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.5 }}
                     />
                     
-                    {/* Línea horizontal de referencia */}
-                    <motion.line
-                      key={`reference-line-${hoverCount}`}
-                      x1="80"
-                      y1="152"
-                      x2="490"
-                      y2="152"
-                      stroke="rgba(103, 188, 183, 0.3)"
-                      strokeWidth="2"
-                      strokeDasharray="5,5"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.5 }}
-                    />
-                    
-                    {/* Área TURQUESA (por debajo de y=152) */}
                     <g clipPath="url(#clipBelowLine)">
-                      <motion.path 
-                        key={`chart-teal-${hoverCount}`}
-                        d="M 489.248 283.23 L 4.869 279.745 L 80 220 C 130 200 170 175 210 165 C 240 158 260 153 280 152 C 290 151 300 138 320 120 C 350 95 380 60 410 35 C 440 15 465 8 489.248 5.489 L 489.248 283.23 Z" 
+                      <path 
+                        d="M 489.248 283.23 L 4.869 279.745 L 80 230 C 140 190 190 165 230 150 C 255 142 275 140 295 146 C 315 152 335 158 355 150 C 385 138 425 108 465 65 C 480 42 487 18 489.248 5.489 L 489.248 283.23 Z" 
                         fill="url(#chartGradientTeal)" 
                         stroke="#67BCB7" 
                         strokeWidth="1.77" 
                         strokeMiterlimit="10" 
-                        initial={{ pathLength: 0, opacity: 0 }} 
-                        animate={{ pathLength: 1, opacity: 1 }} 
-                        transition={{ duration: 1.5, ease: 'easeInOut', delay: 0 }} 
                       />
                     </g>
                     
-                    {/* Área CORAL (por encima de y=152) */}
                     <g clipPath="url(#clipAboveLine)">
-                      <motion.path 
-                        key={`chart-coral-${hoverCount}`}
-                        d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 220 C 130 200 170 175 210 165 C 240 158 260 153 280 152 C 290 151 300 138 320 120 C 350 95 380 60 410 35 C 440 15 465 8 489.248 5.489 Z" 
+                      <path 
+                        d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 230 C 140 190 190 165 230 150 C 255 142 275 140 295 146 C 315 152 335 158 355 150 C 385 138 425 108 465 65 C 480 42 487 18 489.248 5.489 Z" 
                         fill="url(#chartGradientCoral)" 
                         stroke="#FF7F50" 
                         strokeWidth="1.77" 
                         strokeMiterlimit="10" 
-                        initial={{ pathLength: 0, opacity: 0 }} 
-                        animate={{ pathLength: 1, opacity: 1 }} 
-                        transition={{ duration: 1.5, ease: 'easeInOut', delay: 0 }} 
                       />
                     </g>
                     
-                    {/* Línea punteada TURQUESA (por debajo de y=152) */}
                     <g clipPath="url(#clipBelowLine)">
-                      <motion.path 
-                        key={`line-teal-${hoverCount}`}
-                        d="M 80 220 C 130 200 170 175 210 165 C 240 158 260 153 280 152 C 290 151 300 138 320 120 C 350 95 380 60 410 35 C 440 15 465 8 489.248 5.489" 
+                      <path 
+                        d="M 80 230 C 140 190 190 165 230 150 C 255 142 275 140 295 146 C 315 152 335 158 355 150 C 385 138 425 108 465 65 C 480 42 487 18 489.248 5.489" 
                         fill="transparent" 
                         stroke="rgba(103, 188, 183, 0.5)" 
                         strokeWidth="2" 
                         strokeMiterlimit="10" 
                         strokeDasharray="9.07,9.07" 
-                        initial={{ pathLength: 0 }} 
-                        animate={{ pathLength: 1 }} 
-                        transition={{ duration: 1, ease: 'easeInOut', delay: 0.1 }} 
                       />
                     </g>
                     
-                    {/* Línea punteada CORAL (por encima de y=152) */}
                     <g clipPath="url(#clipAboveLine)">
-                      <motion.path 
-                        key={`line-coral-${hoverCount}`}
-                        d="M 80 220 C 130 200 170 175 210 165 C 240 158 260 153 280 152 C 290 151 300 138 320 120 C 350 95 380 60 410 35 C 440 15 465 8 489.248 5.489" 
+                      <path 
+                        d="M 80 230 C 140 190 190 165 230 150 C 255 142 275 140 295 146 C 315 152 335 158 355 150 C 385 138 425 108 465 65 C 480 42 487 18 489.248 5.489" 
                         fill="transparent" 
                         stroke="rgba(255, 127, 80, 0.5)" 
                         strokeWidth="2" 
                         strokeMiterlimit="10" 
                         strokeDasharray="9.07,9.07" 
-                        initial={{ pathLength: 0 }} 
-                        animate={{ pathLength: 1 }} 
-                        transition={{ duration: 1, ease: 'easeInOut', delay: 0.1 }} 
                       />
                     </g>
                   </svg>
