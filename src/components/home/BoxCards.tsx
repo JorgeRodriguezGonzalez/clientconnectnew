@@ -81,10 +81,9 @@ const BoxCards = () => {
 
             {/* 
                 AQUÍ ESTÁ EL CAMBIO:
-                Aumentado el padding-top para bajar más el componente.
-                De 'pt-12 lg:pt-24' pasamos a 'pt-20 lg:pt-36'.
+                Aumentado el padding a 'pt-32 lg:pt-56' para bajarlo notablemente más.
             */}
-            <div className="relative w-full h-full flex items-start justify-center pt-20 lg:pt-36 z-10">
+            <div className="relative w-full h-full flex items-start justify-center pt-32 lg:pt-56 z-10">
               <InteractiveCardStack />
             </div>
           </div>
