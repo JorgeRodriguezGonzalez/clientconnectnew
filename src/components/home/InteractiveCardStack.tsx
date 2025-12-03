@@ -6,12 +6,18 @@ const MATRIX_TRANSFORM = "matrix(0.865865, 0.500278, -0.871576, 0.490261, 182.68
 const MATRIX_TRANSFORM_ALT = "matrix(0.865865, 0.500278, -0.871576, 0.490261, 182.393, 17.2223)";
 
 /**
- * CAPA NODECARD (Turquesa)
- * Z-Index: BAJO (Fondo)
+ * CAPA SUPERIOR (NodeCardLayer) - DISEÑO TURQUESA
+ * Paleta actualizada según instrucciones:
+ * Stroke: #2E6B66
+ * Acentos: #67BCB7
+ * Relleno Principal: #8ED4D0
+ * Relleno Claro/Caras: #D4F2F0
+ * Relleno Más Claro/Brillos: #F0FDFA
  */
 const NodeCardLayer = ({ idPrefix }: { idPrefix: string }) => (
   <svg width="460" height="300" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="pointer-events-none align-middle">
     <defs>
+      {/* ClipPaths originales */}
       <clipPath id={`${idPrefix}clip0`}>
         <rect width="320" height="208" rx="16" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.105 20.9684)" fill="white" />
       </clipPath>
@@ -73,7 +79,7 @@ const NodeCardLayer = ({ idPrefix }: { idPrefix: string }) => (
 
     <g>
       <g clipPath={`url(#${idPrefix}clip0)`}>
-        {/* FONDO PRINCIPAL DE LA TARJETA (Turquesa Pastel) */}
+        {/* FONDO PRINCIPAL DE LA TARJETA SUPERIOR (Turquesa Pastel) */}
         <rect width="320" height="208" rx="16" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.105 20.9684)" fill="#8ED4D0" />
         <rect x="-0.00285524" y="0.495269" width="307" height="94" rx="9.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.502 27.1655)" fill="#8ED4D0" />
         <rect x="-0.00285524" y="0.495269" width="307" height="94" rx="9.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.502 27.1655)" stroke="#2E6B66" />
@@ -263,8 +269,12 @@ const NodeCardLayer = ({ idPrefix }: { idPrefix: string }) => (
 );
 
 /**
- * CAPA WAVECARD (Coral)
- * Z-Index: ALTO (Frente)
+ * CAPA BASE (WaveCardLayer) - DISEÑO CORAL
+ * Revertida a la paleta Coral original que antes estaba en la capa superior.
+ * Stroke: #9A4526
+ * Relleno Principal: #E8A288
+ * Acentos: #DE8363
+ * Claro: #F4D3C6
  */
 const WaveCardLayer = ({ idPrefix }: { idPrefix: string }) => (
   <svg width="460" height="300" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -350,16 +360,19 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
     <div className={cn("relative w-[460px] h-[470px] select-none group mx-auto", className)}>
       <style>{floatKeyframes}</style>
 
-      {/* CAPA 1 (FONDO): NodeCardLayer (Turquesa) */}
+      {/* CAPA 4: FONDO (Wave Card - Diseño Ondas CORAL) */}
+      {/* CAMBIO: z-30 (Mayor Z-Index, superpuesta a todo) */}
       <div 
-        className="absolute top-0 left-0 z-0 transition-transform duration-500 ease-out group-hover:-translate-y-[100px]"
+        className="absolute top-0 left-0 z-30 transition-transform duration-500 ease-out group-hover:-translate-y-[100px]"
+        style={{ transform: 'translateY(-80px)' }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0s' }}>
-          <NodeCardLayer idPrefix={idPrefix + 'node'} />
+          <WaveCardLayer idPrefix={idPrefix + 'wave'} />
         </div>
       </div>
 
-      {/* CAPA 2: FANTASMA */}
+      {/* CAPA 3: FANTASMA */}
+      {/* Mantiene z-10 */}
       <div 
         className="absolute top-0 left-0 z-10 transition-transform duration-500 ease-out group-hover:-translate-y-[35px]"
         style={{ transform: 'translateY(-20px)' }}
@@ -369,7 +382,8 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      {/* CAPA 3: FANTASMA */}
+      {/* CAPA 2: FANTASMA */}
+      {/* Mantiene z-20 */}
       <div 
         className="absolute top-0 left-0 z-20 transition-transform duration-500 ease-out group-hover:translate-y-[30px]"
         style={{ transform: 'translateY(40px)' }}
@@ -379,12 +393,14 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      {/* CAPA 4 (FRENTE): WaveCardLayer (Coral) */}
+      {/* CAPA 1: FRENTE (Node Card - Diseño TURQUESA Completo) */}
+      {/* CAMBIO: z-0 (Menor Z-Index, debajo de todo) */}
       <div 
-        className="absolute top-0 left-0 z-30 transition-transform duration-500 ease-out group-hover:translate-y-[100px] cursor-pointer"
+        className="absolute top-0 left-0 z-0 transition-transform duration-500 ease-out group-hover:translate-y-[100px] cursor-pointer"
+        style={{ transform: 'translateY(100px)' }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0.5s' }}>
-          <WaveCardLayer idPrefix={idPrefix + 'wave'} />
+          <NodeCardLayer idPrefix={idPrefix + 'node'} />
         </div>
       </div>
 
