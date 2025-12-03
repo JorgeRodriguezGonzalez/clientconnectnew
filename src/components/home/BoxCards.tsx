@@ -83,7 +83,7 @@ const BoxCards = () => {
                 AQUÍ ESTÁ EL CAMBIO:
                 Punto intermedio: pt-24 (96px) y lg:pt-44 (176px).
             */}
-            <div className="relative w-full h-full flex items-start justify-center pt-24 lg:pt-44 z-10">
+            <div className="relative w-full h-full flex items-start justify-center pt-24 lg:pt-40 z-10">
               <InteractiveCardStack />
             </div>
           </div>
