@@ -280,8 +280,6 @@ const WaveCardLayer = ({ idPrefix }: { idPrefix: string }) => (
         >
             C
         </text>
-
-        {/* (Barra de Progreso ELIMINADA aquí) */}
       </g>
 
       {/* Círculos dispersos */}
@@ -324,14 +322,20 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      // Calculamos el progreso (0 a 1)
-      // Si rect.top es alto (abajo de la pantalla) -> progress ~ 1 (Expandido)
-      // Si rect.top es bajo (arriba de la pantalla) -> progress ~ 0 (Colapsado)
-      // Usamos 0.8 * windowHeight como punto de referencia para que empiece a colapsar
-      const progress = Math.min(Math.max(rect.top / (windowHeight * 0.9), 0), 1);
+      // --- CAMBIO AQUÍ ---
+      // Lógica para que termine antes y empiece antes:
+      // 'finishPoint': Punto donde ya debe estar colapsado (30% de la pantalla)
+      // 'startPoint': Punto donde empieza a colapsarse (90% de la pantalla)
+      const finishPoint = windowHeight * 0.3; 
+      const startPoint = windowHeight * 0.9;
+      
+      let progress = (rect.top - finishPoint) / (startPoint - finishPoint);
+
+      // Clamp entre 0 y 1
+      progress = Math.min(Math.max(progress, 0), 1);
       
       // Mapeamos el progreso al factor de apilamiento (0.2 a 1)
-      const newFactor = 0.2 + (0.9 * progress);
+      const newFactor = 0.2 + (0.8 * progress);
       
       setStackFactor(newFactor);
     };
