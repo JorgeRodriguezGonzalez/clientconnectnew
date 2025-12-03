@@ -266,25 +266,23 @@ const WaveCardLayer = ({ idPrefix }: { idPrefix: string }) => (
         
         {/* --- NUEVA LETRA "C" REDONDEADA Y GEOMÉTRICA (ESTILO LOGO) --- */}
         <g transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.105 10.9685)">
-            {/* 1. Trazo trasero (Borde Oscuro) */}
+            {/* 1. Trazo trasero (Borde Oscuro) - Ligeramente más grueso para simular el borde */}
             <path 
-                d="M 191.1 82.2 A 38 38 0 1 0 191.1 125.8" 
+                d="M 135 79 A 40 40 0 1 1 135 129" 
                 stroke="#9A4526" 
-                strokeWidth="36" 
+                strokeWidth="20" 
                 strokeLinecap="round" 
                 fill="none" 
             />
             {/* 2. Trazo delantero (Relleno Coral) */}
             <path 
-                d="M 191.1 82.2 A 38 38 0 1 0 191.1 125.8" 
+                d="M 135 79 A 40 40 0 1 1 135 129" 
                 stroke="#E8A288" 
-                strokeWidth="30" 
+                strokeWidth="16" 
                 strokeLinecap="round" 
                 fill="none" 
             />
         </g>
-        
-        {/* Barra de Progreso ELIMINADA */}
       </g>
 
       {/* Círculos dispersos */}
