@@ -22,8 +22,7 @@ const BoxCards = () => {
       <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column: Content */}
-          {/* CAMBIO: Ancho ajustado al 60% (lg:w-[60%]) */}
+          {/* Left Column: Content (60%) */}
           <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-[60%] shrink-0 lg:pr-16 relative z-10 px-6 lg:px-0" style={{ paddingRight: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px] ml-auto"> 
               {/* OUR APPROACH */}
@@ -64,16 +63,14 @@ const BoxCards = () => {
             </div>
           </div>
 
-          {/* Vertical Divider (Desktop only) */}
-          {/* CAMBIO: La línea divisoria se mueve al 60% (left-[60%]) */}
+          {/* Vertical Divider (Desktop only) -> 60% */}
           <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10" />
 
           {/* Horizontal Divider (Mobile only) */}
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
-          {/* Right Column: InteractiveCardStack & BackgroundStripes */}
+          {/* Right Column: InteractiveCardStack (40%) */}
           <div 
-            // CAMBIO: Ancho ajustado al 40% (lg:w-[40%])
             className="relative w-full lg:w-[40%] min-h-[480px] md:min-h-[640px] lg:min-h-auto flex flex-col justify-start items-center overflow-visible self-stretch m-0 p-0"
           >
             
@@ -82,8 +79,11 @@ const BoxCards = () => {
               <BackgroundStripes />
             </div>
 
-            {/* Padding mantenido en pt-24 lg:pt-40 */}
-            <div className="relative w-full h-full flex items-start justify-center pt-24 lg:pt-40 z-10">
+            {/* 
+                AQUÍ ESTÁ EL CAMBIO:
+                Añadido 'translate-x-8 lg:translate-x-16' para mover el stack a la derecha dentro de su columna.
+            */}
+            <div className="relative w-full h-full flex items-start justify-center pt-24 lg:pt-40 z-10 translate-x-8 lg:translate-x-16">
               <InteractiveCardStack />
             </div>
           </div>
