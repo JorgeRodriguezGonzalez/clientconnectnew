@@ -264,11 +264,12 @@ const WaveCardLayer = ({ idPrefix }: { idPrefix: string }) => (
         {/* Fondo ondas (Crema/Piel) */}
         <rect width="320" height="208" rx="16" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.105 10.9685)" fill="#F9E2D8" />
         
-        {/* --- NUEVA LETRA "C" REDONDEADA Y GEOMÉTRICA (ESTILO LOGO) --- */}
+        {/* --- NUEVA LETRA "C" REDONDEADA Y GEOMÉTRICA (GIRADA 180 GRADOS) --- */}
         <g transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.105 10.9685)">
-            {/* 1. Trazo trasero (Borde Oscuro) - Ligeramente más grueso para simular el borde */}
+            {/* 1. Trazo trasero (Borde Oscuro) */}
+            {/* Se ha rotado 180 grados intercambiando el punto de inicio (129) y fin (79) y centrando en X=175 */}
             <path 
-                d="M 135 79 A 40 40 0 1 1 135 129" 
+                d="M 175 129 A 40 40 0 1 1 175 79" 
                 stroke="#9A4526" 
                 strokeWidth="20" 
                 strokeLinecap="round" 
@@ -276,7 +277,7 @@ const WaveCardLayer = ({ idPrefix }: { idPrefix: string }) => (
             />
             {/* 2. Trazo delantero (Relleno Coral) */}
             <path 
-                d="M 135 79 A 40 40 0 1 1 135 129" 
+                d="M 175 129 A 40 40 0 1 1 175 79" 
                 stroke="#E8A288" 
                 strokeWidth="16" 
                 strokeLinecap="round" 
