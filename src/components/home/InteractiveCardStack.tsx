@@ -1,6 +1,12 @@
 import React, { useId, useEffect, useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
 
+// --- Background Stripes Component ---
+const BackgroundStripes = () => <div className="pointer-events-none absolute inset-0 z-[-1] h-full w-full overflow-hidden opacity-[0.04]" style={{
+  backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
+  backgroundRepeat: 'repeat'
+}} />;
+
 // --- Matriz de Transformación 3D ---
 const MATRIX_TRANSFORM = "matrix(0.865865, 0.500278, -0.871576, 0.490261, 182.681, 21.2223)";
 const MATRIX_TRANSFORM_ALT = "matrix(0.865865, 0.500278, -0.871576, 0.490261, 182.393, 17.2223)";
@@ -398,6 +404,7 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
         </div>
       </div>
 
+      <BackgroundStripes />
     </div>
   );
 };
