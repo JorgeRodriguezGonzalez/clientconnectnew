@@ -734,19 +734,19 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                         <stop offset="1" stopColor="rgba(255, 127, 80, 0)" stopOpacity="0" />
                       </linearGradient>
                       <clipPath id="clipBelowLine">
-                        <rect x="0" y="153" width="494" height="134" />
+                        <rect x="0" y="152.5" width="494" height="134" />
                       </clipPath>
                       <clipPath id="clipAboveLine">
-                        <rect x="0" y="0" width="494" height="153" />
+                        <rect x="0" y="0" width="494" height="152.5" />
                       </clipPath>
                     </defs>
                     
                     <motion.line
                       key={`reference-line-${hoverCount}`}
                       x1="80"
-                      y1="153"
+                      y1="152.5"
                       x2="490"
-                      y2="153"
+                      y2="152.5"
                       stroke="rgba(103, 188, 183, 0.3)"
                       strokeWidth="2"
                       strokeDasharray="5,5"
