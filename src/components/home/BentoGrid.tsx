@@ -245,20 +245,13 @@ function FeaturesSectionMinimal() {
       @keyframes bento2-gradient-fade1 {
         0% { opacity: 0.32; }
         25% { opacity: 0; }
-        75% { opacity: 0; }
-        100% { opacity: 0.32; }
+        100% { opacity: 0; }
       }
       @keyframes bento2-gradient-fade2 {
         0% { opacity: 0; }
         25% { opacity: 0.32; }
         75% { opacity: 0.32; }
         100% { opacity: 0; }
-      }
-      @keyframes bento2-gradient-fade3 {
-        0% { opacity: 0.32; }
-        25% { opacity: 0; }
-        75% { opacity: 0; }
-        100% { opacity: 0.32; }
       }
       @keyframes bento2-title-gradient {
         0% { background-position: 200% 50%; }
@@ -557,13 +550,6 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                   style={{ 
                     background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(103,188,183), transparent 72%)",
                     animation: "bento2-gradient-fade2 10.5s ease-in-out infinite"
-                  }}
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{ 
-                    background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(237,191,134), transparent 72%)",
-                    animation: "bento2-gradient-fade3 10.5s ease-in-out infinite"
                   }}
                 />
               </>

@@ -328,10 +328,10 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       // Si rect.top es alto (abajo de la pantalla) -> progress ~ 1 (Expandido)
       // Si rect.top es bajo (arriba de la pantalla) -> progress ~ 0 (Colapsado)
       // Usamos 0.8 * windowHeight como punto de referencia para que empiece a colapsar
-      const progress = Math.min(Math.max(rect.top / (windowHeight * 0.8), 0), 1);
+      const progress = Math.min(Math.max(rect.top / (windowHeight * 0.9), 0), 1);
       
       // Mapeamos el progreso al factor de apilamiento (0.2 a 1)
-      const newFactor = 0.2 + (0.8 * progress);
+      const newFactor = 0.2 + (0.9 * progress);
       
       setStackFactor(newFactor);
     };
