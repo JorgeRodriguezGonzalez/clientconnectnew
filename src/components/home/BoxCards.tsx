@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { InteractiveCardStack } from '@/components/home/InteractiveCardStack';
 
-// 1. Definición del componente de fondo (Exactamente igual que en tu referencia)
+// 1. Componente de fondo (Sin cambios)
 const BackgroundStripes = () => (
   <div
     className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden opacity-[0.04]"
@@ -16,7 +16,10 @@ const BackgroundStripes = () => (
 // @component: BoxCards
 const BoxCards = () => {
   return (
-    <section id="box-cards" className="grow relative w-full overflow-visible bg-white flex flex-col">
+    // CAMBIO 1: Usamos 'overflow-x-hidden' en lugar de 'overflow-visible' general.
+    // Esto permite que el fondo se extienda hasta el infinito a la derecha sin causar scroll horizontal,
+    // pero mantiene el comportamiento vertical si las cartas sobresalen un poco.
+    <section id="box-cards" className="grow relative w-full overflow-x-hidden bg-white flex flex-col">
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
@@ -32,7 +35,7 @@ const BoxCards = () => {
                 OUR APPROACH
               </div>
 
-              {/* Main Heading with gradient highlight */}
+              {/* Main Heading */}
               <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
                 Marketing strategies that transform your business into{' '}
                 <motion.span
@@ -72,11 +75,21 @@ const BoxCards = () => {
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
           {/* Right Column: InteractiveCardStack & BackgroundStripes */}
-          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-hidden self-stretch m-0 p-0">
+          {/* Mantenemos overflow-visible aquí para que el hijo w-screen pueda salir de la caja */}
+          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
             
-            {/* 2. Insertamos las líneas de fondo AQUÍ (dentro de la columna derecha relativa) */}
-            <BackgroundStripes />
+            {/* 
+                CAMBIO 2: Lógica de "Break Out".
+                En lugar de simplemente poner <BackgroundStripes />, lo envolvemos.
+                - absolute inset-y-0 left-0: Se ancla arriba, abajo y a la IZQUIERDA de esta columna (justo en la línea divisoria).
+                - w-screen: Fuerza un ancho del tamaño total de la pantalla hacia la derecha.
+                - z-0: Se queda detrás del contenido.
+            */}
+            <div className="absolute inset-y-0 left-0 w-screen z-0">
+              <BackgroundStripes />
+            </div>
 
+            {/* Contenedor de las Cards (z-10 para estar encima del fondo) */}
             <div className="relative w-full h-full flex items-center justify-start m-0 p-0 translate-y-12 lg:translate-y-24 z-10">
               <InteractiveCardStack />
             </div>
