@@ -1,4 +1,4 @@
-import React, { useId, useEffect, useState } from 'react';
+import React, { useId, useEffect, useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
 
 // --- Matriz de Transformación 3D ---
@@ -7,6 +7,7 @@ const MATRIX_TRANSFORM_ALT = "matrix(0.865865, 0.500278, -0.871576, 0.490261, 18
 
 /**
  * CAPA SUPERIOR (NodeCardLayer) - DISEÑO TURQUESA
+ * Z-Index: 0 (Fondo)
  */
 const NodeCardLayer = ({ idPrefix }: { idPrefix: string }) => (
   <svg width="460" height="300" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="pointer-events-none align-middle">
@@ -240,6 +241,7 @@ const NodeCardLayer = ({ idPrefix }: { idPrefix: string }) => (
 
 /**
  * CAPA BASE (WaveCardLayer) - DISEÑO CORAL
+ * Z-Index: 30 (Frente, superpuesta a todo)
  */
 const WaveCardLayer = ({ idPrefix }: { idPrefix: string }) => (
   <svg width="460" height="300" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -307,33 +309,40 @@ const GhostCardLayer = () => (
 
 // --- COMPONENTE PRINCIPAL EXPORTADO ---
 export const InteractiveCardStack = ({ className }: { className?: string }) => {
-  const idPrefix = useId().replace(/:/g, ''); // Sanitizar ID
-  const [scrollY, setScrollY] = useState(0);
+  const idPrefix = useId().replace(/:/g, '');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [stackFactor, setStackFactor] = useState(1); // Empezamos "expanded" por defecto
 
-  // Manejador de scroll para el efecto de colapso
+  // Lógica de scroll basada en la posición del componente (getBoundingClientRect)
   useEffect(() => {
-    // Inicializar el scrollY al montar
-    setScrollY(window.scrollY);
-
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (!containerRef.current) return;
+      
+      // Obtenemos la distancia del componente al top de la ventana
+      const rect = containerRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Calculamos el progreso (0 a 1)
+      // Si rect.top es alto (abajo de la pantalla) -> progress ~ 1 (Expandido)
+      // Si rect.top es bajo (arriba de la pantalla) -> progress ~ 0 (Colapsado)
+      // Usamos 0.8 * windowHeight como punto de referencia para que empiece a colapsar
+      const progress = Math.min(Math.max(rect.top / (windowHeight * 0.8), 0), 1);
+      
+      // Mapeamos el progreso al factor de apilamiento (0.2 a 1)
+      const newFactor = 0.2 + (0.8 * progress);
+      
+      setStackFactor(newFactor);
     };
 
-    // Añadir listener
     window.addEventListener('scroll', handleScroll, { passive: true });
+    // Ejecutar una vez al inicio para determinar posición inicial
+    handleScroll();
     
-    // Cleanup
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  // Factor de "spread" (dispersión) basado en el scroll.
-  // Empieza en 1 (disperso) y tiende a 0.2 (colapsado).
-  // Se ha aumentado el denominador a 1000 para que el efecto sea más lento y progresivo.
-  const stackFactor = Math.max(0.2, 1 - (scrollY / 1000));
-
-  // Animación de flotación suave
   const floatKeyframes = `
     @keyframes subtle-float {
       0% { transform: translateY(0px); }
@@ -346,13 +355,12 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
   `;
 
   return (
-    <div className={cn("relative w-[460px] h-[470px] select-none group mx-auto", className)}>
+    <div ref={containerRef} className={cn("relative w-[460px] h-[470px] select-none group mx-auto", className)}>
       <style>{floatKeyframes}</style>
 
-      {/* CAPA 4: FONDO (Wave Card - Diseño Ondas CORAL) */}
-      {/* Z-Index Mayor (30). Posición base aumentada a -160px para mayor separación inicial. */}
+      {/* CAPA 4: FONDO (Wave Card - Diseño Ondas CORAL) - Z-Index 30 (Frente) */}
       <div 
-        className="absolute top-0 left-0 z-30 transition-transform duration-500 ease-out"
+        className="absolute top-0 left-0 z-30 transition-transform duration-300 ease-out"
         style={{ transform: `translateY(${-160 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0s' }}>
@@ -361,9 +369,8 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       </div>
 
       {/* CAPA 3: FANTASMA */}
-      {/* Posición base aumentada a -60px */}
       <div 
-        className="absolute top-0 left-0 z-10 transition-transform duration-500 ease-out"
+        className="absolute top-0 left-0 z-10 transition-transform duration-300 ease-out"
         style={{ transform: `translateY(${-60 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '1.5s' }}>
@@ -372,9 +379,8 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       </div>
 
       {/* CAPA 2: FANTASMA */}
-      {/* Posición base aumentada a 60px */}
       <div 
-        className="absolute top-0 left-0 z-20 transition-transform duration-500 ease-out"
+        className="absolute top-0 left-0 z-20 transition-transform duration-300 ease-out"
         style={{ transform: `translateY(${60 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '3s' }}>
@@ -382,10 +388,9 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      {/* CAPA 1: FRENTE (Node Card - Diseño TURQUESA Completo) */}
-      {/* Z-Index Menor (0). Posición base aumentada a 180px para mayor separación inicial. */}
+      {/* CAPA 1: FRENTE (Node Card - Diseño TURQUESA) - Z-Index 0 (Fondo) */}
       <div 
-        className="absolute top-0 left-0 z-0 transition-transform duration-500 ease-out cursor-pointer"
+        className="absolute top-0 left-0 z-0 transition-transform duration-300 ease-out"
         style={{ transform: `translateY(${180 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0.5s' }}>
