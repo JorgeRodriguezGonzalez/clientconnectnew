@@ -11,6 +11,7 @@ import CTASection from "@/components/home/CTASection";
 import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
 import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
+import BoxCards from "@/components/home/BoxCards";
 
 // IMPORTACIÓN DEL NUEVO COMPONENTE
 // (Ajusta la ruta si no lo guardaste en components/home/ScrollableWorkflow)
@@ -41,7 +42,7 @@ const Index = () => {
         </div>
         
         <CloudHero />
-        <InteractiveCardStack />
+        <BoxCards />
 
         {/* AQUÍ ESTÁ EL COMPONENTE ACTUALIZADO CON SCROLL AUTOMÁTICO */}
         <ScrollableWorkflow />

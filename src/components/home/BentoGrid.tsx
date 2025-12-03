@@ -757,7 +757,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     
                     <g clipPath="url(#clipBelowLine)">
                       <path 
-                        d="M 489.248 283.23 L 4.869 279.745 L 80 230 C 140 190 190 165 230 150 C 255 142 275 140 295 146 C 315 152 335 158 355 150 C 385 138 425 108 465 65 C 480 42 487 18 489.248 5.489 L 489.248 283.23 Z" 
+                        d="M 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 153 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 L 489.248 283.23 Z" 
                         fill="url(#chartGradientTeal)" 
                         stroke="#67BCB7" 
                         strokeWidth="1.77" 
@@ -767,7 +767,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     
                     <g clipPath="url(#clipAboveLine)">
                       <path 
-                        d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 230 C 140 190 190 165 230 150 C 255 142 275 140 295 146 C 315 152 335 158 355 150 C 385 138 425 108 465 65 C 480 42 487 18 489.248 5.489 Z" 
+                        d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 153 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 Z" 
                         fill="url(#chartGradientCoral)" 
                         stroke="#FF7F50" 
                         strokeWidth="1.77" 
@@ -777,7 +777,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     
                     <g clipPath="url(#clipBelowLine)">
                       <path 
-                        d="M 80 230 C 140 190 190 165 230 150 C 255 142 275 140 295 146 C 315 152 335 158 355 150 C 385 138 425 108 465 65 C 480 42 487 18 489.248 5.489" 
+                        d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 153 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
                         fill="transparent" 
                         stroke="rgba(103, 188, 183, 0.5)" 
                         strokeWidth="2" 
@@ -788,7 +788,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                     
                     <g clipPath="url(#clipAboveLine)">
                       <path 
-                        d="M 80 230 C 140 190 190 165 230 150 C 255 142 275 140 295 146 C 315 152 335 158 355 150 C 385 138 425 108 465 65 C 480 42 487 18 489.248 5.489" 
+                        d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 153 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
                         fill="transparent" 
                         stroke="rgba(255, 127, 80, 0.5)" 
                         strokeWidth="2" 
