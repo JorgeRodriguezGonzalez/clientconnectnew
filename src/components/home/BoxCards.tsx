@@ -12,14 +12,9 @@ const BoxCards = () => {
       <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column: Content (Ahora a la izquierda) */}
-          {/* Note: Cambiado lg:pl-16 por lg:pr-16 y paddingLeft por paddingRight para mantener el espacio contra el borde central */}
+          {/* Left Column: Content */}
           <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pr-16 relative z-10 px-6 lg:px-0" style={{ paddingRight: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px] ml-auto"> 
-              {/* ml-auto añadido arriba para alinear el contenido cerca del centro si se desea, 
-                  o puedes quitarlo para alineación estándar a la izquierda. 
-                  Basado en el original, el texto estaba "pegado" al divider. */}
-              
               {/* OUR APPROACH */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
                 OUR APPROACH
@@ -64,9 +59,13 @@ const BoxCards = () => {
           {/* Horizontal Divider (Mobile only) */}
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
-          {/* Right Column: InteractiveCardStack (Ahora a la derecha) */}
+          {/* Right Column: InteractiveCardStack */}
           <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
-            <div className="w-full h-full flex items-center justify-start m-0 p-0">
+            {/* 
+                AQUÍ ESTÁ EL CAMBIO: 
+                Añadido 'translate-y-12 lg:translate-y-24' para bajarlo visualmente 
+            */}
+            <div className="w-full h-full flex items-center justify-start m-0 p-0 translate-y-12 lg:translate-y-24">
               <InteractiveCardStack />
             </div>
           </div>
