@@ -734,7 +734,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                         <stop offset="1" stopColor="rgba(255, 127, 80, 0)" stopOpacity="0" />
                       </linearGradient>
                       <clipPath id="clipBelowLine">
-                        <rect x="0" y="152" width="494" height="133" />
+                        <rect x="0" y="152" width="494" height="134" />
                       </clipPath>
                       <clipPath id="clipAboveLine">
                         <rect x="0" y="0" width="494" height="152" />
@@ -756,11 +756,11 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.5 }}
                     />
                     
-                    {/* Área TURQUESA (por debajo de y=150) */}
+                    {/* Área TURQUESA (por debajo de y=152) */}
                     <g clipPath="url(#clipBelowLine)">
                       <motion.path 
                         key={`chart-teal-${hoverCount}`}
-                        d="M 489.248 283.23 L 4.869 279.745 L 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489 L 489.248 283.23 Z" 
+                        d="M 489.248 283.23 L 4.869 279.745 L 80 220 C 130 200 170 175 210 158 C 240 145 260 140 280 147 C 300 154 320 152 340 135 C 365 112 395 72 425 42 C 455 20 475 10 489.248 5.489 L 489.248 283.23 Z" 
                         fill="url(#chartGradientTeal)" 
                         stroke="#67BCB7" 
                         strokeWidth="1.77" 
@@ -771,11 +771,11 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       />
                     </g>
                     
-                    {/* Área CORAL (por encima de y=150) */}
+                    {/* Área CORAL (por encima de y=152) */}
                     <g clipPath="url(#clipAboveLine)">
                       <motion.path 
                         key={`chart-coral-${hoverCount}`}
-                        d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489 Z" 
+                        d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 220 C 130 200 170 175 210 158 C 240 145 260 140 280 147 C 300 154 320 152 340 135 C 365 112 395 72 425 42 C 455 20 475 10 489.248 5.489 Z" 
                         fill="url(#chartGradientCoral)" 
                         stroke="#FF7F50" 
                         strokeWidth="1.77" 
@@ -786,11 +786,11 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       />
                     </g>
                     
-                    {/* Línea punteada TURQUESA (por debajo de y=150) */}
+                    {/* Línea punteada TURQUESA (por debajo de y=152) */}
                     <g clipPath="url(#clipBelowLine)">
                       <motion.path 
                         key={`line-teal-${hoverCount}`}
-                        d="M 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489" 
+                        d="M 80 220 C 130 200 170 175 210 158 C 240 145 260 140 280 147 C 300 154 320 152 340 135 C 365 112 395 72 425 42 C 455 20 475 10 489.248 5.489" 
                         fill="transparent" 
                         stroke="rgba(103, 188, 183, 0.5)" 
                         strokeWidth="2" 
@@ -802,11 +802,11 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       />
                     </g>
                     
-                    {/* Línea punteada CORAL (por encima de y=150) */}
+                    {/* Línea punteada CORAL (por encima de y=152) */}
                     <g clipPath="url(#clipAboveLine)">
                       <motion.path 
                         key={`line-coral-${hoverCount}`}
-                        d="M 80 220 C 130 200 170 175 210 160 C 235 152 255 148 275 150 C 295 152 315 148 335 130 C 360 108 390 70 420 40 C 450 18 470 8 489.248 5.489" 
+                        d="M 80 220 C 130 200 170 175 210 158 C 240 145 260 140 280 147 C 300 154 320 152 340 135 C 365 112 395 72 425 42 C 455 20 475 10 489.248 5.489" 
                         fill="transparent" 
                         stroke="rgba(255, 127, 80, 0.5)" 
                         strokeWidth="2" 
