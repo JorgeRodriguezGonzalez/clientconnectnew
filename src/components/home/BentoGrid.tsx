@@ -477,10 +477,18 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
   
   useEffect(() => {
     if (isVisible && !hasAnimated) {
-      setHoverCount(prev => prev + 1);
-      setHasAnimated(true);
+      const cardAnimationDuration = 800; // duración de la animación bento2-card en ms
+      const cardDelay = Math.max(index * 0.12, 0) * 1000; // delay de la tarjeta en ms
+      const totalDelay = cardAnimationDuration + cardDelay + 200; // 200ms extra después de que termine
+      
+      const timer = setTimeout(() => {
+        setHoverCount(prev => prev + 1);
+        setHasAnimated(true);
+      }, totalDelay);
+      
+      return () => clearTimeout(timer);
     }
-  }, [isVisible, hasAnimated]);
+  }, [isVisible, hasAnimated, index]);
   
   const animationDelay = `${Math.max(index * 0.12, 0)}s`;
 
