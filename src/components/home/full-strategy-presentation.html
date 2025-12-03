@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Connect Australia - Estrategia Web Completa</title>
+    <title>Client Connect Australia - Estrategia Web</title>
     <style>
         * {
             margin: 0;
@@ -13,149 +13,123 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #2E6B66;
             background: #F0FDFA;
+            overflow-x: hidden;
         }
 
         .presentation {
             width: 100%;
-            margin: 0 auto;
         }
 
         .slide {
             width: 100vw;
-            height: 56.25vw; /* 16:9 aspect ratio (100vw * 9/16 = 56.25vw) */
-            min-height: 100vh;
+            height: 56.25vw; /* 16:9 aspect ratio */
             max-height: 100vh;
-            padding: 80px 120px;
+            max-width: 177.78vh; /* 16:9 aspect ratio */
+            margin: 0 auto;
+            padding: 4vh 6vw;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            page-break-after: always;
             background: white;
-            border-bottom: 8px solid #67BCB7;
-            overflow-y: auto;
+            border-bottom: 0.6vh solid #67BCB7;
             box-sizing: border-box;
-        }
-        
-        @media (min-aspect-ratio: 16/9) {
-            .slide {
-                height: 100vh;
-                width: 177.78vh; /* 16:9 aspect ratio (100vh * 16/9 = 177.78vh) */
-                max-width: 100vw;
-                margin: 0 auto;
-            }
+            page-break-after: always;
         }
 
         .slide-title {
-            font-size: 2.4em;
+            font-size: 4.5vh;
             color: #2E6B66;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 6px solid #DE8363;
+            margin-bottom: 3vh;
+            padding-bottom: 2vh;
+            border-bottom: 0.5vh solid #DE8363;
             font-weight: 800;
+            line-height: 1.2;
         }
 
         .slide-subtitle {
-            font-size: 1.6em;
+            font-size: 3vh;
             color: #67BCB7;
-            margin-top: 40px;
-            margin-bottom: 25px;
+            margin-top: 2.5vh;
+            margin-bottom: 2vh;
             font-weight: 700;
         }
 
         .slide-content {
-            font-size: 1.04em;
-            line-height: 1.8;
+            font-size: 2.2vh;
+            line-height: 1.6;
             color: #2E6B66;
         }
 
         .highlight-box {
             background: #F9E2D8;
-            border-left: 8px solid #DE8363;
-            padding: 30px;
-            margin: 30px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(222, 131, 99, 0.15);
+            border-left: 0.6vh solid #DE8363;
+            padding: 2.5vh;
+            margin: 2vh 0;
+            border-radius: 0.8vh;
         }
 
         .quote-box {
             background: #D4F2F0;
-            border-left: 8px solid #67BCB7;
-            padding: 35px;
-            margin: 35px 0;
+            border-left: 0.6vh solid #67BCB7;
+            padding: 2.5vh;
+            margin: 2vh 0;
             font-style: italic;
-            border-radius: 8px;
-            font-size: 1em;
-            line-height: 1.9;
-            box-shadow: 0 4px 15px rgba(103, 188, 183, 0.15);
+            border-radius: 0.8vh;
+            font-size: 2.4vh;
+            line-height: 1.7;
         }
 
         .success-box {
             background: #8ED4D0;
-            border-left: 8px solid #2E6B66;
-            padding: 30px;
-            margin: 30px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(46, 107, 102, 0.15);
+            border-left: 0.6vh solid #2E6B66;
+            padding: 2.5vh;
+            margin: 2vh 0;
+            border-radius: 0.8vh;
         }
 
         ul {
-            margin-left: 40px;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            margin-left: 3vh;
+            margin-top: 1.5vh;
+            margin-bottom: 1.5vh;
         }
 
         li {
-            margin-bottom: 15px;
-            line-height: 1.8;
+            margin-bottom: 1vh;
+            line-height: 1.6;
+            font-size: 2.2vh;
         }
 
         .title-slide {
             background: linear-gradient(135deg, #2E6B66 0%, #67BCB7 100%);
             color: white;
             text-align: center;
-            border-bottom: 8px solid #DE8363;
+            border-bottom: 0.6vh solid #DE8363;
         }
 
         .title-slide .slide-title {
             color: white;
-            border-bottom: 6px solid #DE8363;
-            font-size: 3.2em;
+            border-bottom: 0.5vh solid #DE8363;
+            font-size: 6vh;
         }
 
         .title-slide .subtitle {
-            font-size: 1.6em;
-            margin-top: 30px;
+            font-size: 3.5vh;
+            margin-top: 3vh;
             color: #F0FDFA;
             font-weight: 600;
-        }
-
-        .step-number {
-            background: #DE8363;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6em;
-            font-weight: bold;
-            margin-right: 20px;
-            border: 4px solid #9A4526;
         }
 
         .metric {
             display: inline-block;
             background: #67BCB7;
             color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            margin: 8px;
+            padding: 1vh 2vh;
+            border-radius: 2vh;
+            margin: 0.8vh;
             font-weight: 700;
-            border: 2px solid #2E6B66;
+            border: 0.2vh solid #2E6B66;
+            font-size: 2vh;
         }
 
         strong {
@@ -166,22 +140,22 @@
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin: 30px 0;
+            gap: 3vh;
+            margin: 2vh 0;
         }
 
         .three-column {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 30px;
-            margin: 30px 0;
+            gap: 2vh;
+            margin: 2vh 0;
         }
 
         .column {
-            padding: 25px;
+            padding: 2vh;
             background: #F0FDFA;
-            border-radius: 8px;
-            border: 3px solid #8ED4D0;
+            border-radius: 0.8vh;
+            border: 0.3vh solid #8ED4D0;
         }
 
         em {
@@ -190,88 +164,55 @@
             font-weight: 700;
         }
 
-        .badge {
-            display: inline-block;
-            background: #E8A288;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.72em;
-            font-weight: 700;
-            margin: 5px;
-            border: 2px solid #9A4526;
+        .key-point {
+            background: linear-gradient(135deg, #E8A288 0%, #F4D3C6 100%);
+            padding: 2vh 3vh;
+            margin: 2vh 0;
+            border-radius: 1vh;
+            border-left: 0.6vh solid #9A4526;
+            font-size: 2.6vh;
+            font-weight: 600;
+            color: #9A4526;
+            text-align: center;
         }
 
-        .case-study-box {
-            background: #FFF5F2;
-            border: 4px solid #E8A288;
-            padding: 35px;
-            margin: 30px 0;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(154, 69, 38, 0.15);
-        }
-
-        .case-study-header {
+        .number-badge {
             background: #DE8363;
             color: white;
-            padding: 15px 25px;
-            margin: -35px -35px 25px -35px;
-            border-radius: 8px 8px 0 0;
-            font-size: 1.2em;
-            font-weight: 700;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 25px 0;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #8ED4D0 0%, #D4F2F0 100%);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            border: 3px solid #67BCB7;
-            box-shadow: 0 4px 10px rgba(103, 188, 183, 0.2);
-        }
-
-        .stat-number {
-            font-size: 1.28em;
-            font-weight: 800;
-            color: #2E6B66;
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.88em;
-            color: #2E6B66;
-            margin-top: 5px;
+            width: 5vh;
+            height: 5vh;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5vh;
+            font-weight: bold;
+            margin-right: 1.5vh;
+            border: 0.3vh solid #9A4526;
         }
 
         .comparison-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin: 30px 0;
-            border-radius: 12px;
+            margin: 2vh 0;
+            border-radius: 1vh;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(46, 107, 102, 0.15);
+            font-size: 2vh;
         }
 
         .comparison-table th {
             background: #2E6B66;
             color: white;
-            padding: 20px;
-            font-size: 1.04em;
+            padding: 1.5vh;
+            font-size: 2.2vh;
             font-weight: 700;
         }
 
         .comparison-table td {
-            padding: 20px;
-            font-size: 0.92em;
-            border-bottom: 2px solid #D4F2F0;
+            padding: 1.5vh;
+            font-size: 2vh;
+            border-bottom: 0.2vh solid #D4F2F0;
         }
 
         .comparison-table tr:nth-child(even) td {
@@ -282,107 +223,9 @@
             background: white;
         }
 
-        .comparison-table td:first-child {
-            background: #F9E2D8;
-            font-weight: 700;
-            color: #9A4526;
-        }
-
-        .timeline {
-            position: relative;
-            padding: 30px 0;
-        }
-
-        .timeline-item {
-            display: flex;
-            margin-bottom: 40px;
-            align-items: flex-start;
-        }
-
-        .timeline-marker {
-            background: #DE8363;
-            color: white;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.2em;
-            flex-shrink: 0;
-            border: 5px solid #9A4526;
-            box-shadow: 0 4px 15px rgba(154, 69, 38, 0.3);
-        }
-
-        .timeline-content {
-            margin-left: 30px;
-            background: #F0FDFA;
-            padding: 25px;
-            border-radius: 10px;
-            border-left: 6px solid #67BCB7;
-            flex-grow: 1;
-        }
-
-        .pros-cons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 30px 0;
-        }
-
-        .pros {
-            background: #D4F2F0;
-            padding: 30px;
-            border-radius: 12px;
-            border: 4px solid #67BCB7;
-        }
-
-        .cons {
-            background: #F9E2D8;
-            padding: 30px;
-            border-radius: 12px;
-            border: 4px solid #DE8363;
-        }
-
-        .key-point {
-            background: linear-gradient(135deg, #E8A288 0%, #F4D3C6 100%);
-            padding: 25px 35px;
-            margin: 25px 0;
-            border-radius: 10px;
-            border-left: 8px solid #9A4526;
-            font-size: 1em;
-            font-weight: 600;
-            color: #9A4526;
-            box-shadow: 0 4px 15px rgba(154, 69, 38, 0.2);
-        }
-
-        .section-divider {
-            height: 6px;
-            background: linear-gradient(90deg, #67BCB7 0%, #DE8363 100%);
-            margin: 40px 0;
-            border-radius: 3px;
-        }
-
         @media print {
             .slide {
                 page-break-after: always;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .slide {
-                padding: 60px 80px;
-                height: auto;
-                min-height: 100vh;
-            }
-
-            .slide-title {
-                font-size: 2em;
-            }
-
-            .two-column, .three-column, .pros-cons {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -393,86 +236,77 @@
         <!-- Slide 1: Título -->
         <div class="slide title-slide">
             <h1 class="slide-title">Client Connect Australia</h1>
-            <p class="subtitle">Estrategia Web Completa</p>
-            <p class="subtitle">Marketing by Tradies, for Tradies</p>
-            <p class="subtitle" style="margin-top: 60px; font-size: 0.96em;">Leads en 30 Días. No 6 Meses.</p>
+            <p class="subtitle">Estrategia de Comunicación Web</p>
+            <p class="subtitle" style="margin-top: 6vh; font-size: 4vh;">Marketing by Tradies, for Tradies</p>
+            <p class="subtitle" style="margin-top: 4vh; font-size: 3vh;">Leads en 30 Días. No 6 Meses.</p>
         </div>
 
-        <!-- Slide 2: Resumen Ejecutivo -->
+        <!-- Slide 2: Los 3 Pilares de Nuestra Comunicación -->
         <div class="slide">
-            <h2 class="slide-title">Resumen Ejecutivo</h2>
+            <h2 class="slide-title">Los 3 Pilares de Nuestra Comunicación</h2>
             <div class="slide-content">
-                <p>Esta estrategia web está construida sobre <strong>tres diferenciadores clave</strong> que nos separan de cualquier otra agencia de marketing:</p>
-                
-                <div class="three-column" style="margin-top: 40px;">
-                    <div class="column">
-                        <h3 style="color: #DE8363; margin-bottom: 15px;">🔧 Somos Tradies</h3>
-                        <p>No ex-tradies que se convirtieron en marketers. Somos tradies que también hacemos marketing. Seguimos en las obras.</p>
+                <div class="three-column">
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <div style="text-align: center; margin-bottom: 2vh;">
+                            <div class="number-badge">1</div>
+                        </div>
+                        <h3 style="color: #9A4526; font-size: 2.8vh; margin-bottom: 1.5vh; text-align: center;">🔧 Somos Tradies</h3>
+                        <p style="font-size: 2.2vh; text-align: center; line-height: 1.6;">No ex-tradies. Seguimos en las obras. Mañana: techo. Tarde: leads para clientes.</p>
                     </div>
-                    <div class="column">
-                        <h3 style="color: #DE8363; margin-bottom: 15px;">⚡ Entregamos Rápido</h3>
-                        <p>Leads en 30 días, no 3-6 meses. Porque recordamos lo que es necesitar trabajos YA.</p>
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <div style="text-align: center; margin-bottom: 2vh;">
+                            <div class="number-badge">2</div>
+                        </div>
+                        <h3 style="color: #9A4526; font-size: 2.8vh; margin-bottom: 1.5vh; text-align: center;">⚡ Velocidad</h3>
+                        <p style="font-size: 2.2vh; text-align: center; line-height: 1.6;">Leads en 30 días, no 3-6 meses. Porque recordamos lo que es necesitar trabajos YA.</p>
                     </div>
-                    <div class="column">
-                        <h3 style="color: #DE8363; margin-bottom: 15px;">🚀 Lanzamos Negocios</h3>
-                        <p>Muchos de nuestros clientes no tenían ni siquiera una web cuando firmaron con nosotros.</p>
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <div style="text-align: center; margin-bottom: 2vh;">
+                            <div class="number-badge">3</div>
+                        </div>
+                        <h3 style="color: #9A4526; font-size: 2.8vh; margin-bottom: 1.5vh; text-align: center;">🚀 Lanzamientos</h3>
+                        <p style="font-size: 2.2vh; text-align: center; line-height: 1.6;">Muchos clientes empezaron sin web. Kieren: $500K año 1. Callum: $150K+ jobs.</p>
                     </div>
                 </div>
 
-                <div class="highlight-box" style="margin-top: 40px;">
-                    <h3 class="slide-subtitle" style="margin-top: 0;">Objetivo del Sitio Web:</h3>
-                    <p style="font-size: 0.96em; line-height: 1.8;">Comunicar inmediatamente <strong>confianza, cercanía, velocidad de resultados y expertise</strong> a tradies australianos que han sido estafados por agencias que no entienden su negocio, o nuevos tradies que quieren empezar fuerte desde el día uno.</p>
+                <div class="key-point" style="margin-top: 3vh;">
+                    Nuestra estrategia web comunica estos 3 pilares en CADA página, CADA sección, CADA mensaje.
                 </div>
             </div>
         </div>
 
-        <!-- Slide 3: La Lección de $90K -->
+        <!-- Slide 3: Nuestra Historia Clave: $90K -->
         <div class="slide">
-            <h2 class="slide-title">Nuestra Historia: La Lección de $90K+</h2>
+            <h2 class="slide-title">Nuestra Historia Clave: La Lección de $90K</h2>
             <div class="slide-content">
-                <div class="quote-box">
-                    <p style="font-size: 1.04em; margin-bottom: 20px;"><strong>"Gastamos más de $90,000 en agencias de marketing. Y casi no obtuvimos nada."</strong></p>
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker">1</div>
-                        <div class="timeline-content">
-                            <h3 style="color: #DE8363; margin-bottom: 10px;">Agencia 1: $30K</h3>
-                            <p><strong>Promesa:</strong> "Estrategia de marca completa"</p>
-                            <p><strong>Resultado:</strong> Un logo que nunca usamos y 2 leads basura</p>
-                            <p><strong>Tiempo perdido:</strong> 3 meses</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker">2</div>
-                        <div class="timeline-content">
-                            <h3 style="color: #DE8363; margin-bottom: 10px;">Agencia 2: $35K</h3>
-                            <p><strong>Promesa:</strong> "Construir tu presencia online"</p>
-                            <p><strong>Resultado:</strong> Posts de Instagram que nadie vio y 3 consultas</p>
-                            <p><strong>Tiempo perdido:</strong> 4 meses</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker">3</div>
-                        <div class="timeline-content">
-                            <h3 style="color: #DE8363; margin-bottom: 10px;">Agencia 3: $25K+</h3>
-                            <p><strong>Promesa:</strong> "Marketing de contenidos"</p>
-                            <p><strong>Resultado:</strong> Todavía no sabemos qué significa eso</p>
-                            <p><strong>Tiempo perdido:</strong> 3 meses</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="key-point">
-                    <strong>Total:</strong> Más de $90K gastados. Casi un año perdido. Lecciones aprendidas: Invaluables.
-                </div>
-
                 <div class="highlight-box">
-                    <p style="font-size: 1em;"><strong>Lo que más nos enfureció:</strong> La espera. "Dale 90 días." "Construir marca toma tiempo." "Estas cosas no pasan de la noche a la mañana."</p>
-                    <p style="font-size: 1em; margin-top: 15px; color: #9A4526;"><strong>Bullshit.</strong> Teníamos cuentas que pagar. Un equipo que mantener ocupado. No podíamos esperar 6 meses para ver si su "estrategia" funcionaría.</p>
+                    <p style="font-size: 2.8vh; font-weight: 700; color: #9A4526; margin-bottom: 2vh;">"Gastamos más de $90,000 en agencias de marketing. Casi no obtuvimos nada."</p>
+                </div>
+
+                <div class="two-column">
+                    <div>
+                        <h3 style="color: #2E6B66; margin-bottom: 1.5vh; font-size: 2.6vh;">Por Qué Importa Esta Historia:</h3>
+                        <ul style="font-size: 2.2vh;">
+                            <li><strong>Credibilidad inmediata:</strong> Hemos estado donde están ellos</li>
+                            <li><strong>Empatía real:</strong> Conocemos el dolor de perder dinero</li>
+                            <li><strong>Autoridad ganada:</strong> Aprendimos por las malas</li>
+                            <li><strong>Diferenciación clara:</strong> Por eso no hacemos lo que ellos hacían</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #2E6B66; margin-bottom: 1.5vh; font-size: 2.6vh;">Cómo La Usamos:</h3>
+                        <ul style="font-size: 2.2vh;">
+                            <li>Homepage: Sección "Our Story"</li>
+                            <li>Página dedicada con breakdown detallado</li>
+                            <li>Lead magnet: "$90K in Mistakes"</li>
+                            <li>Blog posts sobre cada lección</li>
+                            <li>Videos contando la historia</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="quote-box" style="margin-top: 2vh;">
+                    <p style="font-size: 2.4vh;"><strong>Mensaje clave:</strong> "Lo que más nos enfureció: La espera. 'Dale 90 días.' 'Construir marca toma tiempo.' Bullshit. Teníamos cuentas que pagar. No podíamos esperar 6 meses."</p>
                 </div>
             </div>
         </div>
@@ -482,915 +316,454 @@
             <h2 class="slide-title">Propuesta de Valor Principal</h2>
             <div class="slide-content">
                 <div class="highlight-box">
-                    <h3 style="color: #9A4526; font-size: 1.28em; margin-bottom: 20px;">Headline del Sitio:</h3>
-                    <p style="font-size: 1.76em; font-weight: 700; color: #2E6B66; line-height: 1.4;">"Marketing by Tradies, for Tradies. Leads en 30 Días, No 6 Meses."</p>
+                    <h3 style="color: #9A4526; font-size: 3vh; margin-bottom: 2vh; text-align: center;">Headline Principal del Sitio:</h3>
+                    <p style="font-size: 3.5vh; font-weight: 700; color: #2E6B66; line-height: 1.4; text-align: center;">"Marketing by Tradies, for Tradies.<br>Leads en 30 Días, No 6 Meses."</p>
                 </div>
 
-                <h3 class="slide-subtitle">Mensajes de Apoyo:</h3>
-                <ul style="font-size: 0.96em;">
-                    <li>Éramos home builders y carpenters. Ahora tenemos un negocio de roofing Y ayudamos a tradies a conseguir leads de calidad.</li>
-                    <li>Aprendimos marketing por las malas - después de que agencias nos estafaran por más de $90K sin nada que mostrar.</li>
-                    <li>Hablamos tu idioma porque vivimos tu vida. Mañana: en obra. Tarde: consiguiéndote leads.</li>
-                    <li><strong>¿Empezando un nuevo negocio de trades? Perfecto. Hemos lanzado docenas de tradies desde cero - muchos sin siquiera una web.</strong></li>
-                    <li><strong>No hay BS de "ramp-up" de 90 días. Verás leads calificados en tus primeros 30 días o trabajamos gratis.</strong></li>
+                <h3 class="slide-subtitle">Mensajes Clave de Apoyo:</h3>
+                <ul style="font-size: 2.3vh;">
+                    <li>Éramos home builders y carpenters. Ahora negocio de roofing + ayudamos a tradies.</li>
+                    <li>Aprendimos marketing después de que agencias nos estafaran por $90K+.</li>
+                    <li><strong>¿Empezando un nuevo negocio? Perfecto. Hemos lanzado docenas desde cero.</strong></li>
+                    <li><strong>Leads calificados en 30 días o trabajamos gratis.</strong></li>
                 </ul>
 
-                <div class="section-divider"></div>
-
-                <h3 class="slide-subtitle">Voz de Marca - Tono Auténtico de Tradie:</h3>
-                <div class="quote-box">
-                    <p>"Mate, lo entendemos. Otra agencia prometiendo el mundo y entregando dos leads de mierda seis meses después. Gastamos más de $90K aprendiendo esa lección."</p>
-                </div>
-
-                <div class="quote-box">
-                    <p>"No somos un tipo con traje en una oficina del CBD que nunca ha sostenido un nivel de burbuja."</p>
-                </div>
-
-                <div class="quote-box">
-                    <p>"¿Recién empezando? Incluso mejor. Hemos ayudado a tradies a conseguir sus primeros 20 trabajos antes de que tuvieran un logo."</p>
+                <div class="quote-box" style="margin-top: 2.5vh;">
+                    <p style="font-size: 2.4vh;">"Mate, lo entendemos. Otra agencia prometiendo el mundo y entregando dos leads de mierda seis meses después. Gastamos más de $90K aprendiendo esa lección."</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 5: La Velocidad Como Diferenciador #1 -->
+        <!-- Slide 5: Estrategia de Velocidad -->
         <div class="slide">
-            <h2 class="slide-title">🚀 Velocidad: Nuestro Diferenciador #1</h2>
+            <h2 class="slide-title">Estrategia de Velocidad: Nuestro Diferenciador #1</h2>
             <div class="slide-content">
-                <div class="key-point">
-                    "Leads en 30 Días, No 6 Meses"
-                </div>
-
                 <table class="comparison-table">
                     <thead>
                         <tr>
-                            <th style="width: 50%;">Otras Agencias</th>
-                            <th style="width: 50%;">Client Connect</th>
+                            <th style="width: 50%;">Otras Agencias Dicen</th>
+                            <th style="width: 50%;">Nosotros Entregamos</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>❌ "Danos 90 días para ver resultados"</td>
-                            <td>✅ Leads dentro de 30 días garantizados</td>
+                            <td style="background: #D4F2F0; font-weight: 700;">✅ Leads dentro de 30 días garantizados</td>
                         </tr>
                         <tr>
                             <td>❌ "Construyamos tu marca primero"</td>
-                            <td>✅ Lanzamos semana 1, leads semana 2-3</td>
-                        </tr>
-                        <tr>
-                            <td>❌ "Necesitamos tiempo para desarrollar estrategia"</td>
-                            <td>✅ Sin contratos a largo plazo</td>
+                            <td style="background: #D4F2F0; font-weight: 700;">✅ Lanzamos semana 1, leads semana 2-3</td>
                         </tr>
                         <tr>
                             <td>❌ "Resultados en 3-6 meses tal vez"</td>
-                            <td>✅ Trabajamos gratis hasta conseguirte 10 leads</td>
-                        </tr>
-                        <tr>
-                            <td>❌ "Se requieren contratos largos"</td>
-                            <td>✅ Construido para tradies que necesitan resultados AHORA</td>
+                            <td style="background: #D4F2F0; font-weight: 700;">✅ Trabajamos gratis hasta conseguirte 10 leads</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div class="highlight-box" style="margin-top: 40px;">
-                    <h3 style="color: #9A4526; font-size: 1.28em; margin-bottom: 15px;">¿Por Qué Podemos Ser Tan Rápidos?</h3>
-                    <div class="two-column">
-                        <div>
-                            <p><strong>1. Saltamos el BS:</strong> Sin fase de estrategia de 6 semanas. Sin reuniones interminables. Sabemos lo que funciona y lo ejecutamos inmediatamente.</p>
-                            <p style="margin-top: 15px;"><strong>2. Lo hemos hecho 50+ veces:</strong> Tenemos sistemas y plantillas. No estamos descubriendo sobre la marcha.</p>
-                        </div>
-                        <div>
-                            <p><strong>3. Aprendimos de $90K+ en fracasos:</strong> Sabemos exactamente qué NO funciona y qué pierde tiempo. Saltamos todo eso.</p>
-                            <p style="margin-top: 15px;"><strong>4. Estamos incentivados:</strong> Si no entregamos en 30 días, trabajamos gratis. Nunca hemos tenido que hacer esto porque nuestro proceso funciona.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 6: Historias de Lanzamiento - Kieren -->
-        <div class="slide">
-            <h2 class="slide-title">📈 Historia de Éxito: Kieren</h2>
-            <div class="slide-content">
-                <div class="case-study-box">
-                    <div class="case-study-header">
-                        Landscaping & Driveways | Empezó desde CERO
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <span class="stat-number">Día 1</span>
-                            <span class="stat-label">Cuando empezó con nosotros</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">18 días</span>
-                            <span class="stat-label">Primer lead</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">$500K+</span>
-                            <span class="stat-label">Ventas año 1</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">25-30</span>
-                            <span class="stat-label">Leads/mes ahora</span>
-                        </div>
-                    </div>
-
-                    <h3 class="slide-subtitle">La Situación:</h3>
-                    <p style="font-size: 0.92em; line-height: 1.7;">Kieren acababa de dejar su trabajo para empezar su propio negocio de landscaping y driveways. Tenía su ABN, sus herramientas y su ute. Eso es todo. Sin web, sin marca, sin clientes. Sabía que necesitaba marketing pero cada agencia quería $10K+ por adelantado y 3-6 meses para 'construir su marca'. No tenía 3-6 meses - tenía cuentas que pagar.</p>
-
-                    <h3 class="slide-subtitle">Qué Hicimos:</h3>
-                    <ul style="font-size: 0.88em;">
-                        <li><strong>Semana 1:</strong> Configuramos targeting para propietarios en su área que necesitan driveways y landscaping</li>
-                        <li><strong>Semana 1:</strong> Creamos anuncios simples mostrando su trabajo previo (fotos de su teléfono)</li>
-                        <li><strong>Semana 2:</strong> Lanzamos campañas con landing page básica</li>
-                        <li><strong>Semana 3:</strong> Primeras consultas llegaron (Día 18)</li>
-                        <li><strong>Semana 4:</strong> Optimizamos basado en resultados tempranos</li>
-                    </ul>
-
-                    <div class="quote-box" style="margin-top: 30px;">
-                        <p style="font-size: 1.04em;"><strong>Kieren dice:</strong></p>
-                        <p>"Literalmente no tenía nada cuando empecé. [Names] me consiguieron leads antes de que tuviera tarjetas de presentación hechas. Otras agencias querían que esperara meses mientras 'construían mi marca.' Mate, necesitaba trabajos, no una marca. En 3 semanas estaba cotizando trabajo real. En 2 meses estaba rechazando trabajos porque estaba completamente reservado. Mejor decisión que tomé."</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 7: Historias de Lanzamiento - Callum -->
-        <div class="slide">
-            <h2 class="slide-title">📈 Historia de Éxito: Callum</h2>
-            <div class="slide-content">
-                <div class="case-study-box">
-                    <div class="case-study-header">
-                        Pool Builder | Empezó desde CERO
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <span class="stat-number">Día 1</span>
-                            <span class="stat-label">Cuando empezó con nosotros</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">18 días</span>
-                            <span class="stat-label">Primera consulta</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">$150K+</span>
-                            <span class="stat-label">Trabajos de piscinas ahora</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">$2M+</span>
-                            <span class="stat-label">Total en contratos</span>
-                        </div>
-                    </div>
-
-                    <h3 class="slide-subtitle">La Situación:</h3>
-                    <p style="font-size: 0.92em; line-height: 1.7;">Callum había trabajado para una empresa de construcción de piscinas durante 8 años. Conocía las piscinas por dentro y por fuera - diseño, construcción, todo. Pero tenía cero clientes propios. Quería trabajar por su cuenta pero estaba aterrado de no tener trabajo. La mayoría de las agencias le dijeron que construyera una web primero, estableciera su marca, luego comenzara marketing en 3-4 meses. Necesitaba clientes AHORA, no en 4 meses.</p>
-
-                    <h3 class="slide-subtitle">Qué Hicimos:</h3>
-                    <ul style="font-size: 0.88em;">
-                        <li><strong>Semana 1:</strong> Construimos estrategia de targeting para propietarios de ingresos altos</li>
-                        <li><strong>Semana 1:</strong> Creamos anuncios destacando sus 8 años de experiencia y portfolio</li>
-                        <li><strong>Semana 1:</strong> Configuramos landing page simple con su trabajo pasado</li>
-                        <li><strong>Semana 2:</strong> Lanzamos campañas</li>
-                        <li><strong>Semana 3:</strong> Primera consulta seria llegó (Día 18)</li>
-                        <li><strong>Semana 6:</strong> Primer contrato firmado ($68K piscina)</li>
-                    </ul>
-
-                    <div class="quote-box" style="margin-top: 30px;">
-                        <p style="font-size: 1.04em;"><strong>Callum dice:</strong></p>
-                        <p>"No tenía web, no tenía logo, no tenía nada excepto fotos de piscinas que construí para mi antiguo jefe. [Names] dijeron 'eso es todo lo que necesitamos.' Tres semanas después estoy hablando con gente que quiere gastar $70K en una piscina. Ahora he hecho más de $2M en piscinas, y cada una vino de su marketing. Cada. Una. No tendría un negocio sin ellos."</p>
-                    </div>
-
-                    <div class="key-point" style="margin-top: 30px;">
-                        <strong>Punto Clave:</strong> Callum construyó su NEGOCIO ENTERO con nuestros leads. Cada trabajo de piscina vino de nosotros.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 8: Historias de Lanzamiento - Danny -->
-        <div class="slide">
-            <h2 class="slide-title">📈 Historia de Éxito: Danny</h2>
-            <div class="slide-content">
-                <div class="case-study-box">
-                    <div class="case-study-header">
-                        Bathroom Renovations | Side Business → Negocio Principal
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <span class="stat-number">Plumber</span>
-                            <span class="stat-label">Trabajo anterior</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">21 días</span>
-                            <span class="stat-label">Primera consulta reno</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">30+</span>
-                            <span class="stat-label">Leads/mes ahora</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">$22K</span>
-                            <span class="stat-label">Valor promedio proyecto</span>
-                        </div>
-                    </div>
-
-                    <h3 class="slide-subtitle">La Situación:</h3>
-                    <p style="font-size: 0.92em; line-height: 1.7;">Danny había sido plumber durante 12 años y quería hacer la transición a renovaciones de baños de mayor valor. Seguía haciendo plomería a tiempo completo pero quería probar si podía construir un negocio de renovación. Sin clientes de renovación todavía, sin marketing, solo una idea. Necesitaba saber rápidamente si esto funcionaría porque estaba considerando dejar su trabajo de plomería.</p>
-
-                    <h3 class="slide-subtitle">Qué Hicimos:</h3>
-                    <ul style="font-size: 0.88em;">
-                        <li><strong>Semana 1:</strong> Targeting a propietarios buscando renovaciones de baño ($15K-40K rango)</li>
-                        <li><strong>Semana 1:</strong> Creamos anuncios mostrando su expertise en plomería como factor de confianza</li>
-                        <li><strong>Semana 2:</strong> Lanzamos campañas con preguntas de calificación</li>
-                        <li><strong>Semana 3:</strong> Primeras consultas de renovación llegaron (Día 21)</li>
-                        <li><strong>Semana 4:</strong> Optimizamos para compradores serios vs. buscadores de precio</li>
-                    </ul>
-
-                    <div class="quote-box" style="margin-top: 30px;">
-                        <p style="font-size: 1.04em;"><strong>Danny dice:</strong></p>
-                        <p>"Estaba nervioso como el demonio para invertir en marketing para algo que ni siquiera había empezado realmente. Pero no podía esperar 6 meses para ver si funcionaría - tenía una hipoteca e hijos. En 3 semanas tenía gente queriendo cotizaciones para renovaciones de baño de $20K-30K. Ahí fue cuando supe que esto era real. Todavía hago plomería pero honestamente, el trabajo de renovación es mucho mejor y todo viene de [Names]. Probablemente dejaré la plomería completamente el próximo año."</p>
-                    </div>
-
-                    <div class="success-box" style="margin-top: 30px;">
-                        <h4 style="font-size: 1.12em; color: #2E6B66; margin-bottom: 15px;"><strong>Resultados Actuales:</strong></h4>
-                        <p style="font-size: 0.92em;">✅ 30+ leads de renovación de baño por mes</p>
-                        <p style="font-size: 0.92em;">✅ 25-30% tasa de cierre</p>
-                        <p style="font-size: 0.92em;">✅ 7-9 proyectos firmados mensualmente</p>
-                        <p style="font-size: 0.92em;">✅ <strong>En transición de plumber a renovador a tiempo completo</strong></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 9: Historia de Escalado - Nanotise -->
-        <div class="slide">
-            <h2 class="slide-title">📈 Historia de Éxito: Nanotise</h2>
-            <div class="slide-content">
-                <div class="case-study-box">
-                    <div class="case-study-header">
-                        Múltiples Servicios de Trades | Escalado 4x en 2 Años
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <span class="stat-number">50</span>
-                            <span class="stat-label">Leads/mes iniciales</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">200</span>
-                            <span class="stat-label">Leads/mes actuales</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">4x</span>
-                            <span class="stat-label">Crecimiento</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number">-35%</span>
-                            <span class="stat-label">Reducción en CPL</span>
-                        </div>
-                    </div>
-
-                    <h3 class="slide-subtitle">La Situación:</h3>
-                    <p style="font-size: 0.92em; line-height: 1.7;">Nanotise ya estaba establecido pero atascado en 50 leads por mes. Habían probado otros enfoques pero no podían romper ese techo. Estaban frustrados con resultados inconsistentes y querían crecimiento predecible y escalable.</p>
-
-                    <h3 class="slide-subtitle">Qué Hicimos:</h3>
-                    <ul style="font-size: 0.88em;">
-                        <li>Reconstruimos completamente su estrategia de targeting</li>
-                        <li>Expandimos a nuevas áreas geográficas</li>
-                        <li>Creamos campañas de anuncios de alta calidad</li>
-                        <li>Implementamos mejor calificación de leads</li>
-                        <li>Probamos múltiples ofertas y enfoques</li>
-                        <li>Escalamos presupuesto conforme el ROI se probó</li>
-                    </ul>
-
-                    <h3 class="slide-subtitle">Progresión de Resultados:</h3>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-marker" style="font-size: 0.96em;">Inicio</div>
-                            <div class="timeline-content">
-                                <p style="font-size: 0.92em;"><strong>50 leads/mes</strong> - Punto de partida atascado</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker" style="font-size: 0.96em;">Mes 6</div>
-                            <div class="timeline-content">
-                                <p style="font-size: 0.92em;"><strong>80 leads/mes</strong> - Primeras mejoras significativas</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker" style="font-size: 0.96em;">Año 1</div>
-                            <div class="timeline-content">
-                                <p style="font-size: 0.92em;"><strong>120 leads/mes</strong> - Más del doble del punto inicial</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-marker" style="font-size: 0.96em;">Año 2</div>
-                            <div class="timeline-content">
-                                <p style="font-size: 0.92em;"><strong>200 leads/mes</strong> - 4x crecimiento total</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="key-point" style="margin-top: 30px;">
-                        <strong>Métricas Clave:</strong> Crecimiento 4x • Calidad mantenida alta • CPL reducido 35% • Consistente y predecible
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 10: Estructura del Sitio -->
-        <div class="slide">
-            <h2 class="slide-title">🗂️ Estructura del Sitio Web</h2>
-            <div class="slide-content">
-                <h3 class="slide-subtitle">Navegación Principal:</h3>
-                <div class="two-column">
-                    <div class="column">
-                        <h4 style="color: #DE8363; margin-bottom: 15px;">📄 Páginas Principales</h4>
-                        <ul>
-                            <li><strong>Home</strong></li>
-                            <li><strong>How It Works</strong></li>
-                            <li><strong>Industries We Serve</strong> (dropdown con 9 trades)</li>
-                            <li><strong>🆕 Starting Out?</strong> (página para nuevos tradies)</li>
-                            <li><strong>Case Studies</strong></li>
-                            <li><strong>Our Story</strong></li>
-                            <li><strong>Resources (Blog)</strong></li>
+                <div class="two-column" style="margin-top: 3vh;">
+                    <div class="highlight-box">
+                        <h4 style="color: #9A4526; font-size: 2.4vh; margin-bottom: 1.5vh;">Cómo Comunicamos Velocidad:</h4>
+                        <ul style="font-size: 2vh;">
+                            <li>Badge "30-Day Guarantee" en homepage</li>
+                            <li>Timeline visual semana por semana</li>
+                            <li>Comparación directa vs. otras agencias</li>
+                            <li>Métricas: "Average first lead: 21 days"</li>
                         </ul>
                     </div>
-                    <div class="column">
-                        <h4 style="color: #DE8363; margin-bottom: 15px;">🎯 CTAs y Footer</h4>
-                        <ul>
-                            <li><strong>Get A Free Audit</strong> (botón CTA)</li>
-                            <li>About Us</li>
-                            <li>Why We're Different</li>
-                            <li><strong>🆕 Why We're Fast</strong></li>
-                            <li>FAQs</li>
-                            <li>Contact</li>
+                    <div class="success-box">
+                        <h4 style="color: #2E6B66; font-size: 2.4vh; margin-bottom: 1.5vh;">Por Qué Funciona:</h4>
+                        <ul style="font-size: 2vh;">
+                            <li>Tradies no pueden esperar 6 meses</li>
+                            <li>Tienen cuentas que pagar AHORA</li>
+                            <li>La velocidad es más valiosa que perfección</li>
+                            <li>Diferenciador claro vs. competencia</li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="section-divider"></div>
-
-                <h3 class="slide-subtitle">Páginas Específicas por Industria (Ejemplo: Pool Builders):</h3>
-                <div class="highlight-box">
-                    <p style="font-size: 0.96em; margin-bottom: 15px;"><strong>URL:</strong> /pool-builders</p>
-                    <ol style="font-size: 0.88em;">
-                        <li><strong>Hero:</strong> "Pool Builder Marketing by Tradies - Leads en 30 Días"</li>
-                        <li><strong>Promesa de Velocidad:</strong> Primera consulta calificada en 30 días o trabajamos gratis</li>
-                        <li><strong>Pain Points:</strong> Problemas específicos de pool builders (incluyendo "no pueden esperar meses")</li>
-                        <li><strong>Historia de Lanzamiento:</strong> Callum y sus trabajos de $150K sin web</li>
-                        <li><strong>Case Study:</strong> Resultados de pool builder</li>
-                        <li><strong>Testimonios:</strong> Específicos de la industria</li>
-                        <li><strong>Nuestro Proceso:</strong> Para pool builders (énfasis en lanzamiento rápido)</li>
-                        <li><strong>Pricing/Packages</strong></li>
-                        <li><strong>FAQ</strong> para pool builders</li>
-                        <li><strong>CTA:</strong> Free Audit</li>
-                    </ol>
-                </div>
             </div>
         </div>
 
-        <!-- Slide 11: Nueva Página "Starting Out?" -->
+        <!-- Slide 6: Estrategia de Lanzamientos -->
         <div class="slide">
-            <h2 class="slide-title">🚀 Nueva Página: "Starting Out?"</h2>
+            <h2 class="slide-title">Estrategia de Lanzamientos: Nuestro Diferenciador #2</h2>
             <div class="slide-content">
                 <div class="key-point">
-                    Página dedicada específicamente para tradies que lanzan nuevos negocios y necesitan leads RÁPIDO
+                    "Muchos clientes no tenían ni web cuando firmaron. Esa es nuestra especialidad."
                 </div>
 
-                <h3 class="slide-subtitle">URL: /starting-your-trade-business</h3>
-
-                <div class="highlight-box">
-                    <h4 style="color: #9A4526; font-size: 0.96em; margin-bottom: 20px;">Hero:</h4>
-                    <p style="font-size: 1.44em; font-weight: 700; color: #2E6B66;">"¿Recién Empezando Tu Negocio de Trades? Te Conseguiremos Tus Primeros 20 Clientes en 60 Días."</p>
-                    <p style="font-size: 1.04em; margin-top: 15px; color: #67BCB7;">Subheadline: "No necesitas web. No necesitas marca. Solo tus habilidades y nuestro marketing."</p>
+                <div class="three-column" style="margin-top: 2vh;">
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <h4 style="color: #9A4526; margin-bottom: 1vh; font-size: 2.2vh;">Kieren</h4>
+                        <p style="font-size: 1.9vh;">Landscaping. Día 1 sin web. $500K+ año 1.</p>
+                    </div>
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <h4 style="color: #9A4526; margin-bottom: 1vh; font-size: 2.2vh;">Callum</h4>
+                        <p style="font-size: 1.9vh;">Pool builder. Sin web. Ahora $150K+ jobs.</p>
+                    </div>
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <h4 style="color: #9A4526; margin-bottom: 1vh; font-size: 2.2vh;">Danny</h4>
+                        <p style="font-size: 1.9vh;">Bathroom renos. Side business. 30+ leads/mes.</p>
+                    </div>
                 </div>
 
-                <h3 class="slide-subtitle">Secciones Clave:</h3>
+                <div class="two-column" style="margin-top: 2.5vh;">
+                    <div class="highlight-box">
+                        <h4 style="color: #9A4526; font-size: 2.4vh; margin-bottom: 1.5vh;">Cómo Comunicamos Esto:</h4>
+                        <ul style="font-size: 2vh;">
+                            <li>Página dedicada: "/starting-out"</li>
+                            <li>Sección en homepage con 3 historias</li>
+                            <li>Badge: "40+ Businesses Launched"</li>
+                            <li>Testimoniales destacando "sin web"</li>
+                            <li>Case studies breves pero impactantes</li>
+                        </ul>
+                    </div>
+                    <div class="success-box">
+                        <h4 style="color: #2E6B66; font-size: 2.4vh; margin-bottom: 1.5vh;">Mensaje a Nuevos Tradies:</h4>
+                        <p style="font-size: 2vh; line-height: 1.6;">"No necesitas web. No necesitas marca. Solo tus habilidades y nosotros. Kieren, Callum y Danny empezaron así. Ahora están prosperando."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Estructura del Sitio -->
+        <div class="slide">
+            <h2 class="slide-title">Estructura del Sitio Web</h2>
+            <div class="slide-content">
+                <div class="two-column">
+                    <div>
+                        <h3 style="color: #2E6B66; margin-bottom: 1.5vh; font-size: 2.6vh;">Páginas Principales:</h3>
+                        <ul style="font-size: 2.2vh;">
+                            <li><strong>Home:</strong> 3 pilares, velocidad, historias launch</li>
+                            <li><strong>How It Works:</strong> Timeline 30 días visual</li>
+                            <li><strong>🆕 Starting Out?:</strong> Para nuevos tradies</li>
+                            <li><strong>Industries:</strong> 9 páginas específicas por trade</li>
+                            <li><strong>Case Studies:</strong> Kieren, Callum, Danny, Nanotise</li>
+                            <li><strong>Our Story:</strong> Historia $90K detallada</li>
+                            <li><strong>Resources:</strong> Blog con contenido educativo</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #2E6B66; margin-bottom: 1.5vh; font-size: 2.6vh;">Cada Página Debe Incluir:</h3>
+                        <div class="highlight-box">
+                            <ul style="font-size: 2vh;">
+                                <li>✅ Mención de que somos tradies activos</li>
+                                <li>✅ Promesa de 30 días visible</li>
+                                <li>✅ Al menos 1 historia de launch o $90K</li>
+                                <li>✅ CTA claro: "Get Free Audit"</li>
+                                <li>✅ Badge "30-Day Guarantee"</li>
+                                <li>✅ Fotos reales de obras (no stock)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-point" style="margin-top: 2vh;">
+                    Cada página refuerza los 3 pilares: Somos Tradies + Velocidad + Lanzamientos
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Homepage Strategy -->
+        <div class="slide">
+            <h2 class="slide-title">Homepage: Estrategia de Comunicación</h2>
+            <div class="slide-content">
+                <h3 class="slide-subtitle">Secciones Clave en Orden:</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2vh; font-size: 2vh;">
+                    <div class="column" style="background: #F9E2D8;">
+                        <strong>1. Hero:</strong> Headline + Badge 30 días + CTA
+                    </div>
+                    <div class="column" style="background: #F9E2D8;">
+                        <strong>2. Speed Promise:</strong> Comparación vs. otras agencias
+                    </div>
+                    <div class="column" style="background: #D4F2F0;">
+                        <strong>3. Launch Success:</strong> Kieren, Callum, Danny cards
+                    </div>
+                    <div class="column" style="background: #D4F2F0;">
+                        <strong>4. Credibility Bar:</strong> Stats y social proof
+                    </div>
+                    <div class="column" style="background: #F9E2D8;">
+                        <strong>5. The Problem:</strong> Por qué otras agencias fallan
+                    </div>
+                    <div class="column" style="background: #F9E2D8;">
+                        <strong>6. Our Story:</strong> Historia $90K resumida
+                    </div>
+                    <div class="column" style="background: #D4F2F0;">
+                        <strong>7. How We're Different:</strong> 4 diferenciadores
+                    </div>
+                    <div class="column" style="background: #D4F2F0;">
+                        <strong>8. Industries:</strong> Grid 9 trades
+                    </div>
+                    <div class="column" style="background: #F9E2D8;">
+                        <strong>9. Proof:</strong> Testimonials + métricas
+                    </div>
+                    <div class="column" style="background: #F9E2D8;">
+                        <strong>10. Final CTA:</strong> Form + garantía 30 días
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 2vh;">
+                    <p style="font-size: 2.2vh; font-weight: 700; text-align: center;">Principio: Cada sección refuerza velocidad, autenticidad y especialización en launches</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Tono y Voz de Marca -->
+        <div class="slide">
+            <h2 class="slide-title">Tono y Voz de Marca</h2>
+            <div class="slide-content">
+                <div class="two-column">
+                    <div class="success-box">
+                        <h3 style="color: #2E6B66; margin-bottom: 1.5vh; font-size: 2.6vh;">✅ SÍ Hacer:</h3>
+                        <ul style="font-size: 2vh;">
+                            <li>Hablar como tradies hablan</li>
+                            <li>Usar términos de tradie reales</li>
+                            <li>Ser directo, sin rodeos</li>
+                            <li>Occasional Aussie slang</li>
+                            <li>"Mate", "shithouse", "bullshit"</li>
+                            <li>Enfatizar velocidad constantemente</li>
+                            <li>Mencionar que seguimos en obras</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box">
+                        <h3 style="color: #9A4526; margin-bottom: 1.5vh; font-size: 2.6vh;">❌ NO Hacer:</h3>
+                        <ul style="font-size: 2vh;">
+                            <li>Marketing speak corporativo</li>
+                            <li>Overpromising irreal</li>
+                            <li>Pretender que no somos tradies</li>
+                            <li>Ser "profesional" a costa de autenticidad</li>
+                            <li>Jargon que tradies no usan</li>
+                            <li>Decir "takes 6 months"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="quote-box" style="margin-top: 2.5vh;">
+                    <p style="font-size: 2.4vh;"><strong>Ejemplo de tono correcto:</strong></p>
+                    <p style="font-size: 2.2vh; margin-top: 1vh;">"No somos un tipo con traje en una oficina del CBD que nunca ha sostenido un nivel de burbuja. Esta mañana estábamos lidiando con delays de council en un roofing job. Esta tarde conseguimos leads a nuestros clientes - empezando en sus primeros 30 días."</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Diseño Visual -->
+        <div class="slide">
+            <h2 class="slide-title">Estrategia de Diseño Visual</h2>
+            <div class="slide-content">
+                <h3 class="slide-subtitle">Principio: Auténtico, No Corporativo</h3>
                 
                 <div class="two-column">
-                    <div class="column">
-                        <h4 style="color: #DE8363; margin-bottom: 10px;">1. Reality Check</h4>
-                        <p>Tienes las habilidades. No tienes los clientes. El reloj está corriendo. No puedes esperar 6 meses.</p>
-                    </div>
-                    <div class="column">
-                        <h4 style="color: #DE8363; margin-bottom: 10px;">2. Nos Especializamos en Lanzamientos</h4>
-                        <p>Muchos clientes no tenían negocio cuando firmaron. En 30 días, tenían leads. En 60 días, clientes pagando.</p>
-                    </div>
-                </div>
-
-                <div class="three-column" style="margin-top: 30px;">
-                    <div class="column" style="background: #F9E2D8; border-color: #DE8363;">
-                        <h4 style="color: #9A4526; margin-bottom: 10px;">3. Historia: Kieren</h4>
-                        <p>Firmó sin web. Primera semana marketing lanzado. Semana 3 primeros leads. $500K+ año 1.</p>
-                    </div>
-                    <div class="column" style="background: #F9E2D8; border-color: #DE8363;">
-                        <h4 style="color: #9A4526; margin-bottom: 10px;">4. Historia: Callum</h4>
-                        <p>Sin web, sin clientes, solo habilidades. Día 1 con nosotros. Ahora cierra trabajos de $150K+.</p>
-                    </div>
-                    <div class="column" style="background: #F9E2D8; border-color: #DE8363;">
-                        <h4 style="color: #9A4526; margin-bottom: 10px;">5. Historia: Danny</h4>
-                        <p>Side business como plumber. 3 semanas a primeros leads. Ahora 30+ leads/mes de renos.</p>
-                    </div>
-                </div>
-
-                <div class="success-box" style="margin-top: 40px;">
-                    <h4 style="color: #2E6B66; font-size: 1.12em; margin-bottom: 20px;"><strong>Qué Necesitas Para Empezar (Spoiler: No Mucho):</strong></h4>
-                    <div class="pros-cons">
-                        <div class="pros">
-                            <p style="font-size: 0.96em; margin-bottom: 10px;"><strong>✓ SÍ Necesitas:</strong></p>
-                            <ul>
-                                <li>ABN y calificaciones de trade</li>
-                                <li>Número de teléfono</li>
-                                <li>Capacidad para cotizar y hacer el trabajo</li>
-                            </ul>
-                        </div>
-                        <div class="cons">
-                            <p style="font-size: 0.96em; margin-bottom: 10px;"><strong>✗ NO Necesitas:</strong></p>
-                            <ul>
-                                <li>Website</li>
-                                <li>Logo o branding</li>
-                                <li>Presencia en redes sociales</li>
-                                <li>Clientes existentes</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 12: Homepage - Sección Hero -->
-        <div class="slide">
-            <h2 class="slide-title">🏠 Homepage: Sección Hero</h2>
-            <div class="slide-content">
-                <div class="highlight-box">
-                    <h3 style="color: #9A4526; font-size: 1.44em; margin-bottom: 20px;">Layout:</h3>
-                    <ul style="font-size: 0.92em;">
-                        <li>Headline grande y audaz</li>
-                        <li>Subheadline enfatizando promesa de 30 días</li>
-                        <li>Botón CTA primario</li>
-                        <li>CTA secundario (video)</li>
-                        <li><strong>🆕 Badge prominente "Garantía 30 Días"</strong></li>
-                        <li>Background: Foto nuestra en trabajo de roofing con high vis</li>
-                    </ul>
-                </div>
-
-                <div class="quote-box" style="margin-top: 40px;">
-                    <h3 style="color: #2E6B66; font-size: 1.28em; margin-bottom: 20px; font-style: normal;"><strong>Headline:</strong></h3>
-                    <p style="font-size: 1.28em; color: #2E6B66; font-style: normal;">"Marketing By Tradies, For Tradies. Leads en 30 Días, No 6 Meses."</p>
-                </div>
-
-                <div class="highlight-box">
-                    <h3 style="color: #9A4526; font-size: 0.96em; margin-bottom: 15px;">Subheadline:</h3>
-                    <p style="font-size: 1.04em; line-height: 1.7;">"Somos home builders y carpenters que ahora tenemos un negocio de roofing. Después de gastar más de $90K en agencias que no pudieron entregar, aprendimos a hacerlo nosotros mismos. Ahora ayudamos a tradies a conseguir 20-30 leads de calidad por mes - comenzando en sus primeros 30 días. Ya sea que lances mañana o escales hoy."</p>
-                </div>
-
-                <div class="two-column" style="margin-top: 40px;">
-                    <div class="column" style="background: #E8A288; border-color: #9A4526;">
-                        <h4 style="color: white; font-size: 1.04em; margin-bottom: 15px;">CTA Primario:</h4>
-                        <p style="font-size: 1.12em; font-weight: 700; color: white;">"Get Leads in 30 Days - Free Audit"</p>
-                    </div>
-                    <div class="column" style="background: #8ED4D0; border-color: #2E6B66;">
-                        <h4 style="color: white; font-size: 1.04em; margin-bottom: 15px;">CTA Secundario:</h4>
-                        <p style="font-size: 1.12em; font-weight: 700; color: white;">"Watch How We Do It" (video 2 min)</p>
-                    </div>
-                </div>
-
-                <div class="success-box" style="margin-top: 40px;">
-                    <h4 style="color: #2E6B66; font-size: 0.96em; margin-bottom: 20px;"><strong>🆕 Elementos de Confianza:</strong></h4>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <span class="stat-label">First Qualified Lead Within</span>
-                            <span class="stat-number" style="font-size: 1.28em;">30 Days</span>
-                            <span class="stat-label">Guaranteed</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-label">Helping</span>
-                            <span class="stat-number" style="font-size: 1.28em;">50+</span>
-                            <span class="stat-label">Aussie Tradies Grow</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-label">Many Clients</span>
-                            <span class="stat-number" style="font-size: 1.28em;">Started</span>
-                            <span class="stat-label">from Scratch</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-label">Kieren's Year 1:</span>
-                            <span class="stat-number" style="font-size: 1.44em;">$500K+</span>
-                            <span class="stat-label">From $0 to</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 13: Homepage - Sección de Velocidad -->
-        <div class="slide">
-            <h2 class="slide-title">⚡ Homepage: Sección Promesa de Velocidad</h2>
-            <div class="slide-content">
-                <div class="key-point">
-                    "30 Días a Leads. No 3-6 Meses."
-                </div>
-
-                <h3 class="slide-subtitle">Comparación en Dos Columnas:</h3>
-
-                <div class="pros-cons">
-                    <div class="cons">
-                        <h3 style="color: #9A4526; font-size: 1.28em; margin-bottom: 20px;">❌ Otras Agencias</h3>
-                        <ul style="font-size: 0.92em;">
-                            <li>"Danos 90 días para ver resultados"</li>
-                            <li>"Construyamos tu marca primero"</li>
-                            <li>"Necesitamos tiempo para desarrollar estrategia"</li>
-                            <li>"Resultados en 3-6 meses tal vez"</li>
-                            <li>"Se requieren contratos largos"</li>
-                        </ul>
-                    </div>
-                    <div class="pros">
-                        <h3 style="color: #2E6B66; font-size: 1.28em; margin-bottom: 20px;">✅ Client Connect</h3>
-                        <ul style="font-size: 0.92em;">
-                            <li>Leads dentro de 30 días garantizados</li>
-                            <li>Lanzamos semana 1, leads semana 2-3</li>
-                            <li>Sin contratos a largo plazo</li>
-                            <li>Trabajamos gratis hasta conseguirte 10 leads</li>
-                            <li>Construido para tradies que necesitan resultados AHORA</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="quote-box" style="margin-top: 40px; text-align: center;">
-                    <p style="font-size: 0.96em; font-weight: 700;">"Recordamos lo que es necesitar trabajos ayer. No te hacemos esperar."</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 14: Homepage - Launch Success -->
-        <div class="slide">
-            <h2 class="slide-title">🚀 Homepage: Launch Success Section</h2>
-            <div class="slide-content">
-                <div class="highlight-box">
-                    <h3 style="font-size: 1.76em; color: #9A4526; margin-bottom: 15px;">"¿Recién Empezando Tu Negocio? Perfecto. Esa es Nuestra Especialidad."</h3>
-                    <p style="font-size: 1.04em; line-height: 1.7;">Muchos de nuestros clientes ni siquiera tenían una web cuando firmaron con nosotros. Algunos no tenían ni su ABN todavía. Tenían sus habilidades y a nosotros. Eso fue suficiente.</p>
-                </div>
-
-                <h3 class="slide-subtitle">Layout de Tres Columnas con Historias Reales:</h3>
-
-                <div class="three-column">
-                    <div class="column" style="background: #F9E2D8; border: 4px solid #DE8363;">
-                        <div style="text-align: center; margin-bottom: 15px;">
-                            <span class="badge" style="font-size: 0.88em;">Kieren - Landscaping</span>
-                        </div>
-                        <ul style="font-size: 0.88em;">
-                            <li>Firmó con nosotros Día 1 de su negocio</li>
-                            <li>Sin web, sin branding, nada</li>
-                            <li>Primer lead: Semana 3</li>
-                            <li><strong>Año 1: Más de $500K en ventas</strong></li>
-                        </ul>
-                        <p style="text-align: center; margin-top: 20px; font-weight: 700; color: #9A4526;">
-                            [Leer Historia Completa →]
-                        </p>
-                    </div>
-
-                    <div class="column" style="background: #F9E2D8; border: 4px solid #DE8363;">
-                        <div style="text-align: center; margin-bottom: 15px;">
-                            <span class="badge" style="font-size: 0.88em;">Callum - Pool Builder</span>
-                        </div>
-                        <ul style="font-size: 0.88em;">
-                            <li>Empezó su negocio con nuestra ayuda</li>
-                            <li>Ahora cierra trabajos de piscinas de $150K+</li>
-                            <li>Construyó negocio entero con nuestros leads</li>
-                            <li><strong>Cada trabajo vino de nosotros</strong></li>
-                        </ul>
-                        <p style="text-align: center; margin-top: 20px; font-weight: 700; color: #9A4526;">
-                            [Leer Historia Completa →]
-                        </p>
-                    </div>
-
-                    <div class="column" style="background: #F9E2D8; border: 4px solid #DE8363;">
-                        <div style="text-align: center; margin-bottom: 15px;">
-                            <span class="badge" style="font-size: 0.88em;">Danny - Bathroom Renos</span>
-                        </div>
-                        <ul style="font-size: 0.88em;">
-                            <li>Side business mientras seguía plumbing</li>
-                            <li>Necesitaba probar rápido si funcionaría</li>
-                            <li>Ahora 30+ leads de reno por mes</li>
-                            <li><strong>A punto de dejar plumbing completamente</strong></li>
-                        </ul>
-                        <p style="text-align: center; margin-top: 20px; font-weight: 700; color: #9A4526;">
-                            [Leer Historia Completa →]
-                        </p>
-                    </div>
-                </div>
-
-                <div class="key-point" style="margin-top: 40px; text-align: center;">
-                    <strong style="font-size: 1.04em;">CTA:</strong> "¿Empezando Tu Negocio de Trades? Te Conseguiremos Clientes →"
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 15: Cómo Funciona - Timeline 30 Días -->
-        <div class="slide">
-            <h2 class="slide-title">⏱️ Cómo Funciona: De Cero a Leads en 30 Días</h2>
-            <div class="slide-content">
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker" style="background: #67BCB7; border-color: #2E6B66;">Sem 1</div>
-                        <div class="timeline-content">
-                            <h3 style="color: #2E6B66; margin-bottom: 10px; font-size: 0.96em;">Fast Setup (Días 1-7)</h3>
-                            <ul style="font-size: 0.88em;">
-                                <li>Auditoría gratis y sesión de estrategia (Día 1-2)</li>
-                                <li>Acordar y empezar inmediatamente (Día 3)</li>
-                                <li>Investigación de audiencia objetivo (Día 4-5)</li>
-                                <li>Creación y aprobación de anuncios (Día 6-7)</li>
-                                <li>Landing page simple si es necesario (Día 6-7)</li>
-                            </ul>
-                            <p style="margin-top: 15px; font-weight: 700; color: #9A4526;">"Sin fase de 'estrategia' de 6 semanas - nos movemos RÁPIDO"</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker" style="background: #8ED4D0; border-color: #2E6B66;">Sem 2</div>
-                        <div class="timeline-content">
-                            <h3 style="color: #2E6B66; margin-bottom: 10px; font-size: 0.96em;">Launch (Días 8-14)</h3>
-                            <ul style="font-size: 0.88em;">
-                                <li>Campañas en vivo (Día 8)</li>
-                                <li>Pruebas iniciales de targeting comienzan</li>
-                                <li>Sistemas de captura de leads activos</li>
-                                <li>Empiezas a ver actividad</li>
-                            </ul>
-                            <p style="margin-top: 15px; font-weight: 700; color: #9A4526;">"Sentirás el momentum inmediatamente"</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker" style="background: #DE8363; border-color: #9A4526;">Sem 3</div>
-                        <div class="timeline-content">
-                            <h3 style="color: #9A4526; margin-bottom: 10px; font-size: 0.96em;">First Leads (Días 15-21)</h3>
-                            <ul style="font-size: 0.88em;">
-                                <li>Consultas calificadas empiezan a llegar</li>
-                                <li>Comienzas a cotizar trabajos reales</li>
-                                <li>Optimizamos basado en data temprana</li>
-                                <li>Ajustamos targeting si es necesario</li>
-                            </ul>
-                            <p style="margin-top: 15px; font-weight: 700; color: #DE8363;">"Kieren, Callum, Danny todos consiguieron primeros leads semana 2-3"</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker" style="background: #E8A288; border-color: #9A4526;">Sem 4</div>
-                        <div class="timeline-content">
-                            <h3 style="color: #9A4526; margin-bottom: 10px; font-size: 0.96em;">Proven & Scaling (Días 22-30)</h3>
-                            <ul style="font-size: 0.88em;">
-                                <li>Escalamos lo que funciona</li>
-                                <li>Cortamos lo que no</li>
-                                <li>Mejoramos costo por lead</li>
-                                <li>Aumentamos calidad de leads</li>
-                                <li>Llamada de estrategia mensual</li>
-                            </ul>
-                            <p style="margin-top: 15px; font-weight: 700; color: #DE8363;">"Para el día 30, SABES que esto funciona"</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 16: Comparación Timeline -->
-        <div class="slide">
-            <h2 class="slide-title">⚖️ Comparación de Timelines</h2>
-            <div class="slide-content">
-                <div class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Periodo</th>
-                            <th>Otras Agencias</th>
-                            <th>Client Connect</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Mes 1</td>
-                            <td>"Fase de estrategia y planificación"</td>
-                            <td><strong>✅ Setup completo, campañas en vivo, primeros leads</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Mes 2</td>
-                            <td>"Desarrollo creativo y preparación"</td>
-                            <td><strong>✅ Flujo constante de leads calificados</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Mes 3</td>
-                            <td>"¿Tal vez lanzamiento?"</td>
-                            <td><strong>✅ Escalando, optimizando, ROI probado</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Mes 4-5</td>
-                            <td>"Fase de pruebas"</td>
-                            <td><strong>✅ Pipeline predecible y consistente</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Mes 6</td>
-                            <td>"Primeros resultados reales (tal vez)"</td>
-                            <td><strong>✅ Negocio transformado, múltiples trabajos cerrados</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="key-point" style="margin-top: 50px; text-align: center; font-size: 0.96em;">
-                    <strong>Otras agencias te hacen esperar 90 días para EMPEZAR a ver resultados.</strong><br>
-                    <strong style="color: #DE8363;">Nosotros entregamos en 30.</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 17: Los 4 Diferenciadores Clave -->
-        <div class="slide">
-            <h2 class="slide-title">🎯 Por Qué Tradies Nos Eligen Sobre Otras Agencias</h2>
-            <div class="slide-content">
-                <div class="two-column">
-                    <div class="column" style="background: #F9E2D8; border: 4px solid #DE8363;">
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <div class="step-number" style="width: 70px; height: 70px; font-size: 1.28em;">⚡</div>
-                        </div>
-                        <h3 style="color: #9A4526; font-size: 0.96em; margin-bottom: 15px;">1. Entregamos Rápido - 30 Días, No 90</h3>
-                        <ul style="font-size: 1.05em;">
-                            <li>Otras agencias: "Danos 90 días para probar"</li>
-                            <li>Nosotros: "Leads calificados en 30 días. Garantizado."</li>
-                            <li>Setup rápido, lanzamiento rápido, entrega rápida</li>
-                            <li>Verás actividad en semana 2-3</li>
-                            <li><strong>Si no entregamos en 30 días, trabajamos gratis</strong></li>
-                        </ul>
-                    </div>
-
-                    <div class="column" style="background: #F9E2D8; border: 4px solid #DE8363;">
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <div class="step-number" style="width: 70px; height: 70px; font-size: 1.28em;">🚀</div>
-                        </div>
-                        <h3 style="color: #9A4526; font-size: 0.96em; margin-bottom: 15px;">2. Lanzamos Nuevos Negocios Desde Cero</h3>
-                        <ul style="font-size: 1.05em;">
-                            <li>Muchos de nuestros clientes empezaron sin nada</li>
-                            <li>¿Sin web? Trabajaremos con eso</li>
-                            <li>¿Recién conseguiste tu ABN? Timing perfecto</li>
-                            <li>Hemos lanzado tradies desde cero</li>
-                            <li><strong>Kieren: $500K+ en año 1 (empezó desde cero)</strong></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="two-column" style="margin-top: 30px;">
-                    <div class="column" style="background: #D4F2F0; border: 4px solid #67BCB7;">
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <div class="step-number" style="background: #67BCB7; border-color: #2E6B66; width: 70px; height: 70px; font-size: 1.28em;">🔧</div>
-                        </div>
-                        <h3 style="color: #2E6B66; font-size: 0.96em; margin-bottom: 15px;">3. Seguimos En Las Herramientas</h3>
-                        <ul style="font-size: 1.05em;">
-                            <li>No somos ex-tradies que dejaron la industria</li>
-                            <li>Somos tradies activos que también hacemos marketing</li>
-                            <li>Entendemos tu realidad diaria porque la vivimos</li>
-                            <li>Cuando nos llamas, podríamos estar en un techo</li>
-                            <li><strong>Esto nos mantiene conectados con problemas reales de tradies</strong></li>
-                        </ul>
-                    </div>
-
-                    <div class="column" style="background: #D4F2F0; border: 4px solid #67BCB7;">
-                        <div style="text-align: center; margin-bottom: 20px;">
-                            <div class="step-number" style="background: #67BCB7; border-color: #2E6B66; width: 70px; height: 70px; font-size: 1.28em;">🤝</div>
-                        </div>
-                        <h3 style="color: #2E6B66; font-size: 0.96em; margin-bottom: 15px;">4. Solo Trabajamos Con Tradies</h3>
-                        <ul style="font-size: 1.05em;">
-                            <li>100% de nuestros clientes son trades</li>
-                            <li>Entendemos permisos, council, delays, estacionalidad</li>
-                            <li>Sabemos la diferencia entre tire kickers y compradores serios</li>
-                            <li>Hablamos tu idioma, no BS corporativo</li>
-                            <li><strong>Después de que agencias nos quemaron por $90K+, nos convertimos en la agencia que tradies realmente necesitan</strong></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 18: Garantía de 30 Días -->
-        <div class="slide">
-            <h2 class="slide-title">✅ Nuestra Garantía de 30 Días</h2>
-            <div class="slide-content">
-                <div class="highlight-box" style="text-align: center; padding: 50px;">
-                    <h3 style="font-size: 1.28em; color: #9A4526; margin-bottom: 30px; line-height: 1.4;">
-                        "Si no consigues al menos 10 leads calificados en tus primeros 30 días, trabajaremos gratis hasta que los tengas."
-                    </h3>
-                    <p style="font-size: 0.96em; color: #2E6B66; margin-top: 30px;">Ponemos nuestro dinero donde está nuestra boca.</p>
-                </div>
-
-                <div class="two-column" style="margin-top: 50px;">
                     <div class="success-box">
-                        <h3 style="color: #2E6B66; font-size: 1.28em; margin-bottom: 20px;">¿Por Qué Podemos Garantizar Esto?</h3>
-                        <ul style="font-size: 0.92em;">
-                            <li><strong>Lo hemos hecho 50+ veces:</strong> Sabemos que nuestro proceso funciona</li>
-                            <li><strong>Tenemos los sistemas:</strong> No estamos experimentando contigo</li>
-                            <li><strong>Estamos seguros:</strong> En 3+ años, nunca hemos tenido que honrar esto</li>
-                            <li><strong>Somos tradies:</strong> Entendemos la urgencia y entregamos</li>
+                        <h4 style="color: #2E6B66; font-size: 2.4vh; margin-bottom: 1.5vh;">✅ Usar:</h4>
+                        <ul style="font-size: 2vh;">
+                            <li>Fotos reales en obras australianas</li>
+                            <li>Nosotros trabajando (high vis, tools)</li>
+                            <li>Proyectos de clientes con permiso</li>
+                            <li>Behind-the-scenes content</li>
+                            <li>Split-screen: obra + marketing</li>
+                            <li>Screenshots de dashboards reales</li>
+                            <li>Videos testimoniales en ubicación</li>
                         </ul>
+                    </div>
+                    <div class="highlight-box">
+                        <h4 style="color: #9A4526; font-size: 2.4vh; margin-bottom: 1.5vh;">❌ NO Usar:</h4>
+                        <ul style="font-size: 2vh;">
+                            <li>Stock photos de gente en trajes</li>
+                            <li>Imágenes corporativas genéricas</li>
+                            <li>Settings no australianos</li>
+                            <li>Fotografía demasiado pulida</li>
+                            <li>Cualquier cosa que se vea falsa</li>
+                            <li>Stock genérico de herramientas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-point" style="margin-top: 2vh;">
+                    Paleta: Turquesa (#2E6B66, #67BCB7, #8ED4D0) + Coral (#9A4526, #DE8363, #E8A288)
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Contenido y Lead Magnets -->
+        <div class="slide">
+            <h2 class="slide-title">Estrategia de Contenido</h2>
+            <div class="slide-content">
+                <h3 class="slide-subtitle">3 Lead Magnets Prioritarios:</h3>
+                
+                <div class="three-column">
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <h4 style="color: #9A4526; margin-bottom: 1vh; font-size: 2.2vh;">1. Plan Lanzamiento</h4>
+                        <p style="font-size: 1.9vh;">"30-Day New Business Launch Plan for Tradies"</p>
+                    </div>
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <h4 style="color: #9A4526; margin-bottom: 1vh; font-size: 2.2vh;">2. Lecciones $90K</h4>
+                        <p style="font-size: 1.9vh;">"$90K in Marketing Mistakes: What We Learned"</p>
+                    </div>
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <h4 style="color: #9A4526; margin-bottom: 1vh; font-size: 2.2vh;">3. Fast Results</h4>
+                        <p style="font-size: 1.9vh;">"Tradie's Guide to Fast Marketing Results"</p>
+                    </div>
+                </div>
+
+                <h3 class="slide-subtitle" style="margin-top: 3vh;">5 Pilares de Contenido Blog:</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <ul style="font-size: 2vh;">
+                            <li><strong>1. Velocidad & Resultados Rápidos</strong></li>
+                            <li><strong>2. Historias Launch Success</strong></li>
+                            <li><strong>3. Nuestra Historia & $90K</strong></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <ul style="font-size: 2vh;">
+                            <li><strong>4. Educación Marketing</strong></li>
+                            <li><strong>5. Resultados & Prueba Social</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 2vh;">
+                    <p style="font-size: 2vh; text-align: center;"><strong>Frecuencia:</strong> 2 posts educativos + 1 historia cliente + 1 behind-scenes + 1 industry deep-dive por mes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Garantía 30 Días -->
+        <div class="slide">
+            <h2 class="slide-title">Nuestra Garantía de 30 Días</h2>
+            <div class="slide-content">
+                <div class="highlight-box" style="text-align: center; padding: 4vh;">
+                    <p style="font-size: 3.5vh; font-weight: 700; color: #9A4526; line-height: 1.4;">
+                        "Si no consigues 10 leads calificados en 30 días,<br>trabajamos gratis hasta que los tengas."
+                    </p>
+                </div>
+
+                <div class="two-column" style="margin-top: 3vh;">
+                    <div class="success-box">
+                        <h3 style="color: #2E6B66; font-size: 2.4vh; margin-bottom: 1.5vh;">Dónde Aparece:</h3>
+                        <ul style="font-size: 2vh;">
+                            <li>Badge prominente en homepage hero</li>
+                            <li>Sección dedicada en homepage</li>
+                            <li>Repetido en cada industry page</li>
+                            <li>En formularios de contacto</li>
+                            <li>Página "How It Works"</li>
+                            <li>Trust badges en footer</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-box">
+                        <h3 style="color: #9A4526; font-size: 2.4vh; margin-bottom: 1.5vh;">Por Qué Funciona:</h3>
+                        <ul style="font-size: 2vh;">
+                            <li>Elimina riesgo completamente</li>
+                            <li>Demuestra confianza extrema</li>
+                            <li>Diferenciador vs. competencia</li>
+                            <li>Respaldo tangible a promesa velocidad</li>
+                            <li>En 3+ años, nunca honrada</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-point" style="margin-top: 2vh;">
+                    Esta garantía es la prueba física de que SABEMOS que podemos entregar en 30 días
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Métricas de Éxito -->
+        <div class="slide">
+            <h2 class="slide-title">Métricas de Éxito</h2>
+            <div class="slide-content">
+                <div class="three-column">
+                    <div class="column" style="background: #F9E2D8; border: 0.4vh solid #DE8363;">
+                        <h3 style="color: #9A4526; text-align: center; margin-bottom: 2vh; font-size: 2.4vh;">3 Meses</h3>
+                        <ul style="font-size: 2vh;">
+                            <li>1,000+ visitantes/mes</li>
+                            <li>20+ auditorías solicitadas</li>
+                            <li>3+ nuevos clientes</li>
+                            <li>40%+ clientes launch</li>
+                        </ul>
+                    </div>
+                    <div class="column" style="background: #D4F2F0; border: 0.4vh solid #67BCB7;">
+                        <h3 style="color: #2E6B66; text-align: center; margin-bottom: 2vh; font-size: 2.4vh;">6 Meses</h3>
+                        <ul style="font-size: 2vh;">
+                            <li>2,000+ visitantes/mes</li>
+                            <li>40+ auditorías solicitadas</li>
+                            <li>8+ nuevos clientes</li>
+                            <li>300+ lista email</li>
+                        </ul>
+                    </div>
+                    <div class="column" style="background: #8ED4D0; border: 0.4vh solid #2E6B66;">
+                        <h3 style="color: white; text-align: center; margin-bottom: 2vh; font-size: 2.4vh;">12 Meses</h3>
+                        <ul style="font-size: 2vh;">
+                            <li>4,000+ visitantes/mes</li>
+                            <li>60+ auditorías solicitadas</li>
+                            <li>15+ nuevos clientes</li>
+                            <li>800+ lista email</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 3vh;">
+                    <h3 style="color: #9A4526; font-size: 2.6vh; margin-bottom: 2vh;">Métricas Específicas de Launch:</h3>
+                    <div style="text-align: center; font-size: 2.2vh;">
+                        <span class="metric">Tiempo promedio primer lead: &lt;21 días</span>
+                        <span class="metric">Retención launch clients: 90%+</span>
+                        <span class="metric">Todavía en negocio después 12 meses: 95%+</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Próximos Pasos -->
+        <div class="slide">
+            <h2 class="slide-title">Próximos Pasos Inmediatos</h2>
+            <div class="slide-content">
+                <div style="display: flex; flex-direction: column; gap: 2vh;">
+                    <div class="highlight-box">
+                        <div style="display: flex; align-items: center;">
+                            <div class="number-badge">1</div>
+                            <div style="flex: 1;">
+                                <h4 style="color: #9A4526; font-size: 2.4vh; margin-bottom: 0.5vh;">Aprobar Estrategia con Founders</h4>
+                                <p style="font-size: 2vh;">Reunión con los 2 tradies para validar dirección</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="highlight-box">
-                        <h3 style="color: #9A4526; font-size: 1.28em; margin-bottom: 20px;">Qué Califica Como "Lead Calificado":</h3>
-                        <ul style="font-size: 0.92em;">
-                            <li>Es propietario (no inquilino)</li>
-                            <li>Tiene presupuesto apropiado para tu servicio</li>
-                            <li>Tiene timeline realista</li>
-                            <li>Decision-maker está involucrado</li>
-                            <li>Interés genuino (no solo browsing)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="key-point" style="margin-top: 50px; text-align: center; font-size: 1.12em;">
-                    La pregunta real no es "¿cómo pueden ser tan rápidos?"<br>
-                    Es <strong>"¿por qué otras agencias te hacen esperar tanto?"</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 19: Estrategia de Diseño Visual -->
-        <div class="slide">
-            <h2 class="slide-title">🎨 Estrategia de Diseño Visual</h2>
-            <div class="slide-content">
-                <h3 class="slide-subtitle">Principio Central: Auténtico, No Corporativo</h3>
-                
-                <div class="pros-cons">
-                    <div class="pros">
-                        <h4 style="color: #2E6B66; font-size: 1.12em; margin-bottom: 20px;">✅ SÍ Usar:</h4>
-                        <ul style="font-size: 0.88em;">
-                            <li>Fotos reales de sitios de trabajo australianos</li>
-                            <li>Miembros reales del equipo trabajando</li>
-                            <li>Proyectos de clientes (con permiso)</li>
-                            <li>Contenido behind-the-scenes</li>
-                            <li>Gráficos de timeline mostrando transformación de 30 días</li>
-                            <li>Split-screen mostrando ambos negocios</li>
-                            <li>Screenshots de dashboards (resultados reales)</li>
-                            <li>Videos testimoniales en ubicación</li>
-                            <li>Fotos de launch clients en sus primeros trabajos</li>
-                        </ul>
-                    </div>
-
-                    <div class="cons">
-                        <h4 style="color: #9A4526; font-size: 1.12em; margin-bottom: 20px;">❌ NO Usar:</h4>
-                        <ul style="font-size: 0.88em;">
-                            <li>Stock photos de gente en trajes</li>
-                            <li>Imágenes genéricas de "negocios"</li>
-                            <li>Settings internacionales/no australianos</li>
-                            <li>Fotografía corporativa demasiado pulida</li>
-                            <li>Cualquier cosa que se vea falsa o staged</li>
-                            <li>Stock photos genéricos de herramientas o construcción</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="section-divider"></div>
-
-                <h3 class="slide-subtitle">Paleta de Colores (Ya Aplicada en Esta Presentación):</h3>
-
-                <div class="two-column">
-                    <div class="column">
-                        <h4 style="color: #2E6B66; margin-bottom: 15px;">🔷 Familia Turquesa:</h4>
-                        <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <div style="background: #2E6B66; color: white; padding: 15px; border-radius: 5px; font-weight: 700;">
-                                #2E6B66 - Deep Teal (Bordes, Headings)
-                            </div>
-                            <div style="background: #67BCB7; color: white; padding: 15px; border-radius: 5px; font-weight: 700;">
-                                #67BCB7 - Base Turquesa (CTAs, Acentos)
-                            </div>
-                            <div style="background: #8ED4D0; color: white; padding: 15px; border-radius: 5px; font-weight: 700;">
-                                #8ED4D0 - Soft Teal (Cajas, Backgrounds)
-                            </div>
-                            <div style="background: #D4F2F0; color: #2E6B66; padding: 15px; border-radius: 5px; font-weight: 700; border: 2px solid #67BCB7;">
-                                #D4F2F0 - Ice Blue (Quotes, Highlights)
-                            </div>
-                            <div style="background: #F0FDFA; color: #2E6B66; padding: 15px; border-radius: 5px; font-weight: 700; border: 2px solid #8ED4D0;">
-                                #F0FDFA - Teal White (Backgrounds)
+                        <div style="display: flex; align-items: center;">
+                            <div class="number-badge">2</div>
+                            <div style="flex: 1;">
+                                <h4 style="color: #9A4526; font-size: 2.4vh; margin-bottom: 0.5vh;">Reunir Assets Clientes</h4>
+                                <p style="font-size: 2vh;">Kieren, Callum, Danny, Nanotise: fotos, números, permisos</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="column">
-                        <h4 style="color: #9A4526; margin-bottom: 15px;">🔶 Familia Coral:</h4>
-                        <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <div style="background: #9A4526; color: white; padding: 15px; border-radius: 5px; font-weight: 700;">
-                                #9A4526 - Rust (Bordes, Strong Text)
+                    <div class="highlight-box">
+                        <div style="display: flex; align-items: center;">
+                            <div class="number-badge">3</div>
+                            <div style="flex: 1;">
+                                <h4 style="color: #9A4526; font-size: 2.4vh; margin-bottom: 0.5vh;">Documentar Historia $90K</h4>
+                                <p style="font-size: 2vh;">Breakdown detallado: cada agencia, qué falló, montos</p>
                             </div>
-                            <div style="background: #DE8363; color: white; padding: 15px; border-radius: 5px; font-weight: 700;">
-                                #DE8363 - Terracota (CTAs, Badges)
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <div style="display: flex; align-items: center;">
+                            <div class="number-badge">4</div>
+                            <div style="flex: 1;">
+                                <h4 style="color: #9A4526; font-size: 2.4vh; margin-bottom: 0.5vh;">Sesión de Fotos/Videos</h4>
+                                <p style="font-size: 2vh;">Founders en roofing jobs, behind-the-scenes, testimoniales</p>
                             </div>
-                            <div style="background: #E8A288; color: white; padding: 15px; border-radius: 5px; font-weight: 700;">
-                                #E8A288 - Muted Coral (Rellenos)
-                            </div>
-                            <div style="background: #F4D3C6; color: #9A4526; padding: 15px; border-radius: 5px; font-weight: 700; border: 2px solid #DE8363;">
-                                #F4D3C6 - Pale Peach (Highlights)
-                            </div>
-                            <div style="background: #F9E2D8; color: #9A4526; padding: 15px; border-radius: 5px; font-weight: 700; border: 2px solid #E8A288;">
-                                #F9E2D8 - Crema Rosado (Boxes)
-                            </div>
-                            <div style="background: #FFF5F2; color: #9A4526; padding: 15px; border-radius: 5px; font-weight: 700; border: 2px solid #F4D3C6;">
-                                #FFF5F2 - Warm White (Backgrounds)
+                        </div>
+                    </div>
+
+                    <div class="highlight-box">
+                        <div style="display: flex; align-items: center;">
+                            <div class="number-badge">5</div>
+                            <div style="flex: 1;">
+                                <h4 style="color: #9A4526; font-size: 2.4vh; margin-bottom: 0.5vh;">Comenzar Desarrollo</h4>
+                                <p style="font-size: 2vh;">Diseño + copywriting + construcción del sitio (12-16 semanas)</p>
                             </div>
                         </div>
                     </div>
@@ -1398,417 +771,23 @@
             </div>
         </div>
 
-        <!-- Slide 20: Estrategia de Contenido -->
-        <div class="slide">
-            <h2 class="slide-title">📝 Estrategia de Contenido</h2>
-            <div class="slide-content">
-                <h3 class="slide-subtitle">5 Pilares de Contenido:</h3>
-
-                <div class="highlight-box">
-                    <h4 style="color: #9A4526; font-size: 1.04em; margin-bottom: 15px;">1️⃣ Velocidad & Resultados Rápidos</h4>
-                    <ul style="font-size: 1.05em;">
-                        <li>Por qué 30 días, no 90 días</li>
-                        <li>Cómo entregamos tan rápido</li>
-                        <li>El costo de esperar</li>
-                        <li>Timelines de lanzamiento</li>
-                        <li>Week-by-week qué sucede</li>
-                        <li>Case studies enfatizando velocidad</li>
-                    </ul>
+        <!-- Slide Final -->
+        <div class="slide title-slide">
+            <div style="max-width: 80%; margin: 0 auto;">
+                <h2 class="slide-title" style="font-size: 5vh; margin-bottom: 4vh;">Nuestra Estrategia en Una Frase</h2>
+                <div class="quote-box" style="font-size: 3vh; line-height: 1.7; padding: 4vh; background: rgba(255,255,255,0.2); border-left: 0.6vh solid #DE8363;">
+                    <p style="margin-bottom: 3vh;">"Somos tradies auténticos que entregan leads en 30 días y lanzan negocios desde cero.</p>
+                    <p style="margin-bottom: 3vh;">Aprendimos marketing después de que agencias nos estafaran por $90K+.</p>
+                    <p>Ahora ayudamos a otros tradies a evitar ese error."</p>
                 </div>
-
-                <div class="highlight-box">
-                    <h4 style="color: #9A4526; font-size: 1.04em; margin-bottom: 15px;">2️⃣ Historias de Éxito de Lanzamiento</h4>
-                    <ul style="font-size: 1.05em;">
-                        <li>Empezando desde cero</li>
-                        <li>No se necesita web</li>
-                        <li>Hitos de primera semana, primer mes</li>
-                        <li>Historias de Kieren, Callum, Danny en profundidad</li>
-                        <li>Tips para nuevos negocios</li>
-                        <li>Checklists de lanzamiento</li>
-                    </ul>
-                </div>
-
-                <div class="two-column">
-                    <div class="column">
-                        <h4 style="color: #2E6B66; font-size: 0.96em; margin-bottom: 15px;">3️⃣ Nuestra Historia & Autenticidad</h4>
-                        <ul style="font-size: 1.05em;">
-                            <li>Quiénes somos (tradies primero)</li>
-                            <li>El error de $90K (breakdown detallado)</li>
-                            <li>Por qué empezamos Client Connect</li>
-                            <li>Nuestro negocio actual de roofing</li>
-                            <li>Behind-the-scenes de ambos negocios</li>
-                            <li>Day-in-the-life content</li>
-                        </ul>
-                    </div>
-
-                    <div class="column">
-                        <h4 style="color: #2E6B66; font-size: 0.96em; margin-bottom: 15px;">4️⃣ Educación de Marketing</h4>
-                        <ul style="font-size: 1.05em;">
-                            <li>Básicos de Facebook Ads para tradies</li>
-                            <li>Estrategias de Google Ads</li>
-                            <li>Cómo calificar leads</li>
-                            <li>Errores de marketing que cometen tradies</li>
-                            <li>Cálculo y tracking de ROI</li>
-                            <li>DIY vs. contratar agencia</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="success-box">
-                    <h4 style="color: #2E6B66; font-size: 1.04em; margin-bottom: 15px;">5️⃣ Resultados & Prueba Social</h4>
-                    <ul style="font-size: 1.05em;">
-                        <li>Case studies de clientes</li>
-                        <li>Testimoniales y reviews</li>
-                        <li>Screenshots de before/after de dashboards</li>
-                        <li>Números reales y ROI</li>
-                        <li>Historias de éxito de clientes</li>
-                        <li>Benchmarks de industria</li>
-                    </ul>
+                <div style="margin-top: 5vh; font-size: 2.8vh;">
+                    <p style="margin-bottom: 2vh;">🔧 Auténticos</p>
+                    <p style="margin-bottom: 2vh;">⚡ Rápidos</p>
+                    <p>🚀 Especializados en Lanzamientos</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 21: Lead Magnets -->
-        <div class="slide">
-            <h2 class="slide-title">🧲 Lead Magnets Prioritarios</h2>
-            <div class="slide-content">
-                <div class="three-column">
-                    <div class="column" style="background: #F9E2D8; border: 4px solid #DE8363;">
-                        <h4 style="color: #9A4526; font-size: 1.04em; margin-bottom: 15px;">1. Plan de Lanzamiento 30 Días</h4>
-                        <p style="font-size: 1.05em;"><strong>"The 30-Day New Business Launch Plan for Tradies"</strong></p>
-                        <ul style="margin-top: 15px; font-size: 1em;">
-                            <li>Plan de acción semana por semana</li>
-                            <li>Qué hacer antes de lanzar</li>
-                            <li>Checklist de setup de marketing</li>
-                            <li>Expectativas del primer mes</li>
-                            <li>Timelines reales de launch clients</li>
-                        </ul>
-                    </div>
-
-                    <div class="column" style="background: #F9E2D8; border: 4px solid #DE8363;">
-                        <h4 style="color: #9A4526; font-size: 1.04em; margin-bottom: 15px;">2. Lecciones de $90K</h4>
-                        <p style="font-size: 1.05em;"><strong>"$90K in Marketing Mistakes: What We Learned"</strong></p>
-                        <ul style="margin-top: 15px; font-size: 1em;">
-                            <li>Breakdown detallado de nuestros fracasos</li>
-                            <li>Qué hizo mal cada agencia</li>
-                            <li>Cuánto gastamos y por qué</li>
-                            <li>Red flags a vigilar</li>
-                            <li>Cómo evitar los mismos errores</li>
-                        </ul>
-                    </div>
-
-                    <div class="column" style="background: #F9E2D8; border: 4px solid #DE8363;">
-                        <h4 style="color: #9A4526; font-size: 1.04em; margin-bottom: 15px;">3. Guía de Resultados Rápidos</h4>
-                        <p style="font-size: 1.05em;"><strong>"The Tradie's Guide to Fast Marketing Results"</strong></p>
-                        <ul style="margin-top: 15px; font-size: 1em;">
-                            <li>Por qué la velocidad importa</li>
-                            <li>Cómo conseguir leads en 30 días</li>
-                            <li>Qué ralentiza otras agencias</li>
-                            <li>Nuestro framework de lanzamiento rápido</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="section-divider"></div>
-
-                <h3 class="slide-subtitle">Contenido Prioritario del Blog:</h3>
-                <div class="two-column">
-                    <div class="column">
-                        <h4 style="color: #2E6B66; margin-bottom: 15px;">Posts de Velocidad & Lanzamiento:</h4>
-                        <ul style="font-size: 1.05em;">
-                            <li>"How to Get Your First 20 Customers in 60 Days"</li>
-                            <li>"Starting a Trade Business? Your 30-Day Marketing Plan"</li>
-                            <li>"Why Most Agencies Make You Wait"</li>
-                            <li>"The Real Cost of Waiting 6 Months for Results"</li>
-                        </ul>
-                    </div>
-
-                    <div class="column">
-                        <h4 style="color: #2E6B66; margin-bottom: 15px;">Historias de Clientes:</h4>
-                        <ul style="font-size: 1.05em;">
-                            <li>"How We Wasted $90K on Marketing"</li>
-                            <li>"Kieren's Story: $0 to $500K in 12 Months"</li>
-                            <li>"Callum's Story: Building a Pool Business from Nothing"</li>
-                            <li>"Danny's Story: Side Business to Main Income in 6 Months"</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 22: Métricas de Éxito -->
-        <div class="slide">
-            <h2 class="slide-title">📊 Métricas de Éxito & KPIs</h2>
-            <div class="slide-content">
-                <h3 class="slide-subtitle">Corto Plazo (3 Meses):</h3>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-label">Visitantes Mensuales</span>
-                        <span class="stat-number">1,000+</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-label">Solicitudes Auditoría</span>
-                        <span class="stat-number">20+</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-label">Nuevos Clientes</span>
-                        <span class="stat-number">3+</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-label">% Clientes Launch</span>
-                        <span class="stat-number">40%+</span>
-                    </div>
-                </div>
-
-                <div class="section-divider"></div>
-
-            <h3 class="slide-subtitle">Mediano Plazo (6 Meses):</h3>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-label">Visitantes Mensuales</span>
-                    <span class="stat-number">2,000+</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-label">Solicitudes Auditoría</span>
-                    <span class="stat-number">40+</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-label">Nuevos Clientes</span>
-                    <span class="stat-number">8+</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-label">Lista de Email</span>
-                    <span class="stat-number">300+</span>
-                </div>
-            </div>
-
-            <div class="section-divider"></div>
-
-            <h3 class="slide-subtitle">Largo Plazo (12 Meses):</h3>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-label">Visitantes Mensuales</span>
-                    <span class="stat-number">4,000+</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-label">Solicitudes Auditoría</span>
-                    <span class="stat-number">60+</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-label">Nuevos Clientes</span>
-                    <span class="stat-number">15+</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-label">Lista de Email</span>
-                    <span class="stat-number">800+</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-label">Case Studies</span>
-                    <span class="stat-number">10+</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-label">Rankings Top 10</span>
-                    <span class="stat-number">20+ keywords</span>
-                </div>
-            </div>
-
-            <div class="key-point" style="margin-top: 40px;">
-                <strong>Métricas Específicas de Launch:</strong><br>
-                Tiempo promedio al primer lead: &lt;21 días • 90%+ tasa de retención de launch clients • 95%+ todavía en negocio después de 12 meses
-            </div>
-        </div>
     </div>
-
-    <!-- Slide 23: Timeline de Implementación -->
-    <div class="slide">
-        <h2 class="slide-title">📅 Timeline de Implementación</h2>
-        <div class="slide-content">
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker" style="font-size: 0.96em;">1-4</div>
-                    <div class="timeline-content">
-                        <h3 style="color: #2E6B66; margin-bottom: 10px; font-size: 1.12em;">Fase 1: Foundation (Semanas 1-4)</h3>
-                        <ul style="font-size: 1.05em;">
-                            <li>Finalizar estructura del sitio web y lista de páginas</li>
-                            <li>Escribir copy de páginas core (home, about, how it works)</li>
-                            <li>Planear sesiones de fotografía y video</li>
-                            <li>Crear mood boards y conceptos de diseño</li>
-                            <li>Seleccionar plataforma web y hosting</li>
-                            <li>Configurar entorno de desarrollo</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-marker" style="font-size: 0.96em;">5-8</div>
-                    <div class="timeline-content">
-                        <h3 style="color: #2E6B66; margin-bottom: 10px; font-size: 1.12em;">Fase 2: Content Creation (Semanas 5-8)</h3>
-                        <ul style="font-size: 1.05em;">
-                            <li>Completar todo el copywriting de páginas</li>
-                            <li>Realizar sesiones de fotografía (en roofing jobs)</li>
-                            <li>Filmar contenido de video (founder story, testimonials)</li>
-                            <li>Reunir testimoniales de clientes y case studies</li>
-                            <li>Escribir 6-8 posts iniciales de blog</li>
-                            <li>Crear lead magnets (guías, checklists)</li>
-                            <li>Diseñar brand assets</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-marker" style="font-size: 0.96em;">9-12</div>
-                    <div class="timeline-content">
-                        <h3 style="color: #2E6B66; margin-bottom: 10px; font-size: 1.12em;">Fase 3: Design & Development (Semanas 9-12)</h3>
-                        <ul style="font-size: 1.05em;">
-                            <li>Diseñar mockup de homepage</li>
-                            <li>Diseñar mockups de landing pages clave</li>
-                            <li>Obtener aprobación de diseños</li>
-                            <li>Desarrollar estructura del website</li>
-                            <li>Construir todas las páginas core</li>
-                            <li>Integrar formularios y CTAs</li>
-                            <li>Configurar estructura de blog</li>
-                            <li>Implementar templates de case study</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-marker" style="font-size: 0.96em;">13-16</div>
-                    <div class="timeline-content">
-                        <h3 style="color: #9A4526; margin-bottom: 10px; font-size: 1.12em;">Fase 4: Testing & Launch (Semanas 13-16)</h3>
-                        <ul style="font-size: 1.05em;">
-                            <li>Testing comprehensivo en todos los dispositivos</li>
-                            <li>Optimización de velocidad</li>
-                            <li>Arreglar cualquier bug o issue</li>
-                            <li>Setup de SEO (meta tags, schema, etc.)</li>
-                            <li>Revisar todo el contenido</li>
-                            <li>Testear funnels de conversión</li>
-                            <li>Auditoría de seguridad</li>
-                            <li><strong>🚀 LANZAMIENTO</strong></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-marker" style="font-size: 0.96em;">17+</div>
-                    <div class="timeline-content">
-                        <h3 style="color: #DE8363; margin-bottom: 10px; font-size: 1.12em;">Fase 5: Post-Launch & Optimization</h3>
-                        <ul style="font-size: 1.05em;">
-                            <li>Monitorear analytics diariamente</li>
-                            <li>A/B testing de páginas clave</li>
-                            <li>Publicar nuevo contenido de blog semanalmente</li>
-                            <li>Reunir feedback de usuarios</li>
-                            <li>Hacer optimizaciones basadas en data</li>
-                            <li>Construir backlinks para SEO</li>
-                            <li>Continuar creación de contenido</li>
-                            <li>Escalar lo que funciona</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    <!-- Slide 24: Próximos Pasos -->
-    <div class="slide">
-        <h2 class="slide-title">🎯 Próximos Pasos</h2>
-        <div class="slide-content">
-            <div class="highlight-box">
-                <h3 style="color: #9A4526; font-size: 1.28em; margin-bottom: 25px;">Acción Inmediata Requerida:</h3>
-                
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-marker">1</div>
-                        <div class="timeline-content">
-                            <h4 style="color: #2E6B66; font-size: 1.04em; margin-bottom: 10px;">Revisar Esta Estrategia con el Equipo</h4>
-                            <p style="font-size: 1.05em;">Reunión con los 2 founders (tradies) para aprobar dirección estratégica</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker">2</div>
-                        <div class="timeline-content">
-                            <h4 style="color: #2E6B66; font-size: 1.04em; margin-bottom: 10px;">Reunir Assets de Kieren/Callum/Danny/Nanotise</h4>
-                            <p style="font-size: 1.05em;">Fotos, números exactos, testimoniales detallados, permiso para usar nombres</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker">3</div>
-                        <div class="timeline-content">
-                            <h4 style="color: #2E6B66; font-size: 1.04em; margin-bottom: 10px;">Documentar Historia de $90K en Detalle</h4>
-                            <p style="font-size: 1.05em;">Cada agencia, qué salió mal, montos exactos, timeline</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker">4</div>
-                        <div class="timeline-content">
-                            <h4 style="color: #2E6B66; font-size: 1.04em; margin-bottom: 10px;">Crear Gráficos de Timeline de 30 Días</h4>
-                            <p style="font-size: 1.05em;">Visuales mostrando velocidad vs. otras agencias</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker">5</div>
-                        <div class="timeline-content">
-                            <h4 style="color: #2E6B66; font-size: 1.04em; margin-bottom: 10px;">Configurar Tracking Específico de Launch</h4>
-                            <p style="font-size: 1.05em;">KPIs para medir éxito de messaging de velocidad y launch</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="timeline-marker">6</div>
-                        <div class="timeline-content">
-                            <h4 style="color: #9A4526; font-size: 1.04em; margin-bottom: 10px;">Comenzar Ejecución</h4>
-                            <p style="font-size: 1.05em;">Con énfasis en messaging de velocidad y autenticidad</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="key-point" style="margin-top: 50px; text-align: center; font-size: 1.12em;">
-                Construyamos un sitio web en el que los tradies realmente confíen.<br>
-                Uno que prometa velocidad y la entregue.<br>
-                Uno que no los haga esperar.
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide Final -->
-    <div class="slide title-slide">
-        <h2 class="slide-title">💪 Reflexión Final</h2>
-        <div class="slide-content" style="text-align: center; max-width: 1000px; margin: 0 auto;">
-            <div class="quote-box" style="font-size: 1.12em; line-height: 1.8; padding: 50px;">
-                <p style="margin-bottom: 30px;">Esta estrategia web está construida sobre tres verdades inquebrantables:</p>
-                
-                <p style="margin-bottom: 25px; font-size: 1.04em;"><strong>1. Somos tradies auténticos</strong>, no marketers disfrazados.<br>Mañana: en un techo. Tarde: consiguiendo leads a clientes.</p>
-                
-                <p style="margin-bottom: 25px; font-size: 1.04em;"><strong>2. Entregamos RÁPIDO.</strong><br>30 días a leads, no 3-6 meses esperando.<br>Porque recordamos lo que es necesitar trabajos ayer.</p>
-                
-                <p style="font-size: 1.04em;"><strong>3. Nos especializamos en lanzar nuevos negocios.</strong><br>Cuando otras agencias dicen "vuelve cuando tengas web",<br>nosotros decimos "consigamos clientes este mes".</p>
-            </div>
-
-            <div style="margin-top: 60px; font-size: 0.96em; color: white; line-height: 1.8;">
-                <p style="margin-bottom: 20px;">Kieren, Callum y Danny no son outliers.</p>
-                <p style="margin-bottom: 20px;">Son prueba de concepto.</p>
-                <p style="margin-bottom: 20px;">Son lo que pasa cuando tradies ayudan a tradies.</p>
-                <p style="margin-top: 50px; font-size: 1.04em; font-weight: 700;">$90K+ nos enseñó qué NO hacer.<br>50+ clientes exitosos nos enseñaron qué funciona.<br>Cada tradie que lanzamos prueba nuestro sistema.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide de Cierre -->
-    <div class="slide" style="background: linear-gradient(135deg, #67BCB7 0%, #2E6B66 100%); color: white; text-align: center; border-bottom: 8px solid #DE8363;">
-        <h1 style="font-size: 3.2em; color: white; margin-bottom: 40px;">¡Listo para Construir!</h1>
-        <p style="font-size: 1.28em; margin-bottom: 30px;">Client Connect Australia</p>
-        <p style="font-size: 1.44em; margin-bottom: 50px;">Marketing by Tradies, for Tradies</p>
-        <div style="font-size: 2.4em; margin: 60px 0;">
-            ⚡ 🔧 🚀
-        </div>
-        <p style="font-size: 1.28em; margin-top: 60px;">Porque no somos solo marketers.</p>
-        <p style="font-size: 1.28em;">Somos tradies que lo entienden.</p>
-    </div>
-
-</div>
 </body>
 </html>
