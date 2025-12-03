@@ -718,7 +718,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                   }}
                 >
                   <svg 
-                    className="absolute bottom-[-40px] left-[-80px] w-[150%] h-[150%]" 
+                    className="absolute bottom-[-40px] left-[-120px] w-[150%] h-[150%]" 
                     viewBox="0 0 494 286" 
                     fill="none" 
                     xmlns="http://www.w3.org/2000/svg" 
