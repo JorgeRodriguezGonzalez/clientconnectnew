@@ -510,7 +510,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
 
   return (
     <div className={`relative ${span}`} style={customStyle}>
-      <div className="relative h-full rounded-2xl p-[2px]">
+      <div className="relative h-full p-[2px]">
         <GlowingEffect
           spread={40}
           glow={true}
@@ -520,7 +520,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
           borderWidth={2}
         />
         <article
-          className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-neutral-900/10 bg-white/80 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] motion-safe:opacity-0 ${
+          className={`group relative flex h-full flex-col justify-between overflow-hidden border border-neutral-900/10 bg-white/80 p-5 shadow-[0_10px_40px_rgba(0,0,0,0.04)] transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] motion-safe:opacity-0 ${
             isVisible ? "motion-safe:animate-[bento2-card_0.8s_ease-out_forwards]" : ""
           } dark:border-white/10 dark:bg-white/5 dark:shadow-[0_18px_40px_rgba(0,0,0,0.35)] dark:hover:shadow-[0_28px_70px_rgba(0,0,0,0.55)]`}
           style={{ animationDelay }}
@@ -532,7 +532,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
           }}
           onMouseLeave={() => setCardHovered(false)}
         >
-          <div className="absolute inset-0 -z-10 overflow-hidden rounded-2xl">
+          <div className="absolute inset-0 -z-10 overflow-hidden">
             <div className="absolute inset-0 bg-white/85 transition-colors duration-500 dark:bg-white/8" />
             {theme === "dark" ? (
               <div
@@ -818,7 +818,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
 
           <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <div
-              className="absolute inset-0 rounded-2xl border border-neutral-900/10 transition-colors duration-500 dark:border-white/10"
+              className="absolute inset-0 border border-neutral-900/10 transition-colors duration-500 dark:border-white/10"
               style={{
                 maskImage:
                   "radial-gradient(220px_220px_at_var(--x,50%)_var(--y,50%), black, transparent)",
