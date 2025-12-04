@@ -361,7 +361,7 @@ export const BlueprintVisualization = () => {
       // CAMBIOS AQUÍ:
       // 1. Reducimos pixelsToStart de 520 a 400 para que empiece antes.
       // 2. Reducimos el divisor de 0.18 a 0.15 para que la transición complete un poco más rápido.
-      const pixelsToStart = 400; 
+      const pixelsToStart = 450; 
       const scrollDistance = windowHeight * 0.15; 
 
       let value = (windowHeight - rect.top - pixelsToStart) / scrollDistance;
