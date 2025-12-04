@@ -1,5 +1,5 @@
 import React from "react";
-import { X, Check, Minus } from "lucide-react";
+import { X, Check } from "lucide-react";
 import { motion } from "framer-motion";
 
 // --- Assets & Styles ---
@@ -9,16 +9,6 @@ const COLORS = {
   coral: "rgb(222, 131, 99)",     // #de8363
   gold: "rgb(237, 191, 134)",     // #edbf86
 };
-
-const BackgroundStripes = () => (
-  <div
-    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.04]"
-    style={{
-      backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
-      backgroundRepeat: 'repeat',
-    }}
-  />
-);
 
 // --- Content Data ---
 
@@ -60,11 +50,9 @@ const comparisonData = [
 const ComparisonSection = () => {
   return (
     <section className="relative w-full overflow-hidden bg-white py-24 sm:py-32">
-      {/* Background Pattern */}
-      <BackgroundStripes />
       
-      {/* Gradient Blurs (Subtle) */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-gradient-to-b from-white via-white to-transparent z-10" />
+      {/* Gradient Blurs (Sutiles manchones de luz para dar profundidad sin lineas) */}
+      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-gradient-to-b from-gray-50/50 via-white to-transparent z-0" />
       
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -156,7 +144,7 @@ const ComparisonSection = () => {
                   <span className="text-base font-semibold text-gray-800">{item.category}</span>
                 </div>
 
-                {/* 2. Traditional/Other Agencies */}
+                {/* 2. Other Agencies */}
                 <div className="col-span-3 bg-gray-50/80 border border-gray-100 p-5 md:p-4 md:rounded-lg flex items-center md:justify-center gap-3 transition-colors duration-300 md:group-hover:bg-gray-100/80 border-b-0 md:border-b">
                   <div className="shrink-0 rounded-full bg-gray-200/50 p-1">
                     <X className="w-4 h-4 text-gray-400" />
@@ -182,7 +170,7 @@ const ComparisonSection = () => {
             ))}
           </div>
 
-          {/* Bottom Call to Action area (Optional subtle footer within table) */}
+          {/* Bottom Call to Action area */}
           <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
