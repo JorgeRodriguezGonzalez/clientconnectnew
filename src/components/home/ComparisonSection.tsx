@@ -51,6 +51,9 @@ const ComparisonSection = () => {
   return (
     <section className="relative w-full overflow-hidden bg-white py-24 sm:py-32">
       
+      {/* --- TOP BORDER LINE --- */}
+      <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-20" />
+
       {/* Gradient Blurs (Sutiles manchones de luz para dar profundidad sin lineas) */}
       <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-gradient-to-b from-gray-50/50 via-white to-transparent z-0" />
       
