@@ -358,9 +358,11 @@ export const BlueprintVisualization = () => {
       // Calcular el progreso basado en la posición del elemento en la ventana.
       // 0 = elemento entrando por abajo
       // 1 = elemento centrado o totalmente visible
-      // Puedes ajustar el divisor (windowHeight) para que la animación sea más rápida o lenta.
-      const pixelsToStart = 520; 
-      const scrollDistance = windowHeight * 0.18; 
+      // CAMBIOS AQUÍ:
+      // 1. Reducimos pixelsToStart de 520 a 400 para que empiece antes.
+      // 2. Reducimos el divisor de 0.18 a 0.15 para que la transición complete un poco más rápido.
+      const pixelsToStart = 400; 
+      const scrollDistance = windowHeight * 0.15; 
 
       let value = (windowHeight - rect.top - pixelsToStart) / scrollDistance;
       
