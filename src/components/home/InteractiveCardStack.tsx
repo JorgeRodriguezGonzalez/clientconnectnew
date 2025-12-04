@@ -326,7 +326,7 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       // finishPoint: Punto donde ya debe estar colapsado (Antes 0.3, ahora 0.55)
       // startPoint: Punto donde empieza a colapsarse (90%)
       const finishPoint = windowHeight * 0.45; 
-      const startPoint = windowHeight * 0.85;
+      const startPoint = windowHeight * 0.80;
       
       let progress = (rect.top - finishPoint) / (startPoint - finishPoint);
 
