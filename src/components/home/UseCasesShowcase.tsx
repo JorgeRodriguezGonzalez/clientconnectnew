@@ -2,7 +2,7 @@ import React from 'react';
 import { Sparkles, Clock, Zap, Mountain, Check } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
-// Utilidad simple para cn si no existe en el proyecto
+// Función de utilidad para combinar clases (polyfill de cn)
 function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(' ');
 }
@@ -18,7 +18,7 @@ type UseCasesShowcaseProps = {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
-  // Props anteriores conservadas para compatibilidad
+  // Props para el marquee
   cardTitle?: string;
   cardImages?: string[];
   cardStats?: Array<{ icon: React.ReactNode; label: string }>;
@@ -26,34 +26,63 @@ type UseCasesShowcaseProps = {
   cardHref?: string;
 };
 
-// Componente ThreeDMarquee (Nuevo componente solicitado)
-const ThreeDMarquee = ({ images, className }: { images: string[], className?: string }) => {
-  // Para mobile: 3 columnas, para desktop: 4 columnas
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+// --- COMPONENTE ThreeDMarquee CORREGIDO ---
+const ThreeDMarquee = ({ images = [], className }: { images?: string[], className?: string }) => {
+  // Estado para controlar si es mobile de forma segura (evita errores de hidratación)
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    // Chequear al montar
+    checkMobile();
+    
+    // Escuchar cambios de tamaño
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const numColumns = isMobile ? 3 : 4;
   
-  const chunkSize = Math.ceil(images.length / numColumns);
+  // Aseguramos que haya imágenes para evitar errores
+  const safeImages = images && images.length > 0 ? images : [];
+  
+  const chunkSize = Math.ceil(safeImages.length / numColumns);
   const chunks = Array.from({ length: numColumns }, (_, colIndex) => {
     const start = colIndex * chunkSize;
-    return images.slice(start, start + chunkSize);
+    return safeImages.slice(start, start + chunkSize);
   });
 
   return (
     <div className={cn("mx-auto block h-[350px] sm:h-[450px] lg:h-[600px] overflow-hidden rounded-2xl", className)}>
-      <div className="flex w-full h-full items-center justify-center">
+      <div className="flex w-full h-full items-center justify-center bg-transparent">
         <div className="w-[1000px] sm:w-[1200px] lg:w-[1548px] h-[1000px] sm:h-[1200px] lg:h-[1548px] shrink-0 scale-[0.4] sm:scale-[0.5] lg:scale-90">
-          <div style={{ transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", transformStyle: "preserve-3d" }}
-            className="relative top-32 sm:top-44 lg:top-80 right-[28%] sm:right-[35%] lg:right-[40%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div 
+            style={{ 
+              transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", 
+              transformStyle: "preserve-3d" 
+            }}
+            className="relative top-32 sm:top-44 lg:top-80 right-[28%] sm:right-[35%] lg:right-[40%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+          >
             {chunks.map((subarray, colIndex) => (
               <motion.div
                 animate={{ y: colIndex % 2 === 0 ? 100 : -100 }}
                 transition={{ duration: colIndex % 2 === 0 ? 10 : 15, repeat: Infinity, repeatType: "reverse" }}
-                key={colIndex + "marquee"} className="flex flex-col items-start gap-8">
+                key={colIndex + "marquee"} 
+                className="flex flex-col items-start gap-8"
+              >
                 {subarray.map((image, imageIndex) => (
-                  <div className="relative" key={imageIndex + image}>
-                    <motion.img whileHover={{ y: -10 }} transition={{ duration: 0.3, ease: "easeInOut" }}
-                      key={imageIndex + image} src={image} alt={`Image ${imageIndex + 1}`}
-                      className="aspect-[5/4] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl" />
+                  <div className="relative w-full" key={imageIndex + image}>
+                    <motion.img 
+                      whileHover={{ y: -10 }} 
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      key={imageIndex + image} 
+                      src={image} 
+                      alt={`Image ${imageIndex + 1}`}
+                      className="aspect-[5/4] w-full rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl bg-gray-200" 
+                    />
                   </div>
                 ))}
               </motion.div>
@@ -65,7 +94,7 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
   );
 };
 
-// Componente FadeInText con glass blur
+// Componente FadeInText
 const FadeInText = ({ 
   children, 
   delay = 0, 
@@ -124,46 +153,34 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
     ctaText = 'Book a Call',
     ctaHref = '#',
-    // Valores por defecto para el card
-    cardTitle = 'Subject: Q4 Strategy Update',
+    // Imágenes por defecto extendidas para que el Marquee se vea lleno
     cardImages = [
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2070&auto=format&fit=crop',
     ],
-    cardStats = [
-      { icon: <Clock className="h-4 w-4" />, label: 'Next 30 Days' },
-      { icon: <Mountain className="h-4 w-4" />, label: '3 Phases' },
-      { icon: <Zap className="h-4 w-4" />, label: 'High Priority' },
-    ],
-    cardDescription = 'We\'re implementing your new SEO strategy starting next week. We\'ll optimize 15 key pages, enhance site speed, and launch targeted content campaigns. Timeline: 30 days. Let\'s drive measurable growth!',
-    cardHref = '#',
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-
-  // Scroll animation para el color del arco
+  
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "start center"]
   });
 
-  // Scroll animation para el border-radius (círculo a cuadrado)
   const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
     target: ref,
     offset: ["start 130vh", "start 100vh"]
   });
 
-  // Scroll animation para la expansión de la elipse
   const { scrollYProgress: scrollYProgressEllipse } = useScroll({
     target: ref,
     offset: ["start 120vh", "start 80vh"]
   });
 
-  // Scroll animation para el color del borde
   const { scrollYProgress: scrollYProgressBorder } = useScroll({
     target: ref,
     offset: ["start 120vh", "start center"]
@@ -181,14 +198,12 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#e5e7eb", "#000000", "#1a1a1a", "#ffffff"]
   );
 
-  // Color de texto para badge y título principal
   const textColor = useTransform(
     scrollYProgress,
     [0, 0.15, 0.151],
     ["#ffffff", "#ffffff", "#000000"]
   );
 
-  // Color para el subtitle
   const subtitleColor = useTransform(
     scrollYProgress,
     [0, 0.15, 0.151],
@@ -228,8 +243,8 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   return (
     <motion.div className="pt-16" style={{ backgroundColor }}>
       <section ref={ref} className="relative">
-        {/* ARCO */}
-        <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none">
+        {/* ARCO (Background Layer) */}
+        <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none z-0">
           <motion.div
             className="w-full h-full border-t-[1px]"
             style={{
@@ -245,11 +260,10 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           />
         </div>
 
-        {/* TÍTULO ESTILO SHOPIFY */}
+        {/* HEADER / TITULO */}
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
             <div className="flex flex-col items-center gap-8">
-              {/* Badge */}
               <FadeInText delay={1.2}>
                 <div 
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)] mb-[6px]"
@@ -257,15 +271,12 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                     background: 'linear-gradient(135deg, #67bcb7 0%, #de8363 100%)'
                   }}
                 >
-                  <span 
-                    className="text-[14px] font-normal tracking-[-0.3px] capitalize text-white"
-                  >
+                  <span className="text-[14px] font-normal tracking-[-0.3px] capitalize text-white">
                     {badge}
                   </span>
                 </div>
               </FadeInText>
 
-              {/* Main Title */}
               <FadeInText delay={0.3}>
                 <div className="w-full max-w-[600px] mx-auto">
                   <motion.h1 
@@ -301,7 +312,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </div>
               </FadeInText>
 
-              {/* Subtitle */}
               <FadeInText delay={0.4}>
                 <div className="w-full max-w-[500px]">
                   <motion.p 
@@ -313,7 +323,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </div>
               </FadeInText>
 
-              {/* CTA Button */}
               <FadeInText delay={0.5}>
                 <a 
                   href={ctaHref} 
@@ -333,13 +342,14 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* CONTENIDO */}
-        <div className="relative pt-48 pb-32 px-4">
+        {/* CONTENIDO PRINCIPAL */}
+        <div className="relative pt-48 pb-32 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-20">
 
               {/* COLUMNA IZQUIERDA - ThreeDMarquee */}
-              <div className="relative flex-1 w-full max-w-[495px] flex items-center justify-center">
+              {/* Aseguramos dimensiones relativas para que el marquee tenga espacio */}
+              <div className="relative w-full max-w-[495px] flex items-center justify-center min-h-[400px]">
                 <ThreeDMarquee images={cardImages} />
               </div>
 
