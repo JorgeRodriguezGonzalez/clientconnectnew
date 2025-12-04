@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Aperture, BarChart3, Activity, Layers } from "lucide-react";
-import { motion, animate } from "framer-motion";
+import { motion, animate, useInView } from "framer-motion";
 
 const cn = (...classes: (string | undefined | null | false)[]) => {
   return classes.filter(Boolean).join(' ');
@@ -257,6 +257,10 @@ function FeaturesSectionMinimal() {
         0% { background-position: 200% 50%; }
         100% { background-position: -100% 50%; }
       }
+      @keyframes move-horizontal {
+        0% { transform: translateX(-200%) translateY(-50%); }
+        100% { transform: translateX(200%) translateY(-50%); }
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -491,6 +495,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
   const isStrategicGrowth = index === 0;
   const isQualifiedLeads = showSkills === true;
   const isTransparentReporting = index === 2;
+  const isFullServiceTeam = index === 3;
 
   const skills = [
     { text: 'Website Design', position: { top: '80px', right: '12px' } },
@@ -823,6 +828,12 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                 </div>
                </div>
             )}
+
+            {isFullServiceTeam && showInternalAnimations && (
+              <div className="relative w-full h-[120px] mt-2">
+                <AnimatedLogos />
+              </div>
+            )}
           </div>
 
           <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -841,6 +852,168 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
     </div>
   );
 }
+
+// Logos animados para Full-Service Team
+const sizeMap = {
+  sm: "h-8 w-8",
+  md: "h-10 w-10",
+  lg: "h-12 w-12",
+};
+
+function AnimatedLogos() {
+  const icons = [
+    {
+      icon: <GoogleAdsLogo className="h-4 w-4" />,
+      size: "sm" as const,
+    },
+    {
+      icon: <MetaLogo className="h-5 w-5" />,
+      size: "md" as const,
+    },
+    {
+      icon: <SEOIcon className="h-6 w-6" />,
+      size: "lg" as const,
+    },
+    {
+      icon: <InstagramLogo className="h-5 w-5" />,
+      size: "md" as const,
+    },
+    {
+      icon: <LinkedInLogo className="h-4 w-4" />,
+      size: "sm" as const,
+    },
+  ];
+
+  const scale = [1, 1.1, 1];
+  const transform = ["translateY(0px)", "translateY(-4px)", "translateY(0px)"];
+  
+  const sequence = icons.map((_, index) => [
+    `.logo-circle-${index + 1}`,
+    { scale, transform },
+    { duration: 0.8 },
+  ]);
+
+  useEffect(() => {
+    const runAnimation = async () => {
+      while (true) {
+        await animate(sequence as any);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    };
+    runAnimation();
+  }, []);
+
+  return (
+    <div className="overflow-hidden h-full relative flex items-center justify-center">
+      <div className="flex flex-row flex-shrink-0 justify-center items-center gap-2">
+        {icons.map((icon, index) => (
+          <LogoContainer
+            key={index}
+            className={`${sizeMap[icon.size || "lg"]} logo-circle-${index + 1}`}
+          >
+            {icon.icon}
+          </LogoContainer>
+        ))}
+      </div>
+      <AnimatedSparklesLine />
+    </div>
+  );
+}
+
+const LogoContainer = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={`rounded-full flex items-center justify-center bg-white/80 dark:bg-neutral-800/80 shadow-md ${className}`}
+    {...props}
+  />
+));
+LogoContainer.displayName = "LogoContainer";
+
+const AnimatedSparklesLine = () => (
+  <div className="h-32 w-px absolute top-1/2 -translate-y-1/2 z-40 bg-gradient-to-b from-transparent via-cyan-500 to-transparent animate-[move-horizontal_3s_linear_infinite]">
+    <div className="w-10 h-24 top-1/2 -translate-y-1/2 absolute -left-5">
+      <Sparkles />
+    </div>
+  </div>
+);
+
+const Sparkles = () => {
+  const randomMove = () => Math.random() * 2 - 1;
+  const randomOpacity = () => Math.random();
+  const random = () => Math.random();
+
+  return (
+    <div className="absolute inset-0">
+      {[...Array(12)].map((_, i) => (
+        <motion.span
+          key={`star-${i}`}
+          animate={{
+            top: `calc(${random() * 100}% + ${randomMove()}px)`,
+            left: `calc(${random() * 100}% + ${randomMove()}px)`,
+            opacity: randomOpacity(),
+            scale: [1, 1.2, 0],
+          }}
+          transition={{
+            duration: random() * 2 + 4,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{
+            position: "absolute",
+            top: `${random() * 100}%`,
+            left: `${random() * 100}%`,
+            width: `2px`,
+            height: `2px`,
+            borderRadius: "50%",
+            zIndex: 1,
+          }}
+          className="inline-block bg-cyan-500 dark:bg-cyan-400"
+        />
+      ))}
+    </div>
+  );
+};
+
+// Logo Components
+const GoogleAdsLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" fill="#4285F4"/>
+  </svg>
+);
+
+const MetaLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 287.56 191" className={className} fill="currentColor">
+    <path fill="#0081fb" d="M31.06,126c0,11,2.41,19.41,5.56,24.51A19,19,0,0,0,53.19,160c8.1,0,15.51-2,29.79-21.76,11.44-15.83,24.92-38,34-52l15.36-23.6c10.67-16.39,23-34.61,37.18-47C181.07,5.6,193.54,0,206.09,0c21.07,0,41.14,12.21,56.5,35.11,16.81,25.08,25,56.67,25,89.27,0,19.38-3.82,33.62-10.32,44.87C271,180.13,258.72,191,238.13,191V160c17.63,0,22-16.2,22-34.74,0-26.42-6.16-55.74-19.73-76.69-9.63-14.86-22.11-23.94-35.84-23.94-14.85,0-26.8,11.2-40.23,31.17-7.14,10.61-14.47,23.54-22.7,38.13l-9.06,16c-18.2,32.27-22.81,39.62-31.91,51.75C84.74,183,71.12,191,53.19,191c-21.27,0-34.72-9.21-43-23.09C3.34,156.6,0,141.76,0,124.85Z"/>
+  </svg>
+);
+
+const SEOIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" fill="#34A853"/>
+  </svg>
+);
+
+const InstagramLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" fill="url(#instagram-gradient)"/>
+    <defs>
+      <linearGradient id="instagram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#f58529" />
+        <stop offset="50%" stopColor="#dd2a7b" />
+        <stop offset="100%" stopColor="#8134af" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+const LinkedInLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z" fill="#0077B5"/>
+  </svg>
+);
 
 export default FeaturesSectionMinimal;
 export { FeaturesSectionMinimal };
