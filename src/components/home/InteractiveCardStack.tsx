@@ -323,10 +323,9 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       const windowHeight = window.innerHeight;
 
       // --- CAMBIO AQUÍ ---
-      // Lógica para que termine antes y empiece antes:
-      // 'finishPoint': Punto donde ya debe estar colapsado (30% de la pantalla)
-      // 'startPoint': Punto donde empieza a colapsarse (90% de la pantalla)
-      const finishPoint = windowHeight * 0.3; 
+      // finishPoint: Punto donde ya debe estar colapsado (Antes 0.3, ahora 0.55)
+      // startPoint: Punto donde empieza a colapsarse (90%)
+      const finishPoint = windowHeight * 0.55; 
       const startPoint = windowHeight * 0.9;
       
       let progress = (rect.top - finishPoint) / (startPoint - finishPoint);
