@@ -26,7 +26,7 @@ export interface OurStepsVersion2Props {
   className?: string;
 }
 
-// Datos adaptados al flujo de marketing proporcionado
+// Datos del flujo de marketing
 export const defaultEntries: OurStepsVersion2Entry[] = [
   {
     icon: Target,
@@ -41,7 +41,6 @@ export const defaultEntries: OurStepsVersion2Entry[] = [
       "Automated nurturing sequences for cold leads",
       "Direct integration with your sales CRM",
     ],
-    // Imagen de "Target/Strategy"
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop",
     button: {
@@ -61,7 +60,6 @@ export const defaultEntries: OurStepsVersion2Entry[] = [
       "Social media management & viral strategies",
       "Paid advertising on Meta, LinkedIn & TikTok",
     ],
-    // Imagen de "Digital/Social Media"
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
   },
@@ -77,7 +75,6 @@ export const defaultEntries: OurStepsVersion2Entry[] = [
       "Conversion Rate Optimization (CRO) audit",
       "Data-driven roadmap with actionable steps",
     ],
-    // Imagen de "Audit/Analytics"
     image:
       "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=2670&auto=format&fit=crop",
   },
@@ -93,7 +90,6 @@ export const defaultEntries: OurStepsVersion2Entry[] = [
       "Revenue tracking & ROI reporting",
       "Sales enablement materials & scripts",
     ],
-    // Imagen de "Success/Growth"
     image:
       "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2632&auto=format&fit=crop",
     button: {
@@ -103,7 +99,6 @@ export const defaultEntries: OurStepsVersion2Entry[] = [
   },
 ];
 
-// Colores extraídos del gradiente de BoxCards
 const COLORS = {
   turquoise: "rgb(103, 188, 183)", // #67bcb7
   coral: "rgb(222, 131, 99)",     // #de8363
@@ -120,7 +115,7 @@ export default function OurStepsVersion2({
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sentinelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Create stable setters for refs inside map
+  // Setters for refs
   const setItemRef = (el: HTMLDivElement | null, i: number) => {
     itemRefs.current[i] = el;
   };
@@ -134,7 +129,12 @@ export default function OurStepsVersion2({
     let frame = 0;
     const updateActiveByProximity = () => {
       frame = requestAnimationFrame(updateActiveByProximity);
-      const centerY = window.innerHeight / 3;
+      
+      // AJUSTE 1: Cambiado de / 3 a / 2.
+      // Esto hace que el elemento se active cuando está en el CENTRO de la pantalla,
+      // en lugar de activarse cuando está muy arriba.
+      const centerY = window.innerHeight / 2;
+      
       let bestIndex = 0;
       let bestDist = Infinity;
       sentinelRefs.current.forEach((node, i) => {
@@ -170,27 +170,30 @@ export default function OurStepsVersion2({
 
           <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
             {titlePrefix}{' '}
-            <motion.span
-              initial={{ backgroundPosition: "400% 50%" }}
-              animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-              transition={{
-                duration: 12,
-                ease: "linear",
-                repeat: Infinity
-              }}
-              style={{
-                display: "inline-block",
-                backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
-                backgroundSize: "400% 100%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                color: "transparent"
-              }}
-            >
-              {gradientTitle}
-            </motion.span>
-            <span className="text-gray-900">.</span>
+            {/* AJUSTE 2: whitespace-nowrap para mantener el punto unido al texto degradado */}
+            <span className="whitespace-nowrap">
+              <motion.span
+                initial={{ backgroundPosition: "400% 50%" }}
+                animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                transition={{
+                  duration: 12,
+                  ease: "linear",
+                  repeat: Infinity
+                }}
+                style={{
+                  display: "inline-block",
+                  backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
+                  backgroundSize: "400% 100%",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  color: "transparent"
+                }}
+              >
+                {gradientTitle}
+              </motion.span>
+              <span className="text-gray-900">.</span>
+            </span>
           </h2>
 
           <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
@@ -209,8 +212,12 @@ export default function OurStepsVersion2({
                 ref={(el) => setItemRef(el, index)}
                 aria-current={isActive ? "true" : "false"}
               >
-                {/* Sticky meta column */}
-                <div className="top-8 flex h-min w-64 shrink-0 items-center gap-4 md:sticky">
+                {/* 
+                  AJUSTE 3: Cambiado 'top-8' por 'top-32'.
+                  Esto hace que la columna izquierda (iconos/títulos) se bloquee (sticky)
+                  más abajo en la pantalla, evitando que choque con la parte superior.
+                */}
+                <div className="top-32 flex h-min w-64 shrink-0 items-center gap-4 md:sticky">
                   <div className="flex items-center gap-3">
                     <div 
                       className={`p-2 rounded-lg transition-colors duration-300 ${
