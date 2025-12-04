@@ -2,6 +2,11 @@ import React from 'react';
 import { Sparkles, Clock, Zap, Mountain, Check } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
+// Utilidad simple para cn si no existe en el proyecto
+function cn(...classes: (string | undefined | null | false)[]) {
+  return classes.filter(Boolean).join(' ');
+}
+
 type UseCasesShowcaseProps = {
   subText?: string;
   heading?: string;
@@ -13,12 +18,51 @@ type UseCasesShowcaseProps = {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
-  // Props para el AnimatedHikeCard
+  // Props anteriores conservadas para compatibilidad
   cardTitle?: string;
   cardImages?: string[];
   cardStats?: Array<{ icon: React.ReactNode; label: string }>;
   cardDescription?: string;
   cardHref?: string;
+};
+
+// Componente ThreeDMarquee (Nuevo componente solicitado)
+const ThreeDMarquee = ({ images, className }: { images: string[], className?: string }) => {
+  // Para mobile: 3 columnas, para desktop: 4 columnas
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+  const numColumns = isMobile ? 3 : 4;
+  
+  const chunkSize = Math.ceil(images.length / numColumns);
+  const chunks = Array.from({ length: numColumns }, (_, colIndex) => {
+    const start = colIndex * chunkSize;
+    return images.slice(start, start + chunkSize);
+  });
+
+  return (
+    <div className={cn("mx-auto block h-[350px] sm:h-[450px] lg:h-[600px] overflow-hidden rounded-2xl", className)}>
+      <div className="flex w-full h-full items-center justify-center">
+        <div className="w-[1000px] sm:w-[1200px] lg:w-[1548px] h-[1000px] sm:h-[1200px] lg:h-[1548px] shrink-0 scale-[0.4] sm:scale-[0.5] lg:scale-90">
+          <div style={{ transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", transformStyle: "preserve-3d" }}
+            className="relative top-32 sm:top-44 lg:top-80 right-[28%] sm:right-[35%] lg:right-[40%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {chunks.map((subarray, colIndex) => (
+              <motion.div
+                animate={{ y: colIndex % 2 === 0 ? 100 : -100 }}
+                transition={{ duration: colIndex % 2 === 0 ? 10 : 15, repeat: Infinity, repeatType: "reverse" }}
+                key={colIndex + "marquee"} className="flex flex-col items-start gap-8">
+                {subarray.map((image, imageIndex) => (
+                  <div className="relative" key={imageIndex + image}>
+                    <motion.img whileHover={{ y: -10 }} transition={{ duration: 0.3, ease: "easeInOut" }}
+                      key={imageIndex + image} src={image} alt={`Image ${imageIndex + 1}`}
+                      className="aspect-[5/4] rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl" />
+                  </div>
+                ))}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 // Componente FadeInText con glass blur
@@ -68,304 +112,6 @@ const FadeInText = ({
   );
 };
 
-// Componente TaskTimeline integrado con fade in glass blur
-const TaskTimeline = () => {
-  type TaskStatus = 'pending' | 'active' | 'complete';
-  type TaskItem = {
-    id: string;
-    title: string;
-    time: string;
-    status: TaskStatus;
-    actions: string;
-  };
-
-  const [currentTaskIndex, setCurrentTaskIndex] = React.useState(0);
-  const [progress, setProgress] = React.useState(0);
-  const [isHovered, setIsHovered] = React.useState(false);
-  const timelineRef = React.useRef(null);
-  const isTimelineInView = useInView(timelineRef, { once: true, amount: 0.3 });
-  
-  const tasksData: TaskItem[] = [
-    {
-      id: '1',
-      title: 'Planning Design',
-      time: 'Jan 15',
-      status: 'pending',
-      actions: '1 more action'
-    },
-    {
-      id: '2',
-      title: 'Designing...',
-      time: '',
-      status: 'pending',
-      actions: '2 more action'
-    },
-    {
-      id: '3',
-      title: 'Complete Design',
-      time: 'Feb 28',
-      status: 'pending',
-      actions: ''
-    }
-  ];
-
-  const [tasks, setTasks] = React.useState<TaskItem[]>(tasksData);
-
-  React.useEffect(() => {
-    if (currentTaskIndex >= tasks.length) {
-      const resetTimer = setTimeout(() => {
-        setTasks(tasksData);
-        setCurrentTaskIndex(0);
-        setProgress(0);
-      }, 1000);
-      return () => clearTimeout(resetTimer);
-    }
-
-    const duration = 2000;
-    const startTime = Date.now();
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const newProgress = Math.min(elapsed / duration * 100, 100);
-      setProgress(newProgress);
-      if (newProgress < 100) {
-        requestAnimationFrame(animate);
-      } else {
-        setTimeout(() => {
-          setTasks(prev => prev.map((task, idx) => idx === currentTaskIndex ? {
-            ...task,
-            status: 'complete' as TaskStatus
-          } : task));
-          setCurrentTaskIndex(prev => prev + 1);
-          setProgress(0);
-        }, 300);
-      }
-    };
-
-    setTasks(prev => prev.map((task, idx) => idx === currentTaskIndex ? {
-      ...task,
-      status: 'active' as TaskStatus
-    } : task));
-    requestAnimationFrame(animate);
-  }, [currentTaskIndex, tasks.length]);
-
-  const circumference = 2 * Math.PI * 14;
-
-  return (
-    <div 
-      ref={timelineRef}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="w-[340px] rounded-2xl p-6 shadow-sm relative overflow-hidden"
-      style={{
-        opacity: isTimelineInView ? 1 : 0,
-        filter: isTimelineInView ? 'blur(0px)' : 'blur(10px)',
-        transform: 'translateZ(0)',
-        transition: 'opacity 0.8s ease-out 1.0s, filter 0.8s ease-out 1.0s, box-shadow 0.3s',
-        boxShadow: isHovered 
-          ? '0 1px 2px 0 rgba(0, 0, 0, 0.05)' 
-          : '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-      }}
-    >
-      {/* Gradiente base (abajo-izquierda) */}
-      <div 
-        className="absolute inset-0 rounded-2xl"
-        style={{
-          background: 'radial-gradient(110.24% 110.2% at -10% 150%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)',
-          opacity: 1,
-          transition: 'opacity 0.8s ease'
-        }}
-      />
-      
-      {/* Gradiente hover (derecha y arriba) */}
-      <div 
-        className="absolute inset-0 rounded-2xl"
-        style={{
-          background: 'radial-gradient(110.24% 110.2% at 160% 30%, #000020 0%, #f1ffa5 10%, #469396 35.44%, #1f3f6d 71.34%, #000 90.76%)',
-          opacity: isHovered ? 1 : 0,
-          transition: 'opacity 0.8s ease'
-        }}
-      />
-      
-      {/* Contenido por encima de los gradientes */}
-      <div className="relative z-10">
-      <div className="space-y-0">
-        {tasks.map((task, index) => (
-          <div key={task.id} className="flex gap-3">
-            <div className="flex flex-col items-center">
-              <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-500 relative">
-                {task.status === 'complete' && (
-                  <div className="w-full h-full rounded-full border-[2px] border-white bg-white flex items-center justify-center transition-colors duration-300">
-                    <Check className="w-3 h-3 stroke-[3] text-black transition-colors duration-300" />
-                  </div>
-                )}
-                {task.status === 'active' && (
-                  <div className="w-full h-full relative">
-                    <div className={`w-full h-full rounded-full border-[2px] absolute inset-0 transition-colors duration-300 ${
-                      isHovered 
-                        ? 'border-gray-200 bg-white'
-                        : 'border-gray-700 bg-black' 
-                    }`} />
-                    <svg className="w-full h-full -rotate-90 absolute inset-0" viewBox="0 0 40 40">
-                      <circle 
-                        cx="20" 
-                        cy="20" 
-                        r="14" 
-                        fill="none" 
-                        stroke="white"
-                        strokeWidth="2" 
-                        strokeDasharray={circumference} 
-                        strokeDashoffset={circumference - progress / 100 * circumference} 
-                        strokeLinecap="round" 
-                        className="transition-all duration-300" 
-                      />
-                    </svg>
-                  </div>
-                )}
-                {task.status === 'pending' && (
-                  <div className={`w-full h-full rounded-full border-[2px] transition-colors duration-300 ${
-                    isHovered 
-                      ? 'border-gray-300 bg-white'
-                      : 'border-gray-700 bg-black' 
-                  }`} />
-                )}
-              </div>
-              {index < tasks.length - 1 && (
-                <div className={`w-0.5 h-8 my-1 transition-all duration-500 ${
-                  task.status === 'complete' 
-                    ? 'bg-white'
-                    : (isHovered ? 'bg-gray-300' : 'bg-gray-700')
-                }`} />
-              )}
-            </div>
-
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between mb-1">
-                <h3 className={`text-sm font-medium transition-colors duration-300 ${
-                  task.status === 'active' || task.status === 'complete' 
-                    ? 'text-white'
-                    : (isHovered ? 'text-gray-400' : 'text-gray-500')
-                }`}>
-                  {task.title}
-                </h3>
-                {task.time && (
-                  <span className={`text-xs font-medium transition-colors duration-300 ${
-                    task.status === 'active' || task.status === 'complete' 
-                      ? 'text-white'
-                      : (isHovered ? 'text-gray-400' : 'text-gray-500')
-                  }`}>
-                    {task.time}
-                  </span>
-                )}
-              </div>
-              {task.actions && (
-                <p className={`text-xs transition-colors duration-300 ${
-                  isHovered ? 'text-gray-500' : 'text-gray-400'
-                }`}>
-                  {task.actions}
-                </p>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-    </div>
-  );
-};
-
-// Componente AnimatedHikeCard integrado con glass blur
-const AnimatedHikeCard = ({ 
-  title, 
-  images, 
-  stats, 
-  description, 
-  href
-}: {
-  title: string;
-  images: string[];
-  stats: Array<{ icon: React.ReactNode; label: string }>;
-  description: string;
-  href: string;
-}) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-  const cardRef = React.useRef(null);
-  const isInView = useInView(cardRef, { once: true, amount: 0.3 });
-
-  return (
-    <motion.a
-      ref={cardRef}
-      href={href}
-      onClick={(e) => e.preventDefault()}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      initial={{ 
-        opacity: 0, 
-        x: -50,
-        filter: "blur(10px)"
-      }}
-      animate={{ 
-        opacity: isInView ? 1 : 0, 
-        x: isInView ? 0 : -50,
-        filter: isInView ? "blur(0px)" : "blur(10px)"
-      }}
-      transition={{ 
-        duration: 0.8, 
-        delay: 0.3, 
-        ease: "easeOut" 
-      }}
-      className="group relative block w-full max-w-sm cursor-pointer rounded-2xl border bg-white p-6 shadow-lg hover:translate-y-0 hover:shadow-sm lg:max-w-md"
-      style={{
-        transform: isHovered ? 'translateY(0)' : 'translateY(-4px)'
-      }}
-    >
-      <div className="flex flex-col">
-        
-        {/* Card Header: Title */}
-        <div className="mb-3">
-          <h2 className="text-[2px] md:text-[8px] lg:text-[18px] font-[500] leading-[1.1] tracking-tight text-gray-900">{title}</h2>
-        </div>
-
-        {/* Stats Section - Moved here */}
-        <div className="mb-6 flex items-center space-x-4 text-sm text-gray-600">
-          {stats.map((stat, index) => (
-            <div key={index} className="flex items-center space-x-1.5">
-              {stat.icon}
-              <span className="font-medium">{stat.label}</span>
-            </div>
-          ))}
-        </div>
-        
-        {/* Stacked Images with Hover Animation */}
-        <div className="relative mb-6 h-32">
-          {images.map((src, index) => (
-            <div
-              key={index}
-              className="absolute h-full w-[40%] overflow-hidden rounded-lg border-2 border-white shadow-md transition-all duration-300 ease-in-out"
-              style={{
-                transform: isHovered 
-                  ? `translateX(${index * 32}px)`
-                  : `translateX(${index * 80}px) rotate(${index * 5 - 5}deg)`,
-                zIndex: images.length - index,
-              }}
-            >
-              <img
-                src={src}
-                alt={`${title} view ${index + 1}`}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-        
-        {/* Description */}
-        <p className="text-[12px] md:text-[14px] font-normal leading-relaxed text-gray-600 tracking-tight">
-          {description}
-        </p>
-      </div>
-    </motion.a>
-  );
-};
-
 const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const {
     subText = 'our approach',
@@ -384,6 +130,8 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2070&auto=format&fit=crop',
     ],
     cardStats = [
       { icon: <Clock className="h-4 w-4" />, label: 'Next 30 Days' },
@@ -588,22 +336,11 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         {/* CONTENIDO */}
         <div className="relative pt-48 pb-32 px-4">
           <div className="max-w-[1225px] mx-auto">
-            <div className="flex flex-col lg:flex-row items-start justify-between gap-20">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-20">
 
-              {/* COLUMNA IZQUIERDA - AnimatedHikeCard */}
-              <div className="relative flex-1 max-w-[495px] flex items-center justify-center">
-                <AnimatedHikeCard
-                  title={cardTitle}
-                  images={cardImages}
-                  stats={cardStats}
-                  description={cardDescription}
-                  href={cardHref}
-                />
-                
-                {/* TaskTimeline superpuesta - fuera del AnimatedHikeCard */}
-                <div className="absolute -bottom-8 -right-24 z-10" style={{ transform: 'translate(40px, 30px)' }}>
-                  <TaskTimeline />
-                </div>
+              {/* COLUMNA IZQUIERDA - ThreeDMarquee */}
+              <div className="relative flex-1 w-full max-w-[495px] flex items-center justify-center">
+                <ThreeDMarquee images={cardImages} />
               </div>
 
               {/* COLUMNA DERECHA - Texto */}
