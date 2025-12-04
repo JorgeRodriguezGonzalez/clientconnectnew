@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Package, Calendar, Sparkles, Zap } from "lucide-react";
+import { ArrowUpRight, Target, Globe, Search, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -26,79 +26,84 @@ export interface OurStepsVersion2Props {
   className?: string;
 }
 
+// Datos adaptados al flujo de marketing proporcionado
 export const defaultEntries: OurStepsVersion2Entry[] = [
   {
-    icon: Package,
-    title: "Advanced Component Pack",
-    subtitle: "Version 2.1.0 • Feb 2025",
+    icon: Target,
+    title: "Qualified Lead Generation",
+    subtitle: "Phase 1 • Daily Influx",
     description:
-      "Ruixen UI now ships with an advanced component pack including complex layouts, enterprise-ready data tables, and animated navigation menus.",
+      "Our targeted campaigns connect you with customers actively searching for your services. Watch your inbox fill with genuine opportunities ready to convert.",
     items: [
-      "New Data Grid with sorting, filtering, and pagination",
-      "Kanban board with drag-and-drop support",
-      "Animated mega menu component",
-      "Masonry grid layout for galleries and portfolios",
-      "Extended accessibility support across all components",
+      "AI-driven audience targeting strategies",
+      "High-conversion landing page optimization",
+      "Real-time lead qualification & verification",
+      "Automated nurturing sequences for cold leads",
+      "Direct integration with your sales CRM",
     ],
+    // Imagen de "Target/Strategy"
     image:
-      "https://pub-940ccf6255b54fa799a9b01050e6c227.r2.dev/dashboard-gradient.png",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop",
     button: {
-      url: "https://ruixenui.com",
-      text: "Explore Components",
+      url: "#contact",
+      text: "Start Getting Leads",
     },
   },
   {
-    icon: Sparkles,
-    title: "Theme Builder & Design Tokens",
-    subtitle: "Version 2.0.0 • Jan 2025",
+    icon: Globe,
+    title: "Omni-Channel Expansion",
+    subtitle: "Phase 2 • Visibility",
     description:
-      "We've introduced a fully customizable theme builder powered by design tokens so you can tailor Ruixen UI to match any brand identity.",
+      "From Google to social media, we create cohesive strategies that maximize your visibility. Your brand deserves to be seen everywhere your customers are.",
     items: [
-      "Real-time theme preview in the dashboard",
-      "Customizable color palettes, typography, and spacing",
-      "Preset themes for quick project setup",
-      "Export tokens to CSS variables or JSON",
+      "Cohesive cross-platform brand identity",
+      "SEO-optimized content for Google rankings",
+      "Social media management & viral strategies",
+      "Paid advertising on Meta, LinkedIn & TikTok",
     ],
+    // Imagen de "Digital/Social Media"
     image:
-      "https://pub-940ccf6255b54fa799a9b01050e6c227.r2.dev/featured-01.png",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
   },
   {
-    icon: Zap,
-    title: "Motion & Interaction Update",
-    subtitle: "Version 1.8.0 • Dec 2024",
+    icon: Search,
+    title: "Strategic Digital Audit",
+    subtitle: "Phase 3 • Analysis",
     description:
-      "Micro-interactions across Ruixen UI have been enhanced with Framer Motion, delivering a smoother and more engaging user experience.",
+      "We analyze your current digital presence and provide a clear roadmap. Every recommendation comes with our commitment to implement the changes for you.",
     items: [
-      "Animated dropdown menus and modals",
-      "Smooth transitions between pages",
-      "Custom easing curves for a premium feel",
-      "Reduced layout shift for better stability",
+      "Deep-dive competitor performance analysis",
+      "Technical SEO & User Experience (UX) review",
+      "Conversion Rate Optimization (CRO) audit",
+      "Data-driven roadmap with actionable steps",
     ],
+    // Imagen de "Audit/Analytics"
     image:
-      "https://pub-940ccf6255b54fa799a9b01050e6c227.r2.dev/dashboard-02.png",
+      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=2670&auto=format&fit=crop",
   },
   {
-    icon: Calendar,
-    title: "Initial Pro Release",
-    subtitle: "Version 1.5.0 • Oct 2024",
+    icon: TrendingUp,
+    title: "High-Intent Conversion",
+    subtitle: "Phase 4 • Revenue",
     description:
-      "Ruixen UI Pro is here — a premium set of components, templates, and utilities designed for production-grade applications.",
+      "Our lead generation strategies target customers ready to buy. We optimize every touchpoint to turn interest into revenue for your business.",
     items: [
-      "Full Figma design kit",
-      "Extended form components with validation",
-      "Chart components with Recharts integration",
-      "Ready-to-use dashboard layouts",
+      "End-to-end sales funnel optimization",
+      "Advanced retargeting for interested prospects",
+      "Revenue tracking & ROI reporting",
+      "Sales enablement materials & scripts",
     ],
+    // Imagen de "Success/Growth"
     image:
-      "https://pub-940ccf6255b54fa799a9b01050e6c227.r2.dev/featured-06.png",
+      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2632&auto=format&fit=crop",
     button: {
-      url: "https://ruixenui.com/pro",
-      text: "View Ruixen UI Pro",
+      url: "#pricing",
+      text: "Scale Your Revenue",
     },
   },
 ];
 
-// Colores extraídos del gradiente de BoxCards para mantener consistencia
+// Colores extraídos del gradiente de BoxCards
 const COLORS = {
   turquoise: "rgb(103, 188, 183)", // #67bcb7
   coral: "rgb(222, 131, 99)",     // #de8363
@@ -106,9 +111,9 @@ const COLORS = {
 };
 
 export default function OurStepsVersion2({
-  titlePrefix = "Ruixen UI",
-  gradientTitle = "Release Notes",
-  description = "Stay up to date with the latest components, features, and performance enhancements in Ruixen UI — built to help you design and ship faster.",
+  titlePrefix = "Our Proven",
+  gradientTitle = "Marketing Process",
+  description = "A data-driven approach designed to scale your business, optimize your presence, and turn prospects into loyal customers.",
   entries = defaultEntries,
 }: OurStepsVersion2Props) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -157,10 +162,10 @@ export default function OurStepsVersion2({
     <section className="py-32 bg-white">
       <div className="container">
         
-        {/* HEADER MODIFICADO ESTILO BOXCARDS */}
+        {/* HEADER */}
         <div className="mx-auto max-w-[600px] flex flex-col gap-6 text-center mb-16 md:mb-24">
           <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
-            LATEST UPDATES
+            WORKFLOW
           </div>
 
           <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
