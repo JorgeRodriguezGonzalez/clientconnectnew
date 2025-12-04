@@ -57,10 +57,10 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
               transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", 
               transformStyle: "preserve-3d" 
             }}
-            // AJUSTES REALIZADOS:
-            // 1. top: Fijado en 850px para desktop. Ajustado a 380px/500px para mobile/tablet.
-            // 2. left: Reducido a 10% (antes 25%) para moverlo un poco a la izquierda.
-            className="relative top-[380px] sm:top-[500px] lg:top-[850px] left-[5%] sm:left-[5%] lg:left-[10%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+            // AJUSTES DE POSICIÓN:
+            // 1. top: Reducido a 600px en desktop (para subirlas más arriba).
+            // 2. left: Mantenido en 10% para que sigan un poco a la izquierda (pero no tanto como antes).
+            className="relative top-[280px] sm:top-[400px] lg:top-[600px] left-[5%] sm:left-[5%] lg:left-[10%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
           >
             {chunks.map((subarray, colIndex) => (
               <motion.div
@@ -142,12 +142,11 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
     ctaText = 'Book a Call',
     ctaHref = '#',
+    // LISTA DE IMÁGENES ACTUALIZADA
+    // Eliminadas: 1.png, 2.png, 4.png, 5.png
+    // Añadidas: 11.jpg, 12.jpg
     cardImages = [
-      '/images/1.png',
-      '/images/2.png',
       '/images/3.png',
-      '/images/4.png',
-      '/images/5.png',
       '/images/6.png',
       '/images/1.jpg',
       '/images/2.jpg',
@@ -155,6 +154,8 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       '/images/4.jpg',
       '/images/5.jpg',
       '/images/6.jpg',
+      '/images/11.jpg',
+      '/images/12.jpg',
     ],
   } = props;
 
