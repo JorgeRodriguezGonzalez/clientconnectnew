@@ -13,9 +13,8 @@ import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 import BoxCards from "@/components/home/BoxCards";
 
-// IMPORTACIÓN DEL NUEVO COMPONENTE
-// (Ajusta la ruta si no lo guardaste en components/home/ScrollableWorkflow)
-import ScrollableWorkflow from "@/components/home/ScrollableWorkflow"; 
+// IMPORTACIÓN DEL NUEVO COMPONENTE OURSTEPS
+import OurSteps from "@/components/home/OurSteps";
 
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
@@ -44,8 +43,8 @@ const Index = () => {
         <CloudHero />
         <BoxCards />
 
-        {/* AQUÍ ESTÁ EL COMPONENTE ACTUALIZADO CON SCROLL AUTOMÁTICO */}
-        <ScrollableWorkflow />
+        {/* AQUÍ ESTÁ EL NUEVO COMPONENTE OURSTEPS */}
+        <OurSteps />
 
         <HowWeWork />
         <ComparisonSection />
