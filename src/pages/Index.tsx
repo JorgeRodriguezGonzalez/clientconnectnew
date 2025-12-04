@@ -44,14 +44,6 @@ const Index = () => {
         <ComparisonSection />
         <Pricing />
 
-        {/* COMPONENTES NO TAN BONITOS */}
-        <OurSteps />
-
-        <ScrollableWorkflow />
-
-        <HowWeWork />
-        
-        
         <TestimonialsSection />
         <CTASection />
 
