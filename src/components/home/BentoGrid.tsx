@@ -694,27 +694,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
 
             {isQualifiedLeads && showInternalAnimations && (
               <div className="relative w-full h-[120px] mt-2">
-                {skills.map((skill, idx) => (
-                  <motion.div
-                    key={`${skill.text}-${hoverCount}`}
-                    className="absolute flex items-center justify-center overflow-hidden rounded-full bg-white dark:bg-neutral-800 px-2 py-1 shadow-md"
-                    style={{
-                      ...skill.position
-                    }}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      duration: 0.4,
-                      delay: isVisible ? idx * 0.05 + 0.3 : 0,
-                      ease: [0.22, 1, 0.36, 1]
-                    }}
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    <p className="m-0 whitespace-nowrap text-[9px] font-medium text-neutral-900 dark:text-white">
-                      {skill.text}
-                    </p>
-                  </motion.div>
-                ))}
+                <AnimatedLogos />
               </div>
             )}
 
@@ -827,12 +807,6 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                   </svg>
                 </div>
                </div>
-            )}
-
-            {isFullServiceTeam && showInternalAnimations && (
-              <div className="relative w-full h-[120px] mt-2">
-                <AnimatedLogos />
-              </div>
             )}
           </div>
 
