@@ -810,7 +810,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
             )}
 
             {isFullServiceTeam && showInternalAnimations && (
-              <div className="absolute bottom-2 right-2 w-[240px]">
+              <div className="absolute bottom-2 right-2 w-[360px]">
                 <MiniCardStatusList />
               </div>
             )}
@@ -854,6 +854,23 @@ function MiniCardStatusList() {
       setActiveDashIndex(prev => (prev + 1) % 8);
     }, 100);
     return () => clearInterval(interval);
+  }, []);
+
+  // Auto-complete "Common words & phrases" after 1 second
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCards(prev => prev.map(card => 
+        card.id === "4" ? { ...card, status: "syncing" as const } : card
+      ));
+
+      setTimeout(() => {
+        setCards(prev => prev.map(card => 
+          card.id === "4" ? { ...card, status: "completed" as const } : card
+        ));
+      }, 2500);
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleSynchronize = (cardId: string) => {
@@ -1010,7 +1027,7 @@ function MiniCardStatusList() {
                     </motion.div>
                   </div>
                   
-                  <span className="text-[10px] text-neutral-900 dark:text-white truncate max-w-[120px]">{card.title}</span>
+                  <span className="text-[10px] text-neutral-900 dark:text-white truncate max-w-[200px]">{card.title}</span>
                 </div>
 
                 <div className="flex items-center min-w-0 h-5">
