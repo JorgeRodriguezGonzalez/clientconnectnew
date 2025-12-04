@@ -808,6 +808,12 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                 </div>
                </div>
             )}
+
+            {isFullServiceTeam && showInternalAnimations && (
+              <div className="absolute bottom-2 right-2 w-[240px]">
+                <MiniCardStatusList />
+              </div>
+            )}
           </div>
 
           <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -823,6 +829,220 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
           </div>
         </article>
       </div>
+    </div>
+  );
+}
+
+// Mini Card Status List for Full-Service Team
+interface MiniCard {
+  id: string;
+  title: string;
+  status: "completed" | "updates-found" | "syncing";
+}
+
+function MiniCardStatusList() {
+  const [cards, setCards] = useState<MiniCard[]>([
+    { id: "3", title: "Primary customers", status: "completed" },
+    { id: "4", title: "Common words & phrases", status: "updates-found" },
+    { id: "5", title: "Company overview", status: "syncing" },
+  ]);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [activeDashIndex, setActiveDashIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveDashIndex(prev => (prev + 1) % 8);
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleSynchronize = (cardId: string) => {
+    setCards(prev => prev.map(card => 
+      card.id === cardId ? { ...card, status: "syncing" as const } : card
+    ));
+
+    setTimeout(() => {
+      setCards(prev => prev.map(card => 
+        card.id === cardId ? { ...card, status: "completed" as const } : card
+      ));
+    }, 2500);
+  };
+
+  const getStatusIcon = (status: MiniCard["status"]) => {
+    switch (status) {
+      case "completed":
+        return (
+          <svg width="12" height="12" viewBox="0 0 16 16" className="drop-shadow-sm">
+            <circle cx="8" cy="8" r="8" fill="#22c55e" />
+            <path 
+              d="M5 8l2.5 2.5 3.5-4" 
+              stroke="white" 
+              strokeWidth="1.5" 
+              fill="none" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+          </svg>
+        );
+      case "updates-found":
+        return (
+          <svg width="12" height="12" viewBox="0 0 16 16">
+            <path 
+              d="M8 1.5L14.5 13H1.5L8 1.5Z" 
+              fill="#eab308" 
+              stroke="#eab308" 
+              strokeWidth="1"
+              strokeLinejoin="round"
+            />
+            <path 
+              d="M8 6v3M8 11h0" 
+              stroke="white" 
+              strokeWidth="1.5" 
+              strokeLinecap="round"
+            />
+          </svg>
+        );
+      case "syncing":
+        return (
+          <svg width="12" height="12" viewBox="0 0 16 16">
+            {Array.from({ length: 8 }).map((_, index) => {
+              const angle = (index * 45) - 90;
+              const radian = (angle * Math.PI) / 180;
+              const radius = 6;
+              const dashLength = 1.8;
+              
+              const startX = 8 + (radius - dashLength/2) * Math.cos(radian);
+              const startY = 8 + (radius - dashLength/2) * Math.sin(radian);
+              const endX = 8 + (radius + dashLength/2) * Math.cos(radian);
+              const endY = 8 + (radius + dashLength/2) * Math.sin(radian);
+              
+              const isActive = index === activeDashIndex;
+              
+              return (
+                <line
+                  key={index}
+                  x1={startX}
+                  y1={startY}
+                  x2={endX}
+                  y2={endY}
+                  stroke={isActive ? "#ffffff" : "#6b7280"}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              );
+            })}
+          </svg>
+        );
+    }
+  };
+
+  const getStatusText = (status: MiniCard["status"]) => {
+    switch (status) {
+      case "updates-found":
+        return "UPDATES";
+      case "syncing":
+        return "SYNCING";
+      default:
+        return null;
+    }
+  };
+
+  const getGradientClass = (status: MiniCard["status"]) => {
+    switch (status) {
+      case "updates-found":
+        return "from-red-500/20 to-transparent";
+      case "syncing":
+        return "from-green-500/20 to-transparent";
+      default:
+        return "";
+    }
+  };
+
+  const sortedCards = [...cards].sort((a, b) => {
+    if (a.status === "completed" && b.status !== "completed") return -1;
+    if (a.status !== "completed" && b.status === "completed") return 1;
+    return 0;
+  });
+
+  return (
+    <div className="border border-neutral-900/10 dark:border-white/10 rounded-lg p-3 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm shadow-lg">
+      <motion.div 
+        className="space-y-2"
+        initial="hidden"
+        animate="visible"
+      >
+        {sortedCards.map((card) => (
+          <motion.div
+            key={card.id}
+            layout
+            className="relative cursor-pointer"
+            onMouseEnter={() => setHoveredCard(card.id)}
+            onMouseLeave={() => setHoveredCard(null)}
+          >
+            <motion.div 
+              className="relative bg-neutral-50 dark:bg-neutral-800 border border-neutral-200/50 dark:border-neutral-700/50 rounded-lg p-2 overflow-hidden"
+              whileHover={{
+                y: -1,
+                transition: { type: "spring", stiffness: 400, damping: 25 }
+              }}
+            >
+              {(card.status === "updates-found" || card.status === "syncing") && (
+                <div className={`absolute inset-0 bg-gradient-to-l ${getGradientClass(card.status)} pointer-events-none`} 
+                     style={{ 
+                       backgroundSize: "40% 100%", 
+                       backgroundPosition: "right",
+                       backgroundRepeat: "no-repeat"
+                     }} 
+                />
+              )}
+              
+              <div className="relative flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <motion.div
+                      key={card.status}
+                      initial={{ x: card.status === "completed" ? 16 : 0, scale: 0.8, opacity: 0 }}
+                      animate={{ x: 0, scale: 1, opacity: 1 }}
+                      exit={{ x: card.status === "syncing" ? -16 : 0, scale: 0.8, opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    >
+                      {getStatusIcon(card.status)}
+                    </motion.div>
+                  </div>
+                  
+                  <span className="text-[10px] text-neutral-900 dark:text-white truncate max-w-[120px]">{card.title}</span>
+                </div>
+
+                <div className="flex items-center min-w-0 h-5">
+                  {card.status === "updates-found" && hoveredCard === card.id ? (
+                    <motion.button
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      onClick={() => handleSynchronize(card.id)}
+                      className="px-1.5 py-0.5 bg-white dark:bg-neutral-700 cursor-pointer text-neutral-900 dark:text-white text-[9px] font-medium rounded transition-colors whitespace-nowrap"
+                    >
+                      Sync
+                    </motion.button>
+                  ) : getStatusText(card.status) ? (
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="text-[8px] font-mono font-medium text-neutral-500 dark:text-neutral-400 tracking-wider whitespace-nowrap"
+                    >
+                      {getStatusText(card.status)}
+                    </motion.span>
+                  ) : null}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   );
 }
