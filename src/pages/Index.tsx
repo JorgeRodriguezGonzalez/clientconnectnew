@@ -13,8 +13,10 @@ import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 import BoxCards from "@/components/home/BoxCards";
 
-// IMPORTACIÓN DEL NUEVO COMPONENTE OURSTEPS
+// IMPORTACIÓN DE LOS NUEVOS COMPONENTES
+import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import OurSteps from "@/components/home/OurSteps";
+import ScrollableWorkflow from "@/components/home/ScrollableWorkflow"; 
 
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
@@ -43,8 +45,13 @@ const Index = () => {
         <CloudHero />
         <BoxCards />
 
-        {/* AQUÍ ESTÁ EL NUEVO COMPONENTE OURSTEPS */}
+        {/* COMPONENTE NUEVO (VERSIÓN 2) */}
+        <OurStepsVersion2 />
+
+        {/* COMPONENTE ANTERIOR */}
         <OurSteps />
+
+        <ScrollableWorkflow />
 
         <HowWeWork />
         <ComparisonSection />
