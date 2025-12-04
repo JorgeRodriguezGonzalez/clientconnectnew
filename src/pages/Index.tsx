@@ -52,11 +52,6 @@ const Index = () => {
         <HowWeWork />
         
         
-        <AnimatedGallerySection />
-        
-        <ServicesSection />
-        <WhyUsSection />
-        <WhySubscribeBento />
         <TestimonialsSection />
         <CTASection />
 
