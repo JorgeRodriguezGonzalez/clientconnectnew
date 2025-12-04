@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sparkles, Clock, Zap, Mountain, Check } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
-// Función de utilidad para combinar clases (polyfill de cn)
-function cn(...classes: (string | undefined | null | false)[]) {
-  return classes.filter(Boolean).join(' ');
-}
+// 1. Utilidad cn (extraída de tu código de referencia)
+const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
 type UseCasesShowcaseProps = {
   subText?: string;
@@ -18,7 +16,7 @@ type UseCasesShowcaseProps = {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
-  // Props para el marquee
+  // Props para el Marquee
   cardTitle?: string;
   cardImages?: string[];
   cardStats?: Array<{ icon: React.ReactNode; label: string }>;
@@ -26,30 +24,26 @@ type UseCasesShowcaseProps = {
   cardHref?: string;
 };
 
-// --- COMPONENTE ThreeDMarquee CORREGIDO ---
-const ThreeDMarquee = ({ images = [], className }: { images?: string[], className?: string }) => {
-  // Estado para controlar si es mobile de forma segura (evita errores de hidratación)
-  const [isMobile, setIsMobile] = React.useState(false);
+// 2. Componente ThreeDMarquee (Basado exactamente en tu referencia aboutus.tsx)
+const ThreeDMarquee = ({ images, className }: { images: string[], className?: string }) => {
+  const [isMobile, setIsMobile] = useState(false);
 
-  React.useEffect(() => {
-    const checkMobile = () => {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
       setIsMobile(window.innerWidth < 1024);
-    };
-    
-    // Chequear al montar
-    checkMobile();
-    
-    // Escuchar cambios de tamaño
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+      
+      const handleResize = () => setIsMobile(window.innerWidth < 1024);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, []);
 
   const numColumns = isMobile ? 3 : 4;
   
-  // Aseguramos que haya imágenes para evitar errores
-  const safeImages = images && images.length > 0 ? images : [];
-  
+  // Seguridad: si no hay imágenes, usar un array vacío para evitar crash
+  const safeImages = images || [];
   const chunkSize = Math.ceil(safeImages.length / numColumns);
+  
   const chunks = Array.from({ length: numColumns }, (_, colIndex) => {
     const start = colIndex * chunkSize;
     return safeImages.slice(start, start + chunkSize);
@@ -57,32 +51,20 @@ const ThreeDMarquee = ({ images = [], className }: { images?: string[], classNam
 
   return (
     <div className={cn("mx-auto block h-[350px] sm:h-[450px] lg:h-[600px] overflow-hidden rounded-2xl", className)}>
-      <div className="flex w-full h-full items-center justify-center bg-transparent">
+      <div className="flex w-full h-full items-center justify-center">
         <div className="w-[1000px] sm:w-[1200px] lg:w-[1548px] h-[1000px] sm:h-[1200px] lg:h-[1548px] shrink-0 scale-[0.4] sm:scale-[0.5] lg:scale-90">
-          <div 
-            style={{ 
-              transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", 
-              transformStyle: "preserve-3d" 
-            }}
-            className="relative top-32 sm:top-44 lg:top-80 right-[28%] sm:right-[35%] lg:right-[40%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
-          >
+          <div style={{ transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", transformStyle: "preserve-3d" }}
+            className="relative top-32 sm:top-44 lg:top-80 right-[28%] sm:right-[35%] lg:right-[40%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {chunks.map((subarray, colIndex) => (
               <motion.div
                 animate={{ y: colIndex % 2 === 0 ? 100 : -100 }}
                 transition={{ duration: colIndex % 2 === 0 ? 10 : 15, repeat: Infinity, repeatType: "reverse" }}
-                key={colIndex + "marquee"} 
-                className="flex flex-col items-start gap-8"
-              >
+                key={colIndex + "marquee"} className="flex flex-col items-start gap-8">
                 {subarray.map((image, imageIndex) => (
                   <div className="relative w-full" key={imageIndex + image}>
-                    <motion.img 
-                      whileHover={{ y: -10 }} 
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      key={imageIndex + image} 
-                      src={image} 
-                      alt={`Image ${imageIndex + 1}`}
-                      className="aspect-[5/4] w-full rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl bg-gray-200" 
-                    />
+                    <motion.img whileHover={{ y: -10 }} transition={{ duration: 0.3, ease: "easeInOut" }}
+                      key={imageIndex + image} src={image} alt={`Image ${imageIndex + 1}`}
+                      className="aspect-[5/4] w-full rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl bg-gray-200" />
                   </div>
                 ))}
               </motion.div>
@@ -94,7 +76,7 @@ const ThreeDMarquee = ({ images = [], className }: { images?: string[], classNam
   );
 };
 
-// Componente FadeInText
+// 3. Componente FadeInText (Conservado para las animaciones de texto)
 const FadeInText = ({ 
   children, 
   delay = 0, 
@@ -153,7 +135,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
     ctaText = 'Book a Call',
     ctaHref = '#',
-    // Imágenes por defecto extendidas para que el Marquee se vea lleno
+    // IMPORTANTE: He ampliado la lista de imágenes por defecto para que el Marquee se vea lleno como en tu ejemplo
     cardImages = [
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2070&auto=format&fit=crop',
@@ -161,11 +143,18 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
       'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1504384308090-c54be3855833?q=80&w=2062&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop'
     ],
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
   
+  // Scroll animation hooks
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "start center"]
@@ -243,7 +232,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   return (
     <motion.div className="pt-16" style={{ backgroundColor }}>
       <section ref={ref} className="relative">
-        {/* ARCO (Background Layer) */}
+        {/* ARCO DE FONDO */}
         <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none z-0">
           <motion.div
             className="w-full h-full border-t-[1px]"
@@ -264,6 +253,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
             <div className="flex flex-col items-center gap-8">
+              {/* Badge */}
               <FadeInText delay={1.2}>
                 <div 
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)] mb-[6px]"
@@ -271,12 +261,15 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                     background: 'linear-gradient(135deg, #67bcb7 0%, #de8363 100%)'
                   }}
                 >
-                  <span className="text-[14px] font-normal tracking-[-0.3px] capitalize text-white">
+                  <span 
+                    className="text-[14px] font-normal tracking-[-0.3px] capitalize text-white"
+                  >
                     {badge}
                   </span>
                 </div>
               </FadeInText>
 
+              {/* Main Title */}
               <FadeInText delay={0.3}>
                 <div className="w-full max-w-[600px] mx-auto">
                   <motion.h1 
@@ -312,6 +305,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </div>
               </FadeInText>
 
+              {/* Subtitle */}
               <FadeInText delay={0.4}>
                 <div className="w-full max-w-[500px]">
                   <motion.p 
@@ -323,6 +317,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </div>
               </FadeInText>
 
+              {/* CTA Button */}
               <FadeInText delay={0.5}>
                 <a 
                   href={ctaHref} 
@@ -345,12 +340,13 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         {/* CONTENIDO PRINCIPAL */}
         <div className="relative pt-48 pb-32 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-20">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
 
               {/* COLUMNA IZQUIERDA - ThreeDMarquee */}
-              {/* Aseguramos dimensiones relativas para que el marquee tenga espacio */}
-              <div className="relative w-full max-w-[495px] flex items-center justify-center min-h-[400px]">
-                <ThreeDMarquee images={cardImages} />
+              {/* Aquí se reemplazó todo el contenido anterior por el componente ThreeDMarquee */}
+              {/* Se eliminó el AnimatedHikeCard y TaskTimeline */}
+              <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[495px] flex items-center justify-center min-h-[400px]">
+                 <ThreeDMarquee images={cardImages} />
               </div>
 
               {/* COLUMNA DERECHA - Texto */}
