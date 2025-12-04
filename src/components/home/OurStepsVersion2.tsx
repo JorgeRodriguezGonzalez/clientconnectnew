@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 
 // --- Components ---
 
-// El componente de fondo con rayas diagonales (Extraído de BoxCards)
 const BackgroundStripes = () => (
   <div
     className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden opacity-[0.04]"
@@ -171,18 +170,18 @@ export default function OurStepsVersion2({
   }, []);
 
   return (
-    // SECCIÓN PRINCIPAL: Relativa y con overflow hidden
+    // SECCIÓN PRINCIPAL
     <section className="relative w-full overflow-hidden bg-white">
       
-      {/* 1. FONDO DE RAYAS (Cubre todo el ancho) */}
+      {/* 1. FONDO DE RAYAS (Visible en los laterales) */}
       <BackgroundStripes />
 
-      {/* 2. CONTENEDOR ESTRUCTURAL (Max-width 1280px + Bordes Grises + Fondo Blanco)
-          - z-10: Para estar sobre las rayas.
-          - bg-white: Para tapar las rayas en el centro.
-          - border-l/r: Las líneas verticales grises.
+      {/* 
+         2. CONTENEDOR ESTRUCTURAL 
+         - Cambiado max-w-[1280px] a max-w-5xl (1024px) para estrechar la caja blanca
+         - border-l y border-r añaden las líneas grises verticales
       */}
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto bg-white border-l border-r border-zinc-200">
+      <div className="relative z-10 w-full max-w-5xl mx-auto bg-white border-l border-r border-zinc-200">
         
         {/* Padding interno del contenido */}
         <div className="py-32 px-4 md:px-8">
