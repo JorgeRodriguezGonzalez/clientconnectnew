@@ -48,13 +48,15 @@ const Index = () => {
         {/* COMPONENTE NUEVO (VERSIÓN 2) */}
         <OurStepsVersion2 />
 
+        <ComparisonSection />
+
         {/* COMPONENTE ANTERIOR */}
         <OurSteps />
 
         <ScrollableWorkflow />
 
         <HowWeWork />
-        <ComparisonSection />
+        
         <Pricing />
         <AnimatedGallerySection />
         

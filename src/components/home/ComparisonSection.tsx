@@ -1,114 +1,200 @@
-import { X, Check } from "lucide-react";
+import React from "react";
+import { X, Check, Minus } from "lucide-react";
+import { motion } from "framer-motion";
 
-const comparison = [
+// --- Assets & Styles ---
+
+const COLORS = {
+  turquoise: "rgb(103, 188, 183)", // #67bcb7
+  coral: "rgb(222, 131, 99)",     // #de8363
+  gold: "rgb(237, 191, 134)",     // #edbf86
+};
+
+const BackgroundStripes = () => (
+  <div
+    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.04]"
+    style={{
+      backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
+      backgroundRepeat: 'repeat',
+    }}
+  />
+);
+
+// --- Content Data ---
+
+const comparisonData = [
   {
-    category: "Speed",
-    traditional: "30-60 minutes per prompt",
-    promptgenius: "2-3 seconds",
+    category: "Strategy",
+    others: "Cookie-cutter templates",
+    us: "Custom, data-driven roadmap",
   },
   {
-    category: "Quality",
-    traditional: "Inconsistent results",
-    promptgenius: "98.7% accuracy rate",
+    category: "Focus Metric",
+    others: "Vanity metrics (Likes/Views)",
+    us: "Revenue & ROI Growth",
   },
   {
-    category: "Expertise Required",
-    traditional: "Advanced prompt engineering",
-    promptgenius: "Zero learning curve",
+    category: "Reporting",
+    others: "Vague monthly PDF reports",
+    us: "Real-time transparent dashboards",
   },
   {
-    category: "Variations",
-    traditional: "Manual iteration",
-    promptgenius: "Multiple options instantly",
+    category: "Communication",
+    others: "Slow email support tickets",
+    us: "Dedicated Slack channel & instant access",
   },
   {
-    category: "Best Practices",
-    traditional: "Self-research needed",
-    promptgenius: "Built-in automatically",
+    category: "Speed to Launch",
+    others: "Weeks or months of onboarding",
+    us: "Rapid deployment in days",
   },
   {
-    category: "Cost",
-    traditional: "Wasted API tokens",
-    promptgenius: "Optimized efficiency",
+    category: "Lead Quality",
+    others: "Cold, unqualified leads",
+    us: "High-intent, ready-to-buy prospects",
   },
 ];
 
+// --- Components ---
+
 const ComparisonSection = () => {
   return (
-    <section className="py-24 sm:py-32 relative overflow-hidden bg-[#0a0e1a]">
-      {/* Animated background */}
-      <div className="absolute inset-0">
-      </div>
+    <section className="relative w-full overflow-hidden bg-white py-24 sm:py-32">
+      {/* Background Pattern */}
+      <BackgroundStripes />
+      
+      {/* Gradient Blurs (Subtle) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-gradient-to-b from-white via-white to-transparent z-10" />
+      
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Header Section */}
+        <div className="flex flex-col gap-6 max-w-3xl mx-auto text-center mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500"
+          >
+            THE DIFFERENCE
+          </motion.div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white">
-            Why Switch to <span className="gradient-text">PromptGenius</span>?
-          </h2>
-          <p className="text-lg text-muted-foreground-pricing">
-            See the dramatic difference between traditional prompt engineering and our AI-powered solution.
-          </p>
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-gray-900"
+          >
+            Why partner with{' '}
+            <motion.span
+              initial={{ backgroundPosition: "400% 50%" }}
+              animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+              transition={{
+                duration: 12,
+                ease: "linear",
+                repeat: Infinity
+              }}
+              style={{
+                display: "inline-block",
+                backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
+                backgroundSize: "400% 100%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                color: "transparent"
+              }}
+            >
+              Client Connect
+            </motion.span>
+            ?
+          </motion.h2>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-[16px] md:text-[18px] font-medium leading-relaxed text-gray-600 tracking-tight"
+          >
+            Stop wasting budget on strategies that don't convert. Compare the difference between the industry standard and our results-obsessed approach.
+          </motion.p>
         </div>
 
-        {/* Comparison Table */}
+        {/* Comparison Table Grid */}
         <div className="max-w-5xl mx-auto">
-          {/* Header Row */}
-          <div className="grid grid-cols-3 gap-4 mb-4 animate-fade-in">
-            <div></div>
-            <div className="text-center p-6 rounded-t-2xl bg-destructive/10 border-2 border-destructive/30 relative corner-shadow-red">
-              <X className="h-8 w-8 mx-auto mb-2 text-destructive" />
-              <h3 className="font-bold text-lg text-white">Traditional Way</h3>
-              <p className="text-sm text-muted-foreground-pricing mt-1">Manual & Time-Consuming</p>
+          
+          {/* Table Headers (Desktop) */}
+          <div className="hidden md:grid grid-cols-10 gap-4 mb-4 items-end">
+            <div className="col-span-3 pb-4 pl-4">
+              <span className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Features</span>
             </div>
-            <div className="text-center p-6 rounded-t-2xl glass-card border-2 border-primary shadow-primary hover:scale-[1.02] hover:shadow-primary-lg transition-all duration-300">
-              <Check className="h-8 w-8 mx-auto mb-2 text-primary" />
-              <h3 className="font-bold text-lg gradient-text">PromptGenius</h3>
-              <p className="text-sm text-muted-foreground-pricing mt-1">AI-Powered & Instant</p>
+            <div className="col-span-3 text-center pb-4">
+              <span className="text-sm font-bold text-gray-500">Other Agencies</span>
+            </div>
+            <div className="col-span-4 text-center pb-4 relative">
+              {/* Highlight Badge */}
+              <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[rgb(103,188,183)] to-[rgb(222,131,99)] text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-md">
+                Recommended
+              </div>
+              <span className="text-lg font-bold text-gray-900">Client Connect</span>
             </div>
           </div>
 
-          {/* Comparison Rows */}
-          <div className="space-y-2">
-            {comparison.map((item, index) => (
-              <div 
+          {/* Rows Container */}
+          <div className="space-y-4 md:space-y-3">
+            {comparisonData.map((item, index) => (
+              <motion.div 
                 key={index}
-                className="grid grid-cols-3 gap-4 group animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="grid grid-cols-1 md:grid-cols-10 gap-0 md:gap-4 group"
               >
-                {/* Category */}
-                <div className="flex items-center p-4 rounded-lg glass-card border border-primary/20 group-hover:border-primary/40 transition-all duration-300">
-                  <span className="font-semibold text-white">{item.category}</span>
+                
+                {/* 1. Feature Name (Mobile: Top Label / Desktop: Left Col) */}
+                <div className="col-span-3 md:flex items-center p-4 md:bg-transparent rounded-t-xl md:rounded-lg">
+                  <span className="text-base font-semibold text-gray-800">{item.category}</span>
                 </div>
 
-                {/* Traditional */}
-                <div className="flex items-center p-4 rounded-lg bg-destructive/5 border border-destructive/20 group-hover:border-destructive/40 transition-all duration-300">
-                  <div className="flex items-center gap-3 w-full">
-                    <X className="h-5 w-5 text-destructive flex-shrink-0" />
-                    <span className="text-muted-foreground-pricing text-sm">{item.traditional}</span>
+                {/* 2. Traditional/Other Agencies */}
+                <div className="col-span-3 bg-gray-50/80 border border-gray-100 p-5 md:p-4 md:rounded-lg flex items-center md:justify-center gap-3 transition-colors duration-300 md:group-hover:bg-gray-100/80 border-b-0 md:border-b">
+                  <div className="shrink-0 rounded-full bg-gray-200/50 p-1">
+                    <X className="w-4 h-4 text-gray-400" />
                   </div>
+                  <span className="text-sm text-gray-500 font-medium">{item.others}</span>
                 </div>
 
-                {/* PromptGenius */}
-                <div className="flex items-center p-4 rounded-lg glass-card border border-primary/30 group-hover:border-primary group-hover:glow-primary group-hover:shadow-lg group-hover:shadow-primary/20 group-hover:scale-[1.02] transition-all duration-300">
-                  <div className="flex items-center gap-3 w-full">
-                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-white text-sm font-medium">{item.promptgenius}</span>
+                {/* 3. Client Connect (Highlighted) */}
+                <div className="col-span-4 relative bg-white border border-zinc-200 p-5 md:p-4 rounded-b-xl md:rounded-lg flex items-center md:justify-center gap-3 shadow-sm md:shadow-[0_2px_10px_rgba(0,0,0,0.04)] md:group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] md:group-hover:-translate-y-1 transition-all duration-300 z-10 md:scale-[1.02]">
+                  {/* Subtle colorful border left/active indicator */}
+                  <div 
+                    className="absolute inset-0 rounded-b-xl md:rounded-lg border-2 border-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{ borderColor: "rgba(103, 188, 183, 0.2)" }}
+                  />
+                  
+                  <div className="shrink-0 rounded-full p-1" style={{ backgroundColor: "rgba(103, 188, 183, 0.15)" }}>
+                    <Check className="w-4 h-4" style={{ color: COLORS.turquoise }} strokeWidth={3} />
                   </div>
+                  <span className="text-sm font-bold text-gray-900">{item.us}</span>
                 </div>
-              </div>
+
+              </motion.div>
             ))}
           </div>
 
-          {/* Bottom glow effect */}
-          <div className="mt-8 p-8 rounded-b-2xl glass-card text-center border-2 border-primary/30 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-            <p className="text-lg font-semibold gradient-text mb-2">
-              10x Faster. 100x Easier. Infinitely Better.
+          {/* Bottom Call to Action area (Optional subtle footer within table) */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-sm text-gray-400 mb-6 font-medium">
+              Join 95+ local brands growing with us
             </p>
-            <p className="text-sm text-muted-foreground-pricing">
-              Join 500,000+ professionals who've made the switch
-            </p>
-          </div>
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-zinc-200 to-transparent" />
+          </motion.div>
+
         </div>
       </div>
     </section>
