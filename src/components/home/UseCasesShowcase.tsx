@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, Clock, Zap, Mountain, Check } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
-// 1. Utilidad cn (extraída de tu código de referencia)
+// Utilidad cn
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
 type UseCasesShowcaseProps = {
@@ -24,7 +24,7 @@ type UseCasesShowcaseProps = {
   cardHref?: string;
 };
 
-// 2. Componente ThreeDMarquee (Basado exactamente en tu referencia aboutus.tsx)
+// --- COMPONENTE ThreeDMarquee ACTUALIZADO ---
 const ThreeDMarquee = ({ images, className }: { images: string[], className?: string }) => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -40,7 +40,6 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
 
   const numColumns = isMobile ? 3 : 4;
   
-  // Seguridad: si no hay imágenes, usar un array vacío para evitar crash
   const safeImages = images || [];
   const chunkSize = Math.ceil(safeImages.length / numColumns);
   
@@ -53,8 +52,16 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
     <div className={cn("mx-auto block h-[350px] sm:h-[450px] lg:h-[600px] overflow-hidden rounded-2xl", className)}>
       <div className="flex w-full h-full items-center justify-center">
         <div className="w-[1000px] sm:w-[1200px] lg:w-[1548px] h-[1000px] sm:h-[1200px] lg:h-[1548px] shrink-0 scale-[0.4] sm:scale-[0.5] lg:scale-90">
-          <div style={{ transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", transformStyle: "preserve-3d" }}
-            className="relative top-32 sm:top-44 lg:top-80 right-[28%] sm:right-[35%] lg:right-[40%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div 
+            style={{ 
+              transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", 
+              transformStyle: "preserve-3d" 
+            }}
+            // HE AJUSTADO AQUÍ LOS VALORES 'top' PARA BAJAR LAS IMÁGENES
+            // Antes: top-32 sm:top-44 lg:top-80
+            // Ahora: top-52 sm:top-64 lg:top-[450px]
+            className="relative top-52 sm:top-64 lg:top-[450px] right-[28%] sm:right-[35%] lg:right-[40%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+          >
             {chunks.map((subarray, colIndex) => (
               <motion.div
                 animate={{ y: colIndex % 2 === 0 ? 100 : -100 }}
@@ -76,7 +83,7 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
   );
 };
 
-// 3. Componente FadeInText (Conservado para las animaciones de texto)
+// Componente FadeInText
 const FadeInText = ({ 
   children, 
   delay = 0, 
@@ -135,20 +142,20 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
     ctaText = 'Book a Call',
     ctaHref = '#',
-    // IMPORTANTE: He ampliado la lista de imágenes por defecto para que el Marquee se vea lleno como en tu ejemplo
+    // LISTA DE IMÁGENES ACTUALIZADA
     cardImages = [
-      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1504384308090-c54be3855833?q=80&w=2062&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop'
+      '/images/1.png',
+      '/images/2.png',
+      '/images/3.png',
+      '/images/4.png',
+      '/images/5.png',
+      '/images/6.png',
+      '/images/1.jpg',
+      '/images/2.jpg',
+      '/images/3.jpg',
+      '/images/4.jpg',
+      '/images/5.jpg',
+      '/images/6.jpg',
     ],
   } = props;
 
@@ -343,8 +350,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
 
               {/* COLUMNA IZQUIERDA - ThreeDMarquee */}
-              {/* Aquí se reemplazó todo el contenido anterior por el componente ThreeDMarquee */}
-              {/* Se eliminó el AnimatedHikeCard y TaskTimeline */}
               <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[495px] flex items-center justify-center min-h-[400px]">
                  <ThreeDMarquee images={cardImages} />
               </div>
