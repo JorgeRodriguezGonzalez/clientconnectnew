@@ -24,7 +24,7 @@ type UseCasesShowcaseProps = {
   cardHref?: string;
 };
 
-// --- COMPONENTE ThreeDMarquee ACTUALIZADO (Posición corregida) ---
+// --- COMPONENTE ThreeDMarquee ACTUALIZADO (Posición drástica) ---
 const ThreeDMarquee = ({ images, className }: { images: string[], className?: string }) => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -57,8 +57,10 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
               transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", 
               transformStyle: "preserve-3d" 
             }}
-            // AQUÍ ESTÁ EL CAMBIO: Valores top mucho más altos para bajar las imágenes
-            className="relative top-[320px] sm:top-[400px] lg:top-[650px] right-[28%] sm:right-[35%] lg:right-[40%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+            // CAMBIOS DRÁSTICOS AQUÍ:
+            // 1. top: aumentado a 1100px en desktop (baja muchísimo)
+            // 2. left: cambiado a positivo 25% (mueve muy a la derecha)
+            className="relative top-[500px] sm:top-[700px] lg:top-[1100px] left-[10%] sm:left-[20%] lg:left-[25%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
           >
             {chunks.map((subarray, colIndex) => (
               <motion.div
