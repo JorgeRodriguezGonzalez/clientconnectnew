@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 
 const BackgroundStripes = () => (
   <div
-    className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden opacity-[0.04]"
+    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.04]"
     style={{
       backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
       backgroundRepeat: 'repeat',
@@ -171,16 +171,13 @@ export default function OurStepsVersion2({
 
   return (
     // SECCIÓN PRINCIPAL
-    <section className="relative w-full overflow-hidden bg-white">
+    // IMPORTANTE: Se ha eliminado 'overflow-hidden' de aquí para restaurar el sticky
+    <section className="relative w-full bg-white">
       
-      {/* 1. FONDO DE RAYAS (Visible en los laterales) */}
+      {/* 1. FONDO DE RAYAS */}
       <BackgroundStripes />
 
-      {/* 
-         2. CONTENEDOR ESTRUCTURAL 
-         - Cambiado max-w-[1280px] a max-w-5xl (1024px) para estrechar la caja blanca
-         - border-l y border-r añaden las líneas grises verticales
-      */}
+      {/* 2. CONTENEDOR ESTRUCTURAL */}
       <div className="relative z-10 w-full max-w-5xl mx-auto bg-white border-l border-r border-zinc-200">
         
         {/* Padding interno del contenido */}
@@ -237,6 +234,7 @@ export default function OurStepsVersion2({
                   aria-current={isActive ? "true" : "false"}
                 >
                   {/* Sticky meta column */}
+                  {/* Al no haber overflow-hidden en los padres, este sticky volverá a funcionar */}
                   <div className="top-32 flex h-min w-64 shrink-0 items-center gap-4 md:sticky">
                     <div className="flex items-center gap-3">
                       <div 
