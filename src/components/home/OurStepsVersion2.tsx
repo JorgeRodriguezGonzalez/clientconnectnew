@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Package, Calendar, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 export type OurStepsVersion2Entry = {
   icon: React.ComponentType<{ className?: string }>;
@@ -18,7 +19,8 @@ export type OurStepsVersion2Entry = {
 };
 
 export interface OurStepsVersion2Props {
-  title?: string;
+  titlePrefix?: string;
+  gradientTitle?: string;
   description?: string;
   entries?: OurStepsVersion2Entry[];
   className?: string;
@@ -96,12 +98,16 @@ export const defaultEntries: OurStepsVersion2Entry[] = [
   },
 ];
 
-/**
- * Behavior: Only the card that is currently centered in the viewport is "open".
- * As you scroll, the active card expands to reveal its full content. Others stay collapsed.
- */
+// Colores extraídos del gradiente de BoxCards para mantener consistencia
+const COLORS = {
+  turquoise: "rgb(103, 188, 183)", // #67bcb7
+  coral: "rgb(222, 131, 99)",     // #de8363
+  gold: "rgb(237, 191, 134)",     // #edbf86
+};
+
 export default function OurStepsVersion2({
-  title = "Ruixen UI Release Notes",
+  titlePrefix = "Ruixen UI",
+  gradientTitle = "Release Notes",
   description = "Stay up to date with the latest components, features, and performance enhancements in Ruixen UI — built to help you design and ship faster.",
   entries = defaultEntries,
 }: OurStepsVersion2Props) {
@@ -120,14 +126,9 @@ export default function OurStepsVersion2({
   useEffect(() => {
     if (!sentinelRefs.current.length) return;
 
-    // We observe small sentinels placed near the title of each card. Whichever
-    // sentinel is closest to the vertical center of the viewport becomes active.
-    // Using IntersectionObserver to track visibility + a rAF loop to pick the closest.
-
     let frame = 0;
     const updateActiveByProximity = () => {
       frame = requestAnimationFrame(updateActiveByProximity);
-      // Compute distance of each sentinel to viewport center
       const centerY = window.innerHeight / 3;
       let bestIndex = 0;
       let bestDist = Infinity;
@@ -148,24 +149,51 @@ export default function OurStepsVersion2({
     return () => cancelAnimationFrame(frame);
   }, [activeIndex]);
 
-  // Optional: ensure the first card is active on mount
   useEffect(() => {
     setActiveIndex(0);
   }, []);
 
   return (
-    <section className="py-32">
+    <section className="py-32 bg-white">
       <div className="container">
-        <div className="mx-auto max-w-3xl">
-          <h1 className="mb-4 text-3xl font-bold tracking-tight md:text-5xl">
-            {title}
-          </h1>
-          <p className="mb-6 text-base text-muted-foreground md:text-lg">
+        
+        {/* HEADER MODIFICADO ESTILO BOXCARDS */}
+        <div className="mx-auto max-w-[600px] flex flex-col gap-6 text-center mb-16 md:mb-24">
+          <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
+            LATEST UPDATES
+          </div>
+
+          <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
+            {titlePrefix}{' '}
+            <motion.span
+              initial={{ backgroundPosition: "400% 50%" }}
+              animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+              transition={{
+                duration: 12,
+                ease: "linear",
+                repeat: Infinity
+              }}
+              style={{
+                display: "inline-block",
+                backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
+                backgroundSize: "400% 100%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                color: "transparent"
+              }}
+            >
+              {gradientTitle}
+            </motion.span>
+            <span className="text-gray-900">.</span>
+          </h2>
+
+          <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
             {description}
           </p>
         </div>
 
-        <div className="mx-auto mt-16 max-w-3xl space-y-16 md:mt-24 md:space-y-24">
+        <div className="mx-auto max-w-3xl space-y-16 md:space-y-24">
           {entries.map((entry, index) => {
             const isActive = index === activeIndex;
 
@@ -179,23 +207,28 @@ export default function OurStepsVersion2({
                 {/* Sticky meta column */}
                 <div className="top-8 flex h-min w-64 shrink-0 items-center gap-4 md:sticky">
                   <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg ${
-                      isActive ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-                    }`}>
+                    <div 
+                      className={`p-2 rounded-lg transition-colors duration-300 ${
+                        isActive ? "text-white" : "bg-gray-100 text-gray-500"
+                      }`}
+                      style={{
+                        backgroundColor: isActive ? COLORS.turquoise : undefined
+                      }}
+                    >
                       <entry.icon className="h-4 w-4" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium">
+                      <span className="text-sm font-medium text-gray-900">
                         {entry.title}
                       </span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs text-gray-500">
                         {entry.subtitle}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Invisible sentinel near the card title to measure proximity to viewport center */}
+                {/* Invisible sentinel */}
                 <div
                   ref={(el) => setSentinelRef(el, index)}
                   aria-hidden
@@ -207,44 +240,43 @@ export default function OurStepsVersion2({
                   className={
                     "flex flex-col rounded-2xl border p-3 transition-all duration-300 " +
                     (isActive
-                      ? "border-gray-50 dark:border-gray-800 bg-gray-50 dark:bg-black shadow-lg"
-                      : "border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-black")
+                      ? "bg-white shadow-xl shadow-slate-200/50 scale-[1.02]"
+                      : "bg-gray-50/50 border-gray-100 opacity-70")
                   }
+                  style={{
+                    borderColor: isActive ? "rgba(103, 188, 183, 0.2)" : undefined
+                  }}
                 >
                   {entry.image && (
                     <img
                       src={entry.image}
                       alt={`${entry.title} visual`}
-                      className="mb-4 w-full h-72 rounded-lg object-cover"
+                      className="mb-4 w-full h-72 rounded-lg object-cover bg-gray-100"
                       loading="lazy"
                     />
                   )}
                   <div className="space-y-4">
-                    {/* Header with improved typography */}
                     <div className="space-y-2">
                       <h2
                         className={
-                          "text-md font-medium leading-tight tracking-tight md:text-lg transition-colors duration-200 " +
-                          (isActive ? "text-foreground" : "text-foreground/70")
+                          "text-md font-bold leading-tight tracking-tight md:text-lg transition-colors duration-200 text-gray-900"
                         }
                       >
                         {entry.title}
                       </h2>
                       
-                      {/* Improved description with better spacing */}
                       <p
                         className={
                           "text-xs leading-relaxed md:text-sm transition-all duration-300 " +
                           (isActive 
-                            ? "text-muted-foreground line-clamp-none" 
-                            : "text-muted-foreground/80 line-clamp-2")
+                            ? "text-gray-600 line-clamp-none font-medium" 
+                            : "text-gray-400 line-clamp-2")
                         }
                       >
                         {entry.description}
                       </p>
                     </div>
 
-                    {/* Enhanced expandable content */}
                     <div
                       aria-hidden={!isActive}
                       className={
@@ -257,14 +289,17 @@ export default function OurStepsVersion2({
                       <div className="overflow-hidden">
                         <div className="space-y-4 pt-2">
                           {entry.items && entry.items.length > 0 && (
-                            <div className="rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-black p-4">
+                            <div className="rounded-lg border border-gray-100 bg-white p-4">
                               <ul className="space-y-2">
                                 {entry.items.map((item, itemIndex) => (
                                   <li 
                                     key={itemIndex} 
-                                    className="flex items-start gap-2 text-sm text-muted-foreground"
+                                    className="flex items-start gap-2 text-sm text-gray-600"
                                   >
-                                    <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary/60 flex-shrink-0" />
+                                    <div 
+                                      className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" 
+                                      style={{ backgroundColor: COLORS.turquoise }}
+                                    />
                                     <span className="leading-relaxed">{item}</span>
                                   </li>
                                 ))}
@@ -275,9 +310,11 @@ export default function OurStepsVersion2({
                           {entry.button && (
                             <div className="flex justify-end">
                               <Button 
-                                variant="default" 
                                 size="sm"
-                                className="group hover:bg-primary hover:text-primary-foreground font-normal transition-all duration-200" 
+                                className="group font-normal transition-all duration-200 text-white shadow-md hover:shadow-lg active:scale-95 border-none" 
+                                style={{
+                                  backgroundColor: COLORS.coral,
+                                }}
                                 asChild
                               >
                                 <a href={entry.button.url} target="_blank" rel="noreferrer">
