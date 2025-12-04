@@ -258,8 +258,8 @@ function FeaturesSectionMinimal() {
         100% { background-position: -100% 50%; }
       }
       @keyframes move-horizontal {
-        0% { left: 10%; }
-        100% { left: 90%; }
+        0% { left: 30%; }
+        100% { left: 70%; }
       }
     `;
     document.head.appendChild(style);
@@ -937,7 +937,7 @@ const AnimatedSparklesLine = () => (
     className="h-32 w-px absolute top-1/2 -translate-y-1/2 bg-gradient-to-b from-transparent via-cyan-500 to-transparent z-40"
     style={{
       animation: 'move-horizontal 3s linear infinite',
-      left: '10%'
+      left: '30%'
     }}
   >
     <div className="w-10 h-24 top-1/2 -translate-y-1/2 absolute -left-5">
