@@ -8,7 +8,7 @@ const cn = (...classes: (string | undefined | null | false)[]) => {
   return classes.filter(Boolean).join(' ');
 };
 
-// --- COMPONENTE GLOWING EFFECT (Extraído de BentoGrid) ---
+// --- COMPONENTE GLOWING EFFECT ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -183,7 +183,7 @@ const GlowingEffect = React.memo(
 );
 GlowingEffect.displayName = "GlowingEffect";
 
-// --- CONSTANTES DE ESTILO ---
+// --- CONSTANTES ---
 const COLORS = {
   turquoise: "rgb(103, 188, 183)", // #67bcb7
   coral: "rgb(222, 131, 99)",     // #de8363
@@ -320,9 +320,11 @@ const Pricing = () => {
             >
               {/* 
                 Estructura para GlowingEffect:
-                El div padre tiene p-[2px] para dejar ver el efecto de brillo que está detrás (absolute).
+                El div padre tiene p-[2px] para crear espacio para el efecto de brillo.
               */}
               <div className="relative h-full p-[2px] rounded-none"> 
+                
+                {/* El efecto de brillo está detrás de la tarjeta */}
                 <GlowingEffect
                   spread={40}
                   glow={true}
@@ -338,11 +340,10 @@ const Pricing = () => {
                   transition={{ duration: 0.5, delay: index * 0.15 }}
                   viewport={{ once: true }}
                   className={cn(
-                    "relative flex flex-col h-full p-8 transition-all duration-300 rounded-none",
-                    // ESTILOS SEGÚN SI ES HIGHLIGHTED (Centro) O NO
-                    plan.highlighted 
-                      ? "bg-white/95 backdrop-blur-sm shadow-xl" // Overlay blanco con opacidad alta
-                      : "bg-white/60 hover:bg-white/80" // Tarjetas normales un poco más transparentes o grises
+                    "relative flex flex-col h-full p-8 transition-all duration-300 rounded-none bg-white",
+                    // Se añade el borde gris a todas las tarjetas:
+                    "border border-zinc-200",
+                    plan.highlighted ? "shadow-xl z-10" : "hover:shadow-lg"
                   )}
                 >
                   {/* Popular Badge */}
