@@ -548,7 +548,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                 <div
                   className="absolute inset-0"
                   style={{ 
-                    background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(128,216,208), transparent 72%)",
+                    background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(102,204,224), transparent 72%)",
                     animation: "bento2-gradient-fade2 10.5s ease-in-out infinite"
                   }}
                 />
