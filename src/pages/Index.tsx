@@ -31,33 +31,27 @@ const Index = () => {
         <div className="relative z-0">
           <FinalHero />
         </div>
-
         <div className="z-999999">
           <UseCasesShowcase />
         </div>
-
         <Services />
-
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
-        
         <CloudHero />
         <BoxCards />
-
-        {/* COMPONENTE NUEVO (VERSIÓN 2) */}
         <OurStepsVersion2 />
-
         <ComparisonSection />
+        <Pricing />
 
-        {/* COMPONENTE ANTERIOR */}
+        {/* COMPONENTES NO TAN BONITOS */}
         <OurSteps />
 
         <ScrollableWorkflow />
 
         <HowWeWork />
         
-        <Pricing />
+        
         <AnimatedGallerySection />
         
         <ServicesSection />
