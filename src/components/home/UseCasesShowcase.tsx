@@ -49,9 +49,6 @@ const BottomSlantedMarquee = () => {
   }, [images]);
 
   return (
-    // CAMBIOS AQUI:
-    // 1. py-52: Mucho padding vertical (arriba y abajo) para dar altura y evitar recortes.
-    // 2. -mt-20: Margen negativo más suave (antes -40) para separar visualmente del bloque superior.
     <div className="w-full overflow-hidden py-52 relative z-[9999] -mt-20 pointer-events-none">
       <div className="flex items-center justify-center" style={{ transform: 'rotate(9deg)' }}>
         <div 
@@ -200,9 +197,9 @@ type UseCasesShowcaseProps = {
   badge?: string;
   mainTitle?: string;
   mainTitleHighlight?: string;
-  subtitle?: string;
-  ctaText?: string;
-  ctaHref?: string;
+  subtitle?: string; // Mantenido en props pero no usado
+  ctaText?: string;  // Mantenido en props pero no usado
+  ctaHref?: string;  // Mantenido en props pero no usado
 };
 
 const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
@@ -214,9 +211,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     badge = 'Digital Marketing Excellence',
     mainTitle = 'Elevate Your Brand with',
     mainTitleHighlight = 'Data-Driven Marketing',
-    subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
-    ctaText = 'Book a Call',
-    ctaHref = '#',
+    // subtitle y cta eliminados de la desestructuración por uso, o mantenidos sin renderizar
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -260,6 +255,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     ["#ffffff", "#ffffff", "#000000"]
   );
 
+  // subtitleColor ya no se usa, pero lo dejamos por si se necesita en el futuro o se elimina
   const subtitleColor = useTransform(
     scrollYProgress,
     [0, 0.15, 0.151],
@@ -368,32 +364,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </div>
               </FadeInText>
 
-              <FadeInText delay={0.4}>
-                <div className="w-full max-w-[500px]">
-                  <motion.p 
-                    className="text-base md:text-lg font-medium leading-relaxed tracking-tight text-center"
-                    style={{ color: subtitleColor }}
-                  >
-                    {subtitle}
-                  </motion.p>
-                </div>
-              </FadeInText>
-
-              <FadeInText delay={0.5}>
-                <a 
-                  href={ctaHref} 
-                  onClick={e => e.preventDefault()} 
-                  className="relative inline-flex items-center justify-center gap-2.5 px-5 py-[14px] bg-black rounded-xl shadow-[0_8px_20px_-4px_rgba(0,0,0,0.3)] overflow-hidden group hover:bg-gray-900 transition-colors"
-                >
-                  <span className="text-base font-medium leading-6 tracking-[-0.5px] text-white z-10">
-                    {ctaText}
-                  </span>
-                  
-                  <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center z-10">
-                    <Sparkles className="w-3 h-3 text-black" />
-                  </div>
-                </a>
-              </FadeInText>
+              {/* AQUÍ ELIMINAMOS EL SUBTITULO Y EL BOTÓN CTA */}
             </div>
           </div>
         </div>
