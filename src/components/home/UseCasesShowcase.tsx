@@ -267,17 +267,15 @@ const BottomSlantedMarquee = () => {
   );
 };
 
-// --- COMPONENTE CONTACT FORM MODIFICADO ---
+// --- COMPONENTE CONTACT FORM ---
 const ContactForm = () => {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      // CAMBIO: max-w-xl para hacerlo más ancho (antes max-w-md)
       className="w-full max-w-xl relative group z-20"
     >
-      {/* GLOWING EFFECT WRAPPER */}
       <div className="absolute -inset-[1px] rounded-none">
         <GlowingEffect
           spread={60}
@@ -289,7 +287,6 @@ const ContactForm = () => {
         />
       </div>
 
-      {/* FORM CARD (Square corners, white bg) */}
       <div className="relative bg-white border border-zinc-200 p-8 shadow-2xl shadow-gray-200/50 rounded-none">
         <div className="mb-6">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">Get in touch</h3>
@@ -338,9 +335,6 @@ const ContactForm = () => {
             Send Message <Send size={16} />
           </button>
         </form>
-
-        {/* CAMBIO: Eliminada la sección de Trust Signals (Ticks) */}
-
       </div>
     </motion.div>
   );
@@ -398,10 +392,8 @@ type UseCasesShowcaseProps = {
   heading?: string;
   highlightText?: string;
   description?: string;
-  badge?: string;
   mainTitle?: string;
   mainTitleHighlight?: string;
-  subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
 };
@@ -412,7 +404,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     heading = 'Marketing strategies that transform your business into',
     highlightText = 'market leaders',
     description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
-    badge = 'Digital Marketing Excellence',
     mainTitle = 'Elevate Your Brand with',
     mainTitleHighlight = 'Data-Driven Marketing',
   } = props;
@@ -512,18 +503,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
             <div className="flex flex-col items-center gap-8">
-              <FadeInText delay={1.2}>
-                <div 
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)] mb-[6px]"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #67bcb7 0%, #de8363 100%)'
-                  }}
-                >
-                  <span className="text-[14px] font-normal tracking-[-0.3px] capitalize text-white">
-                    {badge}
-                  </span>
-                </div>
-              </FadeInText>
+              {/* Badge eliminado */}
 
               <FadeInText delay={0.3}>
                 <div className="w-full max-w-[600px] mx-auto">
@@ -577,7 +557,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </FadeInText>
 
                 <FadeInText delay={0.6} direction="up">
-                  <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900 mb-6">
+                  <h2 className="text-[24px] md:text-[30px] lg:text-[40px] font-semibold leading-[1.1] tracking-tight text-gray-900 mb-6">
                     {heading}{' '}
                     <motion.span
                       initial={{ backgroundPosition: "400% 50%" }}
@@ -611,7 +591,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               </div>
 
               {/* COLUMNA DERECHA - Contact Form */}
-              {/* CAMBIO: Aumentado max-w del contenedor a 600px para permitir formulario más ancho */}
+              {/* CAMBIO: Contenedor más ancho (max-w-[600px]) */}
               <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[600px] flex items-center justify-center min-h-[400px]">
                  <ContactForm />
               </div>
