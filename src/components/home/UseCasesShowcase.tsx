@@ -192,7 +192,6 @@ GlowingEffect.displayName = "GlowingEffect";
 
 // --- CONSTANTES E IMAGENES DEL MARQUEE ---
 const slantedMarqueeImages = [
-  // CAMBIO: Nuevas imágenes añadidas al principio
   '/images/nanotise-vertical.jpg',
   '/images/assetplumbing-vertical.png',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629ab_hero-marquee-image-03-cinemaflow-webflow-template.avif',
@@ -200,7 +199,7 @@ const slantedMarqueeImages = [
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
 ];
 
-// --- COMPONENTE BottomSlantedMarquee (Intacto) ---
+// --- COMPONENTE BottomSlantedMarquee ---
 const BottomSlantedMarquee = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const images = slantedMarqueeImages;
@@ -274,9 +273,7 @@ const ContactForm = () => {
     <motion.div 
       initial={{ opacity: 0, filter: "blur(10px)", y: 30 }}
       whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-      // CAMBIO: amount: 0.5 requiere que el 50% del form sea visible antes de animar
       viewport={{ once: true, amount: 0.5 }} 
-      // CAMBIO: delay: 0.2 añade un pequeño retraso extra
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
       className="w-full max-w-xl relative group z-20"
     >
@@ -547,7 +544,8 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         </div>
 
         {/* CONTENIDO PRINCIPAL (Texto + Formulario) */}
-        <div className="relative pt-0 -mt-12 pb-0 px-4 z-10">
+        {/* RESTAURADO: pt-48 y pb-0 para mantener la distancia original */}
+        <div className="relative pt-48 pb-0 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
 
