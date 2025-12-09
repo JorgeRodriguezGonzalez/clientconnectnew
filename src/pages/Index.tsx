@@ -12,6 +12,7 @@ import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
 import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 import BoxCards from "@/components/home/BoxCards";
+import { FounderSectionAdapted } from "@/components/home/FounderSectionAdapted";
 
 // IMPORTACIÓN DE LOS NUEVOS COMPONENTES
 import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
@@ -33,6 +34,7 @@ const Index = () => {
         </div>
         <div className="z-999999">
           <UseCasesShowcase />
+          <FounderSectionAdapted />
         </div>
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
