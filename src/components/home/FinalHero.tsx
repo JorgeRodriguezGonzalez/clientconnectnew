@@ -1,373 +1,632 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { useScroll, useTransform } from "framer-motion";
-import { Send, Calendar } from 'lucide-react';
-import { motion } from "framer-motion";
-import { Sparkles } from "@/components/ui/sparkles";
+import React, { useState, useEffect, useRef } from 'react';
+import { Sparkles, Clock, Zap, Mountain, Check, Send, ArrowRight } from 'lucide-react';
+import { motion, useInView, useScroll, useTransform, animate } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
-export function FinalHero() {
-  const ref = React.useRef(null);
-  const [scrolled, setScrolled] = useState(false);
-  const [titleNumber, setTitleNumber] = useState(0);
+// --- UTILIDADES ---
+const cn = (...classes: (string | undefined | null | false)[]) => {
+  return classes.filter(Boolean).join(' ');
+};
 
-  const words = useMemo(
-    () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales"],
-    []
-  );
+// --- CONSTANTES DE COLOR ---
+const COLORS = {
+  turquoise: "rgb(103, 188, 183)", // #67bcb7
+  coral: "rgb(222, 131, 99)",     // #de8363
+  gold: "rgb(237, 191, 134)",     // #edbf86
+};
 
-  const wordWidths = {
-    "Light": 110,
-    "Leads": 135,
-    "Clients": 150,
-    "Sales": 120
-  };
+// --- COMPONENTE GLOWING EFFECT ---
+const GlowingEffect = React.memo(
+  ({
+    blur = 0,
+    inactiveZone = 0.7,
+    proximity = 0,
+    spread = 20,
+    variant = "default",
+    glow = false,
+    className,
+    movementDuration = 2,
+    borderWidth = 1,
+    disabled = true,
+  }: {
+    blur?: number;
+    inactiveZone?: number;
+    proximity?: number;
+    spread?: number;
+    variant?: "default" | "white";
+    glow?: boolean;
+    className?: string;
+    disabled?: boolean;
+    movementDuration?: number;
+    borderWidth?: number;
+  }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const lastPosition = useRef({ x: 0, y: 0 });
+    const animationFrameRef = useRef<number>(0);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"], 
-  });
+    const handleMove = React.useCallback(
+      (e?: MouseEvent | { x: number; y: number }) => {
+        if (!containerRef.current) return;
 
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [
-      "rgb(0, 0, 0)",
-      "#6B6B6B"
-    ]
-  );
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
 
-  const sparklesScale = useTransform(
-    scrollYProgress,
-    [0, 1], 
-    [1, 2.6]
-  );
+        animationFrameRef.current = requestAnimationFrame(() => {
+          const element = containerRef.current;
+          if (!element) return;
+
+          const { left, top, width, height } = element.getBoundingClientRect();
+          const mouseX = e?.x ?? lastPosition.current.x;
+          const mouseY = e?.y ?? lastPosition.current.y;
+
+          if (e) {
+            lastPosition.current = { x: mouseX, y: mouseY };
+          }
+
+          const center = [left + width * 0.5, top + height * 0.5];
+          const distanceFromCenter = Math.hypot(
+            mouseX - center[0],
+            mouseY - center[1]
+          );
+          const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
+
+          if (distanceFromCenter < inactiveRadius) {
+            element.style.setProperty("--active", "0");
+            return;
+          }
+
+          const isActive =
+            mouseX > left - proximity &&
+            mouseX < left + width + proximity &&
+            mouseY > top - proximity &&
+            mouseY < top + height + proximity;
+
+          element.style.setProperty("--active", isActive ? "1" : "0");
+
+          if (!isActive) return;
+
+          const currentAngle =
+            parseFloat(element.style.getPropertyValue("--start")) || 0;
+          let targetAngle =
+            (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
+              Math.PI +
+            90;
+
+          const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
+          const newAngle = currentAngle + angleDiff;
+
+          animate(currentAngle, newAngle, {
+            duration: movementDuration,
+            ease: [0.16, 1, 0.3, 1],
+            onUpdate: (value) => {
+              element.style.setProperty("--start", String(value));
+            },
+          });
+        });
+      },
+      [inactiveZone, proximity, movementDuration]
+    );
+
+    useEffect(() => {
+      if (disabled) return;
+
+      const handleScroll = () => handleMove();
+      const handlePointerMove = (e: PointerEvent) => handleMove(e as any);
+
+      window.addEventListener("scroll", handleScroll, { passive: true } as any);
+      document.body.addEventListener("pointermove", handlePointerMove, {
+        passive: true,
+      } as any);
+
+      return () => {
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+        window.removeEventListener("scroll", handleScroll);
+        document.body.removeEventListener("pointermove", handlePointerMove);
+      };
+    }, [handleMove, disabled]);
+
+    return (
+      <>
+        <div
+          className={cn(
+            "pointer-events-none absolute -inset-px hidden rounded-[inherit] border opacity-0 transition-opacity",
+            glow && "opacity-100",
+            variant === "white" && "border-white",
+            disabled && "!block"
+          )}
+        />
+        <div
+          ref={containerRef}
+          style={
+            {
+              "--blur": `${blur}px`,
+              "--spread": spread,
+              "--start": "0",
+              "--active": "0",
+              "--glowingeffect-border-width": `${borderWidth}px`,
+              "--repeating-conic-gradient-times": "5",
+              "--gradient": `radial-gradient(circle, #EDBF86 10%, #EDBF8600 20%),
+                radial-gradient(circle at 40% 40%, #DE8363 5%, #DE836300 15%),
+                radial-gradient(circle at 60% 60%, #67BCB7 10%, #67BCB700 20%), 
+                radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
+                repeating-conic-gradient(
+                  from 236.84deg at 50% 50%,
+                  #EDBF86 0%,
+                  #DE8363 calc(25% / var(--repeating-conic-gradient-times)),
+                  #67BCB7 calc(50% / var(--repeating-conic-gradient-times)), 
+                  #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
+                  #EDBF86 calc(100% / var(--repeating-conic-gradient-times))
+                )`,
+            } as React.CSSProperties
+          }
+          className={cn(
+            "pointer-events-none absolute inset-0 rounded-[inherit] opacity-100 transition-opacity",
+            glow && "opacity-100",
+            blur > 0 && "blur-[var(--blur)] ",
+            className,
+            disabled && "!hidden"
+          )}
+        >
+          <div
+            className={cn(
+              "glow",
+              "rounded-[inherit]",
+              'after:content-[""] after:rounded-[inherit] after:absolute after:inset-[calc(-1*var(--glowingeffect-border-width))]',
+              "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
+              "after:[background:var(--gradient)] after:[background-attachment:fixed]",
+              "after:opacity-[var(--active)] after:transition-opacity after:duration-300",
+              "after:[mask-clip:padding-box,border-box]",
+              "after:[mask-composite:intersect]",
+              "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
+            )}
+          />
+        </div>
+      </>
+    );
+  }
+);
+GlowingEffect.displayName = "GlowingEffect";
+
+// --- CONSTANTES E IMAGENES DEL MARQUEE ---
+const slantedMarqueeImages = [
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a7_hero-marquee-image-01-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629aa_hero-marquee-image-02-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629ab_hero-marquee-image-03-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a8_hero-marquee-image-04-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
+];
+
+// --- COMPONENTE BottomSlantedMarquee (Intacto) ---
+const BottomSlantedMarquee = () => {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const images = slantedMarqueeImages;
+  const isPausedRef = useRef(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+    const marquee = marqueeRef.current;
+    if (!marquee) return;
+    let animationFrameId: number;
+    let translateX = 0;
+    const speed = 0.5;
+    
+    const animate = () => {
+      if (!isPausedRef.current) {
+        const marqueeWidth = marquee.scrollWidth / 3;
+        translateX += speed;
+        if (translateX >= 0) {
+          translateX = -marqueeWidth;
+        }
+        marquee.style.transform = `translateX(${translateX}px)`;
+      }
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [images]);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (titleNumber === words.length - 1) {
-        setTitleNumber(0);
-      } else {
-        setTitleNumber(titleNumber + 1);
-      }
-    }, 3000);
-    return () => clearTimeout(timeoutId);
-  }, [titleNumber, words]);
+  return (
+    <div className="w-full overflow-hidden py-52 relative z-[9999] -mt-20 pointer-events-none">
+      <div className="flex items-center justify-center" style={{ transform: 'rotate(9deg)' }}>
+        <div 
+          ref={marqueeRef} 
+          className="flex gap-6 will-change-transform pointer-events-auto"
+          style={{ paddingRight: '24px' }}
+          onMouseEnter={() => { isPausedRef.current = true; }}
+          onMouseLeave={() => { isPausedRef.current = false; }}
+        >
+          {[...Array(3)].map((_, setIndex) => (
+            <div key={setIndex} className="flex gap-6 flex-shrink-0">
+              {images.map((src, imgIndex) => (
+                <img 
+                  key={`${setIndex}-${imgIndex}`} 
+                  src={src} 
+                  alt={`Marquee Image ${imgIndex + 1}`} 
+                  className="w-[320px] h-[370px] object-cover rounded-3xl opacity-80 hover:opacity-100 hover:scale-105 hover:saturate-110 hover:z-[9999] transition-all duration-300 cursor-pointer"
+                  style={{
+                    transform: 'skewY(-20deg)',
+                    flexShrink: 0,
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+                  }} 
+                  loading="eager" 
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-  const currentWord = words[titleNumber];
-  const currentWidth = wordWidths[currentWord] || 100;
+// --- COMPONENTE CONTACT FORM MODIFICADO ---
+const ContactForm = () => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      // CAMBIO: max-w-xl para hacerlo más ancho (antes max-w-md)
+      className="w-full max-w-xl relative group z-20"
+    >
+      {/* GLOWING EFFECT WRAPPER */}
+      <div className="absolute -inset-[1px] rounded-none">
+        <GlowingEffect
+          spread={60}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+          borderWidth={2}
+        />
+      </div>
 
-  // CONFIGURACIÓN DE COLORES
-  // Solo Coral (#de8363) y Turquesa (#67bcb7).
-  const colorSequence = [
-    "#de8363", "#de8363", // Coral (Inicio + Hold)
-    "#67bcb7", "#67bcb7", // Turquesa (Transición + Hold)
-    "#de8363"             // Vuelta a Coral para loop infinito suave
-  ];
+      {/* FORM CARD (Square corners, white bg) */}
+      <div className="relative bg-white border border-zinc-200 p-8 shadow-2xl shadow-gray-200/50 rounded-none">
+        <div className="mb-6">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Get in touch</h3>
+          <p className="text-gray-500 text-sm">Fill out the form below and we'll start your transformation journey.</p>
+        </div>
+        
+        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">First Name</label>
+              <input 
+                type="text" 
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+                placeholder="Jane" 
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Last Name</label>
+              <input 
+                type="text" 
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+                placeholder="Doe" 
+              />
+            </div>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
+            <input 
+              type="email" 
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+              placeholder="jane@company.com" 
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Message</label>
+            <textarea 
+              rows={3} 
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm resize-none" 
+              placeholder="Tell us about your goals..." 
+            />
+          </div>
+          
+          <button className="w-full bg-black text-white font-medium py-3 rounded-none hover:bg-gray-800 hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 mt-2">
+            Send Message <Send size={16} />
+          </button>
+        </form>
+
+        {/* CAMBIO: Eliminada la sección de Trust Signals (Ticks) */}
+
+      </div>
+    </motion.div>
+  );
+};
+
+// Componente FadeInText
+const FadeInText = ({ 
+  children, 
+  delay = 0, 
+  className = "",
+  direction = "up"
+}: { 
+  children: React.ReactNode; 
+  delay?: number;
+  className?: string;
+  direction?: "up" | "left" | "right";
+}) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
   
-  const colorDuration = 10; 
+  const directionOffset = {
+    up: { y: 10, x: 0 },
+    left: { y: 0, x: -20 },
+    right: { y: 0, x: 20 }
+  };
 
   return (
     <motion.div
       ref={ref}
-      style={{ backgroundColor }}
-      className="h-[130vh] w-full dark:border dark:border-white/[0.1] relative overflow-clip"
+      initial={{ 
+        opacity: 0, 
+        filter: "blur(10px)",
+        ...directionOffset[direction]
+      }}
+      animate={{ 
+        opacity: isInView ? 1 : 0, 
+        filter: isInView ? "blur(0px)" : "blur(10px)",
+        y: isInView ? 0 : directionOffset[direction].y,
+        x: isInView ? 0 : directionOffset[direction].x
+      }}
+      transition={{ 
+        duration: 0.6, 
+        ease: "easeOut", 
+        delay 
+      }}
+      className={className}
     >
-      <div className="top-[-20px] h-[100vh] flex justify-center pt-12">
-        <div className="z-10 flex flex-col items-center justify-center gap-2 w-full px-5 relative">
-
-          {/* LAMP + TÍTULO */}
-          <div className="flex flex-col items-center gap-[-20px]">
-            {/* Lamp Effect */}
-            <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
-              <motion.div
-                initial={{ opacity: 0, width: "15rem" }}
-                animate={{ 
-                  opacity: 1, 
-                  width: "30rem",
-                  "--gradient-color": colorSequence
-                }}
-                transition={{ 
-                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  "--gradient-color": { duration: colorDuration, ease: "linear", repeat: Infinity }
-                }}
-                style={{ 
-                  backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`,
-                  "--gradient-color": "#de8363"
-                } as any}
-                className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
-              >
-                <motion.div
-                  className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
-                  style={{ backgroundColor }}
-                />
-                <motion.div
-                  className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]"
-                  style={{ backgroundColor }}
-                />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, width: "15rem" }}
-                animate={{ 
-                  opacity: 1, 
-                  width: "30rem",
-                  "--gradient-color": colorSequence
-                }}
-                transition={{ 
-                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  "--gradient-color": { duration: colorDuration, ease: "linear", repeat: Infinity }
-                }}
-                style={{ 
-                  backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`,
-                  "--gradient-color": "#de8363"
-                } as any}
-                className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
-              >
-                <motion.div
-                  className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]"
-                  style={{ backgroundColor }}
-                />
-                <motion.div
-                  className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]"
-                  style={{ backgroundColor }}
-                />
-              </motion.div>
-
-              <motion.div
-                className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl"
-                style={{ backgroundColor }}
-              />
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.1 }}
-                transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md"
-              />
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ 
-                  opacity: 0.5,
-                  backgroundColor: colorSequence
-                }}
-                transition={{ 
-                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  backgroundColor: { duration: colorDuration, ease: "linear", repeat: Infinity }
-                }}
-                className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl"
-              />
-
-              <motion.div
-                initial={{ opacity: 0, width: "8rem" }}
-                animate={{ 
-                  opacity: 1, 
-                  width: "16rem",
-                  backgroundColor: colorSequence
-                }}
-                transition={{ 
-                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  backgroundColor: { duration: colorDuration, ease: "linear", repeat: Infinity }
-                }}
-                className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl"
-              ></motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, width: "15rem" }}
-                animate={{ 
-                  opacity: 1, 
-                  width: "30rem",
-                  backgroundColor: colorSequence
-                }}
-                transition={{ 
-                  opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  backgroundColor: { duration: colorDuration, ease: "linear", repeat: Infinity }
-                }}
-                className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]"
-              ></motion.div>
-
-              <motion.div
-                className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]"
-                style={{ backgroundColor }}
-              />
-            </div>
-
-            {/* Título principal */}
-            <motion.h1
-              initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-              // CAMBIO: font-light -> font-normal (un poco más grueso)
-              className="text-[34px] md:text-[40px] lg:text-[50px] font-normal leading-[1.1] tracking-tight text-center text-white relative z-50"
-              style={{ fontFamily: '"Inter Display", sans-serif' }}
-            >
-              Bringing{" "}
-              <motion.span
-                className="relative inline-flex items-center overflow-hidden"
-                animate={{ width: currentWidth }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                style={{ minHeight: '1em' }}
-              >
-                {words.map((word, index) => (
-                  <motion.span
-                    key={index}
-                    // CAMBIO: font-light -> font-normal
-                    className="font-normal"
-                    initial={{ opacity: 0, y: -100 }}
-                    transition={{ type: "spring", stiffness: 50, opacity: { duration: 0.2 } }}
-                    animate={
-                      titleNumber === index
-                        ? { y: 0, opacity: 1, position: "relative" }
-                        : { y: titleNumber > index ? 20 : -50, opacity: 0, position: "absolute", top: 0, left: 0 }
-                    }
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </motion.span>{" "}
-              to Your Business Growth
-            </motion.h1>
-          </div>
-
-          {/* Subtítulo */}
-          <motion.p
-            initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
-            className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
-            style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
-          >
-            Dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
-          >
-            <a href="#contact" className="flex items-center justify-center gap-[7px] h-[52px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
-              <p className="text-[16px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
-                How we do it
-              </p>
-            </a>
-            <motion.a 
-              href="#contact"
-              animate={{
-                borderColor: colorSequence
-              }}
-              transition={{
-                duration: colorDuration,
-                ease: "linear",
-                repeat: Infinity
-              }}
-              className="flex items-center justify-center gap-1.5 h-[52px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]"
-            >
-              <motion.div 
-                className="w-[20px] h-[16px] relative overflow-hidden"
-                animate={{
-                  color: colorSequence
-                }}
-                transition={{
-                  duration: colorDuration,
-                  ease: "linear",
-                  repeat: Infinity
-                }}
-              >
-                <Calendar className="w-[20px] h-[16px]" />
-              </motion.div>
-              <motion.p 
-                className="text-[16px] font-medium leading-5 whitespace-nowrap z-[1]" 
-                style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
-                animate={{
-                  color: colorSequence
-                }}
-                transition={{
-                  duration: colorDuration,
-                  ease: "linear",
-                  repeat: Infinity
-                }}
-              >
-                Book Free Consultation
-              </motion.p>
-            </motion.a>
-          </motion.div>
-
-          {/* Trusted Brands */}
-          <motion.div
-            initial={{ opacity: 0, filter: "blur(10px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
-            className="w-full mt-12 relative z-50"
-          >
-            <div className="mx-auto w-full max-w-2xl">
-              <motion.div 
-                initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
-                className="text-center text-2xl md:text-[16px] leading-tight"
-              >
-                <motion.span 
-                  animate={{
-                    color: colorSequence
-                  }}
-                  transition={{
-                    duration: colorDuration,
-                    ease: "linear",
-                    repeat: Infinity
-                  }}
-                >
-                  Trusted by experts.
-                </motion.span>
-                <br />
-                <span className="text-white">Used by the leaders.</span>
-              </motion.div>
-              <motion.div 
-                initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ delay: 4.2, duration: 0.8, ease: "easeOut" }}
-                className="mt-6 grid grid-cols-5 text-white"
-              >
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Retool</div>
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Vercel</div>
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Remote</div>
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Arc</div>
-                <div className="w-full flex items-center justify-center text-white text-lg font-medium">Raycast</div>
-              </motion.div>
-            </div>
-
-            {/* Contenedor Sparkles */}
-            <motion.div 
-              style={{ 
-                scaleY: sparklesScale, 
-                transformOrigin: "bottom" 
-              }}
-              className="relative -mt-20 -mb-24 h-96 w-full overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]"
-            >
-              <div className="absolute inset-0 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_bottom_center,#06B6D4,transparent_70%)] before:opacity-40" />
-              <Sparkles
-                density={1200}
-                className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
-                color="#ffffff"
-              />
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
+      {children}
     </motion.div>
   );
-}
+};
+
+type UseCasesShowcaseProps = {
+  subText?: string;
+  heading?: string;
+  highlightText?: string;
+  description?: string;
+  badge?: string;
+  mainTitle?: string;
+  mainTitleHighlight?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+};
+
+const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
+  const {
+    subText = 'our approach',
+    heading = 'Marketing strategies that transform your business into',
+    highlightText = 'market leaders',
+    description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
+    badge = 'Digital Marketing Excellence',
+    mainTitle = 'Elevate Your Brand with',
+    mainTitleHighlight = 'Data-Driven Marketing',
+  } = props;
+
+  const ref = React.useRef<HTMLDivElement>(null);
+  
+  // Scroll animation hooks
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "start center"]
+  });
+
+  const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
+    target: ref,
+    offset: ["start 130vh", "start 100vh"]
+  });
+
+  const { scrollYProgress: scrollYProgressEllipse } = useScroll({
+    target: ref,
+    offset: ["start 120vh", "start 80vh"]
+  });
+
+  const { scrollYProgress: scrollYProgressBorder } = useScroll({
+    target: ref,
+    offset: ["start 120vh", "start center"]
+  });
+
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.151],
+    ["#000000", "#1a1a1a", "#ffffff"]
+  );
+
+  const borderColor = useTransform(
+    scrollYProgressBorder,
+    [0, 0.15, 0.15, 0.151],
+    ["#e5e7eb", "#000000", "#1a1a1a", "#ffffff"]
+  );
+
+  const textColor = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.151],
+    ["#ffffff", "#ffffff", "#000000"]
+  );
+
+  const borderRadius = useTransform(
+    scrollYProgressBorderRadius,
+    [0, 0.2925],
+    ["100%", "0%"]
+  );
+
+  const ellipseWidth = useTransform(
+    scrollYProgressEllipse,
+    [0, 0.35],
+    [40, 100]
+  );
+
+  const fadeStart = useTransform(
+    scrollYProgressEllipse,
+    [0, 0.35],
+    [40, 100]
+  );
+
+  const fadeEnd = useTransform(
+    scrollYProgressEllipse,
+    [0, 0.35],
+    [90, 100]
+  );
+
+  const maskImage = useTransform(
+    [ellipseWidth, fadeStart, fadeEnd],
+    ([width, start, end]) => 
+      `radial-gradient(ellipse ${width}% 100% at center, black 0%, black ${start}%, transparent ${end}%, transparent 100%)`
+  );
+
+  return (
+    <motion.div className="pt-16" style={{ backgroundColor }}>
+      <section ref={ref} className="relative pb-10">
+        {/* ARCO DE FONDO */}
+        <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none z-0">
+          <motion.div
+            className="w-full h-full border-t-[1px]"
+            style={{
+              transform: 'translateY(-65%)',
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              borderRadius: borderRadius,
+              borderTopColor: borderColor,
+              WebkitMaskImage: maskImage,
+              maskImage: maskImage,
+              backgroundColor: backgroundColor,
+            }}
+          />
+        </div>
+
+        {/* HEADER / TITULO */}
+        <div className="absolute -top-[254px] left-0 right-0 z-50">
+          <div className="max-w-[1225px] mx-auto px-4">
+            <div className="flex flex-col items-center gap-8">
+              <FadeInText delay={1.2}>
+                <div 
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)] mb-[6px]"
+                  style={{ 
+                    background: 'linear-gradient(135deg, #67bcb7 0%, #de8363 100%)'
+                  }}
+                >
+                  <span className="text-[14px] font-normal tracking-[-0.3px] capitalize text-white">
+                    {badge}
+                  </span>
+                </div>
+              </FadeInText>
+
+              <FadeInText delay={0.3}>
+                <div className="w-full max-w-[600px] mx-auto">
+                  <motion.h1 
+                    className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center"
+                    style={{ color: textColor }}
+                  >
+                    {mainTitle}{' '}
+                    <motion.span style={{ color: textColor }}>
+                      {mainTitleHighlight}
+                    </motion.span>
+                    <motion.span
+                      style={{
+                        display: "inline-block",
+                        backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(237,191,134,0.2) 15%, rgba(237,191,134,0.5) 25%, rgb(237,191,134) 35%, rgb(222,131,99) 50%, rgb(103,188,183) 65%, rgba(103,188,183,0.5) 75%, rgba(103,188,183,0.2) 85%, rgba(255,255,255,0) 100%)",
+                        backgroundSize: "300% 100%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        color: "transparent",
+                      }}
+                      animate={{
+                        backgroundPosition: ["200% 50%", "-100% 50%"]
+                      }}
+                      transition={{
+                        duration: 8,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                    >
+                      .
+                    </motion.span>
+                  </motion.h1>
+                </div>
+              </FadeInText>
+            </div>
+          </div>
+        </div>
+
+        {/* CONTENIDO PRINCIPAL (Texto + Formulario) */}
+        <div className="relative pt-12 pb-0 px-4 z-10">
+          <div className="max-w-[1225px] mx-auto">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
+
+              {/* COLUMNA IZQUIERDA - Texto */}
+              <div className="flex-1 max-w-[520px]">
+                <FadeInText delay={0.5} direction="up">
+                  <div className="text-sm font-medium tracking-[2.2px] uppercase mb-2.5 text-gray-500">
+                    {subText}
+                  </div>
+                </FadeInText>
+
+                <FadeInText delay={0.6} direction="up">
+                  <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900 mb-6">
+                    {heading}{' '}
+                    <motion.span
+                      initial={{ backgroundPosition: "400% 50%" }}
+                      animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                      transition={{
+                        duration: 12,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                      style={{
+                        display: "inline-block",
+                        backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                        backgroundSize: "400% 100%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        color: "transparent"
+                      }}
+                    >
+                      {highlightText}
+                    </motion.span>
+                    <span className="text-gray-900">.</span>
+                  </h2>
+                </FadeInText>
+
+                <FadeInText delay={0.7} direction="up">
+                  <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
+                    {description}
+                  </p>
+                </FadeInText>
+              </div>
+
+              {/* COLUMNA DERECHA - Contact Form */}
+              {/* CAMBIO: Aumentado max-w del contenedor a 600px para permitir formulario más ancho */}
+              <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[600px] flex items-center justify-center min-h-[400px]">
+                 <ContactForm />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        {/* --- BOTTOM MARQUEE --- */}
+        <BottomSlantedMarquee />
+
+      </section>
+    </motion.div>
+  );
+};
+
+export { UseCasesShowcase };
+export default UseCasesShowcase;
