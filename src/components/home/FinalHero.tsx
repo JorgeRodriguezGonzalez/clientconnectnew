@@ -68,16 +68,13 @@ export function FinalHero() {
   const currentWidth = wordWidths[currentWord] || 100;
 
   // CONFIGURACIÓN DE COLORES
-  // Colores: Arena (#edbf86), Coral (#de8363), Turquesa (#67bcb7)
-  // Repetimos los colores en el array para que se mantengan (hold) antes de transicionar.
+  // Solo Coral (#de8363) y Turquesa (#67bcb7).
   const colorSequence = [
-    "#edbf86", // Inicio Arena
-    "#de8363", "#de8363", // Mantiene Coral
-    "#67bcb7", "#67bcb7", // Mantiene Turquesa
-    "#edbf86"  // Fin Arena (para loop suave)
+    "#de8363", "#de8363", // Coral (Inicio + Hold)
+    "#67bcb7", "#67bcb7", // Turquesa (Transición + Hold)
+    "#de8363"             // Vuelta a Coral para loop infinito suave
   ];
   
-  // Duración total más larga para que se aprecien los colores
   const colorDuration = 10; 
 
   return (
@@ -107,7 +104,7 @@ export function FinalHero() {
                 }}
                 style={{ 
                   backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`,
-                  "--gradient-color": "#edbf86"
+                  "--gradient-color": "#de8363"
                 } as any}
                 className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
               >
@@ -135,7 +132,7 @@ export function FinalHero() {
                 }}
                 style={{ 
                   backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`,
-                  "--gradient-color": "#edbf86"
+                  "--gradient-color": "#de8363"
                 } as any}
                 className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
               >
@@ -213,8 +210,8 @@ export function FinalHero() {
               initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-              // CAMBIO: font-semibold a font-light (bastante más fino)
-              className="text-[34px] md:text-[40px] lg:text-[50px] font-light leading-[1.1] tracking-tight text-center text-white relative z-50"
+              // CAMBIO: font-light -> font-normal (un poco más grueso)
+              className="text-[34px] md:text-[40px] lg:text-[50px] font-normal leading-[1.1] tracking-tight text-center text-white relative z-50"
               style={{ fontFamily: '"Inter Display", sans-serif' }}
             >
               Bringing{" "}
@@ -227,8 +224,8 @@ export function FinalHero() {
                 {words.map((word, index) => (
                   <motion.span
                     key={index}
-                    // CAMBIO: font-semibold a font-light aquí también
-                    className="font-light"
+                    // CAMBIO: font-light -> font-normal
+                    className="font-normal"
                     initial={{ opacity: 0, y: -100 }}
                     transition={{ type: "spring", stiffness: 50, opacity: { duration: 0.2 } }}
                     animate={
