@@ -1,28 +1,26 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
-import { ArrowUpRight, TrendingUp, Users, Zap, Play, Check, Globe, ShieldCheck, Code2, Cpu, BarChart3 } from 'lucide-react';
+import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, ShieldCheck, MonitorPlay } from 'lucide-react';
 
-// --- UTILS & COLORS ---
+// --- STYLES ---
+const fontStyles = `
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+  .font-syne { font-family: 'Syne', sans-serif; }
+  .font-inter { font-family: 'Inter', sans-serif; }
+`;
+
+// --- UTILS ---
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
+// --- COLORS ---
 const COLORS = {
-  turquoise: "rgb(103, 188, 183)", // #67bcb7
-  coral: "rgb(222, 131, 99)",     // #de8363
-  gold: "rgb(237, 191, 134)",     // #edbf86
+  gold: "#EE9C21",
+  orange: "#C96928",
+  burnt: "#BA4226",
+  red: "#AD2624",
 };
 
-// --- BACKGROUND COMPONENT ---
-const BackgroundStripes = () => (
-  <div
-    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.04]"
-    style={{
-      backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
-      backgroundRepeat: 'repeat',
-    }}
-  />
-);
-
-// --- GLOWING EFFECT ---
+// --- COMPONENTE GLOWING EFFECT ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -149,15 +147,15 @@ const GlowingEffect = React.memo(
               "--glowingeffect-border-width": `${borderWidth}px`,
               "--repeating-conic-gradient-times": "5",
               "--gradient": `radial-gradient(circle, ${COLORS.gold} 10%, #EDBF8600 20%),
-                radial-gradient(circle at 40% 40%, ${COLORS.coral} 5%, #DE836300 15%),
-                radial-gradient(circle at 60% 60%, ${COLORS.turquoise} 10%, #67BCB700 20%), 
-                radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
+                radial-gradient(circle at 40% 40%, ${COLORS.orange} 5%, #DE836300 15%),
+                radial-gradient(circle at 60% 60%, ${COLORS.burnt} 10%, #67BCB700 20%), 
+                radial-gradient(circle at 40% 60%, ${COLORS.red} 10%, #94A3B800 20%),
                 repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
                   ${COLORS.gold} 0%,
-                  ${COLORS.coral} calc(25% / var(--repeating-conic-gradient-times)),
-                  ${COLORS.turquoise} calc(50% / var(--repeating-conic-gradient-times)), 
-                  #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.orange} calc(25% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.burnt} calc(50% / var(--repeating-conic-gradient-times)), 
+                  ${COLORS.red} calc(75% / var(--repeating-conic-gradient-times)),
                   ${COLORS.gold} calc(100% / var(--repeating-conic-gradient-times))
                 )`,
             } as React.CSSProperties
@@ -190,8 +188,8 @@ const GlowingEffect = React.memo(
 );
 GlowingEffect.displayName = "GlowingEffect";
 
-// --- TECH CARD COMPONENT ---
-const TechCard = ({ 
+// --- 3D TILT CARD COMPONENT ---
+const TiltCard = ({ 
   children, 
   className, 
   layoutId,
@@ -199,7 +197,6 @@ const TechCard = ({
   initial,       
   transition,    
   style,
-  noBorder = false,
   ...props 
 }: { 
   children: React.ReactNode, 
@@ -209,154 +206,193 @@ const TechCard = ({
   initial?: any,
   transition?: any,
   style?: any,
-  noBorder?: boolean,
   [key: string]: any
 }) => {
+  const x = useSpring(0, { stiffness: 150, damping: 20 });
+  const y = useSpring(0, { stiffness: 150, damping: 20 });
+
+  function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct * 10);
+    y.set(yPct * -10);
+  }
+
+  function handleMouseLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
   return (
     <motion.div
       layout
       {...(layoutId ? { layoutId } : {})}
-      initial={initial}
-      animate={animate}
-      transition={transition || { layout: { duration: 0.6, ease: "easeInOut" } }} 
-      style={style}
-      className={cn(
-        "relative overflow-hidden bg-white/80 backdrop-blur-sm transition-all duration-300 group rounded-none",
-        !noBorder && "border border-zinc-200 hover:border-zinc-300 hover:shadow-lg",
-        className
-      )}
-      {...props}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={initial || { opacity: 0, scale: 0.9 }}
+      animate={animate || { opacity: 1, scale: 1 }}
+      transition={transition || { layout: { duration: 0.8, ease: "easeInOut" } }} 
+      style={{
+        rotateY: x,
+        rotateX: y,
+        transformStyle: "preserve-3d",
+        perspective: 1000,
+        ...style 
+      }}
+      className={cn("relative rounded-3xl overflow-hidden transition-colors duration-300", className)}
+      {...props} 
     >
-        <div className="absolute inset-0 z-0 pointer-events-none">
-            <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} />
-        </div>
-        
-        <div className="relative z-10 h-full">
-            {children}
-        </div>
+      {children}
     </motion.div>
   );
 };
 
-// --- AGENCY SECTION ---
+// --- SUB-COMPONENTS ---
+const StatBadge = ({ icon: Icon, label, value, isLight }: { icon: any, label: string, value: string, isLight: boolean }) => (
+  <div className={cn(
+    "flex items-center gap-3 px-4 py-3 rounded-2xl border backdrop-blur-md transition-colors duration-300",
+    isLight 
+      ? "bg-white/80 border-black/5 shadow-sm" 
+      : "bg-white/5 border-white/10"
+  )}>
+    <div className="p-2 rounded-full bg-[#D84315]/10 text-[#D84315]">
+      <Icon size={16} />
+    </div>
+    <div>
+      <div className={cn("font-syne font-bold text-lg leading-none transition-colors duration-0", isLight ? "text-gray-900" : "text-white")}>
+        {value}
+      </div>
+      <div className="font-inter text-[10px] text-[#D84315] uppercase tracking-wider font-medium">
+        {label}
+      </div>
+    </div>
+  </div>
+);
+
+// --- MAIN COMPONENT ---
 export const FounderSectionAdapted = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  const [isCompactMode, setIsCompactMode] = useState(false); 
+  const [isLightMode, setIsLightMode] = useState(false);
   const [isLateScroll, setIsLateScroll] = useState(false);
   
-  // Estado manual para el overlay del blur para evitar bugs de eventos de layout
-  const [showBlurOverlay, setShowBlurOverlay] = useState(false);
+  // NUEVO ESTADO: Controla si la tarjeta se está redimensionando
+  const [isResizing, setIsResizing] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
 
-  // Efecto para manejar el blur overlay manualmente cuando cambia el modo
-  useEffect(() => {
-    // Al cambiar el layout, activamos el blur brevemente
-    setShowBlurOverlay(true);
-    const timer = setTimeout(() => {
-      setShowBlurOverlay(false);
-    }, 600); // 600ms match transition duration
-
-    return () => clearTimeout(timer);
-  }, [isCompactMode]);
-
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // Layout change logic (Resize Card)
-    if (latest > 0.35 && !isCompactMode) {
-      setIsCompactMode(true);
-    } else if (latest <= 0.35 && isCompactMode) {
-      setIsCompactMode(false);
+    // 1. Light Mode
+    if (latest > 0.35 && !isLightMode) {
+      setIsLightMode(true);
+    } else if (latest <= 0.35 && isLightMode) {
+      setIsLightMode(false);
     }
 
-    // Bottom cards appearance (Threshold adjusted to 0.55 for earlier appearance)
-    if (latest > 0.55 && !isLateScroll) {
+    // 2. Late Scroll (Buffer)
+    if (latest > 0.60 && !isLateScroll) {
       setIsLateScroll(true);
-    } else if (latest < 0.45 && isLateScroll) { // Hysteresis to prevent flickering
+    } else if (latest < 0.50 && isLateScroll) {
       setIsLateScroll(false);
     }
   });
 
+  const yStats = useTransform(scrollYProgress, [0, 1], [100, -100]);
+
   return (
     <section 
       ref={containerRef} 
-      className="relative w-full py-24 lg:py-32 bg-white overflow-visible"
+      className={cn(
+        "relative w-full py-24 lg:py-32 transition-colors duration-0 z-10", 
+        isLightMode ? "bg-white" : "bg-[#050505]"
+      )}
     >
-      <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
-      <BackgroundStripes />
+      <style>{fontStyles}</style>
 
-      <div className="max-w-[1500px] mx-auto px-6 lg:px-12 relative z-10">
+      {/* BACKGROUND EFFECTS */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+         <div className={cn("absolute right-[-10%] top-[20%] w-[600px] h-[600px] bg-[#D84315] blur-[150px] opacity-20 animate-pulse rounded-full transition-opacity duration-0", isLightMode ? "opacity-0" : "opacity-20")} />
+      </div>
+
+      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         
-        <div className="flex flex-col lg:flex-row gap-12 items-start">
+        {/* LAYOUT GRID */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           
-          {/* --- LEFT COLUMN: STICKY & TEXTS --- */}
-          {/* Aumentado padding y reducido ancho relativo */}
-          <div className="lg:w-[38%] sticky top-32 z-20 pl-4 lg:pl-16">
+          {/* --- LEFT COLUMN: STICKY --- */}
+          <div className="lg:w-[40%] sticky top-32">
             <div className="flex flex-col gap-8 pb-10">
               
+              {/* Badge */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500"
+                className={cn(
+                  "w-fit px-4 py-1.5 rounded-full border text-[11px] font-inter font-medium uppercase tracking-widest transition-colors duration-300",
+                  isLightMode 
+                    ? "bg-orange-50 border-orange-100 text-[#D84315]" 
+                    : "bg-white/5 border-white/10 text-[#D84315]"
+                )}
               >
-                The Agency
+                Growth Partners
               </motion.div>
 
-              {/* Smaller, tighter typography */}
-              <h2 className="text-[32px] md:text-[42px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-gray-900">
-                We don't just code. <br/>
-                <motion.span
-                  initial={{ backgroundPosition: "400% 50%" }}
-                  animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                  transition={{
-                    duration: 12,
-                    ease: "linear",
-                    repeat: Infinity
-                  }}
-                  style={{
-                    display: "inline-block",
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
-                    backgroundSize: "400% 100%",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    color: "transparent"
-                  }}
-                >
-                  We engineer growth.
-                </motion.span>
+              {/* Headline */}
+              <h2 className={cn(
+                "font-syne font-bold text-[42px] md:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.03em] transition-colors duration-0",
+                isLightMode ? "text-gray-900" : "text-white"
+              )}>
+                We don't just post. <br/>
+                <span className="text-[#D84315]">We dominate markets.</span>
               </h2>
 
-              <p className="text-[16px] leading-[1.6] text-gray-600 font-medium max-w-sm">
-                A collective of engineers and creatives delivering <strong className="text-gray-900">High-Performance</strong> solutions. 
-                We integrate React architecture, pixel-perfect UI, and conversion logic into one cohesive engine.
+              {/* Description */}
+              <p className={cn(
+                "font-inter text-[18px] leading-[1.6] transition-colors duration-0 max-w-md",
+                isLightMode ? "text-gray-500" : "text-gray-400"
+              )}>
+                Most agencies deliver metrics. We deliver <strong className={isLightMode ? "text-gray-900" : "text-white"}>Revenue</strong>. 
+                Our ecosystem integrates data-driven strategy, creative production, and omnichannel media buying into one cohesive growth engine.
               </p>
 
+              {/* Checklist */}
               <div className="flex flex-col gap-4 mt-2">
                 {[
-                  "Performance-First Architecture",
-                  "Direct Response UX/UI",
-                  "Scalable React Ecosystems"
+                  "Full-Funnel Strategy",
+                  "Performance Creative",
+                  "Advanced Analytics"
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 group cursor-default">
-                    <div className="w-5 h-5 flex items-center justify-center rounded-none bg-zinc-100 group-hover:bg-[rgb(103,188,183)] transition-colors duration-300 text-[rgb(103,188,183)] group-hover:text-white">
+                    <div className={cn(
+                      "w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300",
+                      isLightMode ? "bg-black text-white group-hover:bg-[#D84315]" : "bg-white text-black group-hover:bg-[#D84315] group-hover:text-white"
+                    )}>
                       <Check size={12} strokeWidth={3} />
                     </div>
-                    <span className="font-medium text-[14px] text-gray-700">{item}</span>
+                    <span className={cn(
+                      "font-inter font-medium text-[15px] transition-colors duration-0",
+                      isLightMode ? "text-gray-800" : "text-gray-200"
+                    )}>{item}</span>
                   </div>
                 ))}
               </div>
 
+              {/* CTA */}
               <div className="mt-6">
-                <button 
-                   className="group relative px-6 py-3 bg-gray-900 text-white text-[14px] font-bold overflow-hidden transition-all duration-300 hover:shadow-xl hover:bg-black rounded-none"
-                >
+                <button className={cn(
+                   "group relative px-8 py-4 rounded-full font-syne font-bold text-[16px] overflow-hidden transition-all duration-300",
+                   isLightMode ? "bg-[#050505] text-white hover:shadow-xl" : "bg-white text-black hover:bg-[#D84315] hover:text-white"
+                )}>
                   <span className="relative z-10 flex items-center gap-2">
-                    Start Project
-                    <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    Start Growth Engine
+                    <ArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </span>
                 </button>
               </div>
@@ -365,221 +401,231 @@ export const FounderSectionAdapted = () => {
           </div>
 
           {/* --- RIGHT COLUMN: DYNAMIC GRID --- */}
-          {/* Aumentado padding derecho y ancho controlado */}
-          <div className="lg:w-[62%] relative pt-0 lg:pt-0 pr-4 lg:pr-16">
+          <div className="lg:w-[60%] relative pt-0 lg:pt-0">
             
             <motion.div 
                layout 
-               className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-[minmax(200px,auto)]"
+               className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-[minmax(200px,auto)]"
             >
 
               {/* 
-                 ITEM 1: TEAM CARD (Resizable)
-                 Usamos layoutId constante para que Framer Motion entienda que es el mismo elemento.
+                 ITEM 1: TEAM CARD
               */}
-              <TechCard 
-                layoutId="agency-team-card"
-                // No usamos onLayoutAnimation callbacks para evitar el bug del stuck state
+              <TiltCard 
+                layoutId="miguel-card"
+                // CALLBACKS PARA DETECTAR EL REDIMENSIONAMIENTO
+                onLayoutAnimationStart={() => setIsResizing(true)}
+                onLayoutAnimationComplete={() => setIsResizing(false)}
+                transition={{ layout: { duration: 0.8, ease: "easeInOut" } }}
                 className={cn(
-                   "md:row-span-2 h-[450px] md:h-[600px] relative z-10 border-zinc-200",
-                   isCompactMode ? "md:col-span-1" : "md:col-span-2"
+                   "md:row-span-2 h-[450px] md:h-[600px] group border border-white/10 relative z-10",
+                   isLightMode ? "md:col-span-1" : "md:col-span-2"
                 )}
               >
-                {/* Blur Overlay controlado por estado manual */}
+                {/* 
+                  OVERLAY ANTI-DISTORSIÓN (White Blur)
+                  Aparece solo mientras dura la animación (isResizing = true)
+                */}
                 <motion.div 
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: showBlurOverlay ? 1 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute inset-0 z-40 bg-white/60 backdrop-blur-xl pointer-events-none"
+                  animate={{ opacity: isResizing ? 1 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute inset-0 z-40 bg-white/40 backdrop-blur-xl pointer-events-none"
                 />
 
-                <div className="absolute inset-0 bg-zinc-100">
+                {/* GLASS MORPH EFFECT (ESTÁTICO PARA LIGHT MODE) */}
+                <div 
+                  className={cn(
+                    "absolute inset-0 z-20 transition-opacity duration-700 pointer-events-none",
+                    isLightMode ? "opacity-100" : "opacity-0"
+                  )}
+                >
+                    <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} />
+                    <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
+                </div>
+
+                <div className="absolute inset-0 bg-gray-900">
                   <motion.img 
                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" 
                     alt="Agency Team" 
-                    animate={{ scale: isCompactMode ? 1.15 : 1, x: isCompactMode ? "10%" : "0%" }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                    className="w-full h-full object-cover object-center grayscale-[100%] group-hover:grayscale-0 transition-all duration-700"
+                    animate={{ scale: isLightMode ? 1.25 : 1 }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0"
                   />
                   
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-70" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
                   
-                  <div className="absolute bottom-0 left-0 right-0 z-30 p-6 bg-white/95 border-t border-zinc-200 backdrop-blur-md">
-                       <p className="text-gray-900 font-bold text-lg leading-none">The Development Team</p>
-                       <p className="text-gray-500 text-xs mt-1 uppercase tracking-wider">Engineering & Design</p>
+                  <div className="absolute bottom-6 left-6 right-6 z-30">
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
+                       <p className="text-white font-syne font-bold text-lg">The Squad</p>
+                       <p className="text-white/60 font-inter text-xs">Experts across every channel</p>
+                    </div>
                   </div>
                 </div>
-              </TechCard>
+              </TiltCard>
 
               {/* ITEMS 2 & 3: STATS & VIDEO */}
               <AnimatePresence mode="popLayout">
-                 {isCompactMode && (
+                 {isLightMode && (
                     <>
-                       {/* ITEM 2: Performance Stat */}
-                       <TechCard 
-                          key="stat-card"
-                          initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                          transition={{ duration: 0.5 }}
-                          className="h-[280px] p-6 flex flex-col justify-between bg-white relative"
-                       >
-                          <div className="absolute -right-10 -top-10 w-32 h-32 bg-[rgb(222,131,99)] blur-[60px] opacity-20 group-hover:opacity-30 transition-opacity" />
-                          
+                       {/* ITEM 2 */}
+                       <TiltCard className="h-[280px] p-6 flex flex-col justify-between bg-gray-100 border border-gray-200 relative overflow-hidden group">
+                          <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#D84315] blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" />
                           <div className="flex justify-between items-start z-10">
-                             <div className="p-3 bg-[rgb(222,131,99)]/10 border border-[rgb(222,131,99)]/20 text-[rgb(222,131,99)]">
+                             <div className="p-3 bg-[#D84315] rounded-xl text-white">
                                 <TrendingUp size={24} />
                              </div>
-                             <span className="text-xs font-bold uppercase tracking-wider text-gray-400">
-                               Velocity
+                             <span className="font-inter text-xs font-bold uppercase tracking-wider text-gray-400">
+                               Performance
                              </span>
                           </div>
                           <div className="z-10">
-                             <h3 className="text-4xl font-bold mb-2 text-gray-900">98<span className="text-[rgb(222,131,99)]">/100</span></h3>
-                             <p className="text-sm text-gray-500 leading-relaxed">
-                               Average Lighthouse Performance score across deployments.
+                             <h3 className="text-5xl font-syne font-bold mb-2 text-gray-900">4.5x</h3>
+                             <p className="font-inter text-sm text-gray-500">
+                               Average ROAS across all managed partners in Q4.
                              </p>
                           </div>
-                       </TechCard>
+                       </TiltCard>
 
-                       {/* ITEM 3: Video Reel */}
-                       <TechCard 
-                          key="video-card"
-                          initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                          transition={{ duration: 0.5, delay: 0.1 }}
-                          className="h-[300px] bg-zinc-900 relative cursor-pointer border-zinc-800"
-                       >
-                          <div className="absolute inset-0 opacity-40 group-hover:opacity-80 transition-opacity duration-500">
-                             <video autoPlay loop muted playsInline className="w-full h-full object-cover grayscale">
+                       {/* ITEM 3 */}
+                       <TiltCard className="h-[300px] bg-black relative group border border-white/10 cursor-pointer">
+                          <div className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                             <video autoPlay loop muted playsInline className="w-full h-full object-cover">
                                 <source src="https://videos.pexels.com/video-files/5854659/5854659-uhd_2560_1440_25fps.mp4" type="video/mp4" />
                              </video>
                           </div>
                           <div className="absolute inset-0 flex items-center justify-center">
-                             <div className="w-14 h-14 bg-white/5 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/10 rounded-full">
-                                <Play fill="white" className="ml-1 text-white w-4 h-4" />
+                             <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
+                                <Play fill="white" className="ml-1 text-white" />
                              </div>
                           </div>
                           <div className="absolute bottom-5 left-5">
-                             <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 text-white text-[10px] font-bold uppercase tracking-wider">
-                                View Reel
+                             <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-xs font-inter font-medium">
+                                See Reel
                              </span>
                           </div>
-                       </TechCard>
+                       </TiltCard>
                     </>
                  )}
               </AnimatePresence>
 
-              {/* ITEM 4: PROCESS CARD (Always visible) */}
-              <TechCard 
-                layoutId="process-card"
-                className="md:col-span-2 p-8 flex flex-col md:flex-row items-center gap-8 bg-zinc-50 border-zinc-200"
-              >
+              {/* ITEM 4: PROCESS CARD */}
+              <TiltCard className={cn(
+                "md:col-span-2 p-8 flex flex-col md:flex-row items-center gap-8 transition-colors duration-0 border",
+                isLightMode 
+                  ? "bg-[#D84315] border-[#D84315]" 
+                  : "bg-zinc-900 border-zinc-800"
+              )}>
                  <div className="flex-1">
-                    <h3 className="text-gray-900 font-bold text-xl mb-2">The "Atomic" Component System</h3>
-                    <p className="text-gray-600 font-medium text-sm">
-                      We eliminate technical debt before it starts. Modular, reusable, and scalable architecture from day one.
+                    <h3 className="text-white font-syne font-bold text-2xl mb-2">The Unified Ecosystem</h3>
+                    <p className="text-white/80 font-inter font-light">
+                      We eliminate the friction between departments. One team, one goal, zero wasted budget.
                     </p>
                  </div>
                  <div className="flex gap-4">
-                    <div className="w-10 h-10 bg-white border border-zinc-200 shadow-sm flex items-center justify-center text-gray-900">
-                       <Cpu size={18} />
+                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+                       <Zap size={20} />
                     </div>
-                    <div className="w-10 h-10 bg-white border border-zinc-200 shadow-sm flex items-center justify-center text-gray-900">
-                       <Code2 size={18} />
+                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+                       <Clapperboard size={20} />
                     </div>
                  </div>
-              </TechCard>
+              </TiltCard>
 
-              {/* TARJETAS INFERIORES (Aparecen con Late Scroll) */}
-              {/* Usamos layout="position" para evitar saltos si el grid de arriba cambia de altura levemente */}
-              
+              {/* TARJETAS INFERIORES */}
                {/* CARD A (Global) */}
-               <motion.div 
-                  layout="position"
-                  className="md:col-span-1"
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
+               <TiltCard 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
+                  className="h-[280px] relative rounded-3xl group bg-zinc-100/50 p-0 border-none overflow-hidden"
                >
-                 <TechCard 
-                    className="h-[280px] p-0"
-                    noBorder
-                 >
-                     <div className="relative h-full bg-white border border-zinc-200 overflow-hidden flex flex-row items-stretch">
-                        <div className="relative z-20 w-1/2 p-6 flex flex-col justify-center items-start shrink-0">
-                           <div className="p-2 mb-3 bg-[rgb(237,191,134)]/10 border border-[rgb(237,191,134)]/20">
-                              <Globe className="w-4 h-4" style={{ color: COLORS.gold }} />
-                           </div>
-                           <div className="text-[20px] font-bold tracking-tight mb-2 text-gray-900 leading-tight">
-                              20+<br/>
-                              <span className="text-gray-400">Countries</span>
-                           </div>
-                           <p className="text-[12px] font-medium leading-[1.4] text-gray-500">
-                             Global deployment via Edge Networks.
-                           </p>
-                        </div>
-                        <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden">
-                           <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
-                               <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
-                               <img 
-                                  src="https://images.unsplash.com/photo-1527011046414-4781f1f94f8c?q=80&w=1976&auto=format&fit=crop" 
-                                  alt="Global Reach"
-                                  className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
-                               />
-                           </div>
-                        </div>
-                     </div>
-                 </TechCard>
-               </motion.div>
+                   <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} />
+                   
+                   <div className="relative h-full bg-white rounded-3xl border border-black/5 overflow-hidden flex flex-row items-stretch">
+                      {/* Left Content */}
+                      <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
+                         <div className="p-2.5 rounded-full mb-3 bg-orange-50/50 border border-orange-100/20">
+                            <Globe className="w-5 h-5" style={{ color: COLORS.orange }} />
+                         </div>
+                         <div className="text-[24px] font-syne font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
+                            20+<br/>
+                            <span className="text-gray-400">Countries</span>
+                         </div>
+                         <p className="text-[13px] font-inter font-light leading-[1.4] text-gray-500">
+                           Global reach with localized assets.
+                         </p>
+                      </div>
+
+                      {/* Right Image */}
+                      <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden">
+                         <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
+                             <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
+                             <img 
+                                src="https://images.unsplash.com/photo-1527011046414-4781f1f94f8c?q=80&w=1976&auto=format&fit=crop" 
+                                alt="Global Reach"
+                                className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
+                             />
+                         </div>
+                      </div>
+                   </div>
+               </TiltCard>
 
                {/* CARD B (Retention) */}
-               <motion.div 
-                  layout="position"
-                  className="md:col-span-1"
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-                  transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+               <TiltCard 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
+                  className="h-[280px] relative rounded-3xl group bg-gray-900 border-none overflow-hidden"
                >
-                 <TechCard 
-                    className="h-[280px] bg-gray-900 border-none"
-                    noBorder
-                 >
-                     <div className="relative h-full bg-gray-900 overflow-hidden">
-                         <div className="absolute inset-0 w-full h-full opacity-40">
-                            <video
-                              autoPlay
-                              loop
-                              muted
-                              playsInline
-                              className="w-full h-full object-cover grayscale scale-105 group-hover:scale-100 group-hover:grayscale-0 transition-all duration-700 ease-out"
-                            >
-                              <source src="https://videos.pexels.com/video-files/3191572/3191572-uhd_2560_1440_25fps.mp4" type="video/mp4" />
-                            </video>
+                   <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} variant="white" />
+                   
+                   <div className="relative h-full bg-gray-900 rounded-[inherit] overflow-hidden">
+                       
+                       {/* VIDEO BACKGROUND */}
+                       <div className="absolute inset-0 w-full h-full opacity-60">
+                          <video
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className="w-full h-full object-cover grayscale scale-105 group-hover:scale-100 group-hover:grayscale-0 transition-all duration-700 ease-out"
+                          >
+                            <source src="https://videos.pexels.com/video-files/3191572/3191572-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                          </video>
+                       </div>
+
+                       {/* Gradient Overlay */}
+                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                       
+                       {/* Content */}
+                       <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
+                         <div className="flex items-baseline gap-2 mb-1">
+                           <span className="text-6xl font-syne font-semibold leading-none tracking-tighter">95%</span>
+                           <ShieldCheck className="w-6 h-6 mb-2 text-white/80" />
                          </div>
-                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                         <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
-                           <div className="flex items-baseline gap-2 mb-1">
-                             <span className="text-5xl font-bold leading-none tracking-tighter text-white">99.9%</span>
-                             <ShieldCheck className="w-5 h-5 mb-2 text-zinc-400" />
-                           </div>
-                           <span className="text-[12px] font-medium leading-[1.4] text-zinc-400">
-                             Uptime guarantee for all managed client applications.
-                           </span>
-                         </div>
-                     </div>
-                 </TechCard>
-               </motion.div>
+                         <span className="text-[14px] font-inter font-light leading-[1.4] text-white/60">
+                           Client retention rate over the last 12 months.
+                         </span>
+                       </div>
+                   </div>
+               </TiltCard>
 
             </motion.div>
+
+            {/* FLOATING STATS */}
+            <motion.div 
+               style={{ y: yStats }}
+               className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
+            >
+              <StatBadge icon={Clapperboard} label="Ads Launched" value="500+" isLight={isLightMode} />
+            </motion.div>
+
           </div>
         </div>
       </div>
-      
-      <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10" />
     </section>
   );
 };
