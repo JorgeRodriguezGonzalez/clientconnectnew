@@ -18,8 +18,6 @@ const slantedMarqueeImages = [
 const BottomSlantedMarquee = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const images = slantedMarqueeImages;
-  
-  // Ref para controlar la pausa sin provocar re-renders
   const isPausedRef = useRef(false);
 
   useEffect(() => {
@@ -30,11 +28,9 @@ const BottomSlantedMarquee = () => {
     const speed = 0.5;
     
     const animate = () => {
-      // Solo movemos si NO está pausado
       if (!isPausedRef.current) {
         const marqueeWidth = marquee.scrollWidth / 3;
         
-        // Movimiento de Izquierda a Derecha
         translateX += speed;
         
         if (translateX >= 0) {
@@ -43,7 +39,6 @@ const BottomSlantedMarquee = () => {
         
         marquee.style.transform = `translateX(${translateX}px)`;
       }
-      
       animationFrameId = requestAnimationFrame(animate);
     };
     
@@ -58,12 +53,16 @@ const BottomSlantedMarquee = () => {
 
   return (
     <div className="w-full overflow-hidden py-24 relative z-20">
-      <div className="flex items-center justify-center" style={{ transform: 'rotate(4.5deg)' }}>
+      {/* 
+          CONTROL DE INCLINACIÓN:
+          Modifica 'rotate(9deg)' para cambiar la pendiente.
+          Más grados = Más inclinado hacia abajo.
+      */}
+      <div className="flex items-center justify-center" style={{ transform: 'rotate(9deg)' }}>
         <div 
           ref={marqueeRef} 
           className="flex gap-6 will-change-transform" 
           style={{ paddingRight: '24px' }}
-          // Eventos para pausar el marquee
           onMouseEnter={() => { isPausedRef.current = true; }}
           onMouseLeave={() => { isPausedRef.current = false; }}
         >
@@ -74,13 +73,8 @@ const BottomSlantedMarquee = () => {
                   key={`${setIndex}-${imgIndex}`} 
                   src={src} 
                   alt={`Marquee Image ${imgIndex + 1}`} 
-                  // CAMBIOS AQUÍ:
-                  // 1. opacity-70 -> opacity-90 (Base más nítida)
-                  // 2. hover:opacity-100 (Totalmente nítida al hover)
-                  // 3. hover:scale-105 (Efecto zoom)
-                  // 4. hover:saturate-110 (Colores más vivos al hover)
-                  // 5. transition-all (Suavidad)
-                  className="w-[320px] h-[370px] object-cover rounded-3xl opacity-90 hover:opacity-100 hover:scale-105 hover:saturate-110 hover:z-10 transition-all duration-300 cursor-pointer"
+                  // CAMBIO: opacity-80 como base
+                  className="w-[320px] h-[370px] object-cover rounded-3xl opacity-80 hover:opacity-100 hover:scale-105 hover:saturate-110 hover:z-10 transition-all duration-300 cursor-pointer"
                   style={{
                     transform: 'skewY(-20deg)',
                     flexShrink: 0,
@@ -97,7 +91,7 @@ const BottomSlantedMarquee = () => {
   );
 };
 
-// --- RESTO DE COMPONENTES AUXILIARES ---
+// --- RESTO DE COMPONENTES AUXILIARES (Sin cambios) ---
 
 type UseCasesShowcaseProps = {
   subText?: string;
@@ -476,7 +470,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* --- BOTTOM MARQUEE (Arriba-Izq -> Abajo-Der) --- */}
+        {/* --- BOTTOM MARQUEE --- */}
         <BottomSlantedMarquee />
 
       </section>
