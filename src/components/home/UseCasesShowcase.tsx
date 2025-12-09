@@ -5,7 +5,7 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 // Utilidad cn
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
-// --- CONSTANTES E IMAGENES DEL MARQUEE (Para el de abajo del todo) ---
+// --- CONSTANTES E IMAGENES DEL MARQUEE ---
 const slantedMarqueeImages = [
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a7_hero-marquee-image-01-cinemaflow-webflow-template.avif',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629aa_hero-marquee-image-02-cinemaflow-webflow-template.avif',
@@ -14,7 +14,7 @@ const slantedMarqueeImages = [
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
 ];
 
-// --- COMPONENTE BottomSlantedMarquee (El de abajo del todo, intacto con tus ajustes) ---
+// --- COMPONENTE BottomSlantedMarquee MODIFICADO ---
 const BottomSlantedMarquee = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const images = slantedMarqueeImages;
@@ -49,11 +49,17 @@ const BottomSlantedMarquee = () => {
   }, [images]);
 
   return (
-    <div className="w-full overflow-hidden py-24 relative z-20">
+    // CAMBIOS AQUÍ:
+    // 1. pt-0: Quitamos padding superior.
+    // 2. -mt-40: Margen negativo fuerte para subirlo y pegarlo al formulario (compensa la rotación).
+    // 3. z-[9999]: Z-index máximo.
+    <div className="w-full overflow-hidden pt-0 pb-24 relative z-[9999] -mt-40 pointer-events-none"> 
+      {/* pointer-events-none en el contenedor padre para que no tape clicks del formulario si se solapa demasiado, 
+          pero reactivamos pointer-events-auto en las imagenes */}
       <div className="flex items-center justify-center" style={{ transform: 'rotate(9deg)' }}>
         <div 
           ref={marqueeRef} 
-          className="flex gap-6 will-change-transform" 
+          className="flex gap-6 will-change-transform pointer-events-auto" // Reactivamos eventos aquí
           style={{ paddingRight: '24px' }}
           onMouseEnter={() => { isPausedRef.current = true; }}
           onMouseLeave={() => { isPausedRef.current = false; }}
@@ -65,7 +71,9 @@ const BottomSlantedMarquee = () => {
                   key={`${setIndex}-${imgIndex}`} 
                   src={src} 
                   alt={`Marquee Image ${imgIndex + 1}`} 
-                  className="w-[320px] h-[370px] object-cover rounded-3xl opacity-80 hover:opacity-100 hover:scale-105 hover:saturate-110 hover:z-10 transition-all duration-300 cursor-pointer"
+                  // CAMBIOS AQUÍ:
+                  // hover:z-[9999] para asegurar que sobresalga
+                  className="w-[320px] h-[370px] object-cover rounded-3xl opacity-80 hover:opacity-100 hover:scale-105 hover:saturate-110 hover:z-[9999] transition-all duration-300 cursor-pointer"
                   style={{
                     transform: 'skewY(-20deg)',
                     flexShrink: 0,
@@ -82,7 +90,7 @@ const BottomSlantedMarquee = () => {
   );
 };
 
-// --- NUEVO COMPONENTE CONTACT FORM ---
+// --- COMPONENTE CONTACT FORM ---
 const ContactForm = () => {
   return (
     <motion.div 
@@ -142,7 +150,7 @@ const ContactForm = () => {
   );
 };
 
-// Componente FadeInText (Auxiliar)
+// Componente FadeInText
 const FadeInText = ({ 
   children, 
   delay = 0, 
@@ -200,12 +208,6 @@ type UseCasesShowcaseProps = {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
-  // Props que antes se usaban para el marquee superior, ya no necesarias pero mantenidas para compatibilidad
-  cardTitle?: string;
-  cardImages?: string[];
-  cardStats?: Array<{ icon: React.ReactNode; label: string }>;
-  cardDescription?: string;
-  cardHref?: string;
 };
 
 const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
@@ -401,12 +403,13 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* CONTENIDO PRINCIPAL MODIFICADO */}
-        <div className="relative pt-48 pb-32 px-4 z-10">
+        {/* CONTENIDO PRINCIPAL (Texto + Formulario) */}
+        {/* CAMBIO AQUÍ: pb-32 reducido a pb-0 para mínima distancia */}
+        <div className="relative pt-48 pb-0 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
 
-              {/* COLUMNA IZQUIERDA - Texto (Antes estaba a la derecha) */}
+              {/* COLUMNA IZQUIERDA - Texto */}
               <div className="flex-1 max-w-[520px]">
                 <FadeInText delay={0.5} direction="up">
                   <div className="text-sm font-medium tracking-[2.2px] uppercase mb-2.5 text-gray-500">
@@ -448,7 +451,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </FadeInText>
               </div>
 
-              {/* COLUMNA DERECHA - Contact Form (Sustituye al Marquee 3D) */}
+              {/* COLUMNA DERECHA - Contact Form */}
               <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[495px] flex items-center justify-center min-h-[400px]">
                  <ContactForm />
               </div>
@@ -457,7 +460,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* --- BOTTOM MARQUEE (Intacto) --- */}
+        {/* --- BOTTOM MARQUEE --- */}
         <BottomSlantedMarquee />
 
       </section>
