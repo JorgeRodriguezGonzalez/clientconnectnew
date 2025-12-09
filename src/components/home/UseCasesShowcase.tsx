@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, Clock, Zap, Mountain, Check } from 'lucide-react';
+import { Sparkles, Clock, Zap, Mountain, Check, Send } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 // Utilidad cn
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
-// --- CONSTANTES E IMAGENES DEL MARQUEE ---
+// --- CONSTANTES E IMAGENES DEL MARQUEE (Para el de abajo del todo) ---
 const slantedMarqueeImages = [
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a7_hero-marquee-image-01-cinemaflow-webflow-template.avif',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629aa_hero-marquee-image-02-cinemaflow-webflow-template.avif',
@@ -14,7 +14,7 @@ const slantedMarqueeImages = [
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
 ];
 
-// --- COMPONENTE BottomSlantedMarquee ACTUALIZADO ---
+// --- COMPONENTE BottomSlantedMarquee (El de abajo del todo, intacto con tus ajustes) ---
 const BottomSlantedMarquee = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const images = slantedMarqueeImages;
@@ -30,13 +30,10 @@ const BottomSlantedMarquee = () => {
     const animate = () => {
       if (!isPausedRef.current) {
         const marqueeWidth = marquee.scrollWidth / 3;
-        
         translateX += speed;
-        
         if (translateX >= 0) {
           translateX = -marqueeWidth;
         }
-        
         marquee.style.transform = `translateX(${translateX}px)`;
       }
       animationFrameId = requestAnimationFrame(animate);
@@ -53,11 +50,6 @@ const BottomSlantedMarquee = () => {
 
   return (
     <div className="w-full overflow-hidden py-24 relative z-20">
-      {/* 
-          CONTROL DE INCLINACIÓN:
-          Modifica 'rotate(9deg)' para cambiar la pendiente.
-          Más grados = Más inclinado hacia abajo.
-      */}
       <div className="flex items-center justify-center" style={{ transform: 'rotate(9deg)' }}>
         <div 
           ref={marqueeRef} 
@@ -73,7 +65,6 @@ const BottomSlantedMarquee = () => {
                   key={`${setIndex}-${imgIndex}`} 
                   src={src} 
                   alt={`Marquee Image ${imgIndex + 1}`} 
-                  // CAMBIO: opacity-80 como base
                   className="w-[320px] h-[370px] object-cover rounded-3xl opacity-80 hover:opacity-100 hover:scale-105 hover:saturate-110 hover:z-10 transition-all duration-300 cursor-pointer"
                   style={{
                     transform: 'skewY(-20deg)',
@@ -91,79 +82,67 @@ const BottomSlantedMarquee = () => {
   );
 };
 
-// --- RESTO DE COMPONENTES AUXILIARES (Sin cambios) ---
-
-type UseCasesShowcaseProps = {
-  subText?: string;
-  heading?: string;
-  highlightText?: string;
-  description?: string;
-  badge?: string;
-  mainTitle?: string;
-  mainTitleHighlight?: string;
-  subtitle?: string;
-  ctaText?: string;
-  ctaHref?: string;
-  cardTitle?: string;
-  cardImages?: string[];
-  cardStats?: Array<{ icon: React.ReactNode; label: string }>;
-  cardDescription?: string;
-  cardHref?: string;
-};
-
-const ThreeDMarquee = ({ images, className }: { images: string[], className?: string }) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsMobile(window.innerWidth < 1024);
-      const handleResize = () => setIsMobile(window.innerWidth < 1024);
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, []);
-
-  const numColumns = isMobile ? 3 : 4;
-  const safeImages = images || [];
-  const chunkSize = Math.ceil(safeImages.length / numColumns);
-  
-  const chunks = Array.from({ length: numColumns }, (_, colIndex) => {
-    const start = colIndex * chunkSize;
-    return safeImages.slice(start, start + chunkSize);
-  });
-
+// --- NUEVO COMPONENTE CONTACT FORM ---
+const ContactForm = () => {
   return (
-    <div className={cn("mx-auto block h-[350px] sm:h-[450px] lg:h-[600px] overflow-hidden rounded-2xl", className)}>
-      <div className="flex w-full h-full items-center justify-center">
-        <div className="w-[1000px] sm:w-[1200px] lg:w-[1548px] h-[1000px] sm:h-[1200px] lg:h-[1548px] shrink-0 scale-[0.4] sm:scale-[0.5] lg:scale-90">
-          <div 
-            style={{ 
-              transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", 
-              transformStyle: "preserve-3d" 
-            }}
-            className="relative top-[280px] sm:top-[400px] lg:top-[600px] left-[5%] sm:left-[5%] lg:left-[10%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
-          >
-            {chunks.map((subarray, colIndex) => (
-              <motion.div
-                animate={{ y: colIndex % 2 === 0 ? 100 : -100 }}
-                transition={{ duration: colIndex % 2 === 0 ? 10 : 15, repeat: Infinity, repeatType: "reverse" }}
-                key={colIndex + "marquee"} className="flex flex-col items-start gap-8">
-                {subarray.map((image, imageIndex) => (
-                  <div className="relative w-full" key={imageIndex + image}>
-                    <motion.img whileHover={{ y: -10 }} transition={{ duration: 0.3, ease: "easeInOut" }}
-                      key={imageIndex + image} src={image} alt={`Image ${imageIndex + 1}`}
-                      className="aspect-[5/4] w-full rounded-lg object-cover ring ring-gray-950/5 hover:shadow-2xl bg-gray-200" />
-                  </div>
-                ))}
-              </motion.div>
-            ))}
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="w-full max-w-md bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] overflow-hidden border border-gray-100 p-8 relative z-20"
+    >
+      <div className="mb-6">
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">Get in touch</h3>
+        <p className="text-gray-500 text-sm">Fill out the form below and we'll start your transformation journey.</p>
+      </div>
+      
+      <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">First Name</label>
+            <input 
+              type="text" 
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+              placeholder="Jane" 
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Last Name</label>
+            <input 
+              type="text" 
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+              placeholder="Doe" 
+            />
           </div>
         </div>
-      </div>
-    </div>
+        
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
+          <input 
+            type="email" 
+            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+            placeholder="jane@company.com" 
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">Message</label>
+          <textarea 
+            rows={4} 
+            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm resize-none" 
+            placeholder="Tell us about your goals..." 
+          />
+        </div>
+        
+        <button className="w-full bg-black text-white font-medium py-3 rounded-lg hover:bg-gray-800 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 mt-2">
+          Send Message <Send size={16} />
+        </button>
+      </form>
+    </motion.div>
   );
 };
 
+// Componente FadeInText (Auxiliar)
 const FadeInText = ({ 
   children, 
   delay = 0, 
@@ -210,6 +189,25 @@ const FadeInText = ({
   );
 };
 
+type UseCasesShowcaseProps = {
+  subText?: string;
+  heading?: string;
+  highlightText?: string;
+  description?: string;
+  badge?: string;
+  mainTitle?: string;
+  mainTitleHighlight?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  // Props que antes se usaban para el marquee superior, ya no necesarias pero mantenidas para compatibilidad
+  cardTitle?: string;
+  cardImages?: string[];
+  cardStats?: Array<{ icon: React.ReactNode; label: string }>;
+  cardDescription?: string;
+  cardHref?: string;
+};
+
 const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   const {
     subText = 'our approach',
@@ -222,18 +220,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
     ctaText = 'Book a Call',
     ctaHref = '#',
-    cardImages = [
-      '/images/3.png',
-      '/images/6.png',
-      '/images/1.jpg',
-      '/images/2.jpg',
-      '/images/3.jpg',
-      '/images/4.jpg',
-      '/images/5.jpg',
-      '/images/6.jpg',
-      '/images/11.jpg',
-      '/images/12.jpg',
-    ],
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -344,9 +330,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                     background: 'linear-gradient(135deg, #67bcb7 0%, #de8363 100%)'
                   }}
                 >
-                  <span 
-                    className="text-[14px] font-normal tracking-[-0.3px] capitalize text-white"
-                  >
+                  <span className="text-[14px] font-normal tracking-[-0.3px] capitalize text-white">
                     {badge}
                   </span>
                 </div>
@@ -417,15 +401,12 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* CONTENIDO PRINCIPAL */}
+        {/* CONTENIDO PRINCIPAL MODIFICADO */}
         <div className="relative pt-48 pb-32 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
 
-              <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[495px] flex items-center justify-center min-h-[400px]">
-                 <ThreeDMarquee images={cardImages} />
-              </div>
-
+              {/* COLUMNA IZQUIERDA - Texto (Antes estaba a la derecha) */}
               <div className="flex-1 max-w-[520px]">
                 <FadeInText delay={0.5} direction="up">
                   <div className="text-sm font-medium tracking-[2.2px] uppercase mb-2.5 text-gray-500">
@@ -466,11 +447,17 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   </p>
                 </FadeInText>
               </div>
+
+              {/* COLUMNA DERECHA - Contact Form (Sustituye al Marquee 3D) */}
+              <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[495px] flex items-center justify-center min-h-[400px]">
+                 <ContactForm />
+              </div>
+
             </div>
           </div>
         </div>
 
-        {/* --- BOTTOM MARQUEE --- */}
+        {/* --- BOTTOM MARQUEE (Intacto) --- */}
         <BottomSlantedMarquee />
 
       </section>
