@@ -197,7 +197,7 @@ const TiltCard = ({
   initial,       
   transition,    
   style,
-  ...props 
+  ...props // Permitimos pasar props extra (como onLayoutAnimationStart)
 }: { 
   children: React.ReactNode, 
   className?: string, 
@@ -245,7 +245,7 @@ const TiltCard = ({
         ...style 
       }}
       className={cn("relative rounded-3xl overflow-hidden transition-colors duration-300", className)}
-      {...props} 
+      {...props} // Spread de props extra
     >
       {children}
     </motion.div>
@@ -275,7 +275,7 @@ const StatBadge = ({ icon: Icon, label, value, isLight }: { icon: any, label: st
 );
 
 // --- MAIN COMPONENT ---
-export const FounderSectionAdapted = () => {
+export const FounderSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLightMode, setIsLightMode] = useState(false);
   const [isLateScroll, setIsLateScroll] = useState(false);
@@ -341,7 +341,7 @@ export const FounderSectionAdapted = () => {
                     : "bg-white/5 border-white/10 text-[#D84315]"
                 )}
               >
-                Growth Partners
+                The Architect
               </motion.div>
 
               {/* Headline */}
@@ -349,8 +349,8 @@ export const FounderSectionAdapted = () => {
                 "font-syne font-bold text-[42px] md:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.03em] transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
               )}>
-                We don't just post. <br/>
-                <span className="text-[#D84315]">We dominate markets.</span>
+                I don't just edit. <br/>
+                <span className="text-[#D84315]">I scale brands.</span>
               </h2>
 
               {/* Description */}
@@ -358,16 +358,16 @@ export const FounderSectionAdapted = () => {
                 "font-inter text-[18px] leading-[1.6] transition-colors duration-0 max-w-md",
                 isLightMode ? "text-gray-500" : "text-gray-400"
               )}>
-                Most agencies deliver metrics. We deliver <strong className={isLightMode ? "text-gray-900" : "text-white"}>Revenue</strong>. 
-                Our ecosystem integrates data-driven strategy, creative production, and omnichannel media buying into one cohesive growth engine.
+                Most editors deliver files. I deliver <strong className={isLightMode ? "text-gray-900" : "text-white"}>ROAS</strong>. 
+                My workflow integrates creative strategy, high-end production, and media buying logic into one cohesive growth engine.
               </p>
 
               {/* Checklist */}
               <div className="flex flex-col gap-4 mt-2">
                 {[
-                  "Full-Funnel Strategy",
-                  "Performance Creative",
-                  "Advanced Analytics"
+                  "Creative Strategist Mindset",
+                  "Direct Response Editing",
+                  "Performance Data Analysis"
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 group cursor-default">
                     <div className={cn(
@@ -409,7 +409,7 @@ export const FounderSectionAdapted = () => {
             >
 
               {/* 
-                 ITEM 1: TEAM CARD (IMAGEN RESTAURADA AL ORIGINAL PARA FLUIDEZ)
+                 ITEM 1: MIGUEL CARD
               */}
               <TiltCard 
                 layoutId="miguel-card"
@@ -447,7 +447,7 @@ export const FounderSectionAdapted = () => {
                 <div className="absolute inset-0 bg-gray-900">
                   <motion.img 
                     src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop" 
-                    alt="Agency Team" 
+                    alt="Founder" 
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
                     transition={{ duration: 0.8, ease: "easeInOut" }}
                     className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0"
@@ -457,8 +457,8 @@ export const FounderSectionAdapted = () => {
                   
                   <div className="absolute bottom-6 left-6 right-6 z-30">
                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
-                       <p className="text-white font-syne font-bold text-lg">The Squad</p>
-                       <p className="text-white/60 font-inter text-xs">Experts across every channel</p>
+                       <p className="text-white font-syne font-bold text-lg">Miguel (Founder)</p>
+                       <p className="text-white/60 font-inter text-xs">Your Partner in Scale</p>
                     </div>
                   </div>
                 </div>
@@ -517,9 +517,9 @@ export const FounderSectionAdapted = () => {
                   : "bg-zinc-900 border-zinc-800"
               )}>
                  <div className="flex-1">
-                    <h3 className="text-white font-syne font-bold text-2xl mb-2">The Unified Ecosystem</h3>
+                    <h3 className="text-white font-syne font-bold text-2xl mb-2">The "One Workflow" System</h3>
                     <p className="text-white/80 font-inter font-light">
-                      We eliminate the friction between departments. One team, one goal, zero wasted budget.
+                      We eliminate the friction between production and distribution. One team, one goal, zero wasted budget.
                     </p>
                  </div>
                  <div className="flex gap-4">
@@ -620,7 +620,7 @@ export const FounderSectionAdapted = () => {
                style={{ y: yStats }}
                className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
             >
-              <StatBadge icon={Clapperboard} label="Ads Launched" value="500+" isLight={isLightMode} />
+              <StatBadge icon={Clapperboard} label="Ads Created" value="500+" isLight={isLightMode} />
             </motion.div>
 
           </div>
@@ -630,4 +630,4 @@ export const FounderSectionAdapted = () => {
   );
 };
 
-export default FounderSectionAdapted;
+export default FounderSection;
