@@ -192,8 +192,9 @@ GlowingEffect.displayName = "GlowingEffect";
 
 // --- CONSTANTES E IMAGENES DEL MARQUEE ---
 const slantedMarqueeImages = [
-  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a7_hero-marquee-image-01-cinemaflow-webflow-template.avif',
-  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629aa_hero-marquee-image-02-cinemaflow-webflow-template.avif',
+  // CAMBIO: Nuevas imágenes añadidas al principio
+  '/images/nanotise-vertical.jpg',
+  '/images/assetplumbing-vertical.png',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629ab_hero-marquee-image-03-cinemaflow-webflow-template.avif',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a8_hero-marquee-image-04-cinemaflow-webflow-template.avif',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
@@ -267,14 +268,16 @@ const BottomSlantedMarquee = () => {
   );
 };
 
-// --- COMPONENTE CONTACT FORM MODIFICADO ---
+// --- COMPONENTE CONTACT FORM ---
 const ContactForm = () => {
   return (
     <motion.div 
-      // CAMBIO: Animación Fade In + Blur (Glass Morph Style) similar a los textos
-      initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
+      initial={{ opacity: 0, filter: "blur(10px)", y: 30 }}
       whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      // CAMBIO: amount: 0.5 requiere que el 50% del form sea visible antes de animar
+      viewport={{ once: true, amount: 0.5 }} 
+      // CAMBIO: delay: 0.2 añade un pequeño retraso extra
+      transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
       className="w-full max-w-xl relative group z-20"
     >
       <div className="absolute -inset-[1px] rounded-none">
@@ -288,7 +291,6 @@ const ContactForm = () => {
         />
       </div>
 
-      {/* CAMBIO: bg-white/80 + backdrop-blur-xl para efecto Glass Morph */}
       <div className="relative bg-white/80 backdrop-blur-xl border border-zinc-200/50 p-8 shadow-2xl shadow-gray-200/50 rounded-none">
         <div className="mb-6">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">Get in touch</h3>
@@ -545,7 +547,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         </div>
 
         {/* CONTENIDO PRINCIPAL (Texto + Formulario) */}
-        {/* CAMBIO: pt-0 y -mt-12 para pegar el contenido al título */}
         <div className="relative pt-0 -mt-12 pb-0 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
