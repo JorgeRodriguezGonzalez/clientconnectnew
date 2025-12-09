@@ -23,7 +23,6 @@ export function FinalHero() {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    // MODIFICADO: Ahora el scroll trackea hasta que el elemento sale por arriba
     offset: ["start start", "end start"], 
   });
 
@@ -36,11 +35,10 @@ export function FinalHero() {
     ]
   );
 
-  // MODIFICADO: Ajustado para el nuevo rango de scroll
   const sparklesScale = useTransform(
     scrollYProgress,
     [0, 1], 
-    [1, 2.6] // Crece hasta 2.5 veces su tamaño
+    [1, 2.6]
   );
 
   useEffect(() => {
@@ -69,6 +67,9 @@ export function FinalHero() {
   const currentWord = words[titleNumber];
   const currentWidth = wordWidths[currentWord] || 100;
 
+  // CAMBIO: Definimos la duración de la animación aquí para usarla en todos lados (más rápida: 4s)
+  const colorDuration = 4;
+
   return (
     <motion.div
       ref={ref}
@@ -92,7 +93,8 @@ export function FinalHero() {
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
                   width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  "--gradient-color": { duration: 8, ease: "linear", repeat: Infinity }
+                  // CAMBIO: Duración más rápida
+                  "--gradient-color": { duration: colorDuration, ease: "linear", repeat: Infinity }
                 }}
                 style={{ 
                   backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`,
@@ -120,7 +122,8 @@ export function FinalHero() {
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
                   width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  "--gradient-color": { duration: 8, ease: "linear", repeat: Infinity }
+                  // CAMBIO: Duración más rápida
+                  "--gradient-color": { duration: colorDuration, ease: "linear", repeat: Infinity }
                 }}
                 style={{ 
                   backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`,
@@ -156,7 +159,8 @@ export function FinalHero() {
                 }}
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  backgroundColor: { duration: 8, ease: "linear", repeat: Infinity }
+                  // CAMBIO: Duración más rápida
+                  backgroundColor: { duration: colorDuration, ease: "linear", repeat: Infinity }
                 }}
                 className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl"
               />
@@ -171,7 +175,8 @@ export function FinalHero() {
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
                   width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  backgroundColor: { duration: 8, ease: "linear", repeat: Infinity }
+                  // CAMBIO: Duración más rápida
+                  backgroundColor: { duration: colorDuration, ease: "linear", repeat: Infinity }
                 }}
                 className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl"
               ></motion.div>
@@ -186,7 +191,8 @@ export function FinalHero() {
                 transition={{ 
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
                   width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  backgroundColor: { duration: 8, ease: "linear", repeat: Infinity }
+                  // CAMBIO: Duración más rápida
+                  backgroundColor: { duration: colorDuration, ease: "linear", repeat: Infinity }
                 }}
                 className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]"
               ></motion.div>
@@ -202,10 +208,14 @@ export function FinalHero() {
               initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
-              className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center text-white relative z-50"
+              // CAMBIOS:
+              // 1. font-bold -> font-semibold (100 menos de grosor)
+              // 2. text-[32px] -> text-[34px], md:text-[38px] -> md:text-[40px], lg:text-[48px] -> lg:text-[50px] (2px más grande)
+              className="text-[34px] md:text-[40px] lg:text-[50px] font-semibold leading-[1.1] tracking-tight text-center text-white relative z-50"
               style={{ fontFamily: '"Inter Display", sans-serif' }}
             >
-              We Bring{" "}
+              {/* CAMBIO: Texto "We Bring" por "Bringing" */}
+              Bringing{" "}
               <motion.span
                 className="relative inline-flex items-center overflow-hidden"
                 animate={{ width: currentWidth }}
@@ -215,7 +225,8 @@ export function FinalHero() {
                 {words.map((word, index) => (
                   <motion.span
                     key={index}
-                    className="font-bold"
+                    // CAMBIO: Se cambió font-bold a font-semibold aquí también para mantener consistencia
+                    className="font-semibold"
                     initial={{ opacity: 0, y: -100 }}
                     transition={{ type: "spring", stiffness: 50, opacity: { duration: 0.2 } }}
                     animate={
@@ -240,7 +251,8 @@ export function FinalHero() {
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
             style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
           >
-            We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
+            {/* CAMBIO: Texto del subtítulo actualizado */}
+            Dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising
           </motion.p>
 
           {/* CTAs */}
@@ -250,8 +262,9 @@ export function FinalHero() {
             transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
           >
-            <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
-              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+            {/* CAMBIO: Botón más grande (h-52px, px-6, text-16px) */}
+            <a href="#contact" className="flex items-center justify-center gap-[7px] h-[52px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
+              <p className="text-[16px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
                 How we do it
               </p>
             </a>
@@ -261,33 +274,36 @@ export function FinalHero() {
                 borderColor: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
               }}
               transition={{
-                duration: 8,
+                duration: colorDuration, // CAMBIO: Duración rápida
                 ease: "linear",
                 repeat: Infinity
               }}
-              className="flex items-center justify-center gap-1.5 h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border rounded-[50px] px-5 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]"
+              // CAMBIO: Botón más grande (h-52px, px-6)
+              className="flex items-center justify-center gap-1.5 h-[52px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(103,232,249,0.5)] relative z-[100] will-change-[background-color,box-shadow]"
             >
               <motion.div 
-                className="w-[18px] h-[14px] relative overflow-hidden"
+                // CAMBIO: Icono ligeramente más grande
+                className="w-[20px] h-[16px] relative overflow-hidden"
                 animate={{
                   color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
                 }}
                 transition={{
-                  duration: 8,
+                  duration: colorDuration, // CAMBIO: Duración rápida
                   ease: "linear",
                   repeat: Infinity
                 }}
               >
-                <Calendar className="w-[17px] h-[14px]" />
+                <Calendar className="w-[20px] h-[16px]" />
               </motion.div>
               <motion.p 
-                className="text-[14px] font-medium leading-5 whitespace-nowrap z-[1]" 
+                // CAMBIO: Texto más grande (16px)
+                className="text-[16px] font-medium leading-5 whitespace-nowrap z-[1]" 
                 style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
                 animate={{
                   color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
                 }}
                 transition={{
-                  duration: 8,
+                  duration: colorDuration, // CAMBIO: Duración rápida
                   ease: "linear",
                   repeat: Infinity
                 }}
@@ -316,7 +332,7 @@ export function FinalHero() {
                     color: ["#edbf86", "#de8363", "#67bcb7", "#edbf86"]
                   }}
                   transition={{
-                    duration: 8,
+                    duration: colorDuration, // CAMBIO: Duración rápida
                     ease: "linear",
                     repeat: Infinity
                   }}
