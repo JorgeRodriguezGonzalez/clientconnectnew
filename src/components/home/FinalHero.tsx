@@ -406,7 +406,7 @@ type UseCasesShowcaseProps = {
   ctaHref?: string;
 };
 
-const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
+const FinalHero = (props: UseCasesShowcaseProps) => {
   const {
     subText = 'our approach',
     heading = 'Marketing strategies that transform your business into',
@@ -628,5 +628,5 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
   );
 };
 
-export { UseCasesShowcase };
-export default UseCasesShowcase;
+export { FinalHero };
+export default FinalHero;
