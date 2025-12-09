@@ -1,9 +1,83 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Clock, Zap, Mountain, Check } from 'lucide-react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 // Utilidad cn
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
+
+// --- CONSTANTES E IMAGENES DEL MARQUEE (Del primer componente) ---
+const slantedMarqueeImages = [
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a7_hero-marquee-image-01-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629aa_hero-marquee-image-02-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629ab_hero-marquee-image-03-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a8_hero-marquee-image-04-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
+];
+
+// --- NUEVO COMPONENTE: BottomSlantedMarquee (Lógica portada del Hero) ---
+const BottomSlantedMarquee = () => {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const images = slantedMarqueeImages;
+
+  useEffect(() => {
+    const marquee = marqueeRef.current;
+    if (!marquee) return;
+    let animationFrameId: number;
+    let translateX = 0;
+    const speed = 0.5;
+    
+    const animate = () => {
+      translateX -= speed;
+      // Asumimos que hay 3 sets de imágenes, reseteamos cuando pasa el primer set
+      const marqueeWidth = marquee.scrollWidth / 3;
+      
+      if (Math.abs(translateX) >= marqueeWidth) {
+        translateX = 0;
+      }
+      
+      marquee.style.transform = `translateX(${translateX}px)`;
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [images]);
+
+  return (
+    <div className="w-full overflow-hidden py-24 relative z-20">
+      <div className="flex items-center justify-center" style={{ transform: 'rotate(-4.5deg)' }}>
+        <div ref={marqueeRef} className="flex gap-6 will-change-transform" style={{ paddingRight: '24px' }}>
+          {[...Array(3)].map((_, setIndex) => (
+            <div key={setIndex} className="flex gap-6 flex-shrink-0">
+              {images.map((src, imgIndex) => (
+                <img 
+                  key={`${setIndex}-${imgIndex}`} 
+                  src={src} 
+                  alt={`Marquee Image ${imgIndex + 1}`} 
+                  // MISMOS ESTILOS QUE EL HERO ORIGINAL
+                  className="w-[320px] h-[370px] object-cover rounded-3xl opacity-70" 
+                  style={{
+                    transform: 'skewY(20deg)',
+                    flexShrink: 0,
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)' // Añadí un poco de sombra para que resalte
+                  }} 
+                  loading="eager" 
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- RESTO DE COMPONENTES AUXILIARES ---
 
 type UseCasesShowcaseProps = {
   subText?: string;
@@ -16,7 +90,6 @@ type UseCasesShowcaseProps = {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
-  // Props para el Marquee
   cardTitle?: string;
   cardImages?: string[];
   cardStats?: Array<{ icon: React.ReactNode; label: string }>;
@@ -24,14 +97,13 @@ type UseCasesShowcaseProps = {
   cardHref?: string;
 };
 
-// --- COMPONENTE ThreeDMarquee ACTUALIZADO ---
+// --- COMPONENTE ThreeDMarquee (Existente) ---
 const ThreeDMarquee = ({ images, className }: { images: string[], className?: string }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setIsMobile(window.innerWidth < 1024);
-      
       const handleResize = () => setIsMobile(window.innerWidth < 1024);
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
@@ -39,7 +111,6 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
   }, []);
 
   const numColumns = isMobile ? 3 : 4;
-  
   const safeImages = images || [];
   const chunkSize = Math.ceil(safeImages.length / numColumns);
   
@@ -57,9 +128,6 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
               transform: "rotateX(35deg) rotateY(0deg) rotateZ(-25deg)", 
               transformStyle: "preserve-3d" 
             }}
-            // AJUSTES DE POSICIÓN:
-            // 1. top: Reducido a 600px en desktop (para subirlas más arriba).
-            // 2. left: Mantenido en 10% para que sigan un poco a la izquierda (pero no tanto como antes).
             className="relative top-[280px] sm:top-[400px] lg:top-[600px] left-[5%] sm:left-[5%] lg:left-[10%] grid w-full h-full origin-top-left grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
           >
             {chunks.map((subarray, colIndex) => (
@@ -142,9 +210,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     subtitle = 'Strategic marketing solutions that drive growth, build brands, and deliver measurable results for your business.',
     ctaText = 'Book a Call',
     ctaHref = '#',
-    // LISTA DE IMÁGENES ACTUALIZADA
-    // Eliminadas: 1.png, 2.png, 4.png, 5.png
-    // Añadidas: 11.jpg, 12.jpg
     cardImages = [
       '/images/3.png',
       '/images/6.png',
@@ -238,7 +303,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
   return (
     <motion.div className="pt-16" style={{ backgroundColor }}>
-      <section ref={ref} className="relative">
+      <section ref={ref} className="relative pb-10"> {/* Añadido pb-10 */}
         {/* ARCO DE FONDO */}
         <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none z-0">
           <motion.div
@@ -344,7 +409,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* CONTENIDO PRINCIPAL */}
+        {/* CONTENIDO PRINCIPAL (3D Marquee + Texto) */}
         <div className="relative pt-48 pb-32 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
@@ -398,6 +463,10 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
             </div>
           </div>
         </div>
+
+        {/* --- NUEVO BOTTOM MARQUEE --- */}
+        <BottomSlantedMarquee />
+
       </section>
     </motion.div>
   );
