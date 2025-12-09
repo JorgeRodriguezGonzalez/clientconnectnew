@@ -267,13 +267,14 @@ const BottomSlantedMarquee = () => {
   );
 };
 
-// --- COMPONENTE CONTACT FORM ---
+// --- COMPONENTE CONTACT FORM MODIFICADO ---
 const ContactForm = () => {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      // CAMBIO: Animación Fade In + Blur (Glass Morph Style) similar a los textos
+      initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
+      whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
       className="w-full max-w-xl relative group z-20"
     >
       <div className="absolute -inset-[1px] rounded-none">
@@ -287,7 +288,8 @@ const ContactForm = () => {
         />
       </div>
 
-      <div className="relative bg-white border border-zinc-200 p-8 shadow-2xl shadow-gray-200/50 rounded-none">
+      {/* CAMBIO: bg-white/80 + backdrop-blur-xl para efecto Glass Morph */}
+      <div className="relative bg-white/80 backdrop-blur-xl border border-zinc-200/50 p-8 shadow-2xl shadow-gray-200/50 rounded-none">
         <div className="mb-6">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">Get in touch</h3>
           <p className="text-gray-500 text-sm">Fill out the form below and we'll start your transformation journey.</p>
@@ -299,7 +301,7 @@ const ContactForm = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1.5">First Name</label>
               <input 
                 type="text" 
-                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+                className="w-full px-4 py-2.5 bg-white/50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm backdrop-blur-sm" 
                 placeholder="Jane" 
               />
             </div>
@@ -307,7 +309,7 @@ const ContactForm = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1.5">Last Name</label>
               <input 
                 type="text" 
-                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+                className="w-full px-4 py-2.5 bg-white/50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm backdrop-blur-sm" 
                 placeholder="Doe" 
               />
             </div>
@@ -317,7 +319,7 @@ const ContactForm = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
             <input 
               type="email" 
-              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+              className="w-full px-4 py-2.5 bg-white/50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm backdrop-blur-sm" 
               placeholder="jane@company.com" 
             />
           </div>
@@ -326,7 +328,7 @@ const ContactForm = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Message</label>
             <textarea 
               rows={3} 
-              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm resize-none" 
+              className="w-full px-4 py-2.5 bg-white/50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm resize-none backdrop-blur-sm" 
               placeholder="Tell us about your goals..." 
             />
           </div>
@@ -503,8 +505,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
             <div className="flex flex-col items-center gap-8">
-              {/* Badge eliminado */}
-
+              
               <FadeInText delay={0.3}>
                 <div className="w-full max-w-[600px] mx-auto">
                   <motion.h1 
@@ -544,7 +545,8 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         </div>
 
         {/* CONTENIDO PRINCIPAL (Texto + Formulario) */}
-        <div className="relative pt-12 pb-0 px-4 z-10">
+        {/* CAMBIO: pt-0 y -mt-12 para pegar el contenido al título */}
+        <div className="relative pt-0 -mt-12 pb-0 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
 
@@ -591,7 +593,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               </div>
 
               {/* COLUMNA DERECHA - Contact Form */}
-              {/* CAMBIO: Contenedor más ancho (max-w-[600px]) */}
               <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[600px] flex items-center justify-center min-h-[400px]">
                  <ContactForm />
               </div>
