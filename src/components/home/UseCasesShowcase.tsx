@@ -18,6 +18,9 @@ const slantedMarqueeImages = [
 const BottomSlantedMarquee = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const images = slantedMarqueeImages;
+  
+  // Ref para controlar la pausa sin provocar re-renders
+  const isPausedRef = useRef(false);
 
   useEffect(() => {
     const marquee = marqueeRef.current;
@@ -27,16 +30,20 @@ const BottomSlantedMarquee = () => {
     const speed = 0.5;
     
     const animate = () => {
-      const marqueeWidth = marquee.scrollWidth / 3;
-
-      // Movimiento de Izquierda a Derecha
-      translateX += speed;
-      
-      if (translateX >= 0) {
-        translateX = -marqueeWidth;
+      // Solo movemos si NO está pausado
+      if (!isPausedRef.current) {
+        const marqueeWidth = marquee.scrollWidth / 3;
+        
+        // Movimiento de Izquierda a Derecha
+        translateX += speed;
+        
+        if (translateX >= 0) {
+          translateX = -marqueeWidth;
+        }
+        
+        marquee.style.transform = `translateX(${translateX}px)`;
       }
       
-      marquee.style.transform = `translateX(${translateX}px)`;
       animationFrameId = requestAnimationFrame(animate);
     };
     
@@ -51,9 +58,15 @@ const BottomSlantedMarquee = () => {
 
   return (
     <div className="w-full overflow-hidden py-24 relative z-20">
-      {/* CAMBIO 1: rotate(4.5deg) positivo para pendiente descendente (Arriba-Izq a Abajo-Der) */}
       <div className="flex items-center justify-center" style={{ transform: 'rotate(4.5deg)' }}>
-        <div ref={marqueeRef} className="flex gap-6 will-change-transform" style={{ paddingRight: '24px' }}>
+        <div 
+          ref={marqueeRef} 
+          className="flex gap-6 will-change-transform" 
+          style={{ paddingRight: '24px' }}
+          // Eventos para pausar el marquee
+          onMouseEnter={() => { isPausedRef.current = true; }}
+          onMouseLeave={() => { isPausedRef.current = false; }}
+        >
           {[...Array(3)].map((_, setIndex) => (
             <div key={setIndex} className="flex gap-6 flex-shrink-0">
               {images.map((src, imgIndex) => (
@@ -61,9 +74,14 @@ const BottomSlantedMarquee = () => {
                   key={`${setIndex}-${imgIndex}`} 
                   src={src} 
                   alt={`Marquee Image ${imgIndex + 1}`} 
-                  className="w-[320px] h-[370px] object-cover rounded-3xl opacity-70" 
+                  // CAMBIOS AQUÍ:
+                  // 1. opacity-70 -> opacity-90 (Base más nítida)
+                  // 2. hover:opacity-100 (Totalmente nítida al hover)
+                  // 3. hover:scale-105 (Efecto zoom)
+                  // 4. hover:saturate-110 (Colores más vivos al hover)
+                  // 5. transition-all (Suavidad)
+                  className="w-[320px] h-[370px] object-cover rounded-3xl opacity-90 hover:opacity-100 hover:scale-105 hover:saturate-110 hover:z-10 transition-all duration-300 cursor-pointer"
                   style={{
-                    // CAMBIO 2: skewY(-20deg) negativo para compensar la nueva rotación
                     transform: 'skewY(-20deg)',
                     flexShrink: 0,
                     boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
@@ -79,8 +97,7 @@ const BottomSlantedMarquee = () => {
   );
 };
 
-// --- RESTO DE COMPONENTES (ThreeDMarquee, FadeInText, UseCasesShowcase) ---
-// (No cambian, pero se incluyen para el contexto completo)
+// --- RESTO DE COMPONENTES AUXILIARES ---
 
 type UseCasesShowcaseProps = {
   subText?: string;
