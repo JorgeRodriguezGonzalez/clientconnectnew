@@ -15,7 +15,6 @@ const slantedMarqueeImages = [
 ];
 
 // --- COMPONENTE BottomSlantedMarquee ACTUALIZADO ---
-// Ahora las imágenes se mueven de Izquierda a Derecha.
 const BottomSlantedMarquee = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const images = slantedMarqueeImages;
@@ -28,16 +27,11 @@ const BottomSlantedMarquee = () => {
     const speed = 0.5;
     
     const animate = () => {
-      // Calculamos el ancho de un set de imágenes (asumiendo que hay 3 sets)
       const marqueeWidth = marquee.scrollWidth / 3;
 
-      // CAMBIO: Aumentamos X para mover hacia la derecha
+      // Movimiento de Izquierda a Derecha
       translateX += speed;
       
-      // CAMBIO: Lógica de reinicio invertida
-      // Si llegamos a 0 (o más), significa que hemos mostrado todo el bloque "izquierdo"
-      // y volvemos a saltar hacia atrás (-marqueeWidth) para continuar el loop.
-      // El salto inicial de 0 a -marqueeWidth en el primer frame es invisible porque Set 1 == Set 2.
       if (translateX >= 0) {
         translateX = -marqueeWidth;
       }
@@ -57,8 +51,8 @@ const BottomSlantedMarquee = () => {
 
   return (
     <div className="w-full overflow-hidden py-24 relative z-20">
-      <div className="flex items-center justify-center" style={{ transform: 'rotate(-4.5deg)' }}>
-        {/* El paddingRight asegura espacio visual si fuera necesario */}
+      {/* CAMBIO 1: rotate(4.5deg) positivo para pendiente descendente (Arriba-Izq a Abajo-Der) */}
+      <div className="flex items-center justify-center" style={{ transform: 'rotate(4.5deg)' }}>
         <div ref={marqueeRef} className="flex gap-6 will-change-transform" style={{ paddingRight: '24px' }}>
           {[...Array(3)].map((_, setIndex) => (
             <div key={setIndex} className="flex gap-6 flex-shrink-0">
@@ -69,7 +63,8 @@ const BottomSlantedMarquee = () => {
                   alt={`Marquee Image ${imgIndex + 1}`} 
                   className="w-[320px] h-[370px] object-cover rounded-3xl opacity-70" 
                   style={{
-                    transform: 'skewY(20deg)',
+                    // CAMBIO 2: skewY(-20deg) negativo para compensar la nueva rotación
+                    transform: 'skewY(-20deg)',
                     flexShrink: 0,
                     boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
                   }} 
@@ -84,7 +79,8 @@ const BottomSlantedMarquee = () => {
   );
 };
 
-// --- RESTO DE COMPONENTES AUXILIARES ---
+// --- RESTO DE COMPONENTES (ThreeDMarquee, FadeInText, UseCasesShowcase) ---
+// (No cambian, pero se incluyen para el contexto completo)
 
 type UseCasesShowcaseProps = {
   subText?: string;
@@ -104,7 +100,6 @@ type UseCasesShowcaseProps = {
   cardHref?: string;
 };
 
-// Componente ThreeDMarquee (Sin cambios)
 const ThreeDMarquee = ({ images, className }: { images: string[], className?: string }) => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -158,7 +153,6 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
   );
 };
 
-// Componente FadeInText (Sin cambios)
 const FadeInText = ({ 
   children, 
   delay = 0, 
@@ -332,7 +326,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         <div className="absolute -top-[254px] left-0 right-0 z-50">
           <div className="max-w-[1225px] mx-auto px-4">
             <div className="flex flex-col items-center gap-8">
-              {/* Badge */}
               <FadeInText delay={1.2}>
                 <div 
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)] mb-[6px]"
@@ -348,7 +341,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </div>
               </FadeInText>
 
-              {/* Main Title */}
               <FadeInText delay={0.3}>
                 <div className="w-full max-w-[600px] mx-auto">
                   <motion.h1 
@@ -384,7 +376,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </div>
               </FadeInText>
 
-              {/* Subtitle */}
               <FadeInText delay={0.4}>
                 <div className="w-full max-w-[500px]">
                   <motion.p 
@@ -396,7 +387,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                 </div>
               </FadeInText>
 
-              {/* CTA Button */}
               <FadeInText delay={0.5}>
                 <a 
                   href={ctaHref} 
@@ -416,17 +406,15 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* CONTENIDO PRINCIPAL (3D Marquee + Texto) */}
+        {/* CONTENIDO PRINCIPAL */}
         <div className="relative pt-48 pb-32 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
 
-              {/* COLUMNA IZQUIERDA - ThreeDMarquee */}
               <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[495px] flex items-center justify-center min-h-[400px]">
                  <ThreeDMarquee images={cardImages} />
               </div>
 
-              {/* COLUMNA DERECHA - Texto */}
               <div className="flex-1 max-w-[520px]">
                 <FadeInText delay={0.5} direction="up">
                   <div className="text-sm font-medium tracking-[2.2px] uppercase mb-2.5 text-gray-500">
@@ -471,7 +459,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* --- BOTTOM MARQUEE (Izquierda -> Derecha) --- */}
+        {/* --- BOTTOM MARQUEE (Arriba-Izq -> Abajo-Der) --- */}
         <BottomSlantedMarquee />
 
       </section>
