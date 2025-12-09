@@ -409,7 +409,7 @@ export const FounderSectionAdapted = () => {
             >
 
               {/* 
-                 ITEM 1: TEAM CARD
+                 ITEM 1: TEAM CARD (IMAGEN RESTAURADA AL ORIGINAL PARA FLUIDEZ)
               */}
               <TiltCard 
                 layoutId="miguel-card"
@@ -446,7 +446,7 @@ export const FounderSectionAdapted = () => {
 
                 <div className="absolute inset-0 bg-gray-900">
                   <motion.img 
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" 
+                    src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop" 
                     alt="Agency Team" 
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
                     transition={{ duration: 0.8, ease: "easeInOut" }}
