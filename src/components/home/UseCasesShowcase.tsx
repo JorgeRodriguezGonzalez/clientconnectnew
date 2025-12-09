@@ -49,17 +49,14 @@ const BottomSlantedMarquee = () => {
   }, [images]);
 
   return (
-    // CAMBIOS AQUÍ:
-    // 1. pt-0: Quitamos padding superior.
-    // 2. -mt-40: Margen negativo fuerte para subirlo y pegarlo al formulario (compensa la rotación).
-    // 3. z-[9999]: Z-index máximo.
-    <div className="w-full overflow-hidden pt-0 pb-24 relative z-[9999] -mt-40 pointer-events-none"> 
-      {/* pointer-events-none en el contenedor padre para que no tape clicks del formulario si se solapa demasiado, 
-          pero reactivamos pointer-events-auto en las imagenes */}
+    // CAMBIOS AQUI:
+    // 1. py-52: Mucho padding vertical (arriba y abajo) para dar altura y evitar recortes.
+    // 2. -mt-20: Margen negativo más suave (antes -40) para separar visualmente del bloque superior.
+    <div className="w-full overflow-hidden py-52 relative z-[9999] -mt-20 pointer-events-none">
       <div className="flex items-center justify-center" style={{ transform: 'rotate(9deg)' }}>
         <div 
           ref={marqueeRef} 
-          className="flex gap-6 will-change-transform pointer-events-auto" // Reactivamos eventos aquí
+          className="flex gap-6 will-change-transform pointer-events-auto"
           style={{ paddingRight: '24px' }}
           onMouseEnter={() => { isPausedRef.current = true; }}
           onMouseLeave={() => { isPausedRef.current = false; }}
@@ -71,8 +68,6 @@ const BottomSlantedMarquee = () => {
                   key={`${setIndex}-${imgIndex}`} 
                   src={src} 
                   alt={`Marquee Image ${imgIndex + 1}`} 
-                  // CAMBIOS AQUÍ:
-                  // hover:z-[9999] para asegurar que sobresalga
                   className="w-[320px] h-[370px] object-cover rounded-3xl opacity-80 hover:opacity-100 hover:scale-105 hover:saturate-110 hover:z-[9999] transition-all duration-300 cursor-pointer"
                   style={{
                     transform: 'skewY(-20deg)',
@@ -404,7 +399,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
         </div>
 
         {/* CONTENIDO PRINCIPAL (Texto + Formulario) */}
-        {/* CAMBIO AQUÍ: pb-32 reducido a pb-0 para mínima distancia */}
         <div className="relative pt-48 pb-0 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
