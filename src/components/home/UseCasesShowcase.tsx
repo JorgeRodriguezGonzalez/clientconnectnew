@@ -5,7 +5,7 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 // Utilidad cn
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
-// --- CONSTANTES E IMAGENES DEL MARQUEE (Del primer componente) ---
+// --- CONSTANTES E IMAGENES DEL MARQUEE ---
 const slantedMarqueeImages = [
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a7_hero-marquee-image-01-cinemaflow-webflow-template.avif',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629aa_hero-marquee-image-02-cinemaflow-webflow-template.avif',
@@ -14,7 +14,8 @@ const slantedMarqueeImages = [
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
 ];
 
-// --- NUEVO COMPONENTE: BottomSlantedMarquee (Lógica portada del Hero) ---
+// --- COMPONENTE BottomSlantedMarquee ACTUALIZADO ---
+// Ahora las imágenes se mueven de Izquierda a Derecha.
 const BottomSlantedMarquee = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const images = slantedMarqueeImages;
@@ -27,12 +28,18 @@ const BottomSlantedMarquee = () => {
     const speed = 0.5;
     
     const animate = () => {
-      translateX -= speed;
-      // Asumimos que hay 3 sets de imágenes, reseteamos cuando pasa el primer set
+      // Calculamos el ancho de un set de imágenes (asumiendo que hay 3 sets)
       const marqueeWidth = marquee.scrollWidth / 3;
+
+      // CAMBIO: Aumentamos X para mover hacia la derecha
+      translateX += speed;
       
-      if (Math.abs(translateX) >= marqueeWidth) {
-        translateX = 0;
+      // CAMBIO: Lógica de reinicio invertida
+      // Si llegamos a 0 (o más), significa que hemos mostrado todo el bloque "izquierdo"
+      // y volvemos a saltar hacia atrás (-marqueeWidth) para continuar el loop.
+      // El salto inicial de 0 a -marqueeWidth en el primer frame es invisible porque Set 1 == Set 2.
+      if (translateX >= 0) {
+        translateX = -marqueeWidth;
       }
       
       marquee.style.transform = `translateX(${translateX}px)`;
@@ -51,6 +58,7 @@ const BottomSlantedMarquee = () => {
   return (
     <div className="w-full overflow-hidden py-24 relative z-20">
       <div className="flex items-center justify-center" style={{ transform: 'rotate(-4.5deg)' }}>
+        {/* El paddingRight asegura espacio visual si fuera necesario */}
         <div ref={marqueeRef} className="flex gap-6 will-change-transform" style={{ paddingRight: '24px' }}>
           {[...Array(3)].map((_, setIndex) => (
             <div key={setIndex} className="flex gap-6 flex-shrink-0">
@@ -59,12 +67,11 @@ const BottomSlantedMarquee = () => {
                   key={`${setIndex}-${imgIndex}`} 
                   src={src} 
                   alt={`Marquee Image ${imgIndex + 1}`} 
-                  // MISMOS ESTILOS QUE EL HERO ORIGINAL
                   className="w-[320px] h-[370px] object-cover rounded-3xl opacity-70" 
                   style={{
                     transform: 'skewY(20deg)',
                     flexShrink: 0,
-                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)' // Añadí un poco de sombra para que resalte
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
                   }} 
                   loading="eager" 
                 />
@@ -97,7 +104,7 @@ type UseCasesShowcaseProps = {
   cardHref?: string;
 };
 
-// --- COMPONENTE ThreeDMarquee (Existente) ---
+// Componente ThreeDMarquee (Sin cambios)
 const ThreeDMarquee = ({ images, className }: { images: string[], className?: string }) => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -151,7 +158,7 @@ const ThreeDMarquee = ({ images, className }: { images: string[], className?: st
   );
 };
 
-// Componente FadeInText
+// Componente FadeInText (Sin cambios)
 const FadeInText = ({ 
   children, 
   delay = 0, 
@@ -303,7 +310,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
 
   return (
     <motion.div className="pt-16" style={{ backgroundColor }}>
-      <section ref={ref} className="relative pb-10"> {/* Añadido pb-10 */}
+      <section ref={ref} className="relative pb-10">
         {/* ARCO DE FONDO */}
         <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none z-0">
           <motion.div
@@ -464,7 +471,7 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
           </div>
         </div>
 
-        {/* --- NUEVO BOTTOM MARQUEE --- */}
+        {/* --- BOTTOM MARQUEE (Izquierda -> Derecha) --- */}
         <BottomSlantedMarquee />
 
       </section>
