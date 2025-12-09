@@ -1,5 +1,5 @@
 import Footer from "@/components/layout/Footer";
-import FinalHero from "@/components/home/FinalHero";
+import { FinalHero } from "@/components/home/FinalHero";
 import { BentoGrid } from "@/components/home/BentoGrid";
 import { AnimatedGallerySection } from "@/components/animated-gallery-section";
 import ServicesSection from "@/components/home/ServicesSection";

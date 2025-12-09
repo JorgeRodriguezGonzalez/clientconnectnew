@@ -1,9 +1,194 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, Clock, Zap, Mountain, Check, Send } from 'lucide-react';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { Sparkles, Clock, Zap, Mountain, Check, Send, ArrowRight } from 'lucide-react';
+import { motion, useInView, useScroll, useTransform, animate } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
-// Utilidad cn
-const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
+// --- UTILIDADES ---
+const cn = (...classes: (string | undefined | null | false)[]) => {
+  return classes.filter(Boolean).join(' ');
+};
+
+// --- CONSTANTES DE COLOR ---
+const COLORS = {
+  turquoise: "rgb(103, 188, 183)", // #67bcb7
+  coral: "rgb(222, 131, 99)",     // #de8363
+  gold: "rgb(237, 191, 134)",     // #edbf86
+};
+
+// --- COMPONENTE GLOWING EFFECT ---
+const GlowingEffect = React.memo(
+  ({
+    blur = 0,
+    inactiveZone = 0.7,
+    proximity = 0,
+    spread = 20,
+    variant = "default",
+    glow = false,
+    className,
+    movementDuration = 2,
+    borderWidth = 1,
+    disabled = true,
+  }: {
+    blur?: number;
+    inactiveZone?: number;
+    proximity?: number;
+    spread?: number;
+    variant?: "default" | "white";
+    glow?: boolean;
+    className?: string;
+    disabled?: boolean;
+    movementDuration?: number;
+    borderWidth?: number;
+  }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const lastPosition = useRef({ x: 0, y: 0 });
+    const animationFrameRef = useRef<number>(0);
+
+    const handleMove = React.useCallback(
+      (e?: MouseEvent | { x: number; y: number }) => {
+        if (!containerRef.current) return;
+
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+
+        animationFrameRef.current = requestAnimationFrame(() => {
+          const element = containerRef.current;
+          if (!element) return;
+
+          const { left, top, width, height } = element.getBoundingClientRect();
+          const mouseX = e?.x ?? lastPosition.current.x;
+          const mouseY = e?.y ?? lastPosition.current.y;
+
+          if (e) {
+            lastPosition.current = { x: mouseX, y: mouseY };
+          }
+
+          const center = [left + width * 0.5, top + height * 0.5];
+          const distanceFromCenter = Math.hypot(
+            mouseX - center[0],
+            mouseY - center[1]
+          );
+          const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
+
+          if (distanceFromCenter < inactiveRadius) {
+            element.style.setProperty("--active", "0");
+            return;
+          }
+
+          const isActive =
+            mouseX > left - proximity &&
+            mouseX < left + width + proximity &&
+            mouseY > top - proximity &&
+            mouseY < top + height + proximity;
+
+          element.style.setProperty("--active", isActive ? "1" : "0");
+
+          if (!isActive) return;
+
+          const currentAngle =
+            parseFloat(element.style.getPropertyValue("--start")) || 0;
+          let targetAngle =
+            (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
+              Math.PI +
+            90;
+
+          const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
+          const newAngle = currentAngle + angleDiff;
+
+          animate(currentAngle, newAngle, {
+            duration: movementDuration,
+            ease: [0.16, 1, 0.3, 1],
+            onUpdate: (value) => {
+              element.style.setProperty("--start", String(value));
+            },
+          });
+        });
+      },
+      [inactiveZone, proximity, movementDuration]
+    );
+
+    useEffect(() => {
+      if (disabled) return;
+
+      const handleScroll = () => handleMove();
+      const handlePointerMove = (e: PointerEvent) => handleMove(e as any);
+
+      window.addEventListener("scroll", handleScroll, { passive: true } as any);
+      document.body.addEventListener("pointermove", handlePointerMove, {
+        passive: true,
+      } as any);
+
+      return () => {
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+        window.removeEventListener("scroll", handleScroll);
+        document.body.removeEventListener("pointermove", handlePointerMove);
+      };
+    }, [handleMove, disabled]);
+
+    return (
+      <>
+        <div
+          className={cn(
+            "pointer-events-none absolute -inset-px hidden rounded-[inherit] border opacity-0 transition-opacity",
+            glow && "opacity-100",
+            variant === "white" && "border-white",
+            disabled && "!block"
+          )}
+        />
+        <div
+          ref={containerRef}
+          style={
+            {
+              "--blur": `${blur}px`,
+              "--spread": spread,
+              "--start": "0",
+              "--active": "0",
+              "--glowingeffect-border-width": `${borderWidth}px`,
+              "--repeating-conic-gradient-times": "5",
+              "--gradient": `radial-gradient(circle, #EDBF86 10%, #EDBF8600 20%),
+                radial-gradient(circle at 40% 40%, #DE8363 5%, #DE836300 15%),
+                radial-gradient(circle at 60% 60%, #67BCB7 10%, #67BCB700 20%), 
+                radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
+                repeating-conic-gradient(
+                  from 236.84deg at 50% 50%,
+                  #EDBF86 0%,
+                  #DE8363 calc(25% / var(--repeating-conic-gradient-times)),
+                  #67BCB7 calc(50% / var(--repeating-conic-gradient-times)), 
+                  #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
+                  #EDBF86 calc(100% / var(--repeating-conic-gradient-times))
+                )`,
+            } as React.CSSProperties
+          }
+          className={cn(
+            "pointer-events-none absolute inset-0 rounded-[inherit] opacity-100 transition-opacity",
+            glow && "opacity-100",
+            blur > 0 && "blur-[var(--blur)] ",
+            className,
+            disabled && "!hidden"
+          )}
+        >
+          <div
+            className={cn(
+              "glow",
+              "rounded-[inherit]",
+              'after:content-[""] after:rounded-[inherit] after:absolute after:inset-[calc(-1*var(--glowingeffect-border-width))]',
+              "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
+              "after:[background:var(--gradient)] after:[background-attachment:fixed]",
+              "after:opacity-[var(--active)] after:transition-opacity after:duration-300",
+              "after:[mask-clip:padding-box,border-box]",
+              "after:[mask-composite:intersect]",
+              "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
+            )}
+          />
+        </div>
+      </>
+    );
+  }
+);
+GlowingEffect.displayName = "GlowingEffect";
 
 // --- CONSTANTES E IMAGENES DEL MARQUEE ---
 const slantedMarqueeImages = [
@@ -14,7 +199,7 @@ const slantedMarqueeImages = [
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
 ];
 
-// --- COMPONENTE BottomSlantedMarquee MODIFICADO ---
+// --- COMPONENTE BottomSlantedMarquee (Intacto) ---
 const BottomSlantedMarquee = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const images = slantedMarqueeImages;
@@ -82,62 +267,81 @@ const BottomSlantedMarquee = () => {
   );
 };
 
-// --- COMPONENTE CONTACT FORM ---
+// --- COMPONENTE CONTACT FORM MODIFICADO ---
 const ContactForm = () => {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="w-full max-w-md bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] overflow-hidden border border-gray-100 p-8 relative z-20"
+      // CAMBIO: max-w-xl para hacerlo más ancho (antes max-w-md)
+      className="w-full max-w-xl relative group z-20"
     >
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">Get in touch</h3>
-        <p className="text-gray-500 text-sm">Fill out the form below and we'll start your transformation journey.</p>
+      {/* GLOWING EFFECT WRAPPER */}
+      <div className="absolute -inset-[1px] rounded-none">
+        <GlowingEffect
+          spread={60}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+          borderWidth={2}
+        />
       </div>
-      
-      <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-        <div className="grid grid-cols-2 gap-4">
+
+      {/* FORM CARD (Square corners, white bg) */}
+      <div className="relative bg-white border border-zinc-200 p-8 shadow-2xl shadow-gray-200/50 rounded-none">
+        <div className="mb-6">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Get in touch</h3>
+          <p className="text-gray-500 text-sm">Fill out the form below and we'll start your transformation journey.</p>
+        </div>
+        
+        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">First Name</label>
+              <input 
+                type="text" 
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+                placeholder="Jane" 
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Last Name</label>
+              <input 
+                type="text" 
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+                placeholder="Doe" 
+              />
+            </div>
+          </div>
+          
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">First Name</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
             <input 
-              type="text" 
-              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
-              placeholder="Jane" 
+              type="email" 
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+              placeholder="jane@company.com" 
             />
           </div>
+          
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Last Name</label>
-            <input 
-              type="text" 
-              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
-              placeholder="Doe" 
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Message</label>
+            <textarea 
+              rows={3} 
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm resize-none" 
+              placeholder="Tell us about your goals..." 
             />
           </div>
-        </div>
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
-          <input 
-            type="email" 
-            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
-            placeholder="jane@company.com" 
-          />
-        </div>
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Message</label>
-          <textarea 
-            rows={4} 
-            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm resize-none" 
-            placeholder="Tell us about your goals..." 
-          />
-        </div>
-        
-        <button className="w-full bg-black text-white font-medium py-3 rounded-lg hover:bg-gray-800 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 mt-2">
-          Send Message <Send size={16} />
-        </button>
-      </form>
+          
+          <button className="w-full bg-black text-white font-medium py-3 rounded-none hover:bg-gray-800 hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 mt-2">
+            Send Message <Send size={16} />
+          </button>
+        </form>
+
+        {/* CAMBIO: Eliminada la sección de Trust Signals (Ticks) */}
+
+      </div>
     </motion.div>
   );
 };
@@ -197,9 +401,9 @@ type UseCasesShowcaseProps = {
   badge?: string;
   mainTitle?: string;
   mainTitleHighlight?: string;
-  subtitle?: string; // Mantenido en props pero no usado
-  ctaText?: string;  // Mantenido en props pero no usado
-  ctaHref?: string;  // Mantenido en props pero no usado
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
 };
 
 const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
@@ -211,7 +415,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     badge = 'Digital Marketing Excellence',
     mainTitle = 'Elevate Your Brand with',
     mainTitleHighlight = 'Data-Driven Marketing',
-    // subtitle y cta eliminados de la desestructuración por uso, o mantenidos sin renderizar
   } = props;
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -253,13 +456,6 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
     scrollYProgress,
     [0, 0.15, 0.151],
     ["#ffffff", "#ffffff", "#000000"]
-  );
-
-  // subtitleColor ya no se usa, pero lo dejamos por si se necesita en el futuro o se elimina
-  const subtitleColor = useTransform(
-    scrollYProgress,
-    [0, 0.15, 0.151],
-    ["#d1d5db", "#d1d5db", "#6b7280"]
   );
 
   const borderRadius = useTransform(
@@ -363,14 +559,12 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
                   </motion.h1>
                 </div>
               </FadeInText>
-
-              {/* AQUÍ ELIMINAMOS EL SUBTITULO Y EL BOTÓN CTA */}
             </div>
           </div>
         </div>
 
         {/* CONTENIDO PRINCIPAL (Texto + Formulario) */}
-        <div className="relative pt-48 pb-0 px-4 z-10">
+        <div className="relative pt-12 pb-0 px-4 z-10">
           <div className="max-w-[1225px] mx-auto">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
 
@@ -417,7 +611,8 @@ const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
               </div>
 
               {/* COLUMNA DERECHA - Contact Form */}
-              <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[495px] flex items-center justify-center min-h-[400px]">
+              {/* CAMBIO: Aumentado max-w del contenedor a 600px para permitir formulario más ancho */}
+              <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[600px] flex items-center justify-center min-h-[400px]">
                  <ContactForm />
               </div>
 
