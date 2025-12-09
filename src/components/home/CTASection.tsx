@@ -1,22 +1,21 @@
-import React, { useRef, useEffect } from "react";
-import { motion, animate } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Sparkles } from "lucide-react";
+import React, { useState, useEffect, useRef } from 'react';
+import { Sparkles, Clock, Zap, Mountain, Check, Send, ArrowRight } from 'lucide-react';
+import { motion, useInView, useScroll, useTransform, animate } from 'framer-motion';
+import { Link } from 'react-router-dom'; // Asumiendo que usas react-router, si no, usa <a>
 
 // --- UTILIDADES ---
 const cn = (...classes: (string | undefined | null | false)[]) => {
   return classes.filter(Boolean).join(' ');
 };
 
-// --- CONSTANTES ---
+// --- CONSTANTES DE COLOR (Para el efecto Glow y Ticks) ---
 const COLORS = {
   turquoise: "rgb(103, 188, 183)", // #67bcb7
   coral: "rgb(222, 131, 99)",     // #de8363
   gold: "rgb(237, 191, 134)",     // #edbf86
 };
 
-// --- COMPONENTE GLOWING EFFECT ---
+// --- COMPONENTE GLOWING EFFECT (Integrado) ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -191,132 +190,458 @@ const GlowingEffect = React.memo(
 );
 GlowingEffect.displayName = "GlowingEffect";
 
-const BackgroundStripes = () => (
-  <div
-    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.04]"
-    style={{
-      backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
-      backgroundRepeat: 'repeat',
-    }}
-  />
-);
 
-const CTASection = () => {
+// --- CONSTANTES E IMAGENES DEL MARQUEE ---
+const slantedMarqueeImages = [
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a7_hero-marquee-image-01-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629aa_hero-marquee-image-02-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629ab_hero-marquee-image-03-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a8_hero-marquee-image-04-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
+];
+
+// --- COMPONENTE BottomSlantedMarquee (Intacto) ---
+const BottomSlantedMarquee = () => {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const images = slantedMarqueeImages;
+  const isPausedRef = useRef(false);
+
+  useEffect(() => {
+    const marquee = marqueeRef.current;
+    if (!marquee) return;
+    let animationFrameId: number;
+    let translateX = 0;
+    const speed = 0.5;
+    
+    const animate = () => {
+      if (!isPausedRef.current) {
+        const marqueeWidth = marquee.scrollWidth / 3;
+        translateX += speed;
+        if (translateX >= 0) {
+          translateX = -marqueeWidth;
+        }
+        marquee.style.transform = `translateX(${translateX}px)`;
+      }
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [images]);
+
   return (
-    <section className="relative bg-white py-24 sm:py-32 overflow-hidden">
-      {/* --- TOP BORDER LINE --- */}
-      <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-20" />
-      
-      {/* Background Pattern */}
-      <BackgroundStripes />
-
-      {/* Background Gradient Blurs */}
-      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-gray-50/50 to-transparent -z-10" />
-
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Large Central Card */}
-        <div className="max-w-4xl mx-auto relative group">
-          
-          {/* Glowing Effect Wrapper */}
-          <div className="absolute -inset-[1px] rounded-none">
-            <GlowingEffect
-              spread={60}
-              glow={true}
-              disabled={false}
-              proximity={64}
-              inactiveZone={0.01}
-              borderWidth={2}
-            />
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative bg-white border border-zinc-200 p-8 md:p-16 text-center shadow-2xl shadow-gray-200/50"
-          >
-            {/* Top Label */}
-            <div className="flex justify-center mb-6">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-xs font-bold uppercase tracking-widest text-gray-500">
-                <Sparkles className="w-3 h-3 text-[rgb(103,188,183)]" />
-                Start Your Journey
-              </span>
+    <div className="w-full overflow-hidden py-52 relative z-[9999] -mt-20 pointer-events-none">
+      <div className="flex items-center justify-center" style={{ transform: 'rotate(9deg)' }}>
+        <div 
+          ref={marqueeRef} 
+          className="flex gap-6 will-change-transform pointer-events-auto"
+          style={{ paddingRight: '24px' }}
+          onMouseEnter={() => { isPausedRef.current = true; }}
+          onMouseLeave={() => { isPausedRef.current = false; }}
+        >
+          {[...Array(3)].map((_, setIndex) => (
+            <div key={setIndex} className="flex gap-6 flex-shrink-0">
+              {images.map((src, imgIndex) => (
+                <img 
+                  key={`${setIndex}-${imgIndex}`} 
+                  src={src} 
+                  alt={`Marquee Image ${imgIndex + 1}`} 
+                  className="w-[320px] h-[370px] object-cover rounded-3xl opacity-80 hover:opacity-100 hover:scale-105 hover:saturate-110 hover:z-[9999] transition-all duration-300 cursor-pointer"
+                  style={{
+                    transform: 'skewY(-20deg)',
+                    flexShrink: 0,
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+                  }} 
+                  loading="eager" 
+                />
+              ))}
             </div>
-
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 tracking-tight leading-[1.1]">
-              Ready to grow your
-              <br className="hidden md:block" />
-              <motion.span
-                initial={{ backgroundPosition: "400% 50%" }}
-                animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                transition={{
-                  duration: 12,
-                  ease: "linear",
-                  repeat: Infinity
-                }}
-                className="mt-2 inline-block"
-                style={{
-                  backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
-                  backgroundSize: "400% 100%",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  color: "transparent"
-                }}
-              >
-                 business today?
-              </motion.span>
-            </h2>
-
-            <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Book your free consultation and discover exactly how we can help you achieve your goals with a data-driven strategy.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              <Button 
-                size="lg" 
-                asChild 
-                className="h-14 px-8 text-lg font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-none border-0"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${COLORS.turquoise}, ${COLORS.coral})`
-                }}
-              >
-                <Link to="/contact">
-                  Get Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-
-            {/* Trust Signals Grid */}
-            <div className="grid md:grid-cols-3 gap-6 pt-10 border-t border-zinc-100">
-              <div className="flex items-center justify-center gap-3">
-                <div className="rounded-full bg-green-50 p-1">
-                  <Check className="h-4 w-4" style={{ color: COLORS.turquoise }} strokeWidth={3} />
-                </div>
-                <span className="text-sm font-semibold text-gray-700">No long-term contracts</span>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <div className="rounded-full bg-green-50 p-1">
-                  <Check className="h-4 w-4" style={{ color: COLORS.turquoise }} strokeWidth={3} />
-                </div>
-                <span className="text-sm font-semibold text-gray-700">Results in 30-90 days</span>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                 <div className="rounded-full bg-green-50 p-1">
-                  <Check className="h-4 w-4" style={{ color: COLORS.turquoise }} strokeWidth={3} />
-                </div>
-                <span className="text-sm font-semibold text-gray-700">100% Transparency</span>
-              </div>
-            </div>
-
-          </motion.div>
+          ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default CTASection;
+// --- COMPONENTE CONTACT FORM REDISEÑADO ---
+const ContactForm = () => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="w-full max-w-md relative group z-20"
+    >
+      {/* GLOWING EFFECT WRAPPER */}
+      <div className="absolute -inset-[1px] rounded-none">
+        <GlowingEffect
+          spread={60}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+          borderWidth={2}
+        />
+      </div>
+
+      {/* FORM CARD (Square corners, white bg) */}
+      <div className="relative bg-white border border-zinc-200 p-8 shadow-2xl shadow-gray-200/50 rounded-none">
+        <div className="mb-6">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Get in touch</h3>
+          <p className="text-gray-500 text-sm">Fill out the form below and we'll start your transformation journey.</p>
+        </div>
+        
+        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">First Name</label>
+              <input 
+                type="text" 
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+                placeholder="Jane" 
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Last Name</label>
+              <input 
+                type="text" 
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+                placeholder="Doe" 
+              />
+            </div>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
+            <input 
+              type="email" 
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm" 
+              placeholder="jane@company.com" 
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Message</label>
+            {/* CAMBIO: rows=3 */}
+            <textarea 
+              rows={3} 
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 outline-none transition-all text-sm resize-none" 
+              placeholder="Tell us about your goals..." 
+            />
+          </div>
+          
+          <button className="w-full bg-black text-white font-medium py-3 rounded-none hover:bg-gray-800 hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 mt-2">
+            Send Message <Send size={16} />
+          </button>
+        </form>
+
+        {/* TRUST SIGNALS (Ticks) */}
+        <div className="mt-8 pt-6 border-t border-zinc-100 flex flex-col space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="rounded-full bg-green-50 p-1 flex-shrink-0">
+              <Check className="h-4 w-4" style={{ color: COLORS.turquoise }} strokeWidth={3} />
+            </div>
+            <span className="text-sm font-semibold text-gray-700">No long-term contracts</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="rounded-full bg-green-50 p-1 flex-shrink-0">
+              <Check className="h-4 w-4" style={{ color: COLORS.turquoise }} strokeWidth={3} />
+            </div>
+            <span className="text-sm font-semibold text-gray-700">Results in 30-90 days</span>
+          </div>
+        </div>
+
+      </div>
+    </motion.div>
+  );
+};
+
+// Componente FadeInText
+const FadeInText = ({ 
+  children, 
+  delay = 0, 
+  className = "",
+  direction = "up"
+}: { 
+  children: React.ReactNode; 
+  delay?: number;
+  className?: string;
+  direction?: "up" | "left" | "right";
+}) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  
+  const directionOffset = {
+    up: { y: 10, x: 0 },
+    left: { y: 0, x: -20 },
+    right: { y: 0, x: 20 }
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ 
+        opacity: 0, 
+        filter: "blur(10px)",
+        ...directionOffset[direction]
+      }}
+      animate={{ 
+        opacity: isInView ? 1 : 0, 
+        filter: isInView ? "blur(0px)" : "blur(10px)",
+        y: isInView ? 0 : directionOffset[direction].y,
+        x: isInView ? 0 : directionOffset[direction].x
+      }}
+      transition={{ 
+        duration: 0.6, 
+        ease: "easeOut", 
+        delay 
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+type UseCasesShowcaseProps = {
+  subText?: string;
+  heading?: string;
+  highlightText?: string;
+  description?: string;
+  badge?: string;
+  mainTitle?: string;
+  mainTitleHighlight?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+};
+
+const UseCasesShowcase = (props: UseCasesShowcaseProps) => {
+  const {
+    subText = 'our approach',
+    heading = 'Marketing strategies that transform your business into',
+    highlightText = 'market leaders',
+    description = 'We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.',
+    badge = 'Digital Marketing Excellence',
+    mainTitle = 'Elevate Your Brand with',
+    mainTitleHighlight = 'Data-Driven Marketing',
+  } = props;
+
+  const ref = React.useRef<HTMLDivElement>(null);
+  
+  // Scroll animation hooks
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "start center"]
+  });
+
+  const { scrollYProgress: scrollYProgressBorderRadius } = useScroll({
+    target: ref,
+    offset: ["start 130vh", "start 100vh"]
+  });
+
+  const { scrollYProgress: scrollYProgressEllipse } = useScroll({
+    target: ref,
+    offset: ["start 120vh", "start 80vh"]
+  });
+
+  const { scrollYProgress: scrollYProgressBorder } = useScroll({
+    target: ref,
+    offset: ["start 120vh", "start center"]
+  });
+
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.151],
+    ["#000000", "#1a1a1a", "#ffffff"]
+  );
+
+  const borderColor = useTransform(
+    scrollYProgressBorder,
+    [0, 0.15, 0.15, 0.151],
+    ["#e5e7eb", "#000000", "#1a1a1a", "#ffffff"]
+  );
+
+  const textColor = useTransform(
+    scrollYProgress,
+    [0, 0.15, 0.151],
+    ["#ffffff", "#ffffff", "#000000"]
+  );
+
+  const borderRadius = useTransform(
+    scrollYProgressBorderRadius,
+    [0, 0.2925],
+    ["100%", "0%"]
+  );
+
+  const ellipseWidth = useTransform(
+    scrollYProgressEllipse,
+    [0, 0.35],
+    [40, 100]
+  );
+
+  const fadeStart = useTransform(
+    scrollYProgressEllipse,
+    [0, 0.35],
+    [40, 100]
+  );
+
+  const fadeEnd = useTransform(
+    scrollYProgressEllipse,
+    [0, 0.35],
+    [90, 100]
+  );
+
+  const maskImage = useTransform(
+    [ellipseWidth, fadeStart, fadeEnd],
+    ([width, start, end]) => 
+      `radial-gradient(ellipse ${width}% 100% at center, black 0%, black ${start}%, transparent ${end}%, transparent 100%)`
+  );
+
+  return (
+    <motion.div className="pt-16" style={{ backgroundColor }}>
+      <section ref={ref} className="relative pb-10">
+        {/* ARCO DE FONDO */}
+        <div className="absolute inset-x-0 top-0 h-[600px] pointer-events-none z-0">
+          <motion.div
+            className="w-full h-full border-t-[1px]"
+            style={{
+              transform: 'translateY(-65%)',
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              borderRadius: borderRadius,
+              borderTopColor: borderColor,
+              WebkitMaskImage: maskImage,
+              maskImage: maskImage,
+              backgroundColor: backgroundColor,
+            }}
+          />
+        </div>
+
+        {/* HEADER / TITULO */}
+        <div className="absolute -top-[254px] left-0 right-0 z-50">
+          <div className="max-w-[1225px] mx-auto px-4">
+            <div className="flex flex-col items-center gap-8">
+              <FadeInText delay={1.2}>
+                <div 
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg shadow-[0_2px_5px_0_rgba(0,0,0,0.07),0_8px_8px_0_rgba(0,0,0,0.06)] mb-[6px]"
+                  style={{ 
+                    background: 'linear-gradient(135deg, #67bcb7 0%, #de8363 100%)'
+                  }}
+                >
+                  <span className="text-[14px] font-normal tracking-[-0.3px] capitalize text-white">
+                    {badge}
+                  </span>
+                </div>
+              </FadeInText>
+
+              <FadeInText delay={0.3}>
+                <div className="w-full max-w-[600px] mx-auto">
+                  <motion.h1 
+                    className="text-[32px] md:text-[38px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-center"
+                    style={{ color: textColor }}
+                  >
+                    {mainTitle}{' '}
+                    <motion.span style={{ color: textColor }}>
+                      {mainTitleHighlight}
+                    </motion.span>
+                    <motion.span
+                      style={{
+                        display: "inline-block",
+                        backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(237,191,134,0.2) 15%, rgba(237,191,134,0.5) 25%, rgb(237,191,134) 35%, rgb(222,131,99) 50%, rgb(103,188,183) 65%, rgba(103,188,183,0.5) 75%, rgba(103,188,183,0.2) 85%, rgba(255,255,255,0) 100%)",
+                        backgroundSize: "300% 100%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        color: "transparent",
+                      }}
+                      animate={{
+                        backgroundPosition: ["200% 50%", "-100% 50%"]
+                      }}
+                      transition={{
+                        duration: 8,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                    >
+                      .
+                    </motion.span>
+                  </motion.h1>
+                </div>
+              </FadeInText>
+            </div>
+          </div>
+        </div>
+
+        {/* CONTENIDO PRINCIPAL (Texto + Formulario) */}
+        {/* CAMBIO AQUÍ: pt-12 (antes 48) para reducir MUCHO la distancia con el título */}
+        <div className="relative pt-12 pb-0 px-4 z-10">
+          <div className="max-w-[1225px] mx-auto">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-20">
+
+              {/* COLUMNA IZQUIERDA - Texto */}
+              <div className="flex-1 max-w-[520px]">
+                <FadeInText delay={0.5} direction="up">
+                  <div className="text-sm font-medium tracking-[2.2px] uppercase mb-2.5 text-gray-500">
+                    {subText}
+                  </div>
+                </FadeInText>
+
+                <FadeInText delay={0.6} direction="up">
+                  <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900 mb-6">
+                    {heading}{' '}
+                    <motion.span
+                      initial={{ backgroundPosition: "400% 50%" }}
+                      animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                      transition={{
+                        duration: 12,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                      style={{
+                        display: "inline-block",
+                        backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                        backgroundSize: "400% 100%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        color: "transparent"
+                      }}
+                    >
+                      {highlightText}
+                    </motion.span>
+                    <span className="text-gray-900">.</span>
+                  </h2>
+                </FadeInText>
+
+                <FadeInText delay={0.7} direction="up">
+                  <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
+                    {description}
+                  </p>
+                </FadeInText>
+              </div>
+
+              {/* COLUMNA DERECHA - Contact Form */}
+              <div className="relative w-full lg:flex-1 max-w-full lg:max-w-[495px] flex items-center justify-center min-h-[400px]">
+                 <ContactForm />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        {/* --- BOTTOM MARQUEE --- */}
+        <BottomSlantedMarquee />
+
+      </section>
+    </motion.div>
+  );
+};
+
+export { UseCasesShowcase };
+export default UseCasesShowcase;
