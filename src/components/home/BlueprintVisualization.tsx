@@ -6,14 +6,14 @@ const BackgroundStripes = () => <div className="pointer-events-none absolute ins
   backgroundRepeat: 'repeat'
 }} />;
 
-// Componente auxiliar para la etiqueta de Error
-const ErrorLabel = ({ show }: { show: boolean }) => (
+// MODIFICADO: Ahora acepta la propiedad "top"
+const ErrorLabel = ({ show, top }: { show: boolean; top: string }) => (
   <div 
     className={cn(
       "absolute left-[580px] flex items-center gap-0 transition-all duration-700 ease-out will-change-transform",
       show ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
     )}
-    style={{ top: '150px' }} // Ajuste vertical aproximado al centro de la isometría
+    style={{ top: top }} // <--- AQUÍ SE APLICA LA POSICIÓN VERTICAL
   >
     {/* Punta de flecha cuadrada */}
     <div className="h-1.5 w-1.5 bg-zinc-500 shrink-0" />
@@ -38,10 +38,7 @@ const LayerBlueTop = ({
     // Interpolación: de -1.6404 a -80
     const translateY = -1.6404 + (-80 - (-1.6404)) * progress;
     
-    // Aceleramos la aparición del color (1.8)
     const grayscaleAmount = Math.max(0, 1 - progress * 1.8);
-    
-    // Mostrar el error cuando la animación está casi completa
     const showLabel = progress > 0.95;
 
     return (
@@ -155,8 +152,8 @@ const LayerBlueTop = ({
           </svg>
         </div>
         
-        {/* Indicador de Error para la Capa Superior */}
-        <ErrorLabel show={showLabel} />
+        {/* MODIFICA AQUÍ EL "200px" PARA LA CAPA DE ARRIBA (CORAL) */}
+        <ErrorLabel show={showLabel} top="200px" />
       </div>
     );
   };
@@ -255,10 +252,7 @@ const LayerBlueBase = ({
     // Interpolación: de 1.6404 a 80
     const translateY = 1.6404 + (80 - 1.6404) * progress;
 
-    // Aceleramos la aparición del color (1.8)
     const grayscaleAmount = Math.max(0, 1 - progress * 1.8);
-    
-    // Mostrar el error cuando la animación está casi completa
     const showLabel = progress > 0.95;
 
     return (
@@ -377,8 +371,8 @@ const LayerBlueBase = ({
           </svg>
         </div>
         
-        {/* Indicador de Error para la Capa Inferior */}
-        <ErrorLabel show={showLabel} />
+        {/* MODIFICA AQUÍ EL "350px" PARA LA CAPA DE ABAJO (TURQUESA) */}
+        <ErrorLabel show={showLabel} top="350px" />
       </div>
     );
   }
