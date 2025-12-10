@@ -1,12 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
-import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, ShieldCheck, MonitorPlay } from 'lucide-react';
+import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, ShieldCheck } from 'lucide-react';
 
 // --- STYLES ---
 const fontStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
   .font-syne { font-family: 'Syne', sans-serif; }
   .font-inter { font-family: 'Inter', sans-serif; }
+  
+  /* OPTIMIZACIÓN SAFARI: Fuerza aceleración de hardware */
+  .safari-gpu {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    perspective: 1000px;
+  }
 `;
 
 // --- UTILS ---
@@ -20,7 +29,7 @@ const COLORS = {
   red: "#AD2624",
 };
 
-// --- COMPONENTE GLOWING EFFECT ---
+// --- COMPONENTE GLOWING EFFECT (Optimizado con React.memo) ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -236,9 +245,10 @@ const TiltCard = ({
       onMouseLeave={handleMouseLeave}
       initial={initial || { opacity: 0, scale: 0.9 }}
       animate={animate || { opacity: 1, scale: 1 }}
-      // UPDATE: Físicas más suaves por defecto (stiffness 90 es más lento que 300)
+      // SAFARI FIX: Usamos curva Bezier en lugar de Spring para el layout.
+      // [0.25, 1, 0.5, 1] es una curva suave "ease-out" que Safari maneja mejor.
       transition={transition || { 
-        layout: { type: "spring", stiffness: 90, damping: 20 },
+        layout: { duration: 0.7, ease: [0.25, 1, 0.5, 1] }, 
         opacity: { duration: 0.5 }
       }} 
       style={{
@@ -248,8 +258,8 @@ const TiltCard = ({
         perspective: 1000,
         ...style 
       }}
-      // UPDATE: force-gpu para asegurar que no haya parpadeos
-      className={cn("relative rounded-3xl overflow-hidden transition-colors duration-300 force-gpu will-change-transform", className)}
+      // SAFARI FIX: 'safari-gpu' y 'will-change-transform'
+      className={cn("relative rounded-3xl overflow-hidden transition-colors duration-300 safari-gpu will-change-transform", className)}
       {...props} 
     >
       {children}
@@ -284,6 +294,8 @@ export const FounderSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLightMode, setIsLightMode] = useState(false);
   const [isLateScroll, setIsLateScroll] = useState(false);
+  
+  // NUEVO ESTADO: Controla si la tarjeta se está redimensionando
   const [isResizing, setIsResizing] = useState(false);
 
   const { scrollYProgress } = useScroll({
@@ -333,6 +345,7 @@ export const FounderSection = () => {
           <div className="lg:w-[40%] sticky top-32">
             <div className="flex flex-col gap-8 pb-10">
               
+              {/* Badge */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -346,6 +359,7 @@ export const FounderSection = () => {
                 The Architect
               </motion.div>
 
+              {/* Headline */}
               <h2 className={cn(
                 "font-syne font-bold text-[42px] md:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.03em] transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
@@ -354,6 +368,7 @@ export const FounderSection = () => {
                 <span className="text-[#D84315]">I scale brands.</span>
               </h2>
 
+              {/* Description */}
               <p className={cn(
                 "font-inter text-[18px] leading-[1.6] transition-colors duration-0 max-w-md",
                 isLightMode ? "text-gray-500" : "text-gray-400"
@@ -362,6 +377,7 @@ export const FounderSection = () => {
                 My workflow integrates creative strategy, high-end production, and media buying logic into one cohesive growth engine.
               </p>
 
+              {/* Checklist */}
               <div className="flex flex-col gap-4 mt-2">
                 {[
                   "Creative Strategist Mindset",
@@ -383,6 +399,7 @@ export const FounderSection = () => {
                 ))}
               </div>
 
+              {/* CTA */}
               <div className="mt-6">
                 <button className={cn(
                    "group relative px-8 py-4 rounded-full font-syne font-bold text-[16px] overflow-hidden transition-all duration-300",
@@ -407,30 +424,32 @@ export const FounderSection = () => {
             >
 
               {/* 
-                 ITEM 1: MIGUEL CARD (OPTIMIZED)
+                 ITEM 1: MIGUEL CARD
               */}
               <TiltCard 
                 layoutId="miguel-card"
                 layout
-                // FIX: Ajuste de físicas. Stiffness bajado a 85 para que sea más lento y fluido.
+                // SAFARI FIX: Usamos Bezier, más estable que Spring para layouts pesados
                 transition={{ 
-                  layout: { type: "spring", stiffness: 85, damping: 20 },
+                  layout: { duration: 0.7, ease: [0.25, 1, 0.5, 1] },
                   opacity: { duration: 0.5 }
                 }}
                 onLayoutAnimationStart={() => setIsResizing(true)}
                 onLayoutAnimationComplete={() => setIsResizing(false)}
                 className={cn(
-                   "md:row-span-2 h-[450px] md:h-[600px] group border border-white/10 relative z-10",
-                   // FIX: force-gpu y will-change
-                   "force-gpu will-change-transform",
+                   "md:row-span-2 h-[450px] md:h-[600px] group border border-white/10 relative z-10 safari-gpu",
                    isLightMode ? "md:col-span-1" : "md:col-span-2"
                 )}
               >
+                {/* 
+                  SAFARI FIX: Eliminamos backdrop-blur-xl durante la animación.
+                  Usamos solo opacity y bg-white/40. El blur es el enemigo #1 de Safari.
+                */}
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: isResizing ? 1 : 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute inset-0 z-40 bg-white/40 backdrop-blur-xl pointer-events-none"
+                  transition={{ duration: 0.15 }} // Un poco más rápido para ocultar glitches
+                  className="absolute inset-0 z-40 bg-white/60 pointer-events-none" // Quitamos backdrop-blur
                 />
 
                 <div 
@@ -444,21 +463,22 @@ export const FounderSection = () => {
                 </div>
 
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-3xl">
-                  {/* FIX: Usamos layout a secas en vez de layout="position" para que Framer maneje el tamaño también */}
+                  {/* SAFARI FIX: 
+                      1. layout en lugar de layout="position"
+                      2. safari-gpu class (transform3d)
+                      3. loading eager
+                  */}
                   <motion.img 
-                    layout 
+                    layout
                     src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop" 
                     alt="Founder" 
-                    // FIX: loading eager evita parpadeos de carga al redimensionar
                     loading="eager"
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
                     transition={{ 
-                      layout: { type: "spring", stiffness: 85, damping: 20 },
-                      scale: { duration: 0.8, ease: "easeInOut" }
+                        layout: { duration: 0.7, ease: [0.25, 1, 0.5, 1] }, // Mismo timing que el padre
+                        scale: { duration: 0.8, ease: "easeInOut" }
                     }}
-                    // FIX: translateZ fuerza a la GPU a mantener la capa
-                    style={{ transform: "translateZ(0)" }}
-                    className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0 will-change-transform"
+                    className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0 safari-gpu"
                   />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
@@ -478,11 +498,11 @@ export const FounderSection = () => {
                     <>
                        {/* ITEM 2 */}
                        <TiltCard 
-                        layout 
-                        initial={{ opacity: 0, scale: 0.8 }}
+                        layout
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
-                        className="h-[280px] p-6 flex flex-col justify-between bg-gray-100 border border-gray-200 relative overflow-hidden group force-gpu"
+                        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+                        className="h-[280px] p-6 flex flex-col justify-between bg-gray-100 border border-gray-200 relative overflow-hidden group safari-gpu"
                        >
                           <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#D84315] blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" />
                           <div className="flex justify-between items-start z-10">
@@ -503,11 +523,11 @@ export const FounderSection = () => {
 
                        {/* ITEM 3 */}
                        <TiltCard 
-                        layout 
-                        initial={{ opacity: 0, scale: 0.8 }}
+                        layout
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
-                        className="h-[300px] bg-black relative group border border-white/10 cursor-pointer force-gpu"
+                        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+                        className="h-[300px] bg-black relative group border border-white/10 cursor-pointer safari-gpu"
                        >
                           <div className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
                              <video autoPlay loop muted playsInline className="w-full h-full object-cover">
@@ -533,7 +553,7 @@ export const FounderSection = () => {
               <TiltCard 
                 layout
                 className={cn(
-                "md:col-span-2 p-8 flex flex-col md:flex-row items-center gap-8 transition-colors duration-0 border force-gpu",
+                "md:col-span-2 p-8 flex flex-col md:flex-row items-center gap-8 transition-colors duration-0 border safari-gpu",
                 isLightMode 
                   ? "bg-[#D84315] border-[#D84315]" 
                   : "bg-zinc-900 border-zinc-800"
@@ -555,18 +575,19 @@ export const FounderSection = () => {
               </TiltCard>
 
               {/* TARJETAS INFERIORES */}
-               {/* CARD A */}
+               {/* CARD A (Global) */}
                <TiltCard 
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] relative rounded-3xl group bg-zinc-100/50 p-0 border-none overflow-hidden force-gpu"
+                  className="h-[280px] relative rounded-3xl group bg-zinc-100/50 p-0 border-none overflow-hidden safari-gpu"
                >
                    <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} />
                    
                    <div className="relative h-full bg-white rounded-3xl border border-black/5 overflow-hidden flex flex-row items-stretch">
+                      {/* Left Content */}
                       <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
                          <div className="p-2.5 rounded-full mb-3 bg-orange-50/50 border border-orange-100/20">
                             <Globe className="w-5 h-5" style={{ color: COLORS.orange }} />
@@ -580,6 +601,7 @@ export const FounderSection = () => {
                          </p>
                       </div>
 
+                      {/* Right Image */}
                       <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden">
                          <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
                              <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
@@ -593,18 +615,20 @@ export const FounderSection = () => {
                    </div>
                </TiltCard>
 
-               {/* CARD B */}
+               {/* CARD B (Retention) */}
                <TiltCard 
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] relative rounded-3xl group bg-gray-900 border-none overflow-hidden force-gpu"
+                  className="h-[280px] relative rounded-3xl group bg-gray-900 border-none overflow-hidden safari-gpu"
                >
                    <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} variant="white" />
                    
                    <div className="relative h-full bg-gray-900 rounded-[inherit] overflow-hidden">
+                       
+                       {/* VIDEO BACKGROUND */}
                        <div className="absolute inset-0 w-full h-full opacity-60">
                           <video
                             autoPlay
@@ -617,8 +641,10 @@ export const FounderSection = () => {
                           </video>
                        </div>
 
+                       {/* Gradient Overlay */}
                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                        
+                       {/* Content */}
                        <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
                          <div className="flex items-baseline gap-2 mb-1">
                            <span className="text-6xl font-syne font-semibold leading-none tracking-tighter">95%</span>
