@@ -6,6 +6,28 @@ const BackgroundStripes = () => <div className="pointer-events-none absolute ins
   backgroundRepeat: 'repeat'
 }} />;
 
+// Componente auxiliar para la etiqueta de Error
+const ErrorLabel = ({ show }: { show: boolean }) => (
+  <div 
+    className={cn(
+      "absolute left-[580px] flex items-center gap-0 transition-all duration-700 ease-out will-change-transform",
+      show ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+    )}
+    style={{ top: '150px' }} // Ajuste vertical aproximado al centro de la isometría
+  >
+    {/* Punta de flecha cuadrada */}
+    <div className="h-1.5 w-1.5 bg-zinc-500 shrink-0" />
+    
+    {/* Línea horizontal */}
+    <div className="h-[1px] w-12 bg-zinc-500 shrink-0" />
+    
+    {/* Caja de Texto Glassmorphism */}
+    <div className="ml-2 border border-zinc-500/50 bg-white/20 backdrop-blur-sm px-2 py-0.5 text-[10px] font-bold tracking-widest text-zinc-600 shadow-sm">
+      ERROR
+    </div>
+  </div>
+);
+
 const LayerBlueTop = ({
     idPrefix,
     progress
@@ -16,11 +38,11 @@ const LayerBlueTop = ({
     // Interpolación: de -1.6404 a -80
     const translateY = -1.6404 + (-80 - (-1.6404)) * progress;
     
-    // LÓGICA AGREGADA: 
-    // Cuando progress es 0 (inicio), grayscale es 1 (gris total).
-    // Cuando progress es 1 (final), grayscale es 0 (color total).
-    // Multiplicamos por 1.2 para que el color llegue a su máximo un poco antes de terminar la expansión.
-    const grayscaleAmount = Math.max(0, 1 - progress * 2);
+    // Aceleramos la aparición del color (1.8)
+    const grayscaleAmount = Math.max(0, 1 - progress * 1.8);
+    
+    // Mostrar el error cuando la animación está casi completa
+    const showLabel = progress > 0.95;
 
     return (
       <div 
@@ -28,7 +50,6 @@ const LayerBlueTop = ({
         style={{
           zIndex: 5,
           transform: `matrix(1, 0, 0, 1, 0, ${translateY})`,
-          // Aplicamos el filtro dinámico
           filter: `grayscale(${grayscaleAmount})`,
           transition: 'transform 0.1s linear' 
         }}
@@ -133,6 +154,9 @@ const LayerBlueTop = ({
             </defs>
           </svg>
         </div>
+        
+        {/* Indicador de Error para la Capa Superior */}
+        <ErrorLabel show={showLabel} />
       </div>
     );
   };
@@ -231,8 +255,11 @@ const LayerBlueBase = ({
     // Interpolación: de 1.6404 a 80
     const translateY = 1.6404 + (80 - 1.6404) * progress;
 
-    // LÓGICA AGREGADA: Mismo cálculo que en LayerBlueTop para sincronía
-    const grayscaleAmount = Math.max(0, 1 - progress * 2);
+    // Aceleramos la aparición del color (1.8)
+    const grayscaleAmount = Math.max(0, 1 - progress * 1.8);
+    
+    // Mostrar el error cuando la animación está casi completa
+    const showLabel = progress > 0.95;
 
     return (
       <div 
@@ -240,7 +267,6 @@ const LayerBlueBase = ({
         style={{
           zIndex: 1,
           transform: `matrix(1, 0, 0, 1, 0, ${translateY})`,
-          // Aplicamos el filtro dinámico
           filter: `grayscale(${grayscaleAmount})`,
           transition: 'transform 0.1s linear'
         }}
@@ -350,6 +376,9 @@ const LayerBlueBase = ({
             </defs>
           </svg>
         </div>
+        
+        {/* Indicador de Error para la Capa Inferior */}
+        <ErrorLabel show={showLabel} />
       </div>
     );
   }
