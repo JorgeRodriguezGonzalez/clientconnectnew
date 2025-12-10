@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useId } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 
@@ -11,7 +11,7 @@ const fontStyles = `
   }
 `;
 
-// --- SPARKLES COMPONENT (Inlined for portability) ---
+// --- SPARKLES COMPONENT ---
 const Sparkles = ({
   id,
   background,
@@ -132,19 +132,18 @@ const defaultImages = [
 
 // @component: SuperHero
 export const SuperHero = ({
-  title = 'We Turn Ad Spend Into Profitable Revenue at Scale',
-  highlightedText = '',
+  // Estos valores por defecto se pueden sobrescribir, pero el título principal está hardcoded abajo como se solicitó
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
   images = defaultImages
 }: SuperHeroProps) => {
   const marqueeRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false); // Estado para pausar el marquee
+  const [isPaused, setIsPaused] = useState(false);
 
   const bgColor = "#050505";
   const lampColor = "#D84315"; 
 
-  // Colores para el radial cambiante (Coral -> Turquesa -> Coral)
+  // Colores para el radial cambiante
   const radialColorSequence = [
     "radial-gradient(circle at bottom center, #de8363, transparent 70%)", // Coral
     "radial-gradient(circle at bottom center, #67bcb7, transparent 70%)", // Turquesa
@@ -160,12 +159,9 @@ export const SuperHero = ({
     const speed = 0.5;
 
     const animate = () => {
-      // Solo movemos si NO está pausado
       if (!isPaused) {
         const marqueeWidth = marquee.scrollWidth / 3;
-        // MOVIMIENTO: Izquierda a Derecha
         translateX += speed;
-        // Reset para bucle infinito
         if (translateX >= 0) {
           translateX = -marqueeWidth;
         }
@@ -180,7 +176,7 @@ export const SuperHero = ({
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [images, isPaused]); // Añadimos isPaused a dependencias
+  }, [images, isPaused]);
 
   return (
     <div className="w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center py-16 px-6 overflow-hidden relative">
@@ -188,9 +184,10 @@ export const SuperHero = ({
       
       {/* 
         --- BOTTOM SPARKLES + CHANGING RADIAL ---
-        Sustituye al antiguo "Background Glow Effects"
+        Z-Index: 0 (Fondo)
+        Posición: -bottom-48 (Más abajo)
       */}
-      <div className="absolute inset-x-0 bottom-0 h-[500px] w-full overflow-hidden pointer-events-none z-0">
+      <div className="absolute inset-x-0 -bottom-48 h-[600px] w-full overflow-hidden pointer-events-none z-[0]">
         {/* Radial Cambiante */}
         <motion.div 
           className="absolute inset-0 opacity-40"
@@ -207,15 +204,19 @@ export const SuperHero = ({
         <Sparkles
           density={800}
           className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
-          particleColor="#ffffff"
+          particleColor="#ffffff" 
           minSize={0.5}
           maxSize={1.5}
         />
       </div>
 
-      <div className="max-w-[1296px] w-full mx-auto relative z-10" style={{ marginTop: '-10px' }}>
+      {/* 
+        --- CONTENIDO PRINCIPAL ---
+        Z-Index: 20 (Superior) - Asegura que las imágenes estén por encima de los sparkles
+      */}
+      <div className="max-w-[1296px] w-full mx-auto relative z-[20]" style={{ marginTop: '-10px' }}>
         
-        {/* LAMP EFFECT */}
+        {/* LAMP EFFECT (Parte del contenido superior) */}
         <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible z-0 transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             <motion.div
@@ -309,10 +310,7 @@ export const SuperHero = ({
         <div className="relative z-10">
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-8">
-              {/* 
-                 Main Headline - REDUCED THICKNESS
-                 Changed font-extrabold to font-semibold 
-              */}
+              {/* Main Headline - NEW TEXT */}
               <motion.h1 
                 key="hero-title"
                 initial={{ opacity: 0, y: 30 }} 
@@ -324,12 +322,11 @@ export const SuperHero = ({
                 }} 
                 className="font-inter font-semibold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
               >
-                We Turn Ad Spend Into <br className="md:hidden" />
+                We Bring Light <br className="md:hidden" />
+                to Your <br className="hidden md:block" />
                 <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
-                  Profitable Revenue
+                  Business Growth
                 </span>
-                <br />
-                at National Scale
               </motion.h1>
 
               {/* Subtexto */}
@@ -406,9 +403,8 @@ export const SuperHero = ({
 
           {/* Marquee Images */}
           <div 
-            className="mt-16 flex items-center justify-center" 
+            className="mt-16 flex items-center justify-center relative z-[30]" 
             style={{ transform: 'rotate(4.5deg)' }}
-            // Eventos para pausar el carrusel globalmente al interactuar con el contenedor
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
@@ -420,7 +416,6 @@ export const SuperHero = ({
                       key={`${setIndex}-${imgIndex}`} 
                       src={src} 
                       alt={`Hero Marquee Image ${imgIndex + 1}`} 
-                      // Opacidad 0.85 -> 1.0 en hover
                       className="w-[320px] h-[370px] object-cover rounded-3xl opacity-[0.85] hover:opacity-100 transition-opacity duration-300" 
                       style={{
                         transform: 'skewY(-20deg)', 
