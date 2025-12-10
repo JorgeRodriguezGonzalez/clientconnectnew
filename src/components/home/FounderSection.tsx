@@ -343,7 +343,22 @@ export const FounderSection = () => {
 
       {/* BACKGROUND EFFECTS */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-         <div className={cn("absolute right-[-10%] top-[20%] w-[600px] h-[600px] bg-[#D84315] blur-[150px] opacity-20 animate-pulse rounded-none transition-opacity duration-0", isLightMode ? "opacity-0" : "opacity-20")} />
+         {/* CAMBIO 2: Fondo animado Coral -> Turquesa -> Coral */}
+         <motion.div 
+            animate={{
+              backgroundColor: [COLORS.coral, COLORS.turquoise, COLORS.coral],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className={cn(
+              "absolute right-[-10%] top-[20%] w-[600px] h-[600px] blur-[150px] rounded-none transition-opacity duration-500",
+              // Visible en ambos modos (opacity-10 en light, opacity-20 en dark)
+              isLightMode ? "opacity-10" : "opacity-20"
+            )} 
+         />
       </div>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
@@ -369,7 +384,7 @@ export const FounderSection = () => {
                 GROWTH PARTNERS
               </motion.div>
 
-              {/* Headline - ACTUALIZADO CON GRADIENTE ANIMADO */}
+              {/* Headline */}
               <h2 className={cn(
                 "font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tight transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
@@ -393,8 +408,10 @@ export const FounderSection = () => {
                     color: "transparent"
                   }}
                 >
-                  explosive growth.
+                  explosive growth
                 </motion.span>
+                {/* CAMBIO 1: El punto va FUERA del motion.span para heredar el color del h2 (Negro/Blanco) */}
+                <span>.</span>
               </h2>
 
               {/* Description */}
@@ -455,7 +472,7 @@ export const FounderSection = () => {
             >
 
               {/* 
-                 ITEM 1: MAIN IMAGE CARD - ACTUALIZADA A FOTO DE EQUIPO
+                 ITEM 1: MAIN IMAGE CARD
               */}
               <TiltCard 
                 layoutId="miguel-card"
@@ -483,7 +500,6 @@ export const FounderSection = () => {
                 />
 
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-none">
-                  {/* PHOTO UPDATE: Professional Team Photo */}
                   <motion.img 
                     layout
                     src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" 
@@ -607,7 +623,7 @@ export const FounderSection = () => {
               </TiltCard>
 
               {/* TARJETAS INFERIORES */}
-               {/* CARD A (National - UPDATED) */}
+               {/* CARD A (National) */}
                <TiltCard 
                   layout
                   initial={{ opacity: 0, y: 20 }}
@@ -619,7 +635,6 @@ export const FounderSection = () => {
                >
                    <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
                       <div className="p-2.5 rounded-none mb-3 bg-zinc-50 border border-zinc-100">
-                         {/* UPDATE ICON: Map icon for Australian Scale */}
                          <Map className="w-5 h-5 text-gray-900" />
                       </div>
                       <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
@@ -634,7 +649,6 @@ export const FounderSection = () => {
                    <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden">
                       <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
                           <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
-                          {/* UPDATE IMAGE: Sydney/Australia Aerial View */}
                           <img 
                              src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?q=80&w=800&auto=format&fit=crop" 
                              alt="Australian National Reach"

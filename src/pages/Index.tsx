@@ -38,11 +38,11 @@ const Index = () => {
         </div>
         <CloudHero />
         <BoxCards />
+        
+        <Services />
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
-        <Services />
-        
         
         <OurStepsVersion2 />
         <ComparisonSection />
