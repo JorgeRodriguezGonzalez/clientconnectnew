@@ -45,18 +45,28 @@ export const SuperHero = ({
   useEffect(() => {
     const marquee = marqueeRef.current;
     if (!marquee) return;
+    
     let animationFrameId: number;
     let translateX = 0;
     const speed = 0.5;
+
     const animate = () => {
-      translateX -= speed;
       const marqueeWidth = marquee.scrollWidth / 3;
-      if (Math.abs(translateX) >= marqueeWidth) {
-        translateX = 0;
+      
+      // MOVIMIENTO INVERTIDO: Sumamos velocidad (Izquierda a Derecha)
+      translateX += speed;
+
+      // Lógica de reset para movimiento hacia la derecha:
+      // Si llegamos a 0 (o lo superamos), reiniciamos la posición hacia atrás (-marqueeWidth)
+      // para crear el bucle infinito sin saltos visuales.
+      if (translateX >= 0) {
+        translateX = -marqueeWidth;
       }
+
       marquee.style.transform = `translateX(${translateX}px)`;
       animationFrameId = requestAnimationFrame(animate);
     };
+
     animate();
     return () => {
       if (animationFrameId) {
