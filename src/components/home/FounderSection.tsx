@@ -543,10 +543,13 @@ export const FounderSection = () => {
       ref={containerRef} 
       className={cn(
         "relative w-full py-24 lg:py-32 transition-colors duration-0 z-10 font-sans", 
-        isLightMode ? "bg-white" : "bg-[#050505]"
+        isLightMode ? "bg-[#FAFDFE]" : "bg-[#050505]"
       )}
     >
       <style>{fontStyles}</style>
+
+      {/* TOP LINE */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-white z-50" />
 
       {/* BACKGROUND EFFECTS */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -667,6 +670,7 @@ export const FounderSection = () => {
                 >
                   <span className="flex items-center gap-2">
                     Start Scaling
+                    {/* Flecha animada independiente */}
                     <motion.span
                       animate={{
                         color: buttonColorSequence
@@ -788,7 +792,6 @@ export const FounderSection = () => {
                         onClick={() => setIsCaseStudyActive(true)}
                        >
                           <div className="absolute inset-0 w-full h-full">
-                             {/* Video Real: Office/Working footage */}
                              <video 
                                 autoPlay 
                                 loop 
@@ -803,23 +806,19 @@ export const FounderSection = () => {
                              </video>
                           </div>
 
-                          {/* OVERLAY & UI - Disappears on Click */}
                           <motion.div
                              className="absolute inset-0 z-20 pointer-events-none"
                              animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
                              transition={{ duration: 0.5 }}
                           >
-                             {/* Dark Overlay */}
                              <div className="absolute inset-0 bg-black/40" />
 
-                             {/* Play Button */}
                              <div className="absolute inset-0 flex items-center justify-center">
                                 <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-none flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
                                    <Play fill="white" className="ml-1 text-white" />
                                 </div>
                              </div>
 
-                             {/* Text Label */}
                              <div className="absolute bottom-5 left-5">
                                 <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-[11px] font-sans font-medium">
                                    View Case Studies
@@ -854,7 +853,6 @@ export const FounderSection = () => {
                     : "bg-zinc-900 border-zinc-800"
                 )}
               >
-                 {/* BADGE ABSOLUTE */}
                  <div className={cn(
                     "absolute top-6 right-6 rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium z-20",
                     isLightMode 

@@ -129,17 +129,13 @@ export const Services = () => {
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  // --- NUEVA LÓGICA DE FRAMER MOTION PARA EL PADDING ---
   const { scrollX } = useScroll({ container: scrollContainerRef });
   
-  // Transforma el scroll: cuando el usuario scrollea de 0px a 400px, 
-  // el padding pasa del valor calculado (paddingLeft) a 0.
   const animatedPadding = useTransform(
     scrollX, 
     [0, 400], 
     [paddingLeft, 0]
   );
-  // -----------------------------------------------------
 
   useEffect(() => {
     const calculatePadding = () => {
@@ -164,7 +160,6 @@ export const Services = () => {
     const card = document.getElementById(`card-${id}`);
     
     if (card && scrollContainerRef.current) {
-      // Ajustamos el scroll considerando que el padding dinámico afecta la posición visual
       const scrollPos = card.offsetLeft;
       
       scrollContainerRef.current.scrollTo({
@@ -223,7 +218,8 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden pl-[8vw]">
+    // CAMBIO AQUÍ: bg-[#FAFDFE] en lugar de bg-white
+    <div className="w-full bg-[#FAFDFE] min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden pl-[8vw]">
       
       <style>{`
         .hide-scroll::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; background: transparent !important; }
@@ -281,13 +277,11 @@ export const Services = () => {
                 key={service.id} 
                 id={`tab-${service.id}`} 
                 onClick={() => scrollToCard(service.id)} 
-                // CAMBIO AQUÍ: rounded-none en lugar de rounded-full
                 className={cn("relative px-4 py-3 rounded-none text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}
               >
                 {activeTab === service.id && (
                   <motion.div 
                     layoutId="activeTab" 
-                    // CAMBIO AQUÍ: rounded-none en lugar de rounded-full
                     className="absolute inset-0 rounded-none -z-10 overflow-hidden" 
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   >
@@ -295,7 +289,6 @@ export const Services = () => {
                     <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(237,191,134), transparent 72%)", animation: "bento2-gradient-fade1 10.5s ease-in-out infinite" }} />
                     <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(103,188,183), transparent 72%)", animation: "bento2-gradient-fade2 10.5s ease-in-out infinite" }} />
                     <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(148,163,184), transparent 72%)", animation: "bento2-gradient-fade3 10.5s ease-in-out infinite" }} />
-                    {/* CAMBIO AQUÍ: rounded-none en lugar de rounded-full */}
                     <div className="absolute inset-0 rounded-none border border-neutral-200/50" />
                   </motion.div>
                 )}
@@ -306,12 +299,11 @@ export const Services = () => {
         </div>
       </div>
 
-      {/* CAROUSEL - CAMBIADO A MOTION.DIV Y PADDING ANIMADO */}
+      {/* CAROUSEL */}
       <motion.div 
         ref={scrollContainerRef} 
         className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
         style={{ 
-          // paddingLeft ahora es dinámico: comienza igualado al título y termina en 0
           paddingLeft: animatedPadding,
           paddingRight: '85vw' 
         }}
@@ -322,7 +314,6 @@ export const Services = () => {
             id={`card-${service.id}`} 
             className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
           >
-            {/* CAMBIO AQUÍ: rounded-none en lugar de rounded-2xl */}
             <div className="group relative h-[420px] w-full overflow-hidden rounded-none bg-neutral-900 text-white transition-transform duration-500">
               <div 
                 className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
