@@ -36,13 +36,14 @@ const Index = () => {
           <UseCasesShowcase />
           <FounderSection />
         </div>
+        <CloudHero />
+        <BoxCards />
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
         <Services />
         
-        <CloudHero />
-        <BoxCards />
+        
         <OurStepsVersion2 />
         <ComparisonSection />
         <Pricing />
