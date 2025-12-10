@@ -509,6 +509,9 @@ export const FounderSection = () => {
   const [isLightMode, setIsLightMode] = useState(false);
   const [isLateScroll, setIsLateScroll] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
+  
+  // STATE PARA VIDEO "CASE STUDIES"
+  const [isCaseStudyActive, setIsCaseStudyActive] = useState(false);
 
   // --- ANIMATION CONSTANTS FOR BUTTON ---
   const buttonColorSequence = [COLORS.coral, COLORS.coral, COLORS.turquoise, COLORS.turquoise, COLORS.coral];
@@ -664,7 +667,6 @@ export const FounderSection = () => {
                 >
                   <span className="flex items-center gap-2">
                     Start Scaling
-                    {/* Flecha animada independiente */}
                     <motion.span
                       animate={{
                         color: buttonColorSequence
@@ -775,7 +777,7 @@ export const FounderSection = () => {
                           </div>
                        </TiltCard>
 
-                       {/* ITEM 3 */}
+                       {/* ITEM 3: VIDEO CASE STUDY (INTERACTIVE) */}
                        <TiltCard 
                         layout="position"
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -783,22 +785,47 @@ export const FounderSection = () => {
                         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
                         className="h-[300px] group cursor-pointer safari-gpu"
                         innerClassName="bg-black border border-zinc-800"
+                        onClick={() => setIsCaseStudyActive(true)}
                        >
-                          <div className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                             <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+                          <div className="absolute inset-0 w-full h-full">
+                             {/* Video Real: Office/Working footage */}
+                             <video 
+                                autoPlay 
+                                loop 
+                                muted 
+                                playsInline 
+                                className={cn(
+                                   "w-full h-full object-cover transition-all duration-700 ease-out",
+                                   isCaseStudyActive ? "grayscale-0" : "grayscale opacity-60 group-hover:opacity-80"
+                                )}
+                             >
                                 <source src="https://videos.pexels.com/video-files/5854659/5854659-uhd_2560_1440_25fps.mp4" type="video/mp4" />
                              </video>
                           </div>
-                          <div className="absolute inset-0 flex items-center justify-center">
-                             <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-none flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
-                                <Play fill="white" className="ml-1 text-white" />
+
+                          {/* OVERLAY & UI - Disappears on Click */}
+                          <motion.div
+                             className="absolute inset-0 z-20 pointer-events-none"
+                             animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
+                             transition={{ duration: 0.5 }}
+                          >
+                             {/* Dark Overlay */}
+                             <div className="absolute inset-0 bg-black/40" />
+
+                             {/* Play Button */}
+                             <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-none flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
+                                   <Play fill="white" className="ml-1 text-white" />
+                                </div>
                              </div>
-                          </div>
-                          <div className="absolute bottom-5 left-5">
-                             <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-[11px] font-sans font-medium">
-                                View Case Studies
-                             </span>
-                          </div>
+
+                             {/* Text Label */}
+                             <div className="absolute bottom-5 left-5">
+                                <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-[11px] font-sans font-medium">
+                                   View Case Studies
+                                </span>
+                             </div>
+                          </motion.div>
                        </TiltCard>
                     </>
                  )}
