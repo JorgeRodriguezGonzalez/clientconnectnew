@@ -218,8 +218,8 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    // CAMBIO AQUÍ: bg-[#FAFDFE] en lugar de bg-white
-    <div className="w-full bg-[#FAFDFE] min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden pl-[8vw]">
+    // CAMBIO AQUÍ: bg-[#F6F6F6] en lugar de bg-white
+    <div className="w-full bg-[#F6F6F6] min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden pl-[8vw]">
       
       <style>{`
         .hide-scroll::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; background: transparent !important; }

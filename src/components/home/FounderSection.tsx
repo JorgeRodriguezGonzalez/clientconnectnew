@@ -543,13 +543,13 @@ export const FounderSection = () => {
       ref={containerRef} 
       className={cn(
         "relative w-full py-24 lg:py-32 transition-colors duration-0 z-10 font-sans", 
-        isLightMode ? "bg-[#FAFDFE]" : "bg-[#050505]"
+        isLightMode ? "bg-[#F6F6F6]" : "bg-[#050505]"
       )}
     >
       <style>{fontStyles}</style>
 
       {/* TOP LINE */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-white z-50" />
+      <div className="absolute top-0 left-0 w-full h-[0.5px] bg-white z-50" />
 
       {/* BACKGROUND EFFECTS */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
