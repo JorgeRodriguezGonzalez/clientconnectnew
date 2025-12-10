@@ -646,7 +646,7 @@ export const FounderSection = () => {
                 ))}
               </div>
 
-              {/* CTA - UPDATED BUTTON (ALWAYS BLACK BACKGROUND) */}
+              {/* CTA - UPDATED BUTTON */}
               <div className="mt-4">
                 <motion.button
                   animate={{
@@ -828,15 +828,23 @@ export const FounderSection = () => {
                 )}
               >
                  <div className="grid grid-cols-12 gap-4 h-full items-center">
-                    {/* Left Column: Text */}
                     <div className="col-span-5 flex flex-col justify-center h-full">
-                        <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>The Ecosystem</h3>
-                        <p className={cn("font-sans font-medium text-sm leading-relaxed", isLightMode ? "text-gray-500" : "text-white/70")}>
-                          We eliminate friction. One goal: Zero wasted budget.
+                        <div className="flex items-center justify-between mb-2">
+                            <h3 className={cn("font-sans font-bold text-xl", isLightMode ? "text-gray-900" : "text-white")}>The Ecosystem</h3>
+                            <span className={cn(
+                                "rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium",
+                                isLightMode 
+                                    ? "border-zinc-200 text-gray-500" 
+                                    : "border-white/20 text-white/60"
+                            )}>
+                                Reach
+                            </span>
+                        </div>
+                        <p className={cn("font-sans font-medium text-xs leading-relaxed", isLightMode ? "text-gray-500" : "text-white/70")}>
+                          Strategic campaigns across SEO, Google Ads, Social Media and more to capture high-intent prospects.
                         </p>
                     </div>
 
-                    {/* Right Column: Visualization */}
                     <div className="col-span-7 h-full flex items-center justify-center">
                        <div className="relative w-full max-w-[300px] h-[120px]">
                           <AnimatedLogos isLightMode={isLightMode} />
