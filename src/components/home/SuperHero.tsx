@@ -122,10 +122,9 @@ type SuperHeroProps = {
   images?: string[];
 };
 
-// IMÁGENES ACTUALIZADAS
 const defaultImages = [
-  'images/superheroylr.jpg', // Nueva imagen 1
-  'images/superherolcdriveways.jpg', // Nueva imagen 2
+  'images/superheroylr.jpg',
+  'images/superherolcdriveways.jpg',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629ab_hero-marquee-image-03-cinemaflow-webflow-template.avif',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a8_hero-marquee-image-04-cinemaflow-webflow-template.avif',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
@@ -143,11 +142,10 @@ export const SuperHero = ({
   const bgColor = "#050505";
   const lampColor = "#D84315"; 
 
-  // Colores para el radial cambiante
   const radialColorSequence = [
-    "radial-gradient(circle at bottom center, #de8363, transparent 70%)", // Coral
-    "radial-gradient(circle at bottom center, #67bcb7, transparent 70%)", // Turquesa
-    "radial-gradient(circle at bottom center, #de8363, transparent 70%)"  // Coral
+    "radial-gradient(circle at bottom center, #de8363, transparent 70%)", 
+    "radial-gradient(circle at bottom center, #67bcb7, transparent 70%)", 
+    "radial-gradient(circle at bottom center, #de8363, transparent 70%)"
   ];
 
   useEffect(() => {
@@ -182,9 +180,7 @@ export const SuperHero = ({
     <div className="w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center py-16 px-6 overflow-hidden relative">
       <style>{fontStyles}</style>
       
-      {/* 
-        --- BOTTOM SPARKLES + CHANGING RADIAL ---
-      */}
+      {/* BACKGROUND (Sparkles + Radial) */}
       <div className="absolute inset-x-0 -bottom-48 h-[600px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-40"
@@ -206,9 +202,7 @@ export const SuperHero = ({
         />
       </div>
 
-      {/* 
-        --- CONTENIDO PRINCIPAL ---
-      */}
+      {/* MAIN CONTENT */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[20]" style={{ marginTop: '-10px' }}>
         
         {/* LAMP EFFECT */}
@@ -305,14 +299,14 @@ export const SuperHero = ({
         <div className="relative z-10">
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-8">
-              {/* Main Headline - TIEMPOS REDUCIDOS */}
+              {/* Main Headline - DELAY AUMENTADO A 0.7s */}
               <motion.h1 
                 key="hero-title"
                 initial={{ opacity: 0, y: 30 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ 
-                  delay: 0.5, // Antes 2.1
-                  duration: 1.0, // Antes 1.5
+                  delay: 0.7, 
+                  duration: 1.0,
                   ease: "easeOut"
                 }} 
                 className="font-inter font-semibold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
@@ -324,14 +318,14 @@ export const SuperHero = ({
                 </span>
               </motion.h1>
 
-              {/* Subtexto - TIEMPOS REDUCIDOS */}
+              {/* Subtexto - DELAY AUMENTADO A 0.9s */}
               <motion.div 
                 key="hero-subtitle"
                 initial={{ opacity: 0, y: 20 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ 
-                  delay: 0.7, // Antes 2.2
-                  duration: 1.0, // Antes 1.5
+                  delay: 0.9, 
+                  duration: 1.0,
                   ease: "easeOut"
                 }} 
                 className="flex flex-col items-center gap-2 font-inter font-light text-[16px] md:text-[18px] text-gray-400 max-w-3xl mx-auto"
@@ -343,14 +337,14 @@ export const SuperHero = ({
               </motion.div>
             </div>
 
-            {/* CTA Buttons - TIEMPOS REDUCIDOS */}
+            {/* CTA Buttons - DELAY AUMENTADO A 1.1s + HOVER FIX */}
             <motion.div 
               key="hero-buttons"
               initial={{ opacity: 0, scale: 0.9 }} 
               animate={{ opacity: 1, scale: 1 }} 
               transition={{ 
-                delay: 0.9, // Antes 2.4
-                duration: 1.0, // Antes 1.4
+                delay: 1.1, 
+                duration: 1.0,
                 ease: "easeOut"
               }} 
               className="mt-8"
@@ -359,9 +353,10 @@ export const SuperHero = ({
                 {/* Botón Blanco */}
                 <motion.a 
                   href="#contact"
-                  className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto relative z-[100] will-change-[background-color,box-shadow]"
+                  className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100] will-change-[background-color,box-shadow]"
                   whileHover={{
-                    boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)'
+                    boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
+                    transition: { duration: 0.2 } // Fix para hover instantáneo
                   }}
                   onClick={e => e.preventDefault()}
                 >
@@ -373,12 +368,13 @@ export const SuperHero = ({
                 {/* Botón Naranja Rojizo */}
                 <motion.a 
                   href="#contact"
-                  className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto relative z-[100] will-change-[background-color,box-shadow]"
+                  className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100] will-change-[background-color,box-shadow]"
                   style={{
                     border: `1px solid ${lampColor}`
                   }}
                   whileHover={{
-                    boxShadow: `0 0 20px rgba(216, 67, 21, 0.5)`
+                    boxShadow: `0 0 20px rgba(216, 67, 21, 0.5)`,
+                    transition: { duration: 0.2 } // Fix para hover instantáneo
                   }}
                   onClick={e => e.preventDefault()}
                 >
@@ -396,7 +392,7 @@ export const SuperHero = ({
             </motion.div>
           </div>
 
-          {/* Marquee Images */}
+          {/* Marquee Images - SKEW REDUCIDO A -12deg */}
           <div 
             className="mt-16 flex items-center justify-center relative z-[30]" 
             style={{ transform: 'rotate(4.5deg)' }}
@@ -413,7 +409,7 @@ export const SuperHero = ({
                       alt={`Hero Marquee Image ${imgIndex + 1}`} 
                       className="w-[320px] h-[370px] object-cover rounded-3xl opacity-[0.85] hover:opacity-100 transition-opacity duration-300" 
                       style={{
-                        transform: 'skewY(-20deg)', 
+                        transform: 'skewY(-12deg)', // Sutilmente inclinado
                         flexShrink: 0
                       }} 
                       loading="eager" 

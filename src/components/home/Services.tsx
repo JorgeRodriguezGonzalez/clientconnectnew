@@ -281,19 +281,22 @@ export const Services = () => {
                 key={service.id} 
                 id={`tab-${service.id}`} 
                 onClick={() => scrollToCard(service.id)} 
-                className={cn("relative px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}
+                // CAMBIO AQUÍ: rounded-none en lugar de rounded-full
+                className={cn("relative px-4 py-3 rounded-none text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}
               >
                 {activeTab === service.id && (
                   <motion.div 
                     layoutId="activeTab" 
-                    className="absolute inset-0 rounded-full -z-10 overflow-hidden" 
+                    // CAMBIO AQUÍ: rounded-none en lugar de rounded-full
+                    className="absolute inset-0 rounded-none -z-10 overflow-hidden" 
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   >
                     <div className="absolute inset-0 bg-white" />
                     <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(237,191,134), transparent 72%)", animation: "bento2-gradient-fade1 10.5s ease-in-out infinite" }} />
                     <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(103,188,183), transparent 72%)", animation: "bento2-gradient-fade2 10.5s ease-in-out infinite" }} />
                     <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(148,163,184), transparent 72%)", animation: "bento2-gradient-fade3 10.5s ease-in-out infinite" }} />
-                    <div className="absolute inset-0 rounded-full border border-neutral-200/50" />
+                    {/* CAMBIO AQUÍ: rounded-none en lugar de rounded-full */}
+                    <div className="absolute inset-0 rounded-none border border-neutral-200/50" />
                   </motion.div>
                 )}
                 {service.title}
@@ -319,7 +322,8 @@ export const Services = () => {
             id={`card-${service.id}`} 
             className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
           >
-            <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
+            {/* CAMBIO AQUÍ: rounded-none en lugar de rounded-2xl */}
+            <div className="group relative h-[420px] w-full overflow-hidden rounded-none bg-neutral-900 text-white transition-transform duration-500">
               <div 
                 className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105" 
                 style={{
