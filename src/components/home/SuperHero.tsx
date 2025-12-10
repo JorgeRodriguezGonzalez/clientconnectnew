@@ -207,7 +207,7 @@ export const SuperHero = ({
         <Sparkles
           density={800}
           className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
-          color="#ffffff"
+          particleColor="#ffffff"
           minSize={0.5}
           maxSize={1.5}
         />
