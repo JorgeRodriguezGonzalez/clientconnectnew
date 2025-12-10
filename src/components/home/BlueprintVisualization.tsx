@@ -20,7 +20,7 @@ const LayerBlueTop = ({
     // Cuando progress es 0 (inicio), grayscale es 1 (gris total).
     // Cuando progress es 1 (final), grayscale es 0 (color total).
     // Multiplicamos por 1.2 para que el color llegue a su máximo un poco antes de terminar la expansión.
-    const grayscaleAmount = Math.max(0, 1 - progress * 1.2);
+    const grayscaleAmount = Math.max(0, 1 - progress * 2);
 
     return (
       <div 
@@ -232,7 +232,7 @@ const LayerBlueBase = ({
     const translateY = 1.6404 + (80 - 1.6404) * progress;
 
     // LÓGICA AGREGADA: Mismo cálculo que en LayerBlueTop para sincronía
-    const grayscaleAmount = Math.max(0, 1 - progress * 1.2);
+    const grayscaleAmount = Math.max(0, 1 - progress * 2);
 
     return (
       <div 
