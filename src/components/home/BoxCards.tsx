@@ -16,8 +16,7 @@ const BackgroundStripes = () => (
 const BoxCards = () => {
   return (
     <section id="box-cards" className="grow relative w-full overflow-x-hidden bg-[#FAFAFA] flex flex-col">
-      {/* Top Border */}
-      <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
+      {/* Top Border removido aquí */}
 
       <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
