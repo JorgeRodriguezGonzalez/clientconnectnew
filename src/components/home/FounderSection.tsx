@@ -624,9 +624,9 @@ export const FounderSection = () => {
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     // CAMBIO: Trigger para Light Mode ajustado al 15% (0.15)
-    if (latest > 0.25 && !isLightMode) {
+    if (latest > 0.35 && !isLightMode) {
       setIsLightMode(true);
-    } else if (latest <= 0.25 && isLightMode) {
+    } else if (latest <= 0.35 && isLightMode) {
       setIsLightMode(false);
     }
 
