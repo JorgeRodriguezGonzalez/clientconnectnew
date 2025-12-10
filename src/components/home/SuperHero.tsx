@@ -125,9 +125,9 @@ type SuperHeroProps = {
 const defaultImages = [
   'images/superheroylr.jpg',
   'images/superherolcdriveways.jpg',
-  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629ab_hero-marquee-image-03-cinemaflow-webflow-template.avif',
-  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a8_hero-marquee-image-04-cinemaflow-webflow-template.avif',
-  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
+  'images/superheroylr.jpg',
+  'images/superheroylr.jpg',
+  'images/superherolcdriveways.jpg',
 ];
 
 // @component: SuperHero
