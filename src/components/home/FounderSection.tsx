@@ -8,7 +8,9 @@ const fontStyles = `
   .font-syne { font-family: 'Syne', sans-serif; }
   .font-inter { font-family: 'Inter', sans-serif; }
   
-  /* OPTIMIZACIÓN SAFARI: Fuerza aceleración de hardware */
+  /* OPTIMIZACIÓN SAFARI: 
+     Añadimos 'transform: translateZ(0)' para forzar GPU
+     y evitar parpadeos en el repintado */
   .safari-gpu {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
@@ -17,6 +19,14 @@ const fontStyles = `
     perspective: 1000px;
   }
 `;
+
+// --- CONFIGURACIÓN DE ANIMACIÓN UNIFICADA (CORREGIDA PARA TYPESCRIPT) ---
+// El cambio aquí es 'as [number, number, number, number]'.
+// Esto fuerza a TS a entender que es una curva Bezier válida.
+const ANIMATION_CONFIG = {
+  duration: 0.95, 
+  ease: [0.2, 0, 0.2, 1] as [number, number, number, number]
+};
 
 // --- UTILS ---
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
@@ -245,9 +255,9 @@ const TiltCard = ({
       onMouseLeave={handleMouseLeave}
       initial={initial || { opacity: 0, scale: 0.9 }}
       animate={animate || { opacity: 1, scale: 1 }}
-      // UPDATE: Duración aumentada a 0.95s para que sea más lento y elegante
+      // UPDATE: Usamos la configuración unificada
       transition={transition || { 
-        layout: { duration: 0.95, ease: [0.25, 1, 0.5, 1] }, 
+        layout: ANIMATION_CONFIG, 
         opacity: { duration: 0.5 }
       }} 
       style={{
@@ -425,9 +435,8 @@ export const FounderSection = () => {
               <TiltCard 
                 layoutId="miguel-card"
                 layout
-                // UPDATE: 0.95s para la tarjeta
                 transition={{ 
-                  layout: { duration: 0.95, ease: [0.25, 1, 0.5, 1] },
+                  layout: ANIMATION_CONFIG,
                   opacity: { duration: 0.5 }
                 }}
                 onLayoutAnimationStart={() => setIsResizing(true)}
@@ -437,10 +446,6 @@ export const FounderSection = () => {
                    isLightMode ? "md:col-span-1" : "md:col-span-2"
                 )}
               >
-                {/* 
-                   OVERLAY: Mantenemos el fundido rápido, pero el overlay se queda
-                   visible todo lo que dure "isResizing" (0.95s).
-                */}
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: isResizing ? 1 : 0 }}
@@ -466,9 +471,8 @@ export const FounderSection = () => {
                     loading="eager"
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
                     transition={{ 
-                        // UPDATE: Sincronizamos imagen (0.95s) y zoom (0.95s) con la tarjeta
-                        layout: { duration: 0.95, ease: [0.25, 1, 0.5, 1] }, 
-                        scale: { duration: 0.95, ease: "easeInOut" }
+                        layout: ANIMATION_CONFIG, 
+                        scale: ANIMATION_CONFIG 
                     }}
                     className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0 safari-gpu"
                   />
@@ -490,7 +494,7 @@ export const FounderSection = () => {
                     <>
                        {/* ITEM 2 */}
                        <TiltCard 
-                        layout
+                        layout="position"
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
@@ -515,7 +519,7 @@ export const FounderSection = () => {
 
                        {/* ITEM 3 */}
                        <TiltCard 
-                        layout
+                        layout="position"
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
