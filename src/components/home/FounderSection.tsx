@@ -311,7 +311,6 @@ export const FounderSection = () => {
   const [isResizing, setIsResizing] = useState(false);
 
   // --- ANIMATION CONSTANTS FOR BUTTON ---
-  // Color Loop: Coral -> Turquoise -> Coral
   const buttonColorSequence = [COLORS.coral, COLORS.coral, COLORS.turquoise, COLORS.turquoise, COLORS.coral];
   const buttonColorDuration = 10;
 
@@ -447,7 +446,7 @@ export const FounderSection = () => {
                 ))}
               </div>
 
-              {/* CTA - UPDATED BUTTON */}
+              {/* CTA - UPDATED BUTTON (ALWAYS BLACK BACKGROUND) */}
               <div className="mt-4">
                 <motion.button
                   animate={{
@@ -460,9 +459,8 @@ export const FounderSection = () => {
                   }}
                   className={cn(
                     "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(222,131,99,0.3)]",
-                    isLightMode 
-                      ? "bg-white/80 hover:bg-white" 
-                      : "bg-white/5 hover:bg-white/10"
+                    // CHANGED: Always black background
+                    "bg-black text-white hover:bg-zinc-900"
                   )}
                 >
                   <motion.span

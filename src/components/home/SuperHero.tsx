@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 
-// --- FONTS STYLES & ANIMATIONS ---
+// --- FONTS STYLES ---
 const fontStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
   
@@ -12,19 +12,9 @@ const fontStyles = `
   .font-inter {
     font-family: 'Inter', sans-serif;
   }
-
-  /* Animación para el Marquee Inverso */
-  @keyframes marquee-reverse {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0%); }
-  }
-
-  .animate-marquee-reverse {
-    animation: marquee-reverse 60s linear infinite;
-  }
 `;
 
-type HeroVideoSectionProps = {
+type SuperHeroProps = {
   title?: string;
   highlightedText?: string;
   primaryButtonText?: string;
@@ -40,22 +30,43 @@ const defaultImages = [
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
 ];
 
+// @component: SuperHero
 export const SuperHero = ({
   title = 'From Raw Footage to High-Converting Leads in One Workflow',
   highlightedText = '',
   primaryButtonText = 'Book a Strategy Call',
   secondaryButtonText = 'View portfolio',
   images = defaultImages
-}: HeroVideoSectionProps) => {
+}: SuperHeroProps) => {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const bgColor = "#050505";
   const lampColor = "#D84315"; // Naranja rojizo
 
-  // Usamos 4 sets para asegurar que cubra pantallas anchas (4k) sin cortes al hacer el loop
-  const marqueeImages = [...images, ...images, ...images, ...images];
+  useEffect(() => {
+    const marquee = marqueeRef.current;
+    if (!marquee) return;
+    let animationFrameId: number;
+    let translateX = 0;
+    const speed = 0.5;
+    const animate = () => {
+      translateX -= speed;
+      const marqueeWidth = marquee.scrollWidth / 3;
+      if (Math.abs(translateX) >= marqueeWidth) {
+        translateX = 0;
+      }
+      marquee.style.transform = `translateX(${translateX}px)`;
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    animate();
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [images]);
 
   return (
-    <div className="w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center pt-16 pb-0 overflow-hidden relative">
+    <div className="w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center py-16 px-6 overflow-hidden relative">
       <style>{fontStyles}</style>
       
       {/* Background Glow Effects */}
@@ -66,8 +77,7 @@ export const SuperHero = ({
         </div>
       </div>
 
-      {/* --- CONTENT CONTAINER (LIMITED WIDTH) --- */}
-      <div className="max-w-[1296px] w-full mx-auto relative z-10 px-6" style={{ marginTop: '-10px' }}>
+      <div className="max-w-[1296px] w-full mx-auto relative z-10" style={{ marginTop: '-10px' }}>
         
         {/* LAMP EFFECT */}
         <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible z-0 transform scale-75 md:scale-100">
@@ -163,7 +173,7 @@ export const SuperHero = ({
         <div className="relative z-10">
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-8">
-              {/* Main Headline */}
+              {/* Main Headline - INCREASED BY 4PX */}
               <motion.h1 
                 key="hero-title"
                 initial={{ opacity: 0, y: 30 }} 
@@ -173,6 +183,7 @@ export const SuperHero = ({
                   duration: 1.5,
                   ease: "easeOut"
                 }} 
+                // Ajustes: 28->32px, 38->42px, 52->56px
                 className="font-syne font-semibold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
               >
                 From Raw Footage to <br className="md:hidden" />
@@ -183,7 +194,7 @@ export const SuperHero = ({
                 in One Workflow
               </motion.h1>
 
-              {/* Subtexto */}
+              {/* Subtexto - RESTORED TO PREVIOUS SIZE (+2px) */}
               <motion.div 
                 key="hero-subtitle"
                 initial={{ opacity: 0, y: 20 }} 
@@ -193,6 +204,7 @@ export const SuperHero = ({
                   duration: 1.5,
                   ease: "easeOut"
                 }} 
+                // Ajustes: 14->16px, 16->18px
                 className="flex flex-col items-center gap-2 font-inter font-light text-[16px] md:text-[18px] text-gray-400 max-w-3xl mx-auto"
               >
                 <p>Stop hiring separate teams. I handle the entire ecosystem.</p>
@@ -254,30 +266,32 @@ export const SuperHero = ({
               </div>
             </motion.div>
           </div>
-        </div>
-      </div>
-      {/* --- END CONTENT CONTAINER --- */}
 
-
-      {/* --- FULL WIDTH MARQUEE --- */}
-      {/* Se ha sacado del container max-w-1296 para que ocupe todo el ancho */}
-      <div className="mt-20 w-full overflow-hidden pointer-events-auto select-none" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
-        <div className="flex -rotate-[6deg] scale-110 translate-y-8">
-          <div className="flex gap-8 animate-marquee-reverse hover:[animation-play-state:paused] min-w-full">
-            {marqueeImages.map((src, imgIndex) => (
-              <div key={imgIndex} className="relative group/item transition-all duration-500 hover:z-20 flex-shrink-0">
-                 <img 
-                  src={src} 
-                  alt={`Hero Work ${imgIndex}`} 
-                  className="w-[350px] h-[260px] object-cover rounded-2xl opacity-50 group-hover/item:opacity-100 group-hover/item:scale-105 transition-all duration-500 ease-out shadow-2xl" 
-                  loading="eager" 
-                />
-              </div>
-            ))}
+          {/* Marquee Images */}
+          <div className="mt-16 flex items-center justify-center" style={{ transform: 'rotate(-4.5deg)' }}>
+            <div ref={marqueeRef} className="flex gap-6 will-change-transform" style={{ paddingRight: '24px' }}>
+              {[...Array(3)].map((_, setIndex) => (
+                <div key={setIndex} className="flex gap-6 flex-shrink-0">
+                  {images.map((src, imgIndex) => (
+                    <img 
+                      key={`${setIndex}-${imgIndex}`} 
+                      src={src} 
+                      alt={`Hero Marquee Image ${imgIndex + 1}`} 
+                      className="w-[320px] h-[370px] object-cover rounded-3xl opacity-70" 
+                      style={{
+                        transform: 'skewY(20deg)',
+                        flexShrink: 0
+                      }} 
+                      loading="eager" 
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      
+
       <style>{`
         @keyframes slow-spin {
           from { transform: translate(-50%, -50%) rotate(0deg); }
