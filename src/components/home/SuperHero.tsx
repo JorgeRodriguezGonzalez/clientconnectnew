@@ -3,12 +3,10 @@ import { motion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 
 // --- FONTS STYLES ---
+// Actualizado para usar solo Inter, igual que el componente FounderSection
 const fontStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
   
-  .font-syne {
-    font-family: 'Syne', sans-serif;
-  }
   .font-inter {
     font-family: 'Inter', sans-serif;
   }
@@ -32,10 +30,12 @@ const defaultImages = [
 
 // @component: SuperHero
 export const SuperHero = ({
-  title = 'From Raw Footage to High-Converting Leads in One Workflow',
+  // Estos valores por defecto se sobrescriben en el render interno, 
+  // pero los mantengo aquí por si se pasan props desde fuera.
+  title = 'We Turn Ad Spend Into Profitable Revenue at Scale',
   highlightedText = '',
-  primaryButtonText = 'Book a Strategy Call',
-  secondaryButtonText = 'View portfolio',
+  primaryButtonText = 'Start Scaling',
+  secondaryButtonText = 'View Case Studies',
   images = defaultImages
 }: SuperHeroProps) => {
   const marqueeRef = useRef<HTMLDivElement>(null);
@@ -181,7 +181,10 @@ export const SuperHero = ({
         <div className="relative z-10">
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-8">
-              {/* Main Headline */}
+              {/* 
+                 Main Headline - AGENCY ADAPTED 
+                 Changed font-syne to font-inter and increased weight to bold/800 
+              */}
               <motion.h1 
                 key="hero-title"
                 initial={{ opacity: 0, y: 30 }} 
@@ -191,17 +194,17 @@ export const SuperHero = ({
                   duration: 1.5,
                   ease: "easeOut"
                 }} 
-                className="font-syne font-semibold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
+                className="font-inter font-extrabold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
               >
-                From Raw Footage to <br className="md:hidden" />
+                We Turn Ad Spend Into <br className="md:hidden" />
                 <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
-                  High-Converting Leads
+                  Profitable Revenue
                 </span>
                 <br />
-                in One Workflow
+                at National Scale
               </motion.h1>
 
-              {/* Subtexto */}
+              {/* Subtexto - AGENCY ADAPTED */}
               <motion.div 
                 key="hero-subtitle"
                 initial={{ opacity: 0, y: 20 }} 
@@ -213,9 +216,9 @@ export const SuperHero = ({
                 }} 
                 className="flex flex-col items-center gap-2 font-inter font-light text-[16px] md:text-[18px] text-gray-400 max-w-3xl mx-auto"
               >
-                <p>Stop hiring separate teams. I handle the entire ecosystem.</p>
+                <p>Stop relying on guesswork. We act as your entire growth engine.</p>
                 <p className="text-gray-300">
-                  From <span className="text-[#D84315] font-normal">on-site recording</span> and <span className="text-[#D84315] font-normal">premium editing</span> to managing profitable <span className="text-[#D84315] font-normal">Video Ads</span>.
+                  Combining <span className="text-[#D84315] font-semibold">Paid Media</span>, <span className="text-[#D84315] font-semibold">Creative Strategy</span>, and <span className="text-[#D84315] font-semibold">CRO</span> to maximize ROI.
                 </p>
               </motion.div>
             </div>
@@ -242,7 +245,8 @@ export const SuperHero = ({
                   }}
                   onClick={e => e.preventDefault()}
                 >
-                  <p className="font-syne font-bold text-[15px] text-white whitespace-nowrap">
+                  {/* Changed font-syne to font-inter */}
+                  <p className="font-inter font-semibold text-[15px] text-white whitespace-nowrap">
                     {secondaryButtonText}
                   </p>
                 </motion.a>
@@ -262,8 +266,9 @@ export const SuperHero = ({
                   <div className="w-[18px] h-[14px] relative overflow-hidden" style={{ color: lampColor }}>
                     <Calendar className="w-[17px] h-[14px]" />
                   </div>
+                  {/* Changed font-syne to font-inter */}
                   <p 
-                    className="font-syne font-bold text-[15px] whitespace-nowrap z-[1]" 
+                    className="font-inter font-semibold text-[15px] whitespace-nowrap z-[1]" 
                     style={{ color: lampColor }}
                   >
                     {primaryButtonText}
@@ -273,7 +278,7 @@ export const SuperHero = ({
             </motion.div>
           </div>
 
-          {/* Marquee Images - ROTATION & SKEW UPDATED */}
+          {/* Marquee Images - Rotated 4.5deg & Skew -20deg (Left-to-Right logic preserved) */}
           <div className="mt-16 flex items-center justify-center" style={{ transform: 'rotate(4.5deg)' }}>
             <div ref={marqueeRef} className="flex gap-6 will-change-transform" style={{ paddingRight: '24px' }}>
               {[...Array(3)].map((_, setIndex) => (
@@ -285,7 +290,7 @@ export const SuperHero = ({
                       alt={`Hero Marquee Image ${imgIndex + 1}`} 
                       className="w-[320px] h-[370px] object-cover rounded-3xl opacity-70" 
                       style={{
-                        transform: 'skewY(-20deg)', // Negative skew to match positive rotation
+                        transform: 'skewY(-20deg)', 
                         flexShrink: 0
                       }} 
                       loading="eager" 
