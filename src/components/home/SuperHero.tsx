@@ -1,9 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState, useId } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 
 // --- FONTS STYLES ---
-// Actualizado para usar solo Inter, igual que el componente FounderSection
 const fontStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
   
@@ -11,6 +10,109 @@ const fontStyles = `
     font-family: 'Inter', sans-serif;
   }
 `;
+
+// --- SPARKLES COMPONENT (Inlined for portability) ---
+const Sparkles = ({
+  id,
+  background,
+  minSize,
+  maxSize,
+  speed,
+  particleColor,
+  density,
+  className,
+}: {
+  id?: string;
+  background?: string;
+  minSize?: number;
+  maxSize?: number;
+  speed?: number;
+  particleColor?: string;
+  density?: number;
+  className?: string;
+}) => {
+  const [init, setInit] = useState(false);
+  useEffect(() => {
+    setInit(true);
+  }, []);
+  const controls = useAnimation();
+
+  // Settings
+  const particlesCount = density || 100;
+  const generatedParticles = useRef<any[]>([]); 
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!init || !canvasRef.current || !containerRef.current) return;
+    
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = containerRef.current.clientWidth;
+    let height = containerRef.current.clientHeight;
+    
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+            width = entry.contentRect.width;
+            height = entry.contentRect.height;
+            canvas.width = width;
+            canvas.height = height;
+        }
+    });
+    resizeObserver.observe(containerRef.current);
+
+    // Init Particles
+    generatedParticles.current = [];
+    for (let i = 0; i < particlesCount; i++) {
+        generatedParticles.current.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * ((maxSize || 1) - (minSize || 0.5)) + (minSize || 0.5),
+            speedX: (Math.random() - 0.5) * (speed || 1),
+            speedY: (Math.random() - 0.5) * (speed || 1),
+            opacity: Math.random(),
+        });
+    }
+
+    let animationId: number;
+    const animate = () => {
+        ctx.clearRect(0, 0, width, height);
+        generatedParticles.current.forEach((p) => {
+            p.x += p.speedX;
+            p.y += p.speedY;
+            
+            if (p.x < 0) p.x = width;
+            if (p.x > width) p.x = 0;
+            if (p.y < 0) p.y = height;
+            if (p.y > height) p.y = 0;
+
+            ctx.globalAlpha = p.opacity;
+            ctx.fillStyle = particleColor || "#FFFFFF";
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        animationId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    return () => {
+        cancelAnimationFrame(animationId);
+        resizeObserver.disconnect();
+    };
+  }, [init, maxSize, minSize, speed, particleColor, particlesCount]);
+
+  return (
+    <motion.div animate={controls} className={className} ref={containerRef}>
+      <canvas ref={canvasRef} />
+    </motion.div>
+  );
+};
+
+
+// --- MAIN COMPONENT ---
 
 type SuperHeroProps = {
   title?: string;
@@ -30,8 +132,6 @@ const defaultImages = [
 
 // @component: SuperHero
 export const SuperHero = ({
-  // Estos valores por defecto se sobrescriben en el render interno, 
-  // pero los mantengo aquí por si se pasan props desde fuera.
   title = 'We Turn Ad Spend Into Profitable Revenue at Scale',
   highlightedText = '',
   primaryButtonText = 'Start Scaling',
@@ -39,8 +139,17 @@ export const SuperHero = ({
   images = defaultImages
 }: SuperHeroProps) => {
   const marqueeRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false); // Estado para pausar el marquee
+
   const bgColor = "#050505";
-  const lampColor = "#D84315"; // Naranja rojizo
+  const lampColor = "#D84315"; 
+
+  // Colores para el radial cambiante (Coral -> Turquesa -> Coral)
+  const radialColorSequence = [
+    "radial-gradient(circle at bottom center, #de8363, transparent 70%)", // Coral
+    "radial-gradient(circle at bottom center, #67bcb7, transparent 70%)", // Turquesa
+    "radial-gradient(circle at bottom center, #de8363, transparent 70%)"  // Coral
+  ];
 
   useEffect(() => {
     const marquee = marqueeRef.current;
@@ -51,17 +160,17 @@ export const SuperHero = ({
     const speed = 0.5;
 
     const animate = () => {
-      const marqueeWidth = marquee.scrollWidth / 3;
-      
-      // MOVIMIENTO: Izquierda a Derecha
-      translateX += speed;
-
-      // Reset para bucle infinito
-      if (translateX >= 0) {
-        translateX = -marqueeWidth;
+      // Solo movemos si NO está pausado
+      if (!isPaused) {
+        const marqueeWidth = marquee.scrollWidth / 3;
+        // MOVIMIENTO: Izquierda a Derecha
+        translateX += speed;
+        // Reset para bucle infinito
+        if (translateX >= 0) {
+          translateX = -marqueeWidth;
+        }
+        marquee.style.transform = `translateX(${translateX}px)`;
       }
-
-      marquee.style.transform = `translateX(${translateX}px)`;
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -71,18 +180,37 @@ export const SuperHero = ({
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [images]);
+  }, [images, isPaused]); // Añadimos isPaused a dependencias
 
   return (
     <div className="w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center py-16 px-6 overflow-hidden relative">
       <style>{fontStyles}</style>
       
-      {/* Background Glow Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -bottom-[400px] left-1/2 -translate-x-1/2 w-[1200px] h-[800px] opacity-30">
-          <div className="absolute top-[400px] left-[600px] w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[70px] bg-[conic-gradient(from_0deg_at_50%_50%,#AD2624_0deg,#BA4226_55deg,transparent_106deg,transparent_162deg,transparent_252deg,#EE9C21_306deg,#AD2624_360deg)] animate-slow-spin opacity-80" />
-          <div className="absolute top-[400px] left-[600px] w-[300px] h-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[32px] bg-[conic-gradient(from_0deg_at_50%_50%,#EE9C21_0deg,transparent_180deg,#C96928_360deg)] animate-reverse-slow-spin" />
-        </div>
+      {/* 
+        --- BOTTOM SPARKLES + CHANGING RADIAL ---
+        Sustituye al antiguo "Background Glow Effects"
+      */}
+      <div className="absolute inset-x-0 bottom-0 h-[500px] w-full overflow-hidden pointer-events-none z-0">
+        {/* Radial Cambiante */}
+        <motion.div 
+          className="absolute inset-0 opacity-40"
+          animate={{
+            background: radialColorSequence
+          }}
+          transition={{
+            duration: 10,
+            ease: "linear",
+            repeat: Infinity
+          }}
+        />
+        {/* Sparkles */}
+        <Sparkles
+          density={800}
+          className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+          color="#ffffff"
+          minSize={0.5}
+          maxSize={1.5}
+        />
       </div>
 
       <div className="max-w-[1296px] w-full mx-auto relative z-10" style={{ marginTop: '-10px' }}>
@@ -182,8 +310,8 @@ export const SuperHero = ({
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-8">
               {/* 
-                 Main Headline - AGENCY ADAPTED 
-                 Changed font-syne to font-inter and increased weight to bold/800 
+                 Main Headline - REDUCED THICKNESS
+                 Changed font-extrabold to font-semibold 
               */}
               <motion.h1 
                 key="hero-title"
@@ -194,7 +322,7 @@ export const SuperHero = ({
                   duration: 1.5,
                   ease: "easeOut"
                 }} 
-                className="font-inter font-extrabold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
+                className="font-inter font-semibold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
               >
                 We Turn Ad Spend Into <br className="md:hidden" />
                 <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
@@ -204,7 +332,7 @@ export const SuperHero = ({
                 at National Scale
               </motion.h1>
 
-              {/* Subtexto - AGENCY ADAPTED */}
+              {/* Subtexto */}
               <motion.div 
                 key="hero-subtitle"
                 initial={{ opacity: 0, y: 20 }} 
@@ -245,7 +373,6 @@ export const SuperHero = ({
                   }}
                   onClick={e => e.preventDefault()}
                 >
-                  {/* Changed font-syne to font-inter */}
                   <p className="font-inter font-semibold text-[15px] text-white whitespace-nowrap">
                     {secondaryButtonText}
                   </p>
@@ -266,7 +393,6 @@ export const SuperHero = ({
                   <div className="w-[18px] h-[14px] relative overflow-hidden" style={{ color: lampColor }}>
                     <Calendar className="w-[17px] h-[14px]" />
                   </div>
-                  {/* Changed font-syne to font-inter */}
                   <p 
                     className="font-inter font-semibold text-[15px] whitespace-nowrap z-[1]" 
                     style={{ color: lampColor }}
@@ -278,8 +404,14 @@ export const SuperHero = ({
             </motion.div>
           </div>
 
-          {/* Marquee Images - Rotated 4.5deg & Skew -20deg (Left-to-Right logic preserved) */}
-          <div className="mt-16 flex items-center justify-center" style={{ transform: 'rotate(4.5deg)' }}>
+          {/* Marquee Images */}
+          <div 
+            className="mt-16 flex items-center justify-center" 
+            style={{ transform: 'rotate(4.5deg)' }}
+            // Eventos para pausar el carrusel globalmente al interactuar con el contenedor
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
             <div ref={marqueeRef} className="flex gap-6 will-change-transform" style={{ paddingRight: '24px' }}>
               {[...Array(3)].map((_, setIndex) => (
                 <div key={setIndex} className="flex gap-6 flex-shrink-0">
@@ -288,7 +420,8 @@ export const SuperHero = ({
                       key={`${setIndex}-${imgIndex}`} 
                       src={src} 
                       alt={`Hero Marquee Image ${imgIndex + 1}`} 
-                      className="w-[320px] h-[370px] object-cover rounded-3xl opacity-70" 
+                      // Opacidad 0.85 -> 1.0 en hover
+                      className="w-[320px] h-[370px] object-cover rounded-3xl opacity-[0.85] hover:opacity-100 transition-opacity duration-300" 
                       style={{
                         transform: 'skewY(-20deg)', 
                         flexShrink: 0
