@@ -19,7 +19,7 @@ const CloudHero = () => {
     offset: ["start center", "end center"]
   });
 
-  // Suavizado para movimiento fluido
+  // Suavizado del movimiento
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 200,
     damping: 30,
@@ -27,20 +27,16 @@ const CloudHero = () => {
   });
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
-  // Rango: 0.1 -> 0.5
   const verticalTop = useTransform(smoothProgress, [0.1, 0.5], ["50%", "100%"]);
-  // La opacidad se mantiene hasta un poco DESPUÉS de tocar el suelo (0.55) para solaparse
+  // Hacemos que la vertical dure un poquito más visible (hasta 0.55) para que coincida bien
   const verticalOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.5, 0.55], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
-  // Rango: 0.5 -> 0.8 (Empieza EXACTAMENTE cuando el vertical termina)
+  // Empieza exactamente en 0.5
+  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "100px"]);
   
-  // CORRECCIÓN CLAVE: Solo animamos el ancho, no la posición X.
-  // Crece desde 0px hasta 80px hacia la derecha.
-  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "80px"]);
-  
-  // Opacidad: Empieza un poco ANTES (0.48) para asegurar la fusión en la esquina
-  const horizontalOpacity = useTransform(smoothProgress, [0.48, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
+  // Opacidad: Aparece un instante antes (0.49) para que ya esté ahí cuando llegue la vertical
+  const horizontalOpacity = useTransform(smoothProgress, [0.49, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
 
   return (
     <section 
@@ -63,14 +59,12 @@ const CloudHero = () => {
 
           {/* --- DIVISOR VERTICAL --- */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-hidden">
-             {/* BEAM VERTICAL */}
              <motion.div 
                style={{ 
                  top: verticalTop,
                  opacity: verticalOpacity,
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               // translate-y-full: la parte inferior del div es la que guía el movimiento
                className="absolute left-0 w-[3px] -ml-[1px] h-[200px] -translate-y-full blur-[1px]"
              />
           </div>
@@ -123,27 +117,28 @@ const CloudHero = () => {
       <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10">
           
           {/* BEAM HORIZONTAL */}
-          {/* CORRECCIÓN: Eliminado translate X. Ahora está anclado fijamente al 50% */}
           <motion.div 
             style={{ 
-              left: "50%", 
+              // CAMBIO CRÍTICO: "calc(50% - 4px)"
+              // Esto mueve el inicio 4px hacia la IZQUIERDA del centro exacto.
+              // Asegura que visualmente nazca desde la línea vertical, solapándose con ella.
+              left: "calc(50% - 4px)", 
+              
               width: horizontalWidth,
               opacity: horizontalOpacity,
               background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
             }}
-            // -ml-[1px]: Mueve el inicio 1 pixel a la izquierda para solaparse con la línea vertical
-            // origin-left: Asegura que crezca hacia la derecha desde ese punto fijo
-            className="hidden lg:block absolute top-0 h-[3px] -mt-[1px] -ml-[1px] rounded-r-full blur-[1px] origin-left"
+            // z-30 para que esté por encima de la intersección
+            className="hidden lg:block absolute top-0 h-[3px] -mt-[1px] rounded-r-full blur-[1px] origin-left z-30"
           />
           
           {/* PUNTO DE INTERSECCIÓN (Flash Corner) */}
-          {/* Un pequeño punto brillante estático en la esquina para ocultar cualquier imperfección visual */}
           <motion.div
             style={{
                 opacity: useTransform(smoothProgress, [0.49, 0.5, 0.51], [0, 1, 0])
             }}
-            // left-1/2 y -translate-x-1/2 lo centra matemáticamente perfecto en la línea
-            className="hidden lg:block absolute left-1/2 top-0 w-[8px] h-[8px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#67bcb7] blur-[3px] z-20"
+            // left-1/2 exacto para tapar la unión
+            className="hidden lg:block absolute left-1/2 top-0 w-[10px] h-[10px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#67bcb7] blur-[3px] z-40"
           />
       </div>
     </section>
