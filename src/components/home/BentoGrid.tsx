@@ -375,7 +375,7 @@ function FeaturesSectionMinimal() {
   ];
 
   return (
-    <div className="relative min-h-screen w-full bg-white text-neutral-900 transition-colors duration-500 dark:bg-black dark:text-white">
+    <div className="relative min-h-screen w-full bg-[#FAFAFA] text-neutral-900 transition-colors duration-500 dark:bg-black dark:text-white">
       <div className="absolute inset-0 -z-30 overflow-hidden">
         <div
           className="absolute inset-0 [--aurora-base:#ffffff] [--aurora-accent:rgba(148,163,184,0.15)] dark:[--aurora-base:#040404] dark:[--aurora-accent:rgba(59,130,246,0.15)]"
