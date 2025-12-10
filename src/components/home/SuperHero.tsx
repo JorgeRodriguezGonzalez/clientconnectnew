@@ -122,9 +122,10 @@ type SuperHeroProps = {
   images?: string[];
 };
 
+// IMÁGENES ACTUALIZADAS
 const defaultImages = [
-  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a7_hero-marquee-image-01-cinemaflow-webflow-template.avif',
-  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629aa_hero-marquee-image-02-cinemaflow-webflow-template.avif',
+  'images/superheroylr.jpg', // Nueva imagen 1
+  'images/superherolcdriveways.jpg', // Nueva imagen 2
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629ab_hero-marquee-image-03-cinemaflow-webflow-template.avif',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a8_hero-marquee-image-04-cinemaflow-webflow-template.avif',
   'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
@@ -132,7 +133,6 @@ const defaultImages = [
 
 // @component: SuperHero
 export const SuperHero = ({
-  // Estos valores por defecto se pueden sobrescribir, pero el título principal está hardcoded abajo como se solicitó
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
   images = defaultImages
@@ -184,11 +184,8 @@ export const SuperHero = ({
       
       {/* 
         --- BOTTOM SPARKLES + CHANGING RADIAL ---
-        Z-Index: 0 (Fondo)
-        Posición: -bottom-48 (Más abajo)
       */}
       <div className="absolute inset-x-0 -bottom-48 h-[600px] w-full overflow-hidden pointer-events-none z-[0]">
-        {/* Radial Cambiante */}
         <motion.div 
           className="absolute inset-0 opacity-40"
           animate={{
@@ -200,7 +197,6 @@ export const SuperHero = ({
             repeat: Infinity
           }}
         />
-        {/* Sparkles */}
         <Sparkles
           density={800}
           className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
@@ -212,11 +208,10 @@ export const SuperHero = ({
 
       {/* 
         --- CONTENIDO PRINCIPAL ---
-        Z-Index: 20 (Superior) - Asegura que las imágenes estén por encima de los sparkles
       */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[20]" style={{ marginTop: '-10px' }}>
         
-        {/* LAMP EFFECT (Parte del contenido superior) */}
+        {/* LAMP EFFECT */}
         <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible z-0 transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             <motion.div
@@ -310,14 +305,14 @@ export const SuperHero = ({
         <div className="relative z-10">
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-8">
-              {/* Main Headline - NEW TEXT */}
+              {/* Main Headline - TIEMPOS REDUCIDOS */}
               <motion.h1 
                 key="hero-title"
                 initial={{ opacity: 0, y: 30 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ 
-                  delay: 2.1,
-                  duration: 1.5,
+                  delay: 0.5, // Antes 2.1
+                  duration: 1.0, // Antes 1.5
                   ease: "easeOut"
                 }} 
                 className="font-inter font-semibold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
@@ -329,14 +324,14 @@ export const SuperHero = ({
                 </span>
               </motion.h1>
 
-              {/* Subtexto */}
+              {/* Subtexto - TIEMPOS REDUCIDOS */}
               <motion.div 
                 key="hero-subtitle"
                 initial={{ opacity: 0, y: 20 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ 
-                  delay: 2.2,
-                  duration: 1.5,
+                  delay: 0.7, // Antes 2.2
+                  duration: 1.0, // Antes 1.5
                   ease: "easeOut"
                 }} 
                 className="flex flex-col items-center gap-2 font-inter font-light text-[16px] md:text-[18px] text-gray-400 max-w-3xl mx-auto"
@@ -348,14 +343,14 @@ export const SuperHero = ({
               </motion.div>
             </div>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons - TIEMPOS REDUCIDOS */}
             <motion.div 
               key="hero-buttons"
               initial={{ opacity: 0, scale: 0.9 }} 
               animate={{ opacity: 1, scale: 1 }} 
               transition={{ 
-                delay: 2.4,
-                duration: 1.4,
+                delay: 0.9, // Antes 2.4
+                duration: 1.0, // Antes 1.4
                 ease: "easeOut"
               }} 
               className="mt-8"

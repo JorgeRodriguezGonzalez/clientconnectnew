@@ -818,28 +818,28 @@ export const FounderSection = () => {
                     ease: "easeOut"
                 }}
                 className={cn(
-                  "md:col-span-2 group safari-gpu h-[320px]" 
+                  "md:col-span-2 group safari-gpu h-[240px]" 
                 )}
                 innerClassName={cn(
-                  "p-8 transition-colors duration-0 border",
+                  "p-8 transition-colors duration-0 border relative",
                   isLightMode 
                     ? "bg-white border-zinc-200" 
                     : "bg-zinc-900 border-zinc-800"
                 )}
               >
+                 {/* BADGE ABSOLUTE */}
+                 <div className={cn(
+                    "absolute top-6 right-6 rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium z-20",
+                    isLightMode 
+                        ? "border-zinc-200 text-gray-500" 
+                        : "border-white/20 text-white/60"
+                 )}>
+                    Reach
+                 </div>
+
                  <div className="grid grid-cols-12 gap-4 h-full items-center">
                     <div className="col-span-5 flex flex-col justify-center h-full">
-                        <div className="flex items-center justify-between mb-2">
-                            <h3 className={cn("font-sans font-bold text-xl", isLightMode ? "text-gray-900" : "text-white")}>The Ecosystem</h3>
-                            <span className={cn(
-                                "rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium",
-                                isLightMode 
-                                    ? "border-zinc-200 text-gray-500" 
-                                    : "border-white/20 text-white/60"
-                            )}>
-                                Reach
-                            </span>
-                        </div>
+                        <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>The Ecosystem</h3>
                         <p className={cn("font-sans font-medium text-xs leading-relaxed", isLightMode ? "text-gray-500" : "text-white/70")}>
                           Strategic campaigns across SEO, Google Ads, Social Media and more to capture high-intent prospects.
                         </p>
