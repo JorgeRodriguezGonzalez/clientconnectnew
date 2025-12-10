@@ -29,7 +29,7 @@ const COLORS = {
   red: "#AD2624",
 };
 
-// --- COMPONENTE GLOWING EFFECT (Optimizado con React.memo) ---
+// --- COMPONENTE GLOWING EFFECT ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -245,10 +245,9 @@ const TiltCard = ({
       onMouseLeave={handleMouseLeave}
       initial={initial || { opacity: 0, scale: 0.9 }}
       animate={animate || { opacity: 1, scale: 1 }}
-      // SAFARI FIX: Usamos curva Bezier en lugar de Spring para el layout.
-      // [0.25, 1, 0.5, 1] es una curva suave "ease-out" que Safari maneja mejor.
+      // UPDATE: Duración aumentada a 0.95s para que sea más lento y elegante
       transition={transition || { 
-        layout: { duration: 0.7, ease: [0.25, 1, 0.5, 1] }, 
+        layout: { duration: 0.95, ease: [0.25, 1, 0.5, 1] }, 
         opacity: { duration: 0.5 }
       }} 
       style={{
@@ -258,7 +257,6 @@ const TiltCard = ({
         perspective: 1000,
         ...style 
       }}
-      // SAFARI FIX: 'safari-gpu' y 'will-change-transform'
       className={cn("relative rounded-3xl overflow-hidden transition-colors duration-300 safari-gpu will-change-transform", className)}
       {...props} 
     >
@@ -294,8 +292,6 @@ export const FounderSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLightMode, setIsLightMode] = useState(false);
   const [isLateScroll, setIsLateScroll] = useState(false);
-  
-  // NUEVO ESTADO: Controla si la tarjeta se está redimensionando
   const [isResizing, setIsResizing] = useState(false);
 
   const { scrollYProgress } = useScroll({
@@ -429,9 +425,9 @@ export const FounderSection = () => {
               <TiltCard 
                 layoutId="miguel-card"
                 layout
-                // SAFARI FIX: Usamos Bezier, más estable que Spring para layouts pesados
+                // UPDATE: 0.95s para la tarjeta
                 transition={{ 
-                  layout: { duration: 0.7, ease: [0.25, 1, 0.5, 1] },
+                  layout: { duration: 0.95, ease: [0.25, 1, 0.5, 1] },
                   opacity: { duration: 0.5 }
                 }}
                 onLayoutAnimationStart={() => setIsResizing(true)}
@@ -442,14 +438,14 @@ export const FounderSection = () => {
                 )}
               >
                 {/* 
-                  SAFARI FIX: Eliminamos backdrop-blur-xl durante la animación.
-                  Usamos solo opacity y bg-white/40. El blur es el enemigo #1 de Safari.
+                   OVERLAY: Mantenemos el fundido rápido, pero el overlay se queda
+                   visible todo lo que dure "isResizing" (0.95s).
                 */}
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: isResizing ? 1 : 0 }}
-                  transition={{ duration: 0.15 }} // Un poco más rápido para ocultar glitches
-                  className="absolute inset-0 z-40 bg-white/60 pointer-events-none" // Quitamos backdrop-blur
+                  transition={{ duration: 0.15 }} 
+                  className="absolute inset-0 z-40 bg-white/60 pointer-events-none"
                 />
 
                 <div 
@@ -463,11 +459,6 @@ export const FounderSection = () => {
                 </div>
 
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-3xl">
-                  {/* SAFARI FIX: 
-                      1. layout en lugar de layout="position"
-                      2. safari-gpu class (transform3d)
-                      3. loading eager
-                  */}
                   <motion.img 
                     layout
                     src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop" 
@@ -475,8 +466,9 @@ export const FounderSection = () => {
                     loading="eager"
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
                     transition={{ 
-                        layout: { duration: 0.7, ease: [0.25, 1, 0.5, 1] }, // Mismo timing que el padre
-                        scale: { duration: 0.8, ease: "easeInOut" }
+                        // UPDATE: Sincronizamos imagen (0.95s) y zoom (0.95s) con la tarjeta
+                        layout: { duration: 0.95, ease: [0.25, 1, 0.5, 1] }, 
+                        scale: { duration: 0.95, ease: "easeInOut" }
                     }}
                     className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0 safari-gpu"
                   />
