@@ -125,9 +125,9 @@ type SuperHeroProps = {
 const defaultImages = [
   'images/superheroylr.jpg',
   'images/superherolcdriveways.jpg',
-  'images/superheroylr.jpg',
-  'images/superheroylr.jpg',
-  'images/superherolcdriveways.jpg',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629ab_hero-marquee-image-03-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a8_hero-marquee-image-04-cinemaflow-webflow-template.avif',
+  'https://cdn.prod.website-files.com/68dc2b00a1bc8daf62f624b7/68dc2b00a1bc8daf62f629a9_hero-marquee-image-05-cinemaflow-webflow-template.avif'
 ];
 
 // @component: SuperHero
@@ -140,12 +140,14 @@ export const SuperHero = ({
   const [isPaused, setIsPaused] = useState(false);
 
   const bgColor = "#050505";
-  const lampColor = "#D84315"; 
+  // COLOR ACTUALIZADO: Cyan-500 (#06b6d4)
+  const lampColor = "#06b6d4"; 
 
+  // Colores para el radial cambiante (Actualizados a Cyan/Azul)
   const radialColorSequence = [
-    "radial-gradient(circle at bottom center, #de8363, transparent 70%)", 
-    "radial-gradient(circle at bottom center, #67bcb7, transparent 70%)", 
-    "radial-gradient(circle at bottom center, #de8363, transparent 70%)"
+    "radial-gradient(circle at bottom center, #06b6d4, transparent 70%)", 
+    "radial-gradient(circle at bottom center, #22d3ee, transparent 70%)", // Cyan-400
+    "radial-gradient(circle at bottom center, #06b6d4, transparent 70%)"
   ];
 
   useEffect(() => {
@@ -299,7 +301,7 @@ export const SuperHero = ({
         <div className="relative z-10">
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-8">
-              {/* Main Headline - DELAY AUMENTADO A 0.7s */}
+              {/* Main Headline */}
               <motion.h1 
                 key="hero-title"
                 initial={{ opacity: 0, y: 30 }} 
@@ -318,7 +320,7 @@ export const SuperHero = ({
                 </span>
               </motion.h1>
 
-              {/* Subtexto - DELAY AUMENTADO A 0.9s */}
+              {/* Subtexto - COLORES ACTUALIZADOS */}
               <motion.div 
                 key="hero-subtitle"
                 initial={{ opacity: 0, y: 20 }} 
@@ -332,12 +334,12 @@ export const SuperHero = ({
               >
                 <p>Stop relying on guesswork. We act as your entire growth engine.</p>
                 <p className="text-gray-300">
-                  Combining <span className="text-[#D84315] font-semibold">Paid Media</span>, <span className="text-[#D84315] font-semibold">Creative Strategy</span>, and <span className="text-[#D84315] font-semibold">CRO</span> to maximize ROI.
+                  Combining <span className="text-[#06b6d4] font-semibold">Paid Media</span>, <span className="text-[#06b6d4] font-semibold">Creative Strategy</span>, and <span className="text-[#06b6d4] font-semibold">CRO</span> to maximize ROI.
                 </p>
               </motion.div>
             </div>
 
-            {/* CTA Buttons - DELAY AUMENTADO A 1.1s + HOVER FIX */}
+            {/* CTA Buttons */}
             <motion.div 
               key="hero-buttons"
               initial={{ opacity: 0, scale: 0.9 }} 
@@ -356,7 +358,7 @@ export const SuperHero = ({
                   className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100] will-change-[background-color,box-shadow]"
                   whileHover={{
                     boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
-                    transition: { duration: 0.2 } // Fix para hover instantáneo
+                    transition: { duration: 0.2 }
                   }}
                   onClick={e => e.preventDefault()}
                 >
@@ -365,7 +367,7 @@ export const SuperHero = ({
                   </p>
                 </motion.a>
 
-                {/* Botón Naranja Rojizo */}
+                {/* Botón Azul (Antes Naranja) */}
                 <motion.a 
                   href="#contact"
                   className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100] will-change-[background-color,box-shadow]"
@@ -373,8 +375,9 @@ export const SuperHero = ({
                     border: `1px solid ${lampColor}`
                   }}
                   whileHover={{
-                    boxShadow: `0 0 20px rgba(216, 67, 21, 0.5)`,
-                    transition: { duration: 0.2 } // Fix para hover instantáneo
+                    // Shadow actualizada a Cyan (RGB: 6, 182, 212)
+                    boxShadow: `0 0 20px rgba(6, 182, 212, 0.5)`,
+                    transition: { duration: 0.2 }
                   }}
                   onClick={e => e.preventDefault()}
                 >
@@ -392,16 +395,16 @@ export const SuperHero = ({
             </motion.div>
           </div>
 
-          {/* Marquee Images - SKEW REDUCIDO A -12deg */}
+          {/* Marquee Images - GAP AUMENTADO A 12 (48px) */}
           <div 
             className="mt-16 flex items-center justify-center relative z-[30]" 
             style={{ transform: 'rotate(4.5deg)' }}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            <div ref={marqueeRef} className="flex gap-6 will-change-transform" style={{ paddingRight: '24px' }}>
+            <div ref={marqueeRef} className="flex gap-12 will-change-transform" style={{ paddingRight: '48px' }}>
               {[...Array(3)].map((_, setIndex) => (
-                <div key={setIndex} className="flex gap-6 flex-shrink-0">
+                <div key={setIndex} className="flex gap-12 flex-shrink-0">
                   {images.map((src, imgIndex) => (
                     <img 
                       key={`${setIndex}-${imgIndex}`} 
@@ -409,7 +412,7 @@ export const SuperHero = ({
                       alt={`Hero Marquee Image ${imgIndex + 1}`} 
                       className="w-[320px] h-[370px] object-cover rounded-3xl opacity-[0.85] hover:opacity-100 transition-opacity duration-300" 
                       style={{
-                        transform: 'skewY(-12deg)', // Sutilmente inclinado
+                        transform: 'skewY(-12deg)', 
                         flexShrink: 0
                       }} 
                       loading="eager" 
