@@ -1,9 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
-import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, ShieldCheck, Map } from 'lucide-react';
 
 // --- STYLES ---
-// ACTUALIZADO: Usamos Inter para todo para igualar el estilo limpio del componente Pricing
 const fontStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
   .font-sans { font-family: 'Inter', sans-serif; }
@@ -27,14 +26,14 @@ const ANIMATION_CONFIG = {
 // --- UTILS ---
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
-// --- COLORS (ACTUALIZADO AL ESTILO PRICING) ---
+// --- COLORS ---
 const COLORS = {
   turquoise: "#67bcb7",
   coral: "#de8363",
   gold: "#edbf86",
 };
 
-// --- COMPONENTE GLOWING EFFECT (ACTUALIZADO) ---
+// --- COMPONENTE GLOWING EFFECT ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -160,7 +159,6 @@ const GlowingEffect = React.memo(
               "--active": "0",
               "--glowingeffect-border-width": `${borderWidth}px`,
               "--repeating-conic-gradient-times": "5",
-              // GRADIENT ACTUALIZADO AL ESTILO PRICING
               "--gradient": `radial-gradient(circle, ${COLORS.gold} 10%, #EDBF8600 20%),
                 radial-gradient(circle at 40% 40%, ${COLORS.coral} 5%, #DE836300 15%),
                 radial-gradient(circle at 60% 60%, ${COLORS.turquoise} 10%, #67BCB700 20%), 
@@ -203,12 +201,11 @@ const GlowingEffect = React.memo(
 );
 GlowingEffect.displayName = "GlowingEffect";
 
-// --- 3D TILT CARD COMPONENT (ACTUALIZADO ESTRUCTURALMENTE) ---
-// Ahora acepta 'innerClassName' para separar el contenedor de layout del contenedor visual
+// --- 3D TILT CARD COMPONENT ---
 const TiltCard = ({ 
   children, 
-  className,      // Clases de Grid y Layout
-  innerClassName, // Clases visuales (bg, border, etc.)
+  className, 
+  innerClassName,
   layoutId,
   animate,       
   initial,       
@@ -265,11 +262,9 @@ const TiltCard = ({
         perspective: 1000,
         ...style 
       }}
-      // El contenedor externo es transparente y tiene padding de 2px para el borde brillante
       className={cn("relative rounded-none p-[2px] transition-colors duration-300 safari-gpu will-change-transform", className)}
       {...props} 
     >
-      {/* GLOWING EFFECT DETRÁS DEL CONTENIDO */}
       <GlowingEffect 
         spread={40} 
         glow={true} 
@@ -279,7 +274,6 @@ const TiltCard = ({
         borderWidth={2} 
       />
 
-      {/* CONTENIDO INTERNO: Aquí van los colores de fondo y bordes visibles por defecto */}
       <div className={cn("relative h-full w-full overflow-hidden rounded-none", innerClassName)}>
         {children}
       </div>
@@ -375,13 +369,32 @@ export const FounderSection = () => {
                 GROWTH PARTNERS
               </motion.div>
 
-              {/* Headline */}
+              {/* Headline - ACTUALIZADO CON GRADIENTE ANIMADO */}
               <h2 className={cn(
                 "font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tight transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
               )}>
-                We don't just run ads. <br/>
-                <span style={{ color: COLORS.coral }}>We scale revenue.</span>
+                Australia's unfair advantage for{' '}
+                <motion.span
+                  initial={{ backgroundPosition: "400% 50%" }}
+                  animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                  transition={{
+                    duration: 12,
+                    ease: "linear",
+                    repeat: Infinity
+                  }}
+                  style={{
+                    display: "inline-block",
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
+                    backgroundSize: "400% 100%",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    color: "transparent"
+                  }}
+                >
+                  explosive growth.
+                </motion.span>
               </h2>
 
               {/* Description */}
@@ -389,16 +402,16 @@ export const FounderSection = () => {
                 "font-sans text-[15px] leading-[1.6] font-medium transition-colors duration-0 max-w-sm",
                 isLightMode ? "text-gray-500" : "text-gray-400"
               )}>
-                Most agencies focus on clicks. We focus on <strong className={isLightMode ? "text-gray-900" : "text-white"}>Profitable Growth</strong>. 
-                Our data-driven ecosystem integrates paid media, creative strategy, and retention logic into one scalable engine.
+                Client Connect Australia isn't just another agency. We are your data-driven partners in <strong className={isLightMode ? "text-gray-900" : "text-white"}>Profitable Scaling</strong>. 
+                We integrate paid media, creative, and retention into one national growth engine.
               </p>
 
               {/* Checklist */}
               <div className="flex flex-col gap-3 mt-2">
                 {[
-                  "Full-Funnel Acquisition",
+                  "National Acquisition Strategy",
                   "Conversion Rate Optimization",
-                  "Advanced Data Analytics"
+                  "Australian Market Expertise"
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 group cursor-default">
                     <div className={cn(
@@ -424,7 +437,7 @@ export const FounderSection = () => {
                      : "bg-white text-black border-white hover:bg-zinc-200"
                 )}>
                   <span className="relative z-10 flex items-center gap-2">
-                    Scale Your Brand
+                    Start Scaling
                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </span>
                 </button>
@@ -442,7 +455,7 @@ export const FounderSection = () => {
             >
 
               {/* 
-                 ITEM 1: MAIN IMAGE CARD
+                 ITEM 1: MAIN IMAGE CARD - ACTUALIZADA A FOTO DE EQUIPO
               */}
               <TiltCard 
                 layoutId="miguel-card"
@@ -457,7 +470,6 @@ export const FounderSection = () => {
                    "md:row-span-2 h-[450px] md:h-[600px] group relative z-10 safari-gpu",
                    isLightMode ? "md:col-span-1" : "md:col-span-2"
                 )}
-                // INNER CLASSNAME: Aquí definimos el estilo visual real
                 innerClassName={cn(
                   "border",
                   isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-white/10"
@@ -471,10 +483,11 @@ export const FounderSection = () => {
                 />
 
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-none">
+                  {/* PHOTO UPDATE: Professional Team Photo */}
                   <motion.img 
                     layout
-                    src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop" 
-                    alt="Strategic Leadership" 
+                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" 
+                    alt="Client Connect Australia Team" 
                     loading="eager"
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
                     transition={{ 
@@ -488,8 +501,8 @@ export const FounderSection = () => {
                   
                   <motion.div layout className="absolute bottom-6 left-6 right-6 z-30">
                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-none">
-                       <p className="text-white font-sans font-bold text-base">Strategic Vision</p>
-                       <p className="text-white/60 font-sans text-[11px]">Your Partner in Scale</p>
+                       <p className="text-white font-sans font-bold text-base">The Connect Team</p>
+                       <p className="text-white/60 font-sans text-[11px]">Your Australian Growth Partners</p>
                     </div>
                   </motion.div>
                 </div>
@@ -514,13 +527,13 @@ export const FounderSection = () => {
                                 <TrendingUp size={24} />
                              </div>
                              <span className="font-sans text-[11px] font-bold uppercase tracking-wider text-gray-400">
-                               Growth
+                               Results
                              </span>
                           </div>
                           <div className="z-10">
                              <h3 className="text-4xl font-sans font-bold mb-2 text-gray-900">4.5x</h3>
                              <p className="font-sans text-xs text-gray-500 font-medium">
-                               Average ROAS across all managed partners in Q4.
+                               Average ROAS for our Australian partners.
                              </p>
                           </div>
                        </TiltCard>
@@ -546,7 +559,7 @@ export const FounderSection = () => {
                           </div>
                           <div className="absolute bottom-5 left-5">
                              <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-[11px] font-sans font-medium">
-                                Case Studies
+                                View Case Studies
                              </span>
                           </div>
                        </TiltCard>
@@ -594,7 +607,7 @@ export const FounderSection = () => {
               </TiltCard>
 
               {/* TARJETAS INFERIORES */}
-               {/* CARD A (Global) */}
+               {/* CARD A (National - UPDATED) */}
                <TiltCard 
                   layout
                   initial={{ opacity: 0, y: 20 }}
@@ -606,23 +619,25 @@ export const FounderSection = () => {
                >
                    <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
                       <div className="p-2.5 rounded-none mb-3 bg-zinc-50 border border-zinc-100">
-                         <Globe className="w-5 h-5 text-gray-900" />
+                         {/* UPDATE ICON: Map icon for Australian Scale */}
+                         <Map className="w-5 h-5 text-gray-900" />
                       </div>
                       <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
-                         Global<br/>
+                         National<br/>
                          <span className="text-gray-400">Scale</span>
                       </div>
                       <p className="text-[12px] font-sans font-medium leading-[1.4] text-gray-500">
-                        Scaling campaigns across 20+ countries.
+                        Scaling campaigns across every state and territory.
                       </p>
                    </div>
 
                    <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden">
                       <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
                           <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
+                          {/* UPDATE IMAGE: Sydney/Australia Aerial View */}
                           <img 
-                             src="https://images.unsplash.com/photo-1527011046414-4781f1f94f8c?q=80&w=1976&auto=format&fit=crop" 
-                             alt="Global Reach"
+                             src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?q=80&w=800&auto=format&fit=crop" 
+                             alt="Australian National Reach"
                              className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
                           />
                       </div>
