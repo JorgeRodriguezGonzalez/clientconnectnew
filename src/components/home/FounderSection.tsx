@@ -3,10 +3,10 @@ import { motion, useScroll, useMotionValueEvent, useSpring, useTransform, Animat
 import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, ShieldCheck } from 'lucide-react';
 
 // --- STYLES ---
+// ACTUALIZADO: Usamos Inter para todo para igualar el estilo limpio del componente Pricing
 const fontStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
-  .font-syne { font-family: 'Syne', sans-serif; }
-  .font-inter { font-family: 'Inter', sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  .font-sans { font-family: 'Inter', sans-serif; }
   
   /* OPTIMIZACIÓN SAFARI */
   .safari-gpu {
@@ -27,15 +27,14 @@ const ANIMATION_CONFIG = {
 // --- UTILS ---
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
-// --- COLORS ---
+// --- COLORS (ACTUALIZADO AL ESTILO PRICING) ---
 const COLORS = {
-  gold: "#EE9C21",
-  orange: "#C96928",
-  burnt: "#BA4226",
-  red: "#AD2624",
+  turquoise: "#67bcb7",
+  coral: "#de8363",
+  gold: "#edbf86",
 };
 
-// --- COMPONENTE GLOWING EFFECT ---
+// --- COMPONENTE GLOWING EFFECT (ACTUALIZADO) ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -161,16 +160,17 @@ const GlowingEffect = React.memo(
               "--active": "0",
               "--glowingeffect-border-width": `${borderWidth}px`,
               "--repeating-conic-gradient-times": "5",
+              // GRADIENT ACTUALIZADO AL ESTILO PRICING
               "--gradient": `radial-gradient(circle, ${COLORS.gold} 10%, #EDBF8600 20%),
-                radial-gradient(circle at 40% 40%, ${COLORS.orange} 5%, #DE836300 15%),
-                radial-gradient(circle at 60% 60%, ${COLORS.burnt} 10%, #67BCB700 20%), 
-                radial-gradient(circle at 40% 60%, ${COLORS.red} 10%, #94A3B800 20%),
+                radial-gradient(circle at 40% 40%, ${COLORS.coral} 5%, #DE836300 15%),
+                radial-gradient(circle at 60% 60%, ${COLORS.turquoise} 10%, #67BCB700 20%), 
+                radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
                 repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
                   ${COLORS.gold} 0%,
-                  ${COLORS.orange} calc(25% / var(--repeating-conic-gradient-times)),
-                  ${COLORS.burnt} calc(50% / var(--repeating-conic-gradient-times)), 
-                  ${COLORS.red} calc(75% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.coral} calc(25% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.turquoise} calc(50% / var(--repeating-conic-gradient-times)), 
+                  #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
                   ${COLORS.gold} calc(100% / var(--repeating-conic-gradient-times))
                 )`,
             } as React.CSSProperties
@@ -203,10 +203,12 @@ const GlowingEffect = React.memo(
 );
 GlowingEffect.displayName = "GlowingEffect";
 
-// --- 3D TILT CARD COMPONENT ---
+// --- 3D TILT CARD COMPONENT (ACTUALIZADO ESTRUCTURALMENTE) ---
+// Ahora acepta 'innerClassName' para separar el contenedor de layout del contenedor visual
 const TiltCard = ({ 
   children, 
-  className, 
+  className,      // Clases de Grid y Layout
+  innerClassName, // Clases visuales (bg, border, etc.)
   layoutId,
   animate,       
   initial,       
@@ -216,6 +218,7 @@ const TiltCard = ({
 }: { 
   children: React.ReactNode, 
   className?: string, 
+  innerClassName?: string,
   layoutId?: string,
   animate?: any,
   initial?: any,
@@ -262,10 +265,24 @@ const TiltCard = ({
         perspective: 1000,
         ...style 
       }}
-      className={cn("relative rounded-none overflow-hidden transition-colors duration-300 safari-gpu will-change-transform", className)}
+      // El contenedor externo es transparente y tiene padding de 2px para el borde brillante
+      className={cn("relative rounded-none p-[2px] transition-colors duration-300 safari-gpu will-change-transform", className)}
       {...props} 
     >
-      {children}
+      {/* GLOWING EFFECT DETRÁS DEL CONTENIDO */}
+      <GlowingEffect 
+        spread={40} 
+        glow={true} 
+        disabled={false} 
+        proximity={64} 
+        inactiveZone={0.01} 
+        borderWidth={2} 
+      />
+
+      {/* CONTENIDO INTERNO: Aquí van los colores de fondo y bordes visibles por defecto */}
+      <div className={cn("relative h-full w-full overflow-hidden rounded-none", innerClassName)}>
+        {children}
+      </div>
     </motion.div>
   );
 };
@@ -275,17 +292,17 @@ const StatBadge = ({ icon: Icon, label, value, isLight }: { icon: any, label: st
   <div className={cn(
     "flex items-center gap-3 px-4 py-3 rounded-none border backdrop-blur-md transition-colors duration-300",
     isLight 
-      ? "bg-white/80 border-black/5 shadow-sm" 
+      ? "bg-white/80 border-zinc-200 shadow-sm" 
       : "bg-white/5 border-white/10"
   )}>
-    <div className="p-2 rounded-none bg-[#D84315]/10 text-[#D84315]">
+    <div className="p-2 rounded-none bg-zinc-100 text-gray-900">
       <Icon size={16} />
     </div>
     <div>
-      <div className={cn("font-syne font-bold text-lg leading-none transition-colors duration-0", isLight ? "text-gray-900" : "text-white")}>
+      <div className={cn("font-sans font-bold text-lg leading-none transition-colors duration-0", isLight ? "text-gray-900" : "text-white")}>
         {value}
       </div>
-      <div className="font-inter text-[10px] text-[#D84315] uppercase tracking-wider font-medium">
+      <div className="font-sans text-[10px] text-gray-500 uppercase tracking-wider font-semibold">
         {label}
       </div>
     </div>
@@ -324,7 +341,7 @@ export const FounderSection = () => {
     <section 
       ref={containerRef} 
       className={cn(
-        "relative w-full py-24 lg:py-32 transition-colors duration-0 z-10", 
+        "relative w-full py-24 lg:py-32 transition-colors duration-0 z-10 font-sans", 
         isLightMode ? "bg-white" : "bg-[#050505]"
       )}
     >
@@ -335,11 +352,6 @@ export const FounderSection = () => {
          <div className={cn("absolute right-[-10%] top-[20%] w-[600px] h-[600px] bg-[#D84315] blur-[150px] opacity-20 animate-pulse rounded-none transition-opacity duration-0", isLightMode ? "opacity-0" : "opacity-20")} />
       </div>
 
-      {/* 
-         LAYOUT UPDATE:
-         - max-w reducido a 1200px para compactar el contenido central.
-         - padding lateral aumentado a px-6 md:px-12 lg:px-16 para dar mucho aire a los lados.
-      */}
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
         {/* LAYOUT GRID */}
@@ -349,39 +361,39 @@ export const FounderSection = () => {
           <div className="lg:w-[40%] sticky top-32">
             <div className="flex flex-col gap-6 pb-10">
               
-              {/* Badge - Texto más pequeño (text-[10px]) */}
+              {/* Badge */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 className={cn(
-                  "w-fit px-3 py-1.5 rounded-none border text-[10px] font-inter font-medium uppercase tracking-widest transition-colors duration-300",
+                  "w-fit px-3 py-1.5 rounded-none border text-[10px] font-sans font-semibold uppercase tracking-[2px] transition-colors duration-300",
                   isLightMode 
-                    ? "bg-orange-50 border-orange-100 text-[#D84315]" 
-                    : "bg-white/5 border-white/10 text-[#D84315]"
+                    ? "bg-zinc-50 border-zinc-200 text-gray-500" 
+                    : "bg-white/5 border-white/10 text-gray-400"
                 )}
               >
                 GROWTH PARTNERS
               </motion.div>
 
-              {/* Headline - Reducido significativamente */}
+              {/* Headline */}
               <h2 className={cn(
-                "font-syne font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-[-0.03em] transition-colors duration-0",
+                "font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tight transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
               )}>
                 We don't just run ads. <br/>
-                <span className="text-[#D84315]">We scale revenue.</span>
+                <span style={{ color: COLORS.coral }}>We scale revenue.</span>
               </h2>
 
-              {/* Description - Texto más pequeño (text-[15px]) */}
+              {/* Description */}
               <p className={cn(
-                "font-inter text-[15px] leading-[1.6] transition-colors duration-0 max-w-sm",
+                "font-sans text-[15px] leading-[1.6] font-medium transition-colors duration-0 max-w-sm",
                 isLightMode ? "text-gray-500" : "text-gray-400"
               )}>
                 Most agencies focus on clicks. We focus on <strong className={isLightMode ? "text-gray-900" : "text-white"}>Profitable Growth</strong>. 
                 Our data-driven ecosystem integrates paid media, creative strategy, and retention logic into one scalable engine.
               </p>
 
-              {/* Checklist - Texto más pequeño (text-[14px]) */}
+              {/* Checklist */}
               <div className="flex flex-col gap-3 mt-2">
                 {[
                   "Full-Funnel Acquisition",
@@ -391,23 +403,25 @@ export const FounderSection = () => {
                   <div key={i} className="flex items-center gap-3 group cursor-default">
                     <div className={cn(
                       "w-5 h-5 rounded-none flex items-center justify-center transition-all duration-300",
-                      isLightMode ? "bg-black text-white group-hover:bg-[#D84315]" : "bg-white text-black group-hover:bg-[#D84315] group-hover:text-white"
+                      isLightMode ? "bg-zinc-900 text-white" : "bg-white text-black"
                     )}>
                       <Check size={10} strokeWidth={3} />
                     </div>
                     <span className={cn(
-                      "font-inter font-medium text-[14px] transition-colors duration-0",
-                      isLightMode ? "text-gray-800" : "text-gray-200"
+                      "font-sans font-medium text-[14px] transition-colors duration-0",
+                      isLightMode ? "text-gray-700" : "text-gray-300"
                     )}>{item}</span>
                   </div>
                 ))}
               </div>
 
-              {/* CTA - Texto más pequeño (text-[14px]) */}
+              {/* CTA */}
               <div className="mt-4">
                 <button className={cn(
-                   "group relative px-6 py-3.5 rounded-none font-syne font-bold text-[14px] overflow-hidden transition-all duration-300",
-                   isLightMode ? "bg-[#050505] text-white hover:shadow-xl" : "bg-white text-black hover:bg-[#D84315] hover:text-white"
+                   "group relative px-6 py-3.5 rounded-none font-sans font-semibold text-[14px] overflow-hidden transition-all duration-300 border",
+                   isLightMode 
+                     ? "bg-zinc-900 text-white border-zinc-900 hover:shadow-lg hover:scale-[1.01]" 
+                     : "bg-white text-black border-white hover:bg-zinc-200"
                 )}>
                   <span className="relative z-10 flex items-center gap-2">
                     Scale Your Brand
@@ -440,8 +454,13 @@ export const FounderSection = () => {
                 onLayoutAnimationStart={() => setIsResizing(true)}
                 onLayoutAnimationComplete={() => setIsResizing(false)}
                 className={cn(
-                   "md:row-span-2 h-[450px] md:h-[600px] group border border-white/10 relative z-10 safari-gpu",
+                   "md:row-span-2 h-[450px] md:h-[600px] group relative z-10 safari-gpu",
                    isLightMode ? "md:col-span-1" : "md:col-span-2"
+                )}
+                // INNER CLASSNAME: Aquí definimos el estilo visual real
+                innerClassName={cn(
+                  "border",
+                  isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-white/10"
                 )}
               >
                 <motion.div 
@@ -450,16 +469,6 @@ export const FounderSection = () => {
                   transition={{ duration: 0.15 }} 
                   className="absolute inset-0 z-40 bg-white/60 pointer-events-none"
                 />
-
-                <div 
-                  className={cn(
-                    "absolute inset-0 z-20 transition-opacity duration-700 pointer-events-none",
-                    isLightMode ? "opacity-100" : "opacity-0"
-                  )}
-                >
-                    <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} />
-                    <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
-                </div>
 
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-none">
                   <motion.img 
@@ -479,9 +488,8 @@ export const FounderSection = () => {
                   
                   <motion.div layout className="absolute bottom-6 left-6 right-6 z-30">
                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-none">
-                       {/* Texto más pequeño */}
-                       <p className="text-white font-syne font-bold text-base">Strategic Vision</p>
-                       <p className="text-white/60 font-inter text-[11px]">Your Partner in Scale</p>
+                       <p className="text-white font-sans font-bold text-base">Strategic Vision</p>
+                       <p className="text-white/60 font-sans text-[11px]">Your Partner in Scale</p>
                     </div>
                   </motion.div>
                 </div>
@@ -497,21 +505,21 @@ export const FounderSection = () => {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                        className="h-[280px] p-6 flex flex-col justify-between bg-gray-100 border border-gray-200 relative overflow-hidden group safari-gpu"
+                        className="h-[280px] group safari-gpu"
+                        innerClassName="p-6 flex flex-col justify-between bg-white border border-zinc-200"
                        >
-                          <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#D84315] blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" />
+                          <div className="absolute -right-10 -top-10 w-32 h-32 bg-zinc-200 blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" />
                           <div className="flex justify-between items-start z-10">
-                             <div className="p-3 bg-[#D84315] rounded-none text-white">
+                             <div className="p-3 bg-zinc-900 rounded-none text-white">
                                 <TrendingUp size={24} />
                              </div>
-                             <span className="font-inter text-[11px] font-bold uppercase tracking-wider text-gray-400">
+                             <span className="font-sans text-[11px] font-bold uppercase tracking-wider text-gray-400">
                                Growth
                              </span>
                           </div>
                           <div className="z-10">
-                             {/* Número más pequeño (4xl) */}
-                             <h3 className="text-4xl font-syne font-bold mb-2 text-gray-900">4.5x</h3>
-                             <p className="font-inter text-xs text-gray-500">
+                             <h3 className="text-4xl font-sans font-bold mb-2 text-gray-900">4.5x</h3>
+                             <p className="font-sans text-xs text-gray-500 font-medium">
                                Average ROAS across all managed partners in Q4.
                              </p>
                           </div>
@@ -523,7 +531,8 @@ export const FounderSection = () => {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                        className="h-[300px] bg-black relative group border border-white/10 cursor-pointer safari-gpu"
+                        className="h-[300px] group cursor-pointer safari-gpu"
+                        innerClassName="bg-black border border-zinc-800"
                        >
                           <div className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
                              <video autoPlay loop muted playsInline className="w-full h-full object-cover">
@@ -536,7 +545,7 @@ export const FounderSection = () => {
                              </div>
                           </div>
                           <div className="absolute bottom-5 left-5">
-                             <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-[11px] font-inter font-medium">
+                             <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-[11px] font-sans font-medium">
                                 Case Studies
                              </span>
                           </div>
@@ -559,23 +568,26 @@ export const FounderSection = () => {
                     ease: "easeOut"
                 }}
                 className={cn(
-                "md:col-span-2 p-8 flex flex-col md:flex-row items-center gap-8 transition-colors duration-0 border safari-gpu",
-                isLightMode 
-                  ? "bg-[#D84315] border-[#D84315]" 
-                  : "bg-zinc-900 border-zinc-800"
-              )}>
+                  "md:col-span-2 group safari-gpu"
+                )}
+                innerClassName={cn(
+                  "p-8 flex flex-col md:flex-row items-center gap-8 transition-colors duration-0 border",
+                  isLightMode 
+                    ? "bg-white border-zinc-200" 
+                    : "bg-zinc-900 border-zinc-800"
+                )}
+              >
                  <div className="flex-1">
-                    {/* Texto más pequeño */}
-                    <h3 className="text-white font-syne font-bold text-xl mb-2">The Ecosystem</h3>
-                    <p className="text-white/80 font-inter font-light text-sm">
+                    <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>The Ecosystem</h3>
+                    <p className={cn("font-sans font-medium text-sm", isLightMode ? "text-gray-500" : "text-white/70")}>
                       We eliminate friction. Paid media, creative, and email marketing integrated into one goal: Zero wasted budget.
                     </p>
                  </div>
                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-none bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+                    <div className="w-12 h-12 rounded-none bg-zinc-100 flex items-center justify-center text-gray-900">
                        <Zap size={20} />
                     </div>
-                    <div className="w-12 h-12 rounded-none bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+                    <div className="w-12 h-12 rounded-none bg-zinc-100 flex items-center justify-center text-gray-900">
                        <Clapperboard size={20} />
                     </div>
                  </div>
@@ -589,36 +601,30 @@ export const FounderSection = () => {
                   animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] relative rounded-none group bg-zinc-100/50 p-0 border-none overflow-hidden safari-gpu"
+                  className="h-[280px] group safari-gpu"
+                  innerClassName="bg-white border border-zinc-200 flex flex-row items-stretch"
                >
-                   <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} />
-                   
-                   <div className="relative h-full bg-white rounded-none border border-black/5 overflow-hidden flex flex-row items-stretch">
-                      {/* Left Content */}
-                      <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
-                         <div className="p-2.5 rounded-none mb-3 bg-orange-50/50 border border-orange-100/20">
-                            <Globe className="w-5 h-5" style={{ color: COLORS.orange }} />
-                         </div>
-                         {/* Texto más pequeño (text-[20px]) */}
-                         <div className="text-[20px] font-syne font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
-                            Global<br/>
-                            <span className="text-gray-400">Scale</span>
-                         </div>
-                         <p className="text-[12px] font-inter font-light leading-[1.4] text-gray-500">
-                           Scaling campaigns across 20+ countries.
-                         </p>
+                   <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
+                      <div className="p-2.5 rounded-none mb-3 bg-zinc-50 border border-zinc-100">
+                         <Globe className="w-5 h-5 text-gray-900" />
                       </div>
+                      <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
+                         Global<br/>
+                         <span className="text-gray-400">Scale</span>
+                      </div>
+                      <p className="text-[12px] font-sans font-medium leading-[1.4] text-gray-500">
+                        Scaling campaigns across 20+ countries.
+                      </p>
+                   </div>
 
-                      {/* Right Image */}
-                      <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden">
-                         <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
-                             <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
-                             <img 
-                                src="https://images.unsplash.com/photo-1527011046414-4781f1f94f8c?q=80&w=1976&auto=format&fit=crop" 
-                                alt="Global Reach"
-                                className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
-                             />
-                         </div>
+                   <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden">
+                      <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
+                          <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
+                          <img 
+                             src="https://images.unsplash.com/photo-1527011046414-4781f1f94f8c?q=80&w=1976&auto=format&fit=crop" 
+                             alt="Global Reach"
+                             className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
+                          />
                       </div>
                    </div>
                </TiltCard>
@@ -630,13 +636,10 @@ export const FounderSection = () => {
                   animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] relative rounded-none group bg-gray-900 border-none overflow-hidden safari-gpu"
+                  className="h-[280px] group safari-gpu"
+                  innerClassName="bg-zinc-900 border border-zinc-800"
                >
-                   <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} variant="white" />
-                   
-                   <div className="relative h-full bg-gray-900 rounded-[inherit] overflow-hidden">
-                       
-                       {/* VIDEO BACKGROUND */}
+                   <div className="relative h-full w-full">
                        <div className="absolute inset-0 w-full h-full opacity-60">
                           <video
                             autoPlay
@@ -649,17 +652,14 @@ export const FounderSection = () => {
                           </video>
                        </div>
 
-                       {/* Gradient Overlay */}
                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                        
-                       {/* Content */}
                        <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
                          <div className="flex items-baseline gap-2 mb-1">
-                           {/* Número más pequeño (text-5xl) */}
-                           <span className="text-5xl font-syne font-semibold leading-none tracking-tighter">95%</span>
+                           <span className="text-5xl font-sans font-semibold leading-none tracking-tighter">95%</span>
                            <ShieldCheck className="w-6 h-6 mb-2 text-white/80" />
                          </div>
-                         <span className="text-[12px] font-inter font-light leading-[1.4] text-white/60">
+                         <span className="text-[12px] font-sans font-medium leading-[1.4] text-white/60">
                            Client retention rate over the last 12 months.
                          </span>
                        </div>
