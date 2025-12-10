@@ -13,13 +13,11 @@ const COLORS = {
 const CloudHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Detectamos el scroll
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"]
   });
 
-  // Suavizado del movimiento
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 200,
     damping: 30,
@@ -28,14 +26,11 @@ const CloudHero = () => {
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
   const verticalTop = useTransform(smoothProgress, [0.1, 0.5], ["50%", "100%"]);
-  // Hacemos que la vertical dure un poquito más visible (hasta 0.55) para que coincida bien
   const verticalOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.5, 0.55], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
-  // Empieza exactamente en 0.5
+  // Solo animamos el ancho (width)
   const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "100px"]);
-  
-  // Opacidad: Aparece un instante antes (0.49) para que ya esté ahí cuando llegue la vertical
   const horizontalOpacity = useTransform(smoothProgress, [0.49, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
 
   return (
@@ -48,17 +43,22 @@ const CloudHero = () => {
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
       <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
+        
+        {/* Este contenedor es la clave: contiene ambas columnas y sus divisores */}
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column: BlueprintVisualization */}
+          {/* Left Column */}
           <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
             <div className="w-full h-full flex items-center justify-start m-0 p-0">
               <BlueprintVisualization />
             </div>
           </div>
 
-          {/* --- DIVISOR VERTICAL --- */}
-          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-hidden">
+          {/* === DIVISOR VERTICAL === */}
+          {/* Este div actúa como la línea gris vertical */}
+          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
+             
+             {/* 1. RAYO VERTICAL */}
              <motion.div 
                style={{ 
                  top: verticalTop,
@@ -67,6 +67,30 @@ const CloudHero = () => {
                }}
                className="absolute left-0 w-[3px] -ml-[1px] h-[200px] -translate-y-full blur-[1px]"
              />
+
+             {/* 2. RAYO HORIZONTAL (MOVIDO AQUÍ) */}
+             {/* Al ponerlo dentro del divisor vertical, su posición (left: 0) es RELATIVA a la línea. 
+                 Esto garantiza matemáticamente que nazca desde la línea, sin huecos. */}
+             <motion.div 
+               style={{ 
+                 width: horizontalWidth,
+                 opacity: horizontalOpacity,
+                 background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
+               }}
+               // left-0: Empieza en la línea
+               // bottom-0: Pegado al suelo
+               // -ml-1: Lo mueve 4px (aprox) a la izquierda para "enterrarlo" en la línea vertical y asegurar la unión.
+               className="absolute left-0 bottom-0 h-[3px] -ml-1 rounded-r-full blur-[1px] origin-left z-20"
+             />
+
+             {/* 3. FLASH CORNER */}
+             {/* El punto brillante justo en la unión */}
+             <motion.div
+                style={{
+                    opacity: useTransform(smoothProgress, [0.49, 0.5, 0.51], [0, 1, 0])
+                }}
+                className="absolute left-0 bottom-0 w-[12px] h-[12px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#67bcb7] blur-[4px] z-30"
+              />
           </div>
 
           {/* Horizontal Divider (Mobile only) */}
@@ -113,34 +137,8 @@ const CloudHero = () => {
         </div>
       </div>
 
-      {/* --- BOTTOM BORDER --- */}
-      <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10">
-          
-          {/* BEAM HORIZONTAL */}
-          <motion.div 
-            style={{ 
-              // CAMBIO CRÍTICO: "calc(50% - 4px)"
-              // Esto mueve el inicio 4px hacia la IZQUIERDA del centro exacto.
-              // Asegura que visualmente nazca desde la línea vertical, solapándose con ella.
-              left: "calc(50% - 4px)", 
-              
-              width: horizontalWidth,
-              opacity: horizontalOpacity,
-              background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
-            }}
-            // z-30 para que esté por encima de la intersección
-            className="hidden lg:block absolute top-0 h-[3px] -mt-[1px] rounded-r-full blur-[1px] origin-left z-30"
-          />
-          
-          {/* PUNTO DE INTERSECCIÓN (Flash Corner) */}
-          <motion.div
-            style={{
-                opacity: useTransform(smoothProgress, [0.49, 0.5, 0.51], [0, 1, 0])
-            }}
-            // left-1/2 exacto para tapar la unión
-            className="hidden lg:block absolute left-1/2 top-0 w-[10px] h-[10px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#67bcb7] blur-[3px] z-40"
-          />
-      </div>
+      {/* Bottom Border (Visual Only now) */}
+      <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10" />
     </section>
   );
 };
