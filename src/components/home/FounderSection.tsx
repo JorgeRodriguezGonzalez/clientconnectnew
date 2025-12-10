@@ -197,7 +197,7 @@ const TiltCard = ({
   initial,       
   transition,    
   style,
-  ...props // Permitimos pasar props extra (como onLayoutAnimationStart)
+  ...props 
 }: { 
   children: React.ReactNode, 
   className?: string, 
@@ -230,13 +230,17 @@ const TiltCard = ({
 
   return (
     <motion.div
-      layout
-      {...(layoutId ? { layoutId } : {})}
+      layout={props.layout} 
+      layoutId={layoutId}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       initial={initial || { opacity: 0, scale: 0.9 }}
       animate={animate || { opacity: 1, scale: 1 }}
-      transition={transition || { layout: { duration: 0.8, ease: "easeInOut" } }} 
+      // UPDATE: Físicas más suaves por defecto (stiffness 90 es más lento que 300)
+      transition={transition || { 
+        layout: { type: "spring", stiffness: 90, damping: 20 },
+        opacity: { duration: 0.5 }
+      }} 
       style={{
         rotateY: x,
         rotateX: y,
@@ -244,8 +248,9 @@ const TiltCard = ({
         perspective: 1000,
         ...style 
       }}
-      className={cn("relative rounded-3xl overflow-hidden transition-colors duration-300", className)}
-      {...props} // Spread de props extra
+      // UPDATE: force-gpu para asegurar que no haya parpadeos
+      className={cn("relative rounded-3xl overflow-hidden transition-colors duration-300 force-gpu will-change-transform", className)}
+      {...props} 
     >
       {children}
     </motion.div>
@@ -279,8 +284,6 @@ export const FounderSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLightMode, setIsLightMode] = useState(false);
   const [isLateScroll, setIsLateScroll] = useState(false);
-  
-  // NUEVO ESTADO: Controla si la tarjeta se está redimensionando
   const [isResizing, setIsResizing] = useState(false);
 
   const { scrollYProgress } = useScroll({
@@ -330,7 +333,6 @@ export const FounderSection = () => {
           <div className="lg:w-[40%] sticky top-32">
             <div className="flex flex-col gap-8 pb-10">
               
-              {/* Badge */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -344,7 +346,6 @@ export const FounderSection = () => {
                 The Architect
               </motion.div>
 
-              {/* Headline */}
               <h2 className={cn(
                 "font-syne font-bold text-[42px] md:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.03em] transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
@@ -353,7 +354,6 @@ export const FounderSection = () => {
                 <span className="text-[#D84315]">I scale brands.</span>
               </h2>
 
-              {/* Description */}
               <p className={cn(
                 "font-inter text-[18px] leading-[1.6] transition-colors duration-0 max-w-md",
                 isLightMode ? "text-gray-500" : "text-gray-400"
@@ -362,7 +362,6 @@ export const FounderSection = () => {
                 My workflow integrates creative strategy, high-end production, and media buying logic into one cohesive growth engine.
               </p>
 
-              {/* Checklist */}
               <div className="flex flex-col gap-4 mt-2">
                 {[
                   "Creative Strategist Mindset",
@@ -384,7 +383,6 @@ export const FounderSection = () => {
                 ))}
               </div>
 
-              {/* CTA */}
               <div className="mt-6">
                 <button className={cn(
                    "group relative px-8 py-4 rounded-full font-syne font-bold text-[16px] overflow-hidden transition-all duration-300",
@@ -409,23 +407,25 @@ export const FounderSection = () => {
             >
 
               {/* 
-                 ITEM 1: MIGUEL CARD
+                 ITEM 1: MIGUEL CARD (OPTIMIZED)
               */}
               <TiltCard 
                 layoutId="miguel-card"
-                // CALLBACKS PARA DETECTAR EL REDIMENSIONAMIENTO
+                layout
+                // FIX: Ajuste de físicas. Stiffness bajado a 85 para que sea más lento y fluido.
+                transition={{ 
+                  layout: { type: "spring", stiffness: 85, damping: 20 },
+                  opacity: { duration: 0.5 }
+                }}
                 onLayoutAnimationStart={() => setIsResizing(true)}
                 onLayoutAnimationComplete={() => setIsResizing(false)}
-                transition={{ layout: { duration: 0.8, ease: "easeInOut" } }}
                 className={cn(
                    "md:row-span-2 h-[450px] md:h-[600px] group border border-white/10 relative z-10",
+                   // FIX: force-gpu y will-change
+                   "force-gpu will-change-transform",
                    isLightMode ? "md:col-span-1" : "md:col-span-2"
                 )}
               >
-                {/* 
-                  OVERLAY ANTI-DISTORSIÓN (White Blur)
-                  Aparece solo mientras dura la animación (isResizing = true)
-                */}
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: isResizing ? 1 : 0 }}
@@ -433,7 +433,6 @@ export const FounderSection = () => {
                   className="absolute inset-0 z-40 bg-white/40 backdrop-blur-xl pointer-events-none"
                 />
 
-                {/* GLASS MORPH EFFECT (ESTÁTICO PARA LIGHT MODE) */}
                 <div 
                   className={cn(
                     "absolute inset-0 z-20 transition-opacity duration-700 pointer-events-none",
@@ -444,23 +443,32 @@ export const FounderSection = () => {
                     <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
                 </div>
 
-                <div className="absolute inset-0 bg-gray-900">
+                <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-3xl">
+                  {/* FIX: Usamos layout a secas en vez de layout="position" para que Framer maneje el tamaño también */}
                   <motion.img 
+                    layout 
                     src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop" 
                     alt="Founder" 
+                    // FIX: loading eager evita parpadeos de carga al redimensionar
+                    loading="eager"
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }}
-                    className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0"
+                    transition={{ 
+                      layout: { type: "spring", stiffness: 85, damping: 20 },
+                      scale: { duration: 0.8, ease: "easeInOut" }
+                    }}
+                    // FIX: translateZ fuerza a la GPU a mantener la capa
+                    style={{ transform: "translateZ(0)" }}
+                    className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0 will-change-transform"
                   />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
                   
-                  <div className="absolute bottom-6 left-6 right-6 z-30">
+                  <motion.div layout className="absolute bottom-6 left-6 right-6 z-30">
                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
                        <p className="text-white font-syne font-bold text-lg">Miguel (Founder)</p>
                        <p className="text-white/60 font-inter text-xs">Your Partner in Scale</p>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </TiltCard>
 
@@ -469,7 +477,13 @@ export const FounderSection = () => {
                  {isLightMode && (
                     <>
                        {/* ITEM 2 */}
-                       <TiltCard className="h-[280px] p-6 flex flex-col justify-between bg-gray-100 border border-gray-200 relative overflow-hidden group">
+                       <TiltCard 
+                        layout 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
+                        className="h-[280px] p-6 flex flex-col justify-between bg-gray-100 border border-gray-200 relative overflow-hidden group force-gpu"
+                       >
                           <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#D84315] blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" />
                           <div className="flex justify-between items-start z-10">
                              <div className="p-3 bg-[#D84315] rounded-xl text-white">
@@ -488,7 +502,13 @@ export const FounderSection = () => {
                        </TiltCard>
 
                        {/* ITEM 3 */}
-                       <TiltCard className="h-[300px] bg-black relative group border border-white/10 cursor-pointer">
+                       <TiltCard 
+                        layout 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
+                        className="h-[300px] bg-black relative group border border-white/10 cursor-pointer force-gpu"
+                       >
                           <div className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
                              <video autoPlay loop muted playsInline className="w-full h-full object-cover">
                                 <source src="https://videos.pexels.com/video-files/5854659/5854659-uhd_2560_1440_25fps.mp4" type="video/mp4" />
@@ -510,8 +530,10 @@ export const FounderSection = () => {
               </AnimatePresence>
 
               {/* ITEM 4: PROCESS CARD */}
-              <TiltCard className={cn(
-                "md:col-span-2 p-8 flex flex-col md:flex-row items-center gap-8 transition-colors duration-0 border",
+              <TiltCard 
+                layout
+                className={cn(
+                "md:col-span-2 p-8 flex flex-col md:flex-row items-center gap-8 transition-colors duration-0 border force-gpu",
                 isLightMode 
                   ? "bg-[#D84315] border-[#D84315]" 
                   : "bg-zinc-900 border-zinc-800"
@@ -533,18 +555,18 @@ export const FounderSection = () => {
               </TiltCard>
 
               {/* TARJETAS INFERIORES */}
-               {/* CARD A (Global) */}
+               {/* CARD A */}
                <TiltCard 
+                  layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] relative rounded-3xl group bg-zinc-100/50 p-0 border-none overflow-hidden"
+                  className="h-[280px] relative rounded-3xl group bg-zinc-100/50 p-0 border-none overflow-hidden force-gpu"
                >
                    <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} />
                    
                    <div className="relative h-full bg-white rounded-3xl border border-black/5 overflow-hidden flex flex-row items-stretch">
-                      {/* Left Content */}
                       <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
                          <div className="p-2.5 rounded-full mb-3 bg-orange-50/50 border border-orange-100/20">
                             <Globe className="w-5 h-5" style={{ color: COLORS.orange }} />
@@ -558,7 +580,6 @@ export const FounderSection = () => {
                          </p>
                       </div>
 
-                      {/* Right Image */}
                       <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden">
                          <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
                              <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
@@ -572,19 +593,18 @@ export const FounderSection = () => {
                    </div>
                </TiltCard>
 
-               {/* CARD B (Retention) */}
+               {/* CARD B */}
                <TiltCard 
+                  layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] relative rounded-3xl group bg-gray-900 border-none overflow-hidden"
+                  className="h-[280px] relative rounded-3xl group bg-gray-900 border-none overflow-hidden force-gpu"
                >
                    <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} variant="white" />
                    
                    <div className="relative h-full bg-gray-900 rounded-[inherit] overflow-hidden">
-                       
-                       {/* VIDEO BACKGROUND */}
                        <div className="absolute inset-0 w-full h-full opacity-60">
                           <video
                             autoPlay
@@ -597,10 +617,8 @@ export const FounderSection = () => {
                           </video>
                        </div>
 
-                       {/* Gradient Overlay */}
                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                        
-                       {/* Content */}
                        <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
                          <div className="flex items-baseline gap-2 mb-1">
                            <span className="text-6xl font-syne font-semibold leading-none tracking-tighter">95%</span>
