@@ -310,6 +310,11 @@ export const FounderSection = () => {
   const [isLateScroll, setIsLateScroll] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
 
+  // --- ANIMATION CONSTANTS FOR BUTTON ---
+  // Color Loop: Coral -> Turquoise -> Coral
+  const buttonColorSequence = [COLORS.coral, COLORS.coral, COLORS.turquoise, COLORS.turquoise, COLORS.coral];
+  const buttonColorDuration = 10;
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -343,7 +348,6 @@ export const FounderSection = () => {
 
       {/* BACKGROUND EFFECTS */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-         {/* CAMBIO 2: Fondo animado Coral -> Turquesa -> Coral */}
          <motion.div 
             animate={{
               backgroundColor: [COLORS.coral, COLORS.turquoise, COLORS.coral],
@@ -355,7 +359,6 @@ export const FounderSection = () => {
             }}
             className={cn(
               "absolute right-[-10%] top-[20%] w-[600px] h-[600px] blur-[150px] rounded-none transition-opacity duration-500",
-              // Visible en ambos modos (opacity-10 en light, opacity-20 en dark)
               isLightMode ? "opacity-10" : "opacity-20"
             )} 
          />
@@ -410,7 +413,6 @@ export const FounderSection = () => {
                 >
                   explosive growth
                 </motion.span>
-                {/* CAMBIO 1: El punto va FUERA del motion.span para heredar el color del h2 (Negro/Blanco) */}
                 <span>.</span>
               </h2>
 
@@ -445,19 +447,39 @@ export const FounderSection = () => {
                 ))}
               </div>
 
-              {/* CTA */}
+              {/* CTA - UPDATED BUTTON */}
               <div className="mt-4">
-                <button className={cn(
-                   "group relative px-6 py-3.5 rounded-none font-sans font-semibold text-[14px] overflow-hidden transition-all duration-300 border",
-                   isLightMode 
-                     ? "bg-zinc-900 text-white border-zinc-900 hover:shadow-lg hover:scale-[1.01]" 
-                     : "bg-white text-black border-white hover:bg-zinc-200"
-                )}>
-                  <span className="relative z-10 flex items-center gap-2">
+                <motion.button
+                  animate={{
+                    borderColor: buttonColorSequence
+                  }}
+                  transition={{
+                    duration: buttonColorDuration,
+                    ease: "linear",
+                    repeat: Infinity
+                  }}
+                  className={cn(
+                    "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(222,131,99,0.3)]",
+                    isLightMode 
+                      ? "bg-white/80 hover:bg-white" 
+                      : "bg-white/5 hover:bg-white/10"
+                  )}
+                >
+                  <motion.span
+                    animate={{
+                      color: buttonColorSequence
+                    }}
+                    transition={{
+                      duration: buttonColorDuration,
+                      ease: "linear",
+                      repeat: Infinity
+                    }}
+                    className="flex items-center gap-2"
+                  >
                     Start Scaling
                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </span>
-                </button>
+                  </motion.span>
+                </motion.button>
               </div>
 
             </div>

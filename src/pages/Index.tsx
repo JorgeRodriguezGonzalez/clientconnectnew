@@ -23,19 +23,18 @@ import { BlueprintVisualization } from "@/components/home/BlueprintVisualization
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
 import CloudHero from "@/components/home/section-layers";
 import { Services } from "@/components/home/Services";
+import { SuperHero } from "@/components/home/SuperHero";
 
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
-
-        <div className="relative z-0">
-          <FinalHero />
-        </div>
+        <SuperHero />
         <div className="z-999999">
-          <UseCasesShowcase />
           <FounderSection />
         </div>
+
+        
         <CloudHero />
         <BoxCards />
         
@@ -50,6 +49,13 @@ const Index = () => {
 
         <TestimonialsSection />
         <CTASection />
+
+        <div className="relative z-0">
+          <FinalHero />
+        </div>
+        <div className="z-999999">
+          <UseCasesShowcase />
+        </div>
 
       </main>
 
