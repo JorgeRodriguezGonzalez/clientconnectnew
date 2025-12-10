@@ -383,7 +383,7 @@ const LayerBlueBase = ({
         </div>
         
         {/* MODIFICADO: Flecha más larga (w-24) y más a la izquierda (left-[440px]) */}
-        <ErrorLabel show={showLabel} top="350px" left="left-[470px]" width="w-24" />
+        <ErrorLabel show={showLabel} top="350px" left="left-[455px]" width="w-24" />
       </div>
     );
   }
