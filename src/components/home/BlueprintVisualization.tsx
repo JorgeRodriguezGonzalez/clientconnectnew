@@ -1,10 +1,8 @@
 import React, { useId, useState, useEffect, useRef } from 'react';
 import { cn } from '../../lib/utils';
 
-const BackgroundStripes = () => <div className="pointer-events-none absolute inset-0 z-[-1] h-full w-full overflow-hidden opacity-[0.04]" style={{
-  backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
-  backgroundRepeat: 'repeat'
-}} />;
+// MODIFICADO: Se han eliminado las líneas diagonales (background image)
+const BackgroundStripes = () => <div className="pointer-events-none absolute inset-0 z-[-1] h-full w-full overflow-hidden" />;
 
 // MODIFICADO: Ahora acepta "left" y "width" para personalizar posición y largo de línea
 const ErrorLabel = ({ 
