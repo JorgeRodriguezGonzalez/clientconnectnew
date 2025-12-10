@@ -446,7 +446,7 @@ export const FounderSection = () => {
                 ))}
               </div>
 
-              {/* CTA - UPDATED BUTTON (ALWAYS BLACK BACKGROUND) */}
+              {/* CTA - UPDATED BUTTON */}
               <div className="mt-4">
                 <motion.button
                   animate={{
@@ -459,24 +459,26 @@ export const FounderSection = () => {
                   }}
                   className={cn(
                     "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(222,131,99,0.3)]",
-                    // CHANGED: Always black background
+                    // UPDATE: Fondo siempre negro y texto siempre blanco
                     "bg-black text-white hover:bg-zinc-900"
                   )}
                 >
-                  <motion.span
-                    animate={{
-                      color: buttonColorSequence
-                    }}
-                    transition={{
-                      duration: buttonColorDuration,
-                      ease: "linear",
-                      repeat: Infinity
-                    }}
-                    className="flex items-center gap-2"
-                  >
+                  <span className="flex items-center gap-2">
                     Start Scaling
-                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </motion.span>
+                    {/* Flecha animada independiente */}
+                    <motion.span
+                      animate={{
+                        color: buttonColorSequence
+                      }}
+                      transition={{
+                        duration: buttonColorDuration,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                    >
+                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </motion.span>
+                  </span>
                 </motion.button>
               </div>
 
