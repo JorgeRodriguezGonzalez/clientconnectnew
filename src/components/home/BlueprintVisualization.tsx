@@ -1,48 +1,64 @@
 import React, { useId, useState, useEffect, useRef } from 'react';
 import { cn } from '../../lib/utils';
 
-// MODIFICADO: Se han eliminado las líneas diagonales (background image)
-const BackgroundStripes = () => <div className="pointer-events-none absolute inset-0 z-[-1] h-full w-full overflow-hidden" />;
+const BackgroundStripes = () => <div className="pointer-events-none absolute inset-0 z-[-1] h-full w-full overflow-hidden opacity-[0.04]" style={{
+  backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
+  backgroundRepeat: 'repeat'
+}} />;
 
-// MODIFICADO: Ahora acepta "left" y "width" para personalizar posición y largo de línea
+// MODIFICADO: Acepta "rotation" para corregir la inclinación
 const ErrorLabel = ({ 
   show, 
   top, 
-  left = "left-[580px]", // Valor por defecto
-  width = "w-12"         // Valor por defecto
+  left = "left-[580px]", 
+  width = "w-12",
+  rotation = 0 // Nuevo prop para recibir la rotación actual del padre
 }: { 
   show: boolean; 
   top: string; 
   left?: string; 
   width?: string;
+  rotation?: number;
 }) => (
+  // 1. Contenedor EXTERNO: Se encarga de la posición y la CONTRA-ROTACIÓN.
+  // Al aplicar -rotation, anulamos la inclinación del padre y la línea queda recta.
   <div 
     className={cn(
-      "absolute flex items-center gap-0 transition-all duration-700 ease-out will-change-transform",
-      left, // Clase de posición horizontal dinámica
-      show ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+      "absolute origin-left will-change-transform", 
+      left 
     )}
-    style={{ top: top }}
+    style={{ 
+      top: top,
+      transform: `rotate(${-rotation}deg)` // Rotación inversa
+    }}
   >
-    {/* Punta de flecha cuadrada */}
-    <div className="h-1.5 w-1.5 bg-zinc-500 shrink-0" />
-    
-    {/* Línea horizontal (ancho dinámico) */}
-    <div className={cn("h-[1px] bg-zinc-500 shrink-0", width)} />
-    
-    {/* Caja de Texto Glassmorphism */}
-    <div className="ml-2 border border-zinc-500/50 bg-white/20 backdrop-blur-sm px-2 py-0.5 text-[10px] font-bold tracking-widest text-zinc-600 shadow-sm">
-      ERROR
+    {/* 2. Contenedor INTERNO: Se encarga de la animación de aparición (slide + fade) */}
+    <div className={cn(
+      "flex items-center gap-0 transition-all duration-700 ease-out",
+      show ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+    )}>
+      {/* Punta de flecha cuadrada */}
+      <div className="h-1.5 w-1.5 bg-zinc-500 shrink-0" />
+      
+      {/* Línea horizontal (ancho dinámico) */}
+      <div className={cn("h-[1px] bg-zinc-500 shrink-0", width)} />
+      
+      {/* Caja de Texto Glassmorphism */}
+      <div className="ml-2 border border-zinc-500/50 bg-white/20 backdrop-blur-sm px-2 py-0.5 text-[10px] font-bold tracking-widest text-zinc-600 shadow-sm">
+        ERROR
+      </div>
     </div>
   </div>
 );
 
 const LayerBlueTop = ({
     idPrefix,
-    progress
+    progress,
+    rotation // Recibimos la rotación
   }: {
     idPrefix: string;
     progress: number;
+    rotation: number;
   }) => {
     // Interpolación: de -1.6404 a -80
     const translateY = -1.6404 + (-80 - (-1.6404)) * progress;
@@ -62,7 +78,6 @@ const LayerBlueTop = ({
       >
         <div style={{ transform: 'matrix(1, 0, 0, 1, 0, 68.5242)' }}>
           <svg width="700" height="480" viewBox="0 0 700 480" fill="none" xmlns="http://www.w3.org/2000/svg" className="align-middle">
-            {/* NUEVA PALETA ROJA (#E8765D) APLICADA AQUI */}
             <path d="M311.16 31.0619L560.529 175.142C565.072 177.767 565.048 181.98 560.475 184.552L504.258 216.174L238.438 62.5886L294.654 30.9667C299.227 28.3945 306.617 28.4371 311.16 31.0619Z" fill="#E8765D" stroke="#9A3426" />
             <g clipPath={`url(#${idPrefix}-clip0)`}>
               <path d="M294.221 26.7166C299.035 24.0089 306.814 24.0538 311.596 26.8167L560.965 170.897C565.747 173.66 565.721 178.094 560.908 180.802L504.255 212.669L237.569 58.5836L294.221 26.7166Z" fill="#FFE5DF" />
@@ -162,7 +177,8 @@ const LayerBlueTop = ({
           </svg>
         </div>
         
-        <ErrorLabel show={showLabel} top="200px" />
+        {/* Pasamos la rotación al ErrorLabel */}
+        <ErrorLabel show={showLabel} top="200px" rotation={rotation} />
       </div>
     );
   };
@@ -253,10 +269,12 @@ const LayerBlueBottom = ({ progress }: { progress: number }) => {
 
 const LayerBlueBase = ({
     idPrefix,
-    progress
+    progress,
+    rotation // Recibimos la rotación
   }: {
     idPrefix: string;
     progress: number;
+    rotation: number;
   }) => {
     // Interpolación: de 1.6404 a 80
     const translateY = 1.6404 + (80 - 1.6404) * progress;
@@ -380,8 +398,8 @@ const LayerBlueBase = ({
           </svg>
         </div>
         
-        {/* MODIFICADO: Flecha más larga (w-24) y más a la izquierda (left-[440px]) */}
-        <ErrorLabel show={showLabel} top="350px" left="left-[495px]" width="w-24" />
+        {/* Pasamos la rotación al ErrorLabel */}
+        <ErrorLabel show={showLabel} top="350px" left="left-[495px]" width="w-24" rotation={rotation} />
       </div>
     );
   }
@@ -411,7 +429,6 @@ export const BlueprintVisualization = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    // Llamada inicial para establecer el estado correcto al cargar
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
@@ -434,11 +451,15 @@ export const BlueprintVisualization = () => {
             transition: 'transform 0.1s linear'
           }}
         >
-          <LayerBlueTop idPrefix={idPrefix} progress={progress} />
+          {/* AHORA: Pasamos rotation a las capas que contienen las etiquetas de error */}
+          <LayerBlueTop idPrefix={idPrefix} progress={progress} rotation={rotation} />
+          
           <LayerZinc progress={progress} />
           <LayerMiddle isHovered={false} />
           <LayerBlueBottom progress={progress} />
-          <LayerBlueBase idPrefix={idPrefix} progress={progress} />
+          
+          {/* AHORA: Pasamos rotation a las capas que contienen las etiquetas de error */}
+          <LayerBlueBase idPrefix={idPrefix} progress={progress} rotation={rotation} />
         </div>
       </div>
       <BackgroundStripes />
