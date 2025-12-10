@@ -15,6 +15,12 @@ const fontStyles = `
     transform: translate3d(0, 0, 0);
     perspective: 1000px;
   }
+
+  /* ANIMACIÓN LÍNEA VERTICAL (Del BentoGrid) */
+  @keyframes move-horizontal {
+    0% { left: 10%; }
+    100% { left: 90%; }
+  }
 `;
 
 // --- CONFIGURACIÓN DE ANIMACIÓN UNIFICADA ---
@@ -32,6 +38,68 @@ const COLORS = {
   coral: "#de8363",
   gold: "#edbf86",
 };
+
+// --- LOGO COMPONENTS (SVG) ---
+const InstagramLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none">
+    <defs>
+      <linearGradient id="instagram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#f58529" />
+        <stop offset="50%" stopColor="#dd2a7b" />
+        <stop offset="100%" stopColor="#8134af" />
+      </linearGradient>
+    </defs>
+    <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" fill="url(#instagram-gradient)"/>
+  </svg>
+);
+
+const GoogleLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className}>
+    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+  </svg>
+);
+
+const OpenAILogo = ({ className }: { className?: string }) => (
+  <svg className={className} width="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M26.153 11.46a6.888 6.888 0 0 0-.608-5.73 7.117 7.117 0 0 0-3.29-2.93 7.238 7.238 0 0 0-4.41-.454 7.065 7.065 0 0 0-2.41-1.742A7.15 7.15 0 0 0 12.514 0a7.216 7.216 0 0 0-4.217 1.346 7.061 7.061 0 0 0-2.603 3.539 7.12 7.12 0 0 0-2.734 1.188A7.012 7.012 0 0 0 .966 8.268a6.979 6.979 0 0 0 .88 8.273 6.89 6.89 0 0 0 .607 5.729 7.117 7.117 0 0 0 3.29 2.93 7.238 7.238 0 0 0 4.41.454 7.061 7.061 0 0 0 2.409 1.742c.92.404 1.916.61 2.923.604a7.215 7.215 0 0 0 4.22-1.345 7.06 7.06 0 0 0 2.605-3.543 7.116 7.116 0 0 0 2.734-1.187 7.01 7.01 0 0 0 1.993-2.196 6.978 6.978 0 0 0-.884-8.27Zm-10.61 14.71c-1.412 0-2.505-.428-3.46-1.215.043-.023.119-.064.168-.094l5.65-3.22a.911.911 0 0 0 .464-.793v-7.86l2.389 1.36a.087.087 0 0 1 .046.065v6.508c0 2.952-2.491 5.248-5.257 5.248ZM4.062 21.354a5.17 5.17 0 0 1-.635-3.516c.042.025.115.07.168.1l5.65 3.22a.928.928 0 0 0 .928 0l6.898-3.93v2.72a.083.083 0 0 1-.034.072l-5.711 3.255a5.386 5.386 0 0 1-4.035.522 5.315 5.315 0 0 1-3.23-2.443ZM2.573 9.184a5.283 5.283 0 0 1 2.768-2.301V13.515a.895.895 0 0 0 .464.793l6.897 3.93-2.388 1.36a.087.087 0 0 1-.08.008L4.52 16.349a5.262 5.262 0 0 1-2.475-3.185 5.192 5.192 0 0 1 .527-3.98Zm19.623 4.506-6.898-3.93 2.388-1.36a.087.087 0 0 1 .08-.008l5.713 3.255a5.28 5.28 0 0 1 2.054 2.118 5.19 5.19 0 0 1-.488 5.608 5.314 5.314 0 0 1-2.39 1.742v-6.633a.896.896 0 0 0-.459-.792Zm2.377-3.533a7.973 7.973 0 0 0-.168-.099l-5.65-3.22a.93.93 0 0 0-.928 0l-6.898 3.93V8.046a.083.083 0 0 1 .034-.072l5.712-3.251a5.375 5.375 0 0 1 5.698.241 5.262 5.262 0 0 1 1.865 2.28c.39.92.506 1.93.335 2.913ZM9.631 15.009l-2.39-1.36a.083.083 0 0 1-.046-.065V7.075c.001-.997.29-1.973.832-2.814a5.297 5.297 0 0 1 2.231-1.935 5.382 5.382 0 0 1 5.659.72 4.89 4.89 0 0 0-.168.093l-5.65 3.22a.913.913 0 0 0-.465.793l-.003 7.857Zm1.297-2.76L14 10.5l3.072 1.75v3.5L14 17.499l-3.072-1.75v-3.5Z" fill="currentColor" />
+  </svg>
+);
+
+const GeminiLogo = ({ className }: { className?: string }) => (
+  <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className={className}>
+    <path d="M16 8.016A8.522 8.522 0 008.016 16h-.032A8.521 8.521 0 000 8.016v-.032A8.521 8.521 0 007.984 0h.032A8.522 8.522 0 0016 7.984v.032z" fill="url(#prefix__paint0_radial_980_20147)" />
+    <defs>
+      <radialGradient id="prefix__paint0_radial_980_20147" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(16.1326 5.4553 -43.70045 129.2322 1.588 6.503)">
+        <stop offset=".067" stopColor="#9168C0" />
+        <stop offset=".343" stopColor="#5684D1" />
+        <stop offset=".672" stopColor="#1BA1E3" />
+      </radialGradient>
+    </defs>
+  </svg>
+);
+
+const MetaIconOutline = ({ className }: { className?: string }) => (
+  <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 287.56 191" className={className}>
+    <defs>
+      <linearGradient id="linear-gradient" x1="62.34" y1="101.45" x2="260.34" y2="91.45" gradientTransform="matrix(1, 0, 0, -1, 0, 192)" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stopColor="#0064e1" />
+        <stop offset="0.4" stopColor="#0064e1" />
+        <stop offset="0.83" stopColor="#0073ee" />
+        <stop offset="1" stopColor="#0082fb" />
+      </linearGradient>
+      <linearGradient id="linear-gradient-2" x1="41.42" y1="53" x2="41.42" y2="126" gradientTransform="matrix(1, 0, 0, -1, 0, 192)" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stopColor="#0082fb" />
+        <stop offset="1" stopColor="#0064e0" />
+      </linearGradient>
+    </defs>
+    <path fill="#0081fb" d="M31.06,126c0,11,2.41,19.41,5.56,24.51A19,19,0,0,0,53.19,160c8.1,0,15.51-2,29.79-21.76,11.44-15.83,24.92-38,34-52l15.36-23.6c10.67-16.39,23-34.61,37.18-47C181.07,5.6,193.54,0,206.09,0c21.07,0,41.14,12.21,56.5,35.11,16.81,25.08,25,56.67,25,89.27,0,19.38-3.82,33.62-10.32,44.87C271,180.13,258.72,191,238.13,191V160c17.63,0,22-16.2,22-34.74,0-26.42-6.16-55.74-19.73-76.69-9.63-14.86-22.11-23.94-35.84-23.94-14.85,0-26.8,11.2-40.23,31.17-7.14,10.61-14.47,23.54-22.7,38.13l-9.06,16c-18.2,32.27-22.81,39.62-31.91,51.75C84.74,183,71.12,191,53.19,191c-21.27,0-34.72-9.21-43-23.09C3.34,156.6,0,141.76,0,124.85Z" />
+    <path fill="url(#linear-gradient)" d="M24.49,37.3C38.73,15.35,59.28,0,82.85,0c13.65,0,27.22,4,41.39,15.61,15.5,12.65,32,33.48,52.63,67.81l7.39,12.32c17.84,29.72,28,45,33.93,52.22,7.64,9.26,13,12,19.94,12,17.63,0,22-16.2,22-34.74l27.4-.86c0,19.38-3.82,33.62-10.32,44.87C271,180.13,258.72,191,238.13,191c-12.8,0-24.14-2.78-36.68-14.61-9.64-9.08-20.91-25.21-29.58-39.71L146.08,93.6c-12.94-21.62-24.81-37.74-31.68-45C107,40.71,97.51,31.23,82.35,31.23c-12.27,0-22.69,8.61-31.41,21.78Z" />
+    <path fill="url(#linear-gradient-2)" d="M82.35,31.23c-12.27,0-22.69,8.61-31.41,21.78C38.61,71.62,31.06,99.34,31.06,126c0,11,2.41,19.41,5.56,24.51L10.14,167.91C3.34,156.6,0,141.76,0,124.85,0,94.1,8.44,62.05,24.49,37.3,38.73,15.35,59.28,0,82.85,0Z" />
+  </svg>
+);
 
 // --- COMPONENTE GLOWING EFFECT ---
 const GlowingEffect = React.memo(
@@ -303,6 +371,138 @@ const StatBadge = ({ icon: Icon, label, value, isLight }: { icon: any, label: st
   </div>
 );
 
+// --- ANIMATION COMPONENTS FOR ECOSYSTEM CARD ---
+const sizeMap = {
+  sm: "h-8 w-8",
+  md: "h-10 w-10",
+  lg: "h-12 w-12",
+};
+
+const LogoContainer = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={`rounded-full flex items-center justify-center shadow-[0px_-2px_6px_0px_rgba(0,0,0,0.12)_inset,0px_10px_14px_-8px_rgba(0,0,0,0.25)] ${className}`}
+    {...props}
+  />
+));
+LogoContainer.displayName = "LogoContainer";
+
+function AnimatedLogos({ isLightMode }: { isLightMode: boolean }) {
+  const icons = [
+    {
+      icon: <InstagramLogo className="h-4 w-4" />,
+      size: "sm" as const,
+    },
+    {
+      icon: <GoogleLogo className="h-5 w-5" />,
+      size: "md" as const,
+    },
+    {
+      icon: <OpenAILogo className="h-6 w-6 text-black dark:text-white" />,
+      size: "lg" as const,
+    },
+    {
+      icon: <MetaIconOutline className="h-5 w-5" />,
+      size: "md" as const,
+    },
+    {
+      icon: <GeminiLogo className="h-4 w-4" />,
+      size: "sm" as const,
+    },
+  ];
+
+  const scale = [1, 1.1, 1];
+  const transform = ["translateY(0px)", "translateY(-4px)", "translateY(0px)"];
+  
+  const sequence = icons.map((_, index) => [
+    `.logo-circle-${index + 1}`,
+    { scale, transform },
+    { duration: 0.8 },
+  ]);
+
+  useEffect(() => {
+    const runAnimation = async () => {
+      while (true) {
+        await animate(sequence as any);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    };
+    runAnimation();
+  }, []);
+
+  return (
+    <div className="overflow-hidden h-full relative flex items-center justify-center w-full">
+      <div className="flex flex-row flex-shrink-0 justify-center items-center gap-2">
+        {icons.map((icon, index) => (
+          <LogoContainer
+            key={index}
+            className={`${sizeMap[icon.size || "lg"]} logo-circle-${index + 1} ${
+              isLightMode ? "bg-white/90" : "bg-neutral-800/80"
+            }`}
+          >
+            {icon.icon}
+          </LogoContainer>
+        ))}
+      </div>
+      <AnimatedSparklesLine />
+    </div>
+  );
+}
+
+const AnimatedSparklesLine = () => (
+  <div 
+    className="h-32 w-px absolute top-1/2 -translate-y-1/2 bg-gradient-to-b from-transparent via-cyan-500 to-transparent z-40"
+    style={{
+      animation: 'move-horizontal 3s linear infinite',
+      left: '10%'
+    }}
+  >
+    <div className="w-10 h-24 top-1/2 -translate-y-1/2 absolute -left-5">
+      <Sparkles />
+    </div>
+  </div>
+);
+
+const Sparkles = () => {
+  const randomMove = () => Math.random() * 2 - 1;
+  const randomOpacity = () => Math.random();
+  const random = () => Math.random();
+
+  return (
+    <div className="absolute inset-0">
+      {[...Array(12)].map((_, i) => (
+        <motion.span
+          key={`star-${i}`}
+          animate={{
+            top: `calc(${random() * 100}% + ${randomMove()}px)`,
+            left: `calc(${random() * 100}% + ${randomMove()}px)`,
+            opacity: randomOpacity(),
+            scale: [1, 1.2, 0],
+          }}
+          transition={{
+            duration: random() * 2 + 4,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{
+            position: "absolute",
+            top: `${random() * 100}%`,
+            left: `${random() * 100}%`,
+            width: `2px`,
+            height: `2px`,
+            borderRadius: "50%",
+            zIndex: 1,
+          }}
+          className="inline-block bg-cyan-400"
+        />
+      ))}
+    </div>
+  );
+};
+
 // --- MAIN COMPONENT ---
 export const FounderSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -446,7 +646,7 @@ export const FounderSection = () => {
                 ))}
               </div>
 
-              {/* CTA - UPDATED BUTTON */}
+              {/* CTA - UPDATED BUTTON (ALWAYS BLACK BACKGROUND) */}
               <div className="mt-4">
                 <motion.button
                   animate={{
@@ -459,7 +659,6 @@ export const FounderSection = () => {
                   }}
                   className={cn(
                     "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(222,131,99,0.3)]",
-                    // UPDATE: Fondo siempre negro y texto siempre blanco
                     "bg-black text-white hover:bg-zinc-900"
                   )}
                 >
@@ -605,7 +804,7 @@ export const FounderSection = () => {
                  )}
               </AnimatePresence>
 
-              {/* ITEM 4: PROCESS CARD */}
+              {/* ITEM 4: PROCESS CARD (THE ECOSYSTEM) */}
               <TiltCard 
                 layout
                 initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} 
@@ -619,27 +818,29 @@ export const FounderSection = () => {
                     ease: "easeOut"
                 }}
                 className={cn(
-                  "md:col-span-2 group safari-gpu"
+                  "md:col-span-2 group safari-gpu h-[320px]" 
                 )}
                 innerClassName={cn(
-                  "p-8 flex flex-col md:flex-row items-center gap-8 transition-colors duration-0 border",
+                  "p-8 transition-colors duration-0 border",
                   isLightMode 
                     ? "bg-white border-zinc-200" 
                     : "bg-zinc-900 border-zinc-800"
                 )}
               >
-                 <div className="flex-1">
-                    <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>The Ecosystem</h3>
-                    <p className={cn("font-sans font-medium text-sm", isLightMode ? "text-gray-500" : "text-white/70")}>
-                      We eliminate friction. Paid media, creative, and email marketing integrated into one goal: Zero wasted budget.
-                    </p>
-                 </div>
-                 <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-none bg-zinc-100 flex items-center justify-center text-gray-900">
-                       <Zap size={20} />
+                 <div className="grid grid-cols-12 gap-4 h-full items-center">
+                    {/* Left Column: Text */}
+                    <div className="col-span-5 flex flex-col justify-center h-full">
+                        <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>The Ecosystem</h3>
+                        <p className={cn("font-sans font-medium text-sm leading-relaxed", isLightMode ? "text-gray-500" : "text-white/70")}>
+                          We eliminate friction. One goal: Zero wasted budget.
+                        </p>
                     </div>
-                    <div className="w-12 h-12 rounded-none bg-zinc-100 flex items-center justify-center text-gray-900">
-                       <Clapperboard size={20} />
+
+                    {/* Right Column: Visualization */}
+                    <div className="col-span-7 h-full flex items-center justify-center">
+                       <div className="relative w-full max-w-[300px] h-[120px]">
+                          <AnimatedLogos isLightMode={isLightMode} />
+                       </div>
                     </div>
                  </div>
               </TiltCard>
