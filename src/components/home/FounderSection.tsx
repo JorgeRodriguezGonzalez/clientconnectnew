@@ -540,9 +540,21 @@ export const FounderSection = () => {
                  )}
               </AnimatePresence>
 
-              {/* ITEM 4: PROCESS CARD */}
+              {/* ITEM 4: PROCESS CARD (OPTIMIZED) */}
               <TiltCard 
                 layout
+                initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} // Efecto de blur inicial
+                animate={isLightMode 
+                    ? { opacity: 1, y: 0, filter: "blur(0px)" } 
+                    : { opacity: 0, y: 20, filter: "blur(10px)" }
+                }
+                transition={{
+                    // DURATION 0 cuando desaparece (isLightMode = false) para no molestar al expandirse
+                    duration: isLightMode ? 0.5 : 0, 
+                    // DELAY 0.9s cuando aparece (isLightMode = true) para esperar a Miguel
+                    delay: isLightMode ? 0.9 : 0, 
+                    ease: "easeOut"
+                }}
                 className={cn(
                 "md:col-span-2 p-8 flex flex-col md:flex-row items-center gap-8 transition-colors duration-0 border safari-gpu",
                 isLightMode 
@@ -650,11 +662,7 @@ export const FounderSection = () => {
 
             </motion.div>
 
-            {/* 
-               FLOATING STATS (SOLUCIONADO): 
-               - Delay 0.8s al aparecer (para no molestar al estrecharse)
-               - Delay 0s al desaparecer (para no molestar al expandirse)
-            */}
+            {/* FLOATING STATS */}
             <motion.div 
                style={{ y: yStats }}
                initial={{ opacity: 0, scale: 0.8 }}
