@@ -262,7 +262,6 @@ const TiltCard = ({
         perspective: 1000,
         ...style 
       }}
-      // CHANGED: rounded-3xl -> rounded-none (Recto)
       className={cn("relative rounded-none overflow-hidden transition-colors duration-300 safari-gpu will-change-transform", className)}
       {...props} 
     >
@@ -274,13 +273,11 @@ const TiltCard = ({
 // --- SUB-COMPONENTS ---
 const StatBadge = ({ icon: Icon, label, value, isLight }: { icon: any, label: string, value: string, isLight: boolean }) => (
   <div className={cn(
-    // CHANGED: rounded-2xl -> rounded-none (Recto)
     "flex items-center gap-3 px-4 py-3 rounded-none border backdrop-blur-md transition-colors duration-300",
     isLight 
       ? "bg-white/80 border-black/5 shadow-sm" 
       : "bg-white/5 border-white/10"
   )}>
-    {/* CHANGED: rounded-full -> rounded-none (Recto) */}
     <div className="p-2 rounded-none bg-[#D84315]/10 text-[#D84315]">
       <Icon size={16} />
     </div>
@@ -335,26 +332,29 @@ export const FounderSection = () => {
 
       {/* BACKGROUND EFFECTS */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-         {/* CHANGED: rounded-full -> rounded-none (Recto) */}
          <div className={cn("absolute right-[-10%] top-[20%] w-[600px] h-[600px] bg-[#D84315] blur-[150px] opacity-20 animate-pulse rounded-none transition-opacity duration-0", isLightMode ? "opacity-0" : "opacity-20")} />
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+      {/* 
+         LAYOUT UPDATE:
+         - max-w reducido a 1200px para compactar el contenido central.
+         - padding lateral aumentado a px-6 md:px-12 lg:px-16 para dar mucho aire a los lados.
+      */}
+      <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
         {/* LAYOUT GRID */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           
           {/* --- LEFT COLUMN: STICKY --- */}
           <div className="lg:w-[40%] sticky top-32">
-            <div className="flex flex-col gap-8 pb-10">
+            <div className="flex flex-col gap-6 pb-10">
               
-              {/* Badge */}
+              {/* Badge - Texto más pequeño (text-[10px]) */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 className={cn(
-                  // CHANGED: rounded-full -> rounded-none (Recto)
-                  "w-fit px-4 py-1.5 rounded-none border text-[11px] font-inter font-medium uppercase tracking-widest transition-colors duration-300",
+                  "w-fit px-3 py-1.5 rounded-none border text-[10px] font-inter font-medium uppercase tracking-widest transition-colors duration-300",
                   isLightMode 
                     ? "bg-orange-50 border-orange-100 text-[#D84315]" 
                     : "bg-white/5 border-white/10 text-[#D84315]"
@@ -363,26 +363,26 @@ export const FounderSection = () => {
                 GROWTH PARTNERS
               </motion.div>
 
-              {/* Headline */}
+              {/* Headline - Reducido significativamente */}
               <h2 className={cn(
-                "font-syne font-bold text-[42px] md:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.03em] transition-colors duration-0",
+                "font-syne font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-[-0.03em] transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
               )}>
                 We don't just run ads. <br/>
-                <span className="text-[#D84315]">We scale businesses.</span>
+                <span className="text-[#D84315]">We scale revenue.</span>
               </h2>
 
-              {/* Description */}
+              {/* Description - Texto más pequeño (text-[15px]) */}
               <p className={cn(
-                "font-inter text-[18px] leading-[1.6] transition-colors duration-0 max-w-md",
+                "font-inter text-[15px] leading-[1.6] transition-colors duration-0 max-w-sm",
                 isLightMode ? "text-gray-500" : "text-gray-400"
               )}>
-                Most agencies deliver clicks. We deliver <strong className={isLightMode ? "text-gray-900" : "text-white"}>Revenue</strong>. 
-                Our data-driven ecosystem integrates paid media, creative strategy, and retention logic into one scalable growth engine.
+                Most agencies focus on clicks. We focus on <strong className={isLightMode ? "text-gray-900" : "text-white"}>Profitable Growth</strong>. 
+                Our data-driven ecosystem integrates paid media, creative strategy, and retention logic into one scalable engine.
               </p>
 
-              {/* Checklist */}
-              <div className="flex flex-col gap-4 mt-2">
+              {/* Checklist - Texto más pequeño (text-[14px]) */}
+              <div className="flex flex-col gap-3 mt-2">
                 {[
                   "Full-Funnel Acquisition",
                   "Conversion Rate Optimization",
@@ -390,30 +390,28 @@ export const FounderSection = () => {
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 group cursor-default">
                     <div className={cn(
-                      // CHANGED: rounded-full -> rounded-none (Recto)
-                      "w-6 h-6 rounded-none flex items-center justify-center transition-all duration-300",
+                      "w-5 h-5 rounded-none flex items-center justify-center transition-all duration-300",
                       isLightMode ? "bg-black text-white group-hover:bg-[#D84315]" : "bg-white text-black group-hover:bg-[#D84315] group-hover:text-white"
                     )}>
-                      <Check size={12} strokeWidth={3} />
+                      <Check size={10} strokeWidth={3} />
                     </div>
                     <span className={cn(
-                      "font-inter font-medium text-[15px] transition-colors duration-0",
+                      "font-inter font-medium text-[14px] transition-colors duration-0",
                       isLightMode ? "text-gray-800" : "text-gray-200"
                     )}>{item}</span>
                   </div>
                 ))}
               </div>
 
-              {/* CTA */}
-              <div className="mt-6">
+              {/* CTA - Texto más pequeño (text-[14px]) */}
+              <div className="mt-4">
                 <button className={cn(
-                   // CHANGED: rounded-full -> rounded-none (Recto)
-                   "group relative px-8 py-4 rounded-none font-syne font-bold text-[16px] overflow-hidden transition-all duration-300",
+                   "group relative px-6 py-3.5 rounded-none font-syne font-bold text-[14px] overflow-hidden transition-all duration-300",
                    isLightMode ? "bg-[#050505] text-white hover:shadow-xl" : "bg-white text-black hover:bg-[#D84315] hover:text-white"
                 )}>
                   <span className="relative z-10 flex items-center gap-2">
                     Scale Your Brand
-                    <ArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </span>
                 </button>
               </div>
@@ -463,7 +461,6 @@ export const FounderSection = () => {
                     <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
                 </div>
 
-                {/* CHANGED: rounded-3xl -> rounded-none (Recto) */}
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-none">
                   <motion.img 
                     layout
@@ -481,10 +478,10 @@ export const FounderSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
                   
                   <motion.div layout className="absolute bottom-6 left-6 right-6 z-30">
-                    {/* CHANGED: rounded-2xl -> rounded-none (Recto) */}
                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-none">
-                       <p className="text-white font-syne font-bold text-lg">Strategic Vision</p>
-                       <p className="text-white/60 font-inter text-xs">Your Partner in Scale</p>
+                       {/* Texto más pequeño */}
+                       <p className="text-white font-syne font-bold text-base">Strategic Vision</p>
+                       <p className="text-white/60 font-inter text-[11px]">Your Partner in Scale</p>
                     </div>
                   </motion.div>
                 </div>
@@ -504,17 +501,17 @@ export const FounderSection = () => {
                        >
                           <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#D84315] blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" />
                           <div className="flex justify-between items-start z-10">
-                             {/* CHANGED: rounded-xl -> rounded-none (Recto) */}
                              <div className="p-3 bg-[#D84315] rounded-none text-white">
                                 <TrendingUp size={24} />
                              </div>
-                             <span className="font-inter text-xs font-bold uppercase tracking-wider text-gray-400">
+                             <span className="font-inter text-[11px] font-bold uppercase tracking-wider text-gray-400">
                                Growth
                              </span>
                           </div>
                           <div className="z-10">
-                             <h3 className="text-5xl font-syne font-bold mb-2 text-gray-900">4.5x</h3>
-                             <p className="font-inter text-sm text-gray-500">
+                             {/* Número más pequeño (4xl) */}
+                             <h3 className="text-4xl font-syne font-bold mb-2 text-gray-900">4.5x</h3>
+                             <p className="font-inter text-xs text-gray-500">
                                Average ROAS across all managed partners in Q4.
                              </p>
                           </div>
@@ -534,14 +531,12 @@ export const FounderSection = () => {
                              </video>
                           </div>
                           <div className="absolute inset-0 flex items-center justify-center">
-                             {/* CHANGED: rounded-full -> rounded-none (Recto) */}
                              <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-none flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
                                 <Play fill="white" className="ml-1 text-white" />
                              </div>
                           </div>
                           <div className="absolute bottom-5 left-5">
-                             {/* CHANGED: rounded-lg -> rounded-none (Recto) */}
-                             <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-xs font-inter font-medium">
+                             <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-[11px] font-inter font-medium">
                                 Case Studies
                              </span>
                           </div>
@@ -570,17 +565,16 @@ export const FounderSection = () => {
                   : "bg-zinc-900 border-zinc-800"
               )}>
                  <div className="flex-1">
-                    <h3 className="text-white font-syne font-bold text-2xl mb-2">The Ecosystem</h3>
-                    <p className="text-white/80 font-inter font-light">
+                    {/* Texto más pequeño */}
+                    <h3 className="text-white font-syne font-bold text-xl mb-2">The Ecosystem</h3>
+                    <p className="text-white/80 font-inter font-light text-sm">
                       We eliminate friction. Paid media, creative, and email marketing integrated into one goal: Zero wasted budget.
                     </p>
                  </div>
                  <div className="flex gap-4">
-                    {/* CHANGED: rounded-full -> rounded-none (Recto) */}
                     <div className="w-12 h-12 rounded-none bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
                        <Zap size={20} />
                     </div>
-                    {/* CHANGED: rounded-full -> rounded-none (Recto) */}
                     <div className="w-12 h-12 rounded-none bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
                        <Clapperboard size={20} />
                     </div>
@@ -599,19 +593,18 @@ export const FounderSection = () => {
                >
                    <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} />
                    
-                   {/* CHANGED: rounded-3xl -> rounded-none (Recto) */}
                    <div className="relative h-full bg-white rounded-none border border-black/5 overflow-hidden flex flex-row items-stretch">
                       {/* Left Content */}
                       <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
-                         {/* CHANGED: rounded-full -> rounded-none (Recto) */}
                          <div className="p-2.5 rounded-none mb-3 bg-orange-50/50 border border-orange-100/20">
                             <Globe className="w-5 h-5" style={{ color: COLORS.orange }} />
                          </div>
-                         <div className="text-[24px] font-syne font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
+                         {/* Texto más pequeño (text-[20px]) */}
+                         <div className="text-[20px] font-syne font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
                             Global<br/>
                             <span className="text-gray-400">Scale</span>
                          </div>
-                         <p className="text-[13px] font-inter font-light leading-[1.4] text-gray-500">
+                         <p className="text-[12px] font-inter font-light leading-[1.4] text-gray-500">
                            Scaling campaigns across 20+ countries.
                          </p>
                       </div>
@@ -662,10 +655,11 @@ export const FounderSection = () => {
                        {/* Content */}
                        <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
                          <div className="flex items-baseline gap-2 mb-1">
-                           <span className="text-6xl font-syne font-semibold leading-none tracking-tighter">95%</span>
+                           {/* Número más pequeño (text-5xl) */}
+                           <span className="text-5xl font-syne font-semibold leading-none tracking-tighter">95%</span>
                            <ShieldCheck className="w-6 h-6 mb-2 text-white/80" />
                          </div>
-                         <span className="text-[14px] font-inter font-light leading-[1.4] text-white/60">
+                         <span className="text-[12px] font-inter font-light leading-[1.4] text-white/60">
                            Client retention rate over the last 12 months.
                          </span>
                        </div>
