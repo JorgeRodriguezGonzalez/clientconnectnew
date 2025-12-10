@@ -5,7 +5,7 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 // @component: CloudHero
 const CloudHero = () => {
   return (
-    <section id="cloud" className="grow relative w-full overflow-visible bg-white flex flex-col">
+    <section id="cloud" className="grow relative w-full overflow-visible bg-[#FAFAFA] flex flex-col">
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 

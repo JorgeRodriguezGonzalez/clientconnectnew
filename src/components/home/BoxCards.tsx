@@ -15,7 +15,7 @@ const BackgroundStripes = () => (
 // @component: BoxCards
 const BoxCards = () => {
   return (
-    <section id="box-cards" className="grow relative w-full overflow-x-hidden bg-white flex flex-col">
+    <section id="box-cards" className="grow relative w-full overflow-x-hidden bg-[#FAFAFA] flex flex-col">
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
