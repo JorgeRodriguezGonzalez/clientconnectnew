@@ -20,7 +20,7 @@ const fontStyles = `
   }
 
   .animate-marquee-reverse {
-    animation: marquee-reverse 40s linear infinite;
+    animation: marquee-reverse 60s linear infinite;
   }
 `;
 
@@ -51,11 +51,11 @@ export const SuperHero = ({
   const bgColor = "#050505";
   const lampColor = "#D84315"; // Naranja rojizo
 
-  // Duplicamos las imágenes para asegurar un loop infinito fluido
-  const marqueeImages = [...images, ...images, ...images];
+  // Usamos 4 sets para asegurar que cubra pantallas anchas (4k) sin cortes al hacer el loop
+  const marqueeImages = [...images, ...images, ...images, ...images];
 
   return (
-    <div className="w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center py-16 px-6 overflow-hidden relative">
+    <div className="w-full min-h-screen bg-[#050505] flex flex-col items-center justify-center pt-16 pb-0 overflow-hidden relative">
       <style>{fontStyles}</style>
       
       {/* Background Glow Effects */}
@@ -66,7 +66,8 @@ export const SuperHero = ({
         </div>
       </div>
 
-      <div className="max-w-[1296px] w-full mx-auto relative z-10" style={{ marginTop: '-10px' }}>
+      {/* --- CONTENT CONTAINER (LIMITED WIDTH) --- */}
+      <div className="max-w-[1296px] w-full mx-auto relative z-10 px-6" style={{ marginTop: '-10px' }}>
         
         {/* LAMP EFFECT */}
         <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible z-0 transform scale-75 md:scale-100">
@@ -253,28 +254,30 @@ export const SuperHero = ({
               </div>
             </motion.div>
           </div>
-
-          {/* Marquee Interactivo (Estilo Cine) */}
-          <div className="mt-24 relative w-full overflow-hidden pointer-events-auto select-none" style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)' }}>
-            <div className="flex -rotate-[6deg] scale-110">
-              <div className="flex gap-8 animate-marquee-reverse hover:[animation-play-state:paused]">
-                {marqueeImages.map((src, imgIndex) => (
-                  <div key={imgIndex} className="relative group/item transition-all duration-500 hover:z-20">
-                     <img 
-                      src={src} 
-                      alt={`Hero Work ${imgIndex}`} 
-                      className="w-[350px] h-[260px] object-cover rounded-2xl opacity-50 group-hover/item:opacity-100 group-hover/item:scale-105 transition-all duration-500 ease-out shadow-2xl" 
-                      loading="eager" 
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          
         </div>
       </div>
+      {/* --- END CONTENT CONTAINER --- */}
 
+
+      {/* --- FULL WIDTH MARQUEE --- */}
+      {/* Se ha sacado del container max-w-1296 para que ocupe todo el ancho */}
+      <div className="mt-20 w-full overflow-hidden pointer-events-auto select-none" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
+        <div className="flex -rotate-[6deg] scale-110 translate-y-8">
+          <div className="flex gap-8 animate-marquee-reverse hover:[animation-play-state:paused] min-w-full">
+            {marqueeImages.map((src, imgIndex) => (
+              <div key={imgIndex} className="relative group/item transition-all duration-500 hover:z-20 flex-shrink-0">
+                 <img 
+                  src={src} 
+                  alt={`Hero Work ${imgIndex}`} 
+                  className="w-[350px] h-[260px] object-cover rounded-2xl opacity-50 group-hover/item:opacity-100 group-hover/item:scale-105 transition-all duration-500 ease-out shadow-2xl" 
+                  loading="eager" 
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      
       <style>{`
         @keyframes slow-spin {
           from { transform: translate(-50%, -50%) rotate(0deg); }
