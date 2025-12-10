@@ -262,7 +262,8 @@ const TiltCard = ({
         perspective: 1000,
         ...style 
       }}
-      className={cn("relative rounded-3xl overflow-hidden transition-colors duration-300 safari-gpu will-change-transform", className)}
+      // CHANGED: rounded-3xl -> rounded-none (Recto)
+      className={cn("relative rounded-none overflow-hidden transition-colors duration-300 safari-gpu will-change-transform", className)}
       {...props} 
     >
       {children}
@@ -273,12 +274,14 @@ const TiltCard = ({
 // --- SUB-COMPONENTS ---
 const StatBadge = ({ icon: Icon, label, value, isLight }: { icon: any, label: string, value: string, isLight: boolean }) => (
   <div className={cn(
-    "flex items-center gap-3 px-4 py-3 rounded-2xl border backdrop-blur-md transition-colors duration-300",
+    // CHANGED: rounded-2xl -> rounded-none (Recto)
+    "flex items-center gap-3 px-4 py-3 rounded-none border backdrop-blur-md transition-colors duration-300",
     isLight 
       ? "bg-white/80 border-black/5 shadow-sm" 
       : "bg-white/5 border-white/10"
   )}>
-    <div className="p-2 rounded-full bg-[#D84315]/10 text-[#D84315]">
+    {/* CHANGED: rounded-full -> rounded-none (Recto) */}
+    <div className="p-2 rounded-none bg-[#D84315]/10 text-[#D84315]">
       <Icon size={16} />
     </div>
     <div>
@@ -305,14 +308,12 @@ export const FounderSection = () => {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // 1. Light Mode
     if (latest > 0.35 && !isLightMode) {
       setIsLightMode(true);
     } else if (latest <= 0.35 && isLightMode) {
       setIsLightMode(false);
     }
 
-    // 2. Late Scroll (Buffer)
     if (latest > 0.60 && !isLateScroll) {
       setIsLateScroll(true);
     } else if (latest < 0.50 && isLateScroll) {
@@ -334,7 +335,8 @@ export const FounderSection = () => {
 
       {/* BACKGROUND EFFECTS */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-         <div className={cn("absolute right-[-10%] top-[20%] w-[600px] h-[600px] bg-[#D84315] blur-[150px] opacity-20 animate-pulse rounded-full transition-opacity duration-0", isLightMode ? "opacity-0" : "opacity-20")} />
+         {/* CHANGED: rounded-full -> rounded-none (Recto) */}
+         <div className={cn("absolute right-[-10%] top-[20%] w-[600px] h-[600px] bg-[#D84315] blur-[150px] opacity-20 animate-pulse rounded-none transition-opacity duration-0", isLightMode ? "opacity-0" : "opacity-20")} />
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
@@ -351,13 +353,14 @@ export const FounderSection = () => {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 className={cn(
-                  "w-fit px-4 py-1.5 rounded-full border text-[11px] font-inter font-medium uppercase tracking-widest transition-colors duration-300",
+                  // CHANGED: rounded-full -> rounded-none (Recto)
+                  "w-fit px-4 py-1.5 rounded-none border text-[11px] font-inter font-medium uppercase tracking-widest transition-colors duration-300",
                   isLightMode 
                     ? "bg-orange-50 border-orange-100 text-[#D84315]" 
                     : "bg-white/5 border-white/10 text-[#D84315]"
                 )}
               >
-                The Architect
+                GROWTH PARTNERS
               </motion.div>
 
               {/* Headline */}
@@ -365,8 +368,8 @@ export const FounderSection = () => {
                 "font-syne font-bold text-[42px] md:text-[52px] lg:text-[64px] leading-[1] tracking-[-0.03em] transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
               )}>
-                I don't just edit. <br/>
-                <span className="text-[#D84315]">I scale brands.</span>
+                We don't just run ads. <br/>
+                <span className="text-[#D84315]">We scale businesses.</span>
               </h2>
 
               {/* Description */}
@@ -374,20 +377,21 @@ export const FounderSection = () => {
                 "font-inter text-[18px] leading-[1.6] transition-colors duration-0 max-w-md",
                 isLightMode ? "text-gray-500" : "text-gray-400"
               )}>
-                Most editors deliver files. I deliver <strong className={isLightMode ? "text-gray-900" : "text-white"}>ROAS</strong>. 
-                My workflow integrates creative strategy, high-end production, and media buying logic into one cohesive growth engine.
+                Most agencies deliver clicks. We deliver <strong className={isLightMode ? "text-gray-900" : "text-white"}>Revenue</strong>. 
+                Our data-driven ecosystem integrates paid media, creative strategy, and retention logic into one scalable growth engine.
               </p>
 
               {/* Checklist */}
               <div className="flex flex-col gap-4 mt-2">
                 {[
-                  "Creative Strategist Mindset",
-                  "Direct Response Editing",
-                  "Performance Data Analysis"
+                  "Full-Funnel Acquisition",
+                  "Conversion Rate Optimization",
+                  "Advanced Data Analytics"
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 group cursor-default">
                     <div className={cn(
-                      "w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300",
+                      // CHANGED: rounded-full -> rounded-none (Recto)
+                      "w-6 h-6 rounded-none flex items-center justify-center transition-all duration-300",
                       isLightMode ? "bg-black text-white group-hover:bg-[#D84315]" : "bg-white text-black group-hover:bg-[#D84315] group-hover:text-white"
                     )}>
                       <Check size={12} strokeWidth={3} />
@@ -403,11 +407,12 @@ export const FounderSection = () => {
               {/* CTA */}
               <div className="mt-6">
                 <button className={cn(
-                   "group relative px-8 py-4 rounded-full font-syne font-bold text-[16px] overflow-hidden transition-all duration-300",
+                   // CHANGED: rounded-full -> rounded-none (Recto)
+                   "group relative px-8 py-4 rounded-none font-syne font-bold text-[16px] overflow-hidden transition-all duration-300",
                    isLightMode ? "bg-[#050505] text-white hover:shadow-xl" : "bg-white text-black hover:bg-[#D84315] hover:text-white"
                 )}>
                   <span className="relative z-10 flex items-center gap-2">
-                    Start Growth Engine
+                    Scale Your Brand
                     <ArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </span>
                 </button>
@@ -425,7 +430,7 @@ export const FounderSection = () => {
             >
 
               {/* 
-                 ITEM 1: MIGUEL CARD
+                 ITEM 1: MAIN IMAGE CARD
               */}
               <TiltCard 
                 layoutId="miguel-card"
@@ -458,11 +463,12 @@ export const FounderSection = () => {
                     <div className="absolute inset-0 bg-white/5 backdrop-blur-[1px]" />
                 </div>
 
-                <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-3xl">
+                {/* CHANGED: rounded-3xl -> rounded-none (Recto) */}
+                <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-none">
                   <motion.img 
                     layout
                     src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop" 
-                    alt="Founder" 
+                    alt="Strategic Leadership" 
                     loading="eager"
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
                     transition={{ 
@@ -475,8 +481,9 @@ export const FounderSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
                   
                   <motion.div layout className="absolute bottom-6 left-6 right-6 z-30">
-                    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
-                       <p className="text-white font-syne font-bold text-lg">Miguel (Founder)</p>
+                    {/* CHANGED: rounded-2xl -> rounded-none (Recto) */}
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-none">
+                       <p className="text-white font-syne font-bold text-lg">Strategic Vision</p>
                        <p className="text-white/60 font-inter text-xs">Your Partner in Scale</p>
                     </div>
                   </motion.div>
@@ -497,11 +504,12 @@ export const FounderSection = () => {
                        >
                           <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#D84315] blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" />
                           <div className="flex justify-between items-start z-10">
-                             <div className="p-3 bg-[#D84315] rounded-xl text-white">
+                             {/* CHANGED: rounded-xl -> rounded-none (Recto) */}
+                             <div className="p-3 bg-[#D84315] rounded-none text-white">
                                 <TrendingUp size={24} />
                              </div>
                              <span className="font-inter text-xs font-bold uppercase tracking-wider text-gray-400">
-                               Performance
+                               Growth
                              </span>
                           </div>
                           <div className="z-10">
@@ -526,13 +534,15 @@ export const FounderSection = () => {
                              </video>
                           </div>
                           <div className="absolute inset-0 flex items-center justify-center">
-                             <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
+                             {/* CHANGED: rounded-full -> rounded-none (Recto) */}
+                             <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-none flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
                                 <Play fill="white" className="ml-1 text-white" />
                              </div>
                           </div>
                           <div className="absolute bottom-5 left-5">
-                             <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-xs font-inter font-medium">
-                                See Reel
+                             {/* CHANGED: rounded-lg -> rounded-none (Recto) */}
+                             <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-xs font-inter font-medium">
+                                Case Studies
                              </span>
                           </div>
                        </TiltCard>
@@ -540,18 +550,16 @@ export const FounderSection = () => {
                  )}
               </AnimatePresence>
 
-              {/* ITEM 4: PROCESS CARD (OPTIMIZED) */}
+              {/* ITEM 4: PROCESS CARD */}
               <TiltCard 
                 layout
-                initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} // Blur inicial
+                initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} 
                 animate={isLightMode 
                     ? { opacity: 1, y: 0, filter: "blur(0px)" } 
                     : { opacity: 0, y: 20, filter: "blur(10px)" }
                 }
                 transition={{
-                    // DURATION 0 si desaparece, 0.5 si aparece
                     duration: isLightMode ? 0.5 : 0, 
-                    // DELAY: 0.5s para que empiece un poco antes (stagger effect)
                     delay: isLightMode ? 0.5 : 0, 
                     ease: "easeOut"
                 }}
@@ -562,16 +570,18 @@ export const FounderSection = () => {
                   : "bg-zinc-900 border-zinc-800"
               )}>
                  <div className="flex-1">
-                    <h3 className="text-white font-syne font-bold text-2xl mb-2">The "One Workflow" System</h3>
+                    <h3 className="text-white font-syne font-bold text-2xl mb-2">The Ecosystem</h3>
                     <p className="text-white/80 font-inter font-light">
-                      We eliminate the friction between production and distribution. One team, one goal, zero wasted budget.
+                      We eliminate friction. Paid media, creative, and email marketing integrated into one goal: Zero wasted budget.
                     </p>
                  </div>
                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+                    {/* CHANGED: rounded-full -> rounded-none (Recto) */}
+                    <div className="w-12 h-12 rounded-none bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
                        <Zap size={20} />
                     </div>
-                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+                    {/* CHANGED: rounded-full -> rounded-none (Recto) */}
+                    <div className="w-12 h-12 rounded-none bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
                        <Clapperboard size={20} />
                     </div>
                  </div>
@@ -585,22 +595,24 @@ export const FounderSection = () => {
                   animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] relative rounded-3xl group bg-zinc-100/50 p-0 border-none overflow-hidden safari-gpu"
+                  className="h-[280px] relative rounded-none group bg-zinc-100/50 p-0 border-none overflow-hidden safari-gpu"
                >
                    <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} />
                    
-                   <div className="relative h-full bg-white rounded-3xl border border-black/5 overflow-hidden flex flex-row items-stretch">
+                   {/* CHANGED: rounded-3xl -> rounded-none (Recto) */}
+                   <div className="relative h-full bg-white rounded-none border border-black/5 overflow-hidden flex flex-row items-stretch">
                       {/* Left Content */}
                       <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
-                         <div className="p-2.5 rounded-full mb-3 bg-orange-50/50 border border-orange-100/20">
+                         {/* CHANGED: rounded-full -> rounded-none (Recto) */}
+                         <div className="p-2.5 rounded-none mb-3 bg-orange-50/50 border border-orange-100/20">
                             <Globe className="w-5 h-5" style={{ color: COLORS.orange }} />
                          </div>
                          <div className="text-[24px] font-syne font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
-                            20+<br/>
-                            <span className="text-gray-400">Countries</span>
+                            Global<br/>
+                            <span className="text-gray-400">Scale</span>
                          </div>
                          <p className="text-[13px] font-inter font-light leading-[1.4] text-gray-500">
-                           Global reach with localized assets.
+                           Scaling campaigns across 20+ countries.
                          </p>
                       </div>
 
@@ -625,7 +637,7 @@ export const FounderSection = () => {
                   animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                   style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] relative rounded-3xl group bg-gray-900 border-none overflow-hidden safari-gpu"
+                  className="h-[280px] relative rounded-none group bg-gray-900 border-none overflow-hidden safari-gpu"
                >
                    <GlowingEffect spread={40} glow={true} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={1.5} variant="white" />
                    
@@ -676,7 +688,7 @@ export const FounderSection = () => {
                }}
                className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
             >
-              <StatBadge icon={Clapperboard} label="Ads Created" value="500+" isLight={isLightMode} />
+              <StatBadge icon={Clapperboard} label="Campaigns Launched" value="500+" isLight={isLightMode} />
             </motion.div>
 
           </div>
