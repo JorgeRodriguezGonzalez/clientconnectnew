@@ -543,7 +543,7 @@ export const FounderSection = () => {
       ref={containerRef} 
       className={cn(
         "relative w-full py-24 lg:py-32 transition-colors duration-0 z-10 font-sans", 
-        isLightMode ? "bg-[#F6F6F6]" : "bg-[#050505]"
+        isLightMode ? "bg-[#FAFAFA]" : "bg-[#050505]"
       )}
     >
       <style>{fontStyles}</style>
