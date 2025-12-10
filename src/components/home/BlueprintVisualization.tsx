@@ -16,13 +16,21 @@ const LayerBlueTop = ({
     // Interpolación: de -1.6404 a -80
     const translateY = -1.6404 + (-80 - (-1.6404)) * progress;
     
+    // LÓGICA AGREGADA: 
+    // Cuando progress es 0 (inicio), grayscale es 1 (gris total).
+    // Cuando progress es 1 (final), grayscale es 0 (color total).
+    // Multiplicamos por 1.2 para que el color llegue a su máximo un poco antes de terminar la expansión.
+    const grayscaleAmount = Math.max(0, 1 - progress * 1.2);
+
     return (
       <div 
         className="absolute will-change-transform" 
         style={{
           zIndex: 5,
           transform: `matrix(1, 0, 0, 1, 0, ${translateY})`,
-          transition: 'transform 0.1s linear' // Transición rápida para suavizar el scroll
+          // Aplicamos el filtro dinámico
+          filter: `grayscale(${grayscaleAmount})`,
+          transition: 'transform 0.1s linear' 
         }}
       >
         <div style={{ transform: 'matrix(1, 0, 0, 1, 0, 68.5242)' }}>
@@ -223,12 +231,17 @@ const LayerBlueBase = ({
     // Interpolación: de 1.6404 a 80
     const translateY = 1.6404 + (80 - 1.6404) * progress;
 
+    // LÓGICA AGREGADA: Mismo cálculo que en LayerBlueTop para sincronía
+    const grayscaleAmount = Math.max(0, 1 - progress * 1.2);
+
     return (
       <div 
         className="absolute will-change-transform" 
         style={{
           zIndex: 1,
           transform: `matrix(1, 0, 0, 1, 0, ${translateY})`,
+          // Aplicamos el filtro dinámico
+          filter: `grayscale(${grayscaleAmount})`,
           transition: 'transform 0.1s linear'
         }}
       >
@@ -311,7 +324,6 @@ const LayerBlueBase = ({
                 <rect width="36" height="12" rx="4" transform="matrix(0.865865 0.500278 -0.871576 0.490261 251.066 327.876)" fill="#F0FDFA" />
                 <rect x="-0.00285524" y="0.495269" width="5" height="5" rx="1.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 251.481 331.102)" fill="#67BCB7" stroke="#2E6B66" />
               </g>
-              <rect x="-0.00285524" y="0.495269" width="35" height="11" rx="3.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 251.498 328.13)" stroke="#2E6B66" />
               <rect width="1" height="12" transform="matrix(0.865865 0.500278 -0.871576 0.490261 359.801 380.774)" fill="#2E6B66" />
               <rect width="1" height="12" transform="matrix(0.865865 0.500278 -0.871576 0.490261 276.678 332.748)" fill="#2E6B66" />
             </g>
@@ -355,12 +367,6 @@ export const BlueprintVisualization = () => {
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // Calcular el progreso basado en la posición del elemento en la ventana.
-      // 0 = elemento entrando por abajo
-      // 1 = elemento centrado o totalmente visible
-      // CAMBIOS AQUÍ:
-      // 1. Reducimos pixelsToStart de 520 a 400 para que empiece antes.
-      // 2. Reducimos el divisor de 0.18 a 0.15 para que la transición complete un poco más rápido.
       const pixelsToStart = 550; 
       const scrollDistance = windowHeight * 0.16; 
 
@@ -398,7 +404,7 @@ export const BlueprintVisualization = () => {
         >
           <LayerBlueTop idPrefix={idPrefix} progress={progress} />
           <LayerZinc progress={progress} />
-          <LayerMiddle isHovered={false} /> {/* LayerMiddle no se mueve, así que le pasamos false o lo ignoramos */}
+          <LayerMiddle isHovered={false} />
           <LayerBlueBottom progress={progress} />
           <LayerBlueBase idPrefix={idPrefix} progress={progress} />
         </div>
