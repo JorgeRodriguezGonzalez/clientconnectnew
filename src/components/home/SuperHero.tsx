@@ -53,12 +53,10 @@ export const SuperHero = ({
     const animate = () => {
       const marqueeWidth = marquee.scrollWidth / 3;
       
-      // MOVIMIENTO INVERTIDO: Sumamos velocidad (Izquierda a Derecha)
+      // MOVIMIENTO: Izquierda a Derecha
       translateX += speed;
 
-      // Lógica de reset para movimiento hacia la derecha:
-      // Si llegamos a 0 (o lo superamos), reiniciamos la posición hacia atrás (-marqueeWidth)
-      // para crear el bucle infinito sin saltos visuales.
+      // Reset para bucle infinito
       if (translateX >= 0) {
         translateX = -marqueeWidth;
       }
@@ -183,7 +181,7 @@ export const SuperHero = ({
         <div className="relative z-10">
           <div className="max-w-[1000px] mx-auto">
             <div className="text-center mb-8">
-              {/* Main Headline - INCREASED BY 4PX */}
+              {/* Main Headline */}
               <motion.h1 
                 key="hero-title"
                 initial={{ opacity: 0, y: 30 }} 
@@ -193,7 +191,6 @@ export const SuperHero = ({
                   duration: 1.5,
                   ease: "easeOut"
                 }} 
-                // Ajustes: 28->32px, 38->42px, 52->56px
                 className="font-syne font-semibold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
               >
                 From Raw Footage to <br className="md:hidden" />
@@ -204,7 +201,7 @@ export const SuperHero = ({
                 in One Workflow
               </motion.h1>
 
-              {/* Subtexto - RESTORED TO PREVIOUS SIZE (+2px) */}
+              {/* Subtexto */}
               <motion.div 
                 key="hero-subtitle"
                 initial={{ opacity: 0, y: 20 }} 
@@ -214,7 +211,6 @@ export const SuperHero = ({
                   duration: 1.5,
                   ease: "easeOut"
                 }} 
-                // Ajustes: 14->16px, 16->18px
                 className="flex flex-col items-center gap-2 font-inter font-light text-[16px] md:text-[18px] text-gray-400 max-w-3xl mx-auto"
               >
                 <p>Stop hiring separate teams. I handle the entire ecosystem.</p>
@@ -277,8 +273,8 @@ export const SuperHero = ({
             </motion.div>
           </div>
 
-          {/* Marquee Images */}
-          <div className="mt-16 flex items-center justify-center" style={{ transform: 'rotate(-4.5deg)' }}>
+          {/* Marquee Images - ROTATION & SKEW UPDATED */}
+          <div className="mt-16 flex items-center justify-center" style={{ transform: 'rotate(4.5deg)' }}>
             <div ref={marqueeRef} className="flex gap-6 will-change-transform" style={{ paddingRight: '24px' }}>
               {[...Array(3)].map((_, setIndex) => (
                 <div key={setIndex} className="flex gap-6 flex-shrink-0">
@@ -289,7 +285,7 @@ export const SuperHero = ({
                       alt={`Hero Marquee Image ${imgIndex + 1}`} 
                       className="w-[320px] h-[370px] object-cover rounded-3xl opacity-70" 
                       style={{
-                        transform: 'skewY(20deg)',
+                        transform: 'skewY(-20deg)', // Negative skew to match positive rotation
                         flexShrink: 0
                       }} 
                       loading="eager" 
