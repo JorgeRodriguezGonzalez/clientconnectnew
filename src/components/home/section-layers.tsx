@@ -2,43 +2,49 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { BlueprintVisualization } from '@/components/home/BlueprintVisualization';
 
-// --- CONSTANTES DE COLOR (Iguales a Pricing.tsx) ---
+// --- CONSTANTES DE COLOR ---
 const COLORS = {
-  turquoise: "rgb(103, 188, 183)", // #67bcb7
-  coral: "rgb(222, 131, 99)",     // #de8363
-  gold: "rgb(237, 191, 134)",     // #edbf86
+  turquoise: "rgb(103, 188, 183)",
+  coral: "rgb(222, 131, 99)",
+  gold: "rgb(237, 191, 134)",
 };
 
 // @component: CloudHero
 const CloudHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // 1. Detectar el progreso del scroll dentro de esta sección
+  // Detectamos el scroll
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"] // La animación ocurre mientras la sección cruza el centro de la pantalla
+    offset: ["start center", "end center"]
   });
 
-  // Suavizar el scroll para que el movimiento de la luz sea fluido
+  // Suavizamos MUCHO el scroll para que la curva sea perfecta
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
+    stiffness: 200,
     damping: 30,
     restDelta: 0.001
   });
 
-  // --- TRAYECTORIAS ---
-
-  // 1. Trayectoria Vertical (Bajando por la línea central)
-  // Ocurre durante la primera mitad del progreso (0 -> 0.6)
-  // Empieza en el 50% de la altura (centro) y baja hasta el 100% (borde inferior)
+  // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
+  // Rango: 0.1 a 0.5 (Llega al suelo exactamente en 0.5)
+  // top: Empieza en 50% (centro) y empuja hasta 100% (fondo)
   const verticalTop = useTransform(smoothProgress, [0.1, 0.5], ["50%", "100%"]);
-  const verticalOpacity = useTransform(smoothProgress, [0.1, 0.15, 0.45, 0.5], [0, 1, 1, 0]);
+  // Opacidad: Se mantiene 1 hasta justo DESPUÉS de tocar el suelo (0.52) para asegurar el solape
+  const verticalOpacity = useTransform(smoothProgress, [0.1, 0.15, 0.5, 0.55], [0, 1, 1, 0]);
 
-  // 2. Trayectoria Horizontal (Moviéndose a la derecha en el borde inferior)
-  // Ocurre justo después de la vertical (0.5 -> 0.8)
-  // Empieza en el 50% del ancho (donde intersecta la vertical) y se mueve 50px a la derecha
-  const horizontalLeft = useTransform(smoothProgress, [0.49, 0.8], ["50%", "calc(50% + 50px)"]);
-  const horizontalOpacity = useTransform(smoothProgress, [0.49, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
+
+  // --- TRAYECTORIA 2: HORIZONTAL (Giro a la derecha) ---
+  // Rango: 0.5 a 0.8 (Empieza exactamente cuando el vertical toca el suelo)
+  
+  // Ancho: Crece desde 0px (en la esquina) hasta 100px hacia la derecha
+  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "100px"]);
+  
+  // Posición X: Una vez que ha crecido un poco, empieza a moverse hacia la derecha para desvanecerse
+  const horizontalX = useTransform(smoothProgress, [0.6, 0.8], ["0px", "50px"]);
+  
+  // Opacidad: Aparece justo ANTES de que el vertical muera (0.48)
+  const horizontalOpacity = useTransform(smoothProgress, [0.48, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
 
   return (
     <section 
@@ -59,17 +65,19 @@ const CloudHero = () => {
             </div>
           </div>
 
-          {/* --- DIVISOR VERTICAL (Con efecto Glowing) --- */}
+          {/* --- DIVISOR VERTICAL --- */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-hidden">
-             {/* El "Beam" de luz vertical */}
+             {/* BEAM VERTICAL */}
              <motion.div 
                style={{ 
                  top: verticalTop,
                  opacity: verticalOpacity,
-                 // Gradiente vertical simulando la energía bajando
-                 background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, transparent)`
+                 // El gradiente está diseñado para que la "punta" inferior sea la más brillante
+                 // y coincida con el inicio del horizontal
+                 background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               className="absolute left-0 w-[2px] -ml-[0.5px] h-[150px] -translate-y-full"
+               // translate-y-full hace que el "top" controle la posición de la punta inferior del rayo
+               className="absolute left-0 w-[3px] -ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
              />
           </div>
 
@@ -84,7 +92,7 @@ const CloudHero = () => {
                 OUR APPROACH
               </div>
 
-              {/* Main Heading with gradient highlight */}
+              {/* Main Heading */}
               <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
                 Marketing strategies that transform your business into{' '}
                 <motion.span
@@ -110,7 +118,6 @@ const CloudHero = () => {
                 <span className="text-gray-900">.</span>
               </h2>
 
-              {/* Description */}
               <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
                 We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.
               </p>
@@ -120,17 +127,32 @@ const CloudHero = () => {
         </div>
       </div>
 
-      {/* --- BOTTOM BORDER (Con efecto Glowing) --- */}
-      <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10 overflow-hidden">
-          {/* El "Beam" de luz horizontal */}
+      {/* --- BOTTOM BORDER --- */}
+      {/* Añadimos overflow-visible para que el brillo no se corte */}
+      <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10">
+          
+          {/* BEAM HORIZONTAL */}
           <motion.div 
             style={{ 
-              left: horizontalLeft,
+              // IMPORTANTE: left: 50% inicia exactamente en la línea central
+              left: "50%", 
+              width: horizontalWidth,
+              x: horizontalX,
               opacity: horizontalOpacity,
-              // Gradiente horizontal hacia la derecha
+              // Gradiente horizontal: Empieza con Turquoise (igual que el final del vertical) -> Coral -> Gold
               background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
             }}
-            className="hidden lg:block absolute top-0 h-[3px] -mt-[1px] w-[100px] rounded-full blur-[1px]"
+            // Origin left asegura que crezca desde la esquina hacia afuera
+            className="hidden lg:block absolute top-0 h-[3px] -mt-[1px] rounded-r-full blur-[1px] origin-left"
+          />
+          
+          {/* PUNTO DE GIRO (CORNER FLASH) */}
+          {/* Este pequeño punto brilla justo en la intersección para disimular cualquier pixel gap */}
+          <motion.div
+            style={{
+                opacity: useTransform(smoothProgress, [0.48, 0.5, 0.52], [0, 1, 0])
+            }}
+            className="hidden lg:block absolute left-[50%] top-0 w-[6px] h-[6px] -ml-[3px] -mt-[3px] rounded-full bg-[#67bcb7] blur-[2px] z-20"
           />
       </div>
     </section>
