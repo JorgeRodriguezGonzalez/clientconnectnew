@@ -8,9 +8,7 @@ const fontStyles = `
   .font-syne { font-family: 'Syne', sans-serif; }
   .font-inter { font-family: 'Inter', sans-serif; }
   
-  /* OPTIMIZACIÓN SAFARI: 
-     Añadimos 'transform: translateZ(0)' para forzar GPU
-     y evitar parpadeos en el repintado */
+  /* OPTIMIZACIÓN SAFARI */
   .safari-gpu {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
@@ -20,9 +18,7 @@ const fontStyles = `
   }
 `;
 
-// --- CONFIGURACIÓN DE ANIMACIÓN UNIFICADA (CORREGIDA PARA TYPESCRIPT) ---
-// El cambio aquí es 'as [number, number, number, number]'.
-// Esto fuerza a TS a entender que es una curva Bezier válida.
+// --- CONFIGURACIÓN DE ANIMACIÓN UNIFICADA ---
 const ANIMATION_CONFIG = {
   duration: 0.95, 
   ease: [0.2, 0, 0.2, 1] as [number, number, number, number]
@@ -255,7 +251,6 @@ const TiltCard = ({
       onMouseLeave={handleMouseLeave}
       initial={initial || { opacity: 0, scale: 0.9 }}
       animate={animate || { opacity: 1, scale: 1 }}
-      // UPDATE: Usamos la configuración unificada
       transition={transition || { 
         layout: ANIMATION_CONFIG, 
         opacity: { duration: 0.5 }
@@ -655,9 +650,22 @@ export const FounderSection = () => {
 
             </motion.div>
 
-            {/* FLOATING STATS */}
+            {/* 
+               FLOATING STATS (SOLUCIONADO): 
+               - Delay 0.8s al aparecer (para no molestar al estrecharse)
+               - Delay 0s al desaparecer (para no molestar al expandirse)
+            */}
             <motion.div 
                style={{ y: yStats }}
+               initial={{ opacity: 0, scale: 0.8 }}
+               animate={{ 
+                 opacity: isLightMode ? 1 : 0,
+                 scale: isLightMode ? 1 : 0.8,
+                 transition: { 
+                    duration: 0.3, 
+                    delay: isLightMode ? 0.8 : 0 
+                 }
+               }}
                className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
             >
               <StatBadge icon={Clapperboard} label="Ads Created" value="500+" isLight={isLightMode} />
