@@ -543,16 +543,16 @@ export const FounderSection = () => {
               {/* ITEM 4: PROCESS CARD (OPTIMIZED) */}
               <TiltCard 
                 layout
-                initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} // Efecto de blur inicial
+                initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} // Blur inicial
                 animate={isLightMode 
                     ? { opacity: 1, y: 0, filter: "blur(0px)" } 
                     : { opacity: 0, y: 20, filter: "blur(10px)" }
                 }
                 transition={{
-                    // DURATION 0 cuando desaparece (isLightMode = false) para no molestar al expandirse
+                    // DURATION 0 si desaparece, 0.5 si aparece
                     duration: isLightMode ? 0.5 : 0, 
-                    // DELAY 0.9s cuando aparece (isLightMode = true) para esperar a Miguel
-                    delay: isLightMode ? 0.9 : 0, 
+                    // DELAY: 0.5s para que empiece un poco antes (stagger effect)
+                    delay: isLightMode ? 0.5 : 0, 
                     ease: "easeOut"
                 }}
                 className={cn(
