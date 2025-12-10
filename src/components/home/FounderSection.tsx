@@ -57,7 +57,6 @@ function LogoCard({ logo, className, children, isLightMode }: { logo: Logo, clas
     >
       <img
         alt={logo.alt}
-        // En Dark Mode invertimos los logos para que sean blancos
         className={cn(
           "pointer-events-none h-4 select-none md:h-5 transition-all duration-500",
           !isLightMode && "brightness-0 invert" 
@@ -72,121 +71,69 @@ function LogoCard({ logo, className, children, isLightMode }: { logo: Logo, clas
 }
 
 export function LogoCloud({ isLightMode }: { isLightMode: boolean }) {
-  // Definimos los estilos base para bordes e iconos según el modo
   const borderColor = isLightMode ? "border-zinc-200" : "border-white/10";
   const iconColor = isLightMode ? "text-zinc-300" : "text-white/20";
-  
-  // Colores de fondo para el patrón de ajedrez
-  // Main: transparente (hereda el color de la sección)
-  // Alt: Un color ligeramente diferente para crear contraste
   const bgAlt = isLightMode ? "bg-white" : "bg-white/5";
 
   return (
     <div className={cn("relative grid grid-cols-2 border-x md:grid-cols-4 transition-colors duration-500 mb-20", borderColor)}>
-      
-      {/* Top Border Line extending screen width */}
       <div className={cn("-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t", borderColor)} />
 
-      {/* CARD 1 */}
       <LogoCard
         isLightMode={isLightMode}
         className={cn("relative border-r border-b", bgAlt, borderColor)}
-        logo={{
-          src: "https://svgl.app/library/nvidia-wordmark-light.svg",
-          alt: "Nvidia Logo",
-        }}
+        logo={{ src: "https://svgl.app/library/nvidia-wordmark-light.svg", alt: "Nvidia Logo" }}
       >
-        <PlusIcon
-          className={cn("-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 transition-colors duration-500", iconColor)}
-          strokeWidth={1}
-        />
+        <PlusIcon className={cn("-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 transition-colors duration-500", iconColor)} strokeWidth={1} />
       </LogoCard>
 
-      {/* CARD 2 */}
       <LogoCard
         isLightMode={isLightMode}
         className={cn("border-b md:border-r", borderColor)}
-        logo={{
-          src: "https://svgl.app/library/supabase_wordmark_light.svg",
-          alt: "Supabase Logo",
-        }}
+        logo={{ src: "https://svgl.app/library/supabase_wordmark_light.svg", alt: "Supabase Logo" }}
       />
 
-      {/* CARD 3 */}
       <LogoCard
         isLightMode={isLightMode}
-        className={cn("relative border-r border-b md:bg-transparent", borderColor, isLightMode ? "md:bg-white" : "md:bg-white/5")} // Ajuste manual para MD
-        logo={{
-          src: "https://svgl.app/library/github_wordmark_light.svg",
-          alt: "GitHub Logo",
-        }}
+        className={cn("relative border-r border-b md:bg-transparent", borderColor, isLightMode ? "md:bg-white" : "md:bg-white/5")}
+        logo={{ src: "https://svgl.app/library/github_wordmark_light.svg", alt: "GitHub Logo" }}
       >
-        <PlusIcon
-          className={cn("-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 transition-colors duration-500", iconColor)}
-          strokeWidth={1}
-        />
-        <PlusIcon
-          className={cn("-bottom-[12.5px] -left-[12.5px] absolute z-10 hidden size-6 md:block transition-colors duration-500", iconColor)}
-          strokeWidth={1}
-        />
+        <PlusIcon className={cn("-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 transition-colors duration-500", iconColor)} strokeWidth={1} />
+        <PlusIcon className={cn("-bottom-[12.5px] -left-[12.5px] absolute z-10 hidden size-6 md:block transition-colors duration-500", iconColor)} strokeWidth={1} />
       </LogoCard>
 
-      {/* CARD 4 */}
       <LogoCard
         isLightMode={isLightMode}
-        className={cn("relative border-b", borderColor, bgAlt, isLightMode ? "md:bg-transparent" : "md:bg-transparent")} // Ajuste manual para MD
-        logo={{
-          src: "https://svgl.app/library/openai_wordmark_light.svg",
-          alt: "OpenAI Logo",
-        }}
+        className={cn("relative border-b", borderColor, bgAlt, isLightMode ? "md:bg-transparent" : "md:bg-transparent")}
+        logo={{ src: "https://svgl.app/library/openai_wordmark_light.svg", alt: "OpenAI Logo" }}
       />
 
-      {/* CARD 5 */}
       <LogoCard
         isLightMode={isLightMode}
         className={cn("relative border-r border-b md:border-b-0", bgAlt, borderColor, isLightMode ? "md:bg-transparent" : "md:bg-transparent")}
-        logo={{
-          src: "https://svgl.app/library/turso-wordmark-light.svg",
-          alt: "Turso Logo",
-        }}
+        logo={{ src: "https://svgl.app/library/turso-wordmark-light.svg", alt: "Turso Logo" }}
       >
-        <PlusIcon
-          className={cn("-right-[12.5px] -bottom-[12.5px] md:-left-[12.5px] absolute z-10 size-6 md:hidden transition-colors duration-500", iconColor)}
-          strokeWidth={1}
-        />
+        <PlusIcon className={cn("-right-[12.5px] -bottom-[12.5px] md:-left-[12.5px] absolute z-10 size-6 md:hidden transition-colors duration-500", iconColor)} strokeWidth={1} />
       </LogoCard>
 
-      {/* CARD 6 */}
       <LogoCard
         isLightMode={isLightMode}
         className={cn("border-b md:border-r md:border-b-0", borderColor, isLightMode ? "md:bg-white" : "md:bg-white/5")}
-        logo={{
-          src: "https://svgl.app/library/clerk-wordmark-light.svg",
-          alt: "Clerk Logo",
-        }}
+        logo={{ src: "https://svgl.app/library/clerk-wordmark-light.svg", alt: "Clerk Logo" }}
       />
 
-      {/* CARD 7 */}
       <LogoCard
         isLightMode={isLightMode}
         className={cn("border-r", borderColor)}
-        logo={{
-          src: "https://svgl.app/library/claude-ai-wordmark-icon_light.svg",
-          alt: "Claude AI Logo",
-        }}
+        logo={{ src: "https://svgl.app/library/claude-ai-wordmark-icon_light.svg", alt: "Claude AI Logo" }}
       />
 
-      {/* CARD 8 */}
       <LogoCard
         isLightMode={isLightMode}
         className={cn(bgAlt)}
-        logo={{
-          src: "https://svgl.app/library/vercel_wordmark.svg",
-          alt: "Vercel Logo",
-        }}
+        logo={{ src: "https://svgl.app/library/vercel_wordmark.svg", alt: "Vercel Logo" }}
       />
 
-      {/* Bottom Border Line extending screen width */}
       <div className={cn("-translate-x-1/2 -bottom-px pointer-events-none absolute left-1/2 w-screen border-b", borderColor)} />
     </div>
   );
@@ -676,9 +623,10 @@ export const FounderSection = () => {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest > 0.35 && !isLightMode) {
+    // CAMBIO: Trigger para Light Mode ajustado al 15% (0.15)
+    if (latest > 0.15 && !isLightMode) {
       setIsLightMode(true);
-    } else if (latest <= 0.35 && isLightMode) {
+    } else if (latest <= 0.15 && isLightMode) {
       setIsLightMode(false);
     }
 
@@ -730,8 +678,8 @@ export const FounderSection = () => {
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
-        {/* LAYOUT GRID */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-20">
+        {/* LAYOUT GRID - CAMBIO: mt-40 para dar 160px de espacio superior */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-40">
           
           {/* --- LEFT COLUMN: STICKY --- */}
           <div className="lg:w-[40%] sticky top-32">
