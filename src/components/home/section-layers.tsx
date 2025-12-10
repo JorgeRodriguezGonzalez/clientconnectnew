@@ -19,7 +19,7 @@ const CloudHero = () => {
     offset: ["start center", "end center"]
   });
 
-  // Suavizamos MUCHO el scroll para que la curva sea perfecta
+  // Suavizado para movimiento fluido
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 200,
     damping: 30,
@@ -27,23 +27,19 @@ const CloudHero = () => {
   });
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
-  // Rango: 0.1 a 0.5 (Llega al suelo exactamente en 0.5)
-  // top: Empieza en 50% (centro) y empuja hasta 100% (fondo)
+  // Rango: 0.1 -> 0.5
   const verticalTop = useTransform(smoothProgress, [0.1, 0.5], ["50%", "100%"]);
-  // Opacidad: Se mantiene 1 hasta justo DESPUÉS de tocar el suelo (0.52) para asegurar el solape
-  const verticalOpacity = useTransform(smoothProgress, [0.1, 0.15, 0.5, 0.55], [0, 1, 1, 0]);
+  // La opacidad se mantiene hasta un poco DESPUÉS de tocar el suelo (0.55) para solaparse
+  const verticalOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.5, 0.55], [0, 1, 1, 0]);
 
-
-  // --- TRAYECTORIA 2: HORIZONTAL (Giro a la derecha) ---
-  // Rango: 0.5 a 0.8 (Empieza exactamente cuando el vertical toca el suelo)
+  // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
+  // Rango: 0.5 -> 0.8 (Empieza EXACTAMENTE cuando el vertical termina)
   
-  // Ancho: Crece desde 0px (en la esquina) hasta 100px hacia la derecha
-  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "100px"]);
+  // CORRECCIÓN CLAVE: Solo animamos el ancho, no la posición X.
+  // Crece desde 0px hasta 80px hacia la derecha.
+  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "80px"]);
   
-  // Posición X: Una vez que ha crecido un poco, empieza a moverse hacia la derecha para desvanecerse
-  const horizontalX = useTransform(smoothProgress, [0.6, 0.8], ["0px", "50px"]);
-  
-  // Opacidad: Aparece justo ANTES de que el vertical muera (0.48)
+  // Opacidad: Empieza un poco ANTES (0.48) para asegurar la fusión en la esquina
   const horizontalOpacity = useTransform(smoothProgress, [0.48, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
 
   return (
@@ -72,12 +68,10 @@ const CloudHero = () => {
                style={{ 
                  top: verticalTop,
                  opacity: verticalOpacity,
-                 // El gradiente está diseñado para que la "punta" inferior sea la más brillante
-                 // y coincida con el inicio del horizontal
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               // translate-y-full hace que el "top" controle la posición de la punta inferior del rayo
-               className="absolute left-0 w-[3px] -ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
+               // translate-y-full: la parte inferior del div es la que guía el movimiento
+               className="absolute left-0 w-[3px] -ml-[1px] h-[200px] -translate-y-full blur-[1px]"
              />
           </div>
 
@@ -87,12 +81,10 @@ const CloudHero = () => {
           {/* Right Column: Content */}
           <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px]">
-              {/* OUR APPROACH */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
                 OUR APPROACH
               </div>
 
-              {/* Main Heading */}
               <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
                 Marketing strategies that transform your business into{' '}
                 <motion.span
@@ -128,31 +120,30 @@ const CloudHero = () => {
       </div>
 
       {/* --- BOTTOM BORDER --- */}
-      {/* Añadimos overflow-visible para que el brillo no se corte */}
       <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10">
           
           {/* BEAM HORIZONTAL */}
+          {/* CORRECCIÓN: Eliminado translate X. Ahora está anclado fijamente al 50% */}
           <motion.div 
             style={{ 
-              // IMPORTANTE: left: 50% inicia exactamente en la línea central
               left: "50%", 
               width: horizontalWidth,
-              x: horizontalX,
               opacity: horizontalOpacity,
-              // Gradiente horizontal: Empieza con Turquoise (igual que el final del vertical) -> Coral -> Gold
               background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
             }}
-            // Origin left asegura que crezca desde la esquina hacia afuera
-            className="hidden lg:block absolute top-0 h-[3px] -mt-[1px] rounded-r-full blur-[1px] origin-left"
+            // -ml-[1px]: Mueve el inicio 1 pixel a la izquierda para solaparse con la línea vertical
+            // origin-left: Asegura que crezca hacia la derecha desde ese punto fijo
+            className="hidden lg:block absolute top-0 h-[3px] -mt-[1px] -ml-[1px] rounded-r-full blur-[1px] origin-left"
           />
           
-          {/* PUNTO DE GIRO (CORNER FLASH) */}
-          {/* Este pequeño punto brilla justo en la intersección para disimular cualquier pixel gap */}
+          {/* PUNTO DE INTERSECCIÓN (Flash Corner) */}
+          {/* Un pequeño punto brillante estático en la esquina para ocultar cualquier imperfección visual */}
           <motion.div
             style={{
-                opacity: useTransform(smoothProgress, [0.48, 0.5, 0.52], [0, 1, 0])
+                opacity: useTransform(smoothProgress, [0.49, 0.5, 0.51], [0, 1, 0])
             }}
-            className="hidden lg:block absolute left-[50%] top-0 w-[6px] h-[6px] -ml-[3px] -mt-[3px] rounded-full bg-[#67bcb7] blur-[2px] z-20"
+            // left-1/2 y -translate-x-1/2 lo centra matemáticamente perfecto en la línea
+            className="hidden lg:block absolute left-1/2 top-0 w-[8px] h-[8px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#67bcb7] blur-[3px] z-20"
           />
       </div>
     </section>
