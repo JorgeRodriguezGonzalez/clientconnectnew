@@ -29,7 +29,6 @@ const CloudHero = () => {
   const verticalOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.5, 0.55], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
-  // Solo animamos el ancho (width)
   const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "100px"]);
   const horizontalOpacity = useTransform(smoothProgress, [0.49, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
 
@@ -43,8 +42,6 @@ const CloudHero = () => {
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
       <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
-        
-        {/* Este contenedor es la clave: contiene ambas columnas y sus divisores */}
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
           {/* Left Column */}
@@ -55,41 +52,39 @@ const CloudHero = () => {
           </div>
 
           {/* === DIVISOR VERTICAL === */}
-          {/* Este div actúa como la línea gris vertical */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
-             {/* 1. RAYO VERTICAL */}
+             {/* 1. RAYO VERTICAL (Más fino) */}
              <motion.div 
                style={{ 
                  top: verticalTop,
                  opacity: verticalOpacity,
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               className="absolute left-0 w-[3px] -ml-[1px] h-[200px] -translate-y-full blur-[1px]"
+               // w-[2px] para hacerlo fino
+               // -ml-[0.5px] para centrarlo perfecto en la linea de 1px
+               className="absolute left-0 w-[2px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* 2. RAYO HORIZONTAL (MOVIDO AQUÍ) */}
-             {/* Al ponerlo dentro del divisor vertical, su posición (left: 0) es RELATIVA a la línea. 
-                 Esto garantiza matemáticamente que nazca desde la línea, sin huecos. */}
+             {/* 2. RAYO HORIZONTAL (Más fino y ajustado) */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
                  background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
                }}
-               // left-0: Empieza en la línea
-               // bottom-0: Pegado al suelo
-               // -ml-1: Lo mueve 4px (aprox) a la izquierda para "enterrarlo" en la línea vertical y asegurar la unión.
-               className="absolute left-0 bottom-0 h-[3px] -ml-1 rounded-r-full blur-[1px] origin-left z-20"
+               // h-[2px] para hacerlo fino
+               // -ml-[0.5px]: Ajuste micrométrico. Solo se mueve medio pixel a la izquierda para conectar.
+               className="absolute left-0 bottom-0 h-[2px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
 
-             {/* 3. FLASH CORNER */}
-             {/* El punto brillante justo en la unión */}
+             {/* 3. FLASH CORNER (Más pequeño) */}
              <motion.div
                 style={{
                     opacity: useTransform(smoothProgress, [0.49, 0.5, 0.51], [0, 1, 0])
                 }}
-                className="absolute left-0 bottom-0 w-[12px] h-[12px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#67bcb7] blur-[4px] z-30"
+                // Reducido a w-[6px] para que no sea un "pegote" grande
+                className="absolute left-0 bottom-0 w-[6px] h-[6px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#67bcb7] blur-[2px] z-30"
               />
           </div>
 
@@ -137,7 +132,7 @@ const CloudHero = () => {
         </div>
       </div>
 
-      {/* Bottom Border (Visual Only now) */}
+      {/* Bottom Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10" />
     </section>
   );
