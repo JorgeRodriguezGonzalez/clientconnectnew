@@ -31,7 +31,7 @@ const CloudHero = () => {
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
   // Se expande desde 0.7 hasta 0.9
-  const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "140px"]);
+  const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "135px"]);
   
   // Opacidad: Aparece en 0.7, se mantiene visible, y se desvanece suavemente al final (0.95)
   // Ya NO desaparece de golpe, sino que tiene una salida suave.
