@@ -29,10 +29,8 @@ const CloudHero = () => {
   const verticalOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.7, 0.75], [0, 1, 1, 0]);
 
   // --- ANIMACIÓN ENTRADA ROBOT (Scroll) ---
-  // Aparece entre 0.3 y 0.35
   const iconScale = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
   const iconOpacity = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
-  // Gira izquierda -> derecha -> centro al entrar
   const iconRotate = useTransform(smoothProgress, [0.3, 0.32, 0.35, 0.38], [-15, 15, -5, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
@@ -70,18 +68,16 @@ const CloudHero = () => {
                   scale: iconScale,
                   opacity: iconOpacity,
                   rotate: iconRotate,
-                  // CORRECCIÓN IMPORTANTE:
-                  // Usamos x e y aquí en lugar de clases Tailwind (-translate-x-1/2).
-                  // Esto evita que la animación de rotación rompa el centrado.
                   x: "-50%",
                   y: "-50%"
                 }}
-                // Animación de parpadeo (Colores solicitados)
+                // Animación de parpadeo (Colores actualizados al #FFE5DF)
                 animate={{
-                  borderColor: ["#e4e4e7", "#9A3426", "#e4e4e7"], // Gris -> Rojo Oscuro -> Gris
-                  color: ["#6b7280", "#9A3426", "#6b7280"],       // Gris -> Rojo Oscuro -> Gris
-                  backgroundColor: ["#ffffff", "#FFD0C4", "#ffffff"], // Blanco -> Rojo Claro -> Blanco
-                  boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", "0 0 10px rgba(154,52,38,0.3)", "0 1px 2px 0 rgba(0,0,0,0.05)"]
+                  borderColor: ["#e4e4e7", "#9A3426", "#e4e4e7"], 
+                  color: ["#6b7280", "#9A3426", "#6b7280"],       
+                  // Fondo: Blanco -> Rojo Suave (#FFE5DF) -> Blanco
+                  backgroundColor: ["#ffffff", "#FFE5DF", "#ffffff"], 
+                  boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", "0 0 10px rgba(154,52,38,0.2)", "0 1px 2px 0 rgba(0,0,0,0.05)"]
                 }}
                 transition={{
                   duration: 2.5,
@@ -96,7 +92,8 @@ const CloudHero = () => {
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
-                  strokeWidth="1.5" 
+                  // CAMBIO: strokeWidth a 1 para igualar la línea vertical de zinc
+                  strokeWidth="1" 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
                   className="w-8 h-8 -mt-[2px]" 
