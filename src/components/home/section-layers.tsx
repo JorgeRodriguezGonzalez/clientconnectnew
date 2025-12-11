@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionTemplate } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValueEvent } from 'framer-motion';
 import { BlueprintVisualization } from '@/components/home/BlueprintVisualization';
 
 // --- CONSTANTES DE COLOR ---
@@ -7,12 +7,13 @@ const COLORS = {
   turquoise: "rgb(103, 188, 183)",
   coral: "rgb(222, 131, 99)",
   gold: "rgb(237, 191, 134)",
-  red: "#9A3426" // El rojo solicitado
+  red: "#9A3426" 
 };
 
 // @component: CloudHero
 const CloudHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [showRobot, setShowRobot] = useState(false); // Nuevo estado para controlar la animación
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -25,28 +26,27 @@ const CloudHero = () => {
     restDelta: 0.001
   });
 
-  // --- ANIMACIÓN ENTRADA ROBOT (Scroll) ---
-  // Aparece en 0.30
-  const iconScale = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
-  const iconOpacity = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
-  
-  // MODIFICADO: El giro ahora dura más tiempo (de 0.30 hasta 0.55)
-  // Antes: [0.3, 0.32, 0.35, 0.38]
-  // Ahora: Se siente más pesado y mecánico al tardar más en estabilizarse.
-  const iconRotate = useTransform(smoothProgress, [0.3, 0.38, 0.46, 0.55], [-15, 15, -5, 0]);
+  // --- DETECTOR DE SCROLL PARA ACTIVAR ROBOT ---
+  // En lugar de transformar valores, escuchamos cambios.
+  // Si pasa de 0.3, activamos la animación "fire-and-forget".
+  useMotionValueEvent(smoothProgress, "change", (latest) => {
+    if (latest >= 0.3 && !showRobot) {
+      setShowRobot(true);
+    } else if (latest < 0.3 && showRobot) {
+      setShowRobot(false);
+    }
+  });
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
-  // MODIFICADO: Retrasado el inicio de 0.30 a 0.38 para dar protagonismo al robot primero
+  // Empieza en 0.38 (retrasado respecto al robot que sale en 0.30)
   const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["75%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
-  // MODIFICADO: Interpolación de color para el rayo vertical
-  // Empieza siendo ROJO (#9A3426) y se transforma a los colores originales
+  // Color del rayo: Rojo -> Gradiente Original
   const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.gold]);
   const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.coral]);
   const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.turquoise]);
   
-  // Creamos el gradiente dinámico
   const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
@@ -80,24 +80,47 @@ const CloudHero = () => {
              
              {/* --- ICONO ROBOT ERROR CENTRADO --- */}
              <motion.div 
-                style={{ 
-                  scale: iconScale,
-                  opacity: iconOpacity,
-                  rotate: iconRotate,
-                  x: "-50%",
-                  y: "-50%"
-                }}
-                animate={{
+                style={{ x: "-50%", y: "-50%" }} // Centrado estático CSS
+                initial={{ scale: 0, opacity: 0, rotate: -15 }} // Estado inicial (oculto)
+                
+                // ANIMACIÓN CONDICIONAL (Disparador)
+                animate={showRobot ? {
+                  scale: 1,
+                  opacity: 1,
+                  rotate: [-15, 15, -5, 0], // Secuencia de "wobble" (Entrada)
+                  // Bucle de colores (Infinito)
                   borderColor: ["#e4e4e7", "#9A3426", "#e4e4e7"], 
                   color: ["#6b7280", "#9A3426", "#6b7280"],       
                   backgroundColor: ["#ffffff", "#FFE5DF", "#ffffff"], 
                   boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", "0 0 10px rgba(154,52,38,0.2)", "0 1px 2px 0 rgba(0,0,0,0.05)"]
+                } : {
+                  // Salida (cuando se hace scroll hacia arriba)
+                  scale: 0,
+                  opacity: 0,
+                  rotate: -15, 
+                  // Reseteamos colores al salir para que no parpadee mientras desaparece
+                  borderColor: "#e4e4e7",
+                  color: "#6b7280",
+                  backgroundColor: "#ffffff",
+                  boxShadow: "0 0 0 transparent"
                 }}
+
+                // TRANSICIONES INDIVIDUALES
                 transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
+                  // Entrada física (Escala/Opacidad)
+                  scale: { duration: 0.4, ease: "backOut" },
+                  opacity: { duration: 0.3 },
+                  
+                  // Giro: Más largo (1.2s) y ocurre solo 1 vez al entrar
+                  rotate: { duration: 1.2, ease: "easeInOut" }, 
+
+                  // Bucle de Colores: Infinito y suave (2.5s)
+                  borderColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+                  color: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+                  backgroundColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+                  boxShadow: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
                 }}
+
                 className="absolute top-1/2 left-1/2 z-40 p-1 rounded-lg border flex items-center justify-center"
              >
                 <svg 
@@ -123,12 +146,12 @@ const CloudHero = () => {
                 </svg>
              </motion.div>
              
-             {/* 1. RAYO VERTICAL (Ahora usa background dinámico) */}
+             {/* 1. RAYO VERTICAL (Rojo -> Gradiente) */}
              <motion.div 
                style={{ 
                  top: verticalTop,
                  opacity: verticalOpacity,
-                 background: verticalGradient // <-- Gradiente animado (Rojo -> Original)
+                 background: verticalGradient
                }}
                className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
