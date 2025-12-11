@@ -6,13 +6,13 @@ const BackgroundStripes = () => <div className="pointer-events-none absolute ins
   backgroundRepeat: 'repeat'
 }} />;
 
-// MODIFICADO: Acepta "rotation" para corregir la inclinación
+// MODIFICADO: Estilos actualizados (!ERROR!, colores rojos de la paleta)
 const ErrorLabel = ({ 
   show, 
   top, 
   left = "left-[580px]", 
   width = "w-12",
-  rotation = 0 // Nuevo prop para recibir la rotación actual del padre
+  rotation = 0 
 }: { 
   show: boolean; 
   top: string; 
@@ -20,8 +20,7 @@ const ErrorLabel = ({
   width?: string;
   rotation?: number;
 }) => (
-  // 1. Contenedor EXTERNO: Se encarga de la posición y la CONTRA-ROTACIÓN.
-  // Al aplicar -rotation, anulamos la inclinación del padre y la línea queda recta.
+  // 1. Contenedor EXTERNO: Posición y Contra-rotación
   <div 
     className={cn(
       "absolute origin-left will-change-transform", 
@@ -29,23 +28,23 @@ const ErrorLabel = ({
     )}
     style={{ 
       top: top,
-      transform: `rotate(${-rotation}deg)` // Rotación inversa
+      transform: `rotate(${-rotation}deg)` 
     }}
   >
-    {/* 2. Contenedor INTERNO: Se encarga de la animación de aparición (slide + fade) */}
+    {/* 2. Contenedor INTERNO: Animación */}
     <div className={cn(
       "flex items-center gap-0 transition-all duration-700 ease-out",
       show ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
     )}>
-      {/* Punta de flecha cuadrada */}
-      <div className="h-1.5 w-1.5 bg-zinc-500 shrink-0" />
+      {/* Punta de flecha (color actualizado a rojo #9A3426) */}
+      <div className="h-1.5 w-1.5 bg-[#9A3426] shrink-0" />
       
-      {/* Línea horizontal (ancho dinámico) */}
-      <div className={cn("h-[1px] bg-zinc-500 shrink-0", width)} />
+      {/* Línea horizontal (color actualizado a rojo #9A3426) */}
+      <div className={cn("h-[1px] bg-[#9A3426] shrink-0", width)} />
       
-      {/* Caja de Texto Glassmorphism */}
-      <div className="ml-2 border border-zinc-500/50 bg-white/20 backdrop-blur-sm px-2 py-0.5 text-[10px] font-bold tracking-widest text-zinc-600 shadow-sm">
-        ERROR
+      {/* Caja de Texto MODIFICADA */}
+      <div className="ml-2 border border-[#9A3426] bg-[#FFE5DF] px-2 py-0.5 text-[10px] font-bold tracking-widest text-[#9A3426] shadow-sm">
+        !ERROR!
       </div>
     </div>
   </div>
@@ -54,7 +53,7 @@ const ErrorLabel = ({
 const LayerBlueTop = ({
     idPrefix,
     progress,
-    rotation // Recibimos la rotación
+    rotation 
   }: {
     idPrefix: string;
     progress: number;
@@ -270,7 +269,7 @@ const LayerBlueBottom = ({ progress }: { progress: number }) => {
 const LayerBlueBase = ({
     idPrefix,
     progress,
-    rotation // Recibimos la rotación
+    rotation 
   }: {
     idPrefix: string;
     progress: number;
@@ -451,14 +450,14 @@ export const BlueprintVisualization = () => {
             transition: 'transform 0.1s linear'
           }}
         >
-          {/* AHORA: Pasamos rotation a las capas que contienen las etiquetas de error */}
+          {/* Pasamos rotation a las capas */}
           <LayerBlueTop idPrefix={idPrefix} progress={progress} rotation={rotation} />
           
           <LayerZinc progress={progress} />
           <LayerMiddle isHovered={false} />
           <LayerBlueBottom progress={progress} />
           
-          {/* AHORA: Pasamos rotation a las capas que contienen las etiquetas de error */}
+          {/* Pasamos rotation a las capas */}
           <LayerBlueBase idPrefix={idPrefix} progress={progress} rotation={rotation} />
         </div>
       </div>
