@@ -29,10 +29,10 @@ const CloudHero = () => {
   const verticalOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.7, 0.75], [0, 1, 1, 0]);
 
   // --- ANIMACIÓN ENTRADA ROBOT (Scroll) ---
-  // Aparece entre 0.3 y 0.35 (coincide con el inicio del rayo)
+  // Aparece entre 0.3 y 0.35
   const iconScale = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
   const iconOpacity = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
-  // Efecto de "alerta/tambaleo" al entrar: Gira izquierda -> derecha -> centro
+  // Gira izquierda -> derecha -> centro al entrar
   const iconRotate = useTransform(smoothProgress, [0.3, 0.32, 0.35, 0.38], [-15, 15, -5, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
@@ -61,7 +61,7 @@ const CloudHero = () => {
             </div>
           </div>
 
-          {/* === DIVISOR VERTICAL (Contenedor de los rayos) === */}
+          {/* === DIVISOR VERTICAL === */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
              {/* --- ICONO ROBOT ERROR CENTRADO --- */}
@@ -70,31 +70,35 @@ const CloudHero = () => {
                   scale: iconScale,
                   opacity: iconOpacity,
                   rotate: iconRotate,
+                  // CORRECCIÓN IMPORTANTE:
+                  // Usamos x e y aquí en lugar de clases Tailwind (-translate-x-1/2).
+                  // Esto evita que la animación de rotación rompa el centrado.
+                  x: "-50%",
+                  y: "-50%"
                 }}
-                // Animación infinita de "Alerta Roja" (Parpadeo suave)
+                // Animación de parpadeo (Colores solicitados)
                 animate={{
-                  borderColor: ["#e4e4e7", "#fca5a5", "#e4e4e7"], // zinc-200 -> red-300 -> zinc-200
-                  color: ["#6b7280", "#ef4444", "#6b7280"],       // gray-500 -> red-500 -> gray-500
-                  backgroundColor: ["#ffffff", "#fef2f2", "#ffffff"], // white -> red-50 -> white
-                  boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", "0 0 8px rgba(239,68,68,0.25)", "0 1px 2px 0 rgba(0,0,0,0.05)"]
+                  borderColor: ["#e4e4e7", "#9A3426", "#e4e4e7"], // Gris -> Rojo Oscuro -> Gris
+                  color: ["#6b7280", "#9A3426", "#6b7280"],       // Gris -> Rojo Oscuro -> Gris
+                  backgroundColor: ["#ffffff", "#FFD0C4", "#ffffff"], // Blanco -> Rojo Claro -> Blanco
+                  boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", "0 0 10px rgba(154,52,38,0.3)", "0 1px 2px 0 rgba(0,0,0,0.05)"]
                 }}
                 transition={{
-                  duration: 2.5, // Lento y suave
+                  duration: 2.5,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 p-1 rounded-lg border flex items-center justify-center bg-white"
+                className="absolute top-1/2 left-1/2 z-40 p-1 rounded-lg border flex items-center justify-center"
              >
                 <svg 
                   width="24" 
                   height="24" 
                   viewBox="0 0 24 24" 
                   fill="none" 
-                  stroke="currentColor" // Hereda el color animado del padre
+                  stroke="currentColor" 
                   strokeWidth="1.5" 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
-                  // -mt-[2px]: Sube el icono un poco dentro de la caja
                   className="w-8 h-8 -mt-[2px]" 
                 >
                   <rect x="4" y="8" width="16" height="12" rx="2" />
