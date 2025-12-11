@@ -54,35 +54,27 @@ const CloudHero = () => {
           {/* === DIVISOR VERTICAL (Contenedor de los rayos) === */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
-             {/* 1. RAYO VERTICAL (2px) */}
-             {/* Un poco más fino que antes, pero con presencia */}
+             {/* 1. RAYO VERTICAL */}
              <motion.div 
                style={{ 
                  top: verticalTop,
                  opacity: verticalOpacity,
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               // w-[2px]: Grosor medio
-               // -ml-[0.5px]: Centrado perfecto sobre la línea de 1px
                className="absolute left-0 w-[1.2px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* 2. RAYO HORIZONTAL (1px) */}
-             {/* El más fino de todos, "Not as thin as the horizontal" implica que este es el más delgado */}
+             {/* 2. RAYO HORIZONTAL */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
                  background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
                }}
-               // h-[1px]: Grosor láser
-               // bottom-0: Pegado a la línea inferior
-               // -ml-[0.5px]: Conexión perfecta sin huecos
                className="absolute left-0 bottom-0 h-[2.1px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
 
-             {/* 3. FLASH CORNER (Micro punto) */}
-             {/* Reducido para que no destaque sobre las líneas finas */}
+             {/* 3. FLASH CORNER */}
              <motion.div
                 style={{
                     opacity: useTransform(smoothProgress, [0.49, 0.5, 0.51], [0, 1, 0])
@@ -97,12 +89,15 @@ const CloudHero = () => {
           {/* Right Column: Content */}
           <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px]">
+              
+              {/* SUBTITLE: Changed to focus on diagnosis */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
-                OUR APPROACH
+                SYSTEM DIAGNOSIS
               </div>
 
+              {/* TITLE: Focused on finding errors */}
               <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
-                Marketing strategies that transform your business into{' '}
+                We uncover the{' '}
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}
                   animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -121,13 +116,14 @@ const CloudHero = () => {
                     color: "transparent"
                   }}
                 >
-                  market leaders
+                  invisible faults
                 </motion.span>
-                <span className="text-gray-900">.</span>
+                {' '}in your digital ecosystem.
               </h2>
 
+              {/* TEXT: Explains the SEO/Web/Strategy audit process */}
               <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
-                We combine data-driven insights, creative excellence, and proven strategies to deliver marketing solutions that drive growth and exceed expectations.
+                From technical SEO bottlenecks to cracks in your content strategy, we audit every layer of your online presence. We identify exactly what is broken—so we can engineer the perfect fix.
               </p>
             </div>
           </div>

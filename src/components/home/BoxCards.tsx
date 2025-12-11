@@ -1,6 +1,13 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { InteractiveCardStack } from '@/components/home/InteractiveCardStack';
+
+// --- CONSTANTES DE COLOR (Igual que en CloudHero para consistencia) ---
+const COLORS = {
+  turquoise: "rgb(103, 188, 183)",
+  coral: "rgb(222, 131, 99)",
+  gold: "rgb(237, 191, 134)",
+};
 
 const BackgroundStripes = () => (
   <div
@@ -14,8 +21,32 @@ const BackgroundStripes = () => (
 
 // @component: BoxCards
 const BoxCards = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Lógica de Scroll
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 200,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  // --- TRAYECTORIA DEL RAYO ---
+  // top: Va desde -10% (apenas entrando) hasta 50% (la mitad exacta)
+  const beamTop = useTransform(smoothProgress, [0, 1], ["-10%", "50%"]);
+  // opacity: Aparece suavemente y se desvanece un poco al llegar al final
+  const beamOpacity = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
   return (
-    <section id="box-cards" className="grow relative w-full overflow-x-hidden bg-[#FAFAFA] flex flex-col">
+    <section 
+      ref={containerRef}
+      id="box-cards" 
+      className="grow relative w-full overflow-x-hidden bg-[#FAFAFA] flex flex-col"
+    >
       {/* Top Border removido aquí */}
 
       <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
@@ -62,8 +93,18 @@ const BoxCards = () => {
             </div>
           </div>
 
-          {/* Vertical Divider (Desktop only) -> 60% */}
-          <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10" />
+          {/* === DIVISOR VERTICAL (Desktop only) -> 60% === */}
+          <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-hidden">
+            {/* RAYO VERTICAL (Beam) */}
+            <motion.div 
+               style={{ 
+                 top: beamTop,
+                 opacity: beamOpacity,
+                 background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
+               }}
+               className="absolute left-0 w-[1.2px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
+             />
+          </div>
 
           {/* Horizontal Divider (Mobile only) */}
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
@@ -78,10 +119,6 @@ const BoxCards = () => {
               <BackgroundStripes />
             </div>
 
-            {/* 
-                AQUÍ ESTÁ EL CAMBIO:
-                Añadido 'translate-x-8 lg:translate-x-16' para mover el stack a la derecha dentro de su columna.
-            */}
             <div className="relative w-full h-full flex items-start justify-center pt-24 lg:pt-40 z-10 translate-x-8 lg:translate-x-16">
               <InteractiveCardStack />
             </div>
