@@ -25,12 +25,20 @@ const CloudHero = () => {
   });
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
-  const verticalTop = useTransform(smoothProgress, [0.1, 0.5], ["50%", "100%"]);
-  const verticalOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.5, 0.55], [0, 1, 1, 0]);
+  // Antes empezaba en 0.1, ahora empieza en 0.3 (más tarde) y termina en 0.7
+  const verticalTop = useTransform(smoothProgress, [0.3, 0.7], ["50%", "100%"]);
+  // La opacidad aparece al 0.3, se mantiene y desaparece rápido al llegar al 0.7
+  const verticalOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.7, 0.75], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
-  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "145px"]);
-  const horizontalOpacity = useTransform(smoothProgress, [0.49, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
+  // Empieza exactamente en 0.7 (cuando termina el vertical) y se extiende hasta 0.9
+  const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "145px"]);
+  // Aparece justo en el 0.7
+  const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.95], [0, 1, 1, 0]);
+
+  // --- FLASH (Punto de impacto) ---
+  // Ocurre exactamente en el momento de transición (0.7)
+  const flashOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.71], [0, 1, 0]);
 
   return (
     <section 
@@ -77,7 +85,7 @@ const CloudHero = () => {
              {/* 3. FLASH CORNER */}
              <motion.div
                 style={{
-                    opacity: useTransform(smoothProgress, [0.49, 0.5, 0.51], [0, 1, 0])
+                    opacity: flashOpacity // Usamos la nueva variable sincronizada
                 }}
                 className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#67bcb7] blur-[1px] z-30"
               />
@@ -90,12 +98,12 @@ const CloudHero = () => {
           <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px]">
               
-              {/* SUBTITLE: Changed to focus on diagnosis */}
+              {/* SUBTITLE */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
                 SYSTEM DIAGNOSIS
               </div>
 
-              {/* TITLE: Focused on finding errors */}
+              {/* TITLE */}
               <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
                 We uncover the{' '}
                 <motion.span
@@ -121,7 +129,7 @@ const CloudHero = () => {
                 {' '}in your digital ecosystem.
               </h2>
 
-              {/* TEXT: Explains the SEO/Web/Strategy audit process */}
+              {/* TEXT */}
               <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
                 From technical SEO bottlenecks to cracks in your content strategy, we audit every layer of your online presence. We identify exactly what is broken—so we can engineer the perfect fix.
               </p>
