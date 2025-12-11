@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useMotionTemplate } from 'framer-motion';
 import { BlueprintVisualization } from '@/components/home/BlueprintVisualization';
 
 // --- CONSTANTES DE COLOR ---
@@ -7,6 +7,7 @@ const COLORS = {
   turquoise: "rgb(103, 188, 183)",
   coral: "rgb(222, 131, 99)",
   gold: "rgb(237, 191, 134)",
+  red: "#9A3426" // El rojo solicitado
 };
 
 // @component: CloudHero
@@ -24,14 +25,29 @@ const CloudHero = () => {
     restDelta: 0.001
   });
 
-  // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
-  const verticalTop = useTransform(smoothProgress, [0.3, 0.7], ["75%", "100%"]);
-  const verticalOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.7, 0.75], [0, 1, 1, 0]);
-
   // --- ANIMACIÓN ENTRADA ROBOT (Scroll) ---
+  // Aparece en 0.30
   const iconScale = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
   const iconOpacity = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
-  const iconRotate = useTransform(smoothProgress, [0.3, 0.32, 0.35, 0.38], [-15, 15, -5, 0]);
+  
+  // MODIFICADO: El giro ahora dura más tiempo (de 0.30 hasta 0.55)
+  // Antes: [0.3, 0.32, 0.35, 0.38]
+  // Ahora: Se siente más pesado y mecánico al tardar más en estabilizarse.
+  const iconRotate = useTransform(smoothProgress, [0.3, 0.38, 0.46, 0.55], [-15, 15, -5, 0]);
+
+  // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
+  // MODIFICADO: Retrasado el inicio de 0.30 a 0.38 para dar protagonismo al robot primero
+  const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["75%", "100%"]);
+  const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
+
+  // MODIFICADO: Interpolación de color para el rayo vertical
+  // Empieza siendo ROJO (#9A3426) y se transforma a los colores originales
+  const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.gold]);
+  const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.coral]);
+  const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.turquoise]);
+  
+  // Creamos el gradiente dinámico
+  const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
   const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "130px"]);
@@ -71,11 +87,9 @@ const CloudHero = () => {
                   x: "-50%",
                   y: "-50%"
                 }}
-                // Animación de parpadeo (Colores actualizados al #FFE5DF)
                 animate={{
                   borderColor: ["#e4e4e7", "#9A3426", "#e4e4e7"], 
                   color: ["#6b7280", "#9A3426", "#6b7280"],       
-                  // Fondo: Blanco -> Rojo Suave (#FFE5DF) -> Blanco
                   backgroundColor: ["#ffffff", "#FFE5DF", "#ffffff"], 
                   boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", "0 0 10px rgba(154,52,38,0.2)", "0 1px 2px 0 rgba(0,0,0,0.05)"]
                 }}
@@ -92,7 +106,6 @@ const CloudHero = () => {
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
-                  // CAMBIO: strokeWidth a 1 para igualar la línea vertical de zinc
                   strokeWidth="1" 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
@@ -109,14 +122,13 @@ const CloudHero = () => {
                   <path d="M9 17h6" />
                 </svg>
              </motion.div>
-             {/* ----------------------------------------- */}
-
-             {/* 1. RAYO VERTICAL */}
+             
+             {/* 1. RAYO VERTICAL (Ahora usa background dinámico) */}
              <motion.div 
                style={{ 
                  top: verticalTop,
                  opacity: verticalOpacity,
-                 background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
+                 background: verticalGradient // <-- Gradiente animado (Rojo -> Original)
                }}
                className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
