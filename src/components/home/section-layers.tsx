@@ -29,7 +29,7 @@ const CloudHero = () => {
   const verticalOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.5, 0.55], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
-  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "150px"]);
+  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "145px"]);
   const horizontalOpacity = useTransform(smoothProgress, [0.49, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
 
   return (
