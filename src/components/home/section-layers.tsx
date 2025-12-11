@@ -29,7 +29,8 @@ const CloudHero = () => {
   const verticalOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.5, 0.55], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
-  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "100px"]);
+  // Aumentado a 140px (+40px más largo)
+  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "140px"]);
   const horizontalOpacity = useTransform(smoothProgress, [0.49, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
 
   return (
@@ -61,31 +62,18 @@ const CloudHero = () => {
                  opacity: verticalOpacity,
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               // Mantenemos el blur suave aquí porque en vertical se ve bien
                className="absolute left-0 w-[1.3px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* 2. RAYO HORIZONTAL (CORE - EL COLOR PURO) */}
+             {/* 2. RAYO HORIZONTAL (Solo Núcleo) */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
                  background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
                }}
-               // CAMBIO CLAVE: He quitado 'blur-[0.5px]' y añadido 'brightness-110'
-               // Al quitar el blur, el color se vuelve sólido y saturado.
+               // Sin capa de glow, sin blur, solo brillo y color sólido
                className="absolute left-0 bottom-0 h-[1.3px] -ml-[0.5px] rounded-r-full brightness-110 origin-left z-20"
-             />
-             
-             {/* 2b. RAYO HORIZONTAL (GLOW - EL BRILLO) */}
-             {/* Esta capa extra añade el brillo que perdimos al quitar el blur del core, pero sin lavar el color */}
-             <motion.div 
-               style={{ 
-                 width: horizontalWidth,
-                 opacity: useTransform(horizontalOpacity, [0, 1], [0, 0.5]), // Menos opacidad
-                 background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
-               }}
-               className="absolute left-0 bottom-0 h-[4px] -mb-[1.3px] -ml-[0.5px] rounded-r-full blur-[2px] origin-left z-10"
              />
 
              {/* 3. FLASH CORNER */}
