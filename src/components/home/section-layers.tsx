@@ -57,7 +57,7 @@ const CloudHero = () => {
           {/* === DIVISOR VERTICAL (Contenedor de los rayos) === */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
-             {/* --- ICONO ROBOT ERROR CENTRADO (MODIFICADO) --- */}
+             {/* --- ICONO ROBOT ERROR CENTRADO (TRAZO FINO + ANTENA CORTA) --- */}
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-white p-1 rounded-lg border border-zinc-200 shadow-sm flex items-center justify-center">
                 <svg 
                   width="24" 
@@ -65,7 +65,7 @@ const CloudHero = () => {
                   viewBox="0 0 24 24" 
                   fill="none" 
                   stroke="currentColor" 
-                  strokeWidth="2" 
+                  strokeWidth="1.5" /* <-- CAMBIO: Trazo más fino (antes era 2) */
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
                   className="text-gray-500 w-8 h-8" 
@@ -73,18 +73,19 @@ const CloudHero = () => {
                   {/* Cabeza del robot */}
                   <rect x="4" y="8" width="16" height="12" rx="2" />
                   
-                  {/* Antena (SIN círculo sólido arriba) */}
-                  <path d="M12 2v6" />
+                  {/* Antena (CORTA) */}
+                  {/* d="M12 5v3" hace que empiece en Y=5 y baje 3 unidades hasta Y=8 (borde cabeza) */}
+                  <path d="M12 5v3" /> 
                   
                   {/* Orejas/Tuercas */}
                   <path d="M2 14h2" />
                   <path d="M20 14h2" />
                   
-                  {/* Ojo Izquierdo (X) - Separado hacia la izquierda */}
+                  {/* Ojo Izquierdo (X) */}
                   <path d="M7.5 11l2 2" />
                   <path d="M9.5 11l-2 2" />
                   
-                  {/* Ojo Derecho (X) - Separado hacia la derecha */}
+                  {/* Ojo Derecho (X) */}
                   <path d="M14.5 11l2 2" />
                   <path d="M16.5 11l-2 2" />
                   
@@ -92,7 +93,7 @@ const CloudHero = () => {
                   <path d="M9 17h6" />
                 </svg>
              </div>
-             {/* ----------------------------------------- */}
+             {/* ------------------------------------------------------------- */}
 
              {/* 1. RAYO VERTICAL */}
              <motion.div 
