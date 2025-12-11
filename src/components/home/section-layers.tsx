@@ -26,7 +26,7 @@ const CloudHero = () => {
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
   // Mantiene el retraso: empieza en 0.3 y termina en 0.7
-  const verticalTop = useTransform(smoothProgress, [0.3, 0.7], ["80%", "100%"]);
+  const verticalTop = useTransform(smoothProgress, [0.3, 0.7], ["75%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.7, 0.75], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
