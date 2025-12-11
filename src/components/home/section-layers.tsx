@@ -54,11 +54,11 @@ const CloudHero = () => {
             </div>
           </div>
 
-          {/* === DIVISOR VERTICAL (Contenedor de los rayos y el ICONO) === */}
+          {/* === DIVISOR VERTICAL (Contenedor de los rayos) === */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
-             {/* --- NUEVO: ICONO ROBOT ERROR CENTRADO --- */}
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-white p-2 rounded-lg border border-zinc-200 shadow-sm flex items-center justify-center">
+             {/* --- ICONO ROBOT ERROR CENTRADO (MODIFICADO) --- */}
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-white p-1 rounded-lg border border-zinc-200 shadow-sm flex items-center justify-center">
                 <svg 
                   width="24" 
                   height="24" 
@@ -68,22 +68,26 @@ const CloudHero = () => {
                   strokeWidth="2" 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
-                  className="text-gray-800 w-6 h-6"
+                  className="text-gray-500 w-8 h-8" 
                 >
                   {/* Cabeza del robot */}
                   <rect x="4" y="8" width="16" height="12" rx="2" />
-                  {/* Antena */}
+                  
+                  {/* Antena (SIN círculo sólido arriba) */}
                   <path d="M12 2v6" />
-                  <circle cx="12" cy="2" r="1.5" fill="currentColor" />
+                  
                   {/* Orejas/Tuercas */}
                   <path d="M2 14h2" />
                   <path d="M20 14h2" />
-                  {/* Ojo Izquierdo (X) */}
-                  <path d="M9 12l2 2" />
-                  <path d="M11 12l-2 2" />
-                  {/* Ojo Derecho (X) */}
-                  <path d="M13 12l2 2" />
-                  <path d="M15 12l-2 2" />
+                  
+                  {/* Ojo Izquierdo (X) - Separado hacia la izquierda */}
+                  <path d="M7.5 11l2 2" />
+                  <path d="M9.5 11l-2 2" />
+                  
+                  {/* Ojo Derecho (X) - Separado hacia la derecha */}
+                  <path d="M14.5 11l2 2" />
+                  <path d="M16.5 11l-2 2" />
+                  
                   {/* Boca */}
                   <path d="M9 17h6" />
                 </svg>
