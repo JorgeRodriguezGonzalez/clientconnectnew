@@ -101,7 +101,7 @@ const BoxCards = () => {
                  opacity: beamOpacity,
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               className="absolute left-0 w-[4.4px] ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
+               className="absolute left-0 w-[4.4px] -ml-[3px] h-[200px] -translate-y-full blur-[0.5px]"
              />
           </div>
 
