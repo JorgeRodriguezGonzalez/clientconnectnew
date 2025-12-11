@@ -25,16 +25,11 @@ const CloudHero = () => {
   });
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
-  // Mantiene el retraso: empieza en 0.3 y termina en 0.7
   const verticalTop = useTransform(smoothProgress, [0.3, 0.7], ["75%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.7, 0.75], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
-  // Se expande desde 0.7 hasta 0.9
   const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "130px"]);
-  
-  // Opacidad: Aparece en 0.7, se mantiene visible, y se desvanece suavemente al final (0.95)
-  // Ya NO desaparece de golpe, sino que tiene una salida suave.
   const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.95], [0, 1, 1, 0]);
 
   // --- FLASH (Punto de impacto) ---
@@ -59,9 +54,42 @@ const CloudHero = () => {
             </div>
           </div>
 
-          {/* === DIVISOR VERTICAL (Contenedor de los rayos) === */}
+          {/* === DIVISOR VERTICAL (Contenedor de los rayos y el ICONO) === */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
+             {/* --- NUEVO: ICONO ROBOT ERROR CENTRADO --- */}
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-white p-2 rounded-lg border border-zinc-200 shadow-sm flex items-center justify-center">
+                <svg 
+                  width="24" 
+                  height="24" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className="text-gray-800 w-6 h-6"
+                >
+                  {/* Cabeza del robot */}
+                  <rect x="4" y="8" width="16" height="12" rx="2" />
+                  {/* Antena */}
+                  <path d="M12 2v6" />
+                  <circle cx="12" cy="2" r="1.5" fill="currentColor" />
+                  {/* Orejas/Tuercas */}
+                  <path d="M2 14h2" />
+                  <path d="M20 14h2" />
+                  {/* Ojo Izquierdo (X) */}
+                  <path d="M9 12l2 2" />
+                  <path d="M11 12l-2 2" />
+                  {/* Ojo Derecho (X) */}
+                  <path d="M13 12l2 2" />
+                  <path d="M15 12l-2 2" />
+                  {/* Boca */}
+                  <path d="M9 17h6" />
+                </svg>
+             </div>
+             {/* ----------------------------------------- */}
+
              {/* 1. RAYO VERTICAL */}
              <motion.div 
                style={{ 
@@ -77,9 +105,6 @@ const CloudHero = () => {
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
-                 // CORRECCIÓN AQUÍ:
-                 // Eliminé 'transparent' del final. Ahora termina en 'COLORS.gold'.
-                 // Esto hace que la punta sea sólida y no se vea difuminada/fina.
                  background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold})`
                }}
                className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
