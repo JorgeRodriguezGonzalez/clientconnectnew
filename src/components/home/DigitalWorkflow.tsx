@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { BarChart, CheckCircle, Image as ImageIcon, Code as CodeIcon } from 'lucide-react';
 
 // --- COMPONENTE 1: FLIGHT BOARDING PROGRESS ---
-// Corrección aplicada: valor por defecto en className para evitar error de tipos
 const FlightBoardingProgress = ({ className = "" }) => {
   const [step, setStep] = useState(1);
 
@@ -123,7 +122,7 @@ const PhoneFrame = () => {
 
           {/* App Container */}
           <div className="flex-1 flex items-center justify-center p-4 z-10">
-            <FlightBoardingProgress />
+            <FlightBoardingProgress className="" />
           </div>
 
           {/* Bottom Home Indicator */}
@@ -148,7 +147,7 @@ const DigitalWorkflow = () => {
   const [uiWidgets, setUiWidgets] = useState([]);
 
   useEffect(() => {
-    // Generador de líneas de código (Zona Izquierda)
+    // Generador de líneas de código
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const snippets = [
       'import { Flight } from "@api/types"', 
@@ -160,7 +159,6 @@ const DigitalWorkflow = () => {
       'fetch("https://api.flights.com")'
     ];
     
-    // Generar partículas de código
     const lines = Array.from({ length: 25 }).map((_, i) => ({
       id: i,
       text: snippets[Math.floor(Math.random() * snippets.length)],
@@ -171,7 +169,7 @@ const DigitalWorkflow = () => {
     }));
     setCodeLines(lines);
 
-    // Generar widgets de salida (Zona Derecha)
+    // Generador de widgets
     const widgets = Array.from({ length: 15 }).map((_, i) => ({
       id: i,
       type: Math.floor(Math.random() * 4), 
@@ -183,13 +181,13 @@ const DigitalWorkflow = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[600px] bg-black overflow-hidden flex items-center justify-center font-sans selection:bg-pink-500 selection:text-white">
+    <div className="relative w-full h-[600px] bg-black overflow-hidden flex flex-col items-center justify-end font-sans selection:bg-pink-500 selection:text-white">
       
       {/* --- ZONA 1: TÚNEL IZQUIERDO (Entrada de Código) --- */}
       <div className="absolute left-0 w-1/2 h-full z-0 overflow-hidden">
-        {/* Gradiente oscuro */}
+        {/* Gradiente original oscuro */}
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-transparent"></div>
-        {/* Código flotante */}
+        {/* Código */}
         {codeLines.map((line) => (
           <div
             key={line.id}
@@ -205,23 +203,29 @@ const DigitalWorkflow = () => {
         ))}
       </div>
 
-      {/* --- ZONA 2: MOCKUP CENTRAL --- */}
-      <div className="relative z-20 flex flex-col items-center justify-center transform scale-[0.45] md:scale-[0.55] lg:scale-[0.6]">
+      {/* --- ZONA 2: MOCKUP CENTRAL (MODIFICADO) --- */}
+      {/* Ajustes: items-end en el padre (arriba), translate-y para bajarlo, scale aumentado */}
+      <div className="relative z-20 flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.7] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
         {/* Glow effect detrás del teléfono */}
-        <div className="absolute inset-0 bg-indigo-600/20 blur-[100px] rounded-full scale-110 animate-pulse"></div>
+        <div className="absolute top-10 inset-0 bg-indigo-600/20 blur-[120px] rounded-full scale-110 animate-pulse"></div>
         
         {/* El Teléfono */}
         <PhoneFrame />
       </div>
 
-      {/* --- ZONA 3: TÚNEL DERECHO (Salida de UI) --- */}
-      <div className="absolute right-0 w-1/2 h-full bg-gradient-to-l from-[#0b1120] via-[#111827] to-transparent z-10 overflow-hidden pointer-events-none">
-        {/* Grid tecnológico de fondo sutil */}
-        <div className="absolute inset-0 opacity-10" 
+      {/* --- ZONA 3: TÚNEL DERECHO (Salida de UI) (MODIFICADO) --- */}
+      <div className="absolute right-0 w-1/2 h-full z-10 overflow-hidden pointer-events-none">
+        
+        {/* BACKGROUND MODIFICADO: Más claro y azulado a la derecha */}
+        {/* 'from-slate-800' es mucho más claro que el negro original */}
+        <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b] via-[#0f172a] to-transparent opacity-90"></div>
+
+        {/* Grid tecnológico */}
+        <div className="absolute inset-0 opacity-15 mix-blend-overlay" 
              style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
         </div>
 
-        {/* Widgets flotantes saliendo del centro */}
+        {/* Widgets flotantes */}
         {uiWidgets.map((widget) => (
           <div
             key={widget.id}
@@ -233,34 +237,31 @@ const DigitalWorkflow = () => {
               animationDelay: widget.delay,
             }}
           >
-            {/* Widget Tipo 0: Code Block Visual */}
+            {/* Widgets Types (mismo contenido) */}
             {widget.type === 0 && (
-              <div className="w-40 h-16 bg-white/5 backdrop-blur-md border-l-4 border-pink-500 rounded-r-lg p-3 shadow-lg flex flex-col gap-2">
+              <div className="w-40 h-16 bg-white/10 backdrop-blur-md border-l-4 border-pink-500 rounded-r-lg p-3 shadow-lg flex flex-col gap-2">
                 <div className="flex justify-between items-center">
                    <div className="w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center"><CodeIcon size={14} className="text-pink-400"/></div>
-                   <div className="w-16 h-2 bg-white/10 rounded"></div>
+                   <div className="w-16 h-2 bg-white/20 rounded"></div>
                 </div>
               </div>
             )}
-            {/* Widget Tipo 1: Gráfico */}
             {widget.type === 1 && (
-              <div className="w-24 h-24 bg-gradient-to-t from-indigo-900/50 to-slate-800 border border-indigo-500/30 rounded-xl flex items-center justify-center shadow-xl backdrop-blur-sm rotate-6">
-                <BarChart className="text-indigo-400 w-8 h-8" />
+              <div className="w-24 h-24 bg-gradient-to-t from-indigo-800 to-slate-700 border border-indigo-500/30 rounded-xl flex items-center justify-center shadow-xl backdrop-blur-sm rotate-6">
+                <BarChart className="text-indigo-300 w-8 h-8" />
               </div>
             )}
-            {/* Widget Tipo 2: Notificación */}
             {widget.type === 2 && (
-              <div className="flex items-center gap-3 px-4 py-3 bg-slate-800/80 border border-slate-600 rounded-full shadow-lg">
+              <div className="flex items-center gap-3 px-4 py-3 bg-slate-700/80 border border-slate-500 rounded-full shadow-lg">
                 <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <span className="text-xs text-slate-200 font-medium tracking-wide">Boarding Complete</span>
+                <span className="text-xs text-slate-100 font-medium tracking-wide">Boarding Complete</span>
               </div>
             )}
-            {/* Widget Tipo 3: Tarjeta Imagen */}
             {widget.type === 3 && (
-              <div className="w-32 h-20 bg-slate-900 border border-slate-700 rounded-lg p-2 shadow-2xl -rotate-3 overflow-hidden">
-                <div className="w-full h-full bg-slate-800 rounded flex items-center justify-center relative">
-                   <ImageIcon className="text-slate-600 w-6 h-6" />
-                   <div className="absolute bottom-1 left-2 w-10 h-1 bg-slate-600 rounded"></div>
+              <div className="w-32 h-20 bg-slate-800 border border-slate-600 rounded-lg p-2 shadow-2xl -rotate-3 overflow-hidden">
+                <div className="w-full h-full bg-slate-700/50 rounded flex items-center justify-center relative">
+                   <ImageIcon className="text-slate-400 w-6 h-6" />
+                   <div className="absolute bottom-1 left-2 w-10 h-1 bg-slate-500 rounded"></div>
                 </div>
               </div>
             )}
@@ -268,7 +269,7 @@ const DigitalWorkflow = () => {
         ))}
       </div>
 
-      {/* Estilos para keyframes sin necesidad de tailwind.config */}
+      {/* Estilos para keyframes */}
       <style>{`
         @keyframes codeFlow {
           0% { transform: translateX(-50px) scale(0.8); opacity: 0; }
