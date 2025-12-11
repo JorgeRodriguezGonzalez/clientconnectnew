@@ -25,10 +25,8 @@ const BoxCards = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    // CAMBIO AQUÍ:
-    // "start 60%": El scroll empieza cuando el tope del componente llega al 60% de la altura de la ventana.
-    // Antes estaba en 80% (muy abajo) y originalmente en "center" (50%).
-    // 60% es el punto medio perfecto para que no sea ni muy pronto ni muy tarde.
+    // "start 60%": El scroll empieza un poco más tarde que al 80%, 
+    // dando tiempo a ver el componente antes de que baje el rayo.
     offset: ["start 60%", "end center"]
   });
 
@@ -39,10 +37,10 @@ const BoxCards = () => {
   });
 
   // --- TRAYECTORIA DEL RAYO ---
-  // Mantenemos [0, 0.3] para que la acción sea rápida una vez que empieza.
+  // Rango [0, 0.3]: Animación rápida al principio del scroll.
   const beamTop = useTransform(smoothProgress, [0, 0.3], ["0%", "50%"]);
   
-  // Opacidad
+  // Opacidad: Aparece, se mantiene y desaparece al llegar.
   const beamOpacity = useTransform(smoothProgress, [0, 0.05, 0.3, 0.35], [0, 1, 1, 0]);
 
   return (
@@ -93,7 +91,8 @@ const BoxCards = () => {
           </div>
 
           {/* === DIVISOR VERTICAL (Desktop only) -> 60% === */}
-          <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-hidden">
+          {/* AÑADIDO: z-20 y overflow-visible para solucionar el recorte */}
+          <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-20 overflow-visible">
              {/* RAYO VERTICAL */}
              <motion.div 
                style={{ 
@@ -101,7 +100,8 @@ const BoxCards = () => {
                  opacity: beamOpacity,
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               className="absolute left-0 w-[4.4px] -ml-[3px] h-[200px] -translate-y-full blur-[0.8px]"
+               // AÑADIDO: w-[2.4px] y -ml-[1px] como solicitaste
+               className="absolute left-0 w-[2.4px] -ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
              />
           </div>
 
