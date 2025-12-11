@@ -31,7 +31,7 @@ const CloudHero = () => {
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
   // Se expande desde 0.7 hasta 0.9
-  const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "135px"]);
+  const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "130px"]);
   
   // Opacidad: Aparece en 0.7, se mantiene visible, y se desvanece suavemente al final (0.95)
   // Ya NO desaparece de golpe, sino que tiene una salida suave.
@@ -69,7 +69,7 @@ const CloudHero = () => {
                  opacity: verticalOpacity,
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               className="absolute left-0 w-[1.2px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
+               className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
              {/* 2. RAYO HORIZONTAL */}
@@ -82,7 +82,7 @@ const CloudHero = () => {
                  // Esto hace que la punta sea sólida y no se vea difuminada/fina.
                  background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold})`
                }}
-               className="absolute left-0 bottom-0 h-[2.1px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
+               className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
 
              {/* 3. FLASH CORNER */}
