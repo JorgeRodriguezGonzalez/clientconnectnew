@@ -74,7 +74,7 @@ export const SavingsCard = ({
             <p className={`text-[20px] font-semibold leading-[28px] tracking-[0.5px] whitespace-nowrap transition-colors duration-500 ${
               isHovered ? 'text-white' : 'text-black/80'
             }`} style={{
-              fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+              fontFamily: 'Satoshi, sans-serif',
               fontStyle: 'normal'
             }}>
               {title}

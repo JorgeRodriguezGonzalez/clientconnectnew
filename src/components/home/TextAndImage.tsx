@@ -42,7 +42,7 @@ export const TextAndImage = ({
         <h2 
           className="text-[32px] font-semibold text-black leading-[38px] tracking-[-1px] m-0"
           style={{
-            fontFamily: 'Inter, "Inter Placeholder", sans-serif'
+            fontFamily: 'Satoshi, sans-serif'
           }}
         >
           {title}
@@ -50,7 +50,7 @@ export const TextAndImage = ({
         <p 
           className="text-[16px] font-normal text-black/60 leading-[24px] tracking-[-0.2px] m-0"
           style={{
-            fontFamily: 'Inter, "Inter Placeholder", sans-serif'
+            fontFamily: 'Satoshi, sans-serif'
           }}
         >
           {description}

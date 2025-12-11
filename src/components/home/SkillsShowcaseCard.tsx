@@ -91,7 +91,7 @@ export const SkillsShowcaseCard = ({
             whileHover={{ scale: 1.1 }}
           >
             <p className="m-0 whitespace-nowrap border-0 p-0 text-[10px] font-normal leading-[14px] tracking-[-0.2px] text-black" style={{
-              fontFamily: 'Inter, "Inter Placeholder", sans-serif'
+              fontFamily: 'Satoshi, sans-serif'
             }}>
               {skill.text}
             </p>

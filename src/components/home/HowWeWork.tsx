@@ -71,13 +71,13 @@ const TaskCard = () => {
 
         <div className="flex flex-col gap-1">
           <p className="text-black/80 text-[20px] font-semibold leading-[28px] tracking-[0.5px]" style={{
-            fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+            fontFamily: 'Satoshi, sans-serif',
             fontStyle: 'normal'
           }}>
             Keyword Research & Optimization
           </p>
           <p className="text-black/40 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px]" style={{
-            fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+            fontFamily: 'Satoshi, sans-serif',
             fontStyle: 'normal'
           }}>
             Target high-value keywords for Sydney market
@@ -337,7 +337,7 @@ export const HowWeWork = () => {
                       <Icon size={16} className="text-[#3255D2]" />
                     </div>
                     <h5 className="text-black/40 text-[14px] font-normal leading-[19.6px] tracking-[-0.4px]" style={{
-                      fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+                      fontFamily: 'Satoshi, sans-serif',
                       fontStyle: 'normal'
                     }}>
                       {step.label}
@@ -345,14 +345,14 @@ export const HowWeWork = () => {
                   </div>
 
                   <h2 className="text-black/80 text-[28px] leading-[33.6px] font-semibold tracking-[0.5px] max-w-[360px]" style={{
-                    fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+                    fontFamily: 'Satoshi, sans-serif',
                     fontStyle: 'normal'
                   }}>
                     {step.title}
                   </h2>
 
                   <p className="text-black/40 text-base leading-6 font-normal max-w-[360px]" style={{
-                    fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+                    fontFamily: 'Satoshi, sans-serif',
                     fontStyle: 'normal'
                   }}>
                     {step.description}

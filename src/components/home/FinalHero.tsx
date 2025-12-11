@@ -212,7 +212,7 @@ export function FinalHero() {
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
               // CAMBIO: font-light -> font-normal (un poco más grueso)
               className="text-[34px] md:text-[40px] lg:text-[50px] font-normal leading-[1.1] tracking-tight text-center text-white relative z-50"
-              style={{ fontFamily: '"Inter Display", sans-serif' }}
+              style={{ fontFamily: '"Satoshi", sans-serif' }}
             >
               Bringing{" "}
               <motion.span
@@ -248,7 +248,7 @@ export function FinalHero() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
-            style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
+            style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}
           >
             Dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising
           </motion.p>
@@ -261,7 +261,7 @@ export function FinalHero() {
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
           >
             <a href="#contact" className="flex items-center justify-center gap-[7px] h-[52px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
-              <p className="text-[16px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+              <p className="text-[16px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}>
                 How we do it
               </p>
             </a>
@@ -292,7 +292,7 @@ export function FinalHero() {
               </motion.div>
               <motion.p 
                 className="text-[16px] font-medium leading-5 whitespace-nowrap z-[1]" 
-                style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
+                style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}
                 animate={{
                   color: colorSequence
                 }}

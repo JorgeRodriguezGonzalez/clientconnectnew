@@ -175,7 +175,7 @@ export function FinalHero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
               className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
-              style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.5px' }}
+              style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '-1.5px' }}
             >
               We Bring{" "}
               <motion.span
@@ -210,7 +210,7 @@ export function FinalHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
-            style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
+            style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
           </motion.p>
@@ -223,7 +223,7 @@ export function FinalHero() {
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
           >
             <a href="#contact" className="flex items-center justify-center gap-[7px] h-[42px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-4 py-2 transition-[background-color,box-shadow] duration-[500ms] cursor-pointer w-full sm:w-auto hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-[100] will-change-[background-color,box-shadow]">
-              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}>
                 How we do it
               </p>
             </a>
@@ -231,7 +231,7 @@ export function FinalHero() {
               <div className="w-[18px] h-[14px] relative overflow-hidden">
                 <Calendar className="w-[17px] h-[14px] text-cyan-300" />
               </div>
-              <p className="text-[14px] font-medium leading-5 text-cyan-300 whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+              <p className="text-[14px] font-medium leading-5 text-cyan-300 whitespace-nowrap z-[1]" style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}>
                 Book Free Consultation
               </p>
             </a>

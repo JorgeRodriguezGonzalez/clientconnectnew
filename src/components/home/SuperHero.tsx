@@ -4,10 +4,8 @@ import { Calendar } from 'lucide-react';
 
 // --- FONTS STYLES ---
 const fontStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-  
   .font-inter {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Satoshi', sans-serif;
   }
 `;
 

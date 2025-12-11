@@ -127,7 +127,7 @@ export function GoogleGeminiEffectDemo() {
             }}
             className="text-3xl md:text-[52px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
             style={{
-              fontFamily: '"Inter Display", sans-serif',
+              fontFamily: '"Satoshi", sans-serif',
               letterSpacing: '-1.5px',
             }}
           >
@@ -145,7 +145,7 @@ export function GoogleGeminiEffectDemo() {
             }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[27px] text-center text-white/80 max-w-[683px] relative z-50 mb-6"
             style={{
-              fontFamily: '"Inter Display", sans-serif',
+              fontFamily: '"Satoshi", sans-serif',
               letterSpacing: '0.2px'
             }}
           >
@@ -173,7 +173,7 @@ export function GoogleGeminiEffectDemo() {
               <p 
                 className="text-[14px] font-medium leading-5 text-white whitespace-nowrap"
                 style={{
-                  fontFamily: '"Inter Display", sans-serif',
+                  fontFamily: '"Satoshi", sans-serif',
                   letterSpacing: '0.2px',
                 }}
               >
@@ -192,7 +192,7 @@ export function GoogleGeminiEffectDemo() {
               <p 
                 className="text-[14px] font-medium leading-5 text-white whitespace-nowrap z-[1]"
                 style={{
-                  fontFamily: '"Inter Display", sans-serif',
+                  fontFamily: '"Satoshi", sans-serif',
                   letterSpacing: '0.2px'
                 }}
               >

@@ -56,7 +56,7 @@ export const MarketingCard = ({
         {/* Contenido izquierdo */}
         <div className="flex flex-col items-start justify-center gap-6 flex-1 pr-8">
           <h2 className="font-semibold text-black/90 text-[22px] leading-[30px] m-0 text-left" style={{
-            fontFamily: 'Inter, sans-serif',
+            fontFamily: 'Satoshi, sans-serif',
             fontStyle: 'normal',
             letterSpacing: '0px'
           }}>
@@ -68,7 +68,7 @@ export const MarketingCard = ({
               <li key={index} className="flex items-start gap-3">
                 <span className="text-black/60 font-bold">✓</span>
                 <p className="font-normal text-black/60 text-[16px] leading-[22.4px] tracking-[-0.4px] m-0" style={{
-                  fontFamily: 'Inter, sans-serif',
+                  fontFamily: 'Satoshi, sans-serif',
                   fontStyle: 'normal'
                 }}>
                   {point}

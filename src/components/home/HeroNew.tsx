@@ -167,7 +167,7 @@ export function NewHero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.0, duration: 0.8, ease: "easeOut" }}
               className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center text-white relative z-50"
-              style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.5px' }}
+              style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '-1.5px' }}
             >
               We Bring{" "}
               <motion.span
@@ -202,7 +202,7 @@ export function NewHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-center text-white/80 max-w-[683px] relative z-50 mt-6 mb-6"
-            style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
+            style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}
           >
             We help businesses dominate Google, convert more customers, and scale through strategic SEO, high-converting web design, and targeted advertising.
           </motion.p>
@@ -218,7 +218,7 @@ export function NewHero() {
               <div className="w-6 h-6 relative overflow-hidden">
                 <Send className="w-6 h-6 text-white" />
               </div>
-              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap" style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}>
                 Message
               </p>
             </a>
@@ -226,7 +226,7 @@ export function NewHero() {
               <div className="w-[18px] h-[14px] relative overflow-hidden">
                 <Calendar className="w-[17px] h-[14px] text-white" />
               </div>
-              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap z-[1]" style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}>
+              <p className="text-[14px] font-medium leading-5 text-white whitespace-nowrap z-[1]" style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}>
                 Book Free Consultation
               </p>
             </a>
@@ -269,7 +269,7 @@ export function NewHero() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 2.0, duration: 0.8, ease: "easeOut" }}
                   style={{ 
-                    fontFamily: '"Inter Display", sans-serif', 
+                    fontFamily: '"Satoshi", sans-serif', 
                     letterSpacing: '-1.2px',
                     color: belowArcTextColor
                   }}

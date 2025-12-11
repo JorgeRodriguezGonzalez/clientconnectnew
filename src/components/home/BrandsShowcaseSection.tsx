@@ -12,7 +12,7 @@ export const BrandsShowcaseSection = (_props: BrandsShowcaseSectionProps) => {
       <div className="flex flex-col items-center justify-center gap-4 max-w-[800px] text-center">
         <p 
           className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[20px] text-gray-600"
-          style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
+          style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}
         >
           Our systematic approach to marketing ensures your success from day one.
         </p>

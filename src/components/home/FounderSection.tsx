@@ -4,8 +4,7 @@ import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, Shield
 
 // --- STYLES ---
 const fontStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-  .font-sans { font-family: 'Inter', sans-serif; }
+  .font-sans { font-family: 'Satoshi', sans-serif; }
   
   /* OPTIMIZACIÓN SAFARI */
   .safari-gpu {

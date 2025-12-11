@@ -108,7 +108,7 @@ export const AnimatedGallerySection = () => {
             {/* Título */}
             <h2
               className="text-3xl md:text-[50px] font-light leading-tight md:leading-[60px] text-center text-white px-8"
-              style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '-1.5px' }}
+              style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '-1.5px' }}
             >
               We have been doing this for +12 years
             </h2>
@@ -123,7 +123,7 @@ export const AnimatedGallerySection = () => {
               </div>
               <p 
                 className="text-[14px] font-medium leading-5 text-cyan-300 whitespace-nowrap" 
-                style={{ fontFamily: '"Inter Display", sans-serif', letterSpacing: '0.2px' }}
+                style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}
               >
                 Book Free Consultation
               </p>
