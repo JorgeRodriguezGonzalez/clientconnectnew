@@ -24,6 +24,7 @@ import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
 import CloudHero from "@/components/home/section-layers";
 import { Services } from "@/components/home/Services";
 import { SuperHero } from "@/components/home/SuperHero";
+import DigitalWorkflow from "@/components/home/DigitalWorkflow";
 
 const Index = () => {
   return (
@@ -33,6 +34,8 @@ const Index = () => {
         <div className="z-999999">
           <FounderSection />
         </div>
+
+        <DigitalWorkflow />
 
         
         <CloudHero />
