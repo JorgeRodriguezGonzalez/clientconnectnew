@@ -29,7 +29,7 @@ const CloudHero = () => {
   const verticalOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.5, 0.55], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
-  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "140px"]);
+  const horizontalWidth = useTransform(smoothProgress, [0.5, 0.7], ["0px", "100px"]);
   const horizontalOpacity = useTransform(smoothProgress, [0.49, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
 
   return (
@@ -51,42 +51,38 @@ const CloudHero = () => {
             </div>
           </div>
 
-          {/* === DIVISOR VERTICAL === */}
+          {/* === DIVISOR VERTICAL (Contenedor de los rayos) === */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
-             {/* 1. RAYO VERTICAL */}
+             {/* 1. RAYO VERTICAL (2px) */}
+             {/* Un poco más fino que antes, pero con presencia */}
              <motion.div 
                style={{ 
                  top: verticalTop,
                  opacity: verticalOpacity,
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               className="absolute left-0 w-[1.3px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
+               // w-[2px]: Grosor medio
+               // -ml-[0.5px]: Centrado perfecto sobre la línea de 1px
+               className="absolute left-0 w-[2px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* 2. RAYO HORIZONTAL - GLOW (FONDO) */}
-             {/* Z-10: Detrás del núcleo. Posicionado ligeramente más abajo para centrarse tras la línea fina */}
-             <motion.div 
-               style={{ 
-                 width: horizontalWidth,
-                 opacity: useTransform(horizontalOpacity, [0, 1], [0, 0.6]), // Opacidad media para no saturar
-                 background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
-               }}
-               className="absolute left-0 -bottom-[1.5px] h-[4px] -ml-[0.5px] rounded-r-full blur-[3px] origin-left z-10"
-             />
-
-             {/* 3. RAYO HORIZONTAL - CORE (FRENTE) */}
-             {/* Z-20: Delante del glow. Bottom-0 exacto. Sin Blur. */}
+             {/* 2. RAYO HORIZONTAL (1px) */}
+             {/* El más fino de todos, "Not as thin as the horizontal" implica que este es el más delgado */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
                  background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
                }}
-               className="absolute left-0 bottom-0 h-[1.3px] -ml-[0.5px] rounded-r-full origin-left z-20"
+               // h-[1px]: Grosor láser
+               // bottom-0: Pegado a la línea inferior
+               // -ml-[0.5px]: Conexión perfecta sin huecos
+               className="absolute left-0 bottom-0 h-[1px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
 
-             {/* 4. FLASH CORNER */}
+             {/* 3. FLASH CORNER (Micro punto) */}
+             {/* Reducido para que no destaque sobre las líneas finas */}
              <motion.div
                 style={{
                     opacity: useTransform(smoothProgress, [0.49, 0.5, 0.51], [0, 1, 0])
