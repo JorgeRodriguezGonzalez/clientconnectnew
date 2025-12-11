@@ -28,6 +28,13 @@ const CloudHero = () => {
   const verticalTop = useTransform(smoothProgress, [0.3, 0.7], ["75%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.7, 0.75], [0, 1, 1, 0]);
 
+  // --- ANIMACIÓN ENTRADA ROBOT (Scroll) ---
+  // Aparece entre 0.3 y 0.35 (coincide con el inicio del rayo)
+  const iconScale = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
+  const iconOpacity = useTransform(smoothProgress, [0.3, 0.35], [0, 1]);
+  // Efecto de "alerta/tambaleo" al entrar: Gira izquierda -> derecha -> centro
+  const iconRotate = useTransform(smoothProgress, [0.3, 0.32, 0.35, 0.38], [-15, 15, -5, 0]);
+
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
   const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "130px"]);
   const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.95], [0, 1, 1, 0]);
@@ -57,43 +64,51 @@ const CloudHero = () => {
           {/* === DIVISOR VERTICAL (Contenedor de los rayos) === */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
-             {/* --- ICONO ROBOT ERROR CENTRADO (TRAZO FINO + ANTENA CORTA) --- */}
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 bg-white p-1 rounded-lg border border-zinc-200 shadow-sm flex items-center justify-center">
+             {/* --- ICONO ROBOT ERROR CENTRADO --- */}
+             <motion.div 
+                style={{ 
+                  scale: iconScale,
+                  opacity: iconOpacity,
+                  rotate: iconRotate,
+                }}
+                // Animación infinita de "Alerta Roja" (Parpadeo suave)
+                animate={{
+                  borderColor: ["#e4e4e7", "#fca5a5", "#e4e4e7"], // zinc-200 -> red-300 -> zinc-200
+                  color: ["#6b7280", "#ef4444", "#6b7280"],       // gray-500 -> red-500 -> gray-500
+                  backgroundColor: ["#ffffff", "#fef2f2", "#ffffff"], // white -> red-50 -> white
+                  boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", "0 0 8px rgba(239,68,68,0.25)", "0 1px 2px 0 rgba(0,0,0,0.05)"]
+                }}
+                transition={{
+                  duration: 2.5, // Lento y suave
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 p-1 rounded-lg border flex items-center justify-center bg-white"
+             >
                 <svg 
                   width="24" 
                   height="24" 
                   viewBox="0 0 24 24" 
                   fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="1.5" /* <-- CAMBIO: Trazo más fino (antes era 2) */
+                  stroke="currentColor" // Hereda el color animado del padre
+                  strokeWidth="1.5" 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
-                  className="text-gray-500 w-8 h-8" 
+                  // -mt-[2px]: Sube el icono un poco dentro de la caja
+                  className="w-8 h-8 -mt-[2px]" 
                 >
-                  {/* Cabeza del robot */}
                   <rect x="4" y="8" width="16" height="12" rx="2" />
-                  
-                  {/* Antena (CORTA) */}
-                  {/* d="M12 5v3" hace que empiece en Y=5 y baje 3 unidades hasta Y=8 (borde cabeza) */}
                   <path d="M12 5v3" /> 
-                  
-                  {/* Orejas/Tuercas */}
                   <path d="M2 14h2" />
                   <path d="M20 14h2" />
-                  
-                  {/* Ojo Izquierdo (X) */}
                   <path d="M7.5 11l2 2" />
                   <path d="M9.5 11l-2 2" />
-                  
-                  {/* Ojo Derecho (X) */}
                   <path d="M14.5 11l2 2" />
                   <path d="M16.5 11l-2 2" />
-                  
-                  {/* Boca */}
                   <path d="M9 17h6" />
                 </svg>
-             </div>
-             {/* ------------------------------------------------------------- */}
+             </motion.div>
+             {/* ----------------------------------------- */}
 
              {/* 1. RAYO VERTICAL */}
              <motion.div 
