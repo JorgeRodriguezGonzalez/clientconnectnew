@@ -25,11 +25,11 @@ const BoxCards = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    // CAMBIO CLAVE AQUÍ:
-    // "start 80%": El scroll (0) empieza cuando el tope del componente está 
-    // al 80% de la altura de la pantalla (casi abajo del todo).
-    // Esto hace que el rayo empiece a bajar mucho antes que con "start center".
-    offset: ["start 80%", "end center"]
+    // CAMBIO AQUÍ:
+    // "start 60%": El scroll empieza cuando el tope del componente llega al 60% de la altura de la ventana.
+    // Antes estaba en 80% (muy abajo) y originalmente en "center" (50%).
+    // 60% es el punto medio perfecto para que no sea ni muy pronto ni muy tarde.
+    offset: ["start 60%", "end center"]
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -39,11 +39,10 @@ const BoxCards = () => {
   });
 
   // --- TRAYECTORIA DEL RAYO ---
-  // [0, 0.3]: Mantenemos este rango corto. 
-  // Como el offset empieza antes, el 0% y el 30% ocurren antes en la navegación.
+  // Mantenemos [0, 0.3] para que la acción sea rápida una vez que empieza.
   const beamTop = useTransform(smoothProgress, [0, 0.3], ["0%", "50%"]);
   
-  // Opacidad sincronizada para aparecer rápido
+  // Opacidad
   const beamOpacity = useTransform(smoothProgress, [0, 0.05, 0.3, 0.35], [0, 1, 1, 0]);
 
   return (
@@ -95,7 +94,7 @@ const BoxCards = () => {
 
           {/* === DIVISOR VERTICAL (Desktop only) -> 60% === */}
           <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-hidden">
-             {/* RAYO VERTICAL (Idéntico visualmente al anterior) */}
+             {/* RAYO VERTICAL */}
              <motion.div 
                style={{ 
                  top: beamTop,

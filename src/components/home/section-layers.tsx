@@ -25,18 +25,17 @@ const CloudHero = () => {
   });
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
+  // Mantiene el retraso: empieza en 0.3 y termina en 0.7
   const verticalTop = useTransform(smoothProgress, [0.3, 0.7], ["50%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.7, 0.75], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
+  // Se expande desde 0.7 hasta 0.9
   const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "145px"]);
   
-  // CAMBIO 1: Corte abrupto de opacidad.
-  // Pasa de 1 a 0 casi instantáneamente al llegar al 0.9 (final del recorrido)
-  // [0.69 -> 0.7] = Aparece
-  // [0.7 -> 0.9] = Visible
-  // [0.9 -> 0.901] = Desaparece de golpe
-  const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.901], [0, 1, 1, 0]);
+  // Opacidad: Aparece en 0.7, se mantiene visible, y se desvanece suavemente al final (0.95)
+  // Ya NO desaparece de golpe, sino que tiene una salida suave.
+  const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.95], [0, 1, 1, 0]);
 
   // --- FLASH (Punto de impacto) ---
   const flashOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.71], [0, 1, 0]);
@@ -78,8 +77,9 @@ const CloudHero = () => {
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
-                 // CAMBIO 2: Eliminado 'transparent' del final del gradiente.
-                 // Ahora termina sólido en Gold, evitando que se vea "fino" en la punta.
+                 // CORRECCIÓN AQUÍ:
+                 // Eliminé 'transparent' del final. Ahora termina en 'COLORS.gold'.
+                 // Esto hace que la punta sea sólida y no se vea difuminada/fina.
                  background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold})`
                }}
                className="absolute left-0 bottom-0 h-[2.1px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
