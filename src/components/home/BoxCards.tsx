@@ -25,7 +25,11 @@ const BoxCards = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"]
+    // CAMBIO CLAVE AQUÍ:
+    // "start 80%": El scroll (0) empieza cuando el tope del componente está 
+    // al 80% de la altura de la pantalla (casi abajo del todo).
+    // Esto hace que el rayo empiece a bajar mucho antes que con "start center".
+    offset: ["start 80%", "end center"]
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -34,13 +38,12 @@ const BoxCards = () => {
     restDelta: 0.001
   });
 
-  // --- TRAYECTORIA DEL RAYO (Ajustada para ser más rápida) ---
-  
-  // top: Mapeamos el scroll 0 al 0.3 (el primer 30% del scroll).
-  // Esto hace que el rayo baje muy rápido y llegue al 50% "bastante antes".
+  // --- TRAYECTORIA DEL RAYO ---
+  // [0, 0.3]: Mantenemos este rango corto. 
+  // Como el offset empieza antes, el 0% y el 30% ocurren antes en la navegación.
   const beamTop = useTransform(smoothProgress, [0, 0.3], ["0%", "50%"]);
   
-  // opacity: Aparece rápido (0.05), se mantiene, y se desvanece al llegar al destino (0.35)
+  // Opacidad sincronizada para aparecer rápido
   const beamOpacity = useTransform(smoothProgress, [0, 0.05, 0.3, 0.35], [0, 1, 1, 0]);
 
   return (
@@ -92,14 +95,13 @@ const BoxCards = () => {
 
           {/* === DIVISOR VERTICAL (Desktop only) -> 60% === */}
           <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-hidden">
-             {/* RAYO VERTICAL (Idéntico a CloudHero) */}
+             {/* RAYO VERTICAL (Idéntico visualmente al anterior) */}
              <motion.div 
                style={{ 
                  top: beamTop,
                  opacity: beamOpacity,
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
-               // w-[1.2px] y blur-[0.5px] para igualar el aspecto visual exacto
                className="absolute left-0 w-[1.2px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
           </div>

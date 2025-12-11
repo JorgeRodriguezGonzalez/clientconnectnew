@@ -25,19 +25,20 @@ const CloudHero = () => {
   });
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
-  // Antes empezaba en 0.1, ahora empieza en 0.3 (más tarde) y termina en 0.7
   const verticalTop = useTransform(smoothProgress, [0.3, 0.7], ["50%", "100%"]);
-  // La opacidad aparece al 0.3, se mantiene y desaparece rápido al llegar al 0.7
   const verticalOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.7, 0.75], [0, 1, 1, 0]);
 
   // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
-  // Empieza exactamente en 0.7 (cuando termina el vertical) y se extiende hasta 0.9
   const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "145px"]);
-  // Aparece justo en el 0.7
-  const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.95], [0, 1, 1, 0]);
+  
+  // CAMBIO 1: Corte abrupto de opacidad.
+  // Pasa de 1 a 0 casi instantáneamente al llegar al 0.9 (final del recorrido)
+  // [0.69 -> 0.7] = Aparece
+  // [0.7 -> 0.9] = Visible
+  // [0.9 -> 0.901] = Desaparece de golpe
+  const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.901], [0, 1, 1, 0]);
 
   // --- FLASH (Punto de impacto) ---
-  // Ocurre exactamente en el momento de transición (0.7)
   const flashOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.71], [0, 1, 0]);
 
   return (
@@ -77,16 +78,16 @@ const CloudHero = () => {
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
-                 background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold}, transparent)`
+                 // CAMBIO 2: Eliminado 'transparent' del final del gradiente.
+                 // Ahora termina sólido en Gold, evitando que se vea "fino" en la punta.
+                 background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold})`
                }}
                className="absolute left-0 bottom-0 h-[2.1px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
 
              {/* 3. FLASH CORNER */}
              <motion.div
-                style={{
-                    opacity: flashOpacity // Usamos la nueva variable sincronizada
-                }}
+                style={{ opacity: flashOpacity }}
                 className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#67bcb7] blur-[1px] z-30"
               />
           </div>
