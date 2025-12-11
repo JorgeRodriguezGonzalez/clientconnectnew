@@ -101,7 +101,7 @@ const BoxCards = () => {
                  background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
                }}
                // AÑADIDO: w-[2.4px] y -ml-[1px] como solicitaste
-               className="absolute left-0 w-[2.4px] -ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
+               className="absolute left-0 w-[1.6px] -ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
              />
           </div>
 
