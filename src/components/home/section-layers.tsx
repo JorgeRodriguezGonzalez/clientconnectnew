@@ -64,7 +64,7 @@ const CloudHero = () => {
                }}
                // w-[2px]: Grosor medio
                // -ml-[0.5px]: Centrado perfecto sobre la línea de 1px
-               className="absolute left-0 w-[1.4px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
+               className="absolute left-0 w-[1.3px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
              {/* 2. RAYO HORIZONTAL (1px) */}
@@ -78,7 +78,7 @@ const CloudHero = () => {
                // h-[1px]: Grosor láser
                // bottom-0: Pegado a la línea inferior
                // -ml-[0.5px]: Conexión perfecta sin huecos
-               className="absolute left-0 bottom-0 h-[1.7px] -ml-[0.5px] rounded-r-full blur-[0.1px] origin-left z-20"
+               className="absolute left-0 bottom-0 h-[1.8px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
 
              {/* 3. FLASH CORNER (Micro punto) */}
