@@ -106,7 +106,7 @@ const CloudHero = () => {
 
               {/* TITLE */}
               <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
-                We uncover the{' '}
+                We find the{' '}
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}
                   animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -125,14 +125,14 @@ const CloudHero = () => {
                     color: "transparent"
                   }}
                 >
-                  invisible faults
+                  structural flaws
                 </motion.span>
                 {' '}in your digital ecosystem.
               </h2>
 
               {/* TEXT */}
               <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
-                From technical SEO bottlenecks to cracks in your content strategy, we audit every layer of your online presence. We identify exactly what is broken—so we can engineer the perfect fix.
+              We dive deep into the code to find what others miss. From broken SEO hierarchies and slow rendering times to unoptimized mobile architectures, we identify the precise technical bottlenecks and strategy errors that are costing you conversions.
               </p>
             </div>
           </div>
