@@ -5,9 +5,9 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
   cyan: "#06b6d4", 
-  emerald: "#34d399", // Emerald-400
-  red: "#9A3426"      // Rojo (Solo para inicio del rayo/error)
-  // Eliminados: Coral y Gold
+  emerald: "#34d399", 
+  red: "#9A3426", // Rojo solo para el inicio del rayo/robot, NO para el texto
+  white: "#FFFFFF"
 };
 
 // @component: CloudHero
@@ -39,8 +39,7 @@ const CloudHero = () => {
   const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
-  // Color del rayo: Rojo (Inicio) -> Emerald/Cyan (Final)
-  // Eliminados los dorados y naranjas
+  // Color del rayo: Rojo (Inicio error) -> Emerald/Cyan (Solución)
   const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);
   const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);
   const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]); 
@@ -58,49 +57,46 @@ const CloudHero = () => {
     <section 
       ref={containerRef} 
       id="cloud" 
-      // CAMBIO: Fondo negro (bg-[#050505]) en lugar de FAFAFA
-      className="grow relative w-full overflow-visible bg-[#050505] flex flex-col"
+      // VUELVE A SER COLOR CLARO (Para la izquierda)
+      className="grow relative w-full overflow-visible bg-[#FAFAFA] flex flex-col"
     >
-      {/* Top Border - Oscurecido para modo oscuro */}
-      <div className="w-full h-[1px] bg-white/10 absolute top-0 z-10" />
+      {/* Top Border */}
+      <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
       <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column */}
+          {/* Left Column (Mantiene el fondo claro del padre) */}
           <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
             <div className="w-full h-full flex items-center justify-start m-0 p-0">
               <BlueprintVisualization />
             </div>
           </div>
 
-          {/* === DIVISOR VERTICAL (Oscurecido) === */}
-          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-white/10 z-10 overflow-visible">
+          {/* === DIVISOR VERTICAL === */}
+          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
              {/* --- ICONO ROBOT ERROR CENTRADO --- */}
              <motion.div 
                 style={{ x: "-50%", y: "-50%" }} 
                 initial={{ scale: 0, opacity: 0, rotate: -15 }} 
                 
-                // ANIMACIÓN CONDICIONAL (Adaptada a modo oscuro)
+                // Animación Robot (Rojo para indicar error inicial)
                 animate={showRobot ? {
                   scale: 1,
                   opacity: 1,
                   rotate: [-15, 15, -5, 0], 
-                  // Borde: Gris oscuro -> Rojo -> Gris oscuro
-                  borderColor: ["#27272a", "#9A3426", "#27272a"], 
-                  // Icono: Gris -> Rojo -> Gris
-                  color: ["#52525b", "#9A3426", "#52525b"],       
-                  // Fondo: Negro -> Rojo muy oscuro -> Negro
-                  backgroundColor: ["#09090b", "#450a0a", "#09090b"], 
-                  boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.5)", "0 0 15px rgba(154,52,38,0.4)", "0 1px 2px 0 rgba(0,0,0,0.5)"]
+                  borderColor: ["#e4e4e7", "#9A3426", "#e4e4e7"], 
+                  color: ["#6b7280", "#9A3426", "#6b7280"],       
+                  backgroundColor: ["#ffffff", "#FFE5DF", "#ffffff"], 
+                  boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", "0 0 10px rgba(154,52,38,0.2)", "0 1px 2px 0 rgba(0,0,0,0.05)"]
                 } : {
                   scale: 0,
                   opacity: 0,
                   rotate: -15, 
-                  borderColor: "#27272a",
-                  color: "#52525b",
-                  backgroundColor: "#09090b",
+                  borderColor: "#e4e4e7",
+                  color: "#6b7280",
+                  backgroundColor: "#ffffff",
                   boxShadow: "0 0 0 transparent"
                 }}
 
@@ -139,7 +135,7 @@ const CloudHero = () => {
                 </svg>
              </motion.div>
              
-             {/* 1. RAYO VERTICAL (Rojo -> Emerald/Cyan) */}
+             {/* 1. RAYO VERTICAL */}
              <motion.div 
                style={{ 
                  top: verticalTop,
@@ -149,7 +145,7 @@ const CloudHero = () => {
                className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* 2. RAYO HORIZONTAL - Solo Cyan y Emerald (Sin dorados) */}
+             {/* 2. RAYO HORIZONTAL */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
@@ -166,19 +162,20 @@ const CloudHero = () => {
               />
           </div>
 
-          {/* Horizontal Divider (Mobile only - Oscurecido) */}
-          <div className="lg:hidden w-screen h-[1px] bg-white/10 mb-0 -ml-6" />
+          {/* Horizontal Divider (Mobile only) */}
+          <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
           {/* Right Column: Content */}
-          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
+          {/* AQUI APLICAMOS EL FONDO NEGRO (#050505) SOLO A LA DERECHA */}
+          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0 bg-[#050505]" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px]">
               
-              {/* SUBTITLE (Texto gris claro) */}
+              {/* SUBTITLE */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-400">
                 SYSTEM DIAGNOSIS
               </div>
 
-              {/* TITLE (Texto blanco) */}
+              {/* TITLE */}
               <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-white">
                 We find the{' '}
                 <motion.span
@@ -191,8 +188,8 @@ const CloudHero = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // GRADIENTE: Rojo (flaw) -> Emerald -> Cyan (Fix). Sin naranjas/dorados.
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.red}, ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
+                    // CORREGIDO: Solo Emerald, Cyan y Blanco. Sin Rojos/Naranjas.
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, ${COLORS.white}, ${COLORS.emerald}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -205,7 +202,7 @@ const CloudHero = () => {
                 {' '}in your digital ecosystem.
               </h2>
 
-              {/* TEXT (Texto gris medio) */}
+              {/* TEXT */}
               <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-400 tracking-tight">
               We dive deep into the code to find what others miss. From broken SEO hierarchies and slow rendering times to unoptimized mobile architectures, we identify the precise technical bottlenecks and strategy errors that are costing you conversions.
               </p>
@@ -215,8 +212,8 @@ const CloudHero = () => {
         </div>
       </div>
 
-      {/* Bottom Border - Oscurecido */}
-      <div className="w-full h-[1px] bg-white/10 absolute bottom-0 z-10" />
+      {/* Bottom Border */}
+      <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10" />
     </section>
   );
 };
