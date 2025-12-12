@@ -486,7 +486,7 @@ export const SuperHero = ({
       </div>
 
       {/* --- DIGITAL WORKFLOW SECTION --- */}
-      <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-24">
+      <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-28">
         
         {/* LEFT TUNNEL (Code) - z-10 */}
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
