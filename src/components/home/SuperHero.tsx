@@ -12,7 +12,6 @@ const fontStyles = `
     font-family: 'Satoshi', sans-serif;
   }
   
-  /* Animación normal (Parte inferior): Llega hasta el centro */
   @keyframes codeFlow {
     0% { transform: translateX(-50px) scale(0.8); opacity: 0; }
     10% { opacity: 0.6; }
@@ -20,11 +19,10 @@ const fontStyles = `
     100% { transform: translateX(50vw); opacity: 0; }
   }
 
-  /* Animación SUPERIOR: Se desvanece antes de tocar los botones */
   @keyframes codeFlowTop {
     0% { transform: translateX(-50px) scale(0.8); opacity: 0; }
     10% { opacity: 0.4; }
-    40% { opacity: 0; } /* Desaparece al 40% del trayecto */
+    40% { opacity: 0; } 
     100% { transform: translateX(30vw); opacity: 0; }
   }
 
@@ -134,7 +132,6 @@ const Sparkles = ({
 
 // --- SUB-COMPONENTS FOR DIGITAL WORKFLOW ---
 
-// 1. Widget de ROI (Campaign Progress)
 const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   const [step, setStep] = useState(1);
 
@@ -193,7 +190,6 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   );
 };
 
-// 2. Contenido de la App (Marketing Goals)
 const MarketingAppContent = () => {
   const initialPreferences = [{ id: 'leads', label: 'Maximize Lead Gen' }, { id: 'brand', label: 'Boost Brand Authority' }, { id: 'revenue', label: 'Scale Revenue (ROI)' }];
   const [selectedPreference, setSelectedPreference] = useState('leads');
@@ -242,7 +238,6 @@ const MarketingAppContent = () => {
   );
 };
 
-// 3. Phone Frame
 const PhoneFrame = () => {
   return (
     <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
@@ -274,7 +269,8 @@ export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
 }: SuperHeroProps) => {
-  const bgColor = "#050505";
+  // CAMBIO CLAVE: bgColor ahora es transparente para evitar el corte negro
+  const bgColor = "transparent";
   const lampColor = "#06b6d4"; 
 
   const radialColorSequence = [
@@ -283,18 +279,15 @@ export const SuperHero = ({
     "radial-gradient(circle at bottom center, #06b6d4, transparent 70%)"
   ];
 
-  // Logic for the Digital Workflow Scene
   const [codeLines, setCodeLines] = useState<any[]>([]);
   const [uiWidgets, setUiWidgets] = useState<any[]>([]);
 
   useEffect(() => {
-    // Generate Code Particles (Left Tunnel)
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
     
     const lines = Array.from({ length: 25 }).map((_, i) => {
       const topPos = Math.random() * 90;
-      // Detección: ¿Está en el 45% superior?
       const isTopLine = topPos < 45; 
 
       return {
@@ -304,13 +297,11 @@ export const SuperHero = ({
         top: `${topPos}%`,
         delay: `${Math.random() * 5}s`,
         duration: `${3 + Math.random() * 3}s`,
-        // Asignamos la animación especial si es Top
         animationName: isTopLine ? 'codeFlowTop' : 'codeFlow',
       };
     });
     setCodeLines(lines);
 
-    // Generate UI Widgets (Right Tunnel)
     const widgets = Array.from({ length: 15 }).map((_, i) => ({
       id: i,
       type: Math.floor(Math.random() * 4), 
@@ -322,11 +313,10 @@ export const SuperHero = ({
   }, []);
 
   return (
-    // CAMBIO 1: Gradiente Global aplicado aquí
     <div className="w-full min-h-screen bg-gradient-to-r from-black via-[#050505] to-[#1e293b] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
       <style>{fontStyles}</style>
       
-      {/* BACKGROUND SPARKLES & RADIAL (Behind everything) */}
+      {/* BACKGROUND SPARKLES & RADIAL */}
       <div className="absolute inset-x-0 -bottom-48 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-30"
@@ -345,10 +335,11 @@ export const SuperHero = ({
       {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         
-        {/* LAMP EFFECT */}
+        {/* LAMP EFFECT (FIXED) */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
-            {/* ... Lamp Conic Gradients ... */}
+            
+            {/* 1. Conic Gradient Derecha */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
@@ -356,9 +347,12 @@ export const SuperHero = ({
               style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, "--gradient-color": lampColor } as any}
               className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
             >
+              {/* Masks transparentes (sin bloques sólidos) */}
               <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: bgColor }} />
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: bgColor }} />
             </motion.div>
+
+            {/* 2. Conic Gradient Izquierda */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
@@ -366,15 +360,30 @@ export const SuperHero = ({
               style={{ backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, "--gradient-color": lampColor } as any}
               className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
             >
+               {/* Masks transparentes */}
               <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: bgColor }} />
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: bgColor }} />
             </motion.div>
-            <div className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl" style={{ backgroundColor: bgColor }} />
+
+            {/* 3. Blurs y Efectos Centrales */}
+            {/* Eliminado el fondo sólido aquí también */}
+            <div className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl" style={{ backgroundColor: 'transparent' }} />
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
+            
+            {/* Glow Central */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.5, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
+            
+            {/* Arco Superior */}
             <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
+            
+            {/* Linea Fina */}
             <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
-            <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: bgColor }} />
+            
+            {/* ELIMINADO EL BLOQUE SUPERIOR QUE CAUSABA EL CORTE */}
+            {/* <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: bgColor }} />  <-- ESTA LINEA ERA LA CULPABLE */}
+            
+            {/* Espacio reservado transparente */}
+             <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: 'transparent' }} />
           </div>
         </div>
 
@@ -429,9 +438,8 @@ export const SuperHero = ({
       {/* --- DIGITAL WORKFLOW SECTION --- */}
       <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-10">
         
-        {/* LEFT TUNNEL (Code) - z-10 */}
+        {/* LEFT TUNNEL (Code) */}
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
-          {/* CAMBIO: Gradiente sutil para mantener efecto tunel sin romper el BG principal */}
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
           {codeLines.map((line) => (
             <div
@@ -439,7 +447,7 @@ export const SuperHero = ({
               className={`absolute left-0 whitespace-nowrap font-mono text-xs md:text-sm ${line.color} opacity-0 blur-[0.5px]`}
               style={{
                 top: line.top,
-                animation: `${line.animationName} ${line.duration} linear infinite`, // CAMBIO: Usa animationName dinámico
+                animation: `${line.animationName} ${line.duration} linear infinite`,
                 animationDelay: line.delay,
               }}
             >
@@ -448,15 +456,14 @@ export const SuperHero = ({
           ))}
         </div>
 
-        {/* CENTER PHONE - z-20 (Higher than tunnels and sparkles) */}
+        {/* CENTER PHONE */}
         <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           <PhoneFrame />
         </div>
 
-        {/* RIGHT TUNNEL (Widgets) - z-10 */}
+        {/* RIGHT TUNNEL (Widgets) */}
         <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
-          {/* CAMBIO: Gradiente ajustado para blending */}
           <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
           <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
           {uiWidgets.map((widget) => (
