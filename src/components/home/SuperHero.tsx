@@ -206,8 +206,12 @@ const MarketingAppContent = () => {
         </div>
       </div>
       <div className="flex-1 overflow-y-auto px-4 pb-8 pt-2">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-5">
-          <h2 className="text-xl font-medium text-gray-900 leading-snug px-1 mt-2">Let's set your growth targets. Where should we focus our energy?</h2>
+        {/* GAP REDUCIDO: gap-6 -> gap-3 para compactar contenido */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-3">
+          {/* TEXTO REDUCIDO: text-xl -> text-[17px] y leading-tight */}
+          <h2 className="text-[17px] font-medium text-gray-900 leading-tight px-1 mt-2">
+            Let's set your growth targets. Where should we focus our energy?
+          </h2>
           <div className="space-y-2">
             <AnimatePresence>
               {initialPreferences.map((preference, index) => (
@@ -222,8 +226,6 @@ const MarketingAppContent = () => {
               ))}
             </AnimatePresence>
           </div>
-          
-          {/* CAMBIO: Eliminado el input field de 'Target audience...' */}
           
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} className="mt-1">
             <CampaignProgressWidget />
@@ -330,36 +332,63 @@ export const SuperHero = ({
       {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         
-        {/* LAMP EFFECT (Sin cambios de posición) */}
+        {/* LAMP EFFECT (AJUSTADO: Máscara para altura corta y glow central bajado) */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             
+            {/* 1. Conic Gradient Derecha + MASK */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, "--gradient-color": lampColor } as any}
+              // MASK AGRESIVA: transparent 50% para acortar la luz
+              style={{ 
+                backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, 
+                "--gradient-color": lampColor,
+                maskImage: "linear-gradient(to top, transparent 50%, white 100%)",
+                WebkitMaskImage: "linear-gradient(to top, transparent 50%, white 100%)"
+              } as any}
               className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
             >
               <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
+            {/* 2. Conic Gradient Izquierda + MASK */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              style={{ backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, "--gradient-color": lampColor } as any}
+              // MASK AGRESIVA: transparent 50%
+              style={{ 
+                backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, 
+                "--gradient-color": lampColor,
+                maskImage: "linear-gradient(to top, transparent 50%, white 100%)",
+                WebkitMaskImage: "linear-gradient(to top, transparent 50%, white 100%)"
+              } as any}
               className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
             >
                <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
+            {/* 3. Blurs y Efectos Centrales */}
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.5, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
+            
+            {/* Glow Central BAJADO: translate-y-[10%] en lugar de -translate-y-1/2 */}
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 0.5, backgroundColor: lampColor }} 
+              transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
+              className="absolute inset-auto z-50 h-36 w-[28rem] translate-y-[10%] rounded-full blur-3xl" 
+            />
+            
+            {/* Arco Superior */}
             <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
+            
+            {/* Linea Fina */}
             <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
+            
             <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: 'transparent' }} />
           </div>
         </div>
@@ -371,7 +400,7 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.7, duration: 1.0, ease: "easeOut" }} 
-            // CAMBIO: Title más pequeño
+            // TITULO REDUCIDO
             className="font-inter font-semibold text-[28px] md:text-[38px] lg:text-[48px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
           >
             We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
@@ -385,7 +414,7 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.9, duration: 1.0, ease: "easeOut" }} 
-            // CAMBIO: Subtitle más pequeño
+            // SUBTITULO REDUCIDO
             className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-gray-400 max-w-3xl mx-auto"
           >
             <p>Stop relying on guesswork. We act as your entire growth engine.</p>
@@ -415,7 +444,7 @@ export const SuperHero = ({
       </div>
 
       {/* --- DIGITAL WORKFLOW SECTION --- */}
-      {/* CAMBIO: Margen negativo aumentado (-mt-10 -> -mt-24) para subir el teléfono hacia los CTAs */}
+      {/* MARGEN NEGATIVO AUMENTADO PARA SUBIR EL TELEFONO (-mt-24) */}
       <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-24">
         
         {/* LEFT TUNNEL (Code) */}
