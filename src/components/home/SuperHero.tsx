@@ -12,7 +12,6 @@ const fontStyles = `
     font-family: 'Satoshi', sans-serif;
   }
   
-  /* Animación normal (Parte inferior): Llega hasta el centro */
   @keyframes codeFlow {
     0% { transform: translateX(-50px) scale(0.8); opacity: 0; }
     10% { opacity: 0.6; }
@@ -20,11 +19,10 @@ const fontStyles = `
     100% { transform: translateX(50vw); opacity: 0; }
   }
 
-  /* Animación SUPERIOR: Se desvanece antes de tocar los botones */
   @keyframes codeFlowTop {
     0% { transform: translateX(-50px) scale(0.8); opacity: 0; }
     10% { opacity: 0.4; }
-    40% { opacity: 0; } /* Desaparece al 40% del trayecto */
+    40% { opacity: 0; } 
     100% { transform: translateX(30vw); opacity: 0; }
   }
 
@@ -134,7 +132,6 @@ const Sparkles = ({
 
 // --- SUB-COMPONENTS FOR DIGITAL WORKFLOW ---
 
-// 1. Widget de ROI (Campaign Progress)
 const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   const [step, setStep] = useState(1);
 
@@ -193,12 +190,21 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   );
 };
 
-// 2. Contenido de la App (Marketing Goals)
-const MarketingAppContent = () => {
-  const initialPreferences = [{ id: 'leads', label: 'Maximize Lead Gen' }, { id: 'brand', label: 'Boost Brand Authority' }, { id: 'revenue', label: 'Scale Revenue (ROI)' }];
+// --- UPDATED MarketingAppContent (From Reference) ---
+const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
+  const initialPreferences = [
+    { id: 'leads', label: 'Maximize Lead Gen' }, 
+    { id: 'clicks', label: 'Increase Clicks & CTR' }, 
+    { id: 'revenue', label: 'Scale Revenue (ROI)' }
+  ];
+  
   const [selectedPreference, setSelectedPreference] = useState('leads');
-  const [inputValue, setInputValue] = useState('');
   const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+  const handleSelect = (id: string) => {
+    setSelectedPreference(id);
+    onOptionChange(id); 
+  };
 
   return (
     <div className="flex flex-col h-full bg-white relative font-sans">
@@ -210,13 +216,27 @@ const MarketingAppContent = () => {
           <Battery className="w-[22px] h-[16px]" strokeWidth={2.5} />
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pb-8 pt-2">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-6">
-          <h2 className="text-xl font-medium text-gray-900 leading-snug px-1 mt-2">Let's set your growth targets. Where should we focus our energy?</h2>
-          <div className="space-y-2">
-            <AnimatePresence>
+      <div className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
+        
+        {/* GAP PADRE AJUSTADO: gap-[12px] */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-[12px]">
+          
+          <h2 className="text-[16px] font-medium text-gray-900 leading-tight px-1 mt-2">
+            Let's set your growth targets. Where should we focus our energy?
+          </h2>
+          
+          {/* SPACE-Y AJUSTADO: space-y-[11px] */}
+          <div className="space-y-[11px]">
+            <AnimatePresence mode='wait'>
               {initialPreferences.map((preference, index) => (
-                <motion.button key={preference.id} onClick={() => setSelectedPreference(preference.id)} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-[1.2rem] transition-all duration-300 ${selectedPreference === preference.id ? 'bg-black text-white shadow-lg scale-[1.02]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
+                <motion.button 
+                    key={preference.id} 
+                    onClick={() => handleSelect(preference.id)} 
+                    initial={{ opacity: 0, x: -20 }} 
+                    animate={{ opacity: 1, x: 0 }} 
+                    transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }} 
+                    className={`w-full flex items-center gap-3 px-4 py-4 rounded-[1.2rem] transition-all duration-300 ${selectedPreference === preference.id ? 'bg-black text-white shadow-lg scale-[1.02]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}
+                >
                   <div className="flex items-center justify-center flex-shrink-0">
                     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedPreference === preference.id ? 'border-white bg-white' : 'border-gray-400'}`}>
                       {selectedPreference === preference.id && (<motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></motion.svg>)}
@@ -227,12 +247,8 @@ const MarketingAppContent = () => {
               ))}
             </AnimatePresence>
           </div>
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.7 }} className="flex items-center gap-3 px-4 py-3 bg-gray-100 rounded-[1.5rem]">
-            <Users className="w-5 h-5 text-gray-400 flex-shrink-0" />
-            <input type="text" placeholder="Target audience..." value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="flex-1 bg-transparent text-gray-900 text-[15px] placeholder:text-gray-400 outline-none border-none" />
-            <button className={`flex-shrink-0 p-2 rounded-full transition-all duration-200 ${inputValue.trim() ? 'bg-black text-white' : 'bg-gray-300 text-gray-500'}`}><Send className="w-4 h-4" /></button>
-          </motion.div>
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.8 }} className="mt-2">
+          
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} className="mt-2">
             <CampaignProgressWidget />
           </motion.div>
         </motion.div>
@@ -242,8 +258,8 @@ const MarketingAppContent = () => {
   );
 };
 
-// 3. Phone Frame
-const PhoneFrame = () => {
+// --- UPDATED PhoneFrame (Accepts Callback) ---
+const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
     <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
       <div className="absolute left-[-4px] top-[120px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
@@ -254,7 +270,7 @@ const PhoneFrame = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
           <div className="absolute right-[25%] w-[10px] h-[10px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
-        <MarketingAppContent />
+        <MarketingAppContent onOptionChange={onOptionChange} />
       </div>
     </div>
   );
@@ -283,18 +299,16 @@ export const SuperHero = ({
     "radial-gradient(circle at bottom center, #06b6d4, transparent 70%)"
   ];
 
-  // Logic for the Digital Workflow Scene
   const [codeLines, setCodeLines] = useState<any[]>([]);
   const [uiWidgets, setUiWidgets] = useState<any[]>([]);
 
+  // Code Particles Logic
   useEffect(() => {
-    // Generate Code Particles (Left Tunnel)
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
     
     const lines = Array.from({ length: 25 }).map((_, i) => {
       const topPos = Math.random() * 90;
-      // Detección: ¿Está en el 45% superior?
       const isTopLine = topPos < 45; 
 
       return {
@@ -304,25 +318,68 @@ export const SuperHero = ({
         top: `${topPos}%`,
         delay: `${Math.random() * 5}s`,
         duration: `${3 + Math.random() * 3}s`,
-        // Asignamos la animación especial si es Top
         animationName: isTopLine ? 'codeFlowTop' : 'codeFlow',
       };
     });
     setCodeLines(lines);
-
-    // Generate UI Widgets (Right Tunnel)
-    const widgets = Array.from({ length: 15 }).map((_, i) => ({
-      id: i,
-      type: Math.floor(Math.random() * 4), 
-      top: `${15 + Math.random() * 70}%`, 
-      delay: `${Math.random() * 6}s`,
-      duration: `${5 + Math.random() * 4}s`
-    }));
-    setUiWidgets(widgets);
   }, []);
 
+  // --- WIDGET GENERATION LOGIC (Copied from reference) ---
+  const generateWidgetsData = (mode: string, count: number, burstMode: boolean = false) => {
+    return Array.from({ length: count }).map((_, i) => {
+        let type = 2; // Default
+        const rand = Math.random();
+
+        if (mode === 'leads') {
+            if (rand < 0.8) type = 0; 
+            else if (rand < 0.9) type = 2; 
+            else type = 3;
+        } else if (mode === 'clicks') {
+            if (rand < 0.8) type = 3; 
+            else if (rand < 0.9) type = 0;
+            else type = 1;
+        } else if (mode === 'revenue') {
+             if (rand < 0.8) type = 1; 
+             else if (rand < 0.9) type = 2;
+             else type = 0;
+        }
+
+        const delay = burstMode 
+            ? Math.random() * 1.5 
+            : Math.random() * 6;
+
+        return {
+            id: Math.random().toString(36).substr(2, 9) + Date.now(),
+            type: type, 
+            top: `${15 + Math.random() * 70}%`, 
+            delay: `${delay}s`,
+            duration: `${5 + Math.random() * 4}s`
+        };
+    });
+  };
+
+  // Initial Widgets
+  useEffect(() => {
+    setUiWidgets(generateWidgetsData('leads', 15, false));
+  }, []);
+
+  // Interaction Handler
+  const handlePhoneOptionChange = (id: string) => {
+      const newBurstWidgets = generateWidgetsData(id, 12, true);
+      setUiWidgets(prev => [...prev, ...newBurstWidgets]);
+
+      setTimeout(() => {
+         setUiWidgets(prev => {
+             if (prev.length > 25) {
+                 return prev.slice(prev.length - 25);
+             }
+             return prev;
+         });
+      }, 8000); 
+  };
+
   return (
-    // CAMBIO APLICADO: bg-gradient-to-br con final en #15171c (Menos azul, casi negro/gris oscuro)
+    // BG GRADIENT KEPT FROM PREVIOUS REQUEST (Corner TopLeft to BottomRight, ending in #15171c)
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
       <style>{fontStyles}</style>
       
@@ -378,14 +435,15 @@ export const SuperHero = ({
           </div>
         </div>
 
-        {/* TITLE & BUTTONS */}
+        {/* TITLE & BUTTONS (UPDATED SIZES FROM REFERENCE) */}
         <div className="relative z-10 text-center mb-8">
           <motion.h1 
             key="hero-title"
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.7, duration: 1.0, ease: "easeOut" }} 
-            className="font-inter font-semibold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
+            // UPDATED SIZE: 28px -> 38px -> 48px
+            className="font-inter font-semibold text-[28px] md:text-[38px] lg:text-[48px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
           >
             We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
             <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
@@ -398,7 +456,8 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.9, duration: 1.0, ease: "easeOut" }} 
-            className="flex flex-col items-center gap-2 font-inter font-light text-[16px] md:text-[18px] text-gray-400 max-w-3xl mx-auto"
+            // UPDATED SIZE: 14px -> 16px
+            className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-gray-400 max-w-3xl mx-auto"
           >
             <p>Stop relying on guesswork. We act as your entire growth engine.</p>
             <p className="text-gray-300">
@@ -451,7 +510,8 @@ export const SuperHero = ({
         {/* CENTER PHONE - z-20 (Higher than tunnels and sparkles) */}
         <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
-          <PhoneFrame />
+          {/* UPDATED: Pass callback to PhoneFrame */}
+          <PhoneFrame onOptionChange={handlePhoneOptionChange} />
         </div>
 
         {/* RIGHT TUNNEL (Widgets) - z-10 */}
