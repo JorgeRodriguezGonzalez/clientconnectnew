@@ -134,6 +134,8 @@ const Sparkles = ({
 
 const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   const [step, setStep] = useState(1);
+  // Randomizamos el ROI mostrado en este widget específico también para variar
+  const [roiValue] = useState(() => Math.floor(Math.random() * (150 - 110) + 110)); 
 
   useEffect(() => {
     const cycleSteps = () => {
@@ -165,7 +167,7 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
              <TrendingUp width="20" height="20" className="text-green-400" />
           </div>
         </div>
-        <h2 className="text-xl font-black tracking-tight text-white">ROI <span className="text-green-500 text-sm font-normal ml-1">▲ 124%</span></h2>
+        <h2 className="text-xl font-black tracking-tight text-white">ROI <span className="text-green-500 text-sm font-normal ml-1">▲ {roiValue}%</span></h2>
       </div>
       <div className="relative mb-5 px-1">
         <div className="h-1 bg-[#505050] rounded-full w-full" />
@@ -190,7 +192,7 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   );
 };
 
-// --- UPDATED MarketingAppContent (From Reference) ---
+// --- UPDATED MarketingAppContent ---
 const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   const initialPreferences = [
     { id: 'leads', label: 'Maximize Lead Gen' }, 
@@ -218,25 +220,28 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
       </div>
       <div className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
         
-        {/* GAP PADRE AJUSTADO: gap-[12px] */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-[12px]">
+        {/* ANIMACIÓN: Fade in glass morph para el contenedor de texto */}
+        <motion.div 
+            initial={{ opacity: 0, y: 10, filter: "blur(5px)" }} 
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} 
+            transition={{ duration: 0.6, delay: 0.3 }} 
+            className="flex flex-col gap-[12px]"
+        >
           
           <h2 className="text-[16px] font-medium text-gray-900 leading-tight px-1 mt-2">
             Let's set your growth targets. Where should we focus our energy?
           </h2>
           
-          {/* SPACE-Y AJUSTADO: space-y-[11px] */}
           <div className="space-y-[11px]">
             <AnimatePresence mode='wait'>
               {initialPreferences.map((preference, index) => (
                 <motion.button 
                     key={preference.id} 
                     onClick={() => handleSelect(preference.id)} 
-                    // --- MODIFICACIÓN AQUÍ: Se eliminó x: -20 y x: 0 para que solo sea Fade In ---
-                    initial={{ opacity: 0 }} 
-                    animate={{ opacity: 1 }} 
-                    // --------------------------------------------------------------------------
-                    transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }} 
+                    // ANIMACIÓN: Fade in Glass Morph para cada botón individual
+                    initial={{ opacity: 0, filter: "blur(4px)" }} 
+                    animate={{ opacity: 1, filter: "blur(0px)" }} 
+                    transition={{ duration: 0.5, delay: 0.4 + index * 0.15, ease: "easeOut" }} 
                     className={`w-full flex items-center gap-3 px-4 py-4 rounded-[1.2rem] transition-all duration-300 ${selectedPreference === preference.id ? 'bg-black text-white shadow-lg scale-[1.02]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}
                 >
                   <div className="flex items-center justify-center flex-shrink-0">
@@ -250,7 +255,12 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
             </AnimatePresence>
           </div>
           
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} className="mt-2">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }} 
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }} 
+            transition={{ duration: 0.7, delay: 0.8 }} 
+            className="mt-2"
+          >
             <CampaignProgressWidget />
           </motion.div>
         </motion.div>
@@ -260,7 +270,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   );
 };
 
-// --- UPDATED PhoneFrame (Accepts Callback) ---
+// --- UPDATED PhoneFrame ---
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
     <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
@@ -304,7 +314,6 @@ export const SuperHero = ({
   const [codeLines, setCodeLines] = useState<any[]>([]);
   const [uiWidgets, setUiWidgets] = useState<any[]>([]);
 
-  // Code Particles Logic
   useEffect(() => {
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
@@ -326,7 +335,7 @@ export const SuperHero = ({
     setCodeLines(lines);
   }, []);
 
-  // --- WIDGET GENERATION LOGIC (Copied from reference) ---
+  // --- WIDGET GENERATION LOGIC (UPDATED WITH RANDOM NUMBERS) ---
   const generateWidgetsData = (mode: string, count: number, burstMode: boolean = false) => {
     return Array.from({ length: count }).map((_, i) => {
         let type = 2; // Default
@@ -349,23 +358,27 @@ export const SuperHero = ({
         const delay = burstMode 
             ? Math.random() * 1.5 
             : Math.random() * 6;
+        
+        // Generar valores aleatorios para ROI y CTR
+        const randomROI = Math.floor(Math.random() * (450 - 150) + 150); // Entre 150 y 450
+        const randomCTR = (Math.random() * (9.5 - 2.1) + 2.1).toFixed(1); // Entre 2.1 y 9.5 con 1 decimal
 
         return {
             id: Math.random().toString(36).substr(2, 9) + Date.now(),
             type: type, 
             top: `${15 + Math.random() * 70}%`, 
             delay: `${delay}s`,
-            duration: `${5 + Math.random() * 4}s`
+            duration: `${5 + Math.random() * 4}s`,
+            roiValue: randomROI,
+            ctrValue: randomCTR
         };
     });
   };
 
-  // Initial Widgets
   useEffect(() => {
     setUiWidgets(generateWidgetsData('leads', 15, false));
   }, []);
 
-  // Interaction Handler
   const handlePhoneOptionChange = (id: string) => {
       const newBurstWidgets = generateWidgetsData(id, 12, true);
       setUiWidgets(prev => [...prev, ...newBurstWidgets]);
@@ -381,11 +394,9 @@ export const SuperHero = ({
   };
 
   return (
-    // BG GRADIENT KEPT FROM PREVIOUS REQUEST (Corner TopLeft to BottomRight, ending in #15171c)
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
       <style>{fontStyles}</style>
       
-      {/* BACKGROUND SPARKLES & RADIAL (Behind everything) */}
       <div className="absolute inset-x-0 -bottom-48 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-30"
@@ -401,13 +412,10 @@ export const SuperHero = ({
         />
       </div>
 
-      {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         
-        {/* LAMP EFFECT */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
-            {/* ... Lamp Conic Gradients ... */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
@@ -437,14 +445,12 @@ export const SuperHero = ({
           </div>
         </div>
 
-        {/* TITLE & BUTTONS (UPDATED SIZES FROM REFERENCE) */}
         <div className="relative z-10 text-center mb-8">
           <motion.h1 
             key="hero-title"
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.7, duration: 1.0, ease: "easeOut" }} 
-            // UPDATED SIZE: 28px -> 38px -> 48px
             className="font-inter font-semibold text-[28px] md:text-[38px] lg:text-[48px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
           >
             We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
@@ -458,7 +464,6 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.9, duration: 1.0, ease: "easeOut" }} 
-            // UPDATED SIZE: 14px -> 16px
             className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-gray-400 max-w-3xl mx-auto"
           >
             <p>Stop relying on guesswork. We act as your entire growth engine.</p>
@@ -490,9 +495,7 @@ export const SuperHero = ({
       {/* --- DIGITAL WORKFLOW SECTION --- */}
       <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-28">
         
-        {/* LEFT TUNNEL (Code) - z-10 */}
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
-          {/* CAMBIO: Gradiente sutil para mantener efecto tunel sin romper el BG principal */}
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
           {codeLines.map((line) => (
             <div
@@ -500,7 +503,7 @@ export const SuperHero = ({
               className={`absolute left-0 whitespace-nowrap font-mono text-xs md:text-sm ${line.color} opacity-0 blur-[0.5px]`}
               style={{
                 top: line.top,
-                animation: `${line.animationName} ${line.duration} linear infinite`, // CAMBIO: Usa animationName dinámico
+                animation: `${line.animationName} ${line.duration} linear infinite`, 
                 animationDelay: line.delay,
               }}
             >
@@ -509,16 +512,19 @@ export const SuperHero = ({
           ))}
         </div>
 
-        {/* CENTER PHONE - z-20 (Higher than tunnels and sparkles) */}
-        <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
+        {/* --- ANIMACIÓN DEL TELÉFONO (Glass Morph Fade In) --- */}
+        <motion.div 
+            initial={{ opacity: 0, scale: 0.8, filter: "blur(15px)" }}
+            animate={{ opacity: 1, scale: 0.9, filter: "blur(0px)" }} // scale 0.9 es el tamaño final deseado (lg:scale-[0.9])
+            transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+            className="relative z-[20] flex flex-col items-center justify-end origin-bottom"
+            // Reemplazamos las clases de escala de Tailwind por la animación de Framer Motion para suavidad
+        >
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
-          {/* UPDATED: Pass callback to PhoneFrame */}
           <PhoneFrame onOptionChange={handlePhoneOptionChange} />
-        </div>
+        </motion.div>
 
-        {/* RIGHT TUNNEL (Widgets) - z-10 */}
         <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
-          {/* CAMBIO: Gradiente ajustado para blending */}
           <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
           <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
           {uiWidgets.map((widget) => (
@@ -539,7 +545,8 @@ export const SuperHero = ({
               )}
               {widget.type === 1 && (
                 <div className="w-28 h-28 bg-gradient-to-t from-slate-900 to-slate-800 border border-green-500/20 rounded-xl flex flex-col items-center justify-center shadow-xl backdrop-blur-sm rotate-6 p-2 gap-1">
-                  <BarChart className="text-green-400 w-8 h-8" /><span className="text-[10px] text-green-300 font-bold">+240% ROI</span>
+                  {/* WIDGET ROI CON NÚMERO ALEATORIO */}
+                  <BarChart className="text-green-400 w-8 h-8" /><span className="text-[10px] text-green-300 font-bold">+{widget.roiValue}% ROI</span>
                 </div>
               )}
               {widget.type === 2 && (
@@ -549,7 +556,8 @@ export const SuperHero = ({
               )}
               {widget.type === 3 && (
                 <div className="w-36 h-24 bg-slate-900 border border-slate-700 rounded-lg p-3 shadow-2xl -rotate-3 flex flex-col justify-between">
-                  <div className="flex justify-between items-start"><div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center"><MousePointerClick size={16} className="text-white"/></div><div className="text-[10px] text-gray-400">CTR</div></div><div className="text-xl font-bold text-white">4.8%</div>
+                  {/* WIDGET CTR CON NÚMERO ALEATORIO */}
+                  <div className="flex justify-between items-start"><div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center"><MousePointerClick size={16} className="text-white"/></div><div className="text-[10px] text-gray-400">CTR</div></div><div className="text-xl font-bold text-white">{widget.ctrValue}%</div>
                 </div>
               )}
             </div>

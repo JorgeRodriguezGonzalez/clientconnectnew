@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
-import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, ShieldCheck, Map, PlusIcon } from 'lucide-react';
+import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, ShieldCheck, Map, PlusIcon, Activity } from 'lucide-react';
 
 // --- STYLES ---
 const fontStyles = `
@@ -602,12 +602,122 @@ const Sparkles = () => {
   );
 };
 
+// --- NEW COMPONENT: PROFIT CHART ANIMATION ---
+const ProfitChart = () => {
+  return (
+    <div className="absolute inset-0 w-full h-full overflow-hidden" 
+      style={{
+        maskImage: 'linear-gradient(to right, transparent 0%, transparent 2%, black 10%, black 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 20%, black 100%)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, transparent 2%, black 10%, black 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 20%, black 100%)',
+        maskComposite: 'intersect',
+        WebkitMaskComposite: 'source-in'
+      }}
+    >
+      <svg 
+        className="absolute bottom-0 left-[-20%] w-[140%] h-[120%]" 
+        viewBox="0 0 494 286" 
+        fill="none" 
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg" 
+      >
+        <defs>
+          <linearGradient id="chartGradientTeal" x1="0.5" x2="0.5" y1="0" y2="1">
+            <stop offset="0" stopColor={COLORS.cyan} stopOpacity="0.5" />
+            <stop offset="1" stopColor={COLORS.cyan} stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="chartGradientCoral" x1="0.5" x2="0.5" y1="0" y2="1">
+            <stop offset="0" stopColor={COLORS.coral} stopOpacity="0.5" />
+            <stop offset="1" stopColor={COLORS.coral} stopOpacity="0" />
+          </linearGradient>
+          <clipPath id="clipBelowLine">
+            <rect x="0" y="152" width="494" height="134" />
+          </clipPath>
+          <clipPath id="clipAboveLine">
+            <rect x="0" y="0" width="494" height="152" />
+          </clipPath>
+        </defs>
+        
+        <motion.line
+          x1="80"
+          y1="152"
+          x2="490"
+          y2="152"
+          stroke={COLORS.cyan}
+          strokeWidth="2"
+          strokeDasharray="5,5"
+          strokeOpacity="0.3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.5 }}
+        />
+        
+        <g clipPath="url(#clipBelowLine)">
+          <motion.path 
+            d="M 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 L 489.248 283.23 Z" 
+            fill="url(#chartGradientTeal)" 
+            stroke={COLORS.cyan}
+            strokeWidth="2" 
+            strokeMiterlimit="10" 
+            initial={{ pathLength: 0, opacity: 0 }} 
+            animate={{ pathLength: 1, opacity: 1 }} 
+            transition={{ duration: 1.5, ease: 'easeInOut', delay: 0 }} 
+          />
+        </g>
+        
+        <g clipPath="url(#clipAboveLine)">
+          <motion.path 
+            d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 Z" 
+            fill="url(#chartGradientCoral)" 
+            stroke={COLORS.coral} 
+            strokeWidth="2" 
+            strokeMiterlimit="10" 
+            initial={{ pathLength: 0, opacity: 0 }} 
+            animate={{ pathLength: 1, opacity: 1 }} 
+            transition={{ duration: 1.5, ease: 'easeInOut', delay: 0 }} 
+          />
+        </g>
+        
+        <g clipPath="url(#clipBelowLine)">
+          <motion.path 
+            d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
+            fill="transparent" 
+            stroke={COLORS.cyan} 
+            strokeOpacity="0.5"
+            strokeWidth="2" 
+            strokeMiterlimit="10" 
+            strokeDasharray="9.07,9.07" 
+            initial={{ pathLength: 0 }} 
+            animate={{ pathLength: 1 }} 
+            transition={{ duration: 1, ease: 'easeInOut', delay: 0.1 }} 
+          />
+        </g>
+        
+        <g clipPath="url(#clipAboveLine)">
+          <motion.path 
+            d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
+            fill="transparent" 
+            stroke={COLORS.coral} 
+            strokeOpacity="0.5"
+            strokeWidth="2" 
+            strokeMiterlimit="10" 
+            strokeDasharray="9.07,9.07" 
+            initial={{ pathLength: 0 }} 
+            animate={{ pathLength: 1 }} 
+            transition={{ duration: 1, ease: 'easeInOut', delay: 0.1 }} 
+          />
+        </g>
+      </svg>
+    </div>
+  );
+};
+
 // --- MAIN COMPONENT ---
 export const FounderSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLightMode, setIsLightMode] = useState(false);
   const [isLateScroll, setIsLateScroll] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
+  const [chartKey, setChartKey] = useState(0); // Para reiniciar animación del gráfico
   
   // STATE PARA VIDEO "CASE STUDIES"
   const [isCaseStudyActive, setIsCaseStudyActive] = useState(false);
@@ -861,29 +971,42 @@ export const FounderSection = () => {
               <AnimatePresence mode="popLayout">
                  {isLightMode && (
                     <>
-                       {/* ITEM 2 */}
+                       {/* ITEM 2 - RESULTS WITH PROFIT CHART GRAPHIC */}
                        <TiltCard 
                         layout="position"
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                        className="h-[280px] group safari-gpu"
-                        innerClassName="p-6 flex flex-col justify-between bg-white border border-zinc-200"
+                        className="h-[280px] group safari-gpu cursor-default"
+                        innerClassName="bg-white border border-zinc-200 overflow-hidden"
+                        onMouseEnter={() => setChartKey(prev => prev + 1)} // Replays animation on hover
                        >
-                          <div className="absolute -right-10 -top-10 w-32 h-32 bg-zinc-200 blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity" />
-                          <div className="flex justify-between items-start z-10">
-                             <div className="p-3 bg-zinc-900 rounded-none text-white">
-                                <TrendingUp size={24} />
+                          {/* Glow Effect from Top Right */}
+                          <div className="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 blur-[60px] opacity-40 group-hover:opacity-60 transition-opacity" />
+                          
+                          {/* Text Content - Top Half */}
+                          <div className="relative z-10 p-6 flex flex-col items-start">
+                             <div className="flex justify-between items-center w-full mb-2">
+                                <div className="p-2 bg-zinc-50 border border-zinc-100 rounded-none text-cyan-600">
+                                   <Activity size={20} />
+                                </div>
+                                <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                                   Results
+                                </span>
                              </div>
-                             <span className="font-sans text-[11px] font-bold uppercase tracking-wider text-gray-400">
-                               Results
-                             </span>
+                             <div>
+                                <h3 className="text-3xl font-sans font-bold text-gray-900 leading-tight">
+                                  4.5x <span className="text-gray-400 text-xl">ROAS</span>
+                                </h3>
+                                <p className="font-sans text-xs text-gray-500 font-medium mt-1">
+                                  Average return for partners.
+                                </p>
+                             </div>
                           </div>
-                          <div className="z-10">
-                             <h3 className="text-4xl font-sans font-bold mb-2 text-gray-900">4.5x</h3>
-                             <p className="font-sans text-xs text-gray-500 font-medium">
-                               Average ROAS for our Australian partners.
-                             </p>
+
+                          {/* Chart Content - Bottom Half (Absolute) */}
+                          <div className="absolute bottom-0 left-0 right-0 h-[140px] w-full z-0">
+                             <ProfitChart key={chartKey} />
                           </div>
                        </TiltCard>
 
