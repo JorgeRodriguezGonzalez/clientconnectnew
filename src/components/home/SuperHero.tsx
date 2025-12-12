@@ -190,10 +190,21 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   );
 };
 
-const MarketingAppContent = () => {
-  const initialPreferences = [{ id: 'leads', label: 'Maximize Lead Gen' }, { id: 'brand', label: 'Boost Brand Authority' }, { id: 'revenue', label: 'Scale Revenue (ROI)' }];
+const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
+  // CAMBIO: Actualizados los labels
+  const initialPreferences = [
+    { id: 'leads', label: 'Maximize Lead Gen' }, 
+    { id: 'clicks', label: 'Increase Clicks & CTR' }, 
+    { id: 'revenue', label: 'Scale Revenue (ROI)' }
+  ];
+  
   const [selectedPreference, setSelectedPreference] = useState('leads');
   const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+  const handleSelect = (id: string) => {
+    setSelectedPreference(id);
+    onOptionChange(id); // Comunicar al padre
+  };
 
   return (
     <div className="flex flex-col h-full bg-white relative font-sans">
@@ -205,19 +216,25 @@ const MarketingAppContent = () => {
           <Battery className="w-[22px] h-[16px]" strokeWidth={2.5} />
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pb-8 pt-2">
-        {/* GAP REDUCIDO: gap-2 para pegar texto a las opciones y dejar espacio al widget negro */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-2">
+      <div className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
+        {/* CAMBIO: Aumentado gap-2 a gap-6 para más distancia entre elementos */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-6">
           
-          {/* TEXTO REDUCIDO y leading tight */}
-          <h2 className="text-[16px] font-medium text-gray-900 leading-tight px-1 mt-2 mb-2">
+          <h2 className="text-[16px] font-medium text-gray-900 leading-tight px-1 mt-2">
             Let's set your growth targets. Where should we focus our energy?
           </h2>
           
-          <div className="space-y-2">
-            <AnimatePresence>
+          <div className="space-y-3">
+            <AnimatePresence mode='wait'>
               {initialPreferences.map((preference, index) => (
-                <motion.button key={preference.id} onClick={() => setSelectedPreference(preference.id)} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-[1.2rem] transition-all duration-300 ${selectedPreference === preference.id ? 'bg-black text-white shadow-lg scale-[1.02]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
+                <motion.button 
+                    key={preference.id} 
+                    onClick={() => handleSelect(preference.id)} 
+                    initial={{ opacity: 0, x: -20 }} 
+                    animate={{ opacity: 1, x: 0 }} 
+                    transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }} 
+                    className={`w-full flex items-center gap-3 px-4 py-4 rounded-[1.2rem] transition-all duration-300 ${selectedPreference === preference.id ? 'bg-black text-white shadow-lg scale-[1.02]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}
+                >
                   <div className="flex items-center justify-center flex-shrink-0">
                     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedPreference === preference.id ? 'border-white bg-white' : 'border-gray-400'}`}>
                       {selectedPreference === preference.id && (<motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></motion.svg>)}
@@ -229,8 +246,8 @@ const MarketingAppContent = () => {
             </AnimatePresence>
           </div>
           
-          {/* Input eliminado, el widget negro subirá naturalmente */}
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} className="mt-2">
+          {/* CAMBIO: Margen superior aumentado para separar del bloque negro */}
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} className="mt-4">
             <CampaignProgressWidget />
           </motion.div>
         </motion.div>
@@ -240,7 +257,7 @@ const MarketingAppContent = () => {
   );
 };
 
-const PhoneFrame = () => {
+const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
     <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
       <div className="absolute left-[-4px] top-[120px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
@@ -251,7 +268,7 @@ const PhoneFrame = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
           <div className="absolute right-[25%] w-[10px] h-[10px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
-        <MarketingAppContent />
+        <MarketingAppContent onOptionChange={onOptionChange} />
       </div>
     </div>
   );
@@ -281,7 +298,9 @@ export const SuperHero = ({
 
   const [codeLines, setCodeLines] = useState<any[]>([]);
   const [uiWidgets, setUiWidgets] = useState<any[]>([]);
+  const [activeMode, setActiveMode] = useState('leads'); // Nuevo estado para controlar qué mostrar
 
+  // 1. Efecto inicial para el código (izquierda)
   useEffect(() => {
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
@@ -301,16 +320,63 @@ export const SuperHero = ({
       };
     });
     setCodeLines(lines);
-
-    const widgets = Array.from({ length: 15 }).map((_, i) => ({
-      id: i,
-      type: Math.floor(Math.random() * 4), 
-      top: `${15 + Math.random() * 70}%`, 
-      delay: `${Math.random() * 6}s`,
-      duration: `${5 + Math.random() * 4}s`
-    }));
-    setUiWidgets(widgets);
   }, []);
+
+  // 2. Función para generar widgets ponderados según la opción seleccionada
+  const generateWidgets = (mode: string) => {
+    // Definir Tipos: 
+    // 0: Lead (CheckCircle - Green) -> Target: 'leads'
+    // 1: ROI (BarChart - Gradient) -> Target: 'revenue'
+    // 2: Client (Generic Users - Blue)
+    // 3: Click/CTR (MousePointer - Dark Blue) -> Target: 'clicks'
+
+    const newWidgets = Array.from({ length: 18 }).map((_, i) => {
+        let type = 2; // Default
+        const rand = Math.random();
+
+        // Lógica de Ponderación
+        if (mode === 'leads') {
+            // 80% Lead Acquired
+            if (rand < 0.8) type = 0;
+            else if (rand < 0.9) type = 2; 
+            else type = 3;
+        } else if (mode === 'clicks') {
+            // 80% CTR/Clicks
+            if (rand < 0.8) type = 3;
+            else if (rand < 0.9) type = 0;
+            else type = 1;
+        } else if (mode === 'revenue') {
+             // 80% ROI
+             if (rand < 0.8) type = 1;
+             else if (rand < 0.9) type = 2;
+             else type = 0;
+        }
+
+        // Delay reducido para efecto "Burst" al inicio
+        // Los primeros elementos tienen delay casi 0 para salir disparados
+        const delay = i < 5 ? Math.random() * 0.5 : Math.random() * 6; 
+
+        return {
+            id: Math.random().toString(36).substr(2, 9), // ID único para forzar re-render
+            type: type, 
+            top: `${15 + Math.random() * 70}%`, 
+            delay: `${delay}s`,
+            duration: `${5 + Math.random() * 4}s`
+        };
+    });
+    setUiWidgets(newWidgets);
+  };
+
+  // 3. Inicializar widgets
+  useEffect(() => {
+    generateWidgets('leads');
+  }, []);
+
+  // 4. Handler que se pasa al teléfono
+  const handlePhoneOptionChange = (id: string) => {
+      setActiveMode(id);
+      generateWidgets(id); // Regenerar widgets inmediatamente (burst effect)
+  };
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-r from-black via-[#050505] to-[#1e293b] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
@@ -332,19 +398,15 @@ export const SuperHero = ({
         />
       </div>
 
-      {/* HEADER SECTION (Lamp + Title + Buttons) */}
+      {/* HEADER SECTION */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
-        
-        {/* LAMP EFFECT */}
+        {/* LAMP EFFECT (Sin cambios en lógica visual) */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
-            
-            {/* 1. Conic Gradient Derecha + MASK AGRESIVA */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              // MASK CORREGIDA: transparent al 20% para acortar el haz.
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, 
                 "--gradient-color": lampColor,
@@ -356,13 +418,10 @@ export const SuperHero = ({
               <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
-
-            {/* 2. Conic Gradient Izquierda + MASK AGRESIVA */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              // MASK CORREGIDA
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, 
                 "--gradient-color": lampColor,
@@ -374,25 +433,15 @@ export const SuperHero = ({
                <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
-
-            {/* 3. Blurs y Efectos Centrales */}
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
-            
-            {/* GLOW CENTRAL CORREGIDO: translate-y-4 para empujar la bola DEBAJO de la línea */}
-            {/* Reducido h-36 a h-20 para que no sea tan alto */}
             <motion.div 
               initial={{ opacity: 0 }} 
               animate={{ opacity: 0.3, backgroundColor: lampColor }} 
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
               className="absolute inset-auto z-50 h-20 w-[28rem] translate-y-4 rounded-full blur-3xl" 
             />
-            
-            {/* Arco Superior (reducido opacidad para evitar mancha superior) */}
             <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 0.7, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
-            
-            {/* Linea Fina (Brillante) */}
             <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
-            
             <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: 'transparent' }} />
           </div>
         </div>
@@ -469,16 +518,18 @@ export const SuperHero = ({
         {/* CENTER PHONE */}
         <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
-          <PhoneFrame />
+          {/* Pasamos el handler al PhoneFrame */}
+          <PhoneFrame onOptionChange={handlePhoneOptionChange} />
         </div>
 
         {/* RIGHT TUNNEL (Widgets) */}
         <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
           <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+          {/* Utilizamos AnimatePresence si quisiéramos transiciones suaves de salida, pero en este caso queremos flujo continuo */}
           {uiWidgets.map((widget) => (
             <div
-              key={widget.id}
+              key={widget.id} // La clave única reinicia la animación al regenerar
               className="absolute opacity-0"
               style={{
                 top: widget.top,
