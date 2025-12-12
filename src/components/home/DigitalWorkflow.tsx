@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BarChart, CheckCircle, Image as ImageIcon, Code as CodeIcon, 
-  Pencil, Wifi, Battery, Signal, Send 
+  Pencil, Wifi, Battery, Signal, Send, TrendingUp, Users, DollarSign, MousePointerClick
 } from 'lucide-react';
 
-// --- 1. COMPONENTE: TARJETA DE VUELO (Widget interno) ---
-const FlightBoardingProgress = ({ className = "" }) => {
+// --- 1. COMPONENTE: WIDGET DE CAMPAÑA (Monitor de ROI) ---
+// Antes era FlightBoarding, ahora muestra el progreso de una campaña de marketing.
+const CampaignProgressWidget = ({ className = "" }) => {
   const [step, setStep] = useState(1);
 
   useEffect(() => {
     const cycleSteps = () => {
       const timer1 = setTimeout(() => { setStep(2); }, 2000);
-      const timer2 = setTimeout(() => { setStep(3); }, 4000);
+      const timer2 = setTimeout(() => { setStep(3); }, 4500);
       const timer3 = setTimeout(() => { setStep(1); }, 10000);
       return [timer1, timer2, timer3];
     };
@@ -40,35 +41,38 @@ const FlightBoardingProgress = ({ className = "" }) => {
       {/* Main content row */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-white -rotate-45">
-            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
-          </svg>
+          {/* Icono de Gráfico ascendente (ROI) */}
+          <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20">
+             <TrendingUp width="20" height="20" className="text-green-400" />
+          </div>
         </div>
-        <h2 className="text-xl font-black tracking-tight text-white">BUD</h2>
+        {/* "ROI" como el destino final */}
+        <h2 className="text-xl font-black tracking-tight text-white">ROI <span className="text-green-500 text-sm font-normal ml-1">▲ 124%</span></h2>
       </div>
 
       {/* Step indicators */}
       <div className="relative mb-5 px-1">
         <div className="h-1 bg-[#505050] rounded-full w-full" />
+        {/* Barra de progreso (Verde para dinero/éxito) */}
         <motion.div 
-          className="absolute top-0 left-0 h-1 bg-gradient-to-r from-[#e879f9] to-[#f472b6] rounded-full" 
+          className="absolute top-0 left-0 h-1 bg-gradient-to-r from-emerald-400 to-green-600 rounded-full" 
           initial={{ width: "16.67%" }} 
-          animate={{ width: step === 3 ? "100%" : step === 2 ? "50%" : "16.67%" }} 
+          animate={{ width: step === 3 ? "100%" : step === 2 ? "60%" : "16.67%" }} 
           transition={{ duration: 0.8, ease: "easeInOut" }} 
         />
         
         <div className="relative flex items-center justify-between mt-2 px-1">
-          <div className="w-2 h-2 bg-[#e879f9] rounded-full shadow-[0_0_10px_#e879f9]" />
+          <div className="w-2 h-2 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399]" />
           <motion.div 
             className="w-2 h-2 rounded-full" 
             initial={{ backgroundColor: "#505050" }} 
-            animate={{ backgroundColor: step >= 2 ? "#e879f9" : "#505050" }} 
+            animate={{ backgroundColor: step >= 2 ? "#34d399" : "#505050" }} 
             transition={{ duration: 0.5 }} 
           />
           <motion.div 
             className="w-2 h-2 rounded-full" 
             initial={{ backgroundColor: "#505050" }} 
-            animate={{ backgroundColor: step === 3 ? "#e879f9" : "#505050" }} 
+            animate={{ backgroundColor: step === 3 ? "#34d399" : "#505050" }} 
             transition={{ duration: 0.5 }} 
           />
         </div>
@@ -83,27 +87,26 @@ const FlightBoardingProgress = ({ className = "" }) => {
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.5 }}
         >
-          {step === 1 ? "Processing data..." : step === 2 ? <span className="text-pink-400">Boarding...</span> : <span className="text-green-400">Arrived.</span>}
+          {step === 1 ? "Analyzing market data..." : step === 2 ? <span className="text-emerald-300">Optimizing campaigns...</span> : <span className="text-white">Growth targets hit.</span>}
         </motion.p>
       </div>
     </div>
   );
 };
 
-// --- 2. COMPONENTE: CONTENIDO DE LA PANTALLA (TRAVEL PREFERENCES) ---
-const TravelAppContent = () => {
-  // Datos y estado de la app de viajes
+// --- 2. COMPONENTE: CONTENIDO APP MARKETING (Formulario Leads) ---
+const MarketingAppContent = () => {
+  // Opciones de Marketing
   const initialPreferences = [
-    { id: 'family-friendly', label: 'Family-friendly hotels' }, 
-    { id: 'unique-experiences', label: 'One-of-a-kind experiences' }, 
-    { id: 'affordable', label: 'Affordable options' }
+    { id: 'leads', label: 'Maximize Lead Gen' }, 
+    { id: 'brand', label: 'Boost Brand Authority' }, 
+    { id: 'revenue', label: 'Scale Revenue (ROI)' }
   ];
   
   const [preferences] = useState(initialPreferences);
-  const [selectedPreference, setSelectedPreference] = useState('unique-experiences');
+  const [selectedPreference, setSelectedPreference] = useState('leads');
   const [inputValue, setInputValue] = useState('');
 
-  // Hora actual para el Status Bar
   const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
 
   return (
@@ -127,9 +130,9 @@ const TravelAppContent = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-col gap-6"
         >
-          {/* Header Text */}
+          {/* Header Text: Enfocado a Cliente */}
           <h2 className="text-xl font-medium text-gray-900 leading-snug px-1 mt-2">
-            Mind if I ask — when you're traveling, what's your preference? This helps shape what shows up tomorrow.
+            Let's set your growth targets. Where should we focus our energy to scale your business?
           </h2>
 
           {/* Opciones (Checkboxes) */}
@@ -159,17 +162,17 @@ const TravelAppContent = () => {
             </AnimatePresence>
           </div>
 
-          {/* Input Field */}
+          {/* Input Field: Target Audience */}
           <motion.div 
             initial={{ opacity: 0, y: 10 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.4, delay: 0.7 }} 
             className="flex items-center gap-3 px-4 py-3 bg-gray-100 rounded-[1.5rem]"
           >
-            <Pencil className="w-5 h-5 text-gray-400 flex-shrink-0" />
+            <Users className="w-5 h-5 text-gray-400 flex-shrink-0" />
             <input 
               type="text" 
-              placeholder="Share anything..." 
+              placeholder="Target audience (e.g. SaaS Founders)..." 
               value={inputValue} 
               onChange={(e) => setInputValue(e.target.value)} 
               className="flex-1 bg-transparent text-gray-900 text-[15px] placeholder:text-gray-400 outline-none border-none" 
@@ -179,14 +182,14 @@ const TravelAppContent = () => {
             </button>
           </motion.div>
 
-          {/* AQUI INSERTAMOS EL PROGRESS BAR EN LUGAR DE LA IMAGEN */}
+          {/* WIDGET DE ROI (Insertado aquí) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.8 }}
             className="mt-2"
           >
-            <FlightBoardingProgress />
+            <CampaignProgressWidget />
           </motion.div>
 
         </motion.div>
@@ -198,11 +201,11 @@ const TravelAppContent = () => {
   );
 };
 
-// --- 3. COMPONENTE: PHONE FRAME (MARCO FÍSICO) ---
+// --- 3. COMPONENTE: PHONE FRAME (MARCO) ---
 const PhoneFrame = () => {
   return (
     <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
-       {/* Botones Físicos Laterales */}
+       {/* Botones Físicos */}
       <div className="absolute left-[-4px] top-[120px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[180px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[250px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
@@ -210,30 +213,32 @@ const PhoneFrame = () => {
 
       {/* Marco Interno */}
       <div className="relative w-full h-full bg-black rounded-[3rem] overflow-hidden border border-gray-800">
-        
-        {/* Dynamic Island / Notch */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
-          {/* Lente cámara */}
           <div className="absolute right-[25%] w-[10px] h-[10px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
-
-        {/* PANTALLA PRINCIPAL */}
-        <TravelAppContent />
+        <MarketingAppContent />
       </div>
     </div>
   );
 };
 
-
-// --- 4. COMPONENTE PRINCIPAL: ESCENA COMPLETA (DIGITAL WORKFLOW) ---
+// --- 4. COMPONENTE PRINCIPAL: ESCENA COMPLETA ---
 const DigitalWorkflow = () => {
   const [codeLines, setCodeLines] = useState([]);
   const [uiWidgets, setUiWidgets] = useState([]);
 
   useEffect(() => {
-    // Generador de líneas de código
+    // Generador de líneas de código (Backend/Tech Stuff)
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
-    const snippets = ['import { Travel } from "@api"', 'const pref = await getPrefs()', '<Checkbox selected={true} />', 'if (user.hasTicket)', 'animate(boardingPass)', 'export default TravelWidget', 'fetch("https://api.travel.com")'];
+    const snippets = [
+      'analytics.track("Conversion")', 
+      'const lead = await crm.create()', 
+      '<MetaPixel id={PIXEL_ID} />', 
+      'if (ad_spend < budget)', 
+      'optimize_bidding(strategy)', 
+      'export default LandingPage',
+      'fetch("https://api.ads.com")'
+    ];
     
     const lines = Array.from({ length: 25 }).map((_, i) => ({
       id: i,
@@ -245,7 +250,7 @@ const DigitalWorkflow = () => {
     }));
     setCodeLines(lines);
 
-    // Generador de widgets
+    // Generador de widgets (Resultados de Marketing)
     const widgets = Array.from({ length: 15 }).map((_, i) => ({
       id: i,
       type: Math.floor(Math.random() * 4), 
@@ -277,18 +282,15 @@ const DigitalWorkflow = () => {
         ))}
       </div>
 
-      {/* --- ZONA 2: MOCKUP CENTRAL (NUEVO BLANCO) --- */}
-      {/* Ajustes de escala y posición para corte inferior */}
+      {/* --- ZONA 2: MOCKUP CENTRAL --- */}
       <div className="relative z-20 flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
-        {/* Glow effect detrás del teléfono (Ahora blanco/azul muy suave para contrastar con el teléfono blanco) */}
+        {/* Glow effect sutil */}
         <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
-        
         <PhoneFrame />
       </div>
 
-      {/* --- ZONA 3: TÚNEL DERECHO (Salida de UI) --- */}
+      {/* --- ZONA 3: TÚNEL DERECHO (Resultados/Leads) --- */}
       <div className="absolute right-0 w-1/2 h-full z-10 overflow-hidden pointer-events-none">
-        {/* Fondo: Azul Oscuro/Pizarra claro */}
         <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b] via-[#0f172a] to-transparent opacity-95"></div>
         <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
 
@@ -303,31 +305,41 @@ const DigitalWorkflow = () => {
               animationDelay: widget.delay,
             }}
           >
+            {/* Widget 0: Lead Captured Notification */}
             {widget.type === 0 && (
-              <div className="w-40 h-16 bg-white/10 backdrop-blur-md border-l-4 border-pink-500 rounded-r-lg p-3 shadow-lg flex flex-col gap-2">
+              <div className="w-48 h-16 bg-white/10 backdrop-blur-md border-l-4 border-emerald-500 rounded-r-lg p-3 shadow-lg flex flex-col gap-1">
                 <div className="flex justify-between items-center">
-                   <div className="w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center"><CodeIcon size={14} className="text-pink-400"/></div>
-                   <div className="w-16 h-2 bg-white/20 rounded"></div>
+                   <div className="flex gap-2 items-center">
+                     <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center"><CheckCircle size={12} className="text-emerald-400"/></div>
+                     <span className="text-xs text-white font-medium">Lead Acquired</span>
+                   </div>
+                   <span className="text-[10px] text-gray-400">Just now</span>
                 </div>
+                <div className="w-24 h-1.5 bg-white/10 rounded ml-8"></div>
               </div>
             )}
+            {/* Widget 1: Revenue Chart */}
             {widget.type === 1 && (
-              <div className="w-24 h-24 bg-gradient-to-t from-indigo-800 to-slate-700 border border-indigo-500/30 rounded-xl flex items-center justify-center shadow-xl backdrop-blur-sm rotate-6">
-                <BarChart className="text-indigo-300 w-8 h-8" />
+              <div className="w-28 h-28 bg-gradient-to-t from-slate-900 to-slate-800 border border-green-500/20 rounded-xl flex flex-col items-center justify-center shadow-xl backdrop-blur-sm rotate-6 p-2 gap-1">
+                <BarChart className="text-green-400 w-8 h-8" />
+                <span className="text-[10px] text-green-300 font-bold">+240% ROI</span>
               </div>
             )}
+            {/* Widget 2: New Client Pill */}
             {widget.type === 2 && (
-              <div className="flex items-center gap-3 px-4 py-3 bg-slate-700/80 border border-slate-500 rounded-full shadow-lg">
-                <CheckCircle className="w-5 h-5 text-emerald-400" />
-                <span className="text-xs text-slate-100 font-medium tracking-wide">Preference Saved</span>
+              <div className="flex items-center gap-3 px-4 py-3 bg-slate-800/90 border border-blue-500/30 rounded-full shadow-lg">
+                <Users className="w-4 h-4 text-blue-400" />
+                <span className="text-xs text-white font-medium tracking-wide">New Client Onboarded</span>
               </div>
             )}
+            {/* Widget 3: Ad Creative / CTR */}
             {widget.type === 3 && (
-              <div className="w-32 h-20 bg-slate-800 border border-slate-600 rounded-lg p-2 shadow-2xl -rotate-3 overflow-hidden">
-                <div className="w-full h-full bg-slate-700/50 rounded flex items-center justify-center relative">
-                   <ImageIcon className="text-slate-400 w-6 h-6" />
-                   <div className="absolute bottom-1 left-2 w-10 h-1 bg-slate-500 rounded"></div>
+              <div className="w-36 h-24 bg-slate-900 border border-slate-700 rounded-lg p-3 shadow-2xl -rotate-3 flex flex-col justify-between">
+                <div className="flex justify-between items-start">
+                  <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center"><MousePointerClick size={16} className="text-white"/></div>
+                  <div className="text-[10px] text-gray-400">CTR</div>
                 </div>
+                <div className="text-xl font-bold text-white">4.8%</div>
               </div>
             )}
           </div>
