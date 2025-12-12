@@ -4,7 +4,7 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
-  turquoise: "rgb(103, 188, 183)",
+  cyan: "#06b6d4", // Modificado de turquoise a cyan
   coral: "rgb(222, 131, 99)",
   gold: "rgb(237, 191, 134)",
   red: "#9A3426" 
@@ -45,7 +45,7 @@ const CloudHero = () => {
   // Color del rayo: Rojo -> Gradiente Original
   const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.gold]);
   const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.coral]);
-  const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.turquoise]);
+  const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]); // Actualizado a cyan
   
   const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
 
@@ -161,7 +161,7 @@ const CloudHero = () => {
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
-                 background: `linear-gradient(to right, ${COLORS.turquoise}, ${COLORS.coral}, ${COLORS.gold})`
+                 background: `linear-gradient(to right, ${COLORS.cyan}, ${COLORS.coral}, ${COLORS.gold})`
                }}
                className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
@@ -169,7 +169,7 @@ const CloudHero = () => {
              {/* 3. FLASH CORNER */}
              <motion.div
                 style={{ opacity: flashOpacity }}
-                className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#67bcb7] blur-[1px] z-30"
+                className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#06b6d4] blur-[1px] z-30"
               />
           </div>
 
@@ -198,7 +198,7 @@ const CloudHero = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
