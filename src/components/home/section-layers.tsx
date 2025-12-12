@@ -6,7 +6,7 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 const COLORS = {
   cyan: "#06b6d4", 
   emerald: "#34d399", 
-  red: "#9A3426", // Rojo solo para el inicio del rayo/robot, NO para el texto
+  red: "#9A3426", // Rojo solo para el inicio del rayo/robot
   white: "#FFFFFF"
 };
 
@@ -57,31 +57,44 @@ const CloudHero = () => {
     <section 
       ref={containerRef} 
       id="cloud" 
-      // VUELVE A SER COLOR CLARO (Para la izquierda)
+      // BG General claro (aplica a la izquierda)
       className="grow relative w-full overflow-visible bg-[#FAFAFA] flex flex-col"
     >
+      {/* 
+        === FONDO NEGRO INFINITO (DERECHA) === 
+        Posicionado absolutamente para cubrir el 50% derecho de la pantalla completa.
+        Z-Index: 0 (Base)
+      */}
+      <div className="hidden lg:block absolute top-0 right-0 w-1/2 h-full bg-[#050505] z-0" />
+
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
-      <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
+      {/* Contenedor Principal (Z-10 para estar sobre el fondo negro base) */}
+      <div className="relative z-10 w-full max-w-[1280px] ml-0 mr-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column (Mantiene el fondo claro del padre) */}
+          {/* Left Column (Fondo transparente, toma el #FAFAFA del padre) */}
           <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
             <div className="w-full h-full flex items-center justify-start m-0 p-0">
               <BlueprintVisualization />
             </div>
           </div>
 
-          {/* === DIVISOR VERTICAL === */}
-          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
+          {/* 
+             === DIVISOR VERTICAL === 
+             Z-Index: 30 (Debe estar POR ENCIMA del fondo negro Z-0 y del contenido Z-10)
+          */}
+          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-30 overflow-visible">
              
-             {/* --- ICONO ROBOT ERROR CENTRADO --- */}
+             {/* 
+                --- ICONO ROBOT ERROR CENTRADO --- 
+                Z-Index: 50 (El más alto de todos, POR ENCIMA del rayo y la línea)
+             */}
              <motion.div 
                 style={{ x: "-50%", y: "-50%" }} 
                 initial={{ scale: 0, opacity: 0, rotate: -15 }} 
                 
-                // Animación Robot (Rojo para indicar error inicial)
                 animate={showRobot ? {
                   scale: 1,
                   opacity: 1,
@@ -110,7 +123,7 @@ const CloudHero = () => {
                   boxShadow: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
                 }}
 
-                className="absolute top-1/2 left-1/2 z-40 p-1 rounded-lg border flex items-center justify-center"
+                className="absolute top-1/2 left-1/2 z-50 p-1 rounded-lg border flex items-center justify-center"
              >
                 <svg 
                   width="24" 
@@ -135,30 +148,36 @@ const CloudHero = () => {
                 </svg>
              </motion.div>
              
-             {/* 1. RAYO VERTICAL */}
+             {/* 
+               1. RAYO VERTICAL 
+               Z-Index: 40 (POR ENCIMA de la línea Z-30, pero DEBAJO del robot Z-50)
+             */}
              <motion.div 
                style={{ 
                  top: verticalTop,
                  opacity: verticalOpacity,
                  background: verticalGradient
                }}
-               className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
+               className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px] z-40"
              />
 
-             {/* 2. RAYO HORIZONTAL */}
+             {/* 
+               2. RAYO HORIZONTAL 
+               Z-Index: 40 (Igual que el vertical)
+             */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
                  background: `linear-gradient(to right, ${COLORS.cyan}, ${COLORS.emerald})`
                }}
-               className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
+               className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-40"
              />
 
-             {/* 3. FLASH CORNER */}
+             {/* 3. FLASH CORNER (Z-40 para estar con el rayo) */}
              <motion.div
                 style={{ opacity: flashOpacity }}
-                className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#06b6d4] blur-[1px] z-30"
+                className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#06b6d4] blur-[1px] z-40"
               />
           </div>
 
@@ -166,8 +185,8 @@ const CloudHero = () => {
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
           {/* Right Column: Content */}
-          {/* AQUI APLICAMOS EL FONDO NEGRO (#050505) SOLO A LA DERECHA */}
-          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0 bg-[#050505]" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
+          {/* En desktop es transparente (el div absoluto pone el negro). En mobile ponemos el negro aquí. */}
+          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0 bg-[#050505] lg:bg-transparent" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px]">
               
               {/* SUBTITLE */}
@@ -188,7 +207,7 @@ const CloudHero = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // CORREGIDO: Solo Emerald, Cyan y Blanco. Sin Rojos/Naranjas.
+                    // GRADIENTE LIMPIO: Solo Emerald, Cyan y White.
                     backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, ${COLORS.white}, ${COLORS.emerald}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
