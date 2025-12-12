@@ -39,7 +39,7 @@ const CloudHero = () => {
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
   // Empieza en 0.38 (retrasado respecto al robot que sale en 0.30)
-  const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["70%", "100%"]);
+  const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
   // Color del rayo: Rojo -> Gradiente Original
