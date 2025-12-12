@@ -206,12 +206,12 @@ const MarketingAppContent = () => {
         </div>
       </div>
       <div className="flex-1 overflow-y-auto px-4 pb-8 pt-2">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-6">
-          
+        {/* GAP REDUCIDO: gap-6 -> gap-3 para compactar contenido */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-3">
+          {/* TEXTO REDUCIDO: text-xl -> text-[17px] y leading-tight */}
           <h2 className="text-[17px] font-medium text-gray-900 leading-tight px-1 mt-2">
             Let's set your growth targets. Where should we focus our energy?
           </h2>
-          
           <div className="space-y-2">
             <AnimatePresence>
               {initialPreferences.map((preference, index) => (
@@ -332,79 +332,62 @@ export const SuperHero = ({
       {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         
-        {/* LAMP EFFECT MODIFICADO SEGÚN TU FEEDBACK */}
-        <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100 origin-top">
-          <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible scale-y-125">
+        {/* LAMP EFFECT (AJUSTADO: Máscara para altura corta y glow central bajado) */}
+        <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
+          <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             
-            {/* 1. HACES DE LUZ: Reducidos a 28rem (menos que la línea) para que no se abran tanto a los lados */}
+            {/* 1. Conic Gradient Derecha + MASK */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 1, width: "28rem", "--gradient-color": lampColor }}
+              animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
+              // MASK AGRESIVA: transparent 50% para acortar la luz
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, 
                 "--gradient-color": lampColor,
-                maskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 95%)",
-                WebkitMaskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 95%)"
+                maskImage: "linear-gradient(to top, transparent 50%, white 100%)",
+                WebkitMaskImage: "linear-gradient(to top, transparent 50%, white 100%)"
               } as any}
-              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[28rem] -translate-y-[7rem] text-white [--conic-position:from_70deg_at_center_top] blur-md"
+              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
             >
               <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
+            {/* 2. Conic Gradient Izquierda + MASK */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 1, width: "28rem", "--gradient-color": lampColor }}
+              animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
+              // MASK AGRESIVA: transparent 50%
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, 
                 "--gradient-color": lampColor,
-                maskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 95%)",
-                WebkitMaskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 95%)"
+                maskImage: "linear-gradient(to top, transparent 50%, white 100%)",
+                WebkitMaskImage: "linear-gradient(to top, transparent 50%, white 100%)"
               } as any}
-              className="absolute inset-auto left-1/2 h-56 w-[28rem] -translate-y-[7rem] text-white [--conic-position:from_290deg_at_center_top] blur-md"
+              className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
             >
                <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
-            {/* 3. LUZ CENTRAL (LA "MANCHA"): 
-               - Ancho reducido a 20rem (para que no ensucie los lados)
-               - Altura aumentada a h-80 (para que caiga más)
-               - Blur aumentado a 120px (para que se degrade y no parezca sólido)
-            */}
+            {/* 3. Blurs y Efectos Centrales */}
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
             
+            {/* Glow Central BAJADO: translate-y-[10%] en lugar de -translate-y-1/2 */}
             <motion.div 
               initial={{ opacity: 0 }} 
-              animate={{ opacity: 0.6 }} 
+              animate={{ opacity: 0.5, backgroundColor: lampColor }} 
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-              className="absolute inset-auto z-50 h-80 w-[20rem] -translate-y-[5rem] blur-[120px]"
-              style={{
-                background: `radial-gradient(circle at top, ${lampColor}, transparent 80%)`
-              }}
+              className="absolute inset-auto z-50 h-36 w-[28rem] translate-y-[10%] rounded-full blur-3xl" 
             />
             
-            {/* Arco Superior: Mantengo la estética de bombilla */}
-            <motion.div 
-                initial={{ opacity: 0, width: "8rem" }} 
-                animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} 
-                transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-                className="absolute inset-auto z-30 h-36 w-64 -translate-y-[7rem] rounded-full blur-2xl" 
-                style={{ 
-                    maskImage: "linear-gradient(to bottom, transparent 50%, black 50%)",
-                    WebkitMaskImage: "linear-gradient(to bottom, transparent 50%, black 50%)"
-                } as any}
-            />
+            {/* Arco Superior */}
+            <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
             
-            {/* LINEA FINA: Se mantiene ancha (30rem) como pediste */}
-            <motion.div 
-              initial={{ opacity: 0, width: "15rem" }} 
-              animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} 
-              transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-              className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" 
-            />
+            {/* Linea Fina */}
+            <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
             
             <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: 'transparent' }} />
           </div>
@@ -417,6 +400,7 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.7, duration: 1.0, ease: "easeOut" }} 
+            // TITULO REDUCIDO
             className="font-inter font-semibold text-[28px] md:text-[38px] lg:text-[48px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
           >
             We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
@@ -430,6 +414,7 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.9, duration: 1.0, ease: "easeOut" }} 
+            // SUBTITULO REDUCIDO
             className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-gray-400 max-w-3xl mx-auto"
           >
             <p>Stop relying on guesswork. We act as your entire growth engine.</p>
@@ -459,6 +444,7 @@ export const SuperHero = ({
       </div>
 
       {/* --- DIGITAL WORKFLOW SECTION --- */}
+      {/* MARGEN NEGATIVO AUMENTADO PARA SUBIR EL TELEFONO (-mt-24) */}
       <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-24">
         
         {/* LEFT TUNNEL (Code) */}
