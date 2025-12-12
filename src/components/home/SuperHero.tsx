@@ -269,8 +269,6 @@ export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
 }: SuperHeroProps) => {
-  // CAMBIO CLAVE: bgColor ahora es transparente para evitar el corte negro
-  const bgColor = "transparent";
   const lampColor = "#06b6d4"; 
 
   const radialColorSequence = [
@@ -335,39 +333,47 @@ export const SuperHero = ({
       {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         
-        {/* LAMP EFFECT (FIXED) */}
+        {/* LAMP EFFECT (FIXED: Solo un atributo Style con propiedades fusionadas) */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             
-            {/* 1. Conic Gradient Derecha */}
+            {/* 1. Conic Gradient Derecha + MASK Fusionados */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, "--gradient-color": lampColor } as any}
+              // AQUI ESTÁ LA CORRECCIÓN: Todo en un solo objeto style
+              style={{ 
+                backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, 
+                "--gradient-color": lampColor,
+                maskImage: "linear-gradient(to top, transparent 40%, white 100%)",
+                WebkitMaskImage: "linear-gradient(to top, transparent 40%, white 100%)"
+              } as any}
               className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
             >
-              {/* Masks transparentes (sin bloques sólidos) */}
-              <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: bgColor }} />
-              <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: bgColor }} />
+              <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
+              <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
-            {/* 2. Conic Gradient Izquierda */}
+            {/* 2. Conic Gradient Izquierda + MASK Fusionados */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              style={{ backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, "--gradient-color": lampColor } as any}
+              // AQUI ESTÁ LA CORRECCIÓN: Todo en un solo objeto style
+              style={{ 
+                backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, 
+                "--gradient-color": lampColor,
+                maskImage: "linear-gradient(to top, transparent 40%, white 100%)",
+                WebkitMaskImage: "linear-gradient(to top, transparent 40%, white 100%)"
+              } as any}
               className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
             >
-               {/* Masks transparentes */}
-              <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: bgColor }} />
-              <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: bgColor }} />
+               <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: "transparent" }} />
+              <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
             {/* 3. Blurs y Efectos Centrales */}
-            {/* Eliminado el fondo sólido aquí también */}
-            <div className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl" style={{ backgroundColor: 'transparent' }} />
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
             
             {/* Glow Central */}
@@ -379,11 +385,7 @@ export const SuperHero = ({
             {/* Linea Fina */}
             <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
             
-            {/* ELIMINADO EL BLOQUE SUPERIOR QUE CAUSABA EL CORTE */}
-            {/* <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: bgColor }} />  <-- ESTA LINEA ERA LA CULPABLE */}
-            
-            {/* Espacio reservado transparente */}
-             <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: 'transparent' }} />
+            <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: 'transparent' }} />
           </div>
         </div>
 
