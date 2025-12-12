@@ -134,7 +134,6 @@ const Sparkles = ({
 
 const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   const [step, setStep] = useState(1);
-  // Randomizamos el ROI mostrado en este widget específico también para variar
   const [roiValue] = useState(() => Math.floor(Math.random() * (150 - 110) + 110)); 
 
   useEffect(() => {
@@ -238,7 +237,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                 <motion.button 
                     key={preference.id} 
                     onClick={() => handleSelect(preference.id)} 
-                    // ANIMACIÓN: Fade in Glass Morph para cada botón individual
+                    // ANIMACIÓN: Fade in Glass Morph para cada botón
                     initial={{ opacity: 0, filter: "blur(4px)" }} 
                     animate={{ opacity: 1, filter: "blur(0px)" }} 
                     transition={{ duration: 0.5, delay: 0.4 + index * 0.15, ease: "easeOut" }} 
@@ -335,7 +334,7 @@ export const SuperHero = ({
     setCodeLines(lines);
   }, []);
 
-  // --- WIDGET GENERATION LOGIC (UPDATED WITH RANDOM NUMBERS) ---
+  // --- WIDGET GENERATION LOGIC ---
   const generateWidgetsData = (mode: string, count: number, burstMode: boolean = false) => {
     return Array.from({ length: count }).map((_, i) => {
         let type = 2; // Default
@@ -359,9 +358,8 @@ export const SuperHero = ({
             ? Math.random() * 1.5 
             : Math.random() * 6;
         
-        // Generar valores aleatorios para ROI y CTR
-        const randomROI = Math.floor(Math.random() * (450 - 150) + 150); // Entre 150 y 450
-        const randomCTR = (Math.random() * (9.5 - 2.1) + 2.1).toFixed(1); // Entre 2.1 y 9.5 con 1 decimal
+        const randomROI = Math.floor(Math.random() * (450 - 150) + 150); 
+        const randomCTR = (Math.random() * (9.5 - 2.1) + 2.1).toFixed(1); 
 
         return {
             id: Math.random().toString(36).substr(2, 9) + Date.now(),
@@ -512,17 +510,19 @@ export const SuperHero = ({
           ))}
         </div>
 
-        {/* --- ANIMACIÓN DEL TELÉFONO (Glass Morph Fade In) --- */}
-        <motion.div 
-            initial={{ opacity: 0, scale: 0.8, filter: "blur(15px)" }}
-            animate={{ opacity: 1, scale: 0.9, filter: "blur(0px)" }} // scale 0.9 es el tamaño final deseado (lg:scale-[0.9])
-            transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
-            className="relative z-[20] flex flex-col items-center justify-end origin-bottom"
-            // Reemplazamos las clases de escala de Tailwind por la animación de Framer Motion para suavidad
-        >
+        {/* --- CORRECCIÓN: Contenedor con posicionamiento original + Animación interna --- */}
+        <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
-          <PhoneFrame onOptionChange={handlePhoneOptionChange} />
-        </motion.div>
+          
+          {/* Animación Glass Morph Fade In aplicada al contenido del frame */}
+          <motion.div
+             initial={{ opacity: 0, filter: "blur(15px)", scale: 0.95 }}
+             animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+             transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+          >
+              <PhoneFrame onOptionChange={handlePhoneOptionChange} />
+          </motion.div>
+        </div>
 
         <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
@@ -545,7 +545,6 @@ export const SuperHero = ({
               )}
               {widget.type === 1 && (
                 <div className="w-28 h-28 bg-gradient-to-t from-slate-900 to-slate-800 border border-green-500/20 rounded-xl flex flex-col items-center justify-center shadow-xl backdrop-blur-sm rotate-6 p-2 gap-1">
-                  {/* WIDGET ROI CON NÚMERO ALEATORIO */}
                   <BarChart className="text-green-400 w-8 h-8" /><span className="text-[10px] text-green-300 font-bold">+{widget.roiValue}% ROI</span>
                 </div>
               )}
@@ -556,7 +555,6 @@ export const SuperHero = ({
               )}
               {widget.type === 3 && (
                 <div className="w-36 h-24 bg-slate-900 border border-slate-700 rounded-lg p-3 shadow-2xl -rotate-3 flex flex-col justify-between">
-                  {/* WIDGET CTR CON NÚMERO ALEATORIO */}
                   <div className="flex justify-between items-start"><div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center"><MousePointerClick size={16} className="text-white"/></div><div className="text-[10px] text-gray-400">CTR</div></div><div className="text-xl font-bold text-white">{widget.ctrValue}%</div>
                 </div>
               )}
