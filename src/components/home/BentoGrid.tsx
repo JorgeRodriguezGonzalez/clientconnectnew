@@ -140,13 +140,13 @@ const GlowingEffect = React.memo(
               "--repeating-conic-gradient-times": "5",
               "--gradient": `radial-gradient(circle, #EDBF86 10%, #EDBF8600 20%),
                 radial-gradient(circle at 40% 40%, #DE8363 5%, #DE836300 15%),
-                radial-gradient(circle at 60% 60%, #67BCB7 10%, #67BCB700 20%), 
+                radial-gradient(circle at 60% 60%, #06b6d4 10%, #06b6d400 20%), 
                 radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
                 repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
                   #EDBF86 0%,
                   #DE8363 calc(25% / var(--repeating-conic-gradient-times)),
-                  #67BCB7 calc(50% / var(--repeating-conic-gradient-times)), 
+                  #06b6d4 calc(50% / var(--repeating-conic-gradient-times)), 
                   #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
                   #EDBF86 calc(100% / var(--repeating-conic-gradient-times))
                 )`,
@@ -427,7 +427,7 @@ function FeaturesSectionMinimal() {
               <span
                 style={{
                   display: "inline-block",
-                  backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(237,191,134,0.2) 15%, rgba(237,191,134,0.5) 25%, rgb(237,191,134) 35%, rgb(222,131,99) 50%, rgb(103,188,183) 65%, rgba(103,188,183,0.5) 75%, rgba(103,188,183,0.2) 85%, rgba(255,255,255,0) 100%)",
+                  backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(237,191,134,0.2) 15%, rgba(237,191,134,0.5) 25%, rgb(237,191,134) 35%, rgb(222,131,99) 50%, #06b6d4 65%, rgba(6,182,212,0.5) 75%, rgba(6,182,212,0.2) 85%, rgba(255,255,255,0) 100%)",
                   backgroundSize: "300% 100%",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -553,7 +553,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                 <div
                   className="absolute inset-0"
                   style={{ 
-                    background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(102,204,224), transparent 72%)",
+                    background: "radial-gradient(ellipse 60% 120% at 12% 0%, rgb(6, 182, 212), transparent 72%)",
                     animation: "bento2-gradient-fade2 10.5s ease-in-out infinite"
                   }}
                 />
@@ -718,8 +718,8 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                   >
                     <defs>
                       <linearGradient id="chartGradientTeal" x1="0.4994780349390567" x2="0.5005219650609433" y1="0" y2="1">
-                        <stop offset="0" stopColor="rgba(103, 188, 183, 0.6)" stopOpacity="0.6" />
-                        <stop offset="1" stopColor="rgba(103, 188, 183, 0)" stopOpacity="0" />
+                        <stop offset="0" stopColor="rgba(6, 182, 212, 0.6)" stopOpacity="0.6" />
+                        <stop offset="1" stopColor="rgba(6, 182, 212, 0)" stopOpacity="0" />
                       </linearGradient>
                       <linearGradient id="chartGradientCoral" x1="0.4994780349390567" x2="0.5005219650609433" y1="0" y2="1">
                         <stop offset="0" stopColor="rgba(255, 127, 80, 0.6)" stopOpacity="0.6" />
@@ -739,7 +739,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                       y1="152"
                       x2="490"
                       y2="152"
-                      stroke="rgba(103, 188, 183, 0.3)"
+                      stroke="rgba(6, 182, 212, 0.3)"
                       strokeWidth="2"
                       strokeDasharray="5,5"
                       initial={{ opacity: 0 }}
@@ -752,7 +752,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                         key={`chart-teal-${hoverCount}`}
                         d="M 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 L 489.248 283.23 Z" 
                         fill="url(#chartGradientTeal)" 
-                        stroke="#67BCB7" 
+                        stroke="#06b6d4" 
                         strokeWidth="1.77" 
                         strokeMiterlimit="10" 
                         initial={{ pathLength: 0, opacity: 0 }} 
@@ -780,7 +780,7 @@ function BentoItem({ feature, span = "", theme = "light", index = 0, isVisible =
                         key={`line-teal-${hoverCount}`}
                         d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
                         fill="transparent" 
-                        stroke="rgba(103, 188, 183, 0.5)" 
+                        stroke="rgba(6, 182, 212, 0.5)" 
                         strokeWidth="2" 
                         strokeMiterlimit="10" 
                         strokeDasharray="9.07,9.07" 

@@ -232,8 +232,10 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                 <motion.button 
                     key={preference.id} 
                     onClick={() => handleSelect(preference.id)} 
-                    initial={{ opacity: 0, x: -20 }} 
-                    animate={{ opacity: 1, x: 0 }} 
+                    // --- MODIFICACIÓN AQUÍ: Se eliminó x: -20 y x: 0 para que solo sea Fade In ---
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1 }} 
+                    // --------------------------------------------------------------------------
                     transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }} 
                     className={`w-full flex items-center gap-3 px-4 py-4 rounded-[1.2rem] transition-all duration-300 ${selectedPreference === preference.id ? 'bg-black text-white shadow-lg scale-[1.02]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}
                 >
