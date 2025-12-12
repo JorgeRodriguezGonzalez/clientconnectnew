@@ -322,8 +322,8 @@ export const SuperHero = ({
   }, []);
 
   return (
-    // CAMBIO: Se usa bg-gradient-to-br (arriba-izq a abajo-der) en lugar de bg-gradient-to-r
-    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#1e293b] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
+    // CAMBIO APLICADO: bg-gradient-to-br con final en #15171c (Menos azul, casi negro/gris oscuro)
+    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
       <style>{fontStyles}</style>
       
       {/* BACKGROUND SPARKLES & RADIAL (Behind everything) */}
