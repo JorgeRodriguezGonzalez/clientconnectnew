@@ -191,7 +191,6 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
 };
 
 const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
-  // CAMBIO: Actualizados los labels
   const initialPreferences = [
     { id: 'leads', label: 'Maximize Lead Gen' }, 
     { id: 'clicks', label: 'Increase Clicks & CTR' }, 
@@ -203,7 +202,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 
   const handleSelect = (id: string) => {
     setSelectedPreference(id);
-    onOptionChange(id); // Comunicar al padre
+    onOptionChange(id); 
   };
 
   return (
@@ -217,8 +216,9 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
         </div>
       </div>
       <div className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
-        {/* CAMBIO: Aumentado gap-2 a gap-6 para más distancia entre elementos */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-6">
+        
+        {/* GAP AJUSTADO: gap-4 es el punto medio ideal */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-4">
           
           <h2 className="text-[16px] font-medium text-gray-900 leading-tight px-1 mt-2">
             Let's set your growth targets. Where should we focus our energy?
@@ -246,8 +246,8 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
             </AnimatePresence>
           </div>
           
-          {/* CAMBIO: Margen superior aumentado para separar del bloque negro */}
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} className="mt-4">
+          {/* MARGIN TOP AJUSTADO: mt-2 para acercarlo un poco más */}
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} className="mt-2">
             <CampaignProgressWidget />
           </motion.div>
         </motion.div>
@@ -298,9 +298,8 @@ export const SuperHero = ({
 
   const [codeLines, setCodeLines] = useState<any[]>([]);
   const [uiWidgets, setUiWidgets] = useState<any[]>([]);
-  const [activeMode, setActiveMode] = useState('leads'); // Nuevo estado para controlar qué mostrar
-
-  // 1. Efecto inicial para el código (izquierda)
+  
+  // 1. Inicialización de código flotante (izquierda)
   useEffect(() => {
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
@@ -322,60 +321,68 @@ export const SuperHero = ({
     setCodeLines(lines);
   }, []);
 
-  // 2. Función para generar widgets ponderados según la opción seleccionada
-  const generateWidgets = (mode: string) => {
-    // Definir Tipos: 
-    // 0: Lead (CheckCircle - Green) -> Target: 'leads'
-    // 1: ROI (BarChart - Gradient) -> Target: 'revenue'
-    // 2: Client (Generic Users - Blue)
-    // 3: Click/CTR (MousePointer - Dark Blue) -> Target: 'clicks'
-
-    const newWidgets = Array.from({ length: 18 }).map((_, i) => {
+  // 2. Función para generar widgets (Devuelve array, no setea estado directamente)
+  // `count`: cuántos generar
+  // `burstMode`: si es true, los delays son muy cortos (efecto inmediato)
+  const generateWidgetsData = (mode: string, count: number, burstMode: boolean = false) => {
+    return Array.from({ length: count }).map((_, i) => {
         let type = 2; // Default
         const rand = Math.random();
 
-        // Lógica de Ponderación
+        // Lógica de Ponderación (80% del tipo seleccionado)
         if (mode === 'leads') {
-            // 80% Lead Acquired
-            if (rand < 0.8) type = 0;
+            if (rand < 0.8) type = 0; // Lead Green
             else if (rand < 0.9) type = 2; 
             else type = 3;
         } else if (mode === 'clicks') {
-            // 80% CTR/Clicks
-            if (rand < 0.8) type = 3;
+            if (rand < 0.8) type = 3; // CTR Blue
             else if (rand < 0.9) type = 0;
             else type = 1;
         } else if (mode === 'revenue') {
-             // 80% ROI
-             if (rand < 0.8) type = 1;
+             if (rand < 0.8) type = 1; // ROI Chart
              else if (rand < 0.9) type = 2;
              else type = 0;
         }
 
-        // Delay reducido para efecto "Burst" al inicio
-        // Los primeros elementos tienen delay casi 0 para salir disparados
-        const delay = i < 5 ? Math.random() * 0.5 : Math.random() * 6; 
+        // Delay logic: Burst = inmediatos, Normal = distribuidos
+        const delay = burstMode 
+            ? Math.random() * 1.5 // Burst: entre 0 y 1.5s
+            : Math.random() * 6;  // Normal: distribuido
 
         return {
-            id: Math.random().toString(36).substr(2, 9), // ID único para forzar re-render
+            id: Math.random().toString(36).substr(2, 9) + Date.now(), // ID único siempre
             type: type, 
             top: `${15 + Math.random() * 70}%`, 
             delay: `${delay}s`,
             duration: `${5 + Math.random() * 4}s`
         };
     });
-    setUiWidgets(newWidgets);
   };
 
-  // 3. Inicializar widgets
+  // 3. Inicialización inicial de widgets (Mix)
   useEffect(() => {
-    generateWidgets('leads');
+    setUiWidgets(generateWidgetsData('leads', 15, false));
   }, []);
 
-  // 4. Handler que se pasa al teléfono
+  // 4. Handler interactivo: NO reemplaza, añade (APPEND)
   const handlePhoneOptionChange = (id: string) => {
-      setActiveMode(id);
-      generateWidgets(id); // Regenerar widgets inmediatamente (burst effect)
+      // Generar BURST de nuevos widgets (12 unidades) con el nuevo tipo
+      const newBurstWidgets = generateWidgetsData(id, 12, true);
+      
+      // Añadimos los nuevos a la lista existente
+      setUiWidgets(prev => [...prev, ...newBurstWidgets]);
+
+      // CLEANUP: Para que el navegador no se sature, eliminamos los widgets más viejos
+      // después de que el burst haya ocurrido. Mantenemos el array limpio.
+      setTimeout(() => {
+         setUiWidgets(prev => {
+             // Si hay más de 25 widgets, quitamos los primeros (los más viejos)
+             if (prev.length > 25) {
+                 return prev.slice(prev.length - 25);
+             }
+             return prev;
+         });
+      }, 8000); // 8 segundos es suficiente para que el burst se asiente
   };
 
   return (
@@ -400,7 +407,7 @@ export const SuperHero = ({
 
       {/* HEADER SECTION */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
-        {/* LAMP EFFECT (Sin cambios en lógica visual) */}
+        {/* LAMP EFFECT */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             <motion.div
@@ -518,7 +525,6 @@ export const SuperHero = ({
         {/* CENTER PHONE */}
         <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
-          {/* Pasamos el handler al PhoneFrame */}
           <PhoneFrame onOptionChange={handlePhoneOptionChange} />
         </div>
 
@@ -526,10 +532,9 @@ export const SuperHero = ({
         <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
           <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
-          {/* Utilizamos AnimatePresence si quisiéramos transiciones suaves de salida, pero en este caso queremos flujo continuo */}
           {uiWidgets.map((widget) => (
             <div
-              key={widget.id} // La clave única reinicia la animación al regenerar
+              key={widget.id} 
               className="absolute opacity-0"
               style={{
                 top: widget.top,
