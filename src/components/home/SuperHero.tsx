@@ -218,14 +218,14 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
       <div className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
         
         {/* GAP PADRE AJUSTADO: gap-[15px] es exactamente 1px menos que el gap-4 (16px) */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-[15px]">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-[14px]">
           
           <h2 className="text-[16px] font-medium text-gray-900 leading-tight px-1 mt-2">
             Let's set your growth targets. Where should we focus our energy?
           </h2>
           
           {/* SPACE-Y AJUSTADO: space-y-[10px] es exactamente 2px menos que space-y-3 (12px) */}
-          <div className="space-y-[10px]">
+          <div className="space-y-[11px]">
             <AnimatePresence mode='wait'>
               {initialPreferences.map((preference, index) => (
                 <motion.button 
