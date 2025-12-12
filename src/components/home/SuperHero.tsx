@@ -190,20 +190,11 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   );
 };
 
-const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
-  const initialPreferences = [
-    { id: 'leads', label: 'Maximize Lead Gen' }, 
-    { id: 'clicks', label: 'Increase Clicks & CTR' }, 
-    { id: 'revenue', label: 'Scale Revenue (ROI)' }
-  ];
-  
+const MarketingAppContent = () => {
+  const initialPreferences = [{ id: 'leads', label: 'Maximize Lead Gen' }, { id: 'brand', label: 'Boost Brand Authority' }, { id: 'revenue', label: 'Scale Revenue (ROI)' }];
   const [selectedPreference, setSelectedPreference] = useState('leads');
+  const [inputValue, setInputValue] = useState('');
   const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-
-  const handleSelect = (id: string) => {
-    setSelectedPreference(id);
-    onOptionChange(id); 
-  };
 
   return (
     <div className="flex flex-col h-full bg-white relative font-sans">
@@ -215,27 +206,13 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
           <Battery className="w-[22px] h-[16px]" strokeWidth={2.5} />
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
-        
-        {/* GAP PADRE AJUSTADO: gap-[15px] es exactamente 1px menos que el gap-4 (16px) */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-[12px]">
-          
-          <h2 className="text-[16px] font-medium text-gray-900 leading-tight px-1 mt-2">
-            Let's set your growth targets. Where should we focus our energy?
-          </h2>
-          
-          {/* SPACE-Y AJUSTADO: space-y-[10px] es exactamente 2px menos que space-y-3 (12px) */}
-          <div className="space-y-[11px]">
-            <AnimatePresence mode='wait'>
+      <div className="flex-1 overflow-y-auto px-4 pb-8 pt-2">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-6">
+          <h2 className="text-xl font-medium text-gray-900 leading-snug px-1 mt-2">Let's set your growth targets. Where should we focus our energy?</h2>
+          <div className="space-y-2">
+            <AnimatePresence>
               {initialPreferences.map((preference, index) => (
-                <motion.button 
-                    key={preference.id} 
-                    onClick={() => handleSelect(preference.id)} 
-                    initial={{ opacity: 0, x: -20 }} 
-                    animate={{ opacity: 1, x: 0 }} 
-                    transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }} 
-                    className={`w-full flex items-center gap-3 px-4 py-4 rounded-[1.2rem] transition-all duration-300 ${selectedPreference === preference.id ? 'bg-black text-white shadow-lg scale-[1.02]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}
-                >
+                <motion.button key={preference.id} onClick={() => setSelectedPreference(preference.id)} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-[1.2rem] transition-all duration-300 ${selectedPreference === preference.id ? 'bg-black text-white shadow-lg scale-[1.02]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
                   <div className="flex items-center justify-center flex-shrink-0">
                     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedPreference === preference.id ? 'border-white bg-white' : 'border-gray-400'}`}>
                       {selectedPreference === preference.id && (<motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></motion.svg>)}
@@ -246,8 +223,12 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
               ))}
             </AnimatePresence>
           </div>
-          
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.6 }} className="mt-2">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.7 }} className="flex items-center gap-3 px-4 py-3 bg-gray-100 rounded-[1.5rem]">
+            <Users className="w-5 h-5 text-gray-400 flex-shrink-0" />
+            <input type="text" placeholder="Target audience..." value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="flex-1 bg-transparent text-gray-900 text-[15px] placeholder:text-gray-400 outline-none border-none" />
+            <button className={`flex-shrink-0 p-2 rounded-full transition-all duration-200 ${inputValue.trim() ? 'bg-black text-white' : 'bg-gray-300 text-gray-500'}`}><Send className="w-4 h-4" /></button>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.8 }} className="mt-2">
             <CampaignProgressWidget />
           </motion.div>
         </motion.div>
@@ -257,7 +238,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   );
 };
 
-const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
+const PhoneFrame = () => {
   return (
     <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
       <div className="absolute left-[-4px] top-[120px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
@@ -268,7 +249,7 @@ const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
           <div className="absolute right-[25%] w-[10px] h-[10px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
-        <MarketingAppContent onOptionChange={onOptionChange} />
+        <MarketingAppContent />
       </div>
     </div>
   );
@@ -298,7 +279,7 @@ export const SuperHero = ({
 
   const [codeLines, setCodeLines] = useState<any[]>([]);
   const [uiWidgets, setUiWidgets] = useState<any[]>([]);
-  
+
   useEffect(() => {
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
@@ -318,58 +299,16 @@ export const SuperHero = ({
       };
     });
     setCodeLines(lines);
+
+    const widgets = Array.from({ length: 15 }).map((_, i) => ({
+      id: i,
+      type: Math.floor(Math.random() * 4), 
+      top: `${15 + Math.random() * 70}%`, 
+      delay: `${Math.random() * 6}s`,
+      duration: `${5 + Math.random() * 4}s`
+    }));
+    setUiWidgets(widgets);
   }, []);
-
-  const generateWidgetsData = (mode: string, count: number, burstMode: boolean = false) => {
-    return Array.from({ length: count }).map((_, i) => {
-        let type = 2; // Default
-        const rand = Math.random();
-
-        if (mode === 'leads') {
-            if (rand < 0.8) type = 0; 
-            else if (rand < 0.9) type = 2; 
-            else type = 3;
-        } else if (mode === 'clicks') {
-            if (rand < 0.8) type = 3; 
-            else if (rand < 0.9) type = 0;
-            else type = 1;
-        } else if (mode === 'revenue') {
-             if (rand < 0.8) type = 1; 
-             else if (rand < 0.9) type = 2;
-             else type = 0;
-        }
-
-        const delay = burstMode 
-            ? Math.random() * 1.5 
-            : Math.random() * 6;
-
-        return {
-            id: Math.random().toString(36).substr(2, 9) + Date.now(),
-            type: type, 
-            top: `${15 + Math.random() * 70}%`, 
-            delay: `${delay}s`,
-            duration: `${5 + Math.random() * 4}s`
-        };
-    });
-  };
-
-  useEffect(() => {
-    setUiWidgets(generateWidgetsData('leads', 15, false));
-  }, []);
-
-  const handlePhoneOptionChange = (id: string) => {
-      const newBurstWidgets = generateWidgetsData(id, 12, true);
-      setUiWidgets(prev => [...prev, ...newBurstWidgets]);
-
-      setTimeout(() => {
-         setUiWidgets(prev => {
-             if (prev.length > 25) {
-                 return prev.slice(prev.length - 25);
-             }
-             return prev;
-         });
-      }, 8000); 
-  };
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-r from-black via-[#050505] to-[#1e293b] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
@@ -391,49 +330,61 @@ export const SuperHero = ({
         />
       </div>
 
-      {/* HEADER SECTION */}
+      {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
+        
+        {/* LAMP EFFECT (FIXED: Solo un atributo Style con propiedades fusionadas) */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
+            
+            {/* 1. Conic Gradient Derecha + MASK Fusionados */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
+              // AQUI ESTÁ LA CORRECCIÓN: Todo en un solo objeto style
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, 
                 "--gradient-color": lampColor,
-                maskImage: "linear-gradient(to bottom, white 0%, transparent 20%)", 
-                WebkitMaskImage: "linear-gradient(to bottom, white 0%, transparent 20%)"
+                maskImage: "linear-gradient(to top, transparent 40%, white 100%)",
+                WebkitMaskImage: "linear-gradient(to top, transparent 40%, white 100%)"
               } as any}
               className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
             >
               <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
+
+            {/* 2. Conic Gradient Izquierda + MASK Fusionados */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
+              // AQUI ESTÁ LA CORRECCIÓN: Todo en un solo objeto style
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, 
                 "--gradient-color": lampColor,
-                maskImage: "linear-gradient(to bottom, white 0%, transparent 20%)",
-                WebkitMaskImage: "linear-gradient(to bottom, white 0%, transparent 20%)"
+                maskImage: "linear-gradient(to top, transparent 40%, white 100%)",
+                WebkitMaskImage: "linear-gradient(to top, transparent 40%, white 100%)"
               } as any}
               className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
             >
                <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
+
+            {/* 3. Blurs y Efectos Centrales */}
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 0.3, backgroundColor: lampColor }} 
-              transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-              className="absolute inset-auto z-50 h-20 w-[28rem] translate-y-4 rounded-full blur-3xl" 
-            />
-            <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 0.7, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
+            
+            {/* Glow Central */}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.5, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
+            
+            {/* Arco Superior */}
+            <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
+            
+            {/* Linea Fina */}
             <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
+            
             <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: 'transparent' }} />
           </div>
         </div>
@@ -445,7 +396,7 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.7, duration: 1.0, ease: "easeOut" }} 
-            className="font-inter font-semibold text-[28px] md:text-[38px] lg:text-[48px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
+            className="font-inter font-semibold text-[32px] md:text-[42px] lg:text-[56px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
           >
             We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
             <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
@@ -458,7 +409,7 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.9, duration: 1.0, ease: "easeOut" }} 
-            className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-gray-400 max-w-3xl mx-auto"
+            className="flex flex-col items-center gap-2 font-inter font-light text-[16px] md:text-[18px] text-gray-400 max-w-3xl mx-auto"
           >
             <p>Stop relying on guesswork. We act as your entire growth engine.</p>
             <p className="text-gray-300">
@@ -487,7 +438,7 @@ export const SuperHero = ({
       </div>
 
       {/* --- DIGITAL WORKFLOW SECTION --- */}
-      <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-24">
+      <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-10">
         
         {/* LEFT TUNNEL (Code) */}
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
@@ -510,7 +461,7 @@ export const SuperHero = ({
         {/* CENTER PHONE */}
         <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
-          <PhoneFrame onOptionChange={handlePhoneOptionChange} />
+          <PhoneFrame />
         </div>
 
         {/* RIGHT TUNNEL (Widgets) */}
@@ -519,7 +470,7 @@ export const SuperHero = ({
           <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
           {uiWidgets.map((widget) => (
             <div
-              key={widget.id} 
+              key={widget.id}
               className="absolute opacity-0"
               style={{
                 top: widget.top,
