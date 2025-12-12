@@ -33,7 +33,7 @@ const cn = (...classes: (string | undefined | null | false)[]) => classes.filter
 
 // --- COLORS ---
 const COLORS = {
-  turquoise: "#67bcb7",
+  cyan: "#06b6d4", // Modificado de turquoise (#67bcb7) a cyan
   coral: "#de8363",
   gold: "#edbf86",
 };
@@ -328,13 +328,13 @@ const GlowingEffect = React.memo(
               "--repeating-conic-gradient-times": "5",
               "--gradient": `radial-gradient(circle, ${COLORS.gold} 10%, #EDBF8600 20%),
                 radial-gradient(circle at 40% 40%, ${COLORS.coral} 5%, #DE836300 15%),
-                radial-gradient(circle at 60% 60%, ${COLORS.turquoise} 10%, #67BCB700 20%), 
+                radial-gradient(circle at 60% 60%, ${COLORS.cyan} 10%, #06b6d400 20%), 
                 radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
                 repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
                   ${COLORS.gold} 0%,
                   ${COLORS.coral} calc(25% / var(--repeating-conic-gradient-times)),
-                  ${COLORS.turquoise} calc(50% / var(--repeating-conic-gradient-times)), 
+                  ${COLORS.cyan} calc(50% / var(--repeating-conic-gradient-times)), 
                   #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
                   ${COLORS.gold} calc(100% / var(--repeating-conic-gradient-times))
                 )`,
@@ -613,7 +613,7 @@ export const FounderSection = () => {
   const [isCaseStudyActive, setIsCaseStudyActive] = useState(false);
 
   // --- ANIMATION CONSTANTS FOR BUTTON ---
-  const buttonColorSequence = [COLORS.coral, COLORS.coral, COLORS.turquoise, COLORS.turquoise, COLORS.coral];
+  const buttonColorSequence = [COLORS.coral, COLORS.coral, COLORS.cyan, COLORS.cyan, COLORS.coral];
   const buttonColorDuration = 10;
 
   const { scrollYProgress } = useScroll({
@@ -661,7 +661,7 @@ export const FounderSection = () => {
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
          <motion.div 
             animate={{
-              backgroundColor: [COLORS.coral, COLORS.turquoise, COLORS.coral],
+              backgroundColor: [COLORS.coral, COLORS.cyan, COLORS.coral],
             }}
             transition={{
               duration: 10,
@@ -714,7 +714,7 @@ export const FounderSection = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
