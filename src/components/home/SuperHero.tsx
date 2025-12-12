@@ -6,17 +6,28 @@ import {
   TrendingUp, Users, DollarSign, MousePointerClick 
 } from 'lucide-react';
 
-// --- FONTS STYLES ---
+// --- FONTS STYLES & ANIMATIONS ---
 const fontStyles = `
   .font-inter {
     font-family: 'Satoshi', sans-serif;
   }
+  
+  /* Animación normal (Parte inferior): Llega hasta el centro */
   @keyframes codeFlow {
     0% { transform: translateX(-50px) scale(0.8); opacity: 0; }
     10% { opacity: 0.6; }
-    90% { opacity: 0.8; }
+    80% { opacity: 0.8; }
     100% { transform: translateX(50vw); opacity: 0; }
   }
+
+  /* Animación SUPERIOR: Se desvanece antes de tocar los botones */
+  @keyframes codeFlowTop {
+    0% { transform: translateX(-50px) scale(0.8); opacity: 0; }
+    10% { opacity: 0.4; }
+    40% { opacity: 0; } /* Desaparece al 40% del trayecto */
+    100% { transform: translateX(30vw); opacity: 0; }
+  }
+
   @keyframes uiFlow {
     0% { transform: translateX(0) scale(0.8) perspective(500px) rotateY(15deg); opacity: 0; }
     20% { opacity: 1; }
@@ -24,7 +35,7 @@ const fontStyles = `
   }
 `;
 
-// --- SPARKLES COMPONENT (Original) ---
+// --- SPARKLES COMPONENT ---
 const Sparkles = ({
   id,
   background,
@@ -256,7 +267,7 @@ type SuperHeroProps = {
   highlightedText?: string;
   primaryButtonText?: string;
   secondaryButtonText?: string;
-  images?: string[]; // Kept for prop compatibility but unused
+  images?: string[]; 
 };
 
 export const SuperHero = ({
@@ -280,14 +291,23 @@ export const SuperHero = ({
     // Generate Code Particles (Left Tunnel)
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
-    const lines = Array.from({ length: 25 }).map((_, i) => ({
-      id: i,
-      text: codeSnippets[Math.floor(Math.random() * codeSnippets.length)],
-      color: syntaxColors[Math.floor(Math.random() * syntaxColors.length)],
-      top: `${Math.random() * 90}%`,
-      delay: `${Math.random() * 5}s`,
-      duration: `${3 + Math.random() * 3}s`,
-    }));
+    
+    const lines = Array.from({ length: 25 }).map((_, i) => {
+      const topPos = Math.random() * 90;
+      // Detección: ¿Está en el 45% superior?
+      const isTopLine = topPos < 45; 
+
+      return {
+        id: i,
+        text: codeSnippets[Math.floor(Math.random() * codeSnippets.length)],
+        color: syntaxColors[Math.floor(Math.random() * syntaxColors.length)],
+        top: `${topPos}%`,
+        delay: `${Math.random() * 5}s`,
+        duration: `${3 + Math.random() * 3}s`,
+        // Asignamos la animación especial si es Top
+        animationName: isTopLine ? 'codeFlowTop' : 'codeFlow',
+      };
+    });
     setCodeLines(lines);
 
     // Generate UI Widgets (Right Tunnel)
@@ -302,7 +322,8 @@ export const SuperHero = ({
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-[#050505] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
+    // CAMBIO 1: Gradiente Global aplicado aquí
+    <div className="w-full min-h-screen bg-gradient-to-r from-black via-[#050505] to-[#1e293b] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
       <style>{fontStyles}</style>
       
       {/* BACKGROUND SPARKLES & RADIAL (Behind everything) */}
@@ -405,19 +426,20 @@ export const SuperHero = ({
         </div>
       </div>
 
-      {/* --- NEW DIGITAL WORKFLOW SECTION (Replaces Marquee) --- */}
+      {/* --- DIGITAL WORKFLOW SECTION --- */}
       <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-10">
         
         {/* LEFT TUNNEL (Code) - z-10 */}
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/90 to-transparent"></div>
+          {/* CAMBIO: Gradiente sutil para mantener efecto tunel sin romper el BG principal */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
           {codeLines.map((line) => (
             <div
               key={line.id}
               className={`absolute left-0 whitespace-nowrap font-mono text-xs md:text-sm ${line.color} opacity-0 blur-[0.5px]`}
               style={{
                 top: line.top,
-                animation: `codeFlow ${line.duration} linear infinite`,
+                animation: `${line.animationName} ${line.duration} linear infinite`, // CAMBIO: Usa animationName dinámico
                 animationDelay: line.delay,
               }}
             >
@@ -434,7 +456,8 @@ export const SuperHero = ({
 
         {/* RIGHT TUNNEL (Widgets) - z-10 */}
         <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b] via-[#0f172a] to-transparent opacity-95"></div>
+          {/* CAMBIO: Gradiente ajustado para blending */}
+          <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
           <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
           {uiWidgets.map((widget) => (
             <div
