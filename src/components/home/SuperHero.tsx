@@ -311,8 +311,8 @@ export const SuperHero = ({
   }, []);
 
   return (
-    // CAMBIO: Padding top reducido (pt-16 -> pt-4)
-    <div className="w-full min-h-screen bg-gradient-to-r from-black via-[#050505] to-[#1e293b] flex flex-col items-center justify-start pt-4 px-0 overflow-hidden relative">
+    // AJUSTE: Padding top intermedio (pt-10)
+    <div className="w-full min-h-screen bg-gradient-to-r from-black via-[#050505] to-[#1e293b] flex flex-col items-center justify-start pt-10 px-0 overflow-hidden relative">
       <style>{fontStyles}</style>
       
       {/* BACKGROUND SPARKLES & RADIAL */}
@@ -334,12 +334,11 @@ export const SuperHero = ({
       {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         
-        {/* LAMP EFFECT */}
-        {/* CAMBIO: Padding top de la lampara reducido (pt-56 -> pt-32) para subir todo */}
+        {/* LAMP EFFECT (AJUSTE: pt-48, intermedio) */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
-          <div className="w-full h-[80px] relative flex items-center justify-center pt-32 overflow-visible">
+          <div className="w-full h-[80px] relative flex items-center justify-center pt-48 overflow-visible">
             
-            {/* 1. Conic Gradient Derecha + MASK */}
+            {/* 1. Conic Gradient Derecha + MASK Fusionados */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
@@ -356,7 +355,7 @@ export const SuperHero = ({
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
-            {/* 2. Conic Gradient Izquierda + MASK */}
+            {/* 2. Conic Gradient Izquierda + MASK Fusionados */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
@@ -389,7 +388,6 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.7, duration: 1.0, ease: "easeOut" }} 
-            // CAMBIO: Tamaños de fuente reducidos
             className="font-inter font-semibold text-[28px] md:text-[36px] lg:text-[48px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
           >
             We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
@@ -403,7 +401,6 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.9, duration: 1.0, ease: "easeOut" }} 
-            // CAMBIO: Tamaños de fuente reducidos
             className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-gray-400 max-w-3xl mx-auto"
           >
             <p>Stop relying on guesswork. We act as your entire growth engine.</p>
@@ -433,8 +430,8 @@ export const SuperHero = ({
       </div>
 
       {/* --- DIGITAL WORKFLOW SECTION --- */}
-      {/* CAMBIO: Margen negativo aumentado (-mt-10 -> -mt-24) para subir el móvil */}
-      <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-24">
+      {/* AJUSTE: Margen negativo intermedio (-mt-16) */}
+      <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-16">
         
         {/* LEFT TUNNEL (Code) */}
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
@@ -455,8 +452,8 @@ export const SuperHero = ({
         </div>
 
         {/* CENTER PHONE */}
-        {/* CAMBIO: translate-y reducido (15% -> 5%) para que el movil no esté tan hundido */}
-        <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[5%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
+        {/* AJUSTE: Translation vertical intermedia (10%) para evitar solapamiento con CTAs */}
+        <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[10%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           <PhoneFrame />
         </div>
