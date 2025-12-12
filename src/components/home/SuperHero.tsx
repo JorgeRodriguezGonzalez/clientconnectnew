@@ -332,14 +332,14 @@ export const SuperHero = ({
       {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         
-        {/* LAMP EFFECT (GEOMETRÍA CORREGIDA) */}
+        {/* LAMP EFFECT */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             
-            {/* 1. HACES DE LUZ: Añadido blur-md para suavizar los bordes del triangulo */}
+            {/* 1. HACES DE LUZ: Reducido ancho a 15rem (menos extenso a los lados) */}
             <motion.div
-              initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
+              initial={{ opacity: 0, width: "10rem" }}
+              animate={{ opacity: 1, width: "15rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, 
@@ -347,16 +347,15 @@ export const SuperHero = ({
                 maskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 90%)",
                 WebkitMaskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 90%)"
               } as any}
-              // AÑADIDO: blur-md
-              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] -translate-y-[7rem] text-white [--conic-position:from_70deg_at_center_top] blur-md"
+              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[15rem] -translate-y-[7rem] text-white [--conic-position:from_70deg_at_center_top] blur-md"
             >
               <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
+              initial={{ opacity: 0, width: "10rem" }}
+              animate={{ opacity: 1, width: "15rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, 
@@ -364,29 +363,27 @@ export const SuperHero = ({
                 maskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 90%)",
                 WebkitMaskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 90%)"
               } as any}
-              // AÑADIDO: blur-md
-              className="absolute inset-auto left-1/2 h-56 w-[30rem] -translate-y-[7rem] text-white [--conic-position:from_290deg_at_center_top] blur-md"
+              className="absolute inset-auto left-1/2 h-56 w-[15rem] -translate-y-[7rem] text-white [--conic-position:from_290deg_at_center_top] blur-md"
             >
                <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
-            {/* 3. LUZ CENTRAL DIFUMINADA (Reemplazo de la forma solida "pastilla") */}
+            {/* 3. LUZ CENTRAL: Más difuminada (blur-90px) y centrada */}
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
             
-            {/* NUEVA ESTRATEGIA: Gradiente Radial en lugar de div solido con border-radius */}
             <motion.div 
               initial={{ opacity: 0 }} 
-              animate={{ opacity: 0.6 }} 
+              animate={{ opacity: 0.8 }} 
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-              className="absolute inset-auto z-50 h-40 w-[30rem] -translate-y-[5rem] blur-[60px]"
+              className="absolute inset-auto z-50 h-48 w-[28rem] -translate-y-[5rem] blur-[90px]"
               style={{
-                // Usamos background radial que se desvanece de forma natural
-                background: `radial-gradient(circle at top, ${lampColor}, transparent 70%)`
+                // Gradiente ajustado para ser más intenso en el centro pero desvanecerse suave
+                background: `radial-gradient(circle at top, ${lampColor}, transparent 60%)`
               }}
             />
             
-            {/* Arco Superior (Fuente de luz visible) */}
+            {/* Arco Superior */}
             <motion.div 
                 initial={{ opacity: 0, width: "8rem" }} 
                 animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} 
@@ -398,8 +395,8 @@ export const SuperHero = ({
                 } as any}
             />
             
-            {/* Linea Fina */}
-            <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
+            {/* Linea Fina: Ajustada al ancho de los haces (15rem) */}
+            <motion.div initial={{ opacity: 0, width: "10rem" }} animate={{ opacity: 1, width: "15rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[15rem] -translate-y-[7rem]" />
             
             <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: 'transparent' }} />
           </div>
