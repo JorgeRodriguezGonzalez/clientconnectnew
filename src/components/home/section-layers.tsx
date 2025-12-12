@@ -6,7 +6,7 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 const COLORS = {
   cyan: "#06b6d4", 
   emerald: "#34d399", 
-  red: "#9A3426", // Rojo solo para el inicio del rayo/robot
+  red: "#9A3426", 
   white: "#FFFFFF"
 };
 
@@ -39,7 +39,7 @@ const CloudHero = () => {
   const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
-  // Color del rayo: Rojo (Inicio error) -> Emerald/Cyan (Solución)
+  // Color del rayo
   const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);
   const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);
   const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]); 
@@ -57,44 +57,29 @@ const CloudHero = () => {
     <section 
       ref={containerRef} 
       id="cloud" 
-      // BG General claro (aplica a la izquierda)
       className="grow relative w-full overflow-visible bg-[#FAFAFA] flex flex-col"
     >
-      {/* 
-        === FONDO NEGRO INFINITO (DERECHA) === 
-        Posicionado absolutamente para cubrir el 50% derecho de la pantalla completa.
-        Z-Index: 0 (Base)
-      */}
-      <div className="hidden lg:block absolute top-0 right-0 w-1/2 h-full bg-[#050505] z-0" />
-
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
-      {/* Contenedor Principal (Z-10 para estar sobre el fondo negro base) */}
+      {/* Contenedor Principal */}
       <div className="relative z-10 w-full max-w-[1280px] ml-0 mr-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column (Fondo transparente, toma el #FAFAFA del padre) */}
+          {/* Left Column (Fondo transparente/claro) */}
           <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
             <div className="w-full h-full flex items-center justify-start m-0 p-0">
               <BlueprintVisualization />
             </div>
           </div>
 
-          {/* 
-             === DIVISOR VERTICAL === 
-             Z-Index: 30 (Debe estar POR ENCIMA del fondo negro Z-0 y del contenido Z-10)
-          */}
+          {/* === DIVISOR VERTICAL === */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-30 overflow-visible">
              
-             {/* 
-                --- ICONO ROBOT ERROR CENTRADO --- 
-                Z-Index: 50 (El más alto de todos, POR ENCIMA del rayo y la línea)
-             */}
+             {/* --- ICONO ROBOT ERROR CENTRADO --- */}
              <motion.div 
                 style={{ x: "-50%", y: "-50%" }} 
                 initial={{ scale: 0, opacity: 0, rotate: -15 }} 
-                
                 animate={showRobot ? {
                   scale: 1,
                   opacity: 1,
@@ -148,10 +133,7 @@ const CloudHero = () => {
                 </svg>
              </motion.div>
              
-             {/* 
-               1. RAYO VERTICAL 
-               Z-Index: 40 (POR ENCIMA de la línea Z-30, pero DEBAJO del robot Z-50)
-             */}
+             {/* 1. RAYO VERTICAL */}
              <motion.div 
                style={{ 
                  top: verticalTop,
@@ -161,10 +143,7 @@ const CloudHero = () => {
                className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px] z-40"
              />
 
-             {/* 
-               2. RAYO HORIZONTAL 
-               Z-Index: 40 (Igual que el vertical)
-             */}
+             {/* 2. RAYO HORIZONTAL */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
@@ -174,7 +153,7 @@ const CloudHero = () => {
                className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-40"
              />
 
-             {/* 3. FLASH CORNER (Z-40 para estar con el rayo) */}
+             {/* 3. FLASH CORNER */}
              <motion.div
                 style={{ opacity: flashOpacity }}
                 className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#06b6d4] blur-[1px] z-40"
@@ -184,9 +163,16 @@ const CloudHero = () => {
           {/* Horizontal Divider (Mobile only) */}
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
-          {/* Right Column: Content */}
-          {/* En desktop es transparente (el div absoluto pone el negro). En mobile ponemos el negro aquí. */}
-          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0 bg-[#050505] lg:bg-transparent" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
+          {/* 
+            === RIGHT COLUMN: CONTENT & BACKGROUND ===
+            1. bg-[#050505]: Aplica el fondo negro a la columna misma (cubre desde la línea divisoria hasta el final del contenedor).
+            2. DIV EXTENSION: Cubre el espacio restante a la derecha del contenedor hasta el borde de la pantalla.
+          */}
+          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0 bg-[#050505]" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
+            
+            {/* EXTENSIÓN DE FONDO NEGRO (Cubre el margen derecho) */}
+            <div className="hidden lg:block absolute top-0 bottom-0 left-full w-screen bg-[#050505] -z-10" />
+            
             <div className="flex flex-col gap-6 max-w-[520px]">
               
               {/* SUBTITLE */}
@@ -207,7 +193,6 @@ const CloudHero = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // GRADIENTE LIMPIO: Solo Emerald, Cyan y White.
                     backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, ${COLORS.white}, ${COLORS.emerald}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
