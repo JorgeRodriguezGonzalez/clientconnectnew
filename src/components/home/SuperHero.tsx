@@ -206,12 +206,14 @@ const MarketingAppContent = () => {
         </div>
       </div>
       <div className="flex-1 overflow-y-auto px-4 pb-8 pt-2">
-        {/* GAP REDUCIDO: gap-6 -> gap-3 para compactar contenido */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-3">
-          {/* TEXTO REDUCIDO: text-xl -> text-[17px] y leading-tight */}
+        {/* GAP AUMENTADO: gap-6 para separar texto de las opciones */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="flex flex-col gap-6">
+          
+          {/* TEXTO REDUCIDO para ocupar 2 lineas visualmente */}
           <h2 className="text-[17px] font-medium text-gray-900 leading-tight px-1 mt-2">
             Let's set your growth targets. Where should we focus our energy?
           </h2>
+          
           <div className="space-y-2">
             <AnimatePresence>
               {initialPreferences.map((preference, index) => (
@@ -332,21 +334,22 @@ export const SuperHero = ({
       {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         
-        {/* LAMP EFFECT (AJUSTADO: Máscara para altura corta y glow central bajado) */}
+        {/* LAMP EFFECT */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             
-            {/* 1. Conic Gradient Derecha + MASK */}
+            {/* 1. Conic Gradient Derecha + MASK CORREGIDA */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              // MASK AGRESIVA: transparent 50% para acortar la luz
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, 
                 "--gradient-color": lampColor,
-                maskImage: "linear-gradient(to top, transparent 50%, white 100%)",
-                WebkitMaskImage: "linear-gradient(to top, transparent 50%, white 100%)"
+                // Mask cambiada: "transparent 0%" (Arriba) -> "white 10%" (Inicio luz) -> "transparent 100%" (Abajo)
+                // Esto elimina cualquier color "encima" de la línea de inicio.
+                maskImage: "linear-gradient(to bottom, transparent 0%, white 10%, white 50%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, white 10%, white 50%, transparent 100%)"
               } as any}
               className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
             >
@@ -354,17 +357,17 @@ export const SuperHero = ({
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
-            {/* 2. Conic Gradient Izquierda + MASK */}
+            {/* 2. Conic Gradient Izquierda + MASK CORREGIDA */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              // MASK AGRESIVA: transparent 50%
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, 
                 "--gradient-color": lampColor,
-                maskImage: "linear-gradient(to top, transparent 50%, white 100%)",
-                WebkitMaskImage: "linear-gradient(to top, transparent 50%, white 100%)"
+                // Mask idéntica para simetría
+                maskImage: "linear-gradient(to bottom, transparent 0%, white 10%, white 50%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, white 10%, white 50%, transparent 100%)"
               } as any}
               className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
             >
@@ -375,12 +378,12 @@ export const SuperHero = ({
             {/* 3. Blurs y Efectos Centrales */}
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
             
-            {/* Glow Central BAJADO: translate-y-[10%] en lugar de -translate-y-1/2 */}
+            {/* Glow Central BAJADO: translate-y-[20%] para alejarlo de la línea superior */}
             <motion.div 
               initial={{ opacity: 0 }} 
               animate={{ opacity: 0.5, backgroundColor: lampColor }} 
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-              className="absolute inset-auto z-50 h-36 w-[28rem] translate-y-[10%] rounded-full blur-3xl" 
+              className="absolute inset-auto z-50 h-36 w-[28rem] translate-y-[20%] rounded-full blur-3xl" 
             />
             
             {/* Arco Superior */}
@@ -400,7 +403,7 @@ export const SuperHero = ({
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.7, duration: 1.0, ease: "easeOut" }} 
-            // TITULO REDUCIDO
+            // TEXTO REDUCIDO
             className="font-inter font-semibold text-[28px] md:text-[38px] lg:text-[48px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
           >
             We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
@@ -444,7 +447,7 @@ export const SuperHero = ({
       </div>
 
       {/* --- DIGITAL WORKFLOW SECTION --- */}
-      {/* MARGEN NEGATIVO AUMENTADO PARA SUBIR EL TELEFONO (-mt-24) */}
+      {/* MARGEN NEGATIVO -mt-24 para acercar movil a CTAs */}
       <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-24">
         
         {/* LEFT TUNNEL (Code) */}
