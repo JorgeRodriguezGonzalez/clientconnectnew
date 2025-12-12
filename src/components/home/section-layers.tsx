@@ -4,8 +4,8 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
-  cyan: "#06b6d4", // Modificado de turquoise a cyan
-  coral: "rgb(222, 131, 99)",
+  cyan: "#06b6d4", 
+  emerald: "#34d399", // Modificado de coral a emerald-400
   gold: "rgb(237, 191, 134)",
   red: "#9A3426" 
 };
@@ -13,7 +13,7 @@ const COLORS = {
 // @component: CloudHero
 const CloudHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [showRobot, setShowRobot] = useState(false); // Nuevo estado para controlar la animación
+  const [showRobot, setShowRobot] = useState(false); 
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -27,8 +27,6 @@ const CloudHero = () => {
   });
 
   // --- DETECTOR DE SCROLL PARA ACTIVAR ROBOT ---
-  // En lugar de transformar valores, escuchamos cambios.
-  // Si pasa de 0.3, activamos la animación "fire-and-forget".
   useMotionValueEvent(smoothProgress, "change", (latest) => {
     if (latest >= 0.3 && !showRobot) {
       setShowRobot(true);
@@ -38,14 +36,14 @@ const CloudHero = () => {
   });
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
-  // Empieza en 0.38 (retrasado respecto al robot que sale en 0.30)
   const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
   // Color del rayo: Rojo -> Gradiente Original
   const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.gold]);
-  const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.coral]);
-  const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]); // Actualizado a cyan
+  // Aquí sustituimos coral por emerald
+  const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);
+  const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]); 
   
   const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
 
@@ -80,41 +78,32 @@ const CloudHero = () => {
              
              {/* --- ICONO ROBOT ERROR CENTRADO --- */}
              <motion.div 
-                style={{ x: "-50%", y: "-50%" }} // Centrado estático CSS
-                initial={{ scale: 0, opacity: 0, rotate: -15 }} // Estado inicial (oculto)
+                style={{ x: "-50%", y: "-50%" }} 
+                initial={{ scale: 0, opacity: 0, rotate: -15 }} 
                 
                 // ANIMACIÓN CONDICIONAL (Disparador)
                 animate={showRobot ? {
                   scale: 1,
                   opacity: 1,
-                  rotate: [-15, 15, -5, 0], // Secuencia de "wobble" (Entrada)
-                  // Bucle de colores (Infinito)
+                  rotate: [-15, 15, -5, 0], 
                   borderColor: ["#e4e4e7", "#9A3426", "#e4e4e7"], 
                   color: ["#6b7280", "#9A3426", "#6b7280"],       
                   backgroundColor: ["#ffffff", "#FFE5DF", "#ffffff"], 
                   boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", "0 0 10px rgba(154,52,38,0.2)", "0 1px 2px 0 rgba(0,0,0,0.05)"]
                 } : {
-                  // Salida (cuando se hace scroll hacia arriba)
                   scale: 0,
                   opacity: 0,
                   rotate: -15, 
-                  // Reseteamos colores al salir para que no parpadee mientras desaparece
                   borderColor: "#e4e4e7",
                   color: "#6b7280",
                   backgroundColor: "#ffffff",
                   boxShadow: "0 0 0 transparent"
                 }}
 
-                // TRANSICIONES INDIVIDUALES
                 transition={{
-                  // Entrada física (Escala/Opacidad)
                   scale: { duration: 0.4, ease: "backOut" },
                   opacity: { duration: 0.3 },
-                  
-                  // Giro: Más largo (1.2s) y ocurre solo 1 vez al entrar
                   rotate: { duration: 1.2, ease: "easeInOut" }, 
-
-                  // Bucle de Colores: Infinito y suave (2.5s)
                   borderColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
                   color: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
                   backgroundColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
@@ -146,7 +135,7 @@ const CloudHero = () => {
                 </svg>
              </motion.div>
              
-             {/* 1. RAYO VERTICAL (Rojo -> Gradiente) */}
+             {/* 1. RAYO VERTICAL */}
              <motion.div 
                style={{ 
                  top: verticalTop,
@@ -156,12 +145,12 @@ const CloudHero = () => {
                className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* 2. RAYO HORIZONTAL */}
+             {/* 2. RAYO HORIZONTAL - Actualizado con emerald */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
-                 background: `linear-gradient(to right, ${COLORS.cyan}, ${COLORS.coral}, ${COLORS.gold})`
+                 background: `linear-gradient(to right, ${COLORS.cyan}, ${COLORS.emerald}, ${COLORS.gold})`
                }}
                className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
@@ -198,7 +187,8 @@ const CloudHero = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
+                    // Gradiente actualizado con COLORS.emerald
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
