@@ -511,7 +511,7 @@ export const SuperHero = ({
         </div>
 
         {/* --- CORRECCIÓN: Contenedor con posicionamiento original + Animación interna --- */}
-        <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[15%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
+        <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[25%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           
           {/* Animación Glass Morph Fade In aplicada al contenido del frame */}
