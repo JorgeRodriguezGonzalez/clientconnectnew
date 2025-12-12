@@ -4,7 +4,7 @@ import { InteractiveCardStack } from '@/components/home/InteractiveCardStack';
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
-  turquoise: "rgb(103, 188, 183)",
+  cyan: "#06b6d4", // Modificado de turquoise a cyan
   coral: "rgb(222, 131, 99)",
   gold: "rgb(237, 191, 134)",
 };
@@ -71,7 +71,8 @@ const BoxCards = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                    // Se sustituyó rgb(103, 188, 183) por #06b6d4
+                    backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), #06b6d4, rgba(255, 255, 255, 0))",
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -98,7 +99,8 @@ const BoxCards = () => {
                style={{ 
                  top: beamTop,
                  opacity: beamOpacity,
-                 background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise})`
+                 // Se actualizó COLORS.turquoise a COLORS.cyan
+                 background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.cyan})`
                }}
                // AÑADIDO: w-[2.4px] y -ml-[1px] como solicitaste
                className="absolute left-0 w-[1.6px] -ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
