@@ -33,8 +33,8 @@ const cn = (...classes: (string | undefined | null | false)[]) => classes.filter
 
 // --- COLORS ---
 const COLORS = {
-  cyan: "#06b6d4", // Modificado de turquoise (#67bcb7) a cyan
-  coral: "#de8363",
+  cyan: "#06b6d4", 
+  emerald: "#34d399", // Modificado de coral (#de8363) a emerald-400 (#34d399)
   gold: "#edbf86",
 };
 
@@ -326,14 +326,15 @@ const GlowingEffect = React.memo(
               "--active": "0",
               "--glowingeffect-border-width": `${borderWidth}px`,
               "--repeating-conic-gradient-times": "5",
+              // COLORS.emerald is applied here instead of coral
               "--gradient": `radial-gradient(circle, ${COLORS.gold} 10%, #EDBF8600 20%),
-                radial-gradient(circle at 40% 40%, ${COLORS.coral} 5%, #DE836300 15%),
+                radial-gradient(circle at 40% 40%, ${COLORS.emerald} 5%, #34d39900 15%),
                 radial-gradient(circle at 60% 60%, ${COLORS.cyan} 10%, #06b6d400 20%), 
                 radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
                 repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
                   ${COLORS.gold} 0%,
-                  ${COLORS.coral} calc(25% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.emerald} calc(25% / var(--repeating-conic-gradient-times)),
                   ${COLORS.cyan} calc(50% / var(--repeating-conic-gradient-times)), 
                   #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
                   ${COLORS.gold} calc(100% / var(--repeating-conic-gradient-times))
@@ -625,9 +626,10 @@ const ProfitChart = () => {
             <stop offset="0" stopColor={COLORS.cyan} stopOpacity="0.5" />
             <stop offset="1" stopColor={COLORS.cyan} stopOpacity="0" />
           </linearGradient>
-          <linearGradient id="chartGradientCoral" x1="0.5" x2="0.5" y1="0" y2="1">
-            <stop offset="0" stopColor={COLORS.coral} stopOpacity="0.5" />
-            <stop offset="1" stopColor={COLORS.coral} stopOpacity="0" />
+          {/* Changed coral to emerald */}
+          <linearGradient id="chartGradientEmerald" x1="0.5" x2="0.5" y1="0" y2="1">
+            <stop offset="0" stopColor={COLORS.emerald} stopOpacity="0.5" />
+            <stop offset="1" stopColor={COLORS.emerald} stopOpacity="0" />
           </linearGradient>
           <clipPath id="clipBelowLine">
             <rect x="0" y="152" width="494" height="134" />
@@ -665,10 +667,11 @@ const ProfitChart = () => {
         </g>
         
         <g clipPath="url(#clipAboveLine)">
+          {/* Replaced chartGradientCoral and COLORS.coral with Emerald versions */}
           <motion.path 
             d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 Z" 
-            fill="url(#chartGradientCoral)" 
-            stroke={COLORS.coral} 
+            fill="url(#chartGradientEmerald)" 
+            stroke={COLORS.emerald} 
             strokeWidth="2" 
             strokeMiterlimit="10" 
             initial={{ pathLength: 0, opacity: 0 }} 
@@ -696,7 +699,7 @@ const ProfitChart = () => {
           <motion.path 
             d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
             fill="transparent" 
-            stroke={COLORS.coral} 
+            stroke={COLORS.emerald} 
             strokeOpacity="0.5"
             strokeWidth="2" 
             strokeMiterlimit="10" 
@@ -717,13 +720,14 @@ export const FounderSection = () => {
   const [isLightMode, setIsLightMode] = useState(false);
   const [isLateScroll, setIsLateScroll] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
-  const [chartKey, setChartKey] = useState(0); // Para reiniciar animación del gráfico
+  const [chartKey, setChartKey] = useState(0); 
   
   // STATE PARA VIDEO "CASE STUDIES"
   const [isCaseStudyActive, setIsCaseStudyActive] = useState(false);
 
   // --- ANIMATION CONSTANTS FOR BUTTON ---
-  const buttonColorSequence = [COLORS.coral, COLORS.coral, COLORS.cyan, COLORS.cyan, COLORS.coral];
+  // Replaced coral with emerald
+  const buttonColorSequence = [COLORS.emerald, COLORS.emerald, COLORS.cyan, COLORS.cyan, COLORS.emerald];
   const buttonColorDuration = 10;
 
   const { scrollYProgress } = useScroll({
@@ -771,7 +775,8 @@ export const FounderSection = () => {
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
          <motion.div 
             animate={{
-              backgroundColor: [COLORS.coral, COLORS.cyan, COLORS.coral],
+              // Replaced coral with emerald
+              backgroundColor: [COLORS.emerald, COLORS.cyan, COLORS.emerald],
             }}
             transition={{
               duration: 10,
@@ -824,7 +829,8 @@ export const FounderSection = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
+                    // Replaced coral with emerald
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -880,7 +886,8 @@ export const FounderSection = () => {
                     repeat: Infinity
                   }}
                   className={cn(
-                    "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(222,131,99,0.3)]",
+                    // Updated rgba shadow to match emerald (#34d399 is roughly 52, 211, 153)
+                    "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)]",
                     "bg-black text-white hover:bg-zinc-900"
                   )}
                 >
