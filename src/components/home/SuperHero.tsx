@@ -332,24 +332,22 @@ export const SuperHero = ({
       {/* HEADER SECTION (Lamp + Title + Buttons) */}
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         
-        {/* LAMP EFFECT MODIFICADO */}
-        {/* scale-y-125 agregado al contenedor padre para estirar verticalmente */}
+        {/* LAMP EFFECT MODIFICADO SEGÚN TU FEEDBACK */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100 origin-top">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible scale-y-125">
             
-            {/* 1. HACES DE LUZ: Actualizados a 30rem */}
+            {/* 1. HACES DE LUZ: Reducidos a 28rem (menos que la línea) para que no se abran tanto a los lados */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
+              animate={{ opacity: 1, width: "28rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, 
                 "--gradient-color": lampColor,
-                // Mantenemos maskImage pero el scale-y-125 del padre hará que parezca mucho más larga
                 maskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 95%)",
                 WebkitMaskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 95%)"
               } as any}
-              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] -translate-y-[7rem] text-white [--conic-position:from_70deg_at_center_top] blur-md"
+              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[28rem] -translate-y-[7rem] text-white [--conic-position:from_70deg_at_center_top] blur-md"
             >
               <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: "transparent" }} />
@@ -357,7 +355,7 @@ export const SuperHero = ({
 
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
+              animate={{ opacity: 1, width: "28rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
               style={{ 
                 backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, 
@@ -365,26 +363,30 @@ export const SuperHero = ({
                 maskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 95%)",
                 WebkitMaskImage: "linear-gradient(to bottom, transparent 50%, white 50%, transparent 95%)"
               } as any}
-              className="absolute inset-auto left-1/2 h-56 w-[30rem] -translate-y-[7rem] text-white [--conic-position:from_290deg_at_center_top] blur-md"
+              className="absolute inset-auto left-1/2 h-56 w-[28rem] -translate-y-[7rem] text-white [--conic-position:from_290deg_at_center_top] blur-md"
             >
                <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: "transparent" }} />
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: "transparent" }} />
             </motion.div>
 
-            {/* 3. LUZ CENTRAL: Ancho aumentado a 30rem */}
+            {/* 3. LUZ CENTRAL (LA "MANCHA"): 
+               - Ancho reducido a 20rem (para que no ensucie los lados)
+               - Altura aumentada a h-80 (para que caiga más)
+               - Blur aumentado a 120px (para que se degrade y no parezca sólido)
+            */}
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
             
             <motion.div 
               initial={{ opacity: 0 }} 
-              animate={{ opacity: 0.8 }} 
+              animate={{ opacity: 0.6 }} 
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-              className="absolute inset-auto z-50 h-48 w-[30rem] -translate-y-[5rem] blur-[90px]"
+              className="absolute inset-auto z-50 h-80 w-[20rem] -translate-y-[5rem] blur-[120px]"
               style={{
-                background: `radial-gradient(circle at top, ${lampColor}, transparent 60%)`
+                background: `radial-gradient(circle at top, ${lampColor}, transparent 80%)`
               }}
             />
             
-            {/* Arco Superior: Ajustado proporcionalmente */}
+            {/* Arco Superior: Mantengo la estética de bombilla */}
             <motion.div 
                 initial={{ opacity: 0, width: "8rem" }} 
                 animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} 
@@ -396,7 +398,7 @@ export const SuperHero = ({
                 } as any}
             />
             
-            {/* Linea Fina: Actualizada a 30rem */}
+            {/* LINEA FINA: Se mantiene ancha (30rem) como pediste */}
             <motion.div 
               initial={{ opacity: 0, width: "15rem" }} 
               animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} 
