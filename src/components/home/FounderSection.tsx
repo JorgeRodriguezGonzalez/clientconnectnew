@@ -616,7 +616,7 @@ const ProfitChart = () => {
     >
       <svg 
         // MODIFICADO: left cambiado de -20% a -35% para mostrar más del área verde (derecha)
-        className="absolute bottom-0 left-[-50%] w-[140%] h-[120%]" 
+        className="absolute bottom-0 left-[-45%] w-[140%] h-[120%]" 
         viewBox="0 0 494 286" 
         fill="none" 
         preserveAspectRatio="none"
