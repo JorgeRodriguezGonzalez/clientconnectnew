@@ -5,9 +5,9 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
   cyan: "#06b6d4", 
-  emerald: "#34d399", 
-  red: "#9A3426", 
-  white: "#FFFFFF"
+  emerald: "#34d399", // Modificado de coral a emerald-400
+  gold: "rgb(237, 191, 134)",
+  red: "#9A3426" 
 };
 
 // @component: CloudHero
@@ -39,8 +39,9 @@ const CloudHero = () => {
   const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
-  // Color del rayo
-  const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);
+  // Color del rayo: Rojo -> Gradiente Original
+  const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.gold]);
+  // Aquí sustituimos coral por emerald
   const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);
   const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]); 
   
@@ -62,11 +63,10 @@ const CloudHero = () => {
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
-      {/* Contenedor Principal */}
-      <div className="relative z-10 w-full max-w-[1280px] ml-0 mr-auto">
+      <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column (Fondo transparente/claro) */}
+          {/* Left Column */}
           <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
             <div className="w-full h-full flex items-center justify-start m-0 p-0">
               <BlueprintVisualization />
@@ -74,12 +74,14 @@ const CloudHero = () => {
           </div>
 
           {/* === DIVISOR VERTICAL === */}
-          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-30 overflow-visible">
+          <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
              {/* --- ICONO ROBOT ERROR CENTRADO --- */}
              <motion.div 
                 style={{ x: "-50%", y: "-50%" }} 
                 initial={{ scale: 0, opacity: 0, rotate: -15 }} 
+                
+                // ANIMACIÓN CONDICIONAL (Disparador)
                 animate={showRobot ? {
                   scale: 1,
                   opacity: 1,
@@ -108,7 +110,7 @@ const CloudHero = () => {
                   boxShadow: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
                 }}
 
-                className="absolute top-1/2 left-1/2 z-50 p-1 rounded-lg border flex items-center justify-center"
+                className="absolute top-1/2 left-1/2 z-40 p-1 rounded-lg border flex items-center justify-center"
              >
                 <svg 
                   width="24" 
@@ -140,48 +142,40 @@ const CloudHero = () => {
                  opacity: verticalOpacity,
                  background: verticalGradient
                }}
-               className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px] z-40"
+               className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* 2. RAYO HORIZONTAL */}
+             {/* 2. RAYO HORIZONTAL - Actualizado con emerald */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
-                 background: `linear-gradient(to right, ${COLORS.cyan}, ${COLORS.emerald})`
+                 background: `linear-gradient(to right, ${COLORS.cyan}, ${COLORS.emerald}, ${COLORS.gold})`
                }}
-               className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-40"
+               className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
 
              {/* 3. FLASH CORNER */}
              <motion.div
                 style={{ opacity: flashOpacity }}
-                className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#06b6d4] blur-[1px] z-40"
+                className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#06b6d4] blur-[1px] z-30"
               />
           </div>
 
           {/* Horizontal Divider (Mobile only) */}
           <div className="lg:hidden w-screen h-[1px] bg-zinc-200 mb-0 -ml-6" />
 
-          {/* 
-            === RIGHT COLUMN: CONTENT & BACKGROUND ===
-            1. bg-[#050505]: Aplica el fondo negro a la columna misma (cubre desde la línea divisoria hasta el final del contenedor).
-            2. DIV EXTENSION: Cubre el espacio restante a la derecha del contenedor hasta el borde de la pantalla.
-          */}
-          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0 bg-[#050505]" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
-            
-            {/* EXTENSIÓN DE FONDO NEGRO (Cubre el margen derecho) */}
-            <div className="hidden lg:block absolute top-0 bottom-0 left-full w-screen bg-[#050505] -z-10" />
-            
+          {/* Right Column: Content */}
+          <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px]">
               
               {/* SUBTITLE */}
-              <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-400">
+              <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
                 SYSTEM DIAGNOSIS
               </div>
 
               {/* TITLE */}
-              <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-white">
+              <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
                 We find the{' '}
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}
@@ -193,7 +187,8 @@ const CloudHero = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, ${COLORS.white}, ${COLORS.emerald}, rgba(255, 255, 255, 0))`,
+                    // Gradiente actualizado con COLORS.emerald
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -207,7 +202,7 @@ const CloudHero = () => {
               </h2>
 
               {/* TEXT */}
-              <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-400 tracking-tight">
+              <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
               We dive deep into the code to find what others miss. From broken SEO hierarchies and slow rendering times to unoptimized mobile architectures, we identify the precise technical bottlenecks and strategy errors that are costing you conversions.
               </p>
             </div>
