@@ -8,13 +8,11 @@ const MATRIX_TRANSFORM_ALT = "matrix(0.865865, 0.500278, -0.871576, 0.490261, 18
 /**
  * CAPA SUPERIOR (NodeCardLayer) - DISEÑO CYAN
  * Z-Index: 0 (Fondo)
- * MODIFICADO: Acepta prop `grayscale` para el efecto de color
  */
 const NodeCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: number }) => (
   <div
     className="will-change-[filter,transform]"
     style={{
-      // Aplicamos el filtro aquí. grayscale(1) = gris, grayscale(0) = color
       filter: `grayscale(${grayscale})`,
       transition: 'filter 0.1s linear'
     }}
@@ -82,12 +80,10 @@ const NodeCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: n
 
       <g>
         <g clipPath={`url(#${idPrefix}clip0)`}>
-          {/* FONDO PRINCIPAL (Cyan Pastel) */}
           <rect width="320" height="208" rx="16" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.105 20.9684)" fill="#67e8f9" />
           <rect x="-0.00285524" y="0.495269" width="307" height="94" rx="9.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.502 27.1655)" fill="#67e8f9" />
           <rect x="-0.00285524" y="0.495269" width="307" height="94" rx="9.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.502 27.1655)" stroke="#0e7490" />
           
-          {/* PANEL CLARO (Cyan Muy Claro) */}
           <g clipPath={`url(#${idPrefix}clip1)`}>
             <rect width="308" height="95" rx="10" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.071 22.9117)" fill="#cffafe" />
             
@@ -105,7 +101,6 @@ const NodeCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: n
             
             <rect x="-0.00285524" y="0.495269" width="307" height="19" transform="matrix(0.865865 0.500278 -0.871576 0.490261 117.134 59.9352)" stroke="#0e7490" />
             
-            {/* Nodos y conexiones */}
             <g clipPath={`url(#${idPrefix}clip3)`}>
               <rect width="36" height="12" rx="4" transform="matrix(0.865865 0.500278 -0.871576 0.490261 197.586 53.6777)" fill="#ecfeff" />
               <rect x="-0.00285524" y="0.495269" width="5" height="5" rx="1.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 198 56.9032)" fill="#06b6d4" />
@@ -160,7 +155,6 @@ const NodeCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: n
             <path d="M344.425 142.038C344.702 141.882 345.157 141.883 345.371 142.07C345.608 142.275 345.778 142.505 345.871 142.747C346.015 143.121 345.97 143.51 345.741 143.868C345.511 144.227 345.107 144.54 344.576 144.772C344.044 145.003 343.407 145.143 342.739 145.175C342.071 145.207 341.399 145.13 340.803 144.953C340.206 144.776 339.709 144.506 339.369 144.175C339.029 143.844 338.861 143.465 338.885 143.083C338.9 142.836 338.994 142.594 339.162 142.369C339.314 142.164 339.762 142.12 340.084 142.247C340.406 142.374 340.475 142.625 340.372 142.84C340.329 142.929 340.304 143.022 340.298 143.116C340.284 143.346 340.385 143.573 340.589 143.772C340.792 143.97 341.091 144.132 341.449 144.239C341.807 144.345 342.21 144.391 342.611 144.372C343.012 144.352 343.394 144.268 343.713 144.13C344.032 143.991 344.274 143.803 344.412 143.588C344.549 143.373 344.576 143.139 344.49 142.915C344.454 142.823 344.4 142.733 344.329 142.649C344.16 142.448 344.148 142.194 344.425 142.038Z" fill="#0e7490" />
           </g>
           
-          {/* Stack Izquierdo */}
           <rect x="-0.00285524" y="0.495269" width="307" height="94" rx="9.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.503 23.1656)" stroke="#0e7490" />
           
           <rect x="-0.00285524" y="0.495269" width="307" height="94" rx="9.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 94.4734 76.6819)" fill="#67e8f9" />
@@ -181,7 +175,6 @@ const NodeCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: n
             </g>
             <rect x="-0.00285524" y="0.495269" width="307" height="19" transform="matrix(0.865865 0.500278 -0.871576 0.490261 29.1051 109.451)" stroke="#0e7490" />
             
-            {/* Items stack izquierda */}
             <g clipPath={`url(#${idPrefix}clip12)`}>
               <rect width="36" height="12" rx="4" transform="matrix(0.865865 0.500278 -0.871576 0.490261 109.557 103.194)" fill="#ecfeff" />
               <rect x="-0.00285524" y="0.495269" width="5" height="5" rx="1.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 109.971 106.419)" fill="#06b6d4" />
@@ -241,7 +234,6 @@ const NodeCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: n
           
           <rect x="-0.00285524" y="0.495269" width="307" height="94" rx="9.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 94.4733 72.6817)" stroke="#0e7490" />
           
-          {/* Sombra base final */}
           <rect x="-0.00285524" y="0.495269" width="319" height="207" rx="15.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.537 21.2223)" stroke="#0e7490" />
         </g>
       </g>
@@ -250,15 +242,13 @@ const NodeCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: n
 );
 
 /**
- * CAPA BASE (WaveCardLayer) - DISEÑO CORAL
+ * CAPA BASE (WaveCardLayer) - DISEÑO ESMERALDA (Modificado)
  * Z-Index: 30 (Frente, superpuesta a todo)
- * MODIFICADO: Acepta prop `grayscale` para el efecto de color
  */
 const WaveCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: number }) => (
   <div
     className="will-change-[filter,transform]"
     style={{
-      // Aplicamos el filtro aquí
       filter: `grayscale(${grayscale})`,
       transition: 'filter 0.1s linear'
     }}
@@ -270,28 +260,29 @@ const WaveCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: n
         </clipPath>
       </defs>
       <g>
-        {/* Base de la tarjeta (Coral Suave) */}
-        <rect width="319" height="207" rx="15.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.537 27.2224)" fill="#E8A288" />
-        <rect width="319" height="207" rx="15.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.537 27.2224)" stroke="#9A4526" />
+        {/* Base de la tarjeta (Esmeralda Pastel - Emerald 300) */}
+        <rect width="319" height="207" rx="15.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.537 27.2224)" fill="#6ee7b7" />
+        {/* Bordes (Esmeralda Oscuro - Emerald 700) */}
+        <rect width="319" height="207" rx="15.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.537 27.2224)" stroke="#047857" />
         
         {/* Decoración Izquierda */}
-        <rect x="9.07227" y="115.314" width="8.50049" height="13.0286" fill="#E8A288" />
-        <line x1="9.48145" y1="128.85" x2="9.48145" y2="111.85" stroke="#9A4526" />
+        <rect x="9.07227" y="115.314" width="8.50049" height="13.0286" fill="#6ee7b7" />
+        <line x1="9.48145" y1="128.85" x2="9.48145" y2="111.85" stroke="#047857" />
         
         {/* Contenido PRINCIPAL */}
         <g clipPath={`url(#${idPrefix}_wave_clip)`}>
-          {/* Fondo ondas (Crema/Piel) */}
-          <rect width="320" height="208" rx="16" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.105 10.9685)" fill="#F9E2D8" />
+          {/* Fondo ondas (Esmeralda Muy Claro - Emerald 100) */}
+          <rect width="320" height="208" rx="16" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.105 10.9685)" fill="#d1fae5" />
           
-          {/* --- NUEVA LETRA "C" --- */}
+          {/* Letra "C" en Esmeralda */}
           <text 
               x="160" 
               y="120"
               fontSize="140"
               fontWeight="bold" 
               fontFamily="Arial, sans-serif"
-              fill="#E8A288"
-              stroke="#9A4526"
+              fill="#6ee7b7"
+              stroke="#047857"
               strokeWidth="2"
               textAnchor="middle" 
               dominantBaseline="middle"
@@ -302,11 +293,11 @@ const WaveCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: n
         </g>
 
         {/* Círculos dispersos */}
-        <circle cx="3" cy="3" r="2.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.037 22.855)" fill="#E8A288" stroke="#9A4526" />
-        <circle cx="3" cy="3" r="2.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 433.138 167.936)" fill="#E8A288" stroke="#9A4526" />
+        <circle cx="3" cy="3" r="2.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.037 22.855)" fill="#6ee7b7" stroke="#047857" />
+        <circle cx="3" cy="3" r="2.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 433.138 167.936)" fill="#6ee7b7" stroke="#047857" />
         
         {/* Borde Superior */}
-        <rect width="319" height="207" rx="15.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.537 11.2224)" stroke="#9A4526" />
+        <rect width="319" height="207" rx="15.5" transform="matrix(0.865865 0.500278 -0.871576 0.490261 182.537 11.2224)" stroke="#047857" />
       </g>
     </svg>
   </div>
@@ -314,7 +305,6 @@ const WaveCardLayer = ({ idPrefix, grayscale }: { idPrefix: string; grayscale: n
 
 /**
  * CAPA FANTASMA (GhostCardLayer)
- * Tarjeta genérica gris (Sin cambios)
  */
 const GhostCardLayer = () => (
   <svg width="460" height="300" viewBox="0 0 460 300" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -331,17 +321,13 @@ const GhostCardLayer = () => (
 export const InteractiveCardStack = ({ className }: { className?: string }) => {
   const idPrefix = useId().replace(/:/g, '');
   const containerRef = useRef<HTMLDivElement>(null);
-  const [stackFactor, setStackFactor] = useState(1); // Empezamos "expanded" por defecto
-  
-  // MODIFICADO: Nuevo estado para controlar el gris
-  const [grayscaleVal, setGrayscaleVal] = useState(1); // 1 = Gris total al inicio
+  const [stackFactor, setStackFactor] = useState(1);
+  const [grayscaleVal, setGrayscaleVal] = useState(1); 
 
-  // Lógica de scroll basada en la posición del componente (getBoundingClientRect)
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
       
-      // Obtenemos la distancia del componente al top de la ventana
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
@@ -349,22 +335,14 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
       const startPoint = windowHeight * 0.80;
       
       let progress = (rect.top - finishPoint) / (startPoint - finishPoint);
-
-      // Clamp entre 0 y 1
       progress = Math.min(Math.max(progress, 0), 1);
       
-      // Mapeamos el progreso al factor de apilamiento (0.2 a 1)
       const newFactor = 0.2 + (0.8 * progress);
       setStackFactor(newFactor);
-
-      // MODIFICADO: Actualizamos el valor de gris
-      // Cuando progress es 1 (inicio/abajo), grayscale es 1 (gris).
-      // Cuando progress es 0 (final/arriba), grayscale es 0 (color).
       setGrayscaleVal(progress);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Ejecutar una vez al inicio para determinar posición inicial
     handleScroll();
     
     return () => {
@@ -387,13 +365,12 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
     <div ref={containerRef} className={cn("relative w-[460px] h-[470px] select-none group mx-auto", className)}>
       <style>{floatKeyframes}</style>
 
-      {/* CAPA 4: FONDO (Wave Card - Diseño Ondas CORAL) - Z-Index 30 (Frente) */}
+      {/* CAPA 4: FONDO (Wave Card - Diseño Ondas ESMERALDA) - Z-Index 30 */}
       <div 
         className="absolute top-0 left-0 z-30 transition-transform duration-300 ease-out"
         style={{ transform: `translateY(${-160 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0s' }}>
-          {/* Pasamos grayscaleVal */}
           <WaveCardLayer idPrefix={idPrefix + 'wave'} grayscale={grayscaleVal} />
         </div>
       </div>
@@ -418,13 +395,12 @@ export const InteractiveCardStack = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      {/* CAPA 1: FRENTE (Node Card - Diseño CYAN) - Z-Index 0 (Fondo) */}
+      {/* CAPA 1: FRENTE (Node Card - Diseño CYAN) - Z-Index 0 */}
       <div 
         className="absolute top-0 left-0 z-0 transition-transform duration-300 ease-out"
         style={{ transform: `translateY(${180 * stackFactor}px)` }}
       >
         <div className="animate-subtle-float" style={{ animationDelay: '0.5s' }}>
-          {/* Pasamos grayscaleVal */}
           <NodeCardLayer idPrefix={idPrefix + 'node'} grayscale={grayscaleVal} />
         </div>
       </div>
