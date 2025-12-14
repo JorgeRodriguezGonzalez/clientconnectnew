@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValueEvent } from 'framer-motion';
 import { BlueprintVisualization } from '@/components/home/BlueprintVisualization';
-import { ArrowRight, Sparkles, Plus } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
@@ -22,16 +22,6 @@ const AuditWidget = () => {
       transition={{ delay: 0.2, duration: 0.5 }}
       className="mt-8 w-full max-w-md relative"
     >
-      {/* --- CRUCES DE ESQUINAS (Estilo FounderSection) --- */}
-      {/* Top Left */}
-      <Plus className="absolute -top-3 -left-3 text-zinc-700 w-6 h-6 z-20" strokeWidth={1} />
-      {/* Top Right */}
-      <Plus className="absolute -top-3 -right-3 text-zinc-700 w-6 h-6 z-20" strokeWidth={1} />
-      {/* Bottom Left */}
-      <Plus className="absolute -bottom-3 -left-3 text-zinc-700 w-6 h-6 z-20" strokeWidth={1} />
-      {/* Bottom Right */}
-      <Plus className="absolute -bottom-3 -right-3 text-zinc-700 w-6 h-6 z-20" strokeWidth={1} />
-
       <div className="relative group p-[1px] bg-zinc-800 shadow-xl overflow-hidden rounded-none">
         {/* Glow effect sutil detrás */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-600/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
