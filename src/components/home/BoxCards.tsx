@@ -4,10 +4,9 @@ import { InteractiveCardStack } from '@/components/home/InteractiveCardStack';
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
-  cyan: "#06b6d4",
-  coral: "rgb(222, 131, 99)",
-  gold: "rgb(237, 191, 134)",
-  emerald: "#34d399", // AÑADIDO: Para coincidir con el estilo de CloudHero
+  cyan: "#06b6d4",    // Mantenemos el Cyan del final
+  emerald: "#34d399", // Reemplaza al Coral como color principal
+  lime: "#bef264"     // Reemplaza al Gold como acento brillante superior
 };
 
 const BackgroundStripes = () => (
@@ -67,8 +66,8 @@ const BoxCards = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // MODIFICADO: Ahora usa Emerald y Cyan, igual que "structural flaws"
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
+                    // GRADIENTE ACTUALIZADO: Lime -> Emerald -> Cyan
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.lime}, ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -94,7 +93,8 @@ const BoxCards = () => {
                style={{ 
                  top: beamTop,
                  opacity: beamOpacity,
-                 background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.cyan})`
+                 // GRADIENTE ACTUALIZADO: Transparente -> Lime -> Emerald -> Cyan
+                 background: `linear-gradient(to bottom, transparent, ${COLORS.lime}, ${COLORS.emerald}, ${COLORS.cyan})`
                }}
                className="absolute left-0 w-[1.6px] -ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
              />
