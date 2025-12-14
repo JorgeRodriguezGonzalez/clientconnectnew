@@ -7,7 +7,8 @@ const COLORS = {
   cyan: "#06b6d4", 
   emerald: "#34d399", 
   gold: "rgb(237, 191, 134)", 
-  red: "#9A3426" 
+  red: "#9A3426",       // Rojo oscuro para el UI del robot
+  brightRed: "#ef4444"  // Rojo brillante para el rayo de luz (para que no se oscurezca)
 };
 
 // @component: CloudHero
@@ -39,16 +40,17 @@ const CloudHero = () => {
   const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
-  // CAMBIO: Ajuste de tiempos para que el rojo dure más.
-  // La interpolación ahora tiene 3 pasos: [Inicio, Mitad-Tardía, Final]
-  // Se mantiene ROJO desde 0.38 hasta 0.65, y luego cambia a CYAN/EMERALD hacia 0.8.
+  // CAMBIO: Ajuste de tiempos y brillo.
+  // 1. Usamos COLORS.brightRed para evitar que se vea oscuro.
+  // 2. El punto medio se mueve a 0.50 (antes 0.65) para que el rojo dure menos.
+  // 3. El punto final (0.75) asegura que al tocar abajo ya sea totalmente Cyan.
   
-  // Parte superior del rayo
-  const beamColor1 = useTransform(smoothProgress, [0.38, 0.65, 0.8], [COLORS.red, COLORS.red, COLORS.cyan]);
-  // Cuerpo del rayo (mezcla con emerald para textura)
-  const beamColor2 = useTransform(smoothProgress, [0.38, 0.65, 0.8], [COLORS.red, COLORS.red, COLORS.emerald]);
-  // Punta del rayo (Termina en Cyan como solicitaste)
-  const beamColor3 = useTransform(smoothProgress, [0.38, 0.65, 0.8], [COLORS.red, COLORS.red, COLORS.cyan]); 
+  // Parte superior del rayo: Rojo -> Cyan
+  const beamColor1 = useTransform(smoothProgress, [0.38, 0.5, 0.75], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]);
+  // Cuerpo del rayo: Rojo -> Emerald (para dar el efecto tricolor)
+  const beamColor2 = useTransform(smoothProgress, [0.38, 0.5, 0.75], [COLORS.brightRed, COLORS.brightRed, COLORS.emerald]);
+  // Punta del rayo: Rojo -> Cyan (CRÍTICO: debe ser Cyan para coincidir con el horizontal)
+  const beamColor3 = useTransform(smoothProgress, [0.38, 0.5, 0.75], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]); 
   
   const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
 
@@ -57,6 +59,7 @@ const CloudHero = () => {
   const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.95], [0, 1, 1, 0]);
 
   // --- FLASH (Punto de impacto) ---
+  // Color del flash coincidiendo con la conexión (Cyan)
   const flashOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.71], [0, 1, 0]);
 
   return (
@@ -86,7 +89,7 @@ const CloudHero = () => {
                 style={{ x: "-50%", y: "-50%" }} 
                 initial={{ scale: 0, opacity: 0, rotate: -15 }} 
                 
-                // ANIMACIÓN CONDICIONAL (Disparador)
+                // ANIMACIÓN CONDICIONAL (Disparador) - Mantenemos el rojo oscuro en el UI
                 animate={showRobot ? {
                   scale: 1,
                   opacity: 1,
@@ -151,7 +154,7 @@ const CloudHero = () => {
              />
 
              {/* 2. RAYO HORIZONTAL */}
-             {/* CAMBIO: Comienza en Cyan (coincidiendo con el final del vertical) y alterna con Emerald */}
+             {/* CAMBIO: Inicia en Cyan para hacer match perfecto con la punta del vertical */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
