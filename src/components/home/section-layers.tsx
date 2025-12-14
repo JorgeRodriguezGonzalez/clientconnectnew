@@ -187,8 +187,8 @@ const CloudHero = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // Gradiente actualizado con COLORS.emerald
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
+                    // MODIFICADO: Eliminado COLORS.gold, ahora solo Emerald (verde) y Cyan (azul)
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
