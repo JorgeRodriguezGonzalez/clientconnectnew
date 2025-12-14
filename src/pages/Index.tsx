@@ -24,6 +24,7 @@ import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
 import CloudHero from "@/components/home/section-layers";
 import { Services } from "@/components/home/Services";
 import { SuperHero } from "@/components/home/SuperHero";
+import { FloatingBanner } from "@/components/home/floatingbanner";
 
 const Index = () => {
   return (
@@ -50,13 +51,9 @@ const Index = () => {
 
         <TestimonialsSection />
         <CTASection />
+        <FloatingBanner />
 
-        <div className="relative z-0">
-          <FinalHero />
-        </div>
-        <div className="z-999999">
-          <UseCasesShowcase />
-        </div>
+        
 
       </main>
 
