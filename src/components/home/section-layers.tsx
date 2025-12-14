@@ -6,7 +6,7 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 const COLORS = {
   cyan: "#06b6d4", 
   emerald: "#34d399", 
-  gold: "rgb(237, 191, 134)", // Se mantiene por si se usa en otro sitio, pero no en los rayos
+  gold: "rgb(237, 191, 134)", 
   red: "#9A3426" 
 };
 
@@ -39,11 +39,16 @@ const CloudHero = () => {
   const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
-  // CAMBIO: Transición de colores para el rayo vertical.
-  // Empieza rojo y cambia a Cyan/Emerald.
-  const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]);     // Top: Red -> Cyan
-  const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);  // Mid: Red -> Emerald
-  const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]);     // Bot: Red -> Cyan
+  // CAMBIO: Ajuste de tiempos para que el rojo dure más.
+  // La interpolación ahora tiene 3 pasos: [Inicio, Mitad-Tardía, Final]
+  // Se mantiene ROJO desde 0.38 hasta 0.65, y luego cambia a CYAN/EMERALD hacia 0.8.
+  
+  // Parte superior del rayo
+  const beamColor1 = useTransform(smoothProgress, [0.38, 0.65, 0.8], [COLORS.red, COLORS.red, COLORS.cyan]);
+  // Cuerpo del rayo (mezcla con emerald para textura)
+  const beamColor2 = useTransform(smoothProgress, [0.38, 0.65, 0.8], [COLORS.red, COLORS.red, COLORS.emerald]);
+  // Punta del rayo (Termina en Cyan como solicitaste)
+  const beamColor3 = useTransform(smoothProgress, [0.38, 0.65, 0.8], [COLORS.red, COLORS.red, COLORS.cyan]); 
   
   const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
 
@@ -145,7 +150,8 @@ const CloudHero = () => {
                className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* 2. RAYO HORIZONTAL - CAMBIO: Solo Cyan y Emerald, sin Gold */}
+             {/* 2. RAYO HORIZONTAL */}
+             {/* CAMBIO: Comienza en Cyan (coincidiendo con el final del vertical) y alterna con Emerald */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
