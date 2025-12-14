@@ -5,8 +5,8 @@ import { BlueprintVisualization } from '@/components/home/BlueprintVisualization
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
   cyan: "#06b6d4", 
-  emerald: "#34d399", // Modificado de coral a emerald-400
-  gold: "rgb(237, 191, 134)",
+  emerald: "#34d399", 
+  gold: "rgb(237, 191, 134)", // Se mantiene por si se usa en otro sitio, pero no en los rayos
   red: "#9A3426" 
 };
 
@@ -39,11 +39,11 @@ const CloudHero = () => {
   const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
-  // Color del rayo: Rojo -> Gradiente Original
-  const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.gold]);
-  // Aquí sustituimos coral por emerald
-  const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);
-  const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]); 
+  // CAMBIO: Transición de colores para el rayo vertical.
+  // Empieza rojo y cambia a Cyan/Emerald.
+  const beamColor1 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]);     // Top: Red -> Cyan
+  const beamColor2 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.emerald]);  // Mid: Red -> Emerald
+  const beamColor3 = useTransform(smoothProgress, [0.38, 0.6], [COLORS.red, COLORS.cyan]);     // Bot: Red -> Cyan
   
   const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
 
@@ -145,12 +145,12 @@ const CloudHero = () => {
                className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* 2. RAYO HORIZONTAL - Actualizado con emerald */}
+             {/* 2. RAYO HORIZONTAL - CAMBIO: Solo Cyan y Emerald, sin Gold */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
                  opacity: horizontalOpacity,
-                 background: `linear-gradient(to right, ${COLORS.cyan}, ${COLORS.emerald}, ${COLORS.gold})`
+                 background: `linear-gradient(to right, ${COLORS.cyan}, ${COLORS.emerald}, ${COLORS.cyan})`
                }}
                className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
@@ -187,7 +187,6 @@ const CloudHero = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // MODIFICADO: Eliminado COLORS.gold, ahora solo Emerald (verde) y Cyan (azul)
                     backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
