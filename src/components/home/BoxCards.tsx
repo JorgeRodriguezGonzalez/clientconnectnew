@@ -5,9 +5,9 @@ import { InteractiveCardStack } from '@/components/home/InteractiveCardStack';
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
   cyan: "#06b6d4",
-  coral: "rgb(222, 131, 99)",
+  coral: "rgb(222, 131, 99)", // Se mantienen por si se usan en otros sitios, pero no en el rayo
   gold: "rgb(237, 191, 134)",
-  emerald: "#34d399", // AÑADIDO: Para coincidir con el estilo de CloudHero
+  emerald: "#34d399", 
 };
 
 const BackgroundStripes = () => (
@@ -67,7 +67,7 @@ const BoxCards = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // MODIFICADO: Ahora usa Emerald y Cyan, igual que "structural flaws"
+                    // Texto con gradiente Emerald y Cyan
                     backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
@@ -94,7 +94,8 @@ const BoxCards = () => {
                style={{ 
                  top: beamTop,
                  opacity: beamOpacity,
-                 background: `linear-gradient(to bottom, transparent, ${COLORS.gold}, ${COLORS.coral}, ${COLORS.cyan})`
+                 // CAMBIO: Gradiente actualizado a Emerald -> Cyan
+                 background: `linear-gradient(to bottom, transparent, ${COLORS.emerald}, ${COLORS.cyan})`
                }}
                className="absolute left-0 w-[1.6px] -ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
              />
