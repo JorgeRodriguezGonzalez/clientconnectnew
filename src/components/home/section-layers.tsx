@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValueEvent } from 'framer-motion';
 import { BlueprintVisualization } from '@/components/home/BlueprintVisualization';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Plus } from 'lucide-react';
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
@@ -9,10 +9,10 @@ const COLORS = {
   emerald: "#34d399", 
   gold: "rgb(237, 191, 134)", 
   red: "#9A3426",       // Rojo oscuro para el UI del robot
-  brightRed: "#EF5350"  // MODIFICADO: Un rojo un poco más claro y suave (antes #ef4444)
+  brightRed: "#EF5350"  // Rojo suave para el rayo
 };
 
-// --- WIDGET DE AUDITORÍA ---
+// --- WIDGET DE AUDITORÍA (Estilo Blueprint/Industrial) ---
 const AuditWidget = () => {
   return (
     <motion.div 
@@ -20,21 +20,31 @@ const AuditWidget = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: 0.2, duration: 0.5 }}
-      className="mt-8 w-full max-w-md"
+      className="mt-8 w-full max-w-md relative"
     >
-      <div className="relative group rounded-xl p-[1px] bg-gradient-to-b from-zinc-700 to-zinc-900 shadow-xl overflow-hidden">
+      {/* --- CRUCES DE ESQUINAS (Estilo FounderSection) --- */}
+      {/* Top Left */}
+      <Plus className="absolute -top-3 -left-3 text-zinc-700 w-6 h-6 z-20" strokeWidth={1} />
+      {/* Top Right */}
+      <Plus className="absolute -top-3 -right-3 text-zinc-700 w-6 h-6 z-20" strokeWidth={1} />
+      {/* Bottom Left */}
+      <Plus className="absolute -bottom-3 -left-3 text-zinc-700 w-6 h-6 z-20" strokeWidth={1} />
+      {/* Bottom Right */}
+      <Plus className="absolute -bottom-3 -right-3 text-zinc-700 w-6 h-6 z-20" strokeWidth={1} />
+
+      <div className="relative group p-[1px] bg-zinc-800 shadow-xl overflow-hidden rounded-none">
         {/* Glow effect sutil detrás */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-600/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         
-        <div className="relative bg-[#09090b] rounded-[11px] p-5 flex flex-col gap-4">
+        <div className="relative bg-[#09090b] p-5 flex flex-col gap-4 rounded-none">
           
           {/* Header del Widget */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 bg-zinc-900 rounded-md border border-zinc-800">
+              <div className="p-1.5 bg-zinc-900 border border-zinc-800 rounded-none">
                 <Sparkles size={14} className="text-zinc-400" />
               </div>
-              <span className="text-sm font-medium text-zinc-200">Free Strategy Audit</span>
+              <span className="text-sm font-medium text-zinc-200">Get Your Free Strategy Audit</span>
             </div>
             <div className="flex items-center gap-1.5">
                <span className="relative flex h-2 w-2">
@@ -50,11 +60,11 @@ const AuditWidget = () => {
             <input 
               type="url" 
               placeholder="www.yourwebsite.com" 
-              className="w-full bg-zinc-900/50 border border-zinc-800 text-zinc-300 text-sm rounded-lg pl-4 pr-28 py-3 outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 transition-all placeholder:text-zinc-600"
+              className="w-full bg-zinc-900/50 border border-zinc-800 text-zinc-300 text-sm pl-4 pr-28 py-3 outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 transition-all placeholder:text-zinc-600 rounded-none"
             />
             <button 
               type="submit"
-              className="absolute right-1.5 top-1.5 bottom-1.5 bg-white hover:bg-zinc-200 text-black text-xs font-bold px-3 rounded-md transition-colors flex items-center gap-1"
+              className="absolute right-1.5 top-1.5 bottom-1.5 bg-white hover:bg-zinc-200 text-black text-xs font-bold px-3 transition-colors flex items-center gap-1 rounded-none"
             >
               Analyze
               <ArrowRight size={12} strokeWidth={3} />
@@ -250,7 +260,7 @@ const CloudHero = () => {
                 We dive deep into the code to find what others miss. From broken SEO hierarchies and slow rendering times to unoptimized mobile architectures, we identify the precise technical bottlenecks and strategy errors that are costing you conversions.
               </p>
 
-              {/* === NUEVO WIDGET DE AUDITORÍA === */}
+              {/* === WIDGET DE AUDITORÍA === */}
               <AuditWidget />
 
             </div>
