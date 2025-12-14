@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValueEvent } from 'framer-motion';
 import { BlueprintVisualization } from '@/components/home/BlueprintVisualization';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
@@ -8,7 +9,65 @@ const COLORS = {
   emerald: "#34d399", 
   gold: "rgb(237, 191, 134)", 
   red: "#9A3426",       // Rojo oscuro para el UI del robot
-  brightRed: "#ef4444"  // Rojo brillante para el rayo de luz (para que no se oscurezca)
+  brightRed: "#EF5350"  // MODIFICADO: Un rojo un poco más claro y suave (antes #ef4444)
+};
+
+// --- WIDGET DE AUDITORÍA ---
+const AuditWidget = () => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.2, duration: 0.5 }}
+      className="mt-8 w-full max-w-md"
+    >
+      <div className="relative group rounded-xl p-[1px] bg-gradient-to-b from-zinc-700 to-zinc-900 shadow-xl overflow-hidden">
+        {/* Glow effect sutil detrás */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        
+        <div className="relative bg-[#09090b] rounded-[11px] p-5 flex flex-col gap-4">
+          
+          {/* Header del Widget */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 bg-zinc-900 rounded-md border border-zinc-800">
+                <Sparkles size={14} className="text-zinc-400" />
+              </div>
+              <span className="text-sm font-medium text-zinc-200">Free Strategy Audit</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+               <span className="relative flex h-2 w-2">
+                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+               </span>
+               <span className="text-[10px] font-semibold text-emerald-500 uppercase tracking-wide">Available</span>
+            </div>
+          </div>
+
+          {/* Input Area */}
+          <form className="relative flex items-center" onSubmit={(e) => e.preventDefault()}>
+            <input 
+              type="url" 
+              placeholder="www.yourwebsite.com" 
+              className="w-full bg-zinc-900/50 border border-zinc-800 text-zinc-300 text-sm rounded-lg pl-4 pr-28 py-3 outline-none focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 transition-all placeholder:text-zinc-600"
+            />
+            <button 
+              type="submit"
+              className="absolute right-1.5 top-1.5 bottom-1.5 bg-white hover:bg-zinc-200 text-black text-xs font-bold px-3 rounded-md transition-colors flex items-center gap-1"
+            >
+              Analyze
+              <ArrowRight size={12} strokeWidth={3} />
+            </button>
+          </form>
+          
+          <p className="text-[11px] text-zinc-500 leading-tight">
+            Get a comprehensive report on SEO, performance, and conversion bottlenecks.
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
 // @component: CloudHero
@@ -40,16 +99,9 @@ const CloudHero = () => {
   const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
 
-  // CAMBIO: Ajuste de tiempos y brillo.
-  // 1. Usamos COLORS.brightRed para evitar que se vea oscuro.
-  // 2. El punto medio se mueve a 0.50 (antes 0.65) para que el rojo dure menos.
-  // 3. El punto final (0.75) asegura que al tocar abajo ya sea totalmente Cyan.
-  
-  // Parte superior del rayo: Rojo -> Cyan
+  // Colores del rayo
   const beamColor1 = useTransform(smoothProgress, [0.38, 0.5, 0.75], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]);
-  // Cuerpo del rayo: Rojo -> Emerald (para dar el efecto tricolor)
   const beamColor2 = useTransform(smoothProgress, [0.38, 0.5, 0.75], [COLORS.brightRed, COLORS.brightRed, COLORS.emerald]);
-  // Punta del rayo: Rojo -> Cyan (CRÍTICO: debe ser Cyan para coincidir con el horizontal)
   const beamColor3 = useTransform(smoothProgress, [0.38, 0.5, 0.75], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]); 
   
   const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
@@ -59,7 +111,6 @@ const CloudHero = () => {
   const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.95], [0, 1, 1, 0]);
 
   // --- FLASH (Punto de impacto) ---
-  // Color del flash coincidiendo con la conexión (Cyan)
   const flashOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.71], [0, 1, 0]);
 
   return (
@@ -88,8 +139,6 @@ const CloudHero = () => {
              <motion.div 
                 style={{ x: "-50%", y: "-50%" }} 
                 initial={{ scale: 0, opacity: 0, rotate: -15 }} 
-                
-                // ANIMACIÓN CONDICIONAL (Disparador) - Mantenemos el rojo oscuro en el UI
                 animate={showRobot ? {
                   scale: 1,
                   opacity: 1,
@@ -107,7 +156,6 @@ const CloudHero = () => {
                   backgroundColor: "#ffffff",
                   boxShadow: "0 0 0 transparent"
                 }}
-
                 transition={{
                   scale: { duration: 0.4, ease: "backOut" },
                   opacity: { duration: 0.3 },
@@ -117,20 +165,9 @@ const CloudHero = () => {
                   backgroundColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
                   boxShadow: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
                 }}
-
                 className="absolute top-1/2 left-1/2 z-40 p-1 rounded-lg border flex items-center justify-center"
              >
-                <svg 
-                  width="24" 
-                  height="24" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="1" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  className="w-8 h-8 -mt-[2px]" 
-                >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 -mt-[2px]">
                   <rect x="4" y="8" width="16" height="12" rx="2" />
                   <path d="M12 5v3" /> 
                   <path d="M2 14h2" />
@@ -154,7 +191,6 @@ const CloudHero = () => {
              />
 
              {/* 2. RAYO HORIZONTAL */}
-             {/* CAMBIO: Inicia en Cyan para hacer match perfecto con la punta del vertical */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
@@ -211,8 +247,12 @@ const CloudHero = () => {
 
               {/* TEXT */}
               <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
-              We dive deep into the code to find what others miss. From broken SEO hierarchies and slow rendering times to unoptimized mobile architectures, we identify the precise technical bottlenecks and strategy errors that are costing you conversions.
+                We dive deep into the code to find what others miss. From broken SEO hierarchies and slow rendering times to unoptimized mobile architectures, we identify the precise technical bottlenecks and strategy errors that are costing you conversions.
               </p>
+
+              {/* === NUEVO WIDGET DE AUDITORÍA === */}
+              <AuditWidget />
+
             </div>
           </div>
 
