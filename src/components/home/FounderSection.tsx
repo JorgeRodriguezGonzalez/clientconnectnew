@@ -34,8 +34,8 @@ const cn = (...classes: (string | undefined | null | false)[]) => classes.filter
 // --- COLORS ---
 const COLORS = {
   cyan: "#06b6d4", 
-  emerald: "#34d399", // Modificado de coral (#de8363) a emerald-400 (#34d399)
-  gold: "#edbf86",
+  emerald: "#34d399", // Verde principal
+  gold: "#edbf86",    // (Ya no se usa en los efectos, se mantiene por referencia si fuera necesario)
 };
 
 // --- LOGO CLOUD COMPONENTS ---
@@ -326,18 +326,18 @@ const GlowingEffect = React.memo(
               "--active": "0",
               "--glowingeffect-border-width": `${borderWidth}px`,
               "--repeating-conic-gradient-times": "5",
-              // COLORS.emerald is applied here instead of coral
-              "--gradient": `radial-gradient(circle, ${COLORS.gold} 10%, #EDBF8600 20%),
+              // COLORS.gold eliminados y reemplazados solo por emerald y cyan
+              "--gradient": `radial-gradient(circle, ${COLORS.emerald} 10%, #34d39900 20%),
                 radial-gradient(circle at 40% 40%, ${COLORS.emerald} 5%, #34d39900 15%),
                 radial-gradient(circle at 60% 60%, ${COLORS.cyan} 10%, #06b6d400 20%), 
-                radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
+                radial-gradient(circle at 40% 60%, ${COLORS.cyan} 10%, #06b6d400 20%),
                 repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
-                  ${COLORS.gold} 0%,
-                  ${COLORS.emerald} calc(25% / var(--repeating-conic-gradient-times)),
-                  ${COLORS.cyan} calc(50% / var(--repeating-conic-gradient-times)), 
-                  #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
-                  ${COLORS.gold} calc(100% / var(--repeating-conic-gradient-times))
+                  ${COLORS.emerald} 0%,
+                  ${COLORS.cyan} calc(25% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.emerald} calc(50% / var(--repeating-conic-gradient-times)), 
+                  ${COLORS.cyan} calc(75% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.emerald} calc(100% / var(--repeating-conic-gradient-times))
                 )`,
             } as React.CSSProperties
           }
@@ -615,7 +615,8 @@ const ProfitChart = () => {
       }}
     >
       <svg 
-        className="absolute bottom-0 left-[-20%] w-[140%] h-[120%]" 
+        // MODIFICADO: left cambiado de -20% a -35% para mostrar más del área verde (derecha)
+        className="absolute bottom-0 left-[-35%] w-[140%] h-[120%]" 
         viewBox="0 0 494 286" 
         fill="none" 
         preserveAspectRatio="none"
@@ -994,8 +995,9 @@ export const FounderSection = () => {
                           {/* Text Content - Top Half */}
                           <div className="relative z-10 p-6 flex flex-col items-start">
                              <div className="flex justify-between items-center w-full mb-2">
-                                <div className="p-2 bg-zinc-50 border border-zinc-100 rounded-none text-cyan-600">
-                                   <Activity size={20} />
+                                <div className="p-2 bg-zinc-50 border border-zinc-100 rounded-none text-emerald-500">
+                                   {/* MODIFICADO: Color del icono a emerald directamente */}
+                                   <Activity size={20} style={{ color: COLORS.emerald }} />
                                 </div>
                                 <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-gray-400">
                                    Results
@@ -1204,7 +1206,8 @@ export const FounderSection = () => {
                }}
                className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
             >
-              <StatBadge icon={Clapperboard} label="Campaigns Launched" value="500+" isLight={isLightMode} />
+              {/* MODIFICADO: Icono de TrendingUp y texto relacionado con crecimiento */}
+              <StatBadge icon={TrendingUp} label="Revenue Generated" value="$250M+" isLight={isLightMode} />
             </motion.div>
 
           </div>
