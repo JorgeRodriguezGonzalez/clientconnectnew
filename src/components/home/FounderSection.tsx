@@ -829,8 +829,8 @@ export const FounderSection = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // Replaced coral with emerald
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
+                    // REMOVED COLORS.gold HERE
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
