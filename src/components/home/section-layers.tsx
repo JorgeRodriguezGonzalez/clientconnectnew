@@ -96,13 +96,16 @@ const CloudHero = () => {
   });
 
   // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
-  const verticalTop = useTransform(smoothProgress, [0.38, 0.78], ["72%", "100%"]);
-  const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.75, 0.8], [0, 1, 1, 0]);
+  // MODIFICADO: Rango final reducido a 0.69 para mayor velocidad
+  const verticalTop = useTransform(smoothProgress, [0.38, 0.69], ["72%", "100%"]);
+  
+  // MODIFICADO: Ajustada la opacidad para coincidir con el nuevo tiempo de llegada
+  const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.69, 0.75], [0, 1, 1, 0]);
 
-  // Colores del rayo
-  const beamColor1 = useTransform(smoothProgress, [0.38, 0.5, 0.75], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]);
-  const beamColor2 = useTransform(smoothProgress, [0.38, 0.5, 0.75], [COLORS.brightRed, COLORS.brightRed, COLORS.emerald]);
-  const beamColor3 = useTransform(smoothProgress, [0.38, 0.5, 0.75], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]); 
+  // Colores del rayo (Sincronizados con 0.69)
+  const beamColor1 = useTransform(smoothProgress, [0.38, 0.5, 0.69], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]);
+  const beamColor2 = useTransform(smoothProgress, [0.38, 0.5, 0.69], [COLORS.brightRed, COLORS.brightRed, COLORS.emerald]);
+  const beamColor3 = useTransform(smoothProgress, [0.38, 0.5, 0.69], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]); 
   
   const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
 
