@@ -25,11 +25,13 @@ import CloudHero from "@/components/home/section-layers";
 import { Services } from "@/components/home/Services";
 import { SuperHero } from "@/components/home/SuperHero";
 import { FloatingBanner } from "@/components/home/floatingbanner";
+import { Header } from "@/components/home/header";
 
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1">
+        <Header />
         <SuperHero />
         <div className="z-999999">
           <FounderSection />
