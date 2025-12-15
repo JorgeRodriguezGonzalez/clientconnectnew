@@ -3,7 +3,7 @@ import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { 
   Calendar, BarChart, CheckCircle, Image as ImageIcon, 
   Code as CodeIcon, Pencil, Wifi, Battery, Signal, Send, 
-  TrendingUp, Users, DollarSign, MousePointerClick, ArrowUpCircle
+  TrendingUp, Users, DollarSign, MousePointerClick 
 } from 'lucide-react';
 
 // --- FONTS STYLES & ANIMATIONS ---
@@ -217,27 +217,36 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   // Auto-scroll al fondo cuando hay mensajes nuevos
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, showOptions]);
 
   const handleSelect = (preference: { id: string, label: string }) => {
-    setShowOptions(false); // Ocultar botones
+    // 1. Ocultar opciones temporalmente
+    setShowOptions(false); 
     
-    // 1. Añadir mensaje del usuario ("Enviado")
+    // 2. Añadir mensaje del usuario ("Enviado")
     setMessages(prev => [...prev, {
       id: Date.now(),
       type: 'sent',
       content: preference.label
     }]);
 
-    onOptionChange(preference.id); // Trigger animación externa
+    // 3. Trigger animación externa de los widgets
+    onOptionChange(preference.id); 
 
-    // 2. Simular tiempo de "escribiendo" y respuesta del sistema
+    // 4. Simular tiempo de "escribiendo" y respuesta del sistema
     setTimeout(() => {
+      // Mensaje de respuesta (Widget)
       setMessages(prev => [...prev, {
         id: Date.now() + 1,
         type: 'received',
         content: <CampaignProgressWidget />
       }]);
+      
+      // 5. VOLVER A MOSTRAR LAS OPCIONES para seguir interactuando
+      setTimeout(() => {
+        setShowOptions(true);
+      }, 800); // Pequeño delay para que se lea la respuesta primero
+
     }, 1200);
   };
 
@@ -317,8 +326,8 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 // --- UPDATED PhoneFrame ---
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
-    <div className="relative w-[370px] h-[750px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
-      {/* Botones físicos laterales */}
+    // Dimensiones restauradas a w-[390px] h-[800px] para mantener la posición original
+    <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
       <div className="absolute left-[-4px] top-[120px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[180px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[250px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
@@ -326,9 +335,8 @@ const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }
       
       {/* Pantalla Interna */}
       <div className="relative w-full h-full bg-black rounded-[3rem] overflow-hidden border border-gray-800">
-        {/* Dynamic Island / Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
-          <div className="absolute right-[25%] w-[8px] h-[8px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
+          <div className="absolute right-[25%] w-[10px] h-[10px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
         
         {/* Contenido de la App */}
@@ -571,6 +579,7 @@ export const SuperHero = ({
           ))}
         </div>
 
+        {/* CONTENEDOR ORIGINAL RESTAURADO */}
         <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[35%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           
