@@ -3,7 +3,7 @@ import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { 
   Calendar, BarChart, CheckCircle, Image as ImageIcon, 
   Code as CodeIcon, Pencil, Wifi, Battery, Signal, Send, 
-  TrendingUp, Users, DollarSign, MousePointerClick 
+  TrendingUp, Users, DollarSign, MousePointerClick, ArrowUpCircle
 } from 'lucide-react';
 
 // --- FONTS STYLES & ANIMATIONS ---
@@ -214,39 +214,30 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll al fondo cuando hay mensajes nuevos o cambian las opciones
+  // Auto-scroll al fondo cuando hay mensajes nuevos
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, showOptions]);
+  }, [messages]);
 
   const handleSelect = (preference: { id: string, label: string }) => {
-    // 1. Ocultar opciones temporalmente
-    setShowOptions(false); 
+    setShowOptions(false); // Ocultar botones
     
-    // 2. Añadir mensaje del usuario ("Enviado")
+    // 1. Añadir mensaje del usuario ("Enviado")
     setMessages(prev => [...prev, {
       id: Date.now(),
       type: 'sent',
       content: preference.label
     }]);
 
-    // 3. Trigger animación externa de los widgets
-    onOptionChange(preference.id); 
+    onOptionChange(preference.id); // Trigger animación externa
 
-    // 4. Simular tiempo de "escribiendo" y respuesta del sistema
+    // 2. Simular tiempo de "escribiendo" y respuesta del sistema
     setTimeout(() => {
-      // Mensaje de respuesta (Widget)
       setMessages(prev => [...prev, {
         id: Date.now() + 1,
         type: 'received',
         content: <CampaignProgressWidget />
       }]);
-      
-      // 5. VOLVER A MOSTRAR LAS OPCIONES para seguir interactuando
-      setTimeout(() => {
-        setShowOptions(true);
-      }, 800); 
-
     }, 1200);
   };
 
@@ -326,7 +317,8 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 // --- UPDATED PhoneFrame ---
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
-    <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
+    <div className="relative w-[370px] h-[750px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
+      {/* Botones físicos laterales */}
       <div className="absolute left-[-4px] top-[120px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[180px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[250px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
@@ -334,8 +326,9 @@ const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }
       
       {/* Pantalla Interna */}
       <div className="relative w-full h-full bg-black rounded-[3rem] overflow-hidden border border-gray-800">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
-          <div className="absolute right-[25%] w-[10px] h-[10px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
+        {/* Dynamic Island / Notch */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
+          <div className="absolute right-[25%] w-[8px] h-[8px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
         
         {/* Contenido de la App */}
@@ -559,7 +552,7 @@ export const SuperHero = ({
       </div>
 
       {/* --- DIGITAL WORKFLOW SECTION --- */}
-      <div className="w-full relative h-[700px] flex justify-center overflow-hidden z-[10] -mt-24">
+      <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-28">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
@@ -578,8 +571,7 @@ export const SuperHero = ({
           ))}
         </div>
 
-        {/* CONTENEDOR AJUSTADO: Translate-y al 45% para bajar el teléfono */}
-        <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[45%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
+        <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[35%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           
           <motion.div
