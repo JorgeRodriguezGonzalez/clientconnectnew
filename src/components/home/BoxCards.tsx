@@ -100,21 +100,23 @@ const BoxCards = () => {
           <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-20 overflow-visible">
              
              {/* --- MENSAJE SUPERIOR DERECHA (Improvement 1) --- */}
-             {/* Posición: Subido a -130px y separado a 55px a la derecha */}
+             {/* CAMBIO: Subido a -160px */}
              <motion.div
                initial={{ opacity: 0, x: -10, y: 10 }}
                animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -10, y: 10 }}
                transition={{ delay: 0.1, duration: 0.4 }}
-               className="absolute top-[calc(50%-130px)] left-[55px] flex items-center z-30 pointer-events-none"
+               className="absolute top-[calc(50%-160px)] left-[55px] flex items-center z-30 pointer-events-none"
              >
-                {/* SVG Curve Connector: Nace desde abajo (el cuadrado) hacia arriba */}
-                {/* width=40px cubre la distancia desde el borde del cuadrado hasta el texto */}
-                {/* height=140px cubre la altura desde el cuadrado hasta el texto */}
-                <svg width="40" height="140" viewBox="0 0 40 140" className="absolute -left-[40px] top-[14px] text-zinc-300 pointer-events-none overflow-visible">
-                   {/* Punto de inicio: Esquina superior derecha del cuadrado (aprox x=0, y=135 relativo a este SVG) */}
-                   <circle cx="1" cy="135" r="1.5" fill={COLORS.emerald} />
-                   {/* Curva: Nace verticalmente desde el cuadrado y se curva hacia la derecha */}
-                   <path d="M 1 135 Q 1 5 40 5" fill="none" stroke="currentColor" strokeWidth="1" />
+                {/* SVG Curve Connector */}
+                {/* CAMBIO: viewBox empieza en -5 para permitir dibujar más a la izquierda */}
+                {/* CAMBIO: Height 170px para cubrir la distancia hasta el centro exacto */}
+                <svg width="45" height="170" viewBox="-5 0 45 170" className="absolute -left-[40px] top-[14px] text-zinc-300 pointer-events-none overflow-visible">
+                   {/* CAMBIO: cx="-4" para moverlo 4px a la izquierda del origen anterior */}
+                   {/* CAMBIO: cy="160" para alinear con el centro vertical (dado el offset de -160px) */}
+                   <circle cx="-4" cy="160" r="1.5" fill={COLORS.emerald} />
+                   
+                   {/* CAMBIO: Path nace desde (-4, 160) - centro vertical del cuadrado */}
+                   <path d="M -4 160 Q -4 5 40 5" fill="none" stroke="currentColor" strokeWidth="1" />
                 </svg>
 
                 <motion.div 
@@ -167,19 +169,20 @@ const BoxCards = () => {
              </motion.div>
 
              {/* --- MENSAJE INFERIOR DERECHA (Improvement 2) --- */}
-             {/* Posición: Bajado a +100px y separado a 55px a la derecha */}
              <motion.div
                initial={{ opacity: 0, x: -10, y: -10 }}
                animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -10, y: -10 }}
                transition={{ delay: 0.2, duration: 0.4 }}
                className="absolute top-[calc(50%+100px)] left-[55px] flex items-center z-30 pointer-events-none"
              >
-                {/* SVG Curve Connector: Nace desde arriba (el cuadrado) hacia abajo */}
-                <svg width="40" height="110" viewBox="0 0 40 110" className="absolute -left-[40px] -top-[95px] text-zinc-300 pointer-events-none overflow-visible">
-                   {/* Punto de inicio: Esquina inferior derecha del cuadrado (aprox x=0, y=5) */}
-                   <circle cx="1" cy="5" r="1.5" fill={COLORS.cyan} />
-                   {/* Curva: Nace verticalmente desde el cuadrado y se curva hacia la derecha-abajo */}
-                   <path d="M 1 5 Q 1 105 40 105" fill="none" stroke="currentColor" strokeWidth="1" />
+                {/* SVG Curve Connector */}
+                {/* CAMBIO: viewBox empieza en -5. Top negativo (-100px) para llegar al centro. */}
+                <svg width="45" height="110" viewBox="-5 0 45 110" className="absolute -left-[40px] -top-[100px] text-zinc-300 pointer-events-none overflow-visible">
+                   {/* CAMBIO: cx="-4" (4px a la izquierda). cy="0" (parte superior del SVG = centro pantalla) */}
+                   <circle cx="-4" cy="0" r="1.5" fill={COLORS.cyan} />
+                   
+                   {/* CAMBIO: Path nace desde (-4, 0) - centro vertical */}
+                   <path d="M -4 0 Q -4 100 40 100" fill="none" stroke="currentColor" strokeWidth="1" />
                 </svg>
 
                 <motion.div 
