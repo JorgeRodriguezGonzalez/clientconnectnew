@@ -20,7 +20,7 @@ type ServiceItem = {
 const COLORS = {
   cyan: "#06b6d4",
   emerald: "#34d399",
-  gold: "rgb(237, 191, 134)", // Se mantienen por si acaso, pero no se usan en este comp.
+  gold: "rgb(237, 191, 134)", 
 };
 
 // IMÁGENES PANORÁMICAS
@@ -231,9 +231,6 @@ export const Services = () => {
       <style>{`
         .hide-scroll::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; background: transparent !important; }
         .hide-scroll { -ms-overflow-style: none !important; scrollbar-width: none !important; }
-        @keyframes bento2-gradient-fade1 { 0%, 10% { opacity: 0.5; } 26.67%, 73.33% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
-        @keyframes bento2-gradient-fade2 { 0%, 10% { opacity: 0; } 26.67%, 50% { opacity: 0.5; } 69.05%, 100% { opacity: 0; } }
-        @keyframes bento2-gradient-fade3 { 0%, 50% { opacity: 0; } 69.05%, 73.81% { opacity: 0.5; } 88.1%, 100% { opacity: 0.5; } }
       `}</style>
 
       {/* Header */}
@@ -251,7 +248,6 @@ export const Services = () => {
                 transition={{ duration: 12, ease: "linear", repeat: Infinity }}
                 style={{
                   display: "inline-block",
-                  // CAMBIO: Gradiente Emerald y Cyan
                   backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                   backgroundSize: "400% 100%",
                   WebkitBackgroundClip: "text",
@@ -285,23 +281,41 @@ export const Services = () => {
                 key={service.id} 
                 id={`tab-${service.id}`} 
                 onClick={() => scrollToCard(service.id)} 
-                className={cn("relative px-4 py-3 rounded-none text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition-colors duration-200 flex-shrink-0 z-10", activeTab === service.id ? "text-neutral-900" : "text-neutral-500 hover:text-neutral-900")}
+                className={cn(
+                  "relative px-4 py-3 rounded-none text-xs font-bold uppercase tracking-wide whitespace-nowrap transition-all duration-200 flex-shrink-0 z-10",
+                  activeTab === service.id ? "" : "text-neutral-500 hover:text-neutral-900"
+                )}
               >
+                {/* FONDO NEGRO ACTIVO */}
                 {activeTab === service.id && (
                   <motion.div 
                     layoutId="activeTab" 
-                    className="absolute inset-0 rounded-none -z-10 overflow-hidden" 
+                    className="absolute inset-0 rounded-none -z-10 bg-black" 
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  >
-                    <div className="absolute inset-0 bg-white" />
-                    {/* CAMBIO: Animaciones de gradiente actualizadas a Emerald y Cyan */}
-                    <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse 90% 120% at 20% 50%, ${COLORS.emerald}, transparent 72%)`, animation: "bento2-gradient-fade1 10.5s ease-in-out infinite" }} />
-                    <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse 90% 120% at 20% 50%, ${COLORS.cyan}, transparent 72%)`, animation: "bento2-gradient-fade2 10.5s ease-in-out infinite" }} />
-                    <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(148,163,184), transparent 72%)", animation: "bento2-gradient-fade3 10.5s ease-in-out infinite" }} />
-                    <div className="absolute inset-0 rounded-none border border-neutral-200/50" />
-                  </motion.div>
+                  />
                 )}
-                {service.title}
+                
+                {/* TEXTO CON GRADIENTE ANIMADO (Solo si está activo) */}
+                {activeTab === service.id ? (
+                    <motion.span
+                      initial={{ backgroundPosition: "0% 50%" }}
+                      animate={{ backgroundPosition: ["0% 50%", "200% 50%"] }}
+                      transition={{ duration: 3, ease: "linear", repeat: Infinity }}
+                      style={{
+                        backgroundImage: `linear-gradient(90deg, ${COLORS.emerald}, ${COLORS.cyan}, ${COLORS.emerald})`,
+                        backgroundSize: "200% auto",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        color: "transparent",
+                        display: "inline-block"
+                      }}
+                    >
+                      {service.title}
+                    </motion.span>
+                ) : (
+                    service.title
+                )}
               </button>
             ))}
           </div>
