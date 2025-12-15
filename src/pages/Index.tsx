@@ -44,14 +44,13 @@ const Index = () => {
         <BoxCards />
         <ComparisonSection />
         <Services />
+        <Pricing />
+        <FAQSection />
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
         
         <OurStepsVersion2 />
-        
-        <Pricing />
-        <FAQSection />
 
         <TestimonialsSection />
         <CTASection />
