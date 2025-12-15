@@ -17,24 +17,45 @@ export function FloatingBanner() {
   const isContactPage = location.pathname === "/contact";
 
   useEffect(() => {
-    // Verificar si el usuario ya lo cerró en esta sesión
+    // 1. COMPROBACIÓN DE CIERRE PREVIO
+    // NOTA: He comentado esto para que puedas ver el banner mientras pruebas.
+    // Cuando termines, DESCOMENTA estas líneas:
+    
+    /* 
     const dismissed = sessionStorage.getItem("bannerDismissed");
     if (dismissed) {
       setIsDismissed(true);
       return;
-    }
+    } 
+    */
 
     const handleScroll = () => {
-      // Calcular altura y umbral (15%)
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollThreshold = scrollHeight * 0.15;
+      // Calcular altura total scrolleable
+      const totalDocHeight = document.documentElement.scrollHeight;
+      const windowHeight = window.innerHeight;
+      const maxScroll = totalDocHeight - windowHeight;
+      
+      // Umbral: Mostrar después del 15% del scroll o 300px, lo que ocurra antes
+      // Esto asegura que en pantallas grandes aparezca antes.
+      const scrollThreshold = Math.min(maxScroll * 0.15, 300);
+      
       const currentScroll = window.scrollY;
 
-      // Detectar footer para no solaparlo
+      // Detectar footer para no solaparlo (evita choque visual)
       const footer = document.querySelector("footer");
-      const isFooterVisible = footer && footer.getBoundingClientRect().top <= window.innerHeight;
+      
+      // Check if footer is roughly in view (con un margen de 50px)
+      let isFooterVisible = false;
+      if (footer) {
+        const rect = footer.getBoundingClientRect();
+        isFooterVisible = rect.top <= windowHeight + 50; 
+      }
 
-      // Mostrar si pasamos el umbral y no estamos sobre el footer
+      // LÓGICA DE VISIBILIDAD:
+      // 1. Hemos pasado el umbral de scroll
+      // 2. Y el footer NO está visible (para que no se monte encima)
+      // 3. Opcional: Si llegamos al FINAL de la página, ocultarlo también si choca.
+      
       if (currentScroll > scrollThreshold && !isFooterVisible) {
         setIsVisible(true);
       } else {
@@ -54,6 +75,7 @@ export function FloatingBanner() {
     };
 
     window.addEventListener("scroll", throttledScroll, { passive: true });
+    // Ejecutar una vez al inicio por si recargan la página a mitad de scroll
     handleScroll(); 
 
     return () => window.removeEventListener("scroll", throttledScroll);
@@ -78,21 +100,27 @@ export function FloatingBanner() {
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            // CAMBIO AQUÍ: Centrado absoluto en eje X para todas las pantallas
-            // Se usa w-[calc(100%-32px)] en móvil para que no toque los bordes (flotante)
-            "fixed bottom-6 left-1/2 -translate-x-1/2 z-50",
+            // POSICIONAMIENTO:
+            // fixed bottom-6: Pegado abajo con margen
+            // left-1/2 -translate-x-1/2: Centrado perfecto en eje X
+            // z-[100]: Muy alto para ganar a tu header sticky (que suele ser z-50)
+            "fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]",
+            
+            // TAMAÑO:
+            // Móvil: Ancho calculado con márgenes (flotante)
+            // Desktop: Auto ajustado al contenido
             "w-[calc(100%-32px)] md:w-auto md:max-w-4xl",
-            "pointer-events-none" 
+            
+            "pointer-events-none" // El contenedor no bloquea clicks fuera del banner
           )}
         >
           <div className={cn(
             "pointer-events-auto relative",
             "w-full md:w-auto",
-            // CAMBIO AQUÍ: Borde completo en lugar de solo top, ya que ahora flota en móvil también
             "bg-black border border-zinc-800",
             "p-5 md:py-4 md:px-6",
-            "shadow-2xl shadow-black/50",
-            "rounded-none" 
+            "shadow-2xl shadow-black/80", // Sombra más fuerte para resaltar
+            "rounded-none" // Estilo recto
           )}>
             
             {/* Glow sutil (Esmeralda/Cyan) */}
