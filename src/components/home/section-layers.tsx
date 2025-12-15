@@ -1,117 +1,18 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValueEvent } from 'framer-motion';
-import { ArrowRight, Sparkles, Server, Globe, Database, Shield, Smartphone } from 'lucide-react';
+import { BlueprintVisualization } from '@/components/home/BlueprintVisualization';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
   cyan: "#06b6d4", 
   emerald: "#34d399", 
   gold: "rgb(237, 191, 134)", 
-  red: "#9A3426",       
-  brightRed: "#EF5350"  
+  red: "#9A3426",       // Rojo oscuro para el UI del robot
+  brightRed: "#EF5350"  // Rojo suave para el rayo
 };
 
-// --- COMPONENTE VISUAL: SYSTEM HOLOGRAM (Reemplaza a BlueprintVisualization) ---
-const SystemHologram = () => {
-  return (
-    <div className="relative w-full h-full min-h-[400px] flex items-center justify-center overflow-hidden bg-zinc-50 border-r border-zinc-200">
-      {/* Grid de Fondo */}
-      <div 
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-            backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`,
-            backgroundSize: '40px 40px'
-        }}
-      />
-
-      {/* Círculos concéntricos decorativos */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <motion.div 
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className="w-[500px] h-[500px] border border-dashed border-zinc-200 rounded-full opacity-50" 
-        />
-        <motion.div 
-            animate={{ rotate: -360 }}
-            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            className="absolute w-[350px] h-[350px] border border-zinc-200 rounded-full opacity-50" 
-        />
-      </div>
-
-      {/* Nodos de la Red (Iconos) */}
-      <div className="relative z-10 grid grid-cols-2 gap-12">
-         {/* Node 1: Server */}
-         <motion.div 
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center gap-2"
-         >
-            <div className="p-3 bg-white border border-zinc-200 shadow-sm rounded-lg relative">
-                <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-400 rounded-full animate-pulse" />
-                <Server size={24} className="text-zinc-400" />
-            </div>
-            <div className="h-1 w-12 bg-zinc-200" />
-         </motion.div>
-
-         {/* Node 2: Mobile */}
-         <motion.div 
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex flex-col items-center gap-2 translate-y-8"
-         >
-            <div className="p-3 bg-white border border-zinc-200 shadow-sm rounded-lg">
-                <Smartphone size={24} className="text-zinc-400" />
-            </div>
-            <div className="h-1 w-12 bg-zinc-200" />
-         </motion.div>
-
-         {/* Central Hub */}
-         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 border border-zinc-300 shadow-lg z-20 rounded-xl">
-            <Globe size={32} className="text-zinc-800" />
-         </div>
-
-         {/* Node 3: Database */}
-         <motion.div 
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col-reverse items-center gap-2"
-         >
-            <div className="p-3 bg-white border border-zinc-200 shadow-sm rounded-lg">
-                <Database size={24} className="text-zinc-400" />
-            </div>
-            <div className="h-1 w-12 bg-zinc-200" />
-         </motion.div>
-
-         {/* Node 4: Security */}
-         <motion.div 
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col-reverse items-center gap-2 translate-y-8"
-         >
-            <div className="p-3 bg-white border border-zinc-200 shadow-sm rounded-lg relative">
-                 <div className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full" />
-                <Shield size={24} className="text-zinc-400" />
-            </div>
-            <div className="h-1 w-12 bg-zinc-200" />
-         </motion.div>
-      </div>
-
-      {/* Scanner Line (Animation) */}
-      <motion.div 
-        initial={{ top: "0%" }}
-        whileInView={{ top: "100%" }}
-        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-        className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent z-30 opacity-50 blur-[1px]"
-      />
-    </div>
-  );
-};
-
-// --- WIDGET DE AUDITORÍA ---
+// --- WIDGET DE AUDITORÍA (Estilo Blueprint/Industrial) ---
 const AuditWidget = () => {
   return (
     <motion.div 
@@ -122,9 +23,12 @@ const AuditWidget = () => {
       className="mt-8 w-full max-w-md relative"
     >
       <div className="relative group p-[1px] bg-zinc-800 shadow-xl overflow-hidden rounded-none">
+        {/* Glow effect sutil detrás */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-zinc-600/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         
         <div className="relative bg-[#09090b] p-5 flex flex-col gap-4 rounded-none">
+          
+          {/* Header del Widget */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="p-1.5 bg-zinc-900 border border-zinc-800 rounded-none">
@@ -141,6 +45,7 @@ const AuditWidget = () => {
             </div>
           </div>
 
+          {/* Input Area */}
           <form className="relative flex items-center" onSubmit={(e) => e.preventDefault()}>
             <input 
               type="url" 
@@ -181,6 +86,7 @@ const CloudHero = () => {
     restDelta: 0.001
   });
 
+  // --- DETECTOR DE SCROLL PARA ACTIVAR ROBOT ---
   useMotionValueEvent(smoothProgress, "change", (latest) => {
     if (latest >= 0.3 && !showRobot) {
       setShowRobot(true);
@@ -189,63 +95,50 @@ const CloudHero = () => {
     }
   });
 
-  // --- RAYO VERTICAL CENTRAL (Robot) ---
+  // --- TRAYECTORIA 1: VERTICAL (Bajada) ---
+  // MODIFICADO: Rango final reducido a 0.69 para mayor velocidad
   const verticalTop = useTransform(smoothProgress, [0.38, 0.69], ["72%", "100%"]);
+  
+  // MODIFICADO: Ajustada la opacidad para coincidir con el nuevo tiempo de llegada
   const verticalOpacity = useTransform(smoothProgress, [0.38, 0.45, 0.69, 0.75], [0, 1, 1, 0]);
 
+  // Colores del rayo (Sincronizados con 0.69)
   const beamColor1 = useTransform(smoothProgress, [0.38, 0.5, 0.69], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]);
   const beamColor2 = useTransform(smoothProgress, [0.38, 0.5, 0.69], [COLORS.brightRed, COLORS.brightRed, COLORS.emerald]);
   const beamColor3 = useTransform(smoothProgress, [0.38, 0.5, 0.69], [COLORS.brightRed, COLORS.brightRed, COLORS.cyan]); 
   
   const verticalGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${beamColor1}, ${beamColor2}, ${beamColor3})`;
 
-  // --- RAYO HORIZONTAL CENTRAL ---
+  // --- TRAYECTORIA 2: HORIZONTAL (Expansión) ---
   const horizontalWidth = useTransform(smoothProgress, [0.7, 0.9], ["0px", "130px"]);
   const horizontalOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.9, 0.95], [0, 1, 1, 0]);
-  const flashOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.71], [0, 1, 0]);
 
-  // --- NUEVOS RAYOS LATERALES (Scroll Beams) ---
-  // Rayo Izquierdo (Emerald) y Derecho (Cyan)
-  // Usamos smoothProgress para que bajen durante todo el scroll del componente
-  const sideBeamsTop = useTransform(smoothProgress, [0, 1], ["-10%", "110%"]);
-  const sideBeamsOpacity = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
+  // --- FLASH (Punto de impacto) ---
+  const flashOpacity = useTransform(smoothProgress, [0.69, 0.7, 0.71], [0, 1, 0]);
 
   return (
     <section 
       ref={containerRef} 
       id="cloud" 
-      className="grow relative w-full overflow-hidden bg-[#FAFAFA] flex flex-col"
+      className="grow relative w-full overflow-visible bg-[#FAFAFA] flex flex-col"
     >
       {/* Top Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-10" />
 
-      {/* --- NUEVO: RAYOS LATERALES --- */}
-      {/* Rayo Izquierdo (Emerald) */}
-      <motion.div 
-        style={{ top: sideBeamsTop, opacity: sideBeamsOpacity }}
-        className="absolute left-0 w-[2px] h-32 bg-gradient-to-b from-transparent via-[#34d399] to-transparent z-20"
-      />
-      {/* Rayo Derecho (Cyan) */}
-      <motion.div 
-        style={{ top: sideBeamsTop, opacity: sideBeamsOpacity }}
-        className="absolute right-0 w-[2px] h-32 bg-gradient-to-b from-transparent via-[#06b6d4] to-transparent z-20"
-      />
-
       <div className="relative z-[1] w-full max-w-[1280px] ml-0 mr-auto">
         <div className="relative flex flex-col lg:flex-row items-stretch">
           
-          {/* Left Column: Visualización */}
-          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-hidden self-stretch m-0 p-0">
+          {/* Left Column */}
+          <div className="relative w-full lg:w-1/2 min-h-[480px] md:min-h-[640px] lg:min-h-auto flex items-center justify-start overflow-visible self-stretch m-0 p-0">
             <div className="w-full h-full flex items-center justify-start m-0 p-0">
-              {/* COMPONENTE VISUAL REEMPLAZADO */}
-              <SystemHologram />
+              <BlueprintVisualization />
             </div>
           </div>
 
-          {/* === DIVISOR VERTICAL CENTRAL === */}
+          {/* === DIVISOR VERTICAL === */}
           <div className="hidden lg:block absolute left-[50%] top-0 bottom-0 w-[1px] bg-zinc-200 z-10 overflow-visible">
              
-             {/* Icono Robot */}
+             {/* --- ICONO ROBOT ERROR CENTRADO --- */}
              <motion.div 
                 style={{ x: "-50%", y: "-50%" }} 
                 initial={{ scale: 0, opacity: 0, rotate: -15 }} 
@@ -290,13 +183,17 @@ const CloudHero = () => {
                 </svg>
              </motion.div>
              
-             {/* Rayo Vertical Central */}
+             {/* 1. RAYO VERTICAL */}
              <motion.div 
-               style={{ top: verticalTop, opacity: verticalOpacity, background: verticalGradient }}
+               style={{ 
+                 top: verticalTop,
+                 opacity: verticalOpacity,
+                 background: verticalGradient
+               }}
                className="absolute left-0 w-[1.6px] -ml-[0.5px] h-[200px] -translate-y-full blur-[0.5px]"
              />
 
-             {/* Rayo Horizontal Central */}
+             {/* 2. RAYO HORIZONTAL */}
              <motion.div 
                style={{ 
                  width: horizontalWidth,
@@ -306,7 +203,7 @@ const CloudHero = () => {
                className="absolute left-0 bottom-0 h-[2.3px] -ml-[0.5px] rounded-r-full blur-[0.5px] origin-left z-20"
              />
 
-             {/* Flash Corner */}
+             {/* 3. FLASH CORNER */}
              <motion.div
                 style={{ opacity: flashOpacity }}
                 className="absolute left-0 bottom-0 w-[4px] h-[4px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#06b6d4] blur-[1px] z-30"
@@ -320,10 +217,12 @@ const CloudHero = () => {
           <div className="py-16 lg:py-32 flex flex-col justify-center gap-4 w-full lg:w-1/2 shrink-0 lg:pl-16 relative z-10 px-6 lg:px-0" style={{ paddingLeft: 'calc(4rem + 20px)' }}>
             <div className="flex flex-col gap-6 max-w-[520px]">
               
+              {/* SUBTITLE */}
               <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500">
                 SYSTEM DIAGNOSIS
               </div>
 
+              {/* TITLE */}
               <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900">
                 We find the{' '}
                 <motion.span
@@ -349,10 +248,12 @@ const CloudHero = () => {
                 {' '}in your digital ecosystem.
               </h2>
 
+              {/* TEXT */}
               <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-gray-600 tracking-tight">
                 We dive deep into the code to find what others miss. From broken SEO hierarchies and slow rendering times to unoptimized mobile architectures, we identify the precise technical bottlenecks and strategy errors that are costing you conversions.
               </p>
 
+              {/* === WIDGET DE AUDITORÍA === */}
               <AuditWidget />
 
             </div>
