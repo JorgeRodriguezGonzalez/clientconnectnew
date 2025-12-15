@@ -441,7 +441,8 @@ export const SuperHero = ({
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-48 px-0 overflow-hidden relative pb-0">
+    // CAMBIO 1: Aumentado pt-48 a pt-56 (más espacio encima de la lámpara)
+    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-56 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
       
       <div className="absolute inset-x-0 -bottom-48 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
@@ -545,8 +546,8 @@ export const SuperHero = ({
         </div>
       </div>
 
-      {/* --- CAMBIO PRINCIPAL: mt-24 para bajar MUCHO el teléfono y h-[850px] para que quepa bien --- */}
-      <div className="w-full relative h-[850px] flex justify-center overflow-hidden z-[10] mt-24">
+      {/* --- CAMBIO 2 y 3: mt-16 (menos espacio encima) y h-[750px] (menos espacio debajo) --- */}
+      <div className="w-full relative h-[750px] flex justify-center overflow-hidden z-[10] mt-16">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
@@ -565,7 +566,6 @@ export const SuperHero = ({
           ))}
         </div>
 
-        {/* --- CAMBIO: justify-start + pt-10 para alinear el telefono justo después del margen --- */}
         <div className="relative z-[20] flex flex-col items-center justify-start pt-10">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           
