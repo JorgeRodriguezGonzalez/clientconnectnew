@@ -301,7 +301,6 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                         <button
                             key={opt.id}
                             onClick={() => handleOptionClick(opt.id, opt.label)}
-                            // Reduced padding and font size for compactness
                             className="w-full text-left bg-gray-100 hover:bg-gray-200 active:bg-gray-300 active:scale-[0.98] transition-all rounded-xl px-4 py-2.5 text-[#007AFF] text-[14px] font-medium"
                         >
                             {opt.label}
@@ -321,7 +320,6 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 };
 
 // --- PHONE FRAME ---
-// Recuperado width: 390px, height: 680px (para compensar el ancho)
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
     <div className="relative w-[390px] h-[680px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
@@ -443,11 +441,9 @@ export const SuperHero = ({
   };
 
   return (
-    // CAMBIO: pt-48 para mucho más espacio arriba
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-48 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
       
-      {/* Background Gradients */}
       <div className="absolute inset-x-0 -bottom-48 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-30"
@@ -464,7 +460,6 @@ export const SuperHero = ({
       </div>
 
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
-        {/* Lamp Section */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             <motion.div
@@ -496,7 +491,6 @@ export const SuperHero = ({
           </div>
         </div>
 
-        {/* Text & Buttons */}
         <div className="relative z-10 text-center mb-8">
           <motion.h1 
             key="hero-title"
@@ -551,11 +545,9 @@ export const SuperHero = ({
         </div>
       </div>
 
-      {/* --- DIGITAL WORKFLOW SECTION --- */}
-      {/* CAMBIO: Contenedor con height ajustado y justify-end para eliminar espacio abajo */}
-      <div className="w-full relative h-[800px] flex justify-center overflow-hidden z-[10] -mt-32">
+      {/* --- CAMBIO PRINCIPAL: mt-24 para bajar MUCHO el teléfono y h-[850px] para que quepa bien --- */}
+      <div className="w-full relative h-[850px] flex justify-center overflow-hidden z-[10] mt-24">
         
-        {/* Left Side (Code) */}
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
           {codeLines.map((line) => (
@@ -573,9 +565,8 @@ export const SuperHero = ({
           ))}
         </div>
 
-        {/* Center (Phone) */}
-        {/* Usamos justify-end y un margen negativo mayor arriba para subir todo y que el telefono acabe justo al final */}
-        <div className="relative z-[20] flex flex-col items-center justify-end transform origin-bottom">
+        {/* --- CAMBIO: justify-start + pt-10 para alinear el telefono justo después del margen --- */}
+        <div className="relative z-[20] flex flex-col items-center justify-start pt-10">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           
           <motion.div
@@ -587,7 +578,6 @@ export const SuperHero = ({
           </motion.div>
         </div>
 
-        {/* Right Side (Widgets) */}
         <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
           <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
