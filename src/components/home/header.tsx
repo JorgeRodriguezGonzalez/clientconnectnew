@@ -8,11 +8,8 @@ function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-// --- CONSTANTES DE COLOR ---
-const COLORS = {
-  cyan: "#06b6d4", 
-  emerald: "#34d399",
-};
+// --- CONFIGURACIÓN ---
+const SCROLL_THRESHOLD = 200; // Píxeles de scroll necesarios para que empiece a funcionar la lógica
 
 // --- DATA ---
 const navLinks = [
@@ -24,7 +21,7 @@ const navLinks = [
 
 // --- SUB-COMPONENTS ---
 
-// Desktop Navigation Link (Estilo Minimalista Industrial)
+// Desktop Navigation Link
 const DesktopNavLink = ({ name, href, isActive }: { name: string, href: string, isActive: boolean }) => {
   const [isHovered, setIsHovered] = useState(false);
   
@@ -73,8 +70,7 @@ const MobileNavLink = ({ name, href, onClick }: { name: string, href: string, on
 
 // --- MAIN COMPONENT ---
 export function Header() {
-  // CAMBIO 1: Estado inicial en false (oculto al cargar)
-  const [isVisible, setIsVisible] = useState(false); 
+  const [isVisible, setIsVisible] = useState(false); // Inicia oculto
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -82,15 +78,18 @@ export function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
+
+      // LÓGICA DE VISIBILIDAD:
+      // 1. Si estamos en la parte superior (antes del umbral), siempre oculto.
+      // 2. Si bajamos (current > last), oculto.
+      // 3. Si subimos (current < last) Y hemos pasado el umbral, visible.
       
-      // CAMBIO 2: Lógica simplificada.
-      // Eliminamos el check de 'currentScroll < 50' para que no se muestre automáticamente al estar arriba.
-      // Solo se muestra si scroll < lastScrollY (hacia arriba)
-      
-      if (currentScroll > lastScrollY) {
-         setIsVisible(false); // Scroll Down -> Ocultar
-      } else if (currentScroll < lastScrollY) {
-         setIsVisible(true);  // Scroll Up -> Mostrar
+      if (currentScroll < SCROLL_THRESHOLD) {
+        setIsVisible(false);
+      } else if (currentScroll > lastScrollY) {
+        setIsVisible(false); 
+      } else {
+        setIsVisible(true);
       }
       
       setLastScrollY(currentScroll);
@@ -114,35 +113,44 @@ export function Header() {
 
   const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
+  // VARIANTS: Efecto Suave (Soft Fade)
   const headerVariants: Variants = {
     hidden: { 
-      y: -100, 
+      y: -20, // Menos desplazamiento para que se sienta más como un fade
       opacity: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
     },
     visible: { 
       y: 0, 
       opacity: 1,
       transition: { 
-        duration: 0.3, 
-        ease: "easeOut" 
+        duration: 0.5, 
+        // Curva suave para entrada elegante
+        ease: [0.22, 1, 0.36, 1] 
       }
     }
   };
 
-  const isInteractive = isVisible || isMobileMenuOpen;
+  // Si el menú móvil está abierto, forzamos que el header sea visible e interactivo
+  const shouldShowHeader = isVisible || isMobileMenuOpen;
+  const isInteractive = shouldShowHeader;
 
   return (
     <>
       <motion.header
         role="banner"
-        initial="hidden" // Aseguramos que Framer Motion inicie en estado oculto visualmente
-        animate={isVisible || isMobileMenuOpen ? "visible" : "hidden"}
+        initial="hidden"
+        animate={shouldShowHeader ? "visible" : "hidden"}
         variants={headerVariants}
         className={cn(
           "fixed top-0 left-0 right-0 z-[1000] flex w-full h-[80px] items-center justify-between px-6 md:px-10 font-sans",
           isInteractive ? "pointer-events-auto" : "pointer-events-none",
-          // Estilo Dark Glass + Borde inferior sutil
-          "bg-[#050505]/80 backdrop-blur-md border-b border-white/5"
+          // ESTILO GLASSMORPHISM MEJORADO:
+          // Más transparencia (/70) y más blur (blur-lg) para el efecto cristal
+          "bg-[#050505]/70 backdrop-blur-lg border-b border-white/5 shadow-sm"
         )}
       >
         <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between">
@@ -175,7 +183,7 @@ export function Header() {
           {/* 3. RIGHT SIDE (CTA + Mobile Toggle) */}
           <div className="flex items-center gap-4">
             
-            {/* Desktop CTA (Alto Contraste) */}
+            {/* Desktop CTA */}
             <Link 
                 to="/contact"
                 className={cn(
