@@ -23,7 +23,7 @@ const BackgroundStripes = () => (
 // @component: BoxCards
 const BoxCards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [showIcon, setShowIcon] = useState(false); // Estado para controlar la aparición de la C
+  const [showIcon, setShowIcon] = useState(false); 
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -37,7 +37,6 @@ const BoxCards = () => {
   });
 
   // --- DETECTOR DE SCROLL PARA ACTIVAR LA "C" ---
-  // El rayo termina su recorrido (50%) en el progreso 0.3, ahí activamos el icono
   useMotionValueEvent(smoothProgress, "change", (latest) => {
     if (latest >= 0.3 && !showIcon) {
       setShowIcon(true);
@@ -78,7 +77,6 @@ const BoxCards = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // Texto con gradiente Emerald y Cyan
                     backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
@@ -101,7 +99,7 @@ const BoxCards = () => {
           {/* === DIVISOR VERTICAL (Desktop only) -> 60% === */}
           <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-20 overflow-visible">
              
-             {/* --- ICONO "C" CENTRADO --- */}
+             {/* --- ICONO "C" CENTRADO (Tamaño ajustado a Robot) --- */}
              <motion.div 
                 style={{ x: "-50%", y: "-50%" }} 
                 initial={{ scale: 0, opacity: 0, rotate: -15 }} 
@@ -109,10 +107,9 @@ const BoxCards = () => {
                   scale: 1,
                   opacity: 1,
                   rotate: [-15, 15, -5, 0], 
-                  // Ciclo de colores: Gris -> Cyan -> Emerald -> Gris
                   borderColor: ["#e4e4e7", COLORS.cyan, COLORS.emerald, "#e4e4e7"], 
                   color: ["#6b7280", COLORS.cyan, COLORS.emerald, "#6b7280"],       
-                  backgroundColor: ["#ffffff", "#ECFEFF", "#ECFDF5", "#ffffff"], // Tintes suaves de cyan y emerald
+                  backgroundColor: ["#ffffff", "#ECFEFF", "#ECFDF5", "#ffffff"], 
                   boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", `0 0 10px ${COLORS.cyan}40`, `0 0 10px ${COLORS.emerald}40`, "0 1px 2px 0 rgba(0,0,0,0.05)"]
                 } : {
                   scale: 0,
@@ -132,9 +129,13 @@ const BoxCards = () => {
                   backgroundColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
                   boxShadow: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
                 }}
-                className="absolute top-1/2 left-0 z-40 w-8 h-8 rounded-lg border flex items-center justify-center bg-white"
+                // CAMBIO: 'w-8 h-8' reemplazado por 'p-1' para coincidir con la estructura del Robot
+                className="absolute top-1/2 left-0 z-40 p-1 rounded-lg border flex items-center justify-center bg-white"
              >
-                <span className="font-bold text-lg leading-none mt-[-2px]">C</span>
+                {/* CAMBIO: Wrapper interno w-8 h-8 para simular el tamaño del SVG del robot */}
+                <div className="w-8 h-8 flex items-center justify-center -mt-[2px]">
+                   <span className="font-bold text-2xl leading-none">C</span>
+                </div>
              </motion.div>
 
              {/* RAYO VERTICAL */}
