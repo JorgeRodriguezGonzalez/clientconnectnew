@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Hammer, TrendingUp, AlertTriangle, HardHat, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion, animate } from "framer-motion";
+import { motion, animate, useScroll, useTransform, useSpring, useMotionTemplate } from "framer-motion";
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
@@ -11,7 +11,7 @@ const COLORS = {
   emerald: "#34d399",
 };
 
-// --- COMPONENTE GLOWING EFFECT (Integrado) ---
+// --- COMPONENTE GLOWING EFFECT ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -185,9 +185,8 @@ export const founderStoryEntries: StoryEntry[] = [
       "Contracts that locked us in while we bled cash",
       "The realization: 'No one is coming to save us'",
     ],
-    // Imagen conceptual: Alguien mirando facturas/perdidas o frustrado en la oficina
-    image:
-      "https://images.unsplash.com/photo-1590422502693-47cb7945037d?q=80&w=2670&auto=format&fit=crop",
+    // IMAGEN CORREGIDA: Persona estresada/trabajando de noche
+    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2600&auto=format&fit=crop",
   },
   {
     icon: HardHat,
@@ -201,7 +200,6 @@ export const founderStoryEntries: StoryEntry[] = [
       "Testing strategies with our own money, not yours",
       "Understanding the difference between a lead and a job",
     ],
-    // Imagen conceptual: Un sitio de construcción / ute / herramientas
     image:
       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2670&auto=format&fit=crop",
   },
@@ -217,7 +215,6 @@ export const founderStoryEntries: StoryEntry[] = [
       "Messages that speak 'Tradie', not 'Marketing'",
       "From 2 jobs a week to booked out months ahead",
     ],
-    // Imagen conceptual: Planos, estructura, crecimiento
     image:
       "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2670&auto=format&fit=crop",
   },
@@ -250,10 +247,38 @@ function cn(...classes: (string | undefined | null | false)[]) {
 // --- Main Component ---
 
 export default function FounderStory() {
+  const containerRef = useRef<HTMLDivElement>(null); // Ref para el contenedor principal (para los rayos)
   const [activeIndex, setActiveIndex] = useState(0);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sentinelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // --- CONFIGURACIÓN DE ANIMACIÓN DE RAYOS VERTICALES ---
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"] // El rayo viaja mientras la sección está en pantalla
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  // 1. Movimiento Vertical: De arriba a abajo (0% a 100%)
+  const beamTop = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  
+  // 2. Opacidad: Fade in al entrar, Fade out al salir
+  const beamOpacity = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
+
+  // 3. Color cambiante: Emerald -> Cyan -> Emerald
+  const color1 = useTransform(smoothProgress, [0, 0.5, 1], [COLORS.emerald, COLORS.cyan, COLORS.emerald]);
+  const color2 = useTransform(smoothProgress, [0, 0.5, 1], [COLORS.cyan, COLORS.emerald, COLORS.cyan]);
+  
+  // Gradiente del rayo
+  const beamGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${color1}, ${color2})`;
+
+
+  // --- LÓGICA DE ACTIVE INDEX (Original) ---
   const setItemRef = (el: HTMLDivElement | null, i: number) => {
     itemRefs.current[i] = el;
   };
@@ -293,7 +318,7 @@ export default function FounderStory() {
 
   return (
     // SECCIÓN PRINCIPAL: Fondo negro (#050505)
-    <section className="relative w-full bg-[#050505]">
+    <section className="relative w-full bg-[#050505]" ref={containerRef}>
       
       {/* 1. FONDO DE RAYAS */}
       <BackgroundStripes />
@@ -301,6 +326,26 @@ export default function FounderStory() {
       {/* 2. CONTENEDOR ESTRUCTURAL */}
       <div className="relative z-10 w-full max-w-5xl mx-auto bg-[#050505] border-l border-r border-white/10">
         
+        {/* --- RAYOS ANIMADOS LATERALES --- */}
+        {/* Rayo Izquierdo */}
+        <motion.div 
+            style={{ 
+              top: beamTop,
+              opacity: beamOpacity,
+              background: beamGradient
+            }}
+            className="absolute -left-[1px] w-[2px] h-[150px] -translate-y-full blur-[2px] z-20"
+        />
+        {/* Rayo Derecho */}
+        <motion.div 
+            style={{ 
+              top: beamTop,
+              opacity: beamOpacity,
+              background: beamGradient
+            }}
+            className="absolute -right-[1px] w-[2px] h-[150px] -translate-y-full blur-[2px] z-20"
+        />
+
         {/* Padding interno del contenido */}
         <div className="pt-24 pb-32 px-4 md:px-8">
           
