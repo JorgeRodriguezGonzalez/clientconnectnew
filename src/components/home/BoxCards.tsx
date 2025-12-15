@@ -36,7 +36,7 @@ const BoxCards = () => {
     restDelta: 0.001
   });
 
-  // --- DETECTOR DE SCROLL PARA ACTIVAR LA "C" ---
+  // --- DETECTOR DE SCROLL PARA ACTIVAR LA "C" Y LOS MENSAJES ---
   useMotionValueEvent(smoothProgress, "change", (latest) => {
     if (latest >= 0.3 && !showIcon) {
       setShowIcon(true);
@@ -99,7 +99,31 @@ const BoxCards = () => {
           {/* === DIVISOR VERTICAL (Desktop only) -> 60% === */}
           <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-20 overflow-visible">
              
-             {/* --- ICONO "C" CENTRADO (Tamaño ajustado a Robot) --- */}
+             {/* --- FLECHA SUPERIOR IZQUIERDA (Improvement 1) --- */}
+             <motion.div
+               initial={{ opacity: 0, x: 20, y: 10 }}
+               animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: 20, y: 10 }}
+               transition={{ delay: 0.1, duration: 0.4 }}
+               className="absolute top-[calc(50%-50px)] right-[25px] flex items-center z-30 pointer-events-none"
+             >
+                <motion.div 
+                  animate={showIcon ? {
+                    borderColor: [COLORS.emerald, COLORS.cyan, COLORS.emerald],
+                    color: ["#064e3b", "#0e7490", "#064e3b"], // Tonos oscuros de emerald/cyan para texto
+                  } : {}}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="px-2.5 py-1 bg-white/80 backdrop-blur-sm border rounded shadow-sm text-[10px] font-bold uppercase tracking-wider whitespace-nowrap"
+                >
+                  100% Core Vitals
+                </motion.div>
+                {/* SVG Curve Connector */}
+                <svg width="30" height="30" viewBox="0 0 30 30" className="absolute -right-[24px] top-[14px] text-zinc-300">
+                   <path d="M 0 0 Q 15 0 22 22" fill="none" stroke="currentColor" strokeWidth="1" />
+                   <circle cx="22" cy="22" r="1.5" fill={COLORS.emerald} />
+                </svg>
+             </motion.div>
+
+             {/* --- ICONO "C" CENTRADO --- */}
              <motion.div 
                 style={{ x: "-50%", y: "-50%" }} 
                 initial={{ scale: 0, opacity: 0, rotate: -15 }} 
@@ -129,13 +153,35 @@ const BoxCards = () => {
                   backgroundColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
                   boxShadow: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
                 }}
-                // CAMBIO: 'w-8 h-8' reemplazado por 'p-1' para coincidir con la estructura del Robot
                 className="absolute top-1/2 left-0 z-40 p-1 rounded-lg border flex items-center justify-center bg-white"
              >
-                {/* CAMBIO: Wrapper interno w-8 h-8 para simular el tamaño del SVG del robot */}
                 <div className="w-8 h-8 flex items-center justify-center -mt-[2px]">
                    <span className="font-bold text-2xl leading-none">C</span>
                 </div>
+             </motion.div>
+
+             {/* --- FLECHA INFERIOR DERECHA (Improvement 2) --- */}
+             <motion.div
+               initial={{ opacity: 0, x: -20, y: -10 }}
+               animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -20, y: -10 }}
+               transition={{ delay: 0.2, duration: 0.4 }}
+               className="absolute top-[calc(50%+25px)] left-[25px] flex items-center z-30 pointer-events-none"
+             >
+                {/* SVG Curve Connector */}
+                <svg width="30" height="30" viewBox="0 0 30 30" className="absolute -left-[24px] -top-[16px] text-zinc-300">
+                   <circle cx="8" cy="8" r="1.5" fill={COLORS.cyan} />
+                   <path d="M 8 8 Q 15 30 30 30" fill="none" stroke="currentColor" strokeWidth="1" />
+                </svg>
+                <motion.div 
+                   animate={showIcon ? {
+                    borderColor: [COLORS.cyan, COLORS.emerald, COLORS.cyan],
+                    color: ["#0e7490", "#064e3b", "#0e7490"],
+                  } : {}}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} // Delay para desincronizar un poco el color
+                  className="px-2.5 py-1 bg-white/80 backdrop-blur-sm border rounded shadow-sm text-[10px] font-bold uppercase tracking-wider whitespace-nowrap"
+                >
+                  SEO Architecture
+                </motion.div>
              </motion.div>
 
              {/* RAYO VERTICAL */}
