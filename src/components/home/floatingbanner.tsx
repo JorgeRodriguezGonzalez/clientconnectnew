@@ -18,9 +18,7 @@ export function FloatingBanner() {
 
   useEffect(() => {
     // 1. COMPROBACIÓN DE CIERRE PREVIO
-    // NOTA: He comentado esto para que puedas ver el banner mientras pruebas.
-    // Cuando termines, DESCOMENTA estas líneas:
-    
+    // NOTA: Descomenta esto cuando termines de probar para que recuerde el cierre
     /* 
     const dismissed = sessionStorage.getItem("bannerDismissed");
     if (dismissed) {
@@ -30,32 +28,20 @@ export function FloatingBanner() {
     */
 
     const handleScroll = () => {
-      // Calcular altura total scrolleable
       const totalDocHeight = document.documentElement.scrollHeight;
       const windowHeight = window.innerHeight;
       const maxScroll = totalDocHeight - windowHeight;
-      
-      // Umbral: Mostrar después del 15% del scroll o 300px, lo que ocurra antes
-      // Esto asegura que en pantallas grandes aparezca antes.
       const scrollThreshold = Math.min(maxScroll * 0.15, 300);
-      
       const currentScroll = window.scrollY;
 
-      // Detectar footer para no solaparlo (evita choque visual)
       const footer = document.querySelector("footer");
       
-      // Check if footer is roughly in view (con un margen de 50px)
       let isFooterVisible = false;
       if (footer) {
         const rect = footer.getBoundingClientRect();
         isFooterVisible = rect.top <= windowHeight + 50; 
       }
 
-      // LÓGICA DE VISIBILIDAD:
-      // 1. Hemos pasado el umbral de scroll
-      // 2. Y el footer NO está visible (para que no se monte encima)
-      // 3. Opcional: Si llegamos al FINAL de la página, ocultarlo también si choca.
-      
       if (currentScroll > scrollThreshold && !isFooterVisible) {
         setIsVisible(true);
       } else {
@@ -75,7 +61,6 @@ export function FloatingBanner() {
     };
 
     window.addEventListener("scroll", throttledScroll, { passive: true });
-    // Ejecutar una vez al inicio por si recargan la página a mitad de scroll
     handleScroll(); 
 
     return () => window.removeEventListener("scroll", throttledScroll);
@@ -95,23 +80,17 @@ export function FloatingBanner() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
+          // SOLUCIÓN: Añadimos x: "-50%" aquí para que Framer lo combine con la animación Y
+          initial={{ y: 100, opacity: 0, x: "-50%" }}
+          animate={{ y: 0, opacity: 1, x: "-50%" }}
+          exit={{ y: 100, opacity: 0, x: "-50%" }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            // POSICIONAMIENTO:
-            // fixed bottom-6: Pegado abajo con margen
-            // left-1/2 -translate-x-1/2: Centrado perfecto en eje X
-            // z-[100]: Muy alto para ganar a tu header sticky (que suele ser z-50)
-            "fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]",
-            
-            // TAMAÑO:
-            // Móvil: Ancho calculado con márgenes (flotante)
-            // Desktop: Auto ajustado al contenido
+            // Mantenemos fixed, bottom y left-1/2
+            // Eliminamos -translate-x-1/2 porque ahora lo controla Framer
+            "fixed bottom-6 left-1/2 z-[100]",
             "w-[calc(100%-32px)] md:w-auto md:max-w-4xl",
-            
-            "pointer-events-none" // El contenedor no bloquea clicks fuera del banner
+            "pointer-events-none" 
           )}
         >
           <div className={cn(
@@ -119,11 +98,11 @@ export function FloatingBanner() {
             "w-full md:w-auto",
             "bg-black border border-zinc-800",
             "p-5 md:py-4 md:px-6",
-            "shadow-2xl shadow-black/80", // Sombra más fuerte para resaltar
-            "rounded-none" // Estilo recto
+            "shadow-2xl shadow-black/80", 
+            "rounded-none" 
           )}>
             
-            {/* Glow sutil (Esmeralda/Cyan) */}
+            {/* Glow sutil */}
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent opacity-50" />
 
             {/* Botón Cerrar (X) */}
@@ -140,7 +119,6 @@ export function FloatingBanner() {
               {/* Left: Icon & Text */}
               <div className="flex items-center gap-4 text-center md:text-left w-full md:w-auto justify-start">
                 
-                {/* Icon Box */}
                 <div className="hidden sm:flex w-10 h-10 rounded-none bg-zinc-900 border border-zinc-800 items-center justify-center flex-shrink-0">
                   <Sparkles className="w-4 h-4 text-emerald-400" />
                 </div>
@@ -150,7 +128,6 @@ export function FloatingBanner() {
                     <h3 className="font-sans font-bold text-[15px] text-white leading-none tracking-tight">
                       Ready to scale?
                     </h3>
-                    {/* Indicador Available */}
                     <div className="flex items-center gap-1.5 px-1.5 py-0.5 bg-zinc-900/50 border border-zinc-800/50 rounded-none">
                        <span className="relative flex h-1.5 w-1.5">
                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -168,7 +145,6 @@ export function FloatingBanner() {
               {/* Right: Buttons */}
               <div className="flex flex-row gap-3 w-full md:w-auto items-stretch md:items-center">
                 
-                {/* Call Button (Secondary) */}
                 <a 
                   href="tel:0290734731"
                   className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-none border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all"
@@ -177,7 +153,6 @@ export function FloatingBanner() {
                   <span className="font-sans font-semibold text-xs whitespace-nowrap">Call us</span>
                 </a>
 
-                {/* Action Button (Primary) */}
                 <button
                   onClick={() => {
                     const element = document.getElementById('get-in-touch');
