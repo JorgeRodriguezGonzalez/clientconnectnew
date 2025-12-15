@@ -32,8 +32,8 @@ export function FloatingBanner() {
       const windowHeight = window.innerHeight;
       const maxScroll = totalDocHeight - windowHeight;
       
-      // CORRECCIÓN: Eliminamos Math.min(..., 300) para que sea estrictamente el 30%
-      const scrollThreshold = maxScroll * 0.3;
+      // CAMBIO 1: 20% del scroll total
+      const scrollThreshold = maxScroll * 0.2;
       
       const currentScroll = window.scrollY;
 
@@ -89,9 +89,8 @@ export function FloatingBanner() {
           exit={{ y: 100, opacity: 0, x: "-50%" }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            // Mantenemos fixed, bottom y left-1/2
-            // Eliminamos -translate-x-1/2 porque ahora lo controla Framer
-            "fixed bottom-6 left-1/2 z-[100]",
+            // CAMBIO 2: z-index extremadamente alto
+            "fixed bottom-6 left-1/2 z-[9999999]",
             "w-[calc(100%-32px)] md:w-auto md:max-w-4xl",
             "pointer-events-none" 
           )}
