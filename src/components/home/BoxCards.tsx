@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion';
 import { InteractiveCardStack } from '@/components/home/InteractiveCardStack';
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
   cyan: "#06b6d4",
-  coral: "rgb(222, 131, 99)", // Se mantienen por si se usan en otros sitios, pero no en el rayo
+  coral: "rgb(222, 131, 99)", 
   gold: "rgb(237, 191, 134)",
   emerald: "#34d399", 
 };
@@ -23,6 +23,7 @@ const BackgroundStripes = () => (
 // @component: BoxCards
 const BoxCards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [showIcon, setShowIcon] = useState(false); // Estado para controlar la aparición de la C
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -33,6 +34,16 @@ const BoxCards = () => {
     stiffness: 200,
     damping: 30,
     restDelta: 0.001
+  });
+
+  // --- DETECTOR DE SCROLL PARA ACTIVAR LA "C" ---
+  // El rayo termina su recorrido (50%) en el progreso 0.3, ahí activamos el icono
+  useMotionValueEvent(smoothProgress, "change", (latest) => {
+    if (latest >= 0.3 && !showIcon) {
+      setShowIcon(true);
+    } else if (latest < 0.3 && showIcon) {
+      setShowIcon(false);
+    }
   });
 
   // --- TRAYECTORIA DEL RAYO ---
@@ -89,12 +100,48 @@ const BoxCards = () => {
 
           {/* === DIVISOR VERTICAL (Desktop only) -> 60% === */}
           <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-20 overflow-visible">
+             
+             {/* --- ICONO "C" CENTRADO --- */}
+             <motion.div 
+                style={{ x: "-50%", y: "-50%" }} 
+                initial={{ scale: 0, opacity: 0, rotate: -15 }} 
+                animate={showIcon ? {
+                  scale: 1,
+                  opacity: 1,
+                  rotate: [-15, 15, -5, 0], 
+                  // Ciclo de colores: Gris -> Cyan -> Emerald -> Gris
+                  borderColor: ["#e4e4e7", COLORS.cyan, COLORS.emerald, "#e4e4e7"], 
+                  color: ["#6b7280", COLORS.cyan, COLORS.emerald, "#6b7280"],       
+                  backgroundColor: ["#ffffff", "#ECFEFF", "#ECFDF5", "#ffffff"], // Tintes suaves de cyan y emerald
+                  boxShadow: ["0 1px 2px 0 rgba(0,0,0,0.05)", `0 0 10px ${COLORS.cyan}40`, `0 0 10px ${COLORS.emerald}40`, "0 1px 2px 0 rgba(0,0,0,0.05)"]
+                } : {
+                  scale: 0,
+                  opacity: 0,
+                  rotate: -15, 
+                  borderColor: "#e4e4e7",
+                  color: "#6b7280",
+                  backgroundColor: "#ffffff",
+                  boxShadow: "0 0 0 transparent"
+                }}
+                transition={{
+                  scale: { duration: 0.4, ease: "backOut" },
+                  opacity: { duration: 0.3 },
+                  rotate: { duration: 1.2, ease: "easeInOut" }, 
+                  borderColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+                  color: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+                  backgroundColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" },
+                  boxShadow: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+                }}
+                className="absolute top-1/2 left-0 z-40 w-8 h-8 rounded-lg border flex items-center justify-center bg-white"
+             >
+                <span className="font-bold text-lg leading-none mt-[-2px]">C</span>
+             </motion.div>
+
              {/* RAYO VERTICAL */}
              <motion.div 
                style={{ 
                  top: beamTop,
                  opacity: beamOpacity,
-                 // CAMBIO: Gradiente actualizado a Emerald -> Cyan
                  background: `linear-gradient(to bottom, transparent, ${COLORS.emerald}, ${COLORS.cyan})`
                }}
                className="absolute left-0 w-[1.6px] -ml-[1px] h-[200px] -translate-y-full blur-[0.5px]"
