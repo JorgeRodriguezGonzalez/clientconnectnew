@@ -8,7 +8,14 @@ const cn = (...classes: (string | undefined | null | false)[]) => {
   return classes.filter(Boolean).join(' ');
 };
 
-// --- COMPONENTE GLOWING EFFECT ---
+// --- CONSTANTES ---
+const COLORS = {
+  cyan: "#06b6d4", 
+  emerald: "#34d399",
+  // Gold y Coral eliminados de la UI visible
+};
+
+// --- COMPONENTE GLOWING EFFECT (Actualizado con colores corporativos) ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -141,17 +148,18 @@ const GlowingEffect = React.memo(
               "--active": "0",
               "--glowingeffect-border-width": `${borderWidth}px`,
               "--repeating-conic-gradient-times": "5",
-              "--gradient": `radial-gradient(circle, #EDBF86 10%, #EDBF8600 20%),
-                radial-gradient(circle at 40% 40%, #DE8363 5%, #DE836300 15%),
-                radial-gradient(circle at 60% 60%, #67BCB7 10%, #67BCB700 20%), 
-                radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
+              // CAMBIO: Gradiente actualizado a Emerald y Cyan
+              "--gradient": `radial-gradient(circle, ${COLORS.emerald} 10%, #34d39900 20%),
+                radial-gradient(circle at 40% 40%, ${COLORS.cyan} 5%, #06b6d400 15%),
+                radial-gradient(circle at 60% 60%, ${COLORS.emerald} 10%, #34d39900 20%), 
+                radial-gradient(circle at 40% 60%, ${COLORS.cyan} 10%, #06b6d400 20%),
                 repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
-                  #EDBF86 0%,
-                  #DE8363 calc(25% / var(--repeating-conic-gradient-times)),
-                  #67BCB7 calc(50% / var(--repeating-conic-gradient-times)), 
-                  #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
-                  #EDBF86 calc(100% / var(--repeating-conic-gradient-times))
+                  ${COLORS.emerald} 0%,
+                  ${COLORS.cyan} calc(25% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.emerald} calc(50% / var(--repeating-conic-gradient-times)), 
+                  ${COLORS.cyan} calc(75% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.emerald} calc(100% / var(--repeating-conic-gradient-times))
                 )`,
             } as React.CSSProperties
           }
@@ -182,13 +190,6 @@ const GlowingEffect = React.memo(
   }
 );
 GlowingEffect.displayName = "GlowingEffect";
-
-// --- CONSTANTES ---
-const COLORS = {
-  turquoise: "rgb(103, 188, 183)", // #67bcb7
-  coral: "rgb(222, 131, 99)",     // #de8363
-  gold: "rgb(237, 191, 134)",     // #edbf86
-};
 
 const BackgroundStripes = () => (
   <div
@@ -289,7 +290,8 @@ const Pricing = () => {
               }}
               style={{
                 display: "inline-block",
-                backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
+                // CAMBIO: Gradiente Emerald y Cyan
+                backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                 backgroundSize: "400% 100%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -350,7 +352,7 @@ const Pricing = () => {
                   {plan.highlighted && (
                     <div className="absolute top-0 right-0 p-3">
                       <div className="px-3 py-1 bg-gray-900 text-white flex items-center gap-1.5 shadow-sm">
-                        <Sparkles className="w-3 h-3 text-[rgb(237,191,134)]" />
+                        <Sparkles className="w-3 h-3 text-[#34d399]" />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Popular</span>
                       </div>
                     </div>
@@ -376,9 +378,10 @@ const Pricing = () => {
                         : "bg-transparent text-gray-900 border-zinc-900 hover:bg-zinc-900 hover:text-white"
                     )}
                     style={{
+                      // CAMBIO: Fondo oscuro para destacado y gradiente Emerald/Cyan
                       backgroundColor: plan.highlighted ? "rgb(30, 41, 59)" : undefined,
                       backgroundImage: plan.highlighted 
-                        ? `linear-gradient(135deg, ${COLORS.turquoise}, ${COLORS.coral})` 
+                        ? `linear-gradient(135deg, ${COLORS.emerald}, ${COLORS.cyan})` 
                         : undefined
                     }}
                   >
@@ -392,7 +395,8 @@ const Pricing = () => {
                     {plan.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-start gap-3">
                         <div className="mt-0.5 shrink-0">
-                          <Check className="h-4 w-4" style={{ color: COLORS.turquoise }} strokeWidth={2.5} />
+                          {/* CAMBIO: Icono check en Emerald */}
+                          <Check className="h-4 w-4" style={{ color: COLORS.emerald }} strokeWidth={2.5} />
                         </div>
                         <span className="text-sm text-gray-600 font-medium">{feature}</span>
                       </li>
