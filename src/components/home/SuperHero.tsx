@@ -303,6 +303,10 @@ export const SuperHero = ({
 }: SuperHeroProps) => {
   const bgColor = "#050505";
   const lampColor = "#06b6d4"; 
+  const emeraldColor = "#34d399"; // Color esmeralda para el efecto hover y textos
+
+  // Estado para el hover del botón "Start Scaling"
+  const [isHovered, setIsHovered] = useState(false);
 
   const radialColorSequence = [
     "radial-gradient(circle at bottom center, #06b6d4, transparent 70%)", 
@@ -466,7 +470,7 @@ export const SuperHero = ({
           >
             <p>Stop relying on guesswork. We act as your entire growth engine.</p>
             <p className="text-gray-300">
-              Combining <span className="text-[#06b6d4] font-semibold">Paid Media</span>, <span className="text-[#06b6d4] font-semibold">Creative Strategy</span>, and <span className="text-[#06b6d4] font-semibold">CRO</span> to maximize ROI.
+              Combining <span className="text-emerald-400 font-semibold">Paid Media</span>, <span className="text-emerald-400 font-semibold">Creative Strategy</span>, and <span className="text-emerald-400 font-semibold">CRO</span> to maximize ROI.
             </p>
           </motion.div>
 
@@ -481,9 +485,16 @@ export const SuperHero = ({
               <motion.a href="#contact" className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100]" whileHover={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)', transition: { duration: 0.2 } }}>
                 <p className="font-inter font-semibold text-[15px] text-white whitespace-nowrap">{secondaryButtonText}</p>
               </motion.a>
-              <motion.a href="#contact" className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100]" style={{ border: `1px solid ${lampColor}` }} whileHover={{ boxShadow: `0 0 20px rgba(6, 182, 212, 0.5)`, transition: { duration: 0.2 } }}>
-                <div className="w-[18px] h-[14px] relative overflow-hidden" style={{ color: lampColor }}><Calendar className="w-[17px] h-[14px]" /></div>
-                <p className="font-inter font-semibold text-[15px] whitespace-nowrap z-[1]" style={{ color: lampColor }}>{primaryButtonText}</p>
+              <motion.a 
+                href="#contact" 
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+                className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100]" 
+                style={{ border: `1px solid ${isHovered ? emeraldColor : lampColor}` }} 
+                whileHover={{ boxShadow: `0 0 20px rgba(52, 211, 153, 0.5)`, transition: { duration: 0.2 } }}
+              >
+                <div className="w-[18px] h-[14px] relative overflow-hidden" style={{ color: isHovered ? emeraldColor : lampColor }}><Calendar className="w-[17px] h-[14px]" /></div>
+                <p className="font-inter font-semibold text-[15px] whitespace-nowrap z-[1]" style={{ color: isHovered ? emeraldColor : lampColor }}>{primaryButtonText}</p>
               </motion.a>
             </div>
           </motion.div>
