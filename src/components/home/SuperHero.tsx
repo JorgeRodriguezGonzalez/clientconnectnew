@@ -6,9 +6,6 @@ import {
   TrendingUp, Users, DollarSign, MousePointerClick 
 } from 'lucide-react';
 
-// ... (Mantén fontStyles y Sparkles igual que antes, no los repito para ahorrar espacio visual, 
-// asume que están aquí o impórtalos como en tu código original) ...
-
 // --- FONTS STYLES & ANIMATIONS ---
 const fontStyles = `
   .font-inter {
@@ -133,7 +130,6 @@ const Sparkles = ({
   );
 };
 
-
 // --- SUB-COMPONENTS FOR DIGITAL WORKFLOW ---
 
 const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
@@ -195,7 +191,7 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   );
 };
 
-// --- UPDATED MarketingAppContent (iMessage Style) ---
+// --- MARKING APP CONTENT (iMessage Style) ---
 type Message = {
     id: string;
     role: 'system' | 'user';
@@ -253,8 +249,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 
   return (
     <div className="flex flex-col h-full bg-white relative font-sans overflow-hidden">
-      
-      {/* HEADER (Sticky) */}
+      {/* HEADER */}
       <div className="h-[44px] flex items-center justify-between px-6 pt-3 z-30 shrink-0 bg-white/80 backdrop-blur-md sticky top-0 border-b border-gray-100/50">
         <div className="text-[14px] font-semibold text-gray-900 tracking-wide">{currentTime}</div>
         <div className="flex items-center gap-1.5 text-gray-900">
@@ -264,7 +259,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
         </div>
       </div>
 
-      {/* CHAT AREA: Reduje el pb-32 a pb-20 para que no haya tanto espacio muerto en el nuevo height */}
+      {/* CHAT AREA */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-20">
         {messages.map((msg) => (
             <motion.div
@@ -320,24 +315,22 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
              <div className="w-[130px] h-[5px] bg-black/90 rounded-full" />
         </div>
       </div>
-
     </div>
   );
 };
 
-// --- UPDATED PhoneFrame ---
-// CAMBIO IMPORTANTE: Reduje height de h-[800px] a h-[600px] para reducir el espacio vacío.
+// --- PHONE FRAME ---
+// Height 620px (más corto), Width 320px.
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
-    <div className="relative w-[390px] h-[600px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
-      {/* Botones laterales ajustados ligeramente si fuera necesario, pero por posicion absoluta siguen bien */}
-      <div className="absolute left-[-4px] top-[120px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
-      <div className="absolute left-[-4px] top-[180px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
-      <div className="absolute left-[-4px] top-[250px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
-      <div className="absolute right-[-4px] top-[200px] w-[4px] h-[80px] bg-gray-700 rounded-r-sm"></div>
-      <div className="relative w-full h-full bg-black rounded-[3rem] overflow-hidden border border-gray-800">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
-          <div className="absolute right-[25%] w-[10px] h-[10px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
+    <div className="relative w-[320px] h-[620px] bg-gray-900 rounded-[3rem] shadow-2xl p-3 border-4 border-gray-800">
+      <div className="absolute left-[-4px] top-[100px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
+      <div className="absolute left-[-4px] top-[160px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
+      <div className="absolute left-[-4px] top-[230px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
+      <div className="absolute right-[-4px] top-[180px] w-[4px] h-[80px] bg-gray-700 rounded-r-sm"></div>
+      <div className="relative w-full h-full bg-black rounded-[2.5rem] overflow-hidden border border-gray-800">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[25px] bg-black rounded-b-2xl z-40 flex items-center justify-center pointer-events-none">
+          <div className="absolute right-[25%] w-[8px] h-[8px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
         <MarketingAppContent onOptionChange={onOptionChange} />
       </div>
@@ -361,9 +354,8 @@ export const SuperHero = ({
 }: SuperHeroProps) => {
   const bgColor = "#050505";
   const lampColor = "#06b6d4"; 
-  const emeraldColor = "#34d399"; // Color esmeralda para el efecto hover y textos
+  const emeraldColor = "#34d399"; 
 
-  // Estado para el hover del botón "Start Scaling"
   const [isHovered, setIsHovered] = useState(false);
 
   const radialColorSequence = [
@@ -379,9 +371,9 @@ export const SuperHero = ({
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
     
-    const lines = Array.from({ length: 25 }).map((_, i) => {
-      const topPos = Math.random() * 90;
-      const isTopLine = topPos < 45; 
+    const lines = Array.from({ length: 30 }).map((_, i) => { // Increased lines for taller area
+      const topPos = Math.random() * 95;
+      const isTopLine = topPos < 50; 
 
       return {
         id: i,
@@ -389,17 +381,16 @@ export const SuperHero = ({
         color: syntaxColors[Math.floor(Math.random() * syntaxColors.length)],
         top: `${topPos}%`,
         delay: `${Math.random() * 5}s`,
-        duration: `${3 + Math.random() * 3}s`,
+        duration: `${4 + Math.random() * 4}s`,
         animationName: isTopLine ? 'codeFlowTop' : 'codeFlow',
       };
     });
     setCodeLines(lines);
   }, []);
 
-  // --- WIDGET GENERATION LOGIC ---
   const generateWidgetsData = (mode: string, count: number, burstMode: boolean = false) => {
     return Array.from({ length: count }).map((_, i) => {
-        let type = 2; // Default
+        let type = 2; 
         const rand = Math.random();
 
         if (mode === 'leads') {
@@ -416,17 +407,14 @@ export const SuperHero = ({
              else type = 0;
         }
 
-        const delay = burstMode 
-            ? Math.random() * 1.5 
-            : Math.random() * 6;
-        
+        const delay = burstMode ? Math.random() * 1.5 : Math.random() * 6;
         const randomROI = Math.floor(Math.random() * (450 - 150) + 150); 
         const randomCTR = (Math.random() * (9.5 - 2.1) + 2.1).toFixed(1); 
 
         return {
             id: Math.random().toString(36).substr(2, 9) + Date.now(),
             type: type, 
-            top: `${15 + Math.random() * 70}%`, 
+            top: `${10 + Math.random() * 80}%`, // Spread across new height
             delay: `${delay}s`,
             duration: `${5 + Math.random() * 4}s`,
             roiValue: randomROI,
@@ -454,9 +442,11 @@ export const SuperHero = ({
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-16 px-0 overflow-hidden relative">
+    // CAMBIO 1: Aumentado pt-16 a pt-32 para dar espacio a la lámpara
+    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-32 px-0 overflow-hidden relative">
       <style>{fontStyles}</style>
       
+      {/* Background Gradients */}
       <div className="absolute inset-x-0 -bottom-48 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-30"
@@ -473,7 +463,7 @@ export const SuperHero = ({
       </div>
 
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
-        
+        {/* Lamp Section */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             <motion.div
@@ -505,6 +495,7 @@ export const SuperHero = ({
           </div>
         </div>
 
+        {/* Text & Buttons */}
         <div className="relative z-10 text-center mb-8">
           <motion.h1 
             key="hero-title"
@@ -560,8 +551,11 @@ export const SuperHero = ({
       </div>
 
       {/* --- DIGITAL WORKFLOW SECTION --- */}
-      <div className="w-full relative h-[650px] flex justify-center overflow-hidden z-[10] -mt-28">
+      {/* CAMBIO 2: Altura aumentada a 850px para ver mejor el flujo de fondo. */}
+      {/* CAMBIO 3: -mt-20 ajustado para que no solape tanto la lamp. */}
+      <div className="w-full relative h-[850px] flex justify-center overflow-hidden z-[10] -mt-20">
         
+        {/* Left Side (Code) */}
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
           {codeLines.map((line) => (
@@ -579,20 +573,23 @@ export const SuperHero = ({
           ))}
         </div>
 
-        {/* --- CORRECCIÓN: Contenedor con posicionamiento original + Animación interna --- */}
-        <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[35%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
+        {/* Center (Phone) */}
+        {/* CAMBIO 4: justify-end para que el teléfono quede pegado abajo. Eliminado translate-y excesivo. */}
+        <div className="relative z-[20] flex flex-col items-center justify-end transform origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           
-          {/* Animación Glass Morph Fade In aplicada al contenido del frame */}
           <motion.div
              initial={{ opacity: 0, filter: "blur(15px)", scale: 0.95 }}
              animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
              transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+             // Ajuste ligero para que no se corte la sombra inferior
+             className="pb-2"
           >
               <PhoneFrame onOptionChange={handlePhoneOptionChange} />
           </motion.div>
         </div>
 
+        {/* Right Side (Widgets) */}
         <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
           <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
