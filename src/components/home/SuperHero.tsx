@@ -441,7 +441,7 @@ export const SuperHero = ({
   };
 
   return (
-    // CAMBIO 1: Aumentado pt-48 a pt-56 (más espacio encima de la lámpara)
+    // CAMBIO 1 (Lamp): pt-56 (Manteniendo el buen sitio de la lamp)
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-56 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
       
@@ -546,8 +546,9 @@ export const SuperHero = ({
         </div>
       </div>
 
-      {/* --- CAMBIO 2 y 3: mt-16 (menos espacio encima) y h-[750px] (menos espacio debajo) --- */}
-      <div className="w-full relative h-[750px] flex justify-center overflow-hidden z-[10] mt-16">
+      {/* --- CAMBIO 2 (Más cerca CTAs): mt-8 (antes mt-16) --- */}
+      {/* --- CAMBIO 3 (Menos espacio abajo): h-[700px] (antes h-[750px]) --- */}
+      <div className="w-full relative h-[700px] flex justify-center overflow-hidden z-[10] mt-8">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
@@ -566,7 +567,8 @@ export const SuperHero = ({
           ))}
         </div>
 
-        <div className="relative z-[20] flex flex-col items-center justify-start pt-10">
+        {/* --- CAMBIO 3 (Ajuste fino): pt-2 para que el telefono cuadre casi a ras --- */}
+        <div className="relative z-[20] flex flex-col items-center justify-start pt-2">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           
           <motion.div
