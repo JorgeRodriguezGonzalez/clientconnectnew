@@ -73,7 +73,8 @@ const MobileNavLink = ({ name, href, onClick }: { name: string, href: string, on
 
 // --- MAIN COMPONENT ---
 export function Header() {
-  const [isVisible, setIsVisible] = useState(true); // Visible por defecto al inicio
+  // CAMBIO 1: Estado inicial en false (oculto al cargar)
+  const [isVisible, setIsVisible] = useState(false); 
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -82,14 +83,16 @@ export function Header() {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
       
-      // Lógica: Mostrar header al inicio o al hacer scroll UP. Ocultar al scroll DOWN.
-      if (currentScroll < 50) {
-         setIsVisible(true);
-      } else if (currentScroll > lastScrollY) {
+      // CAMBIO 2: Lógica simplificada.
+      // Eliminamos el check de 'currentScroll < 50' para que no se muestre automáticamente al estar arriba.
+      // Solo se muestra si scroll < lastScrollY (hacia arriba)
+      
+      if (currentScroll > lastScrollY) {
          setIsVisible(false); // Scroll Down -> Ocultar
-      } else {
+      } else if (currentScroll < lastScrollY) {
          setIsVisible(true);  // Scroll Up -> Mostrar
       }
+      
       setLastScrollY(currentScroll);
     };
 
@@ -132,7 +135,7 @@ export function Header() {
     <>
       <motion.header
         role="banner"
-        initial="visible"
+        initial="hidden" // Aseguramos que Framer Motion inicie en estado oculto visualmente
         animate={isVisible || isMobileMenuOpen ? "visible" : "hidden"}
         variants={headerVariants}
         className={cn(
