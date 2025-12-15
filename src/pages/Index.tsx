@@ -1,4 +1,3 @@
-import Footer from "@/components/layout/Footer";
 import { FinalHero } from "@/components/home/FinalHero";
 import { BentoGrid } from "@/components/home/BentoGrid";
 import { AnimatedGallerySection } from "@/components/animated-gallery-section";
@@ -26,6 +25,7 @@ import { Services } from "@/components/home/Services";
 import { SuperHero } from "@/components/home/SuperHero";
 import { FloatingBanner } from "@/components/home/floatingbanner";
 import { Header } from "@/components/home/header";
+import { Footer } from "@/components/home/footer";
 
 const Index = () => {
   return (
@@ -54,6 +54,7 @@ const Index = () => {
         <TestimonialsSection />
         <CTASection />
         <FloatingBanner />
+        <Footer />
 
         
 
