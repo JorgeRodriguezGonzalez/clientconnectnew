@@ -37,7 +37,7 @@ const Index = () => {
         <div className="z-999999">
           <FounderSection />
         </div>
-
+        <OurStepsVersion2 />
 
         
         <CloudHero />
@@ -50,7 +50,7 @@ const Index = () => {
           <BentoGrid />
         </div>
         
-        <OurStepsVersion2 />
+        
 
         <TestimonialsSection />
         <CTASection />
