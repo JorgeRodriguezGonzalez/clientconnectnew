@@ -16,6 +16,13 @@ type ServiceItem = {
   bgPosition: string;
 };
 
+// CONSTANTES DE COLOR
+const COLORS = {
+  cyan: "#06b6d4",
+  emerald: "#34d399",
+  gold: "rgb(237, 191, 134)", // Se mantienen por si acaso, pero no se usan en este comp.
+};
+
 // IMÁGENES PANORÁMICAS
 const PANORAMIC_IMAGES = {
   strategy: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop",
@@ -218,7 +225,7 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    // CAMBIO AQUÍ: bg-[#FAFAFA] en lugar de bg-white
+    // Background Blanco/Gris Claro
     <div className="w-full bg-[#FAFAFA] min-h-screen py-20 font-sans text-neutral-900 selection:bg-neutral-200 overflow-x-hidden pl-[8vw]">
       
       <style>{`
@@ -244,7 +251,8 @@ export const Services = () => {
                 transition={{ duration: 12, ease: "linear", repeat: Infinity }}
                 style={{
                   display: "inline-block",
-                  backgroundImage: "linear-gradient(45deg, rgba(255, 255, 255, 0), rgb(237, 191, 134), rgb(222, 131, 99), rgb(103, 188, 183), rgba(255, 255, 255, 0))",
+                  // CAMBIO: Gradiente Emerald y Cyan
+                  backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                   backgroundSize: "400% 100%",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -286,8 +294,9 @@ export const Services = () => {
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   >
                     <div className="absolute inset-0 bg-white" />
-                    <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(237,191,134), transparent 72%)", animation: "bento2-gradient-fade1 10.5s ease-in-out infinite" }} />
-                    <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(103,188,183), transparent 72%)", animation: "bento2-gradient-fade2 10.5s ease-in-out infinite" }} />
+                    {/* CAMBIO: Animaciones de gradiente actualizadas a Emerald y Cyan */}
+                    <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse 90% 120% at 20% 50%, ${COLORS.emerald}, transparent 72%)`, animation: "bento2-gradient-fade1 10.5s ease-in-out infinite" }} />
+                    <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse 90% 120% at 20% 50%, ${COLORS.cyan}, transparent 72%)`, animation: "bento2-gradient-fade2 10.5s ease-in-out infinite" }} />
                     <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 90% 120% at 20% 50%, rgb(148,163,184), transparent 72%)", animation: "bento2-gradient-fade3 10.5s ease-in-out infinite" }} />
                     <div className="absolute inset-0 rounded-none border border-neutral-200/50" />
                   </motion.div>
