@@ -99,28 +99,32 @@ const BoxCards = () => {
           {/* === DIVISOR VERTICAL (Desktop only) -> 60% === */}
           <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-20 overflow-visible">
              
-             {/* --- FLECHA SUPERIOR IZQUIERDA (Improvement 1) --- */}
+             {/* --- MENSAJE SUPERIOR DERECHA (Improvement 1) --- */}
+             {/* Posición: A la derecha (left-35px) y desplazado hacia arriba (-90px) */}
              <motion.div
-               initial={{ opacity: 0, x: 20, y: 10 }}
-               animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: 20, y: 10 }}
+               initial={{ opacity: 0, x: -10, y: 10 }}
+               animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -10, y: 10 }}
                transition={{ delay: 0.1, duration: 0.4 }}
-               className="absolute top-[calc(50%-50px)] right-[25px] flex items-center z-30 pointer-events-none"
+               className="absolute top-[calc(50%-90px)] left-[35px] flex items-center z-30 pointer-events-none"
              >
+                {/* SVG Curve Connector: Viene desde abajo-izquierda (la linea central) hacia arriba-derecha */}
+                <svg width="40" height="40" viewBox="0 0 40 40" className="absolute -left-[35px] top-[14px] text-zinc-300 pointer-events-none">
+                   {/* Punto de inicio cerca del cuadrado C */}
+                   <circle cx="0" cy="38" r="1.5" fill={COLORS.emerald} />
+                   {/* Curva hacia el badge */}
+                   <path d="M 0 38 Q 15 38 35 20" fill="none" stroke="currentColor" strokeWidth="1" />
+                </svg>
+
                 <motion.div 
                   animate={showIcon ? {
                     borderColor: [COLORS.emerald, COLORS.cyan, COLORS.emerald],
-                    color: ["#064e3b", "#0e7490", "#064e3b"], // Tonos oscuros de emerald/cyan para texto
+                    color: ["#064e3b", "#0e7490", "#064e3b"], 
                   } : {}}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                   className="px-2.5 py-1 bg-white/80 backdrop-blur-sm border rounded shadow-sm text-[10px] font-bold uppercase tracking-wider whitespace-nowrap"
                 >
                   100% Core Vitals
                 </motion.div>
-                {/* SVG Curve Connector */}
-                <svg width="30" height="30" viewBox="0 0 30 30" className="absolute -right-[24px] top-[14px] text-zinc-300">
-                   <path d="M 0 0 Q 15 0 22 22" fill="none" stroke="currentColor" strokeWidth="1" />
-                   <circle cx="22" cy="22" r="1.5" fill={COLORS.emerald} />
-                </svg>
              </motion.div>
 
              {/* --- ICONO "C" CENTRADO --- */}
@@ -160,24 +164,28 @@ const BoxCards = () => {
                 </div>
              </motion.div>
 
-             {/* --- FLECHA INFERIOR DERECHA (Improvement 2) --- */}
+             {/* --- MENSAJE INFERIOR DERECHA (Improvement 2) --- */}
+             {/* Posición: A la derecha (left-35px) y desplazado hacia abajo (+90px) */}
              <motion.div
-               initial={{ opacity: 0, x: -20, y: -10 }}
-               animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -20, y: -10 }}
+               initial={{ opacity: 0, x: -10, y: -10 }}
+               animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -10, y: -10 }}
                transition={{ delay: 0.2, duration: 0.4 }}
-               className="absolute top-[calc(50%+25px)] left-[25px] flex items-center z-30 pointer-events-none"
+               className="absolute top-[calc(50%+90px)] left-[35px] flex items-center z-30 pointer-events-none"
              >
-                {/* SVG Curve Connector */}
-                <svg width="30" height="30" viewBox="0 0 30 30" className="absolute -left-[24px] -top-[16px] text-zinc-300">
-                   <circle cx="8" cy="8" r="1.5" fill={COLORS.cyan} />
-                   <path d="M 8 8 Q 15 30 30 30" fill="none" stroke="currentColor" strokeWidth="1" />
+                {/* SVG Curve Connector: Viene desde arriba-izquierda (la linea central) hacia abajo-derecha */}
+                <svg width="40" height="40" viewBox="0 0 40 40" className="absolute -left-[35px] -top-[12px] text-zinc-300 pointer-events-none">
+                   {/* Punto de inicio cerca del cuadrado C */}
+                   <circle cx="0" cy="2" r="1.5" fill={COLORS.cyan} />
+                   {/* Curva hacia el badge */}
+                   <path d="M 0 2 Q 15 2 35 20" fill="none" stroke="currentColor" strokeWidth="1" />
                 </svg>
+
                 <motion.div 
                    animate={showIcon ? {
                     borderColor: [COLORS.cyan, COLORS.emerald, COLORS.cyan],
                     color: ["#0e7490", "#064e3b", "#0e7490"],
                   } : {}}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} // Delay para desincronizar un poco el color
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
                   className="px-2.5 py-1 bg-white/80 backdrop-blur-sm border rounded shadow-sm text-[10px] font-bold uppercase tracking-wider whitespace-nowrap"
                 >
                   SEO Architecture
