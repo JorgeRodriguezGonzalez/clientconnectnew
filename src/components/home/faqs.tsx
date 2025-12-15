@@ -14,7 +14,8 @@ const COLORS = {
 
 const BackgroundStripes = () => (
   <div
-    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.04]"
+    // Agregamos 'invert' para que el patrón se vea blanco sobre fondo negro
+    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05] invert"
     style={{
       backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
       backgroundRepeat: 'repeat',
@@ -22,7 +23,7 @@ const BackgroundStripes = () => (
   />
 );
 
-// --- DATA (Adaptada a Marketing Digital) ---
+// --- DATA (Marketing Digital) ---
 const faqData = [
   {
     id: 1,
@@ -57,10 +58,11 @@ export default function FAQSection() {
   const [openItem, setOpenItem] = useState<string | null>(null);
 
   return (
-    <section className="relative w-full bg-white py-24 sm:py-32 overflow-hidden">
+    // CAMBIO: Fondo negro (#050505)
+    <section className="relative w-full bg-[#050505] py-24 sm:py-32 overflow-hidden">
       
-      {/* Top Border */}
-      <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-20" />
+      {/* Top Border (ajustado a white/10) */}
+      <div className="w-full h-[1px] bg-white/10 absolute top-0 z-20" />
 
       {/* Background Pattern */}
       <BackgroundStripes />
@@ -73,7 +75,7 @@ export default function FAQSection() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500"
+            className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500"
           >
             SUPPORT
           </motion.div>
@@ -82,7 +84,7 @@ export default function FAQSection() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-gray-900"
+            className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-white"
           >
             Frequently asked{' '}
             <motion.span
@@ -106,14 +108,14 @@ export default function FAQSection() {
             >
               questions
             </motion.span>
-            <span className="text-gray-900">.</span>
+            <span className="text-white">.</span>
           </motion.h2>
 
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[16px] md:text-[18px] font-medium leading-relaxed text-gray-600 tracking-tight"
+            className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-400 tracking-tight"
           >
             Everything you need to know about how we work, our methodology, and how we help businesses scale.
           </motion.p>
@@ -123,7 +125,7 @@ export default function FAQSection() {
         <div className="max-w-[800px] mx-auto">
            {/* Timestamp "Chat" style decoration */}
            <div className="flex justify-center mb-8">
-              <span className="text-[10px] uppercase tracking-widest text-zinc-400 bg-zinc-50 px-3 py-1 border border-zinc-100">
+              <span className="text-[10px] uppercase tracking-widest text-zinc-500 bg-white/5 px-3 py-1 border border-white/5">
                 Updated Today
               </span>
            </div>
@@ -151,22 +153,22 @@ export default function FAQSection() {
                       viewport={{ once: true }}
                       className={cn(
                         "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border rounded-none",
-                        // Estados activos vs inactivos
+                        // Estados activos vs inactivos (Modo Oscuro)
                         openItem === item.id.toString() 
-                          ? "bg-white border-zinc-300 shadow-md z-10" 
-                          : "bg-zinc-50 border-zinc-200 hover:bg-white hover:border-zinc-300"
+                          ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10" 
+                          : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10"
                       )}
                     >
                       <div className="flex items-center gap-4">
                         <div className={cn(
                           "flex items-center justify-center w-8 h-8 rounded-none transition-colors duration-300",
-                          openItem === item.id.toString() ? "bg-zinc-900 text-white" : "bg-zinc-200 text-zinc-500"
+                          openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500"
                         )}>
                             <MessageSquare size={14} />
                         </div>
                         <span className={cn(
                           "text-base md:text-lg font-semibold transition-colors duration-300",
-                          openItem === item.id.toString() ? "text-zinc-900" : "text-zinc-600"
+                          openItem === item.id.toString() ? "text-white" : "text-zinc-400"
                         )}>
                           {item.question}
                         </span>
@@ -175,7 +177,7 @@ export default function FAQSection() {
                       <span 
                         className={cn(
                           "ml-4 transition-transform duration-300",
-                          openItem === item.id.toString() ? "text-emerald-500 rotate-180" : "text-zinc-400"
+                          openItem === item.id.toString() ? "text-emerald-500 rotate-180" : "text-zinc-600"
                         )}
                       >
                         {openItem === item.id.toString() ? (
@@ -211,9 +213,9 @@ export default function FAQSection() {
                         <div className="flex justify-end mt-2 ml-8 md:ml-16">
                             <div
                                 className={cn(
-                                "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-none shadow-sm",
-                                // Fondo Oscuro para la respuesta (Estilo industrial/tech)
-                                "bg-zinc-900 text-zinc-100"
+                                "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-none shadow-sm border",
+                                // Fondo ligeramente más claro que el negro absoluto para destacar, pero oscuro.
+                                "bg-zinc-900 border-white/10 text-zinc-300"
                                 )}
                             >
                                 {/* Decorative corner */}
