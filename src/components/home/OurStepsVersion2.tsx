@@ -114,10 +114,10 @@ export const defaultEntries: OurStepsVersion2Entry[] = [
   },
 ];
 
+// COLORES ACTUALIZADOS
 const COLORS = {
-  turquoise: "rgb(103, 188, 183)", // #67bcb7
-  coral: "rgb(222, 131, 99)",     // #de8363
-  gold: "rgb(237, 191, 134)",     // #edbf86
+  cyan: "#06b6d4", 
+  emerald: "#34d399",
 };
 
 // --- Main Component ---
@@ -170,8 +170,6 @@ export default function OurStepsVersion2({
   }, []);
 
   return (
-    // SECCIÓN PRINCIPAL
-    // IMPORTANTE: Se ha eliminado 'overflow-hidden' de aquí para restaurar el sticky
     <section className="relative w-full bg-white">
       
       {/* 1. FONDO DE RAYAS */}
@@ -180,8 +178,8 @@ export default function OurStepsVersion2({
       {/* 2. CONTENEDOR ESTRUCTURAL */}
       <div className="relative z-10 w-full max-w-5xl mx-auto bg-white border-l border-r border-zinc-200">
         
-        {/* Padding interno del contenido */}
-        <div className="py-32 px-4 md:px-8">
+        {/* Padding interno del contenido: Reducido superior (pt-16) */}
+        <div className="pt-16 pb-32 px-4 md:px-8">
           
           {/* HEADER */}
           <div className="mx-auto max-w-[600px] flex flex-col gap-6 text-center mb-16 md:mb-24">
@@ -202,7 +200,8 @@ export default function OurStepsVersion2({
                   }}
                   style={{
                     display: "inline-block",
-                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
+                    // Gradiente actualizado: Emerald & Cyan
+                    backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -234,15 +233,15 @@ export default function OurStepsVersion2({
                   aria-current={isActive ? "true" : "false"}
                 >
                   {/* Sticky meta column */}
-                  {/* Al no haber overflow-hidden en los padres, este sticky volverá a funcionar */}
                   <div className="top-32 flex h-min w-64 shrink-0 items-center gap-4 md:sticky">
                     <div className="flex items-center gap-3">
+                      {/* Icon Container: rounded-none */}
                       <div 
-                        className={`p-2 rounded-lg transition-colors duration-300 ${
+                        className={`p-2 rounded-none transition-colors duration-300 ${
                           isActive ? "text-white" : "bg-gray-100 text-gray-500"
                         }`}
                         style={{
-                          backgroundColor: isActive ? COLORS.turquoise : undefined
+                          backgroundColor: isActive ? COLORS.cyan : undefined
                         }}
                       >
                         <entry.icon className="h-4 w-4" />
@@ -265,23 +264,23 @@ export default function OurStepsVersion2({
                     className="absolute -top-24 left-0 h-12 w-12 opacity-0"
                   />
 
-                  {/* Content column */}
+                  {/* Content column: rounded-none */}
                   <article
                     className={
-                      "flex flex-col rounded-2xl border p-3 transition-all duration-300 " +
+                      "flex flex-col rounded-none border p-3 transition-all duration-300 " +
                       (isActive
                         ? "bg-white shadow-xl shadow-slate-200/50 scale-[1.02]"
                         : "bg-gray-50/50 border-gray-100 opacity-70")
                     }
                     style={{
-                      borderColor: isActive ? "rgba(103, 188, 183, 0.2)" : undefined
+                      borderColor: isActive ? "rgba(6, 182, 212, 0.2)" : undefined // Cyan con opacidad
                     }}
                   >
                     {entry.image && (
                       <img
                         src={entry.image}
                         alt={`${entry.title} visual`}
-                        className="mb-4 w-full h-72 rounded-lg object-cover bg-gray-100"
+                        className="mb-4 w-full h-72 rounded-none object-cover bg-gray-100" // rounded-none
                         loading="lazy"
                       />
                     )}
@@ -319,16 +318,17 @@ export default function OurStepsVersion2({
                         <div className="overflow-hidden">
                           <div className="space-y-4 pt-2">
                             {entry.items && entry.items.length > 0 && (
-                              <div className="rounded-lg border border-gray-100 bg-white p-4">
+                              <div className="rounded-none border border-gray-100 bg-white p-4"> {/* rounded-none */}
                                 <ul className="space-y-2">
                                   {entry.items.map((item, itemIndex) => (
                                     <li 
                                       key={itemIndex} 
                                       className="flex items-start gap-2 text-sm text-gray-600"
                                     >
+                                      {/* Bullet: Emerald */}
                                       <div 
-                                        className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" 
-                                        style={{ backgroundColor: COLORS.turquoise }}
+                                        className="mt-1.5 h-1.5 w-1.5 rounded-none flex-shrink-0" // rounded-none
+                                        style={{ backgroundColor: COLORS.emerald }}
                                       />
                                       <span className="leading-relaxed">{item}</span>
                                     </li>
@@ -341,9 +341,9 @@ export default function OurStepsVersion2({
                               <div className="flex justify-end">
                                 <Button 
                                   size="sm"
-                                  className="group font-normal transition-all duration-200 text-white shadow-md hover:shadow-lg active:scale-95 border-none" 
+                                  className="group font-normal transition-all duration-200 text-white shadow-md hover:shadow-lg active:scale-95 border-none rounded-none" // rounded-none
                                   style={{
-                                    backgroundColor: COLORS.coral,
+                                    backgroundColor: COLORS.emerald, // Botón Emerald
                                   }}
                                   asChild
                                 >
