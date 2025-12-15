@@ -3,7 +3,7 @@ import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { 
   Calendar, BarChart, CheckCircle, Image as ImageIcon, 
   Code as CodeIcon, Pencil, Wifi, Battery, Signal, Send, 
-  TrendingUp, Users, DollarSign, MousePointerClick, ArrowUpCircle
+  TrendingUp, Users, DollarSign, MousePointerClick 
 } from 'lucide-react';
 
 // --- FONTS STYLES & ANIMATIONS ---
@@ -156,36 +156,36 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   }, []);
 
   return (
-    <div className={`w-full max-w-[280px] bg-[#1a1a1a] rounded-[18px] px-4 py-4 shadow-xl border border-[#333333] ${className}`}>
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20">
-             <TrendingUp width="16" height="16" className="text-green-400" />
+    <div className={`w-full bg-[#1a1a1a] rounded-[24px] px-4 py-5 shadow-xl border border-[#333333] ${className}`}>
+      <div className="flex items-center justify-center mb-4">
+        <div className="w-12 h-1 bg-[#404040] rounded-full" />
+      </div>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20">
+             <TrendingUp width="20" height="20" className="text-green-400" />
           </div>
-          <span className="text-xs text-gray-400 font-medium">System Status</span>
         </div>
-        <span className="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded-full">Active</span>
+        <h2 className="text-xl font-black tracking-tight text-white">ROI <span className="text-green-500 text-sm font-normal ml-1">▲ {roiValue}%</span></h2>
       </div>
-      
-      <div className="flex items-end gap-2 mb-4">
-        <h2 className="text-2xl font-black tracking-tight text-white">{roiValue}%</h2>
-        <span className="text-green-500 text-sm font-medium mb-1">ROI ▲</span>
-      </div>
-
-      <div className="relative mb-4 px-1">
-        <div className="h-1.5 bg-[#404040] rounded-full w-full" />
+      <div className="relative mb-5 px-1">
+        <div className="h-1 bg-[#505050] rounded-full w-full" />
         <motion.div 
-          className="absolute top-0 left-1 h-1.5 bg-gradient-to-r from-emerald-400 to-green-600 rounded-full" 
+          className="absolute top-0 left-0 h-1 bg-gradient-to-r from-emerald-400 to-green-600 rounded-full" 
           initial={{ width: "16.67%" }} 
-          animate={{ width: step === 3 ? "95%" : step === 2 ? "60%" : "16.67%" }} 
+          animate={{ width: step === 3 ? "100%" : step === 2 ? "60%" : "16.67%" }} 
           transition={{ duration: 0.8, ease: "easeInOut" }} 
         />
+        <div className="relative flex items-center justify-between mt-2 px-1">
+          <div className="w-2 h-2 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399]" />
+          <motion.div className="w-2 h-2 rounded-full" initial={{ backgroundColor: "#505050" }} animate={{ backgroundColor: step >= 2 ? "#34d399" : "#505050" }} transition={{ duration: 0.5 }} />
+          <motion.div className="w-2 h-2 rounded-full" initial={{ backgroundColor: "#505050" }} animate={{ backgroundColor: step === 3 ? "#34d399" : "#505050" }} transition={{ duration: 0.5 }} />
+        </div>
       </div>
-      
-      <div className="flex items-center justify-between text-[10px] text-gray-500 font-mono">
-        <span>Analysis</span>
-        <span>Optimization</span>
-        <span>Scale</span>
+      <div className="text-center h-8 flex items-center justify-center">
+        <motion.p className="text-[#999999] text-xs leading-snug font-medium" key={step} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          {step === 1 ? "Analyzing market data..." : step === 2 ? <span className="text-emerald-300">Optimizing campaigns...</span> : <span className="text-white">Growth targets hit.</span>}
+        </motion.p>
       </div>
     </div>
   );
@@ -193,58 +193,23 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
 
 // --- UPDATED MarketingAppContent ---
 const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
-  // Estado para el historial de mensajes
-  const [messages, setMessages] = useState<Array<{id: number, type: 'sent' | 'received', content: React.ReactNode}>>([
-    { 
-      id: 1, 
-      type: 'received', 
-      content: "Gday mate. Where do you want us to focus our energy now?" 
-    }
-  ]);
-
-  // Estado para mostrar las opciones
-  const [showOptions, setShowOptions] = useState(true);
-  
   const initialPreferences = [
-    { id: 'leads', label: 'I need more leads' }, 
-    { id: 'clicks', label: 'Increase Clicks' }, 
-    { id: 'revenue', label: 'Improve Conversion Rate' }
+    { id: 'leads', label: 'Maximize Lead Gen' }, 
+    { id: 'clicks', label: 'Increase Clicks & CTR' }, 
+    { id: 'revenue', label: 'Scale Revenue (ROI)' }
   ];
   
+  const [selectedPreference, setSelectedPreference] = useState('leads');
   const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll al fondo cuando hay mensajes nuevos
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  const handleSelect = (preference: { id: string, label: string }) => {
-    setShowOptions(false); // Ocultar botones
-    
-    // 1. Añadir mensaje del usuario ("Enviado")
-    setMessages(prev => [...prev, {
-      id: Date.now(),
-      type: 'sent',
-      content: preference.label
-    }]);
-
-    onOptionChange(preference.id); // Trigger animación externa
-
-    // 2. Simular tiempo de "escribiendo" y respuesta del sistema
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        type: 'received',
-        content: <CampaignProgressWidget />
-      }]);
-    }, 1200);
+  const handleSelect = (id: string) => {
+    setSelectedPreference(id);
+    onOptionChange(id); 
   };
 
   return (
-    <div className="flex flex-col h-full bg-white relative font-sans overflow-hidden">
-      {/* HEADER: iPhone Style */}
-      <div className="h-[44px] flex items-center justify-between px-6 pt-2 z-20 shrink-0 bg-white/90 backdrop-blur-md sticky top-0 border-b border-gray-100">
+    <div className="flex flex-col h-full bg-white relative font-sans">
+      <div className="h-[44px] flex items-center justify-between px-6 pt-2 z-20 shrink-0">
         <div className="text-[14px] font-semibold text-gray-900 tracking-wide">{currentTime}</div>
         <div className="flex items-center gap-1.5 text-gray-900">
           <Signal className="w-[16px] h-[16px]" strokeWidth={2.5} />
@@ -252,64 +217,54 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
           <Battery className="w-[22px] h-[16px]" strokeWidth={2.5} />
         </div>
       </div>
-
-      {/* CHAT AREA */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-white">
-        {messages.map((msg) => (
-          <motion.div
-            key={msg.id}
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className={`flex w-full ${msg.type === 'sent' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div 
-              className={`max-w-[85%] px-4 py-2.5 text-[15px] leading-snug shadow-sm
-                ${msg.type === 'sent' 
-                  ? 'bg-[#007AFF] text-white rounded-[20px] rounded-br-[4px]' // iMessage Blue
-                  : 'bg-[#E9E9EB] text-black rounded-[20px] rounded-bl-[4px]' // iMessage Gray
-                }
-              `}
-            >
-              {msg.content}
-            </div>
-          </motion.div>
-        ))}
+      <div className="flex-1 overflow-y-auto px-4 pb-8 pt-4">
         
-        {/* Espaciador invisible para scroll */}
-        <div ref={messagesEndRef} className="h-2" />
-      </div>
-
-      {/* INPUT / OPTIONS AREA */}
-      <AnimatePresence>
-        {showOptions && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50, transition: { duration: 0.3 } }}
-            className="p-4 bg-gray-50/90 backdrop-blur-lg border-t border-gray-200 z-10"
-          >
-            <div className="flex flex-col gap-2">
-              <span className="text-xs text-gray-400 font-medium ml-2 mb-1 uppercase tracking-wider">Suggested Replies</span>
+        {/* ANIMACIÓN: Fade in glass morph para el contenedor de texto */}
+        <motion.div 
+            initial={{ opacity: 0, y: 10, filter: "blur(5px)" }} 
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} 
+            transition={{ duration: 0.6, delay: 0.3 }} 
+            className="flex flex-col gap-[12px]"
+        >
+          
+          <h2 className="text-[16px] font-medium text-gray-900 leading-tight px-1 mt-2">
+            Let's set your growth targets. Where should we focus our energy?
+          </h2>
+          
+          <div className="space-y-[11px]">
+            <AnimatePresence mode='wait'>
               {initialPreferences.map((preference, index) => (
                 <motion.button 
                     key={preference.id} 
-                    onClick={() => handleSelect(preference)} 
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full text-left bg-white active:bg-gray-100 border border-gray-200 text-blue-600 font-medium py-3 px-4 rounded-xl shadow-sm hover:shadow transition-all text-[15px]"
+                    onClick={() => handleSelect(preference.id)} 
+                    // ANIMACIÓN: Fade in Glass Morph para cada botón
+                    initial={{ opacity: 0, filter: "blur(4px)" }} 
+                    animate={{ opacity: 1, filter: "blur(0px)" }} 
+                    transition={{ duration: 0.5, delay: 0.4 + index * 0.15, ease: "easeOut" }} 
+                    className={`w-full flex items-center gap-3 px-4 py-4 rounded-[1.2rem] transition-all duration-300 ${selectedPreference === preference.id ? 'bg-black text-white shadow-lg scale-[1.02]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}
                 >
-                  {preference.label}
+                  <div className="flex items-center justify-center flex-shrink-0">
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${selectedPreference === preference.id ? 'border-white bg-white' : 'border-gray-400'}`}>
+                      {selectedPreference === preference.id && (<motion.svg initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></motion.svg>)}
+                    </div>
+                  </div>
+                  <span className="text-[15px] font-medium text-left flex-1">{preference.label}</span>
                 </motion.button>
               ))}
-            </div>
+            </AnimatePresence>
+          </div>
+          
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }} 
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }} 
+            transition={{ duration: 0.7, delay: 0.8 }} 
+            className="mt-2"
+          >
+            <CampaignProgressWidget />
           </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* FOOTER BAR (Home Indicator) */}
-      <div className="h-[20px] bg-white w-full flex items-center justify-center shrink-0">
-         <div className="w-[130px] h-[5px] bg-black/90 rounded-full mb-2" />
+        </motion.div>
       </div>
+      <div className="absolute bottom-[8px] left-1/2 -translate-x-1/2 w-[130px] h-[5px] bg-black/90 rounded-full z-30" />
     </div>
   );
 };
@@ -317,21 +272,15 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 // --- UPDATED PhoneFrame ---
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
-    <div className="relative w-[370px] h-[750px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
-      {/* Botones físicos laterales */}
+    <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
       <div className="absolute left-[-4px] top-[120px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[180px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[250px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute right-[-4px] top-[200px] w-[4px] h-[80px] bg-gray-700 rounded-r-sm"></div>
-      
-      {/* Pantalla Interna */}
       <div className="relative w-full h-full bg-black rounded-[3rem] overflow-hidden border border-gray-800">
-        {/* Dynamic Island / Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
-          <div className="absolute right-[25%] w-[8px] h-[8px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[160px] h-[30px] bg-black rounded-b-3xl z-40 flex items-center justify-center pointer-events-none">
+          <div className="absolute right-[25%] w-[10px] h-[10px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
-        
-        {/* Contenido de la App */}
         <MarketingAppContent onOptionChange={onOptionChange} />
       </div>
     </div>
@@ -354,8 +303,9 @@ export const SuperHero = ({
 }: SuperHeroProps) => {
   const bgColor = "#050505";
   const lampColor = "#06b6d4"; 
-  const emeraldColor = "#34d399"; 
+  const emeraldColor = "#34d399"; // Color esmeralda para el efecto hover y textos
 
+  // Estado para el hover del botón "Start Scaling"
   const [isHovered, setIsHovered] = useState(false);
 
   const radialColorSequence = [
@@ -571,9 +521,11 @@ export const SuperHero = ({
           ))}
         </div>
 
+        {/* --- CORRECCIÓN: Contenedor con posicionamiento original + Animación interna --- */}
         <div className="relative z-[20] flex flex-col items-center justify-end transform translate-y-[35%] scale-[0.8] md:scale-[0.85] lg:scale-[0.9] origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           
+          {/* Animación Glass Morph Fade In aplicada al contenido del frame */}
           <motion.div
              initial={{ opacity: 0, filter: "blur(15px)", scale: 0.95 }}
              animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
