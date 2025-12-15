@@ -31,8 +31,10 @@ export function FloatingBanner() {
       const totalDocHeight = document.documentElement.scrollHeight;
       const windowHeight = window.innerHeight;
       const maxScroll = totalDocHeight - windowHeight;
-      // CAMBIO AQUÍ: Se modificó 0.15 a 0.3 (30%)
-      const scrollThreshold = Math.min(maxScroll * 0.3, 300);
+      
+      // CORRECCIÓN: Eliminamos Math.min(..., 300) para que sea estrictamente el 30%
+      const scrollThreshold = maxScroll * 0.3;
+      
       const currentScroll = window.scrollY;
 
       const footer = document.querySelector("footer");
