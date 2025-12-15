@@ -161,19 +161,18 @@ const BoxCards = () => {
              </motion.div>
 
              {/* --- MENSAJE INFERIOR DERECHA (Improvement 2) --- */}
-             {/* CAMBIO: Subido 10px (de +160 a +150) */}
+             {/* CAMBIO: Subido 10px más (de +150 a +140) */}
              <motion.div
                initial={{ opacity: 0, x: -10, y: -10 }}
                animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -10, y: -10 }}
                transition={{ delay: 0.2, duration: 0.4 }}
-               className="absolute top-[calc(50%+150px)] left-[55px] flex items-center z-30 pointer-events-none"
+               className="absolute top-[calc(50%+140px)] left-[55px] flex items-center z-30 pointer-events-none"
              >
                 {/* SVG Curve Connector */}
-                {/* Ajustado a -top-[150px] y altura 160px para coincidir con la nueva posición */}
-                <svg width="45" height="160" viewBox="-5 0 45 160" className="absolute -left-[40px] -top-[150px] text-zinc-300 pointer-events-none overflow-visible">
+                {/* Ajustado -top a 140px. Height a 150px. Path a 140. */}
+                <svg width="45" height="150" viewBox="-5 0 45 150" className="absolute -left-[40px] -top-[140px] text-zinc-300 pointer-events-none overflow-visible">
                    <circle cx="-4" cy="0" r="1.5" fill={COLORS.cyan} />
-                   {/* Curva recalculada para ir hasta y=150 */}
-                   <path d="M -4 0 Q -4 150 40 150" fill="none" stroke="currentColor" strokeWidth="1" />
+                   <path d="M -4 0 Q -4 140 40 140" fill="none" stroke="currentColor" strokeWidth="1" />
                 </svg>
 
                 <motion.div 
