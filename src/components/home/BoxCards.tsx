@@ -100,16 +100,13 @@ const BoxCards = () => {
           <div className="hidden lg:block absolute left-[60%] top-0 bottom-0 w-[1px] bg-zinc-200 z-20 overflow-visible">
              
              {/* --- MENSAJE SUPERIOR DERECHA (Improvement 1) --- */}
-             {/* DISTANCIA: -160px desde el centro */}
              <motion.div
                initial={{ opacity: 0, x: -10, y: 10 }}
                animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -10, y: 10 }}
                transition={{ delay: 0.1, duration: 0.4 }}
                className="absolute top-[calc(50%-160px)] left-[55px] flex items-center z-30 pointer-events-none"
              >
-                {/* SVG Curve Connector */}
                 <svg width="45" height="170" viewBox="-5 0 45 170" className="absolute -left-[40px] top-[14px] text-zinc-300 pointer-events-none overflow-visible">
-                   {/* ORIGEN: x=-4, y=160 (Centro vertical del cuadrado C) */}
                    <circle cx="-4" cy="160" r="1.5" fill={COLORS.emerald} />
                    <path d="M -4 160 Q -4 5 40 5" fill="none" stroke="currentColor" strokeWidth="1" />
                 </svg>
@@ -164,21 +161,19 @@ const BoxCards = () => {
              </motion.div>
 
              {/* --- MENSAJE INFERIOR DERECHA (Improvement 2) --- */}
-             {/* DISTANCIA: +160px desde el centro (Simetría exacta con el de arriba) */}
+             {/* CAMBIO: Subido 10px (de +160 a +150) */}
              <motion.div
                initial={{ opacity: 0, x: -10, y: -10 }}
                animate={showIcon ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: -10, y: -10 }}
                transition={{ delay: 0.2, duration: 0.4 }}
-               className="absolute top-[calc(50%+160px)] left-[55px] flex items-center z-30 pointer-events-none"
+               className="absolute top-[calc(50%+150px)] left-[55px] flex items-center z-30 pointer-events-none"
              >
                 {/* SVG Curve Connector */}
-                {/* Top negativo (-160) para alcanzar el centro. Height 170 para incluir margen. */}
-                <svg width="45" height="170" viewBox="-5 0 45 170" className="absolute -left-[40px] -top-[160px] text-zinc-300 pointer-events-none overflow-visible">
-                   {/* ORIGEN: x=-4, y=0 (Centro vertical del cuadrado C, que es el top del SVG) */}
+                {/* Ajustado a -top-[150px] y altura 160px para coincidir con la nueva posición */}
+                <svg width="45" height="160" viewBox="-5 0 45 160" className="absolute -left-[40px] -top-[150px] text-zinc-300 pointer-events-none overflow-visible">
                    <circle cx="-4" cy="0" r="1.5" fill={COLORS.cyan} />
-                   
-                   {/* Curva: Baja desde 0 hasta 160 */}
-                   <path d="M -4 0 Q -4 160 40 160" fill="none" stroke="currentColor" strokeWidth="1" />
+                   {/* Curva recalculada para ir hasta y=150 */}
+                   <path d="M -4 0 Q -4 150 40 150" fill="none" stroke="currentColor" strokeWidth="1" />
                 </svg>
 
                 <motion.div 
