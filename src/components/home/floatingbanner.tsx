@@ -25,20 +25,18 @@ export function FloatingBanner() {
     }
 
     const handleScroll = () => {
-      // Calcular altura y umbral (15%)
+      // Calcular altura y umbral (20% para no ser tan intrusivo al inicio)
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollThreshold = scrollHeight * 0.15;
+      const scrollThreshold = scrollHeight * 0.20;
       const currentScroll = window.scrollY;
 
-      // Detectar footer para no solaparlo
+      // Detectar footer para no solaparlo (opcional en modo modal, pero buena práctica)
       const footer = document.querySelector("footer");
       const isFooterVisible = footer && footer.getBoundingClientRect().top <= window.innerHeight;
 
-      // Mostrar si pasamos el umbral y no estamos sobre el footer
+      // Mostrar si pasamos el umbral
       if (currentScroll > scrollThreshold && !isFooterVisible) {
         setIsVisible(true);
-      } else {
-        setIsVisible(false);
       }
     };
 
@@ -54,7 +52,8 @@ export function FloatingBanner() {
     };
 
     window.addEventListener("scroll", throttledScroll, { passive: true });
-    handleScroll(); 
+    // Check inicial
+    // handleScroll(); // Comentado para evitar que aparezca inmediatamente si recargas a mitad de página
 
     return () => window.removeEventListener("scroll", throttledScroll);
   }, []);
@@ -72,98 +71,102 @@ export function FloatingBanner() {
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className={cn(
-            "fixed bottom-0 left-0 w-full md:bottom-6 md:left-1/2 md:-translate-x-1/2 z-50",
-            "md:w-auto md:max-w-4xl",
-            "pointer-events-none" // Contenedor transparente, contenido clickable
-          )}
-        >
-          <div className={cn(
-            "pointer-events-auto relative",
-            "w-full md:w-auto",
-            "bg-black border-t md:border border-zinc-800",
-            "p-5 md:py-4 md:px-6",
-            "shadow-2xl shadow-black/50",
-            "rounded-none" // Estilo Blueprint (Recto)
-          )}>
-            
-            {/* Glow sutil (Esmeralda/Cyan) */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent opacity-50" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-6">
+          
+          {/* 1. BACKDROP (Fondo Oscuro) */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            onClick={handleDismiss} // Cerrar al hacer clic fuera
+            className="absolute inset-0 bg-black/60 backdrop-blur-[4px]"
+          />
 
+          {/* 2. CARD (Centro Absoluto) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className={cn(
+              "relative w-full max-w-2xl",
+              "bg-[#050505] border border-zinc-800",
+              "shadow-2xl shadow-black",
+              "rounded-none", // Estilo Blueprint (Recto)
+              "overflow-hidden"
+            )}
+          >
+            {/* Glow sutil superior (Esmeralda/Cyan) */}
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+            
             {/* Botón Cerrar (X) */}
             <button
               onClick={handleDismiss}
-              className="absolute top-3 right-3 md:-top-3 md:-right-3 w-6 h-6 md:w-7 md:h-7 rounded-none bg-zinc-900 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 transition-all flex items-center justify-center z-10"
+              className="absolute top-0 right-0 p-3 text-zinc-500 hover:text-white hover:bg-zinc-900 transition-colors z-20"
               aria-label="Close banner"
             >
-              <X className="w-3 h-3 md:w-3.5 md:h-3.5" />
+              <X className="w-5 h-5" />
             </button>
 
-            <div className="flex flex-col md:flex-row items-center justify-between gap-5 md:gap-10">
+            <div className="flex flex-col md:flex-row">
               
-              {/* Left: Icon & Text */}
-              <div className="flex items-center gap-4 text-center md:text-left w-full md:w-auto justify-start">
-                
-                {/* Icon Box */}
-                <div className="hidden sm:flex w-10 h-10 rounded-none bg-zinc-900 border border-zinc-800 items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-4 h-4 text-emerald-400" />
+              {/* Left Section: Visual/Icon */}
+              <div className="bg-zinc-900/50 p-6 md:p-8 flex flex-col justify-center items-start md:w-[40%] border-b md:border-b-0 md:border-r border-zinc-800">
+                <div className="w-12 h-12 rounded-none bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-4 shadow-inner">
+                  <Sparkles className="w-5 h-5 text-emerald-400" />
                 </div>
-                
-                <div className="flex flex-col items-start text-left">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-sans font-bold text-[15px] text-white leading-none tracking-tight">
-                      Ready to scale?
-                    </h3>
-                    {/* Indicador Available (Igual que AuditWidget) */}
-                    <div className="flex items-center gap-1.5 px-1.5 py-0.5 bg-zinc-900/50 border border-zinc-800/50 rounded-none">
-                       <span className="relative flex h-1.5 w-1.5">
-                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                       </span>
-                       <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-wide leading-none">Open</span>
-                    </div>
-                  </div>
-                  <p className="font-sans font-medium text-[13px] text-zinc-400 leading-tight">
-                    Get a comprehensive strategy audit for free.
-                  </p>
+                <div className="flex items-center gap-2 mb-2">
+                   <span className="relative flex h-2 w-2">
+                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                   </span>
+                   <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-wider">Available Now</span>
+                </div>
+                <h3 className="font-sans font-bold text-xl text-white leading-tight">
+                  Strategy Audit
+                </h3>
+              </div>
+
+              {/* Right Section: Content & Actions */}
+              <div className="p-6 md:p-8 flex flex-col justify-center md:w-[60%]">
+                <h4 className="font-sans font-semibold text-lg text-white mb-2">
+                  Ready to scale your revenue?
+                </h4>
+                <p className="font-sans font-medium text-sm text-zinc-400 leading-relaxed mb-6">
+                  Get a comprehensive analysis of your digital ecosystem. We identify the bottlenecks costing you conversions.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  {/* Action Button (Primary) */}
+                  <button
+                    onClick={() => {
+                      const element = document.getElementById('get-in-touch');
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        handleDismiss(); // Cerrar modal al ir
+                      }
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-none bg-white hover:bg-zinc-200 text-black shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all group"
+                  >
+                    <span className="font-sans font-bold text-sm">Get Free Audit</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+                  </button>
+
+                  {/* Call Button (Secondary) */}
+                  <a 
+                    href="tel:0290734731"
+                    className="flex items-center justify-center gap-2 px-5 py-3 rounded-none border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span className="font-sans font-semibold text-sm">Call Us</span>
+                  </a>
                 </div>
               </div>
 
-              {/* Right: Buttons */}
-              <div className="flex flex-row gap-3 w-full md:w-auto items-stretch md:items-center">
-                
-                {/* Call Button (Secondary) */}
-                <a 
-                  href="tel:0290734731"
-                  className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-none border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all"
-                >
-                  <Phone className="w-3.5 h-3.5" />
-                  <span className="font-sans font-semibold text-xs whitespace-nowrap">Call us</span>
-                </a>
-
-                {/* Action Button (Primary - White High Contrast) */}
-                <button
-                  onClick={() => {
-                    const element = document.getElementById('get-in-touch');
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                  className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-none bg-white hover:bg-zinc-200 text-black shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all"
-                >
-                  <span className="font-sans font-bold text-xs whitespace-nowrap">Get Free Quote</span>
-                  <ArrowRight className="w-3.5 h-3.5" strokeWidth={3} />
-                </button>
-
-              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );
