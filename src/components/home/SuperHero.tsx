@@ -444,7 +444,7 @@ export const SuperHero = ({
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-56 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
       
-      <div className="absolute inset-x-0 -bottom-48 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
+      <div className="absolute inset-x-0 -bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-30"
           animate={{ background: radialColorSequence }}
