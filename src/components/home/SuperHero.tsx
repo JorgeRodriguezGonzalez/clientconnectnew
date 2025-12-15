@@ -6,6 +6,9 @@ import {
   TrendingUp, Users, DollarSign, MousePointerClick 
 } from 'lucide-react';
 
+// ... (Mantén fontStyles y Sparkles igual que antes, no los repito para ahorrar espacio visual, 
+// asume que están aquí o impórtalos como en tu código original) ...
+
 // --- FONTS STYLES & ANIMATIONS ---
 const fontStyles = `
   .font-inter {
@@ -130,6 +133,7 @@ const Sparkles = ({
   );
 };
 
+
 // --- SUB-COMPONENTS FOR DIGITAL WORKFLOW ---
 
 const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
@@ -156,7 +160,6 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   }, []);
 
   return (
-    // Se ha ajustado ligeramente padding para que encaje mejor dentro del chat bubble si es necesario
     <div className={`w-full bg-[#1a1a1a] rounded-[18px] px-4 py-4 shadow-xl border border-[#333333] ${className}`}>
       <div className="flex items-center justify-center mb-3">
         <div className="w-10 h-1 bg-[#404040] rounded-full" />
@@ -209,7 +212,6 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   
   const [showOptions, setShowOptions] = useState(true);
 
-  // Auto-scroll al fondo cuando llegan mensajes nuevos
   useEffect(() => {
     if (scrollRef.current) {
         scrollRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -217,21 +219,17 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   }, [messages, showOptions]);
 
   const handleOptionClick = (id: string, label: string) => {
-    // 1. Ocultar opciones y añadir mensaje del usuario
     setShowOptions(false);
     const userMsgId = Date.now().toString();
     setMessages(prev => [...prev, { id: userMsgId, role: 'user', content: label }]);
     
-    // 2. Trigger externo
     onOptionChange(id);
 
-    // 3. Simular respuesta del sistema
     setTimeout(() => {
         const sysMsgId = (Date.now() + 1).toString();
         setMessages(prev => [...prev, { 
             id: sysMsgId, 
             role: 'system', 
-            // El Widget se renderiza dentro de la burbuja
             content: (
                 <div className="w-full">
                     <p className="mb-2 text-sm">On it. Initializing growth protocols:</p>
@@ -240,12 +238,11 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
             )
         }]);
 
-        // 4. Volver a mostrar opciones tras un breve delay extra
         setTimeout(() => {
             setShowOptions(true);
         }, 800);
         
-    }, 1200); // 1.2s thinking time
+    }, 1200); 
   };
 
   const options = [
@@ -267,8 +264,8 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
         </div>
       </div>
 
-      {/* CHAT AREA */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-32">
+      {/* CHAT AREA: Reduje el pb-32 a pb-20 para que no haya tanto espacio muerto en el nuevo height */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-20">
         {messages.map((msg) => (
             <motion.div
                 key={msg.id}
@@ -288,11 +285,10 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                 </div>
             </motion.div>
         ))}
-        {/* Dummy div for scrolling */}
         <div ref={scrollRef} />
       </div>
 
-      {/* OPTIONS PANEL (Input Replacement) */}
+      {/* OPTIONS PANEL */}
       <div className="absolute bottom-0 w-full z-40 bg-white/90 backdrop-blur-xl border-t border-gray-200">
         <AnimatePresence>
             {showOptions && (
@@ -320,7 +316,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
         </AnimatePresence>
         
         {/* HOME INDICATOR */}
-        <div className="w-full h-[30px] flex items-center justify-center bg-transparent pointer-events-none">
+        <div className="w-full h-[24px] flex items-center justify-center bg-transparent pointer-events-none">
              <div className="w-[130px] h-[5px] bg-black/90 rounded-full" />
         </div>
       </div>
@@ -330,9 +326,11 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 };
 
 // --- UPDATED PhoneFrame ---
+// CAMBIO IMPORTANTE: Reduje height de h-[800px] a h-[600px] para reducir el espacio vacío.
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
-    <div className="relative w-[390px] h-[800px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
+    <div className="relative w-[390px] h-[600px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
+      {/* Botones laterales ajustados ligeramente si fuera necesario, pero por posicion absoluta siguen bien */}
       <div className="absolute left-[-4px] top-[120px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[180px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[250px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
