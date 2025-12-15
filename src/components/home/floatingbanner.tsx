@@ -1,176 +1,279 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; 
-import { X, Phone, ArrowRight, Sparkles } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
 // --- UTILS ---
 function cn(...classes: (string | undefined | null | false)[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export function FloatingBanner() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isDismissed, setIsDismissed] = useState(false);
+// --- CONFIGURACIÓN ---
+const SCROLL_THRESHOLD = 200; // Píxeles de scroll necesarios para que empiece a funcionar la lógica
+
+// --- DATA ---
+const navLinks = [
+  { name: "Work", href: "/work" },
+  { name: "Process", href: "/process" },
+  { name: "Services", href: "/services" },
+  { name: "About", href: "/about" },
+];
+
+// --- SUB-COMPONENTS ---
+
+// Desktop Navigation Link
+const DesktopNavLink = ({ name, href, isActive }: { name: string, href: string, isActive: boolean }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <Link
+      to={href}
+      className="relative block px-5 py-2 no-underline group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="flex flex-col items-center relative z-10">
+        <span className={cn(
+          "text-[14px] font-sans font-medium leading-tight transition-colors duration-300 tracking-wide uppercase",
+          isActive ? "text-white" : "text-zinc-400 group-hover:text-white"
+        )}>
+          {name}
+        </span>
+        
+        {/* Línea animada Cyan */}
+        <motion.div
+          className="absolute -bottom-1 h-[1px] bg-[#06b6d4]"
+          initial={{ width: "0%" }}
+          animate={{ width: isHovered || isActive ? "100%" : "0%" }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        />
+      </div>
+    </Link>
+  );
+};
+
+// Mobile Navigation Link
+const MobileNavLink = ({ name, href, onClick }: { name: string, href: string, onClick: () => void }) => {
+  return (
+    <Link
+      to={href}
+      onClick={onClick}
+      className="group flex w-full items-center justify-between border-b border-zinc-800 py-6 text-zinc-400 no-underline transition-colors hover:text-white"
+    >
+      <span className="text-[20px] font-sans font-semibold uppercase tracking-tight">{name}</span>
+      <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-none border border-zinc-700 text-zinc-400 transition-all group-hover:border-emerald-500 group-hover:bg-emerald-500 group-hover:text-black">
+        <ArrowRight size={18} className="-rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+      </div>
+    </Link>
+  );
+};
+
+// --- MAIN COMPONENT ---
+export function Header() {
+  const [isVisible, setIsVisible] = useState(false); // Inicia oculto
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Ocultar en página de contacto
-  const isContactPage = location.pathname === "/contact";
-
   useEffect(() => {
-    // 1. COMPROBACIÓN DE CIERRE PREVIO
-    // NOTA: Descomenta esto cuando termines de probar para que recuerde el cierre
-    /* 
-    const dismissed = sessionStorage.getItem("bannerDismissed");
-    if (dismissed) {
-      setIsDismissed(true);
-      return;
-    } 
-    */
-
     const handleScroll = () => {
-      const totalDocHeight = document.documentElement.scrollHeight;
-      const windowHeight = window.innerHeight;
-      const maxScroll = totalDocHeight - windowHeight;
-      const scrollThreshold = Math.min(maxScroll * 0.15, 300);
       const currentScroll = window.scrollY;
 
-      const footer = document.querySelector("footer");
+      // LÓGICA DE VISIBILIDAD:
+      // 1. Si estamos en la parte superior (antes del umbral), siempre oculto.
+      // 2. Si bajamos (current > last), oculto.
+      // 3. Si subimos (current < last) Y hemos pasado el umbral, visible.
       
-      let isFooterVisible = false;
-      if (footer) {
-        const rect = footer.getBoundingClientRect();
-        isFooterVisible = rect.top <= windowHeight + 50; 
-      }
-
-      if (currentScroll > scrollThreshold && !isFooterVisible) {
-        setIsVisible(true);
-      } else {
+      if (currentScroll < SCROLL_THRESHOLD) {
         setIsVisible(false);
+      } else if (currentScroll > lastScrollY) {
+        setIsVisible(false); 
+      } else {
+        setIsVisible(true);
       }
+      
+      setLastScrollY(currentScroll);
     };
 
-    let ticking = false;
-    const throttledScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  // Bloquear scroll body cuando se abre menú móvil
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
     };
+  }, [isMobileMenuOpen]);
 
-    window.addEventListener("scroll", throttledScroll, { passive: true });
-    handleScroll(); 
+  const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
-    return () => window.removeEventListener("scroll", throttledScroll);
-  }, []);
-
-  const handleDismiss = () => {
-    setIsVisible(false);
-    setIsDismissed(true);
-    sessionStorage.setItem("bannerDismissed", "true");
+  // VARIANTS: Efecto Suave (Soft Fade)
+  const headerVariants: Variants = {
+    hidden: { 
+      y: -20, // Menos desplazamiento para que se sienta más como un fade
+      opacity: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { 
+        duration: 0.5, 
+        // Curva suave para entrada elegante
+        ease: [0.22, 1, 0.36, 1] 
+      }
+    }
   };
 
-  if (isDismissed || isContactPage) {
-    return null;
-  }
+  // Si el menú móvil está abierto, forzamos que el header sea visible e interactivo
+  const shouldShowHeader = isVisible || isMobileMenuOpen;
+  const isInteractive = shouldShowHeader;
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          // SOLUCIÓN: Añadimos x: "-50%" aquí para que Framer lo combine con la animación Y
-          initial={{ y: 100, opacity: 0, x: "-50%" }}
-          animate={{ y: 0, opacity: 1, x: "-50%" }}
-          exit={{ y: 100, opacity: 0, x: "-50%" }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className={cn(
-            // Mantenemos fixed, bottom y left-1/2
-            // Eliminamos -translate-x-1/2 porque ahora lo controla Framer
-            "fixed bottom-6 left-1/2 z-[100]",
-            "w-[calc(100%-32px)] md:w-auto md:max-w-4xl",
-            "pointer-events-none" 
-          )}
-        >
-          <div className={cn(
-            "pointer-events-auto relative",
-            "w-full md:w-auto",
-            "bg-black border border-zinc-800",
-            "p-5 md:py-4 md:px-6",
-            "shadow-2xl shadow-black/80", 
-            "rounded-none" 
-          )}>
-            
-            {/* Glow sutil */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent opacity-50" />
-
-            {/* Botón Cerrar (X) */}
-            <button
-              onClick={handleDismiss}
-              className="absolute top-3 right-3 md:-top-3 md:-right-3 w-6 h-6 md:w-7 md:h-7 rounded-none bg-zinc-900 border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 transition-all flex items-center justify-center z-10"
-              aria-label="Close banner"
+    <>
+      <motion.header
+        role="banner"
+        initial="hidden"
+        animate={shouldShowHeader ? "visible" : "hidden"}
+        variants={headerVariants}
+        className={cn(
+          "fixed top-0 left-0 right-0 z-[1000] flex w-full h-[80px] items-center justify-between px-6 md:px-10 font-sans",
+          isInteractive ? "pointer-events-auto" : "pointer-events-none",
+          // ESTILO GLASSMORPHISM MEJORADO:
+          // Más transparencia (/70) y más blur (blur-lg) para el efecto cristal
+          "bg-[#050505]/70 backdrop-blur-lg border-b border-white/5 shadow-sm"
+        )}
+      >
+        <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between">
+          
+          {/* 1. LOGO */}
+          <Link to="/" className="flex items-center relative z-[1002] gap-2 group">
+            <span
+              className={cn(
+                "font-sans text-lg md:text-xl font-bold tracking-tight text-white transition-colors duration-300"
+              )}
             >
-              <X className="w-3 h-3 md:w-3.5 md:h-3.5" />
-            </button>
+              Client Connect Australia<span className="text-[#34d399]">.</span>
+            </span>
+          </Link>
 
-            <div className="flex flex-col md:flex-row items-center justify-between gap-5 md:gap-10">
-              
-              {/* Left: Icon & Text */}
-              <div className="flex items-center gap-4 text-center md:text-left w-full md:w-auto justify-start">
-                
-                <div className="hidden sm:flex w-10 h-10 rounded-none bg-zinc-900 border border-zinc-800 items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-4 h-4 text-emerald-400" />
-                </div>
-                
-                <div className="flex flex-col items-start text-left">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-sans font-bold text-[15px] text-white leading-none tracking-tight">
-                      Ready to scale?
-                    </h3>
-                    <div className="flex items-center gap-1.5 px-1.5 py-0.5 bg-zinc-900/50 border border-zinc-800/50 rounded-none">
-                       <span className="relative flex h-1.5 w-1.5">
-                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                       </span>
-                       <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-wide leading-none">Open</span>
-                    </div>
-                  </div>
-                  <p className="font-sans font-medium text-[13px] text-zinc-400 leading-tight">
-                    Get a comprehensive strategy audit for free.
-                  </p>
-                </div>
-              </div>
-
-              {/* Right: Buttons */}
-              <div className="flex flex-row gap-3 w-full md:w-auto items-stretch md:items-center">
-                
-                <a 
-                  href="tel:0290734731"
-                  className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-none border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all"
-                >
-                  <Phone className="w-3.5 h-3.5" />
-                  <span className="font-sans font-semibold text-xs whitespace-nowrap">Call us</span>
-                </a>
-
-                <button
-                  onClick={() => {
-                    const element = document.getElementById('get-in-touch');
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                  className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-none bg-white hover:bg-zinc-200 text-black shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all"
-                >
-                  <span className="font-sans font-bold text-xs whitespace-nowrap">Get Free Quote</span>
-                  <ArrowRight className="w-3.5 h-3.5" strokeWidth={3} />
-                </button>
-
-              </div>
+          {/* 2. DESKTOP NAVIGATION */}
+          <div className="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2">
+            <div className="flex items-center px-6 py-0 border-x border-white/5 bg-transparent">
+              {navLinks.map((link) => (
+                <DesktopNavLink
+                  key={link.name}
+                  name={link.name}
+                  href={link.href}
+                  isActive={location.pathname === link.href}
+                />
+              ))}
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+
+          {/* 3. RIGHT SIDE (CTA + Mobile Toggle) */}
+          <div className="flex items-center gap-4">
+            
+            {/* Desktop CTA */}
+            <Link 
+                to="/contact"
+                className={cn(
+                    "hidden lg:flex px-6 py-2.5 rounded-none font-sans font-bold text-[13px] uppercase tracking-wide transition-all duration-300 border border-transparent",
+                    "bg-white text-black hover:bg-zinc-200 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]"
+                )}
+            >
+                Start Scaling
+            </Link>
+
+            {/* Mobile Toggle Button */}
+            <div className="block lg:hidden relative z-[1002]">
+              <button
+                onClick={toggleMenu}
+                className="flex items-center justify-center p-2 focus:outline-none pointer-events-auto"
+                aria-label="Toggle menu"
+              >
+                {isMobileMenuOpen ? (
+                  <X size={24} className="text-white" />
+                ) : (
+                  <div className="flex flex-col space-y-1.5 p-2 bg-transparent">
+                    <span className="block h-[2px] w-6 bg-white"></span>
+                    <span className="block h-[2px] w-6 bg-white"></span>
+                  </div>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* MOBILE MENU OVERLAY */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[1001] flex flex-col bg-[#050505] px-6 pt-32 font-sans"
+          >
+            {/* Background Grid Sutil */}
+             <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.05]">
+                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid-pattern-mobile" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid-pattern-mobile)" />
+                </svg>
+            </div>
+
+            {/* Links */}
+            <div className="flex flex-col space-y-2 relative z-10">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.3, ease: "easeOut" }}
+                >
+                  <MobileNavLink
+                    name={link.name}
+                    href={link.href}
+                    onClick={toggleMenu}
+                  />
+                </motion.div>
+              ))}
+              
+              {/* Mobile CTA */}
+               <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: navLinks.length * 0.05, duration: 0.3 }}
+                  className="pt-8"
+                >
+                    <Link 
+                        to="/contact"
+                        onClick={toggleMenu}
+                        className="flex w-full items-center justify-center gap-2 rounded-none py-4 bg-white text-black font-sans font-bold text-sm uppercase tracking-wider shadow-lg hover:bg-zinc-200 transition-colors"
+                    >
+                        Start Scaling
+                        <ArrowRight size={16} />
+                    </Link>
+                </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
