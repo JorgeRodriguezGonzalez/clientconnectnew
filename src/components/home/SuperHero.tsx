@@ -283,7 +283,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
         <div ref={scrollRef} />
       </div>
 
-      {/* OPTIONS PANEL */}
+      {/* OPTIONS PANEL: COMPACTO */}
       <div className="absolute bottom-0 w-full z-40 bg-white/90 backdrop-blur-xl border-t border-gray-200">
         <AnimatePresence>
             {showOptions && (
@@ -292,16 +292,17 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="px-4 pt-3 pb-8 flex flex-col gap-2 overflow-hidden"
+                    className="px-4 pt-2 pb-6 flex flex-col gap-1.5 overflow-hidden" 
                 >
-                    <div className="flex justify-between items-center px-1 mb-1">
-                        <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">Suggested Replies</span>
+                    <div className="flex justify-between items-center px-1 mb-0.5">
+                        <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">Suggested Replies</span>
                     </div>
                     {options.map((opt) => (
                         <button
                             key={opt.id}
                             onClick={() => handleOptionClick(opt.id, opt.label)}
-                            className="w-full text-left bg-gray-100 hover:bg-gray-200 active:bg-gray-300 active:scale-[0.98] transition-all rounded-xl px-4 py-3.5 text-[#007AFF] text-[16px] font-medium"
+                            // Reduced padding and font size for compactness
+                            className="w-full text-left bg-gray-100 hover:bg-gray-200 active:bg-gray-300 active:scale-[0.98] transition-all rounded-xl px-4 py-2.5 text-[#007AFF] text-[14px] font-medium"
                         >
                             {opt.label}
                         </button>
@@ -311,7 +312,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
         </AnimatePresence>
         
         {/* HOME INDICATOR */}
-        <div className="w-full h-[24px] flex items-center justify-center bg-transparent pointer-events-none">
+        <div className="w-full h-[20px] flex items-center justify-center bg-transparent pointer-events-none">
              <div className="w-[130px] h-[5px] bg-black/90 rounded-full" />
         </div>
       </div>
@@ -320,16 +321,16 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 };
 
 // --- PHONE FRAME ---
-// Height 620px (más corto), Width 320px.
+// Recuperado width: 390px, height: 680px (para compensar el ancho)
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
-    <div className="relative w-[320px] h-[620px] bg-gray-900 rounded-[3rem] shadow-2xl p-3 border-4 border-gray-800">
+    <div className="relative w-[390px] h-[680px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
       <div className="absolute left-[-4px] top-[100px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[160px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[230px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute right-[-4px] top-[180px] w-[4px] h-[80px] bg-gray-700 rounded-r-sm"></div>
-      <div className="relative w-full h-full bg-black rounded-[2.5rem] overflow-hidden border border-gray-800">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[25px] bg-black rounded-b-2xl z-40 flex items-center justify-center pointer-events-none">
+      <div className="relative w-full h-full bg-black rounded-[3rem] overflow-hidden border border-gray-800">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[140px] h-[28px] bg-black rounded-b-2xl z-40 flex items-center justify-center pointer-events-none">
           <div className="absolute right-[25%] w-[8px] h-[8px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
         <MarketingAppContent onOptionChange={onOptionChange} />
@@ -371,7 +372,7 @@ export const SuperHero = ({
     const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
     const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
     
-    const lines = Array.from({ length: 30 }).map((_, i) => { // Increased lines for taller area
+    const lines = Array.from({ length: 30 }).map((_, i) => { 
       const topPos = Math.random() * 95;
       const isTopLine = topPos < 50; 
 
@@ -414,7 +415,7 @@ export const SuperHero = ({
         return {
             id: Math.random().toString(36).substr(2, 9) + Date.now(),
             type: type, 
-            top: `${10 + Math.random() * 80}%`, // Spread across new height
+            top: `${10 + Math.random() * 80}%`, 
             delay: `${delay}s`,
             duration: `${5 + Math.random() * 4}s`,
             roiValue: randomROI,
@@ -442,8 +443,8 @@ export const SuperHero = ({
   };
 
   return (
-    // CAMBIO 1: Aumentado pt-16 a pt-32 para dar espacio a la lámpara
-    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-32 px-0 overflow-hidden relative">
+    // CAMBIO: pt-48 para mucho más espacio arriba
+    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-48 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
       
       {/* Background Gradients */}
@@ -551,9 +552,8 @@ export const SuperHero = ({
       </div>
 
       {/* --- DIGITAL WORKFLOW SECTION --- */}
-      {/* CAMBIO 2: Altura aumentada a 850px para ver mejor el flujo de fondo. */}
-      {/* CAMBIO 3: -mt-20 ajustado para que no solape tanto la lamp. */}
-      <div className="w-full relative h-[850px] flex justify-center overflow-hidden z-[10] -mt-20">
+      {/* CAMBIO: Contenedor con height ajustado y justify-end para eliminar espacio abajo */}
+      <div className="w-full relative h-[800px] flex justify-center overflow-hidden z-[10] -mt-32">
         
         {/* Left Side (Code) */}
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
@@ -574,7 +574,7 @@ export const SuperHero = ({
         </div>
 
         {/* Center (Phone) */}
-        {/* CAMBIO 4: justify-end para que el teléfono quede pegado abajo. Eliminado translate-y excesivo. */}
+        {/* Usamos justify-end y un margen negativo mayor arriba para subir todo y que el telefono acabe justo al final */}
         <div className="relative z-[20] flex flex-col items-center justify-end transform origin-bottom">
           <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
           
@@ -582,8 +582,6 @@ export const SuperHero = ({
              initial={{ opacity: 0, filter: "blur(15px)", scale: 0.95 }}
              animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
              transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
-             // Ajuste ligero para que no se corte la sombra inferior
-             className="pb-2"
           >
               <PhoneFrame onOptionChange={handlePhoneOptionChange} />
           </motion.div>
