@@ -13,7 +13,8 @@ const COLORS = {
 
 const BackgroundStripes = () => (
   <div
-    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.04]"
+    // 'invert' para que las lineas se vean blancas/grises sobre el fondo negro
+    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05] invert"
     style={{
       backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
       backgroundRepeat: 'repeat',
@@ -109,11 +110,12 @@ const TestimonialsColumn = (props: {
               {props.testimonials.map(({ text, image, name, role }, i) => (
                 <div 
                   key={i}
-                  className="group relative p-8 rounded-none border border-zinc-200 bg-white transition-all duration-300 hover:border-emerald-400 hover:shadow-lg hover:-translate-y-1 w-full"
+                  // CAMBIOS DARK MODE: bg-zinc-900, border-white/10, text colors
+                  className="group relative p-8 rounded-none border border-white/10 bg-zinc-900 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 w-full"
                 >
-                  <Quote className="absolute top-6 right-6 w-5 h-5 text-zinc-200 group-hover:text-emerald-200 transition-colors" />
+                  <Quote className="absolute top-6 right-6 w-5 h-5 text-zinc-700 group-hover:text-emerald-500/40 transition-colors" />
                   
-                  <p className="text-sm leading-relaxed text-zinc-600 mb-6 font-medium">
+                  <p className="text-sm leading-relaxed text-zinc-300 mb-6 font-medium">
                     "{text}"
                   </p>
                   
@@ -122,16 +124,16 @@ const TestimonialsColumn = (props: {
                         <img
                         src={image}
                         alt={name}
-                        className="h-10 w-10 rounded-none object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                        className="h-10 w-10 rounded-none object-cover grayscale group-hover:grayscale-0 transition-all duration-300 border border-white/10"
                         />
-                        <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-none" />
+                        <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-none" />
                     </div>
                     
                     <div className="flex flex-col">
-                      <span className="text-sm font-bold text-zinc-900 tracking-tight leading-tight">
+                      <span className="text-sm font-bold text-white tracking-tight leading-tight">
                         {name}
                       </span>
-                      <span className="text-xs text-zinc-400 uppercase tracking-wider font-semibold">
+                      <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
                         {role}
                       </span>
                     </div>
@@ -149,10 +151,11 @@ const TestimonialsColumn = (props: {
 // --- COMPONENTE PRINCIPAL ---
 const TestimonialsSection = () => {
   return (
-    <section className="relative w-full bg-[#FAFAFA] py-24 sm:py-32 overflow-hidden">
+    // CAMBIO: Fondo negro (#050505)
+    <section className="relative w-full bg-[#050505] py-24 sm:py-32 overflow-hidden">
       
       {/* Top Border */}
-      <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-20" />
+      <div className="w-full h-[1px] bg-white/10 absolute top-0 z-20" />
 
       {/* Background Pattern */}
       <BackgroundStripes />
@@ -167,11 +170,11 @@ const TestimonialsSection = () => {
           viewport={{ once: true }}
           className="flex flex-col items-center justify-center max-w-[640px] mx-auto text-center mb-16"
         >
-          <div className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500 mb-4">
+          <div className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500 mb-4">
             SOCIAL PROOF
           </div>
 
-          <h2 className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-gray-900 mb-6">
+          <h2 className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-white mb-6">
             Trusted by founders and{' '}
             <motion.span
               initial={{ backgroundPosition: "400% 50%" }}
@@ -195,7 +198,7 @@ const TestimonialsSection = () => {
             </motion.span>
           </h2>
           
-          <p className="text-[16px] md:text-[18px] font-medium leading-relaxed text-gray-600 tracking-tight">
+          <p className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-400 tracking-tight">
             See what happens when data-driven strategy meets creative excellence. Real results from real partners.
           </p>
         </motion.div>
