@@ -41,14 +41,14 @@ const Index = () => {
         
         <CloudHero />
         <BoxCards />
-        
+        <ComparisonSection />
         <Services />
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
         
         <OurStepsVersion2 />
-        <ComparisonSection />
+        
         <Pricing />
 
         <TestimonialsSection />
