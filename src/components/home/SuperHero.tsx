@@ -493,12 +493,7 @@ export const SuperHero = ({
          <div 
             className="absolute inset-0"
             style={{ 
-                // CAMBIO AQUÍ:
-                // 1. Inicio (0%): rgba(5,5,5,0) -> Totalmente transparente en el centro.
-                // 2. Medio (50%): rgba(5,5,5,0.3) -> Un poco oscuro para dar profundidad.
-                // 3. Final (100%): rgba(5,5,5,0.6) -> IMPORTANTE. Antes era #050505 (sólido). 
-                //    Al poner 0.6, dejamos ver el 40% de la imagen en las esquinas.
-                background: 'radial-gradient(ellipse at center, rgba(5,5,5,0) 0%, rgba(5,5,5,0.3) 50%, rgba(5,5,5,0.6) 100%)'
+                background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.85) 50%, rgba(5,5,5,0.6) 100%)'
             }}
          ></div>
       </div>
