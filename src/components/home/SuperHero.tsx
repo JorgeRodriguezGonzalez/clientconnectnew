@@ -441,11 +441,9 @@ export const SuperHero = ({
   };
 
   return (
-    // CAMBIO 1: pt-32 para el contenedor principal. Elimina padding duplicado.
-    <div className="w-full bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-32 px-0 overflow-hidden relative pb-0">
+    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-8 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
       
-      {/* Sparkles z-0, positioned absolute bottom */}
       <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-30"
@@ -462,9 +460,8 @@ export const SuperHero = ({
       </div>
 
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
-        {/* Lamp Section: Eliminado el pt-56 interno para que obedezca al padre */}
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
-          <div className="w-full h-[80px] relative flex items-center justify-center overflow-visible">
+          <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
@@ -549,8 +546,7 @@ export const SuperHero = ({
       </div>
 
       {/* --- WORKFLOW CONTAINER --- */}
-      {/* CAMBIO 2: mt-8 (32px de separación con botones) */}
-      {/* CAMBIO 3: h-[680px] y items-end para matar espacio abajo */}
+      {/* CORRECCIÓN: h-[680px] y items-end para eliminar el espacio inferior */}
       <div className="w-full relative h-[680px] flex justify-center items-end overflow-hidden z-[10] mt-8">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
