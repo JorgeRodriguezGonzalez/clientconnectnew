@@ -478,231 +478,241 @@ export const SuperHero = ({
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-8 px-0 overflow-hidden relative pb-0">
+    // ELIMINADO EL GRADIENTE DEL CONTENEDOR PRINCIPAL
+    <div className="w-full min-h-screen relative flex flex-col items-center justify-start pt-8 px-0 overflow-hidden pb-0">
       <style>{fontStyles}</style>
 
-       {/* --- BACKGROUND IMAGE (UPDATED) --- */}
-      <div className="absolute top-0 left-0 w-full h-[70vh] z-0 pointer-events-none overflow-hidden">
-        <div 
-            className="absolute inset-0 bg-cover bg-center opacity-75"
+       {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
+       {/* 
+           - position: fixed -> Efecto parallax (no se mueve con el scroll)
+           - inset: 0 -> Ocupa toda la pantalla
+           - z-0 -> Detrás de todo
+       */}
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
+         <div 
+            className="absolute inset-0 bg-cover bg-center opacity-40"
             style={{ 
               backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop)',
-              backgroundPosition: 'center 20%' 
+              backgroundPosition: 'center center' 
             }}
-        ></div>
-        <div 
+         ></div>
+         {/* OVERLAY OSCURO EXTENDIDO */}
+         <div 
             className="absolute inset-0"
             style={{ 
-                background: 'radial-gradient(ellipse at bottom center, rgba(5,5,5,0.95) 30%, rgba(5,5,5,0.85) 60%, rgba(5,5,5,0.3) 85%, transparent 100%)'
+                // Gradiente que oscurece los bordes pero deja ver la imagen en el centro
+                background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.85) 50%, #050505 100%)'
             }}
-        ></div>
-         <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#050505] via-[#050505] to-transparent"></div>
+         ></div>
       </div>
       
-      <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
-        <motion.div 
-          className="absolute inset-0 opacity-30"
-          animate={{ background: radialColorSequence }}
-          transition={{ duration: 10, ease: "linear", repeat: Infinity }}
-        />
-        <Sparkles
-          density={800}
-          className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
-          particleColor="#ffffff" 
-          minSize={0.5}
-          maxSize={1.5}
-        />
-      </div>
-
-      <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
-        <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
-          <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
-            
-            {/* 
-               --- LIGHT CONTAINER (CLIPPED) ---
-               MODIFICADO: Cambiado de -translate-y-[7rem] a translate-y-[4rem] 
-               para bajar la fuente de luz unos 180px y alinearla con la línea visualmente.
-            */}
-            <div className="absolute inset-auto z-30 h-56 w-full translate-y-[0rem] flex items-center justify-center pointer-events-none">
-                 <motion.div
-                    className="w-[60rem] h-full relative"
-                    style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
-                 >
-                    {/* Right Cone */}
-                    <motion.div
-                      initial={{ opacity: 0, width: "15rem" }}
-                      animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }} 
-                      transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-                      style={{ 
-                          backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 35%, transparent 100%)`, 
-                          "--gradient-color": lampColor 
-                      } as any}
-                      className="absolute top-0 right-1/2 h-56 overflow-visible w-[28rem] text-white [--conic-position:from_70deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
-                    />
-                    
-                    {/* Left Cone */}
-                    <motion.div
-                      initial={{ opacity: 0, width: "15rem" }}
-                      animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }}
-                      transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-                      style={{ 
-                          backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 65%, var(--gradient-color) 100%)`, 
-                          "--gradient-color": lampColor 
-                      } as any}
-                      className="absolute top-0 left-1/2 h-56 w-[28rem] text-white [--conic-position:from_290deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
-                    />
-
-                    {/* GLOWS */}
-                    <motion.div 
-                        initial={{ opacity: 0 }} 
-                        animate={{ opacity: 0.4, backgroundColor: lampColor }} 
-                        transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-                        className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-[28rem] rounded-full blur-3xl" 
-                    />
-                    <motion.div 
-                        initial={{ opacity: 0, width: "8rem" }} 
-                        animate={{ opacity: 0.8, width: "16rem", backgroundColor: lampColor }} 
-                        transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-                        className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-64 rounded-full blur-2xl" 
-                    />
-
-                 </motion.div>
-            </div>
-            
-            {/* --- CYAN LINE --- */}
+      {/* 
+         WRAPPER PARA CONTENIDO SCROLEABLE
+         z-10 relative para que flote sobre el background fixed
+      */}
+      <div className="relative z-10 w-full flex flex-col items-center">
+      
+          <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
             <motion.div 
-                initial={{ opacity: 0, width: "15rem" }} 
-                animate={{ opacity: 1, width: "28rem", backgroundColor: lampColor }} 
-                transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
-                className="absolute inset-auto z-50 h-0.5 w-[28rem] -translate-y-[7rem]" 
+              className="absolute inset-0 opacity-30"
+              animate={{ background: radialColorSequence }}
+              transition={{ duration: 10, ease: "linear", repeat: Infinity }}
             />
-            
+            <Sparkles
+              density={800}
+              className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+              particleColor="#ffffff" 
+              minSize={0.5}
+              maxSize={1.5}
+            />
           </div>
-        </div>
 
-        <div className="relative z-10 text-center mb-8">
-          <motion.h1 
-            key="hero-title"
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ delay: 0.7, duration: 1.0, ease: "easeOut" }} 
-            className="font-inter font-semibold text-[28px] md:text-[38px] lg:text-[48px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
-          >
-            We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
-            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
-              Business Growth
-            </span>
-          </motion.h1>
+          <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
+            <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
+              <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
+                
+                {/* LIGHT CONTAINER (CLIPPED) */}
+                <div className="absolute inset-auto z-30 h-56 w-full translate-y-[0rem] flex items-center justify-center pointer-events-none">
+                    <motion.div
+                        className="w-[60rem] h-full relative"
+                        style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+                    >
+                        {/* Right Cone */}
+                        <motion.div
+                          initial={{ opacity: 0, width: "15rem" }}
+                          animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }} 
+                          transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
+                          style={{ 
+                              backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 35%, transparent 100%)`, 
+                              "--gradient-color": lampColor 
+                          } as any}
+                          className="absolute top-0 right-1/2 h-56 overflow-visible w-[28rem] text-white [--conic-position:from_70deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                        />
+                        
+                        {/* Left Cone */}
+                        <motion.div
+                          initial={{ opacity: 0, width: "15rem" }}
+                          animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }}
+                          transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
+                          style={{ 
+                              backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 65%, var(--gradient-color) 100%)`, 
+                              "--gradient-color": lampColor 
+                          } as any}
+                          className="absolute top-0 left-1/2 h-56 w-[28rem] text-white [--conic-position:from_290deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                        />
 
-          <motion.div 
-            key="hero-subtitle"
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ delay: 0.9, duration: 1.0, ease: "easeOut" }} 
-            className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-gray-400 max-w-3xl mx-auto"
-          >
-            <p>Stop relying on guesswork. We act as your entire growth engine.</p>
-            <p className="text-gray-300">
-              Combining <span className="text-emerald-400 font-semibold">Paid Media</span>, <span className="text-emerald-400 font-semibold">Creative Strategy</span>, and <span className="text-emerald-400 font-semibold">CRO</span> to maximize ROI.
-            </p>
-          </motion.div>
+                        {/* GLOWS */}
+                        <motion.div 
+                            initial={{ opacity: 0 }} 
+                            animate={{ opacity: 0.4, backgroundColor: lampColor }} 
+                            transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
+                            className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-[28rem] rounded-full blur-3xl" 
+                        />
+                        <motion.div 
+                            initial={{ opacity: 0, width: "8rem" }} 
+                            animate={{ opacity: 0.8, width: "16rem", backgroundColor: lampColor }} 
+                            transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
+                            className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-64 rounded-full blur-2xl" 
+                        />
 
-          <motion.div 
-            key="hero-buttons"
-            initial={{ opacity: 0, scale: 0.9 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            transition={{ delay: 1.1, duration: 1.0, ease: "easeOut" }} 
-            className="mt-8"
-          >
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <motion.a href="#contact" className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100]" whileHover={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)', transition: { duration: 0.2 } }}>
-                <p className="font-inter font-semibold text-[15px] text-white whitespace-nowrap">{secondaryButtonText}</p>
-              </motion.a>
-              <motion.a 
-                href="#contact" 
-                onHoverStart={() => setIsHovered(true)}
-                onHoverEnd={() => setIsHovered(false)}
-                className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100]" 
-                style={{ border: `1px solid ${isHovered ? emeraldColor : lampColor}` }} 
-                whileHover={{ boxShadow: `0 0 20px rgba(52, 211, 153, 0.5)`, transition: { duration: 0.2 } }}
+                    </motion.div>
+                </div>
+                
+                {/* --- CYAN LINE --- */}
+                <motion.div 
+                    initial={{ opacity: 0, width: "15rem" }} 
+                    animate={{ opacity: 1, width: "28rem", backgroundColor: lampColor }} 
+                    transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
+                    className="absolute inset-auto z-50 h-0.5 w-[28rem] -translate-y-[7rem]" 
+                />
+                
+              </div>
+            </div>
+
+            <div className="relative z-10 text-center mb-8">
+              <motion.h1 
+                key="hero-title"
+                initial={{ opacity: 0, y: 30 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ delay: 0.7, duration: 1.0, ease: "easeOut" }} 
+                className="font-inter font-semibold text-[28px] md:text-[38px] lg:text-[48px] leading-[1.1] tracking-[-1.5px] text-white mb-6"
               >
-                <div className="w-[18px] h-[14px] relative overflow-hidden" style={{ color: isHovered ? emeraldColor : lampColor }}><Calendar className="w-[17px] h-[14px]" /></div>
-                <p className="font-inter font-semibold text-[15px] whitespace-nowrap z-[1]" style={{ color: isHovered ? emeraldColor : lampColor }}>{primaryButtonText}</p>
-              </motion.a>
-            </div>
-          </motion.div>
-        </div>
-      </div>
+                We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
+                <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
+                  Business Growth
+                </span>
+              </motion.h1>
 
-      {/* --- WORKFLOW CONTAINER --- */}
-      <div className="w-full relative h-[720px] flex justify-center items-end overflow-hidden z-[10] mt-8">
-        
-        <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
-          {codeLines.map((line) => (
-            <div
-              key={line.id}
-              className={`absolute left-0 whitespace-nowrap font-mono text-xs md:text-sm ${line.color} opacity-0 blur-[0.5px]`}
-              style={{
-                top: line.top,
-                animation: `${line.animationName} ${line.duration} linear infinite`, 
-                animationDelay: line.delay,
-              }}
-            >
-              {line.text}
-            </div>
-          ))}
-        </div>
+              <motion.div 
+                key="hero-subtitle"
+                initial={{ opacity: 0, y: 20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ delay: 0.9, duration: 1.0, ease: "easeOut" }} 
+                className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-gray-400 max-w-3xl mx-auto"
+              >
+                <p>Stop relying on guesswork. We act as your entire growth engine.</p>
+                <p className="text-gray-300">
+                  Combining <span className="text-emerald-400 font-semibold">Paid Media</span>, <span className="text-emerald-400 font-semibold">Creative Strategy</span>, and <span className="text-emerald-400 font-semibold">CRO</span> to maximize ROI.
+                </p>
+              </motion.div>
 
-        <div className="relative z-[20] flex flex-col items-center justify-end">
-          <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
-          
-          <motion.div
-             initial={{ opacity: 0, filter: "blur(15px)", scale: 0.95 }}
-             animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-             transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
-          >
-              <PhoneFrame onOptionChange={handlePhoneOptionChange} />
-          </motion.div>
-        </div>
-
-        <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
-          <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
-          {uiWidgets.map((widget) => (
-            <div
-              key={widget.id}
-              className="absolute opacity-0"
-              style={{
-                top: widget.top,
-                left: '0%', 
-                animation: `uiFlow ${widget.duration} cubic-bezier(0.4, 0, 0.2, 1) infinite`,
-                animationDelay: widget.delay,
-              }}
-            >
-              {widget.type === 0 && (
-                <div className="w-48 h-16 bg-white/10 backdrop-blur-md border-l-4 border-emerald-500 rounded-r-lg p-3 shadow-lg flex flex-col gap-1">
-                  <div className="flex justify-between items-center"><div className="flex gap-2 items-center"><div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center"><CheckCircle size={12} className="text-emerald-400"/></div><span className="text-xs text-white font-medium">Lead Acquired</span></div><span className="text-[10px] text-gray-400">Just now</span></div><div className="w-24 h-1.5 bg-white/10 rounded ml-8"></div>
+              <motion.div 
+                key="hero-buttons"
+                initial={{ opacity: 0, scale: 0.9 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                transition={{ delay: 1.1, duration: 1.0, ease: "easeOut" }} 
+                className="mt-8"
+              >
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <motion.a href="#contact" className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100]" whileHover={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.3)', transition: { duration: 0.2 } }}>
+                    <p className="font-inter font-semibold text-[15px] text-white whitespace-nowrap">{secondaryButtonText}</p>
+                  </motion.a>
+                  <motion.a 
+                    href="#contact" 
+                    onHoverStart={() => setIsHovered(true)}
+                    onHoverEnd={() => setIsHovered(false)}
+                    className="flex items-center justify-center gap-1.5 h-[48px] bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-[50px] px-6 py-3 transition-[background-color,box-shadow] duration-300 cursor-pointer w-full sm:w-auto relative z-[100]" 
+                    style={{ border: `1px solid ${isHovered ? emeraldColor : lampColor}` }} 
+                    whileHover={{ boxShadow: `0 0 20px rgba(52, 211, 153, 0.5)`, transition: { duration: 0.2 } }}
+                  >
+                    <div className="w-[18px] h-[14px] relative overflow-hidden" style={{ color: isHovered ? emeraldColor : lampColor }}><Calendar className="w-[17px] h-[14px]" /></div>
+                    <p className="font-inter font-semibold text-[15px] whitespace-nowrap z-[1]" style={{ color: isHovered ? emeraldColor : lampColor }}>{primaryButtonText}</p>
+                  </motion.a>
                 </div>
-              )}
-              {widget.type === 1 && (
-                <div className="w-28 h-28 bg-gradient-to-t from-slate-900 to-slate-800 border border-green-500/20 rounded-xl flex flex-col items-center justify-center shadow-xl backdrop-blur-sm rotate-6 p-2 gap-1">
-                  <BarChart className="text-green-400 w-8 h-8" /><span className="text-[10px] text-green-300 font-bold">+{widget.roiValue}% ROI</span>
-                </div>
-              )}
-              {widget.type === 2 && (
-                <div className="flex items-center gap-3 px-4 py-3 bg-slate-800/90 border border-blue-500/30 rounded-full shadow-lg">
-                  <Users className="w-4 h-4 text-blue-400" /><span className="text-xs text-white font-medium tracking-wide">New Client Onboarded</span>
-                </div>
-              )}
-              {widget.type === 3 && (
-                <div className="w-36 h-24 bg-slate-900 border border-slate-700 rounded-lg p-3 shadow-2xl -rotate-3 flex flex-col justify-between">
-                  <div className="flex justify-between items-start"><div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center"><MousePointerClick size={16} className="text-white"/></div><div className="text-[10px] text-gray-400">CTR</div></div><div className="text-xl font-bold text-white">{widget.ctrValue}%</div>
-                </div>
-              )}
+              </motion.div>
             </div>
-          ))}
-        </div>
+          </div>
+
+          {/* --- WORKFLOW CONTAINER --- */}
+          <div className="w-full relative h-[720px] flex justify-center items-end overflow-hidden z-[10] mt-8">
+            
+            <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
+              {codeLines.map((line) => (
+                <div
+                  key={line.id}
+                  className={`absolute left-0 whitespace-nowrap font-mono text-xs md:text-sm ${line.color} opacity-0 blur-[0.5px]`}
+                  style={{
+                    top: line.top,
+                    animation: `${line.animationName} ${line.duration} linear infinite`, 
+                    animationDelay: line.delay,
+                  }}
+                >
+                  {line.text}
+                </div>
+              ))}
+            </div>
+
+            <div className="relative z-[20] flex flex-col items-center justify-end">
+              <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
+              
+              <motion.div
+                initial={{ opacity: 0, filter: "blur(15px)", scale: 0.95 }}
+                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+              >
+                  <PhoneFrame onOptionChange={handlePhoneOptionChange} />
+              </motion.div>
+            </div>
+
+            <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
+              <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
+              <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+              {uiWidgets.map((widget) => (
+                <div
+                  key={widget.id}
+                  className="absolute opacity-0"
+                  style={{
+                    top: widget.top,
+                    left: '0%', 
+                    animation: `uiFlow ${widget.duration} cubic-bezier(0.4, 0, 0.2, 1) infinite`,
+                    animationDelay: widget.delay,
+                  }}
+                >
+                  {widget.type === 0 && (
+                    <div className="w-48 h-16 bg-white/10 backdrop-blur-md border-l-4 border-emerald-500 rounded-r-lg p-3 shadow-lg flex flex-col gap-1">
+                      <div className="flex justify-between items-center"><div className="flex gap-2 items-center"><div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center"><CheckCircle size={12} className="text-emerald-400"/></div><span className="text-xs text-white font-medium">Lead Acquired</span></div><span className="text-[10px] text-gray-400">Just now</span></div><div className="w-24 h-1.5 bg-white/10 rounded ml-8"></div>
+                    </div>
+                  )}
+                  {widget.type === 1 && (
+                    <div className="w-28 h-28 bg-gradient-to-t from-slate-900 to-slate-800 border border-green-500/20 rounded-xl flex flex-col items-center justify-center shadow-xl backdrop-blur-sm rotate-6 p-2 gap-1">
+                      <BarChart className="text-green-400 w-8 h-8" /><span className="text-[10px] text-green-300 font-bold">+{widget.roiValue}% ROI</span>
+                    </div>
+                  )}
+                  {widget.type === 2 && (
+                    <div className="flex items-center gap-3 px-4 py-3 bg-slate-800/90 border border-blue-500/30 rounded-full shadow-lg">
+                      <Users className="w-4 h-4 text-blue-400" /><span className="text-xs text-white font-medium tracking-wide">New Client Onboarded</span>
+                    </div>
+                  )}
+                  {widget.type === 3 && (
+                    <div className="w-36 h-24 bg-slate-900 border border-slate-700 rounded-lg p-3 shadow-2xl -rotate-3 flex flex-col justify-between">
+                      <div className="flex justify-between items-start"><div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center"><MousePointerClick size={16} className="text-white"/></div><div className="text-[10px] text-gray-400">CTR</div></div><div className="text-xl font-bold text-white">{widget.ctrValue}%</div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
       </div>
     </div>
   );
