@@ -561,8 +561,10 @@ export const SuperHero = ({
             {/* --- PARCHE DE ABAJO (Blur/Glow) MODIFICADO: w-[30rem] --- */}
             <div className="absolute top-1/2 h-48 w-[30rem] translate-y-12 blur-2xl" style={{ backgroundColor: bgColor }} />
             
-            {/* --- PARCHE DE ARRIBA (Tapa cono) MODIFICADO: w-[30rem] --- */}
-            <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
+            {/* --- PARCHE DE ARRIBA + BACKDROP BLUR MODIFICADO: w-[30rem] --- */}
+            {/* Aquí abajo estaba el w-full causando el desenfoque total. Cambiado a w-[30rem] */}
+            <div className="absolute top-1/2 z-50 h-48 w-[30rem] bg-transparent backdrop-blur-md" />
+            
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.5, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
             <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
             <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
