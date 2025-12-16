@@ -403,7 +403,7 @@ export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
 }: SuperHeroProps) => {
-  // CAMBIO IMPORTANTE: bgColor ahora es semi-transparente (50% de opacidad)
+  // BgColor semi-transparente para ver a través de los parches
   const bgColor = "rgba(5, 5, 5, 0.5)";
   const lampColor = "#06b6d4"; 
   const emeraldColor = "#34d399"; 
@@ -506,7 +506,6 @@ export const SuperHero = ({
               backgroundPosition: 'center 20%' 
             }}
         ></div>
-        {/* Overlay degradado radial */}
         <div 
             className="absolute inset-0"
             style={{ 
@@ -534,7 +533,8 @@ export const SuperHero = ({
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
-            {/* Lámpara Derecha - Opacidad reducida en animate */}
+            
+            {/* Right Cone */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 0.5, width: "30rem", "--gradient-color": lampColor }} 
@@ -542,12 +542,11 @@ export const SuperHero = ({
               style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, "--gradient-color": lampColor } as any}
               className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
             >
-              {/* Máscaras con bgColor semi-transparente */}
               <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: bgColor }} />
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: bgColor }} />
             </motion.div>
             
-            {/* Lámpara Izquierda - Opacidad reducida en animate */}
+            {/* Left Cone */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 0.5, width: "30rem", "--gradient-color": lampColor }}
@@ -555,17 +554,21 @@ export const SuperHero = ({
               style={{ backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, "--gradient-color": lampColor } as any}
               className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
             >
-              {/* Máscaras con bgColor semi-transparente */}
               <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: bgColor }} />
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: bgColor }} />
             </motion.div>
             
-            <div className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl" style={{ backgroundColor: bgColor }} />
+            {/* --- PARCHE DE ABAJO (Blur/Glow) MODIFICADO: w-[30rem] --- */}
+            <div className="absolute top-1/2 h-48 w-[30rem] translate-y-12 blur-2xl" style={{ backgroundColor: bgColor }} />
+            
+            {/* --- PARCHE DE ARRIBA (Tapa cono) MODIFICADO: w-[30rem] --- */}
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.5, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
             <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
             <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
-            <div className="absolute inset-auto z-40 h-44 w-full -translate-y-[12.5rem]" style={{ backgroundColor: bgColor }} />
+            <div className="absolute inset-auto z-40 h-44 w-[30rem] -translate-y-[12.5rem]" style={{ backgroundColor: bgColor }} />
+            {/* ---------------------------------------------------- */}
+            
           </div>
         </div>
 
