@@ -334,7 +334,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
       </div>
 
       {/* --- OPTIONS PANEL (Styled to sit over the chat but distinct) --- */}
-      <div className="absolute bottom-8 w-full z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200">
+      <div className="absolute bottom-16 w-full z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200">
         <AnimatePresence>
             {showOptions && (
                 <motion.div 
