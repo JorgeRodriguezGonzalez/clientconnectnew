@@ -496,6 +496,28 @@ export const SuperHero = ({
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-8 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
       
+      {/* --- NUEVA IMAGEN DE FONDO SUPERIOR --- */}
+      <div className="absolute top-0 left-0 w-full h-[65vh] z-0 pointer-events-none overflow-hidden">
+        {/* Imagen del equipo */}
+        <div 
+            className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-screen"
+            style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop)' }}
+        ></div>
+        
+        {/* Overlay "Semicírculo Negro" y degradado lateral */}
+        <div 
+            className="absolute inset-0"
+            style={{ 
+                // Esto crea el semicírculo negro en el centro inferior que se desvanece hacia arriba y los lados
+                background: 'radial-gradient(ellipse at bottom center, #050505 30%, rgba(5,5,5,0.9) 50%, rgba(5,5,5,0.4) 80%, transparent 100%)'
+            }}
+        ></div>
+
+         {/* Capa extra para suavizar la unión con el fondo negro general de abajo */}
+         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#050505] via-[#050505] to-transparent"></div>
+      </div>
+      {/* -------------------------------------- */}
+
       <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-30"
