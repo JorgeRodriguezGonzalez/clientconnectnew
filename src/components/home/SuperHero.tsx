@@ -257,7 +257,16 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
     <div className="flex flex-col h-full bg-white relative font-sans overflow-hidden">
       {/* HEADER */}
       <div className="h-[44px] flex items-center justify-between px-6 pt-3 z-30 shrink-0 bg-white/80 backdrop-blur-md sticky top-0 border-b border-gray-100/50">
-        <div className="text-[14px] font-semibold text-gray-900 tracking-wide">{currentTime}</div>
+        {/* CORRECCIÓN 1 & 2: Añadido el logo y el nombre del contacto */}
+        <div className="flex items-center gap-2">
+          {/* Logo "CC." con punto esmeralda */}
+          <div className="w-7 h-7 rounded-full bg-gray-700 flex items-center justify-center">
+              <span className="text-white text-xs font-bold">CC</span>
+              <span className="text-emerald-400 text-xs font-bold">.</span>
+          </div>
+          {/* Nombre del contacto */}
+          <div className="text-[14px] font-semibold text-gray-900 tracking-wide">Client Connect</div>
+        </div>
         <div className="flex items-center gap-1.5 text-gray-900">
           <Signal className="w-[16px] h-[16px]" strokeWidth={2.5} />
           <Wifi className="w-[16px] h-[16px]" strokeWidth={2.5} />
@@ -291,7 +300,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 
       {/* OPTIONS PANEL */}
       {/* CORRECCIÓN 2: Cambiado bottom-0 a bottom-8 para subir el componente */}
-      <div className="absolute bottom-36 w-full z-40 bg-white/90 backdrop-blur-xl border-t border-gray-200">
+      <div className="absolute bottom-8 w-full z-40 bg-white/90 backdrop-blur-xl border-t border-gray-200">
         <AnimatePresence>
             {showOptions && (
                 <motion.div 
