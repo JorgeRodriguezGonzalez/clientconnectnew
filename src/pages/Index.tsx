@@ -40,7 +40,7 @@ const Index = () => {
             2. z-[50]: para asegurar que esté encima del Hero.
             3. -mt-[100px]: margen negativo para subirlo 100px. 
         */}
-        <div className="relative z-[50] -mt-[200px]">
+        <div className="relative z-[50] -mt-[180px]">
           <FounderSection />
         </div>
 
