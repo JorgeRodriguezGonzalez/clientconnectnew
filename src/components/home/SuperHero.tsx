@@ -481,10 +481,10 @@ export const SuperHero = ({
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-8 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
 
-       {/* --- BACKGROUND IMAGE --- */}
+       {/* --- BACKGROUND IMAGE (UPDATED) --- */}
       <div className="absolute top-0 left-0 w-full h-[70vh] z-0 pointer-events-none overflow-hidden">
         <div 
-            className="absolute inset-0 bg-cover bg-center opacity-60"
+            className="absolute inset-0 bg-cover bg-center opacity-75" // Changed opacity from 60 to 75
             style={{ 
               backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop)',
               backgroundPosition: 'center 20%' 
@@ -493,7 +493,8 @@ export const SuperHero = ({
         <div 
             className="absolute inset-0"
             style={{ 
-                background: 'radial-gradient(ellipse at bottom center, #050505 40%, rgba(5,5,5,0.8) 60%, rgba(5,5,5,0.2) 85%, transparent 100%)'
+                // Updated gradient to be more transparent on sides
+                background: 'radial-gradient(ellipse at bottom center, rgba(5,5,5,0.9) 20%, rgba(5,5,5,0.7) 40%, rgba(5,5,5,0.1) 70%, transparent 100%)'
             }}
         ></div>
          <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#050505] via-[#050505] to-transparent"></div>
@@ -518,19 +519,15 @@ export const SuperHero = ({
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             
-            {/* --- LIGHT CONES (MODIFIED) --- */}
-            
             {/* Right Cone */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
               animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }} 
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
               style={{ 
-                  // Change: transparent 50% -> transparent 35% for tighter beam
                   backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 35%, transparent 100%)`, 
                   "--gradient-color": lampColor 
               } as any}
-              // Added: [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)] to fade out vertically
               className="absolute inset-auto right-1/2 h-56 overflow-visible w-[28rem] text-white [--conic-position:from_70deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
             >
             </motion.div>
@@ -541,20 +538,20 @@ export const SuperHero = ({
               animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
               style={{ 
-                  // Change: transparent 0%, transparent 50% -> transparent 0%, transparent 65% for tighter beam
                   backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 65%, var(--gradient-color) 100%)`, 
                   "--gradient-color": lampColor 
               } as any}
-              // Added: [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)] to fade out vertically
               className="absolute inset-auto left-1/2 h-56 w-[28rem] text-white [--conic-position:from_290deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
             >
             </motion.div>
             
-            {/* --- CENTER GLOWS (Slightly adjusted opacity if needed, but left mostly intact) --- */}
+            {/* --- CENTER GLOWS (Updated Line Width) --- */}
             
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.4, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
             <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 0.8, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
-            <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
+            
+            {/* MODIFICADO: w-[22rem] en lugar de 30rem o 28rem para que sea más corto que la luz */}
+            <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "22rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[22rem] -translate-y-[7rem]" />
             
           </div>
         </div>
