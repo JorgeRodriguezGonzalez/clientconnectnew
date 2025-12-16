@@ -636,13 +636,16 @@ export const SuperHero = ({
             
             <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
                {/* 
-                  MODIFICADO: Overlay negro izquierdo
-                  Ahora usa un radial-gradient que hace el centro-arriba transparente
-                  y las esquinas inferiores oscuras.
+                  MODIFICADO IZQUIERDA: 
+                  - Radial más ancho (transparent 60%)
+                  - MASK IMAGE añadida al contenedor para desvanecer el borde superior (igual que en la derecha)
                */}
               <div 
                 className="absolute inset-0" 
-                style={{ background: 'radial-gradient(circle at 100% 0%, transparent 30%, #000000 100%)' }}
+                style={{ 
+                    background: 'radial-gradient(circle at 100% 0%, transparent 60%, #000000 100%)',
+                    maskImage: 'linear-gradient(to bottom, transparent, black 40%)'
+                }}
               ></div>
 
               {codeLines.map((line) => (
@@ -675,11 +678,7 @@ export const SuperHero = ({
             <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
               <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent" style={{ maskImage: 'linear-gradient(to bottom, transparent, black)' }}></div>
               
-               {/* 
-                  MODIFICADO: Grid con máscara
-                  Añadido maskImage: 'linear-gradient(135deg...)'
-                  Esto oculta la parte superior izquierda (cerca del telefono) y muestra la inferior derecha.
-               */}
+               {/* MODIFICADO DERECHA (MANTENIDO): Grid con máscara */}
               <div 
                   className="absolute inset-0 opacity-15 mix-blend-overlay" 
                   style={{ 
