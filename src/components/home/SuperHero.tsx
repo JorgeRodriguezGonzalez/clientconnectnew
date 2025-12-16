@@ -199,7 +199,9 @@ type Message = {
 };
 
 const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  // CORRECCIÓN 1: Usar referencia al contenedor para el scroll interno
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  
   const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
   
   const [messages, setMessages] = useState<Message[]>([
@@ -208,9 +210,13 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   
   const [showOptions, setShowOptions] = useState(true);
 
+  // CORRECCIÓN 1: Lógica de scroll ajustada para usar scrollTo en el contenedor
   useEffect(() => {
-    if (scrollRef.current) {
-        scrollRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTo({
+            top: chatContainerRef.current.scrollHeight,
+            behavior: 'smooth'
+        });
     }
   }, [messages, showOptions]);
 
@@ -260,7 +266,8 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
       </div>
 
       {/* CHAT AREA */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-20">
+      {/* CORRECCIÓN 1: Añadida la referencia al contenedor */}
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 pb-32">
         {messages.map((msg) => (
             <motion.div
                 key={msg.id}
@@ -280,11 +287,11 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                 </div>
             </motion.div>
         ))}
-        <div ref={scrollRef} />
       </div>
 
-      {/* OPTIONS PANEL: COMPACTO */}
-      <div className="absolute bottom-0 w-full z-40 bg-white/90 backdrop-blur-xl border-t border-gray-200">
+      {/* OPTIONS PANEL */}
+      {/* CORRECCIÓN 2: Cambiado bottom-0 a bottom-8 para subir el componente */}
+      <div className="absolute bottom-8 w-full z-40 bg-white/90 backdrop-blur-xl border-t border-gray-200">
         <AnimatePresence>
             {showOptions && (
                 <motion.div 
@@ -546,7 +553,6 @@ export const SuperHero = ({
       </div>
 
       {/* --- WORKFLOW CONTAINER --- */}
-      {/* CORRECCIÓN: h-[680px] y items-end para eliminar el espacio inferior */}
       <div className="w-full relative h-[720px] flex justify-center items-end overflow-hidden z-[10] mt-8">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
