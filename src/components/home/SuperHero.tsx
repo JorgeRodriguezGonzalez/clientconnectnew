@@ -484,7 +484,7 @@ export const SuperHero = ({
        {/* --- BACKGROUND IMAGE (UPDATED) --- */}
       <div className="absolute top-0 left-0 w-full h-[70vh] z-0 pointer-events-none overflow-hidden">
         <div 
-            className="absolute inset-0 bg-cover bg-center opacity-75" // Changed opacity from 60 to 75
+            className="absolute inset-0 bg-cover bg-center opacity-75"
             style={{ 
               backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop)',
               backgroundPosition: 'center 20%' 
@@ -493,8 +493,8 @@ export const SuperHero = ({
         <div 
             className="absolute inset-0"
             style={{ 
-                // Updated gradient to be more transparent on sides
-                background: 'radial-gradient(ellipse at bottom center, rgba(5,5,5,0.9) 20%, rgba(5,5,5,0.7) 40%, rgba(5,5,5,0.1) 70%, transparent 100%)'
+                // AQUÍ ES DONDE CONTROLAS LA VELOCIDAD DE DESVANECIMIENTO
+                background: 'radial-gradient(ellipse at bottom center, rgba(5,5,5,0.95) 30%, rgba(5,5,5,0.85) 60%, rgba(5,5,5,0.3) 85%, transparent 100%)'
             }}
         ></div>
          <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#050505] via-[#050505] to-transparent"></div>
@@ -545,13 +545,13 @@ export const SuperHero = ({
             >
             </motion.div>
             
-            {/* --- CENTER GLOWS (Updated Line Width) --- */}
+            {/* --- CENTER GLOWS (Updated Line Width to 28rem) --- */}
             
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.4, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
             <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 0.8, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
             
-            {/* MODIFICADO: w-[22rem] en lugar de 30rem o 28rem para que sea más corto que la luz */}
-            <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "22rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[22rem] -translate-y-[7rem]" />
+            {/* MODIFICADO: w-[28rem] como solicitaste */}
+            <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "28rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[28rem] -translate-y-[7rem]" />
             
           </div>
         </div>
