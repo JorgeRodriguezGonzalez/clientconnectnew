@@ -545,7 +545,7 @@ export const SuperHero = ({
         </div>
       </div>
 
-      <div className="w-full relative h-[700px] flex justify-center overflow-hidden z-[10] mt-8">
+      <div className="w-full relative h-[720px] flex justify-center overflow-hidden z-[10] mt-8">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
