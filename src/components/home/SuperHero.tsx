@@ -403,7 +403,8 @@ export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
 }: SuperHeroProps) => {
-  const bgColor = "#050505";
+  // CAMBIO IMPORTANTE: bgColor ahora es semi-transparente (50% de opacidad)
+  const bgColor = "rgba(5, 5, 5, 0.5)";
   const lampColor = "#06b6d4"; 
   const emeraldColor = "#34d399"; 
 
@@ -495,33 +496,26 @@ export const SuperHero = ({
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-8 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
-      
-      {/* --- NUEVA IMAGEN DE FONDO SUPERIOR --- */}
+
+       {/* --- NUEVA IMAGEN DE FONDO SUPERIOR --- */}
       <div className="absolute top-0 left-0 w-full h-[70vh] z-0 pointer-events-none overflow-hidden">
-        {/* Imagen del equipo */}
         <div 
             className="absolute inset-0 bg-cover bg-center opacity-60"
             style={{ 
               backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop)',
-              // Ajustamos la posición para que las caras se vean mejor en la parte superior
               backgroundPosition: 'center 20%' 
             }}
         ></div>
-        
-        {/* Overlay "Semicírculo Negro" y degradado lateral */}
+        {/* Overlay degradado radial */}
         <div 
             className="absolute inset-0"
             style={{ 
-                // He reducido la agresividad del negro en los bordes para que se vea más imagen
                 background: 'radial-gradient(ellipse at bottom center, #050505 40%, rgba(5,5,5,0.8) 60%, rgba(5,5,5,0.2) 85%, transparent 100%)'
             }}
         ></div>
-
-         {/* Capa extra para suavizar la unión inferior */}
          <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#050505] via-[#050505] to-transparent"></div>
       </div>
-      {/* -------------------------------------- */}
-
+      
       <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-30"
@@ -540,26 +534,32 @@ export const SuperHero = ({
       <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
+            {/* Lámpara Derecha - Opacidad reducida en animate */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
+              animate={{ opacity: 0.5, width: "30rem", "--gradient-color": lampColor }} 
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
               style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, "--gradient-color": lampColor } as any}
               className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
             >
+              {/* Máscaras con bgColor semi-transparente */}
               <div className="absolute w-[100%] left-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: bgColor }} />
               <div className="absolute w-40 h-[100%] left-0 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" style={{ backgroundColor: bgColor }} />
             </motion.div>
+            
+            {/* Lámpara Izquierda - Opacidad reducida en animate */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 1, width: "30rem", "--gradient-color": lampColor }}
+              animate={{ opacity: 0.5, width: "30rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
               style={{ backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, "--gradient-color": lampColor } as any}
               className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
             >
+              {/* Máscaras con bgColor semi-transparente */}
               <div className="absolute w-40 h-[100%] right-0 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" style={{ backgroundColor: bgColor }} />
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: bgColor }} />
             </motion.div>
+            
             <div className="absolute top-1/2 h-48 w-full translate-y-12 scale-x-150 blur-2xl" style={{ backgroundColor: bgColor }} />
             <div className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md" />
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.5, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
