@@ -520,16 +520,15 @@ export const SuperHero = ({
             
             {/* 
                --- LIGHT CONTAINER (CLIPPED) ---
-               This container sits exactly at the line level (-7rem from center).
-               We use clip-path to strictly cut anything above the top edge.
-               Basically: Render from y=0 down to infinity, cut anything y<0.
+               MODIFICADO: Cambiado de -translate-y-[7rem] a translate-y-[4rem] 
+               para bajar la fuente de luz unos 180px y alinearla con la línea visualmente.
             */}
-            <div className="absolute inset-auto z-30 h-56 w-full -translate-y-[7rem] flex items-center justify-center pointer-events-none">
+            <div className="absolute inset-auto z-30 h-56 w-full translate-y-[4rem] flex items-center justify-center pointer-events-none">
                  <motion.div
                     className="w-[60rem] h-full relative"
                     style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
                  >
-                    {/* Right Cone (Starts at top-0, relative to this clipped container) */}
+                    {/* Right Cone */}
                     <motion.div
                       initial={{ opacity: 0, width: "15rem" }}
                       animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }} 
@@ -553,7 +552,7 @@ export const SuperHero = ({
                       className="absolute top-0 left-1/2 h-56 w-[28rem] text-white [--conic-position:from_290deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
                     />
 
-                    {/* GLOWS (Moved inside clipped container, positioned at top-0) */}
+                    {/* GLOWS */}
                     <motion.div 
                         initial={{ opacity: 0 }} 
                         animate={{ opacity: 0.4, backgroundColor: lampColor }} 
@@ -570,7 +569,7 @@ export const SuperHero = ({
                  </motion.div>
             </div>
             
-            {/* --- CYAN LINE (Unclipped, sits on top) --- */}
+            {/* --- CYAN LINE --- */}
             <motion.div 
                 initial={{ opacity: 0, width: "15rem" }} 
                 animate={{ opacity: 1, width: "28rem", backgroundColor: lampColor }} 
