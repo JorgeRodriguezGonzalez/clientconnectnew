@@ -558,17 +558,19 @@ export const SuperHero = ({
               <div className="absolute w-[100%] right-0 h-40 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" style={{ backgroundColor: bgColor }} />
             </motion.div>
             
-            {/* --- PARCHE DE ABAJO (Blur/Glow) MODIFICADO: w-[30rem] --- */}
-            <div className="absolute top-1/2 h-48 w-[30rem] translate-y-12 blur-2xl" style={{ backgroundColor: bgColor }} />
+            {/* --- PARCHE DE ABAJO (Blur/Glow) MODIFICADO: Centrado explícito --- */}
+            <div className="absolute top-1/2 left-1/2 h-48 w-[30rem] -translate-x-1/2 translate-y-12 blur-2xl" style={{ backgroundColor: bgColor }} />
             
-            {/* --- PARCHE DE ARRIBA + BACKDROP BLUR MODIFICADO: w-[30rem] --- */}
-            {/* Aquí abajo estaba el w-full causando el desenfoque total. Cambiado a w-[30rem] */}
-            <div className="absolute top-1/2 z-50 h-48 w-[30rem] bg-transparent backdrop-blur-md" />
+            {/* --- PARCHE DE ARRIBA + BACKDROP BLUR MODIFICADO: Centrado explícito --- */}
+            <div className="absolute top-1/2 left-1/2 z-50 h-48 w-[30rem] -translate-x-1/2 bg-transparent backdrop-blur-md" />
             
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.5, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
             <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
             <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
-            <div className="absolute inset-auto z-40 h-44 w-[30rem] -translate-y-[12.5rem]" style={{ backgroundColor: bgColor }} />
+            
+             {/* --- PARCHE DE ARRIBA (Tapa cono) MODIFICADO: w-[30rem] + Centrado explícito --- */}
+             {/* Antes usaba inset-auto que podría no centrarlo si el padre flex cambia */}
+            <div className="absolute top-0 left-1/2 z-40 h-44 w-[30rem] -translate-x-1/2 -translate-y-[12.5rem]" style={{ backgroundColor: bgColor }} />
             {/* ---------------------------------------------------- */}
             
           </div>
