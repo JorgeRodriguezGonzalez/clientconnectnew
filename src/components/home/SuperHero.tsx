@@ -547,7 +547,7 @@ export const SuperHero = ({
 
       {/* --- WORKFLOW CONTAINER --- */}
       {/* CORRECCIÓN: h-[680px] y items-end para eliminar el espacio inferior */}
-      <div className="w-full relative h-[720px] flex justify-center items-end overflow-hidden z-[10] mt-8">
+      <div className="w-full relative h-[760px] flex justify-center items-end overflow-hidden z-[10] mt-8">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
