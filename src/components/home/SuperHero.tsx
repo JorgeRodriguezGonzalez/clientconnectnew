@@ -441,7 +441,9 @@ export const SuperHero = ({
   };
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-8 px-0 overflow-hidden relative pb-0">
+    // CAMBIO IMPORTANTE: Eliminado min-h-screen y reemplazado por h-auto (el defecto de block)
+    // Se mantiene pt-56, px-0, overflow-hidden y pb-0
+    <div className="w-full bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-56 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
       
       <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
@@ -546,7 +548,7 @@ export const SuperHero = ({
       </div>
 
       {/* --- WORKFLOW CONTAINER --- */}
-      {/* CORRECCIÓN: h-[680px] y items-end para eliminar el espacio inferior */}
+      {/* CORRECCIÓN: h-[680px] (igual que teléfono) y justify-end */}
       <div className="w-full relative h-[680px] flex justify-center items-end overflow-hidden z-[10] mt-8">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
