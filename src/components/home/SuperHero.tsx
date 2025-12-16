@@ -156,20 +156,21 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
     };
   }, []);
 
+  // COMPACTADO: padding reducido, textos más pequeños
   return (
-    <div className={`w-full bg-[#1a1a1a] rounded-[18px] px-4 py-4 shadow-xl border border-[#333333] ${className}`}>
-      <div className="flex items-center justify-center mb-3">
-        <div className="w-10 h-1 bg-[#404040] rounded-full" />
+    <div className={`w-full bg-[#1a1a1a] rounded-[16px] px-3 py-3 shadow-xl border border-[#333333] ${className}`}>
+      <div className="flex items-center justify-center mb-2">
+        <div className="w-8 h-1 bg-[#404040] rounded-full" />
       </div>
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20">
-             <TrendingUp width="16" height="16" className="text-green-400" />
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-1.5">
+          <div className="w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20">
+             <TrendingUp width="12" height="12" className="text-green-400" />
           </div>
         </div>
-        <h2 className="text-lg font-black tracking-tight text-white">ROI <span className="text-green-500 text-xs font-normal ml-1">▲ {roiValue}%</span></h2>
+        <h2 className="text-[13px] font-black tracking-tight text-white">ROI <span className="text-green-500 text-[10px] font-normal ml-0.5">▲ {roiValue}%</span></h2>
       </div>
-      <div className="relative mb-4 px-1">
+      <div className="relative mb-2 px-0.5">
         <div className="h-1 bg-[#505050] rounded-full w-full" />
         <motion.div 
           className="absolute top-0 left-0 h-1 bg-gradient-to-r from-emerald-400 to-green-600 rounded-full" 
@@ -177,14 +178,14 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
           animate={{ width: step === 3 ? "100%" : step === 2 ? "60%" : "16.67%" }} 
           transition={{ duration: 0.8, ease: "easeInOut" }} 
         />
-        <div className="relative flex items-center justify-between mt-2 px-1">
-          <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399]" />
-          <motion.div className="w-1.5 h-1.5 rounded-full" initial={{ backgroundColor: "#505050" }} animate={{ backgroundColor: step >= 2 ? "#34d399" : "#505050" }} transition={{ duration: 0.5 }} />
-          <motion.div className="w-1.5 h-1.5 rounded-full" initial={{ backgroundColor: "#505050" }} animate={{ backgroundColor: step === 3 ? "#34d399" : "#505050" }} transition={{ duration: 0.5 }} />
+        <div className="relative flex items-center justify-between mt-1.5 px-0.5">
+          <div className="w-1 h-1 bg-emerald-400 rounded-full shadow-[0_0_6px_#34d399]" />
+          <motion.div className="w-1 h-1 rounded-full" initial={{ backgroundColor: "#505050" }} animate={{ backgroundColor: step >= 2 ? "#34d399" : "#505050" }} transition={{ duration: 0.5 }} />
+          <motion.div className="w-1 h-1 rounded-full" initial={{ backgroundColor: "#505050" }} animate={{ backgroundColor: step === 3 ? "#34d399" : "#505050" }} transition={{ duration: 0.5 }} />
         </div>
       </div>
-      <div className="text-center h-6 flex items-center justify-center">
-        <motion.p className="text-[#999999] text-[10px] leading-snug font-medium" key={step} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <div className="text-center h-4 flex items-center justify-center">
+        <motion.p className="text-[#999999] text-[9px] leading-snug font-medium" key={step} initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           {step === 1 ? "Analyzing market data..." : step === 2 ? <span className="text-emerald-300">Optimizing campaigns...</span> : <span className="text-white">Growth targets hit.</span>}
         </motion.p>
       </div>
@@ -192,7 +193,7 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   );
 };
 
-// --- MARKETING APP CONTENT (iOS Design Replica) ---
+// --- MARKETING APP CONTENT (iOS Design Replica - Compact) ---
 type Message = {
     id: string;
     role: 'system' | 'user';
@@ -234,7 +235,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
             role: 'system', 
             content: (
                 <div className="w-full">
-                    <p className="mb-2 text-sm text-gray-800">On it. Initializing growth protocols:</p>
+                    <p className="mb-1.5 text-[13px] text-gray-800">On it. Initializing growth protocols:</p>
                     <CampaignProgressWidget />
                 </div>
             )
@@ -256,49 +257,49 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   return (
     <div className="flex flex-col h-full bg-white relative font-inter overflow-hidden">
       
-      {/* --- STATUS BAR (Top) --- */}
-      <div className="h-[47px] w-full flex items-end justify-between px-6 pb-2 z-50 absolute top-0 text-black font-medium text-[15px]">
-          <div className="w-[54px] text-center tracking-tight font-semibold">{currentTime.split(' ')[0]}</div>
+      {/* --- STATUS BAR (Compact) --- */}
+      <div className="h-[40px] w-full flex items-end justify-between px-6 pb-2 z-50 absolute top-0 text-black font-medium text-[15px]">
+          <div className="w-[54px] text-center tracking-tight font-semibold text-[13px]">{currentTime.split(' ')[0]}</div>
           <div className="flex items-center gap-1.5">
-             <Signal className="w-[17px] h-[17px] fill-black" strokeWidth={0} />
-             <Wifi className="w-[17px] h-[17px]" strokeWidth={2.5} />
-             <Battery className="w-[24px] h-[12px] text-black/40 fill-black" strokeWidth={0} />
+             <Signal className="w-[14px] h-[14px] fill-black" strokeWidth={0} />
+             <Wifi className="w-[14px] h-[14px]" strokeWidth={2.5} />
+             <Battery className="w-[20px] h-[10px] text-black/40 fill-black" strokeWidth={0} />
           </div>
       </div>
 
-      {/* --- NAVIGATION BAR (iOS Style) --- */}
-      <div className="pt-[47px] pb-3 px-3 bg-[#F5F5F5]/90 backdrop-blur-xl border-b border-gray-300/50 z-40 sticky top-0 flex items-center justify-between">
+      {/* --- NAVIGATION BAR (Compact iOS Style) --- */}
+      <div className="pt-[40px] pb-2 px-3 bg-[#F5F5F5]/90 backdrop-blur-xl border-b border-gray-300/50 z-40 sticky top-0 flex items-center justify-between">
           {/* Left: Back Arrow */}
           <div className="flex items-center text-[#007AFF] -ml-1">
-             <ChevronLeft size={26} strokeWidth={2.5} />
+             <ChevronLeft size={22} strokeWidth={2.5} />
           </div>
 
           {/* Center: Avatar & Name */}
           <div className="flex flex-col items-center justify-center flex-1">
-             <div className="w-10 h-10 rounded-full bg-gray-400 mb-1 flex items-center justify-center overflow-hidden relative shadow-sm">
+             <div className="w-8 h-8 rounded-full bg-gray-400 mb-0.5 flex items-center justify-center overflow-hidden relative shadow-sm">
                   {/* Simulate Contact Photo with Gradient & Text */}
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500"></div>
-                  <span className="relative z-10 text-white text-[13px] font-bold">CC<span className="text-emerald-400">.</span></span>
+                  <span className="relative z-10 text-white text-[10px] font-bold">CC<span className="text-emerald-400">.</span></span>
              </div>
              <div className="flex items-center gap-0.5">
-                <span className="text-[12px] font-semibold text-black tracking-tight">Client Connect</span>
-                <ChevronRight size={10} className="text-gray-400 mt-0.5" strokeWidth={3} />
+                <span className="text-[10px] font-semibold text-black tracking-tight">Client Connect</span>
+                <ChevronRight size={8} className="text-gray-400 mt-0.5" strokeWidth={3} />
              </div>
           </div>
 
           {/* Right: Video Icon */}
           <div className="flex items-center justify-end text-[#007AFF] pr-1">
-             <Video size={22} fill="#007AFF" className="opacity-100" />
+             <Video size={18} fill="#007AFF" className="opacity-100" />
           </div>
       </div>
 
-      {/* --- CHAT AREA --- */}
-      <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-2 pb-40 bg-white">
+      {/* --- CHAT AREA (Compact) --- */}
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-3 space-y-1.5 pb-40 bg-white">
         
         {/* Timestamp Header */}
-        <div className="w-full flex flex-col items-center justify-center py-4 gap-1">
-            <span className="text-[11px] font-medium text-gray-400">iMessage</span>
-            <span className="text-[11px] font-medium text-gray-400">Today {currentTime}</span>
+        <div className="w-full flex flex-col items-center justify-center py-2 gap-0.5">
+            <span className="text-[10px] font-medium text-gray-400">iMessage</span>
+            <span className="text-[10px] font-medium text-gray-400">Today {currentTime}</span>
         </div>
 
         {messages.map((msg, index) => {
@@ -313,12 +314,12 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className={`flex w-full flex-col ${isUser ? 'items-end' : 'items-start'}`}
             >
-                {/* Message Bubble */}
+                {/* Message Bubble - COMPACTADO */}
                 <div 
-                    className={`max-w-[75%] px-[14px] py-[8px] text-[16px] leading-[1.35] relative
+                    className={`max-w-[78%] px-[12px] py-[6px] text-[13.5px] leading-[1.3] relative
                     ${isUser 
-                        ? 'bg-[#007AFF] text-white rounded-[18px] rounded-br-[4px]' // iOS User Bubble Shape
-                        : 'bg-[#E9E9EB] text-black rounded-[18px] rounded-bl-[4px]' // iOS System Bubble Shape
+                        ? 'bg-[#007AFF] text-white rounded-[16px] rounded-br-[4px]' 
+                        : 'bg-[#E9E9EB] text-black rounded-[16px] rounded-bl-[4px]'
                     }`}
                 >
                     {msg.content}
@@ -326,15 +327,15 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                 
                 {/* Delivered Text */}
                 {isUser && isLast && (
-                    <span className="text-[10px] font-medium text-gray-400 mt-1 mr-1">Delivered</span>
+                    <span className="text-[9px] font-medium text-gray-400 mt-0.5 mr-1">Delivered</span>
                 )}
             </motion.div>
             );
         })}
       </div>
 
-      {/* --- OPTIONS PANEL (Styled to sit over the chat but distinct) --- */}
-      <div className="absolute bottom-16 w-full z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200">
+      {/* --- OPTIONS PANEL (Compact) --- */}
+      <div className="absolute bottom-8 w-full z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200">
         <AnimatePresence>
             {showOptions && (
                 <motion.div 
@@ -342,19 +343,19 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="px-4 pt-3 pb-6 flex flex-col gap-2 overflow-hidden" 
+                    className="px-3 pt-2 pb-5 flex flex-col gap-1.5 overflow-hidden" 
                 >
                     <div className="flex justify-between items-center px-1">
-                        <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">Suggested Replies</span>
+                        <span className="text-[9px] font-semibold text-gray-400 uppercase tracking-widest">Suggested Replies</span>
                     </div>
                     {options.map((opt) => (
                         <button
                             key={opt.id}
                             onClick={() => handleOptionClick(opt.id, opt.label)}
-                            className="w-full text-left bg-white border border-gray-200 shadow-sm hover:bg-gray-50 active:bg-gray-100 active:scale-[0.99] transition-all rounded-xl px-4 py-3 text-black text-[15px] flex justify-between items-center"
+                            className="w-full text-left bg-white border border-gray-200 shadow-sm hover:bg-gray-50 active:bg-gray-100 active:scale-[0.99] transition-all rounded-xl px-3 py-2.5 text-black text-[12px] flex justify-between items-center"
                         >
                             <span>{opt.label}</span>
-                            <Send size={14} className="text-gray-300" />
+                            <Send size={12} className="text-gray-300" />
                         </button>
                     ))}
                 </motion.div>
@@ -362,8 +363,8 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
         </AnimatePresence>
         
         {/* HOME INDICATOR */}
-        <div className="w-full h-[24px] flex items-center justify-center bg-transparent pointer-events-none pb-1">
-             <div className="w-[130px] h-[5px] bg-black rounded-full" />
+        <div className="w-full h-[20px] flex items-center justify-center bg-transparent pointer-events-none pb-1">
+             <div className="w-[120px] h-[4px] bg-black rounded-full" />
         </div>
       </div>
     </div>
