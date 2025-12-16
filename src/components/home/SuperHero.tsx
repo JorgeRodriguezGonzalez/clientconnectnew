@@ -478,16 +478,10 @@ export const SuperHero = ({
   };
 
   return (
-    // ELIMINADO EL GRADIENTE DEL CONTENEDOR PRINCIPAL
     <div className="w-full min-h-screen relative flex flex-col items-center justify-start pt-8 px-0 overflow-hidden pb-0">
       <style>{fontStyles}</style>
 
        {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
-       {/* 
-           - position: fixed -> Efecto parallax (no se mueve con el scroll)
-           - inset: 0 -> Ocupa toda la pantalla
-           - z-0 -> Detrás de todo
-       */}
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
          <div 
             className="absolute inset-0 bg-cover bg-center opacity-40"
@@ -496,20 +490,14 @@ export const SuperHero = ({
               backgroundPosition: 'center center' 
             }}
          ></div>
-         {/* OVERLAY OSCURO EXTENDIDO */}
          <div 
             className="absolute inset-0"
             style={{ 
-                // Gradiente que oscurece los bordes pero deja ver la imagen en el centro
                 background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.85) 50%, #050505 100%)'
             }}
          ></div>
       </div>
       
-      {/* 
-         WRAPPER PARA CONTENIDO SCROLEABLE
-         z-10 relative para que flote sobre el background fixed
-      */}
       <div className="relative z-10 w-full flex flex-col items-center">
       
           <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
@@ -647,7 +635,16 @@ export const SuperHero = ({
           <div className="w-full relative h-[720px] flex justify-center items-end overflow-hidden z-[10] mt-8">
             
             <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
+               {/* 
+                  MODIFICADO: Overlay negro izquierdo
+                  Ahora usa un radial-gradient que hace el centro-arriba transparente
+                  y las esquinas inferiores oscuras.
+               */}
+              <div 
+                className="absolute inset-0" 
+                style={{ background: 'radial-gradient(circle at 100% 0%, transparent 30%, #000000 100%)' }}
+              ></div>
+
               {codeLines.map((line) => (
                 <div
                   key={line.id}
@@ -676,8 +673,22 @@ export const SuperHero = ({
             </div>
 
             <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
-              <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent"></div>
-              <div className="absolute inset-0 opacity-15 mix-blend-overlay" style={{ backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+              <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent" style={{ maskImage: 'linear-gradient(to bottom, transparent, black)' }}></div>
+              
+               {/* 
+                  MODIFICADO: Grid con máscara
+                  Añadido maskImage: 'linear-gradient(135deg...)'
+                  Esto oculta la parte superior izquierda (cerca del telefono) y muestra la inferior derecha.
+               */}
+              <div 
+                  className="absolute inset-0 opacity-15 mix-blend-overlay" 
+                  style={{ 
+                      backgroundImage: 'linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)', 
+                      backgroundSize: '40px 40px',
+                      maskImage: 'linear-gradient(135deg, transparent 0%, black 100%)'
+                  }}
+              ></div>
+              
               {uiWidgets.map((widget) => (
                 <div
                   key={widget.id}
