@@ -444,7 +444,7 @@ export const SuperHero = ({
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-8 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
       
-      <div className="absolute inset-x-0 -bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
+      <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-[0]">
         <motion.div 
           className="absolute inset-0 opacity-30"
           animate={{ background: radialColorSequence }}
@@ -545,7 +545,9 @@ export const SuperHero = ({
         </div>
       </div>
 
-      <div className="w-full relative h-[720px] flex justify-center overflow-hidden z-[10] mt-8">
+      {/* --- WORKFLOW CONTAINER --- */}
+      {/* CORRECCIÓN: h-[680px] y items-end para eliminar el espacio inferior */}
+      <div className="w-full relative h-[680px] flex justify-center items-end overflow-hidden z-[10] mt-8">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
