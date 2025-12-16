@@ -34,12 +34,18 @@ const Index = () => {
       <main className="flex-1">
         <Header />
         <SuperHero />
-        <div className="z-999999">
+        
+        {/* CAMBIO APLICADO AQUÍ: 
+            1. relative: para que el z-index funcione.
+            2. z-[50]: para asegurar que esté encima del Hero.
+            3. -mt-[100px]: margen negativo para subirlo 100px. 
+        */}
+        <div className="relative z-[50] -mt-[100px]">
           <FounderSection />
         </div>
+
         <OurStepsVersion2 />
 
-        
         <CloudHero />
         <BoxCards />
         <ComparisonSection />
@@ -50,18 +56,12 @@ const Index = () => {
           <BentoGrid />
         </div>
         
-        
-
         <TestimonialsSection />
         <CTASection />
         <FloatingBanner />
         <Footer />
 
-        
-
       </main>
-
-      
     </div>
   );
 };
