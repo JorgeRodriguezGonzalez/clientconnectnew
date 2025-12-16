@@ -322,7 +322,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 // --- PHONE FRAME ---
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
-    <div className="relative w-[390px] h-[680px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
+    <div className="relative w-[390px] h-[720px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
       <div className="absolute left-[-4px] top-[100px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[160px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[230px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
@@ -547,7 +547,7 @@ export const SuperHero = ({
 
       {/* --- WORKFLOW CONTAINER --- */}
       {/* CORRECCIÓN: h-[680px] y items-end para eliminar el espacio inferior */}
-      <div className="w-full relative h-[680px] flex justify-center items-end overflow-hidden z-[10] mt-8">
+      <div className="w-full relative h-[720px] flex justify-center items-end overflow-hidden z-[10] mt-8">
         
         <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
