@@ -156,7 +156,6 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
     };
   }, []);
 
-  // COMPACTADO: padding reducido, textos más pequeños
   return (
     <div className={`w-full bg-[#1a1a1a] rounded-[16px] px-3 py-3 shadow-xl border border-[#333333] ${className}`}>
       <div className="flex items-center justify-center mb-2">
@@ -193,7 +192,7 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   );
 };
 
-// --- MARKETING APP CONTENT (iOS Design Replica - Compact) ---
+// --- MARKETING APP CONTENT ---
 type Message = {
     id: string;
     role: 'system' | 'user';
@@ -203,7 +202,6 @@ type Message = {
 const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   
-  // Format: "9:41 AM" style
   const currentTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
   
   const [messages, setMessages] = useState<Message[]>([
@@ -257,7 +255,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   return (
     <div className="flex flex-col h-full bg-white relative font-inter overflow-hidden">
       
-      {/* --- STATUS BAR (Compact) --- */}
+      {/* --- STATUS BAR --- */}
       <div className="h-[40px] w-full flex items-end justify-between px-6 pb-2 z-50 absolute top-0 text-black font-medium text-[15px]">
           <div className="w-[54px] text-center tracking-tight font-semibold text-[13px]">{currentTime.split(' ')[0]}</div>
           <div className="flex items-center gap-1.5">
@@ -267,17 +265,13 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
           </div>
       </div>
 
-      {/* --- NAVIGATION BAR (Compact iOS Style) --- */}
+      {/* --- NAVIGATION BAR --- */}
       <div className="pt-[40px] pb-2 px-3 bg-[#F5F5F5]/90 backdrop-blur-xl border-b border-gray-300/50 z-40 sticky top-0 flex items-center justify-between">
-          {/* Left: Back Arrow */}
           <div className="flex items-center text-[#007AFF] -ml-1">
              <ChevronLeft size={22} strokeWidth={2.5} />
           </div>
-
-          {/* Center: Avatar & Name */}
           <div className="flex flex-col items-center justify-center flex-1">
              <div className="w-8 h-8 rounded-full bg-gray-400 mb-0.5 flex items-center justify-center overflow-hidden relative shadow-sm">
-                  {/* Simulate Contact Photo with Gradient & Text */}
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500"></div>
                   <span className="relative z-10 text-white text-[10px] font-bold">CC<span className="text-emerald-400">.</span></span>
              </div>
@@ -286,17 +280,13 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                 <ChevronRight size={8} className="text-gray-400 mt-0.5" strokeWidth={3} />
              </div>
           </div>
-
-          {/* Right: Video Icon */}
           <div className="flex items-center justify-end text-[#007AFF] pr-1">
              <Video size={18} fill="#007AFF" className="opacity-100" />
           </div>
       </div>
 
-      {/* --- CHAT AREA (Compact) --- */}
+      {/* --- CHAT AREA --- */}
       <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-3 space-y-1.5 pb-40 bg-white">
-        
-        {/* Timestamp Header */}
         <div className="w-full flex flex-col items-center justify-center py-2 gap-0.5">
             <span className="text-[10px] font-medium text-gray-400">iMessage</span>
             <span className="text-[10px] font-medium text-gray-400">Today {currentTime}</span>
@@ -314,7 +304,6 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className={`flex w-full flex-col ${isUser ? 'items-end' : 'items-start'}`}
             >
-                {/* Message Bubble - COMPACTADO */}
                 <div 
                     className={`max-w-[78%] px-[12px] py-[6px] text-[13.5px] leading-[1.3] relative
                     ${isUser 
@@ -324,8 +313,6 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                 >
                     {msg.content}
                 </div>
-                
-                {/* Delivered Text */}
                 {isUser && isLast && (
                     <span className="text-[9px] font-medium text-gray-400 mt-0.5 mr-1">Delivered</span>
                 )}
@@ -334,7 +321,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
         })}
       </div>
 
-      {/* --- OPTIONS PANEL (Compact) --- */}
+      {/* --- OPTIONS PANEL --- */}
       <div className="absolute bottom-32 w-full z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200">
         <AnimatePresence>
             {showOptions && (
@@ -362,7 +349,6 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
             )}
         </AnimatePresence>
         
-        {/* HOME INDICATOR */}
         <div className="w-full h-[20px] flex items-center justify-center bg-transparent pointer-events-none pb-1">
              <div className="w-[120px] h-[4px] bg-black rounded-full" />
         </div>
@@ -495,7 +481,7 @@ export const SuperHero = ({
     <div className="w-full min-h-screen bg-gradient-to-br from-black via-[#050505] to-[#15171c] flex flex-col items-center justify-start pt-8 px-0 overflow-hidden relative pb-0">
       <style>{fontStyles}</style>
 
-       {/* --- NUEVA IMAGEN DE FONDO SUPERIOR --- */}
+       {/* --- BACKGROUND IMAGE --- */}
       <div className="absolute top-0 left-0 w-full h-[70vh] z-0 pointer-events-none overflow-hidden">
         <div 
             className="absolute inset-0 bg-cover bg-center opacity-60"
@@ -532,35 +518,43 @@ export const SuperHero = ({
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             
+            {/* --- LIGHT CONES (MODIFIED) --- */}
+            
             {/* Right Cone */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 0.5, width: "30rem", "--gradient-color": lampColor }} 
+              animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }} 
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              style={{ backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`, "--gradient-color": lampColor } as any}
-              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[30rem] text-white [--conic-position:from_70deg_at_center_top]"
+              style={{ 
+                  // Change: transparent 50% -> transparent 35% for tighter beam
+                  backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 35%, transparent 100%)`, 
+                  "--gradient-color": lampColor 
+              } as any}
+              // Added: [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)] to fade out vertically
+              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[28rem] text-white [--conic-position:from_70deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
             >
-              {/* MASKS ELIMINADAS: Aquí había un div con bgColor que oscurecía */}
             </motion.div>
             
             {/* Left Cone */}
             <motion.div
               initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 0.5, width: "30rem", "--gradient-color": lampColor }}
+              animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }}
               transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              style={{ backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`, "--gradient-color": lampColor } as any}
-              className="absolute inset-auto left-1/2 h-56 w-[30rem] text-white [--conic-position:from_290deg_at_center_top]"
+              style={{ 
+                  // Change: transparent 0%, transparent 50% -> transparent 0%, transparent 65% for tighter beam
+                  backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 65%, var(--gradient-color) 100%)`, 
+                  "--gradient-color": lampColor 
+              } as any}
+              // Added: [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)] to fade out vertically
+              className="absolute inset-auto left-1/2 h-56 w-[28rem] text-white [--conic-position:from_290deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
             >
-               {/* MASKS ELIMINADAS: Aquí había un div con bgColor que oscurecía */}
             </motion.div>
             
-            {/* --- SOLO BRILLOS Y LINEAS CIAN (Nada de fondos oscuros) --- */}
+            {/* --- CENTER GLOWS (Slightly adjusted opacity if needed, but left mostly intact) --- */}
             
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.5, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
-            <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 1, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.4, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
+            <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 0.8, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
             <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "30rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]" />
-            
-            {/* ---------------------------------------------------- */}
             
           </div>
         </div>
