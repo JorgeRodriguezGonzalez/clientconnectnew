@@ -322,7 +322,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 // --- PHONE FRAME ---
 const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
   return (
-    <div className="relative w-[390px] h-[720px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
+    <div className="relative w-[390px] h-[680px] bg-gray-900 rounded-[3.5rem] shadow-2xl p-3 border-4 border-gray-800">
       <div className="absolute left-[-4px] top-[100px] w-[4px] h-[32px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[160px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute left-[-4px] top-[230px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
