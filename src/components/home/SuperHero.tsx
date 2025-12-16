@@ -493,7 +493,6 @@ export const SuperHero = ({
         <div 
             className="absolute inset-0"
             style={{ 
-                // AQUÍ ES DONDE CONTROLAS LA VELOCIDAD DE DESVANECIMIENTO
                 background: 'radial-gradient(ellipse at bottom center, rgba(5,5,5,0.95) 30%, rgba(5,5,5,0.85) 60%, rgba(5,5,5,0.3) 85%, transparent 100%)'
             }}
         ></div>
@@ -519,39 +518,65 @@ export const SuperHero = ({
         <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible transform scale-75 md:scale-100">
           <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
             
-            {/* Right Cone */}
-            <motion.div
-              initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }} 
-              transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              style={{ 
-                  backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 35%, transparent 100%)`, 
-                  "--gradient-color": lampColor 
-              } as any}
-              className="absolute inset-auto right-1/2 h-56 overflow-visible w-[28rem] text-white [--conic-position:from_70deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
-            >
-            </motion.div>
+            {/* 
+               --- LIGHT CONTAINER (CLIPPED) ---
+               This container sits exactly at the line level (-7rem from center).
+               We use clip-path to strictly cut anything above the top edge.
+               Basically: Render from y=0 down to infinity, cut anything y<0.
+            */}
+            <div className="absolute inset-auto z-30 h-56 w-full -translate-y-[7rem] flex items-center justify-center pointer-events-none">
+                 <motion.div
+                    className="w-[60rem] h-full relative"
+                    style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+                 >
+                    {/* Right Cone (Starts at top-0, relative to this clipped container) */}
+                    <motion.div
+                      initial={{ opacity: 0, width: "15rem" }}
+                      animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }} 
+                      transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
+                      style={{ 
+                          backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 35%, transparent 100%)`, 
+                          "--gradient-color": lampColor 
+                      } as any}
+                      className="absolute top-0 right-1/2 h-56 overflow-visible w-[28rem] text-white [--conic-position:from_70deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                    />
+                    
+                    {/* Left Cone */}
+                    <motion.div
+                      initial={{ opacity: 0, width: "15rem" }}
+                      animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }}
+                      transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
+                      style={{ 
+                          backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 65%, var(--gradient-color) 100%)`, 
+                          "--gradient-color": lampColor 
+                      } as any}
+                      className="absolute top-0 left-1/2 h-56 w-[28rem] text-white [--conic-position:from_290deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                    />
+
+                    {/* GLOWS (Moved inside clipped container, positioned at top-0) */}
+                    <motion.div 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 0.4, backgroundColor: lampColor }} 
+                        transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
+                        className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-[28rem] rounded-full blur-3xl" 
+                    />
+                    <motion.div 
+                        initial={{ opacity: 0, width: "8rem" }} 
+                        animate={{ opacity: 0.8, width: "16rem", backgroundColor: lampColor }} 
+                        transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
+                        className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-64 rounded-full blur-2xl" 
+                    />
+
+                 </motion.div>
+            </div>
             
-            {/* Left Cone */}
-            <motion.div
-              initial={{ opacity: 0, width: "15rem" }}
-              animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }}
-              transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
-              style={{ 
-                  backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 65%, var(--gradient-color) 100%)`, 
-                  "--gradient-color": lampColor 
-              } as any}
-              className="absolute inset-auto left-1/2 h-56 w-[28rem] text-white [--conic-position:from_290deg_at_center_top] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
-            >
-            </motion.div>
-            
-            {/* --- CENTER GLOWS (Updated Line Width to 28rem) --- */}
-            
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.4, backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full blur-3xl" />
-            <motion.div initial={{ opacity: 0, width: "8rem" }} animate={{ opacity: 0.8, width: "16rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl" />
-            
-            {/* MODIFICADO: w-[28rem] como solicitaste */}
-            <motion.div initial={{ opacity: 0, width: "15rem" }} animate={{ opacity: 1, width: "28rem", backgroundColor: lampColor }} transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} className="absolute inset-auto z-50 h-0.5 w-[28rem] -translate-y-[7rem]" />
+            {/* --- CYAN LINE (Unclipped, sits on top) --- */}
+            <motion.div 
+                initial={{ opacity: 0, width: "15rem" }} 
+                animate={{ opacity: 1, width: "28rem", backgroundColor: lampColor }} 
+                transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
+                className="absolute inset-auto z-50 h-0.5 w-[28rem] -translate-y-[7rem]" 
+            />
             
           </div>
         </div>
