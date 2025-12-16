@@ -3,13 +3,14 @@ import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { 
   Calendar, BarChart, CheckCircle, Image as ImageIcon, 
   Code as CodeIcon, Pencil, Wifi, Battery, Signal, Send, 
-  TrendingUp, Users, DollarSign, MousePointerClick 
+  TrendingUp, Users, DollarSign, MousePointerClick,
+  ChevronLeft, Video, ChevronRight
 } from 'lucide-react';
 
 // --- FONTS STYLES & ANIMATIONS ---
 const fontStyles = `
   .font-inter {
-    font-family: 'Satoshi', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
   
   @keyframes codeFlow {
@@ -191,7 +192,7 @@ const CampaignProgressWidget = ({ className = "" }: { className?: string }) => {
   );
 };
 
-// --- MARKING APP CONTENT (iMessage Style) ---
+// --- MARKETING APP CONTENT (iOS Design Replica) ---
 type Message = {
     id: string;
     role: 'system' | 'user';
@@ -199,10 +200,10 @@ type Message = {
 };
 
 const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) => void }) => {
-  // CORRECCIÓN 1: Usar referencia al contenedor para el scroll interno
   const chatContainerRef = useRef<HTMLDivElement>(null);
   
-  const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  // Format: "9:41 AM" style
+  const currentTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
   
   const [messages, setMessages] = useState<Message[]>([
     { id: 'init-1', role: 'system', content: "G'day mate. Where do you want us to focus our energy now?" }
@@ -210,7 +211,6 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   
   const [showOptions, setShowOptions] = useState(true);
 
-  // CORRECCIÓN 1: Lógica de scroll ajustada para usar scrollTo en el contenedor
   useEffect(() => {
     if (chatContainerRef.current) {
         chatContainerRef.current.scrollTo({
@@ -234,7 +234,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
             role: 'system', 
             content: (
                 <div className="w-full">
-                    <p className="mb-2 text-sm">On it. Initializing growth protocols:</p>
+                    <p className="mb-2 text-sm text-gray-800">On it. Initializing growth protocols:</p>
                     <CampaignProgressWidget />
                 </div>
             )
@@ -254,53 +254,87 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white relative font-sans overflow-hidden">
-      {/* HEADER */}
-      <div className="h-[44px] flex items-center justify-between px-6 pt-3 z-30 shrink-0 bg-white/80 backdrop-blur-md sticky top-0 border-b border-gray-100/50">
-        {/* CORRECCIÓN 1 & 2: Añadido el logo y el nombre del contacto */}
-        <div className="flex items-center gap-2">
-          {/* Logo "CC." con punto esmeralda */}
-          <div className="w-7 h-7 rounded-full bg-gray-700 flex items-center justify-center">
-              <span className="text-white text-xs font-bold">CC</span>
-              <span className="text-emerald-400 text-xs font-bold">.</span>
+    <div className="flex flex-col h-full bg-white relative font-inter overflow-hidden">
+      
+      {/* --- STATUS BAR (Top) --- */}
+      <div className="h-[47px] w-full flex items-end justify-between px-6 pb-2 z-50 absolute top-0 text-black font-medium text-[15px]">
+          <div className="w-[54px] text-center tracking-tight font-semibold">{currentTime.split(' ')[0]}</div>
+          <div className="flex items-center gap-1.5">
+             <Signal className="w-[17px] h-[17px] fill-black" strokeWidth={0} />
+             <Wifi className="w-[17px] h-[17px]" strokeWidth={2.5} />
+             <Battery className="w-[24px] h-[12px] text-black/40 fill-black" strokeWidth={0} />
           </div>
-          {/* Nombre del contacto */}
-          <div className="text-[14px] font-semibold text-gray-900 tracking-wide">Client Connect</div>
-        </div>
-        <div className="flex items-center gap-1.5 text-gray-900">
-          <Signal className="w-[16px] h-[16px]" strokeWidth={2.5} />
-          <Wifi className="w-[16px] h-[16px]" strokeWidth={2.5} />
-          <Battery className="w-[22px] h-[16px]" strokeWidth={2.5} />
-        </div>
       </div>
 
-      {/* CHAT AREA */}
-      {/* CORRECCIÓN 1: Añadida la referencia al contenedor */}
-      <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 pb-32">
-        {messages.map((msg) => (
+      {/* --- NAVIGATION BAR (iOS Style) --- */}
+      <div className="pt-[47px] pb-3 px-3 bg-[#F5F5F5]/90 backdrop-blur-xl border-b border-gray-300/50 z-40 sticky top-0 flex items-center justify-between">
+          {/* Left: Back Arrow */}
+          <div className="flex items-center text-[#007AFF] -ml-1">
+             <ChevronLeft size={26} strokeWidth={2.5} />
+          </div>
+
+          {/* Center: Avatar & Name */}
+          <div className="flex flex-col items-center justify-center flex-1">
+             <div className="w-10 h-10 rounded-full bg-gray-400 mb-1 flex items-center justify-center overflow-hidden relative shadow-sm">
+                  {/* Simulate Contact Photo with Gradient & Text */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500"></div>
+                  <span className="relative z-10 text-white text-[13px] font-bold">CC<span className="text-emerald-400">.</span></span>
+             </div>
+             <div className="flex items-center gap-0.5">
+                <span className="text-[12px] font-semibold text-black tracking-tight">Client Connect</span>
+                <ChevronRight size={10} className="text-gray-400 mt-0.5" strokeWidth={3} />
+             </div>
+          </div>
+
+          {/* Right: Video Icon */}
+          <div className="flex items-center justify-end text-[#007AFF] pr-1">
+             <Video size={22} fill="#007AFF" className="opacity-100" />
+          </div>
+      </div>
+
+      {/* --- CHAT AREA --- */}
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-2 pb-40 bg-white">
+        
+        {/* Timestamp Header */}
+        <div className="w-full flex flex-col items-center justify-center py-4 gap-1">
+            <span className="text-[11px] font-medium text-gray-400">iMessage</span>
+            <span className="text-[11px] font-medium text-gray-400">Today {currentTime}</span>
+        </div>
+
+        {messages.map((msg, index) => {
+            const isUser = msg.role === 'user';
+            const isLast = index === messages.length - 1;
+
+            return (
             <motion.div
                 key={msg.id}
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                initial={{ opacity: 0, y: 10, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className={`flex w-full flex-col ${isUser ? 'items-end' : 'items-start'}`}
             >
+                {/* Message Bubble */}
                 <div 
-                    className={`max-w-[85%] px-4 py-3 text-[15px] shadow-sm
-                    ${msg.role === 'user' 
-                        ? 'bg-[#007AFF] text-white rounded-[20px] rounded-br-[2px]' 
-                        : 'bg-[#E9E9EB] text-black rounded-[20px] rounded-bl-[2px]'
+                    className={`max-w-[75%] px-[14px] py-[8px] text-[16px] leading-[1.35] relative
+                    ${isUser 
+                        ? 'bg-[#007AFF] text-white rounded-[18px] rounded-br-[4px]' // iOS User Bubble Shape
+                        : 'bg-[#E9E9EB] text-black rounded-[18px] rounded-bl-[4px]' // iOS System Bubble Shape
                     }`}
                 >
                     {msg.content}
                 </div>
+                
+                {/* Delivered Text */}
+                {isUser && isLast && (
+                    <span className="text-[10px] font-medium text-gray-400 mt-1 mr-1">Delivered</span>
+                )}
             </motion.div>
-        ))}
+            );
+        })}
       </div>
 
-      {/* OPTIONS PANEL */}
-      {/* CORRECCIÓN 2: Cambiado bottom-0 a bottom-8 para subir el componente */}
-      <div className="absolute bottom-8 w-full z-40 bg-white/90 backdrop-blur-xl border-t border-gray-200">
+      {/* --- OPTIONS PANEL (Styled to sit over the chat but distinct) --- */}
+      <div className="absolute bottom-8 w-full z-40 bg-white/95 backdrop-blur-xl border-t border-gray-200">
         <AnimatePresence>
             {showOptions && (
                 <motion.div 
@@ -308,18 +342,19 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="px-4 pt-2 pb-6 flex flex-col gap-1.5 overflow-hidden" 
+                    className="px-4 pt-3 pb-6 flex flex-col gap-2 overflow-hidden" 
                 >
-                    <div className="flex justify-between items-center px-1 mb-0.5">
+                    <div className="flex justify-between items-center px-1">
                         <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest">Suggested Replies</span>
                     </div>
                     {options.map((opt) => (
                         <button
                             key={opt.id}
                             onClick={() => handleOptionClick(opt.id, opt.label)}
-                            className="w-full text-left bg-gray-100 hover:bg-gray-200 active:bg-gray-300 active:scale-[0.98] transition-all rounded-xl px-4 py-2.5 text-[#007AFF] text-[14px] font-medium"
+                            className="w-full text-left bg-white border border-gray-200 shadow-sm hover:bg-gray-50 active:bg-gray-100 active:scale-[0.99] transition-all rounded-xl px-4 py-3 text-black text-[15px] flex justify-between items-center"
                         >
-                            {opt.label}
+                            <span>{opt.label}</span>
+                            <Send size={14} className="text-gray-300" />
                         </button>
                     ))}
                 </motion.div>
@@ -327,8 +362,8 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
         </AnimatePresence>
         
         {/* HOME INDICATOR */}
-        <div className="w-full h-[20px] flex items-center justify-center bg-transparent pointer-events-none">
-             <div className="w-[130px] h-[5px] bg-black/90 rounded-full" />
+        <div className="w-full h-[24px] flex items-center justify-center bg-transparent pointer-events-none pb-1">
+             <div className="w-[130px] h-[5px] bg-black rounded-full" />
         </div>
       </div>
     </div>
@@ -344,7 +379,7 @@ const PhoneFrame = ({ onOptionChange }: { onOptionChange: (id: string) => void }
       <div className="absolute left-[-4px] top-[230px] w-[4px] h-[60px] bg-gray-700 rounded-l-sm"></div>
       <div className="absolute right-[-4px] top-[180px] w-[4px] h-[80px] bg-gray-700 rounded-r-sm"></div>
       <div className="relative w-full h-full bg-black rounded-[3rem] overflow-hidden border border-gray-800">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[140px] h-[28px] bg-black rounded-b-2xl z-40 flex items-center justify-center pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[140px] h-[28px] bg-black rounded-b-2xl z-50 flex items-center justify-center pointer-events-none">
           <div className="absolute right-[25%] w-[8px] h-[8px] bg-[#1a1a1a] rounded-full ring-1 ring-gray-800/50"></div>
         </div>
         <MarketingAppContent onOptionChange={onOptionChange} />
