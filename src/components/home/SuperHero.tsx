@@ -484,7 +484,7 @@ export const SuperHero = ({
        {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-60"
+            className="absolute inset-0 bg-cover bg-center opacity-80"
             style={{ 
               backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop)',
               backgroundPosition: 'center center' 
