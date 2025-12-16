@@ -523,7 +523,7 @@ export const SuperHero = ({
                MODIFICADO: Cambiado de -translate-y-[7rem] a translate-y-[4rem] 
                para bajar la fuente de luz unos 180px y alinearla con la línea visualmente.
             */}
-            <div className="absolute inset-auto z-30 h-56 w-full translate-y-[4rem] flex items-center justify-center pointer-events-none">
+            <div className="absolute inset-auto z-30 h-56 w-full translate-y-[2rem] flex items-center justify-center pointer-events-none">
                  <motion.div
                     className="w-[60rem] h-full relative"
                     style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
