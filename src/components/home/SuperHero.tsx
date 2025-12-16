@@ -291,7 +291,7 @@ const MarketingAppContent = ({ onOptionChange }: { onOptionChange: (id: string) 
 
       {/* OPTIONS PANEL */}
       {/* CORRECCIÓN 2: Cambiado bottom-0 a bottom-8 para subir el componente */}
-      <div className="absolute bottom-8 w-full z-40 bg-white/90 backdrop-blur-xl border-t border-gray-200">
+      <div className="absolute bottom-36 w-full z-40 bg-white/90 backdrop-blur-xl border-t border-gray-200">
         <AnimatePresence>
             {showOptions && (
                 <motion.div 
