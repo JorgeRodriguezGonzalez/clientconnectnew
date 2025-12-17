@@ -513,7 +513,7 @@ export const SuperHero = ({
                     playsinline
                     poster="https://assets.mixkit.co/videos/preview/mixkit-group-of-people-working-in-an-office-4977-0.jpg"
                 >
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-group-of-people-working-in-an-office-4977-large.mp4" type="video/mp4" />
+                    <source src="/videos/hero-video-cca.mp4" type="video/mp4" />
                 </video>
                 `
             }}
