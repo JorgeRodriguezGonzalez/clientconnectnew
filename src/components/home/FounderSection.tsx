@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
-// AÑADIDOS ICONOS MÁS HUMANOS: HeartHandshake, Users, MessageCircleHeart, Smile
 import { ArrowUpRight, TrendingUp, Play, Check, PlusIcon, HeartHandshake, Users, MessageCircleHeart, ShieldCheck, Smile } from 'lucide-react';
 
 // --- STYLES ---
@@ -76,7 +75,6 @@ export function LogoCloud({ isLightMode }: { isLightMode: boolean }) {
   return (
     <div className={cn("relative grid grid-cols-2 border-x md:grid-cols-4 transition-colors duration-500 mb-20", borderColor)}>
       <div className={cn("-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t", borderColor)} />
-      {/* Logos se mantienen igual por consistencia de marca */}
       <LogoCard isLightMode={isLightMode} className={cn("relative border-r border-b", bgAlt, borderColor)} logo={{ src: "https://svgl.app/library/nvidia-wordmark-light.svg", alt: "Nvidia Logo" }}>
         <PlusIcon className={cn("-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 transition-colors duration-500", iconColor)} strokeWidth={1} />
       </LogoCard>
@@ -1083,7 +1081,7 @@ export const FounderSection = () => {
                       <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
                           <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
                           <img 
-                             src="https://images.unsplash.com/photo-1577415124269-1085074988ee?q=80&w=800&auto=format&fit=crop" 
+                             src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
                              alt="Australian National Support"
                              className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
                           />

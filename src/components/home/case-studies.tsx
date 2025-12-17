@@ -65,7 +65,7 @@ const cases: CaseStudy[] = [
     id: "roofers",
     client: "Your Local Roofers",
     category: "Roofing",
-    icon: Home, // Icono de casa
+    icon: Home,
     title: "From 'Feast & Famine' to Booked Out",
     description: "They were relying on word-of-mouth. We implemented a hyper-local SEO & Google Ads infrastructure that captured high-intent storm damage queries.",
     thumbnail: "https://images.unsplash.com/photo-1632759145351-1d592919f522?q=80&w=2670&auto=format&fit=crop",
@@ -82,7 +82,7 @@ const cases: CaseStudy[] = [
     id: "nanotise",
     client: "Nanotise",
     category: "Protection",
-    icon: Droplets, // Icono de coatings/protección
+    icon: Droplets,
     title: "Dominating the Surface Protection Market",
     description: "Nanotise needed to reach high-net-worth clients. We shifted their strategy to direct-response LinkedIn & Meta ads targeting luxury property owners.",
     thumbnail: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2670&auto=format&fit=crop",
@@ -99,7 +99,7 @@ const cases: CaseStudy[] = [
     id: "landscaping",
     client: "Lifestyle Concepts",
     category: "Landscaping",
-    icon: Flower2, // Icono de paisajismo
+    icon: Flower2,
     title: "Scaling High-Ticket Landscape Projects",
     description: "Selling $50k+ garden transformations requires trust. We built a visual-first funnel with high-converting landing pages focused on project reveals.",
     thumbnail: "https://images.unsplash.com/photo-1558904541-efa843a96f01?q=80&w=2600&auto=format&fit=crop",
@@ -116,7 +116,7 @@ const cases: CaseStudy[] = [
     id: "bathrooms",
     client: "Premier Bathrooms",
     category: "Renovation",
-    icon: Hammer, // Icono de renovación
+    icon: Hammer,
     title: "Filling the Schedule 4 Months Ahead",
     description: "We automated their lead qualification process and launched a 'Dream Bathroom' campaign that filled their renovation slots for the entire season.",
     thumbnail: "https://images.unsplash.com/photo-1552321159-5d974a29b8cc?q=80&w=2670&auto=format&fit=crop",
@@ -163,8 +163,8 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
                     d={pathD}
                     fill="none"
                     stroke={color}
-                    // CAMBIO: strokeWidth reducido a 1.2 para ser "muy fino"
-                    strokeWidth="0.4"
+                    // CAMBIO: strokeWidth 0.3 (muy fino)
+                    strokeWidth="0.3"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     initial={{ pathLength: 0 }}
@@ -172,7 +172,7 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
                     transition={{ duration: 1.5, ease: "easeInOut" }}
                 />
                 
-                {/* Puntos brillantes sutiles en los picos para dar tech feel */}
+                {/* Puntos brillantes sutiles */}
                  {data.map((d, i) => (
                     (i === data.length - 1) && ( 
                         <motion.circle
@@ -182,7 +182,8 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
                             r="1.5"
                             fill="white"
                             stroke={color}
-                            strokeWidth="0.4"
+                            // CAMBIO: strokeWidth 0.3 (muy fino)
+                            strokeWidth="0.3"
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ delay: 1.5 }}
@@ -219,12 +220,12 @@ const VideoModal = ({
                         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                     />
                     
-                    {/* Modal Content */}
+                    {/* Modal Content - CAMBIO: rounded-none */}
                     <motion.div 
                         initial={{ scale: 0.9, opacity: 0, y: 20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                        className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+                        className="relative w-full max-w-4xl aspect-video bg-black rounded-none overflow-hidden shadow-2xl border border-white/10"
                     >
                         <button 
                             onClick={onClose}
@@ -310,14 +311,14 @@ export default function CaseStudies() {
         {/* --- DASHBOARD UI --- */}
         <div className="max-w-6xl mx-auto">
             
-            {/* TABS */}
+            {/* TABS - CAMBIO: rounded-none */}
             <div className="flex flex-wrap justify-center gap-2 mb-10">
                 {cases.map((c, idx) => (
                     <button
                         key={c.id}
                         onClick={() => { setActiveTab(idx); setIsVideoOpen(false); }}
                         className={cn(
-                            "relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 overflow-hidden group border",
+                            "relative px-6 py-3 rounded-none text-sm font-semibold transition-all duration-300 overflow-hidden group border",
                             activeTab === idx 
                                 ? "text-gray-900 border-zinc-300 bg-white shadow-sm" 
                                 : "text-gray-500 border-transparent hover:bg-zinc-100 hover:text-gray-900"
@@ -338,7 +339,7 @@ export default function CaseStudies() {
                 ))}
             </div>
 
-            {/* --- MAIN CARD --- */}
+            {/* --- MAIN CARD - CAMBIO: rounded-none --- */}
             <AnimatePresence mode="wait">
                 <motion.div
                     key={activeCase.id}
@@ -346,7 +347,7 @@ export default function CaseStudies() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -20, scale: 0.98 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="relative w-full bg-white border border-zinc-200 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
+                    className="relative w-full bg-white border border-zinc-200 rounded-none overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
                 >
                     <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
                         
@@ -368,12 +369,12 @@ export default function CaseStudies() {
                                     {activeCase.description}
                                 </p>
 
-                                {/* --- VIDEO THUMBNAIL CARD --- */}
+                                {/* --- VIDEO THUMBNAIL CARD - CAMBIO: rounded-none --- */}
                                 <motion.div 
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => setIsVideoOpen(true)}
-                                    className="group relative w-full h-48 rounded-xl overflow-hidden cursor-pointer shadow-sm mb-6 border border-zinc-100"
+                                    className="group relative w-full h-48 rounded-none overflow-hidden cursor-pointer shadow-sm mb-6 border border-zinc-100"
                                 >
                                     {/* Image */}
                                     <div className="absolute inset-0">
@@ -393,7 +394,7 @@ export default function CaseStudies() {
                                         >
                                             <Play size={20} fill="currentColor" />
                                         </div>
-                                        <div className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full border border-white/20">
+                                        <div className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-none border border-white/20">
                                             <span className="text-white text-xs font-semibold tracking-wide">
                                                 Watch Testimonial
                                             </span>
@@ -422,7 +423,8 @@ export default function CaseStudies() {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.1 + (i * 0.1) }}
-                                        className="bg-white border border-zinc-200/60 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow"
+                                        // CAMBIO: rounded-none
+                                        className="bg-white border border-zinc-200/60 rounded-none p-5 shadow-sm hover:shadow-md transition-shadow"
                                     >
                                         <div className="flex items-center justify-between mb-3">
                                             <stat.icon size={18} className="text-gray-400" />
@@ -443,10 +445,11 @@ export default function CaseStudies() {
                                 ))}
                             </div>
 
-                            {/* Graph Area */}
-                            <div className="flex-1 bg-white rounded-xl border border-zinc-200 shadow-sm relative overflow-hidden group">
+                            {/* Graph Area - CAMBIO: rounded-none */}
+                            <div className="flex-1 bg-white rounded-none border border-zinc-200 shadow-sm relative overflow-hidden group">
                                 <div className="absolute top-4 left-4 z-20 flex gap-2">
-                                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-zinc-50 border border-zinc-100">
+                                    {/* CAMBIO: rounded-none en badge */}
+                                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-none bg-zinc-50 border border-zinc-100">
                                         <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: activeCase.color }} />
                                         <span className="text-[10px] text-gray-500 font-bold tracking-wide">LIVE PERFORMANCE</span>
                                     </div>

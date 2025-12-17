@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Hammer, TrendingUp, AlertTriangle, HardHat, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Hammer, AlertTriangle, HardHat, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, animate, useScroll, useTransform, useSpring, useMotionTemplate } from "framer-motion";
 
@@ -18,7 +18,6 @@ const GlowingEffect = React.memo(
     inactiveZone = 0.7,
     proximity = 0,
     spread = 20,
-    variant = "default",
     glow = false,
     className,
     movementDuration = 2,
@@ -314,7 +313,8 @@ export default function FounderStory() {
       <BackgroundStripes />
 
       {/* 2. CONTENEDOR ESTRUCTURAL */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto bg-[#050505] border-l border-r border-white/10">
+      {/* MODIFICACIÓN: max-w-7xl para dar mucho más espacio a las tarjetas */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto bg-[#050505] border-l border-r border-white/10">
         
         {/* --- RAYOS ANIMADOS LATERALES --- */}
         <motion.div 
@@ -335,7 +335,7 @@ export default function FounderStory() {
         />
 
         {/* Padding interno del contenido */}
-        <div className="pt-24 pb-32 px-4 md:px-8">
+        <div className="pt-24 pb-32 px-4 md:px-12">
           
           {/* HEADER (NARRATIVA) */}
           <div className="mx-auto max-w-[680px] flex flex-col gap-6 text-center mb-16 md:mb-24">
@@ -377,21 +377,20 @@ export default function FounderStory() {
           </div>
 
           {/* LISTA DE CAPITULOS (STORIES) */}
-          {/* CAMBIO 1: max-w-6xl en lugar de 3xl para permitir que el lado derecho sea ancho */}
-          <div className="mx-auto max-w-6xl space-y-40 md:space-y-64">
+          <div className="mx-auto w-full space-y-40 md:space-y-64">
             {founderStoryEntries.map((entry, index) => {
               const isActive = index === activeIndex;
 
               return (
                 <div
                   key={index}
-                  className="relative flex flex-col md:flex-row gap-8 md:gap-20"
+                  className="relative flex flex-col md:flex-row gap-8 md:gap-16 lg:gap-24"
                   ref={(el) => setItemRef(el, index)}
                   aria-current={isActive ? "true" : "false"}
                 >
-                  {/* STICKY COLUMN (LEFT) - REDISEÑO VISUAL */}
-                  {/* Ahora es más ancho (w-80 -> w-96 aprox) para acomodar el nuevo diseño */}
-                  <div className="top-40 flex h-min w-full md:w-[380px] shrink-0 flex-col md:sticky">
+                  {/* STICKY COLUMN (TITULOS) */}
+                  {/* MODIFICACIÓN: Ajustado a 350px para dar espacio a la derecha, pero manteniendo el diseño grande */}
+                  <div className="top-40 flex h-min w-full md:w-[350px] shrink-0 flex-col md:sticky">
                     
                     {/* Número de fondo gigante */}
                     <div 
@@ -399,7 +398,7 @@ export default function FounderStory() {
                             "absolute -top-10 -left-4 text-[120px] leading-none font-bold select-none transition-all duration-700",
                             isActive ? "text-white/10 translate-y-0" : "text-white/0 translate-y-4"
                         )}
-                        style={{ fontFamily: 'Arial, sans-serif' }} // O tu fuente principal
+                        style={{ fontFamily: 'Arial, sans-serif' }}
                     >
                         0{index + 1}
                     </div>
@@ -417,7 +416,7 @@ export default function FounderStory() {
                                 "text-xs font-bold uppercase tracking-[0.15em] transition-colors duration-500",
                                 isActive ? "text-[#34d399]" : "text-zinc-600"
                             )}>
-                                {entry.subtitle.split("•")[0]} {/* Solo mostramos la primera parte para limpieza visual */}
+                                {entry.subtitle.split("•")[0]} 
                             </span>
                         </div>
 
@@ -444,8 +443,8 @@ export default function FounderStory() {
                     className="absolute -top-24 left-0 h-12 w-12 opacity-0"
                   />
 
-                  {/* CONTENT COLUMN (RIGHT) */}
-                  {/* Al aumentar el max-w del padre a 6xl, este flex-1 recupera su ancho original */}
+                  {/* CONTENT COLUMN (TARJETAS) */}
+                  {/* Al ser flex-1 y el padre max-w-7xl, estas tarjetas ahora son mucho más anchas */}
                   <div className="relative flex-1 min-w-0">
                     
                     {/* Glowing Effect Wrapper */}
@@ -462,7 +461,7 @@ export default function FounderStory() {
 
                     <article
                       className={
-                        "relative flex flex-col rounded-none border p-8 transition-all duration-300 " +
+                        "relative flex flex-col rounded-none border p-6 md:p-8 transition-all duration-300 " +
                         (isActive
                           ? "bg-zinc-900 z-10 border-transparent shadow-2xl shadow-black/50"
                           : "bg-white/5 border-white/5 opacity-40 grayscale blur-[1px]")
@@ -484,7 +483,8 @@ export default function FounderStory() {
                         <div className="space-y-2">
                           <p
                             className={
-                              "text-base leading-relaxed md:text-lg transition-all duration-300 font-medium " +
+                              // MODIFICACIÓN: Texto más pequeño (text-sm md:text-base) en lugar de text-lg
+                              "text-sm leading-relaxed md:text-base transition-all duration-300 font-medium " +
                               (isActive 
                                 ? "text-zinc-300" 
                                 : "text-zinc-500")
@@ -507,14 +507,14 @@ export default function FounderStory() {
                             <div className="space-y-6 pt-2">
                               {entry.items && entry.items.length > 0 && (
                                 <div className="rounded-none border-l-2 border-white/10 pl-6 py-2">
-                                  <ul className="space-y-4">
+                                  <ul className="space-y-3">
                                     {entry.items.map((item, itemIndex) => (
                                       <li 
                                         key={itemIndex} 
-                                        className="flex items-start gap-3 text-sm md:text-base text-zinc-400"
+                                        className="flex items-start gap-3 text-sm text-zinc-400"
                                       >
                                         <div 
-                                          className="mt-2 h-1.5 w-1.5 rounded-none flex-shrink-0"
+                                          className="mt-1.5 h-1.5 w-1.5 rounded-none flex-shrink-0"
                                           style={{ backgroundColor: COLORS.emerald }}
                                         />
                                         <span className="leading-relaxed">{item}</span>
@@ -528,7 +528,7 @@ export default function FounderStory() {
                                 <div className="flex justify-start pt-4">
                                   <Button 
                                     size="lg"
-                                    className="group font-bold transition-all duration-200 text-white rounded-none border-none px-8 h-12 text-base"
+                                    className="group font-bold transition-all duration-200 text-white rounded-none border-none px-8 h-10 text-sm"
                                     style={{
                                       backgroundImage: `linear-gradient(135deg, ${COLORS.emerald}, ${COLORS.cyan})`,
                                     }}
@@ -536,7 +536,7 @@ export default function FounderStory() {
                                   >
                                     <a href={entry.button.url}>
                                       {entry.button.text} 
-                                      <ArrowUpRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                                      <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                                     </a>
                                   </Button>
                                 </div>
