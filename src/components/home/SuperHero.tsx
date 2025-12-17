@@ -494,7 +494,7 @@ export const SuperHero = ({
 
        {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
-         {/* 1. La Imagen de Fondo: Estática, con opacidad 0.8 */}
+         {/* 1. La Imagen de Fondo (Estática, siempre ahí) */}
          <div 
             className="absolute inset-0 bg-cover bg-center opacity-80"
             style={{ 
@@ -503,13 +503,19 @@ export const SuperHero = ({
             }}
          ></div>
 
-         {/* 2. El Overlay Oscuro: Empieza totalmente negro y se abre */}
-         <motion.div 
+         {/* 2. El Overlay Final (Estático, es el objetivo al que queremos llegar) */}
+         <div 
             className="absolute inset-0"
-            initial={{ background: 'radial-gradient(ellipse at center, #050505 100%, #050505 100%)' }} // Todo Negro
-            animate={{ 
-                background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.90) 50%, #050505 100%)' // Se abre
+            style={{ 
+                background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.90) 50%, #050505 100%)'
             }}
+         ></div>
+
+         {/* 3. La "Cortina" Negra Sólida (Empieza tapándolo todo y se desvanece) */}
+         <motion.div 
+            className="absolute inset-0 bg-[#050505]" // Negro puro
+            initial={{ opacity: 1 }} // Opacidad 100% al inicio (todo negro)
+            animate={{ opacity: 0 }} // Opacidad 0% al final (desaparece y revela lo de abajo)
             transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }}
          ></motion.div>
       </div>
