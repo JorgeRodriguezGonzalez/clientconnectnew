@@ -164,7 +164,7 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
                     fill="none"
                     stroke={color}
                     // CAMBIO: strokeWidth reducido a 1.2 para ser "muy fino"
-                    strokeWidth="1.2"
+                    strokeWidth="0.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     initial={{ pathLength: 0 }}
@@ -182,7 +182,7 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
                             r="1.5"
                             fill="white"
                             stroke={color}
-                            strokeWidth="1.2"
+                            strokeWidth="0.4"
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ delay: 1.5 }}
