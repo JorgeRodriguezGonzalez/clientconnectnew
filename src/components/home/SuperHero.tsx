@@ -17,17 +17,17 @@ const fontStyles = `
   
   /* Input Flow: From left to center (Chaos) */
   @keyframes inputFlow {
-    0% { transform: translateX(-100px) scale(0.8) rotate(-5deg); opacity: 0; }
-    10% { opacity: 0.8; }
-    80% { opacity: 0.4; }
-    100% { transform: translateX(45vw) scale(0.6) rotate(5deg); opacity: 0; }
+    0% { transform: translateX(-150px) scale(0.8) rotate(-5deg); opacity: 0; }
+    15% { opacity: 1; transform: translateX(-20px) scale(1) rotate(-2deg); }
+    80% { opacity: 0.8; }
+    100% { transform: translateX(45vw) scale(0.8) rotate(5deg); opacity: 0; }
   }
 
   /* Output Flow: From center to right (Order) */
   @keyframes outputFlow {
     0% { transform: translateX(0) scale(0.5) perspective(500px) rotateY(10deg); opacity: 0; }
-    10% { opacity: 1; transform: translateX(2vw) scale(0.8); }
-    100% { transform: translateX(45vw) scale(1.05) perspective(500px) rotateY(0deg); opacity: 0; }
+    10% { opacity: 1; transform: translateX(3vw) scale(1) rotateY(0deg); }
+    100% { transform: translateX(45vw) scale(1.1) perspective(500px) rotateY(-5deg); opacity: 0; }
   }
 `;
 
@@ -643,15 +643,16 @@ export const SuperHero = ({
               {painPoints.map((item) => (
                 <div
                   key={item.id}
-                  className={`absolute left-0 flex items-center gap-2 px-3 py-2 rounded-lg border backdrop-blur-[2px] shadow-lg ${item.bg} ${item.border}`}
+                  className={`absolute left-0 flex items-center gap-3 px-4 py-3 rounded-lg border backdrop-blur-[2px] shadow-lg ${item.bg} ${item.border}`}
                   style={{
                     top: item.top,
                     animation: `inputFlow ${item.duration} linear infinite`, 
                     animationDelay: item.delay,
+                    animationFillMode: 'both' // Fixes glitch
                   }}
                 >
-                  <item.icon size={14} className={item.color} />
-                  <span className={`text-[11px] font-medium opacity-90 ${item.color.replace('text-', 'text-white/80 ')}`}>
+                  <item.icon size={20} className={item.color} />
+                  <span className={`text-[14px] font-semibold opacity-90 ${item.color.replace('text-', 'text-white/90 ')}`}>
                     {item.text}
                   </span>
                 </div>
@@ -693,55 +694,56 @@ export const SuperHero = ({
                     left: '0%', 
                     animation: `outputFlow ${widget.duration} cubic-bezier(0.4, 0, 0.2, 1) infinite`,
                     animationDelay: widget.delay,
+                    animationFillMode: 'both' // Fixes glitch
                   }}
                 >
                   {widget.type === 'lead' && (
-                    <div className="flex items-center gap-3 px-4 py-3 bg-slate-900/80 border border-emerald-500/30 rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.1)] backdrop-blur-md">
-                       <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
-                          <CheckCircle size={14} className="text-emerald-400" />
+                    <div className="flex items-center gap-4 px-5 py-4 bg-slate-900/90 border border-emerald-500/40 rounded-xl shadow-[0_0_25px_rgba(16,185,129,0.15)] backdrop-blur-md">
+                       <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
+                          <CheckCircle size={20} className="text-emerald-400" />
                        </div>
                        <div className="flex flex-col">
-                          <span className="text-[12px] font-semibold text-white">Lead Qualified</span>
-                          <span className="text-[10px] text-emerald-400/80">Ready for outreach</span>
+                          <span className="text-[15px] font-bold text-white leading-tight">Lead Qualified</span>
+                          <span className="text-[12px] text-emerald-400/80 font-medium">Ready for outreach</span>
                        </div>
                     </div>
                   )}
 
                   {widget.type === 'job' && (
-                    <div className="flex items-center gap-3 px-4 py-3 bg-blue-900/40 border border-blue-400/30 rounded-xl shadow-lg backdrop-blur-md">
-                       <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                          <CalendarCheck size={14} className="text-blue-400" />
+                    <div className="flex items-center gap-4 px-5 py-4 bg-blue-900/60 border border-blue-400/40 rounded-xl shadow-xl backdrop-blur-md">
+                       <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-500/30">
+                          <CalendarCheck size={20} className="text-blue-400" />
                        </div>
                        <div className="flex flex-col">
-                          <span className="text-[12px] font-semibold text-white">Job Booked</span>
-                          <span className="text-[10px] text-blue-300">Tomorrow, 9:00 AM</span>
+                          <span className="text-[15px] font-bold text-white leading-tight">Job Booked</span>
+                          <span className="text-[12px] text-blue-300 font-medium">Tomorrow, 9:00 AM</span>
                        </div>
                     </div>
                   )}
 
                   {widget.type === 'call' && (
-                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/90 border-l-2 border-green-500 rounded-r-lg shadow-lg">
-                       <PhoneCall size={14} className="text-green-400" />
-                       <span className="text-[11px] text-white">Incoming Call: <span className="text-gray-400">04XX...</span></span>
+                    <div className="flex items-center gap-3 px-5 py-3 bg-slate-800/95 border-l-4 border-green-500 rounded-r-lg shadow-xl">
+                       <PhoneCall size={18} className="text-green-400" />
+                       <span className="text-[14px] font-medium text-white">Incoming Call: <span className="text-gray-400">04XX...</span></span>
                     </div>
                   )}
 
                   {widget.type === 'revenue' && (
-                     <div className="px-4 py-2 bg-gradient-to-r from-slate-900 to-slate-800 border border-emerald-500/20 rounded-lg flex items-center gap-3 shadow-xl transform rotate-1">
-                        <div className="bg-emerald-500/10 p-1.5 rounded-md">
-                            <TrendingUp size={16} className="text-emerald-400" />
+                     <div className="px-6 py-3 bg-gradient-to-r from-slate-900 to-slate-800 border border-emerald-500/30 rounded-lg flex items-center gap-4 shadow-2xl transform rotate-1">
+                        <div className="bg-emerald-500/10 p-2 rounded-md">
+                            <TrendingUp size={22} className="text-emerald-400" />
                         </div>
                         <div>
-                            <div className="text-[10px] text-gray-400 uppercase tracking-wider">Revenue</div>
-                            <div className="text-[14px] font-bold text-white">+24% This Week</div>
+                            <div className="text-[11px] text-gray-400 uppercase tracking-wider font-bold">Revenue</div>
+                            <div className="text-[18px] font-black text-white">+24% This Week</div>
                         </div>
                      </div>
                   )}
 
                    {widget.type === 'traffic' && (
-                     <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/60 border border-indigo-500/30 rounded-full">
-                        <Users size={12} className="text-indigo-400" />
-                        <span className="text-[10px] text-indigo-200">High Intent Traffic Detected</span>
+                     <div className="flex items-center gap-3 px-4 py-3 bg-slate-900/80 border border-indigo-500/40 rounded-full">
+                        <Users size={16} className="text-indigo-400" />
+                        <span className="text-[13px] font-medium text-indigo-200">High Intent Traffic Detected</span>
                      </div>
                   )}
                 </div>
