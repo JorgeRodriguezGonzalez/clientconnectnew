@@ -494,19 +494,27 @@ export const SuperHero = ({
 
        {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
-         <div 
-            className="absolute inset-0 bg-cover bg-center opacity-80"
+         {/* 1. La Imagen de Fondo: Comienza invisible (oscura) y aparece */}
+         <motion.div 
+            className="absolute inset-0 bg-cover bg-center"
+            initial={{ opacity: 0 }} // Empieza totalmente oculta
+            animate={{ opacity: 0.8 }} // Termina con la opacidad visible
+            transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }} // Sincronizada con la lamp
             style={{ 
               backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop)',
               backgroundPosition: 'center center' 
             }}
-         ></div>
-         <div 
+         ></motion.div>
+
+         {/* 2. El Overlay Oscuro: Simula la oscuridad abriéndose por la luz */}
+         <motion.div 
             className="absolute inset-0"
-            style={{ 
-                background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.90) 50%, #050505 100%)'
+            initial={{ background: 'radial-gradient(ellipse at center, #050505 100%, #050505 100%)' }} // Todo Negro al principio
+            animate={{ 
+                background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.90) 50%, #050505 100%)' // Se abre el centro
             }}
-         ></div>
+            transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }}
+         ></motion.div>
       </div>
       
       <div className="relative z-10 w-full flex flex-col items-center">
