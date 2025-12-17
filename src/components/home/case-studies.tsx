@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useInView, animate } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowUpRight, 
   TrendingUp, 
@@ -15,40 +15,27 @@ import {
   BarChart3
 } from "lucide-react";
 
-// --- COLORES CORPORATIVOS ---
+// --- CONSTANTES DE COLOR ---
 const COLORS = {
   cyan: "#06b6d4",
-  emerald: "#34d399",
-  darkBg: "#050505",
-  panelBg: "#0a0a0a",
+  coral: "rgb(222, 131, 99)", 
+  gold: "rgb(237, 191, 134)",
+  emerald: "#34d399", 
 };
+
+// --- BACKGROUND STRIPES ---
+const BackgroundStripes = () => (
+  <div
+    className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden opacity-[0.04]"
+    style={{
+      backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
+      backgroundRepeat: 'repeat',
+    }}
+  />
+);
 
 // --- UTILS ---
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
-
-// --- COMPONENTE: GLOWING EFFECT (Reutilizado para consistencia) ---
-const GlowingEffect = ({
-  spread = 20,
-  glow = false,
-  disabled = false,
-  proximity = 64,
-  inactiveZone = 0.01,
-  borderWidth = 1,
-}: {
-  spread?: number;
-  glow?: boolean;
-  disabled?: boolean;
-  proximity?: number;
-  inactiveZone?: number;
-  borderWidth?: number;
-}) => {
-    // Nota: Simplificado para este componente específico, asumiendo hover automático por CSS en el padre
-    return (
-        <div className={cn("absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100", disabled && "!hidden")}>
-             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-500/20 via-cyan-500/20 to-emerald-500/20 blur-xl" />
-        </div>
-    );
-};
 
 // --- DATA: CASOS DE ÉXITO ---
 type CaseStudy = {
@@ -64,7 +51,7 @@ type CaseStudy = {
     subtext: string;
     icon: React.ElementType;
   }[];
-  graphData: number[]; // Array simple para dibujar la curva
+  graphData: number[];
   color: string;
 };
 
@@ -82,7 +69,6 @@ const cases: CaseStudy[] = [
       { label: "Cost Per Lead", value: "$24.50", subtext: "-45% Decrease", icon: TrendingUp },
       { label: "Qualified Leads", value: "86", subtext: "Per Month", icon: Users },
     ],
-    // Datos simulados para la curva (0-100)
     graphData: [20, 35, 30, 50, 45, 60, 55, 80, 75, 90, 85, 100], 
   },
   {
@@ -107,7 +93,7 @@ const cases: CaseStudy[] = [
     icon: Zap,
     title: "Cracking the B2B Demo Booking Code",
     description: "We shifted their strategy from 'gate-kept whitepapers' to direct-response LinkedIn ads targeting CTOs, resulting in a massive pipeline unlock.",
-    color: COLORS.emerald, // Volvemos a Emerald para variar
+    color: COLORS.coral, 
     stats: [
       { label: "Pipeline Value", value: "$3.5M", subtext: "Generated Q3", icon: BarChart3 },
       { label: "Demo Bookings", value: "142", subtext: "+300% Increase", icon: Users },
@@ -119,14 +105,7 @@ const cases: CaseStudy[] = [
 
 // --- COMPONENTES INTERNOS ---
 
-const Counter = ({ value }: { value: string }) => {
-    // Simulación simple de contador para strings con símbolos (ej: $145k)
-    // En producción, usaría una librería como 'framer-motion' useSpring para interpolar números
-    return <span className="tracking-tight">{value}</span>;
-};
-
 const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
-    // Generar path SVG basado en los datos
     const width = 100;
     const height = 50;
     const points = data.map((d, i) => {
@@ -134,54 +113,35 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
         const y = height - (d / 100) * height;
         return `${x},${y}`;
     }).join(" ");
-
-    // Curva suave (bezier simplificado o polyline directo para estilo 'tech')
     const pathD = `M ${points}`;
 
     return (
         <div className="w-full h-full relative">
             <svg viewBox="0 0 100 50" className="w-full h-full overflow-visible" preserveAspectRatio="none">
                 <defs>
-                    <linearGradient id={`gradient-${color}`} x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="0%" stopColor={color} stopOpacity="0.4" />
+                    <linearGradient id={`gradient-light-${color}`} x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stopColor={color} stopOpacity="0.2" />
                         <stop offset="100%" stopColor={color} stopOpacity="0" />
                     </linearGradient>
                 </defs>
-                {/* Area Fill */}
                 <motion.path
                     d={`${pathD} L 100,50 L 0,50 Z`}
-                    fill={`url(#gradient-${color})`}
+                    fill={`url(#gradient-light-${color})`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}
                 />
-                {/* Line Stroke */}
                 <motion.path 
                     d={pathD}
                     fill="none"
                     stroke={color}
-                    strokeWidth="1.5"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: 1 }}
                     transition={{ duration: 1.5, ease: "easeInOut" }}
                 />
-                {/* Glowing Dots on peaks */}
-                {data.map((d, i) => (
-                    (i === data.length - 1 || i === 4) && ( // Solo mostrar un par de puntos clave
-                        <motion.circle
-                            key={i}
-                            cx={(i / (data.length - 1)) * width}
-                            cy={height - (d / 100) * height}
-                            r="2"
-                            fill="#fff"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 1 + (i * 0.1) }}
-                        />
-                    )
-                ))}
             </svg>
         </div>
     );
@@ -189,7 +149,7 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
 
 // --- COMPONENTE PRINCIPAL ---
 
-export default function CaseStudiesSection() {
+export default function CaseStudies() {
   const [activeTab, setActiveTab] = useState(0);
   const activeCase = cases[activeTab];
   const containerRef = useRef(null);
@@ -197,33 +157,22 @@ export default function CaseStudiesSection() {
   return (
     <section 
         ref={containerRef}
-        className="relative w-full py-24 lg:py-32 bg-[#050505] overflow-hidden"
+        className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] overflow-hidden"
     >
-      {/* BACKGROUND ELEMENTS */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none">
-         {/* Grid sutil */}
-         <div 
-            className="absolute inset-0 opacity-[0.03]" 
-            style={{ 
-                backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', 
-                backgroundSize: '40px 40px' 
-            }} 
-         />
-         {/* Gradient Glow Superior */}
-         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-emerald-900/10 blur-[100px] rounded-full" />
-      </div>
+      {/* 1. BACKGROUND STRIPES */}
+      <BackgroundStripes />
       
-      {/* Top Border */}
-      <div className="w-full h-[1px] bg-white/10 absolute top-0 z-20" />
+      {/* 2. TOP BORDER (Zinc-200 para modo claro) */}
+      <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-20" />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container relative z-10 mx-auto px-6 lg:px-8 max-w-[1280px]">
         
         {/* HEADER */}
         <div className="flex flex-col gap-6 max-w-3xl mx-auto text-center mb-16">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500"
+            className="text-sm font-medium tracking-[2.2px] uppercase text-gray-500"
           >
             PROVEN RESULTS
           </motion.div>
@@ -232,53 +181,60 @@ export default function CaseStudiesSection() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-white"
+            className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-gray-900"
           >
             Don't just take our word for it. <br className="hidden md:block"/>
             Look at the <motion.span
               animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-[length:200%_auto]"
+              style={{
+                backgroundImage: `linear-gradient(45deg, ${COLORS.emerald}, ${COLORS.cyan}, ${COLORS.emerald})`,
+                backgroundSize: "200% auto",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                color: "transparent"
+              }}
             >
               data
             </motion.span>.
           </motion.h2>
         </div>
 
-        {/* --- INTERFACE CONTROL --- */}
+        {/* --- DASHBOARD UI --- */}
         <div className="max-w-6xl mx-auto">
             
-            {/* TABS DE NAVEGACIÓN */}
-            <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {/* TABS (Light Mode) */}
+            <div className="flex flex-wrap justify-center gap-2 mb-10">
                 {cases.map((c, idx) => (
                     <button
                         key={c.id}
                         onClick={() => setActiveTab(idx)}
                         className={cn(
-                            "relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 border backdrop-blur-md overflow-hidden group",
+                            "relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 overflow-hidden group border",
                             activeTab === idx 
-                                ? "text-black border-transparent" 
-                                : "text-zinc-400 border-white/10 hover:border-white/20 hover:text-white bg-white/5"
+                                ? "text-gray-900 border-zinc-300 bg-white shadow-sm" 
+                                : "text-gray-500 border-transparent hover:bg-zinc-100 hover:text-gray-900"
                         )}
                     >
-                        {/* Fondo activo animado */}
+                        {/* Indicador activo pequeño */}
                         {activeTab === idx && (
-                            <motion.div 
-                                layoutId="activeTabBg"
-                                className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400"
-                                initial={false}
-                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            <motion.span 
+                                layoutId="activeDot"
+                                className="absolute left-4 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full"
+                                style={{ backgroundColor: c.color }}
                             />
                         )}
-                        <span className="relative z-10 flex items-center gap-2">
-                            <c.icon size={14} className={activeTab === idx ? "text-black" : "text-zinc-500 group-hover:text-white"} />
+                        <span className={cn("relative z-10 flex items-center gap-2", activeTab === idx ? "pl-3" : "")}>
+                            {/* CORRECCIÓN AQUI: Cambiado de !activeTab === idx a activeTab !== idx */}
+                            {activeTab !== idx && <c.icon size={14} />}
                             {c.category}
                         </span>
                     </button>
                 ))}
             </div>
 
-            {/* --- MAIN DASHBOARD CARD --- */}
+            {/* --- MAIN CARD (Light Mode Dashboard) --- */}
             <AnimatePresence mode="wait">
                 <motion.div
                     key={activeCase.id}
@@ -286,42 +242,39 @@ export default function CaseStudiesSection() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -20, scale: 0.98 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="relative w-full bg-[#0a0a0a] border border-white/10 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl"
+                    className="relative w-full bg-white border border-zinc-200 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
                 >
-                    {/* Glow decorativo detrás del card */}
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-b from-emerald-500/5 to-cyan-500/5 blur-[80px] rounded-full pointer-events-none" />
-
                     <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
                         
-                        {/* --- LEFT COLUMN: CONTEXT --- */}
-                        <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between relative z-10 border-b lg:border-b-0 lg:border-r border-white/5">
+                        {/* LEFT: Context */}
+                        <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between relative z-10 border-b lg:border-b-0 lg:border-r border-zinc-100">
                             <div>
                                 <div className="flex items-center gap-3 mb-6">
-                                    <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                                        <activeCase.icon size={18} className="text-emerald-400" />
+                                    <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center">
+                                        <activeCase.icon size={18} style={{ color: activeCase.color }} />
                                     </div>
-                                    <span className="text-zinc-400 font-mono text-sm uppercase tracking-wider">{activeCase.client}</span>
+                                    <span className="text-gray-500 font-medium text-sm uppercase tracking-wider">{activeCase.client}</span>
                                 </div>
                                 
-                                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                                <h3 className="text-3xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
                                     {activeCase.title}
                                 </h3>
                                 
-                                <p className="text-zinc-400 leading-relaxed text-base md:text-lg mb-8">
+                                <p className="text-gray-600 leading-relaxed text-base md:text-[16px] mb-8 font-medium">
                                     {activeCase.description}
                                 </p>
                             </div>
 
                             <div>
-                                <a href="#contact" className="group inline-flex items-center gap-2 text-white font-semibold border-b border-white/30 pb-1 hover:border-emerald-400 transition-colors">
-                                    Read Full Case Study
-                                    <ArrowUpRight size={16} className="text-emerald-400 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                                <a href="#contact" className="group inline-flex items-center gap-2 text-gray-900 font-bold border-b-2 border-zinc-100 pb-1 hover:border-emerald-400 transition-colors text-sm">
+                                    READ FULL CASE STUDY
+                                    <ArrowUpRight size={14} className="text-emerald-500 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
                                 </a>
                             </div>
                         </div>
 
-                        {/* --- RIGHT COLUMN: VISUALS & STATS --- */}
-                        <div className="lg:col-span-7 p-8 md:p-12 relative overflow-hidden flex flex-col">
+                        {/* RIGHT: Stats & Graph */}
+                        <div className="lg:col-span-7 p-8 md:p-12 relative overflow-hidden flex flex-col bg-zinc-50/50">
                             
                             {/* Stats Grid */}
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -331,18 +284,21 @@ export default function CaseStudiesSection() {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.1 + (i * 0.1) }}
-                                        className="bg-white/5 border border-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors group"
+                                        className="bg-white border border-zinc-200/60 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow"
                                     >
-                                        <div className="flex items-center justify-between mb-2">
-                                            <stat.icon size={16} className="text-zinc-500 group-hover:text-emerald-400 transition-colors" />
+                                        <div className="flex items-center justify-between mb-3">
+                                            <stat.icon size={18} className="text-gray-400" />
                                         </div>
-                                        <div className="text-2xl md:text-3xl font-bold text-white mb-1">
-                                            <Counter value={stat.value} />
+                                        <div className="text-2xl font-bold text-gray-900 mb-1">
+                                            {stat.value}
                                         </div>
-                                        <div className="text-xs text-zinc-400 uppercase tracking-wider font-semibold">
+                                        <div className="text-[11px] text-gray-400 uppercase tracking-wider font-bold">
                                             {stat.label}
                                         </div>
-                                        <div className="text-xs text-emerald-400/80 mt-1 font-mono">
+                                        <div 
+                                          className="text-xs font-semibold mt-1"
+                                          style={{ color: activeCase.color }}
+                                        >
                                             {stat.subtext}
                                         </div>
                                     </motion.div>
@@ -350,30 +306,27 @@ export default function CaseStudiesSection() {
                             </div>
 
                             {/* Graph Area */}
-                            <div className="flex-1 bg-[#050505] rounded-xl border border-white/10 relative overflow-hidden group">
+                            <div className="flex-1 bg-white rounded-xl border border-zinc-200 shadow-sm relative overflow-hidden group">
                                 <div className="absolute top-4 left-4 z-20 flex gap-2">
-                                    <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-white/5 border border-white/5">
-                                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                                        <span className="text-[10px] text-zinc-300 font-mono">LIVE PERFORMANCE</span>
+                                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-zinc-50 border border-zinc-100">
+                                        <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: activeCase.color }} />
+                                        <span className="text-[10px] text-gray-500 font-bold tracking-wide">LIVE PERFORMANCE</span>
                                     </div>
                                 </div>
 
-                                <div className="absolute inset-0 p-6 pt-12">
-                                    {/* Grilla de fondo del chart */}
-                                    <div className="absolute inset-0 flex flex-col justify-between p-6 opacity-10 pointer-events-none">
-                                        <div className="w-full h-px bg-white" />
-                                        <div className="w-full h-px bg-white" />
-                                        <div className="w-full h-px bg-white" />
-                                        <div className="w-full h-px bg-white" />
-                                        <div className="w-full h-px bg-white" />
+                                <div className="absolute inset-0 p-6 pt-16">
+                                    {/* Grid Lines (Lighter) */}
+                                    <div className="absolute inset-0 flex flex-col justify-between p-6 opacity-[0.4] pointer-events-none">
+                                        <div className="w-full h-px bg-zinc-100" />
+                                        <div className="w-full h-px bg-zinc-100" />
+                                        <div className="w-full h-px bg-zinc-100" />
+                                        <div className="w-full h-px bg-zinc-100" />
+                                        <div className="w-full h-px bg-zinc-100" />
                                     </div>
 
-                                    {/* Componente Gráfica */}
+                                    {/* Graph */}
                                     <LiveGraph data={activeCase.graphData} color={activeCase.color} />
                                 </div>
-                                
-                                {/* Overlay Gradient al hover */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                             </div>
 
                         </div>
@@ -381,14 +334,17 @@ export default function CaseStudiesSection() {
                 </motion.div>
             </AnimatePresence>
             
-            {/* FOOTER CTA LINE */}
+            {/* FOOTER */}
             <div className="mt-12 text-center">
-                 <p className="text-zinc-500 text-sm">
-                    Results shown are verified from client CRM & Ad accounts. <span className="text-zinc-300 underline cursor-pointer hover:text-emerald-400 transition-colors">See Methodology</span>.
+                 <p className="text-gray-400 text-sm font-medium">
+                    Results shown are verified from client CRM & Ad accounts. <span className="text-gray-900 underline cursor-pointer hover:text-emerald-500 transition-colors">See Methodology</span>.
                  </p>
             </div>
         </div>
       </div>
+      
+      {/* Bottom Border */}
+      <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10" />
     </section>
   );
 }
