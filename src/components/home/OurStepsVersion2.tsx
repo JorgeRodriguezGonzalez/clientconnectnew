@@ -176,37 +176,42 @@ export const founderStoryEntries: StoryEntry[] = [
     icon: AlertTriangle,
     title: "The $90k Lesson",
     subtitle: "The Monster • Being Burned",
+    // TEXTO ACORTADO
     description:
-      "Before Client Connect, we were exactly where you are. We ran our own roofing business and trusted agencies with our growth. We lost over $90,000 to 'marketing experts' who promised the world but delivered dashboards full of vanity metrics and zero revenue.",
+      "Before Client Connect, we ran our own roofing business. We trusted agencies and lost over $90,000 to 'experts' who promised the world but delivered dashboards full of vanity metrics and zero revenue.",
     items: [
       "Agencies that didn't understand the trade",
       "Reports full of 'Likes' but no paying jobs",
       "Contracts that locked us in while we bled cash",
       "The realization: 'No one is coming to save us'",
     ],
-    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2600&auto=format&fit=crop",
+    // FOTO CAMBIADA (Ahora es la del ordenador/tools)
+    image:
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2670&auto=format&fit=crop",
   },
   {
     icon: HardHat,
     title: "The Double Life",
     subtitle: "The Quest • Tools & Laptops",
+    // TEXTO ACORTADO
     description:
-      "We decided to take matters into our own hands. We didn't quit the tools. Instead, we spent our days on roofs dealing with council delays and our nights decoding Google's algorithms. We lived the reality: High-vis in the morning, high-level strategy in the afternoon.",
+      "We didn't quit the tools. Instead, we spent days on roofs and nights decoding algorithms. We lived the reality: High-vis in the morning, high-level strategy in the afternoon.",
     items: [
       "Still on the tools: We know the pressure",
       "Learning code and algorithms from the ground up",
       "Testing strategies with our own money, not yours",
       "Understanding the difference between a lead and a job",
     ],
-    image:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2670&auto=format&fit=crop",
+    // FOTO CAMBIADA (Ahora es la de persona estresada/noche)
+    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2600&auto=format&fit=crop",
   },
   {
     icon: Hammer,
     title: "The Breakthrough",
     subtitle: "The Victory • It Works",
+    // TEXTO ACORTADO
     description:
-      "It clicked. When we applied a tradie's mindset—precision, structural integrity, and no BS—to marketing, our leads exploded. We realized that local positioning isn't about 'brand awareness', it's about being the most trusted option when a neighbor needs help urgently.",
+      "It clicked. Applying a tradie's mindset to marketing made our leads explode. We realized local positioning isn't about 'brand awareness', it's about being the most trusted option when a neighbor needs help.",
     items: [
       "Built a system that bypasses corporate fluff",
       "Hyper-local targeting down to the suburb level",
@@ -220,8 +225,9 @@ export const founderStoryEntries: StoryEntry[] = [
     icon: ShieldCheck,
     title: "Protecting The Trade",
     subtitle: "The Mission • Your Unfair Advantage",
+    // TEXTO ACORTADO
     description:
-      "Now, we exist for one reason: To ensure no other Australian business owner gets burned like we did. We aren't suits in a CBD office guessing about your industry. We are your competitive advantage because we've literally walked in your steel-capped boots.",
+      "We exist to ensure no other business owner gets burned. We aren't suits in a CBD office guessing about your industry. We are your competitive advantage because we've literally walked in your steel-capped boots.",
     items: [
       "We validate every lead (we know the tyre-kickers)",
       "We speak your language, not jargon",
@@ -313,7 +319,6 @@ export default function FounderStory() {
       <BackgroundStripes />
 
       {/* 2. CONTENEDOR ESTRUCTURAL */}
-      {/* MODIFICACIÓN: max-w-7xl para dar mucho más espacio a las tarjetas */}
       <div className="relative z-10 w-full max-w-7xl mx-auto bg-[#050505] border-l border-r border-white/10">
         
         {/* --- RAYOS ANIMADOS LATERALES --- */}
@@ -389,13 +394,13 @@ export default function FounderStory() {
                   aria-current={isActive ? "true" : "false"}
                 >
                   {/* STICKY COLUMN (TITULOS) */}
-                  {/* MODIFICACIÓN: Ajustado a 350px para dar espacio a la derecha, pero manteniendo el diseño grande */}
-                  <div className="top-40 flex h-min w-full md:w-[350px] shrink-0 flex-col md:sticky">
+                  {/* MODIFICACIÓN: Añadido pl-12 (padding left) para empujar el texto a la derecha, cerca de las tarjetas */}
+                  <div className="top-40 flex h-min w-full md:w-[350px] shrink-0 flex-col md:sticky md:pl-12">
                     
                     {/* Número de fondo gigante */}
                     <div 
                         className={cn(
-                            "absolute -top-10 -left-4 text-[120px] leading-none font-bold select-none transition-all duration-700",
+                            "absolute -top-10 -left-4 md:left-8 text-[120px] leading-none font-bold select-none transition-all duration-700",
                             isActive ? "text-white/10 translate-y-0" : "text-white/0 translate-y-4"
                         )}
                         style={{ fontFamily: 'Arial, sans-serif' }}
@@ -444,7 +449,6 @@ export default function FounderStory() {
                   />
 
                   {/* CONTENT COLUMN (TARJETAS) */}
-                  {/* Al ser flex-1 y el padre max-w-7xl, estas tarjetas ahora son mucho más anchas */}
                   <div className="relative flex-1 min-w-0">
                     
                     {/* Glowing Effect Wrapper */}
@@ -483,7 +487,6 @@ export default function FounderStory() {
                         <div className="space-y-2">
                           <p
                             className={
-                              // MODIFICACIÓN: Texto más pequeño (text-sm md:text-base) en lugar de text-lg
                               "text-sm leading-relaxed md:text-base transition-all duration-300 font-medium " +
                               (isActive 
                                 ? "text-zinc-300" 
