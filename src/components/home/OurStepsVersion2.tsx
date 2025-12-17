@@ -176,7 +176,6 @@ export const founderStoryEntries: StoryEntry[] = [
     icon: AlertTriangle,
     title: "The $90k Lesson",
     subtitle: "The Monster • Being Burned",
-    // TEXTO ACORTADO
     description:
       "Before Client Connect, we ran our own roofing business. We trusted agencies and lost over $90,000 to 'experts' who promised the world but delivered dashboards full of vanity metrics and zero revenue.",
     items: [
@@ -185,7 +184,7 @@ export const founderStoryEntries: StoryEntry[] = [
       "Contracts that locked us in while we bled cash",
       "The realization: 'No one is coming to save us'",
     ],
-    // FOTO CAMBIADA (Ahora es la del ordenador/tools)
+    // FOTO: Tools/Laptop
     image:
       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2670&auto=format&fit=crop",
   },
@@ -193,7 +192,6 @@ export const founderStoryEntries: StoryEntry[] = [
     icon: HardHat,
     title: "The Double Life",
     subtitle: "The Quest • Tools & Laptops",
-    // TEXTO ACORTADO
     description:
       "We didn't quit the tools. Instead, we spent days on roofs and nights decoding algorithms. We lived the reality: High-vis in the morning, high-level strategy in the afternoon.",
     items: [
@@ -202,14 +200,13 @@ export const founderStoryEntries: StoryEntry[] = [
       "Testing strategies with our own money, not yours",
       "Understanding the difference between a lead and a job",
     ],
-    // FOTO CAMBIADA (Ahora es la de persona estresada/noche)
+    // FOTO: Stressed/Night
     image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2600&auto=format&fit=crop",
   },
   {
     icon: Hammer,
     title: "The Breakthrough",
     subtitle: "The Victory • It Works",
-    // TEXTO ACORTADO
     description:
       "It clicked. Applying a tradie's mindset to marketing made our leads explode. We realized local positioning isn't about 'brand awareness', it's about being the most trusted option when a neighbor needs help.",
     items: [
@@ -225,7 +222,6 @@ export const founderStoryEntries: StoryEntry[] = [
     icon: ShieldCheck,
     title: "Protecting The Trade",
     subtitle: "The Mission • Your Unfair Advantage",
-    // TEXTO ACORTADO
     description:
       "We exist to ensure no other business owner gets burned. We aren't suits in a CBD office guessing about your industry. We are your competitive advantage because we've literally walked in your steel-capped boots.",
     items: [
@@ -394,7 +390,6 @@ export default function FounderStory() {
                   aria-current={isActive ? "true" : "false"}
                 >
                   {/* STICKY COLUMN (TITULOS) */}
-                  {/* MODIFICACIÓN: Añadido pl-12 (padding left) para empujar el texto a la derecha, cerca de las tarjetas */}
                   <div className="top-40 flex h-min w-full md:w-[350px] shrink-0 flex-col md:sticky md:pl-12">
                     
                     {/* Número de fondo gigante */}
@@ -472,7 +467,8 @@ export default function FounderStory() {
                       }
                     >
                       {entry.image && (
-                        <div className="mb-8 w-full h-[320px] overflow-hidden bg-black border-b border-white/10 relative group">
+                        // MODIFICACIÓN: Altura reducida a h-[240px] para efecto panorámico
+                        <div className="mb-8 w-full h-[240px] overflow-hidden bg-black border-b border-white/10 relative group">
                             <img
                                 src={entry.image}
                                 alt={`${entry.title} visual`}
