@@ -4,7 +4,9 @@ import {
   Calendar, BarChart, CheckCircle, Image as ImageIcon, 
   Code as CodeIcon, Pencil, Wifi, Battery, Signal, Send, 
   TrendingUp, Users, DollarSign, MousePointerClick,
-  ChevronLeft, Video, ChevronRight
+  ChevronLeft, Video, ChevronRight, AlertTriangle, 
+  XCircle, PhoneMissed, TrendingDown, Clock, PhoneCall,
+  CalendarCheck
 } from 'lucide-react';
 
 // --- FONTS STYLES & ANIMATIONS ---
@@ -13,24 +15,19 @@ const fontStyles = `
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
   
-  @keyframes codeFlow {
-    0% { transform: translateX(-50px) scale(0.8); opacity: 0; }
-    10% { opacity: 0.6; }
-    80% { opacity: 0.8; }
-    100% { transform: translateX(50vw); opacity: 0; }
+  /* Input Flow: From left to center (Chaos) */
+  @keyframes inputFlow {
+    0% { transform: translateX(-100px) scale(0.8) rotate(-5deg); opacity: 0; }
+    10% { opacity: 0.8; }
+    80% { opacity: 0.4; }
+    100% { transform: translateX(45vw) scale(0.6) rotate(5deg); opacity: 0; }
   }
 
-  @keyframes codeFlowTop {
-    0% { transform: translateX(-50px) scale(0.8); opacity: 0; }
-    10% { opacity: 0.4; }
-    40% { opacity: 0; } 
-    100% { transform: translateX(30vw); opacity: 0; }
-  }
-
-  @keyframes uiFlow {
-    0% { transform: translateX(0) scale(0.8) perspective(500px) rotateY(15deg); opacity: 0; }
-    20% { opacity: 1; }
-    100% { transform: translateX(50vw) scale(1.1) perspective(500px) rotateY(0deg); opacity: 0; }
+  /* Output Flow: From center to right (Order) */
+  @keyframes outputFlow {
+    0% { transform: translateX(0) scale(0.5) perspective(500px) rotateY(10deg); opacity: 0; }
+    10% { opacity: 1; transform: translateX(2vw) scale(0.8); }
+    100% { transform: translateX(45vw) scale(1.05) perspective(500px) rotateY(0deg); opacity: 0; }
   }
 `;
 
@@ -400,77 +397,76 @@ export const SuperHero = ({
     "radial-gradient(circle at bottom center, #06b6d4, transparent 70%)"
   ];
 
-  const [codeLines, setCodeLines] = useState<any[]>([]);
-  const [uiWidgets, setUiWidgets] = useState<any[]>([]);
+  // --- CHANGED: Logic for INPUTS (Left Side) - Pain Points ---
+  const [painPoints, setPainPoints] = useState<any[]>([]);
+  const [successWidgets, setSuccessWidgets] = useState<any[]>([]);
 
+  // Generator for Left Side (Inputs/Problems)
   useEffect(() => {
-    const syntaxColors = ['text-blue-500', 'text-cyan-400', 'text-indigo-400', 'text-sky-300'];
-    const codeSnippets = ['analytics.track("Conversion")', 'const lead = await crm.create()', '<MetaPixel id={PIXEL_ID} />', 'if (ad_spend < budget)', 'optimize_bidding(strategy)', 'export default LandingPage', 'fetch("https://api.ads.com")'];
+    const problems = [
+        { icon: AlertTriangle, text: "Low Lead Quality", color: "text-amber-400", bg: "bg-amber-500/10", border: "border-amber-500/20" },
+        { icon: PhoneMissed, text: "Missed Calls", color: "text-red-400", bg: "bg-red-500/10", border: "border-red-500/20" },
+        { icon: XCircle, text: "0 Leads Today", color: "text-red-500", bg: "bg-red-500/10", border: "border-red-500/20" },
+        { icon: TrendingDown, text: "High CPA", color: "text-orange-400", bg: "bg-orange-500/10", border: "border-orange-500/20" },
+        { icon: DollarSign, text: "Ad Spend Wasted", color: "text-red-300", bg: "bg-red-900/20", border: "border-red-500/20" },
+        { icon: Clock, text: "No Time", color: "text-gray-400", bg: "bg-gray-700/30", border: "border-gray-500/20" }
+    ];
     
-    const lines = Array.from({ length: 30 }).map((_, i) => { 
-      const topPos = Math.random() * 95;
-      const isTopLine = topPos < 50; 
+    // Generate more items for "noise"
+    const lines = Array.from({ length: 25 }).map((_, i) => { 
+      const topPos = Math.random() * 90;
+      const problem = problems[Math.floor(Math.random() * problems.length)];
 
       return {
         id: i,
-        text: codeSnippets[Math.floor(Math.random() * codeSnippets.length)],
-        color: syntaxColors[Math.floor(Math.random() * syntaxColors.length)],
+        ...problem,
         top: `${topPos}%`,
-        delay: `${Math.random() * 5}s`,
-        duration: `${4 + Math.random() * 4}s`,
-        animationName: isTopLine ? 'codeFlowTop' : 'codeFlow',
+        delay: `${Math.random() * 8}s`,
+        duration: `${6 + Math.random() * 5}s`, // Slower, more drifting feel
       };
     });
-    setCodeLines(lines);
+    setPainPoints(lines);
   }, []);
 
-  const generateWidgetsData = (mode: string, count: number, burstMode: boolean = false) => {
+  // Generator for Right Side (Outputs/Success)
+  const generateSuccessWidgets = (mode: string, count: number, burstMode: boolean = false) => {
     return Array.from({ length: count }).map((_, i) => {
-        let type = 2; 
+        let type = 'lead'; 
         const rand = Math.random();
 
+        // Weigh probabilities based on user choice
         if (mode === 'leads') {
-            if (rand < 0.8) type = 0; 
-            else if (rand < 0.9) type = 2; 
-            else type = 3;
+            type = rand > 0.3 ? 'lead' : 'call';
         } else if (mode === 'clicks') {
-            if (rand < 0.8) type = 3; 
-            else if (rand < 0.9) type = 0;
-            else type = 1;
+            type = rand > 0.4 ? 'traffic' : 'lead';
         } else if (mode === 'revenue') {
-             if (rand < 0.8) type = 1; 
-             else if (rand < 0.9) type = 2;
-             else type = 0;
+             type = rand > 0.4 ? 'revenue' : 'job';
         }
 
-        const delay = burstMode ? Math.random() * 1.5 : Math.random() * 6;
-        const randomROI = Math.floor(Math.random() * (450 - 150) + 150); 
-        const randomCTR = (Math.random() * (9.5 - 2.1) + 2.1).toFixed(1); 
-
+        const delay = burstMode ? Math.random() * 1.5 : Math.random() * 8;
+        
         return {
             id: Math.random().toString(36).substr(2, 9) + Date.now(),
             type: type, 
-            top: `${10 + Math.random() * 80}%`, 
+            top: `${15 + Math.random() * 70}%`, 
             delay: `${delay}s`,
-            duration: `${5 + Math.random() * 4}s`,
-            roiValue: randomROI,
-            ctrValue: randomCTR
+            duration: `${6 + Math.random() * 3}s`, // Smooth flow
         };
     });
   };
 
   useEffect(() => {
-    setUiWidgets(generateWidgetsData('leads', 15, false));
+    setSuccessWidgets(generateSuccessWidgets('leads', 12, false));
   }, []);
 
   const handlePhoneOptionChange = (id: string) => {
-      const newBurstWidgets = generateWidgetsData(id, 12, true);
-      setUiWidgets(prev => [...prev, ...newBurstWidgets]);
+      const newBurstWidgets = generateSuccessWidgets(id, 8, true);
+      setSuccessWidgets(prev => [...prev, ...newBurstWidgets]);
 
       setTimeout(() => {
-         setUiWidgets(prev => {
-             if (prev.length > 25) {
-                 return prev.slice(prev.length - 25);
+         setSuccessWidgets(prev => {
+             if (prev.length > 20) {
+                 return prev.slice(prev.length - 20);
              }
              return prev;
          });
@@ -634,12 +630,8 @@ export const SuperHero = ({
           {/* --- WORKFLOW CONTAINER --- */}
           <div className="w-full relative h-[720px] flex justify-center items-end overflow-hidden z-[10] mt-8">
             
+            {/* --- LEFT SIDE: PROBLEMS (INPUTS) --- */}
             <div className="absolute left-0 w-1/2 h-full z-[10] overflow-hidden">
-               {/* 
-                  MODIFICADO IZQUIERDA: 
-                  - Radial más ancho (transparent 60%)
-                  - MASK IMAGE añadida al contenedor para desvanecer el borde superior (igual que en la derecha)
-               */}
               <div 
                 className="absolute inset-0" 
                 style={{ 
@@ -648,21 +640,25 @@ export const SuperHero = ({
                 }}
               ></div>
 
-              {codeLines.map((line) => (
+              {painPoints.map((item) => (
                 <div
-                  key={line.id}
-                  className={`absolute left-0 whitespace-nowrap font-mono text-xs md:text-sm ${line.color} opacity-0 blur-[0.5px]`}
+                  key={item.id}
+                  className={`absolute left-0 flex items-center gap-2 px-3 py-2 rounded-lg border backdrop-blur-[2px] shadow-lg ${item.bg} ${item.border}`}
                   style={{
-                    top: line.top,
-                    animation: `${line.animationName} ${line.duration} linear infinite`, 
-                    animationDelay: line.delay,
+                    top: item.top,
+                    animation: `inputFlow ${item.duration} linear infinite`, 
+                    animationDelay: item.delay,
                   }}
                 >
-                  {line.text}
+                  <item.icon size={14} className={item.color} />
+                  <span className={`text-[11px] font-medium opacity-90 ${item.color.replace('text-', 'text-white/80 ')}`}>
+                    {item.text}
+                  </span>
                 </div>
               ))}
             </div>
 
+            {/* --- CENTER: PHONE --- */}
             <div className="relative z-[20] flex flex-col items-center justify-end">
               <div className="absolute top-20 inset-0 bg-indigo-500/10 blur-[100px] rounded-full scale-105 animate-pulse"></div>
               
@@ -675,10 +671,10 @@ export const SuperHero = ({
               </motion.div>
             </div>
 
+            {/* --- RIGHT SIDE: RESULTS (OUTPUTS) --- */}
             <div className="absolute right-0 w-1/2 h-full z-[10] overflow-hidden pointer-events-none">
               <div className="absolute inset-0 bg-gradient-to-l from-[#1e293b]/50 to-transparent" style={{ maskImage: 'linear-gradient(to bottom, transparent, black)' }}></div>
               
-               {/* MODIFICADO DERECHA (MANTENIDO): Grid con máscara */}
               <div 
                   className="absolute inset-0 opacity-15 mix-blend-overlay" 
                   style={{ 
@@ -688,36 +684,65 @@ export const SuperHero = ({
                   }}
               ></div>
               
-              {uiWidgets.map((widget) => (
+              {successWidgets.map((widget) => (
                 <div
                   key={widget.id}
                   className="absolute opacity-0"
                   style={{
                     top: widget.top,
                     left: '0%', 
-                    animation: `uiFlow ${widget.duration} cubic-bezier(0.4, 0, 0.2, 1) infinite`,
+                    animation: `outputFlow ${widget.duration} cubic-bezier(0.4, 0, 0.2, 1) infinite`,
                     animationDelay: widget.delay,
                   }}
                 >
-                  {widget.type === 0 && (
-                    <div className="w-48 h-16 bg-white/10 backdrop-blur-md border-l-4 border-emerald-500 rounded-r-lg p-3 shadow-lg flex flex-col gap-1">
-                      <div className="flex justify-between items-center"><div className="flex gap-2 items-center"><div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center"><CheckCircle size={12} className="text-emerald-400"/></div><span className="text-xs text-white font-medium">Lead Acquired</span></div><span className="text-[10px] text-gray-400">Just now</span></div><div className="w-24 h-1.5 bg-white/10 rounded ml-8"></div>
+                  {widget.type === 'lead' && (
+                    <div className="flex items-center gap-3 px-4 py-3 bg-slate-900/80 border border-emerald-500/30 rounded-xl shadow-[0_0_15px_rgba(16,185,129,0.1)] backdrop-blur-md">
+                       <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
+                          <CheckCircle size={14} className="text-emerald-400" />
+                       </div>
+                       <div className="flex flex-col">
+                          <span className="text-[12px] font-semibold text-white">Lead Qualified</span>
+                          <span className="text-[10px] text-emerald-400/80">Ready for outreach</span>
+                       </div>
                     </div>
                   )}
-                  {widget.type === 1 && (
-                    <div className="w-28 h-28 bg-gradient-to-t from-slate-900 to-slate-800 border border-green-500/20 rounded-xl flex flex-col items-center justify-center shadow-xl backdrop-blur-sm rotate-6 p-2 gap-1">
-                      <BarChart className="text-green-400 w-8 h-8" /><span className="text-[10px] text-green-300 font-bold">+{widget.roiValue}% ROI</span>
+
+                  {widget.type === 'job' && (
+                    <div className="flex items-center gap-3 px-4 py-3 bg-blue-900/40 border border-blue-400/30 rounded-xl shadow-lg backdrop-blur-md">
+                       <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                          <CalendarCheck size={14} className="text-blue-400" />
+                       </div>
+                       <div className="flex flex-col">
+                          <span className="text-[12px] font-semibold text-white">Job Booked</span>
+                          <span className="text-[10px] text-blue-300">Tomorrow, 9:00 AM</span>
+                       </div>
                     </div>
                   )}
-                  {widget.type === 2 && (
-                    <div className="flex items-center gap-3 px-4 py-3 bg-slate-800/90 border border-blue-500/30 rounded-full shadow-lg">
-                      <Users className="w-4 h-4 text-blue-400" /><span className="text-xs text-white font-medium tracking-wide">New Client Onboarded</span>
+
+                  {widget.type === 'call' && (
+                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/90 border-l-2 border-green-500 rounded-r-lg shadow-lg">
+                       <PhoneCall size={14} className="text-green-400" />
+                       <span className="text-[11px] text-white">Incoming Call: <span className="text-gray-400">04XX...</span></span>
                     </div>
                   )}
-                  {widget.type === 3 && (
-                    <div className="w-36 h-24 bg-slate-900 border border-slate-700 rounded-lg p-3 shadow-2xl -rotate-3 flex flex-col justify-between">
-                      <div className="flex justify-between items-start"><div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center"><MousePointerClick size={16} className="text-white"/></div><div className="text-[10px] text-gray-400">CTR</div></div><div className="text-xl font-bold text-white">{widget.ctrValue}%</div>
-                    </div>
+
+                  {widget.type === 'revenue' && (
+                     <div className="px-4 py-2 bg-gradient-to-r from-slate-900 to-slate-800 border border-emerald-500/20 rounded-lg flex items-center gap-3 shadow-xl transform rotate-1">
+                        <div className="bg-emerald-500/10 p-1.5 rounded-md">
+                            <TrendingUp size={16} className="text-emerald-400" />
+                        </div>
+                        <div>
+                            <div className="text-[10px] text-gray-400 uppercase tracking-wider">Revenue</div>
+                            <div className="text-[14px] font-bold text-white">+24% This Week</div>
+                        </div>
+                     </div>
+                  )}
+
+                   {widget.type === 'traffic' && (
+                     <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/60 border border-indigo-500/30 rounded-full">
+                        <Users size={12} className="text-indigo-400" />
+                        <span className="text-[10px] text-indigo-200">High Intent Traffic Detected</span>
+                     </div>
                   )}
                 </div>
               ))}
