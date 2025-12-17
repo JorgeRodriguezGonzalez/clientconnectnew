@@ -95,7 +95,7 @@ export function LogoCloud({ isLightMode }: { isLightMode: boolean }) {
   );
 }
 
-// --- LOGO COMPONENTS (FOR ECOSYSTEM CARD) ---
+// --- LOGO COMPONENTS ---
 const InstagramLogo = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="none">
     <defs>
@@ -1089,7 +1089,7 @@ export const FounderSection = () => {
                    </div>
                </TiltCard>
 
-               {/* CARD 6 (Inferior B): CONFIANZA */}
+               {/* CARD 6 (Inferior B): CONFIANZA (CON IMAGEN DE HANDSHAKE) */}
                <TiltCard 
                   layout
                   initial={{ opacity: 0, y: 20 }}
@@ -1101,15 +1101,12 @@ export const FounderSection = () => {
                >
                    <div className="relative h-full w-full">
                        <div className="absolute inset-0 w-full h-full opacity-60">
-                          <video
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
+                          {/* CAMBIO: Usamos una imagen de handshake de alta calidad en vez de video para garantizar la carga */}
+                          <img
+                            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop"
+                            alt="Trust and Partnership Handshake"
                             className="w-full h-full object-cover grayscale scale-105 group-hover:scale-100 group-hover:grayscale-0 transition-all duration-700 ease-out"
-                          >
-                            <source src="https://videos.pexels.com/video-files/3252038/3252038-uhd_2560_1440_25fps.mp4" type="video/mp4" />
-                          </video>
+                          />
                        </div>
 
                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
