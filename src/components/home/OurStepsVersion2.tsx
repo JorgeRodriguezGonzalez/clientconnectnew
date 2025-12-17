@@ -185,7 +185,6 @@ export const founderStoryEntries: StoryEntry[] = [
       "Contracts that locked us in while we bled cash",
       "The realization: 'No one is coming to save us'",
     ],
-    // IMAGEN CORREGIDA: Persona estresada/trabajando de noche
     image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2600&auto=format&fit=crop",
   },
   {
@@ -247,7 +246,7 @@ function cn(...classes: (string | undefined | null | false)[]) {
 // --- Main Component ---
 
 export default function FounderStory() {
-  const containerRef = useRef<HTMLDivElement>(null); // Ref para el contenedor principal (para los rayos)
+  const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sentinelRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -255,7 +254,7 @@ export default function FounderStory() {
   // --- CONFIGURACIÓN DE ANIMACIÓN DE RAYOS VERTICALES ---
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"] // El rayo viaja mientras la sección está en pantalla
+    offset: ["start end", "end start"]
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -264,21 +263,13 @@ export default function FounderStory() {
     restDelta: 0.001
   });
 
-  // 1. Movimiento Vertical: De arriba a abajo (0% a 100%)
   const beamTop = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
-  
-  // 2. Opacidad: Fade in al entrar, Fade out al salir
   const beamOpacity = useTransform(smoothProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
-
-  // 3. Color cambiante: Emerald -> Cyan -> Emerald
   const color1 = useTransform(smoothProgress, [0, 0.5, 1], [COLORS.emerald, COLORS.cyan, COLORS.emerald]);
   const color2 = useTransform(smoothProgress, [0, 0.5, 1], [COLORS.cyan, COLORS.emerald, COLORS.cyan]);
-  
-  // Gradiente del rayo
   const beamGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${color1}, ${color2})`;
 
-
-  // --- LÓGICA DE ACTIVE INDEX (Original) ---
+  // --- LÓGICA DE ACTIVE INDEX ---
   const setItemRef = (el: HTMLDivElement | null, i: number) => {
     itemRefs.current[i] = el;
   };
@@ -317,7 +308,6 @@ export default function FounderStory() {
   }, []);
 
   return (
-    // SECCIÓN PRINCIPAL: Fondo negro (#050505)
     <section className="relative w-full bg-[#050505]" ref={containerRef}>
       
       {/* 1. FONDO DE RAYAS */}
@@ -327,7 +317,6 @@ export default function FounderStory() {
       <div className="relative z-10 w-full max-w-5xl mx-auto bg-[#050505] border-l border-r border-white/10">
         
         {/* --- RAYOS ANIMADOS LATERALES --- */}
-        {/* Rayo Izquierdo */}
         <motion.div 
             style={{ 
               top: beamTop,
@@ -336,7 +325,6 @@ export default function FounderStory() {
             }}
             className="absolute -left-[1px] w-[2px] h-[150px] -translate-y-full blur-[2px] z-20"
         />
-        {/* Rayo Derecho */}
         <motion.div 
             style={{ 
               top: beamTop,
@@ -369,7 +357,6 @@ export default function FounderStory() {
                   }}
                   style={{
                     display: "inline-block",
-                    // EFECTO GRADIENTE: Emerald -> Cyan -> Emerald
                     backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
@@ -390,7 +377,8 @@ export default function FounderStory() {
           </div>
 
           {/* LISTA DE CAPITULOS (STORIES) */}
-          <div className="mx-auto max-w-3xl space-y-16 md:space-y-24">
+          {/* MODIFICACIÓN: Aumentado el space-y para evitar que se cierren muy pronto al hacer scroll */}
+          <div className="mx-auto max-w-3xl space-y-32 md:space-y-60">
             {founderStoryEntries.map((entry, index) => {
               const isActive = index === activeIndex;
 
@@ -402,25 +390,26 @@ export default function FounderStory() {
                   aria-current={isActive ? "true" : "false"}
                 >
                   {/* STICKY COLUMN (LEFT) - Icon & Title */}
-                  <div className="top-32 flex h-min w-64 shrink-0 items-center gap-4 md:sticky">
-                    <div className="flex items-center gap-3">
-                      {/* Icon Container: Square corners */}
+                  {/* MODIFICACIÓN: Aumentado ancho a w-80 y tamaños de fuente */}
+                  <div className="top-32 flex h-min w-auto md:w-80 shrink-0 items-start gap-4 md:sticky">
+                    <div className="flex items-center gap-4">
+                      {/* Icon Container */}
                       <div 
                         className={cn(
-                          "p-2 rounded-none transition-colors duration-300 border border-transparent",
+                          "p-2.5 rounded-none transition-colors duration-300 border border-transparent mt-1",
                           isActive ? "text-black" : "bg-white/5 text-zinc-500 border-white/5"
                         )}
                         style={{
                           backgroundColor: isActive ? COLORS.cyan : undefined
                         }}
                       >
-                        <entry.icon className="h-4 w-4" />
+                        <entry.icon className="h-5 w-5" />
                       </div>
-                      <div className="flex flex-col">
-                        <span className={cn("text-sm font-bold transition-colors duration-300", isActive ? "text-white" : "text-zinc-500")}>
+                      <div className="flex flex-col gap-1">
+                        <span className={cn("text-xl md:text-2xl font-bold transition-colors duration-300 leading-tight", isActive ? "text-white" : "text-zinc-500")}>
                           {entry.title}
                         </span>
-                        <span className="text-xs text-zinc-600 font-medium">
+                        <span className="text-sm text-zinc-600 font-medium">
                           {entry.subtitle}
                         </span>
                       </div>
@@ -435,9 +424,9 @@ export default function FounderStory() {
                   />
 
                   {/* CONTENT COLUMN (RIGHT) */}
-                  <div className="relative">
+                  <div className="relative flex-1">
                     
-                    {/* Glowing Effect Wrapper - Solo activo cuando es visible */}
+                    {/* Glowing Effect Wrapper */}
                     <div className="absolute -inset-[1px] rounded-none opacity-0 transition-opacity duration-500" style={{ opacity: isActive ? 1 : 0 }}>
                         <GlowingEffect 
                             spread={20}
@@ -465,15 +454,12 @@ export default function FounderStory() {
                                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-80 group-hover:opacity-100"
                                 loading="lazy"
                             />
-                            {/* Overlay sutil para integrar imagen en dark mode */}
                             <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent opacity-60" />
                         </div>
                       )}
                       
                       <div className="space-y-4">
                         <div className="space-y-2">
-                          {/* Eliminado título duplicado, ya está en el sticky. Enfocamos en narrativa */}
-                          
                           <p
                             className={
                               "text-sm leading-relaxed md:text-base transition-all duration-300 font-medium " +
@@ -505,7 +491,6 @@ export default function FounderStory() {
                                         key={itemIndex} 
                                         className="flex items-start gap-3 text-sm text-zinc-400"
                                       >
-                                        {/* Bullet: Emerald Square */}
                                         <div 
                                           className="mt-1.5 h-1.5 w-1.5 rounded-none flex-shrink-0"
                                           style={{ backgroundColor: COLORS.emerald }}
@@ -523,7 +508,6 @@ export default function FounderStory() {
                                     size="lg"
                                     className="group font-bold transition-all duration-200 text-white rounded-none border-none px-8"
                                     style={{
-                                      // Gradiente Emerald -> Cyan
                                       backgroundImage: `linear-gradient(135deg, ${COLORS.emerald}, ${COLORS.cyan})`,
                                     }}
                                     asChild

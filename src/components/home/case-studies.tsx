@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowUpRight, 
@@ -12,7 +12,9 @@ import {
   Briefcase, 
   Zap,
   Activity,
-  BarChart3
+  BarChart3,
+  Play,
+  X
 } from "lucide-react";
 
 // --- CONSTANTES DE COLOR ---
@@ -45,6 +47,8 @@ type CaseStudy = {
   icon: React.ElementType;
   title: string;
   description: string;
+  thumbnail: string; // Nueva propiedad para la miniatura del video
+  videoUrl: string;  // URL del video (simulada)
   stats: {
     label: string;
     value: string;
@@ -63,6 +67,8 @@ const cases: CaseStudy[] = [
     icon: Briefcase,
     title: "From 'Feast & Famine' to Booked Out",
     description: "Apex was relying on word-of-mouth. We implemented a hyper-local SEO & Google Ads infrastructure that captured high-intent emergency queries.",
+    thumbnail: "https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=2670&auto=format&fit=crop",
+    videoUrl: "https://videos.pexels.com/video-files/5532766/5532766-uhd_2560_1440_25fps.mp4", // Video stock de ejemplo (Obrero/Arquitecto)
     color: COLORS.emerald,
     stats: [
       { label: "Monthly Revenue", value: "$145k", subtext: "+210% YoY", icon: DollarSign },
@@ -78,6 +84,8 @@ const cases: CaseStudy[] = [
     icon: ShoppingBag,
     title: "Scaling ROAS for High-Ticket Furniture",
     description: "Selling $4,000 sofas online requires trust. We built a full-funnel Meta Ads strategy combined with high-converting landing pages focused on social proof.",
+    thumbnail: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2669&auto=format&fit=crop",
+    videoUrl: "https://videos.pexels.com/video-files/3191576/3191576-uhd_2560_1440_25fps.mp4", // Video stock de ejemplo (Oficina/Diseñadora)
     color: COLORS.cyan,
     stats: [
       { label: "ROAS", value: "6.8x", subtext: "Ad Spend Return", icon: Activity },
@@ -93,6 +101,8 @@ const cases: CaseStudy[] = [
     icon: Zap,
     title: "Cracking the B2B Demo Booking Code",
     description: "We shifted their strategy from 'gate-kept whitepapers' to direct-response LinkedIn ads targeting CTOs, resulting in a massive pipeline unlock.",
+    thumbnail: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2574&auto=format&fit=crop",
+    videoUrl: "https://videos.pexels.com/video-files/3252755/3252755-uhd_2560_1440_25fps.mp4", // Video stock de ejemplo (Corporate)
     color: COLORS.coral, 
     stats: [
       { label: "Pipeline Value", value: "$3.5M", subtext: "Generated Q3", icon: BarChart3 },
@@ -147,10 +157,64 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
     );
 };
 
+// --- COMPONENTE DE VIDEO MODAL ---
+const VideoModal = ({ 
+    isOpen, 
+    onClose, 
+    videoUrl, 
+    color 
+}: { 
+    isOpen: boolean; 
+    onClose: () => void; 
+    videoUrl: string; 
+    color: string 
+}) => {
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+                    {/* Backdrop */}
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={onClose}
+                        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                    />
+                    
+                    {/* Modal Content */}
+                    <motion.div 
+                        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                        animate={{ scale: 1, opacity: 1, y: 0 }}
+                        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                        className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+                    >
+                        <button 
+                            onClick={onClose}
+                            className="absolute top-4 right-4 z-20 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white backdrop-blur-md transition-colors"
+                        >
+                            <X size={20} />
+                        </button>
+                        
+                        <video 
+                            src={videoUrl} 
+                            controls 
+                            autoPlay 
+                            className="w-full h-full object-cover"
+                            style={{ outlineColor: color }}
+                        />
+                    </motion.div>
+                </div>
+            )}
+        </AnimatePresence>
+    );
+};
+
 // --- COMPONENTE PRINCIPAL ---
 
 export default function CaseStudies() {
   const [activeTab, setActiveTab] = useState(0);
+  const [isVideoOpen, setIsVideoOpen] = useState(false); // Estado para el video
   const activeCase = cases[activeTab];
   const containerRef = useRef(null);
 
@@ -159,11 +223,16 @@ export default function CaseStudies() {
         ref={containerRef}
         className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] overflow-hidden"
     >
-      {/* 1. BACKGROUND STRIPES */}
       <BackgroundStripes />
-      
-      {/* 2. TOP BORDER (Zinc-200 para modo claro) */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-20" />
+
+      {/* Video Modal (Renderizado a nivel de sección para cubrir todo) */}
+      <VideoModal 
+         isOpen={isVideoOpen} 
+         onClose={() => setIsVideoOpen(false)} 
+         videoUrl={activeCase.videoUrl}
+         color={activeCase.color}
+      />
 
       <div className="container relative z-10 mx-auto px-6 lg:px-8 max-w-[1280px]">
         
@@ -204,12 +273,12 @@ export default function CaseStudies() {
         {/* --- DASHBOARD UI --- */}
         <div className="max-w-6xl mx-auto">
             
-            {/* TABS (Light Mode) */}
+            {/* TABS */}
             <div className="flex flex-wrap justify-center gap-2 mb-10">
                 {cases.map((c, idx) => (
                     <button
                         key={c.id}
-                        onClick={() => setActiveTab(idx)}
+                        onClick={() => { setActiveTab(idx); setIsVideoOpen(false); }}
                         className={cn(
                             "relative px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 overflow-hidden group border",
                             activeTab === idx 
@@ -217,7 +286,6 @@ export default function CaseStudies() {
                                 : "text-gray-500 border-transparent hover:bg-zinc-100 hover:text-gray-900"
                         )}
                     >
-                        {/* Indicador activo pequeño */}
                         {activeTab === idx && (
                             <motion.span 
                                 layoutId="activeDot"
@@ -226,7 +294,6 @@ export default function CaseStudies() {
                             />
                         )}
                         <span className={cn("relative z-10 flex items-center gap-2", activeTab === idx ? "pl-3" : "")}>
-                            {/* CORRECCIÓN AQUI: Cambiado de !activeTab === idx a activeTab !== idx */}
                             {activeTab !== idx && <c.icon size={14} />}
                             {c.category}
                         </span>
@@ -234,7 +301,7 @@ export default function CaseStudies() {
                 ))}
             </div>
 
-            {/* --- MAIN CARD (Light Mode Dashboard) --- */}
+            {/* --- MAIN CARD --- */}
             <AnimatePresence mode="wait">
                 <motion.div
                     key={activeCase.id}
@@ -246,9 +313,9 @@ export default function CaseStudies() {
                 >
                     <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
                         
-                        {/* LEFT: Context */}
-                        <div className="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between relative z-10 border-b lg:border-b-0 lg:border-r border-zinc-100">
-                            <div>
+                        {/* LEFT: Context & Video Trigger */}
+                        <div className="lg:col-span-5 p-8 md:p-12 flex flex-col relative z-10 border-b lg:border-b-0 lg:border-r border-zinc-100">
+                            <div className="flex-grow">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center">
                                         <activeCase.icon size={18} style={{ color: activeCase.color }} />
@@ -260,11 +327,45 @@ export default function CaseStudies() {
                                     {activeCase.title}
                                 </h3>
                                 
-                                <p className="text-gray-600 leading-relaxed text-base md:text-[16px] mb-8 font-medium">
+                                <p className="text-gray-600 leading-relaxed text-base mb-8 font-medium">
                                     {activeCase.description}
                                 </p>
+
+                                {/* --- VIDEO THUMBNAIL CARD --- */}
+                                <motion.div 
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => setIsVideoOpen(true)}
+                                    className="group relative w-full h-48 rounded-xl overflow-hidden cursor-pointer shadow-sm mb-6"
+                                >
+                                    {/* Image */}
+                                    <div className="absolute inset-0">
+                                        <img 
+                                            src={activeCase.thumbnail} 
+                                            alt="Client Video" 
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
+                                    </div>
+
+                                    {/* Play Button & Text */}
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                                        <div 
+                                            className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center pl-1 shadow-lg transition-transform duration-300 group-hover:scale-110"
+                                            style={{ color: activeCase.color }}
+                                        >
+                                            <Play size={20} fill="currentColor" />
+                                        </div>
+                                        <div className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full border border-white/10">
+                                            <span className="text-white text-xs font-semibold tracking-wide">
+                                                Hear from {activeCase.client.split(' ')[0]}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </motion.div>
                             </div>
 
+                            {/* CTA Link */}
                             <div>
                                 <a href="#contact" className="group inline-flex items-center gap-2 text-gray-900 font-bold border-b-2 border-zinc-100 pb-1 hover:border-emerald-400 transition-colors text-sm">
                                     READ FULL CASE STUDY
@@ -315,20 +416,15 @@ export default function CaseStudies() {
                                 </div>
 
                                 <div className="absolute inset-0 p-6 pt-16">
-                                    {/* Grid Lines (Lighter) */}
+                                    {/* Grid Lines */}
                                     <div className="absolute inset-0 flex flex-col justify-between p-6 opacity-[0.4] pointer-events-none">
-                                        <div className="w-full h-px bg-zinc-100" />
-                                        <div className="w-full h-px bg-zinc-100" />
-                                        <div className="w-full h-px bg-zinc-100" />
-                                        <div className="w-full h-px bg-zinc-100" />
-                                        <div className="w-full h-px bg-zinc-100" />
+                                        {[...Array(5)].map((_, i) => (
+                                            <div key={i} className="w-full h-px bg-zinc-100" />
+                                        ))}
                                     </div>
-
-                                    {/* Graph */}
                                     <LiveGraph data={activeCase.graphData} color={activeCase.color} />
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </motion.div>
@@ -342,8 +438,6 @@ export default function CaseStudies() {
             </div>
         </div>
       </div>
-      
-      {/* Bottom Border */}
       <div className="w-full h-[1px] bg-zinc-200 absolute bottom-0 z-10" />
     </section>
   );
