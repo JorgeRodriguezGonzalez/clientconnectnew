@@ -494,18 +494,26 @@ export const SuperHero = ({
 
        {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
-         {/* 1. Video de Fondo (Marketing Office) */}
+         {/* 1. Video de Fondo (Marketing Office) - CORREGIDO */}
          <video 
+            ref={(el) => {
+              if (el) {
+                // Forzamos la reproducción por código si el autoplay falla
+                el.play().catch(e => console.log("Autoplay prevented:", e));
+              }
+            }}
             autoPlay 
             loop 
             muted 
             playsInline
+            poster="https://images.pexels.com/photos/3129671/pexels-photo-3129671.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             className="absolute inset-0 w-full h-full object-cover opacity-80"
          >
-            <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+            {/* Usamos una versión HD estándar (1920x1080) más rápida y compatible que la UHD */}
+            <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_25fps.mp4" type="video/mp4" />
          </video>
 
-         {/* 2. El Overlay Final (Estático, es el objetivo al que queremos llegar) */}
+         {/* 2. El Overlay Final (Estático) */}
          <div 
             className="absolute inset-0"
             style={{ 
@@ -513,11 +521,11 @@ export const SuperHero = ({
             }}
          ></div>
 
-         {/* 3. La "Cortina" Negra Sólida (Empieza tapándolo todo y se desvanece) */}
+         {/* 3. La "Cortina" Negra Sólida (Efecto fade-in) */}
          <motion.div 
-            className="absolute inset-0 bg-[#050505]" // Negro puro
-            initial={{ opacity: 1 }} // Opacidad 100% al inicio (todo negro)
-            animate={{ opacity: 0 }} // Opacidad 0% al final (desaparece y revela lo de abajo)
+            className="absolute inset-0 bg-[#050505]"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
             transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }}
          ></motion.div>
       </div>
