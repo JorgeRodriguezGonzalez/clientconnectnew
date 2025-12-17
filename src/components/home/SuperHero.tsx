@@ -386,17 +386,20 @@ export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
 }: SuperHeroProps) => {
-  // --- COLOR MODIFICADO: Cyan casi blanco ---
-  const lampColor = "#ecfeff"; 
+  // --- CAMBIO DE COLOR: CYAN ELECTRICO CLARO ---
+  // Antes #06b6d4 (Oscuro), luego #ecfeff (Blanco). 
+  // Ahora: #74f0ff (Un cyan brillante, medio camino, muy eléctrico)
+  const lampColor = "#74f0ff"; 
   const emeraldColor = "#34d399"; 
 
   const [isHovered, setIsHovered] = useState(false);
 
-  // --- SECUENCIA DE COLOR MODIFICADA: Tonos muy claros ---
+  // --- SECUENCIA DE COLOR AJUSTADA ---
+  // Mezcla el Cyan eléctrico con un tono un poco más claro para el parpadeo
   const radialColorSequence = [
-    "radial-gradient(circle at bottom center, #ecfeff, transparent 70%)", 
-    "radial-gradient(circle at bottom center, #cffafe, transparent 70%)", 
-    "radial-gradient(circle at bottom center, #ecfeff, transparent 70%)"
+    "radial-gradient(circle at bottom center, #74f0ff, transparent 70%)", 
+    "radial-gradient(circle at bottom center, #a1f6ff, transparent 70%)", 
+    "radial-gradient(circle at bottom center, #74f0ff, transparent 70%)"
   ];
 
   // --- LOGIC FOR INPUTS (Left Side) - Pain Points ---
