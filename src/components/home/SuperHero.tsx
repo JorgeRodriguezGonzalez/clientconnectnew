@@ -397,7 +397,7 @@ export const SuperHero = ({
     "radial-gradient(circle at bottom center, #06b6d4, transparent 70%)"
   ];
 
-  // --- CHANGED: Logic for INPUTS (Left Side) - Pain Points ---
+  // --- LOGIC FOR INPUTS (Left Side) - Pain Points ---
   const [painPoints, setPainPoints] = useState<any[]>([]);
   const [successWidgets, setSuccessWidgets] = useState<any[]>([]);
 
@@ -411,10 +411,8 @@ export const SuperHero = ({
         { icon: DollarSign, text: "Ad Spend Wasted", color: "text-red-300", bg: "bg-red-900/20", border: "border-red-500/20" }
     ];
     
-    // Generate more items for "noise"
-    // CHANGED: Reduced length to 15 (Option A)
+    // Generate 15 items (Balanced with Right side)
     const lines = Array.from({ length: 15 }).map((_, i) => { 
-      // CHANGED: Use simple random * 90 to match full height potential
       const topPos = Math.random() * 90;
       const problem = problems[Math.floor(Math.random() * problems.length)];
 
@@ -429,19 +427,34 @@ export const SuperHero = ({
     setPainPoints(lines);
   }, []);
 
-  // Generator for Right Side (Outputs/Success)
+  // --- UPDATED GENERATOR FOR RIGHT SIDE (Outputs/Success) ---
   const generateSuccessWidgets = (mode: string, count: number, burstMode: boolean = false) => {
     return Array.from({ length: count }).map((_, i) => {
         let type = 'lead'; 
         const rand = Math.random();
 
         // Weigh probabilities based on user choice
-        if (mode === 'leads') {
-            type = rand > 0.3 ? 'lead' : 'call';
+        // UPDATED: Added a 'mix' mode for initial load to show ALL types
+        if (mode === 'mix') {
+            if (rand < 0.3) type = 'lead';
+            else if (rand < 0.5) type = 'call';
+            else if (rand < 0.7) type = 'job';
+            else if (rand < 0.85) type = 'revenue';
+            else type = 'traffic';
+        } 
+        else if (mode === 'leads') {
+            // Even in leads mode, we sprinkle a few others so it's not boring
+            if (rand < 0.6) type = 'lead'; 
+            else if (rand < 0.9) type = 'call'; 
+            else type = 'job';
         } else if (mode === 'clicks') {
-            type = rand > 0.4 ? 'traffic' : 'lead';
+            if (rand < 0.5) type = 'traffic'; 
+            else if (rand < 0.8) type = 'lead';
+            else type = 'revenue';
         } else if (mode === 'revenue') {
-             type = rand > 0.4 ? 'revenue' : 'job';
+             if (rand < 0.5) type = 'revenue'; 
+             else if (rand < 0.8) type = 'job';
+             else type = 'lead';
         }
 
         const delay = burstMode ? Math.random() * 1.5 : Math.random() * 8;
@@ -449,7 +462,6 @@ export const SuperHero = ({
         return {
             id: Math.random().toString(36).substr(2, 9) + Date.now(),
             type: type, 
-            // CHANGED: Use simple random * 90 to match inputs height range
             top: `${Math.random() * 90}%`, 
             delay: `${delay}s`,
             duration: `${6 + Math.random() * 3}s`, 
@@ -458,8 +470,8 @@ export const SuperHero = ({
   };
 
   useEffect(() => {
-    // CHANGED: Initial count to 15 (Option A)
-    setSuccessWidgets(generateSuccessWidgets('leads', 15, false));
+    // CHANGED: Start with 'mix' mode instead of 'leads' to show variety
+    setSuccessWidgets(generateSuccessWidgets('mix', 15, false));
   }, []);
 
   const handlePhoneOptionChange = (id: string) => {
@@ -706,7 +718,7 @@ export const SuperHero = ({
                           <CheckCircle size={20} className="text-emerald-400" />
                        </div>
                        <div className="flex flex-col">
-                          <span className="text-[15px] font-bold text-white leading-tight">Lead Booked</span>
+                          <span className="text-[15px] font-bold text-white leading-tight">Lead Received</span>
                           <span className="text-[12px] text-emerald-400/80 font-medium">Ready for outreach</span>
                        </div>
                     </div>
