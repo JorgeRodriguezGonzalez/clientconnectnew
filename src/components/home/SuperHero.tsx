@@ -494,24 +494,21 @@ export const SuperHero = ({
 
        {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
-         {/* 1. La Imagen de Fondo: Comienza invisible (oscura) y aparece */}
-         <motion.div 
-            className="absolute inset-0 bg-cover bg-center"
-            initial={{ opacity: 0 }} // Empieza totalmente oculta
-            animate={{ opacity: 0.8 }} // Termina con la opacidad visible
-            transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }} // Sincronizada con la lamp
+         {/* 1. La Imagen de Fondo: Estática, con opacidad 0.8 */}
+         <div 
+            className="absolute inset-0 bg-cover bg-center opacity-80"
             style={{ 
               backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop)',
               backgroundPosition: 'center center' 
             }}
-         ></motion.div>
+         ></div>
 
-         {/* 2. El Overlay Oscuro: Simula la oscuridad abriéndose por la luz */}
+         {/* 2. El Overlay Oscuro: Empieza totalmente negro y se abre */}
          <motion.div 
             className="absolute inset-0"
-            initial={{ background: 'radial-gradient(ellipse at center, #050505 100%, #050505 100%)' }} // Todo Negro al principio
+            initial={{ background: 'radial-gradient(ellipse at center, #050505 100%, #050505 100%)' }} // Todo Negro
             animate={{ 
-                background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.90) 50%, #050505 100%)' // Se abre el centro
+                background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.90) 50%, #050505 100%)' // Se abre
             }}
             transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }}
          ></motion.div>
