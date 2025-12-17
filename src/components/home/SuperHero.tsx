@@ -494,14 +494,16 @@ export const SuperHero = ({
 
        {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
-         {/* 1. La Imagen de Fondo (Estática, siempre ahí) */}
-         <div 
-            className="absolute inset-0 bg-cover bg-center opacity-80"
-            style={{ 
-              backgroundImage: 'url(https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop)',
-              backgroundPosition: 'center center' 
-            }}
-         ></div>
+         {/* 1. Video de Fondo (Marketing Office) */}
+         <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover opacity-80"
+         >
+            <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+         </video>
 
          {/* 2. El Overlay Final (Estático, es el objetivo al que queremos llegar) */}
          <div 
