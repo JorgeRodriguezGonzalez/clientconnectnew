@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowUpRight, 
@@ -8,20 +8,21 @@ import {
   Users, 
   DollarSign, 
   MousePointerClick, 
-  ShoppingBag, 
   Briefcase, 
   Zap,
   Activity,
   BarChart3,
   Play,
-  X
+  X,
+  Home,
+  Droplets,
+  Flower2,
+  Hammer
 } from "lucide-react";
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
   cyan: "#06b6d4",
-  coral: "rgb(222, 131, 99)", 
-  gold: "rgb(237, 191, 134)",
   emerald: "#34d399", 
 };
 
@@ -43,12 +44,12 @@ const cn = (...classes: (string | undefined | null | false)[]) => classes.filter
 type CaseStudy = {
   id: string;
   client: string;
-  category: "Lead Gen" | "E-Commerce" | "SaaS";
+  category: string;
   icon: React.ElementType;
   title: string;
   description: string;
-  thumbnail: string; // Nueva propiedad para la miniatura del video
-  videoUrl: string;  // URL del video (simulada)
+  thumbnail: string;
+  videoUrl: string;
   stats: {
     label: string;
     value: string;
@@ -61,15 +62,15 @@ type CaseStudy = {
 
 const cases: CaseStudy[] = [
   {
-    id: "apex",
-    client: "Apex Roofing Co.",
-    category: "Lead Gen",
-    icon: Briefcase,
+    id: "roofers",
+    client: "Your Local Roofers",
+    category: "Roofing",
+    icon: Home, // Icono de casa
     title: "From 'Feast & Famine' to Booked Out",
-    description: "Apex was relying on word-of-mouth. We implemented a hyper-local SEO & Google Ads infrastructure that captured high-intent emergency queries.",
-    thumbnail: "https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=2670&auto=format&fit=crop",
-    videoUrl: "https://videos.pexels.com/video-files/5532766/5532766-uhd_2560_1440_25fps.mp4", // Video stock de ejemplo (Obrero/Arquitecto)
-    color: COLORS.emerald,
+    description: "They were relying on word-of-mouth. We implemented a hyper-local SEO & Google Ads infrastructure that captured high-intent storm damage queries.",
+    thumbnail: "https://images.unsplash.com/photo-1632759145351-1d592919f522?q=80&w=2670&auto=format&fit=crop",
+    videoUrl: "https://videos.pexels.com/video-files/5532766/5532766-uhd_2560_1440_25fps.mp4", 
+    color: COLORS.emerald, // 1. EMERALD
     stats: [
       { label: "Monthly Revenue", value: "$145k", subtext: "+210% YoY", icon: DollarSign },
       { label: "Cost Per Lead", value: "$24.50", subtext: "-45% Decrease", icon: TrendingUp },
@@ -78,38 +79,55 @@ const cases: CaseStudy[] = [
     graphData: [20, 35, 30, 50, 45, 60, 55, 80, 75, 90, 85, 100], 
   },
   {
-    id: "velvet",
-    client: "Velvet & Oak",
-    category: "E-Commerce",
-    icon: ShoppingBag,
-    title: "Scaling ROAS for High-Ticket Furniture",
-    description: "Selling $4,000 sofas online requires trust. We built a full-funnel Meta Ads strategy combined with high-converting landing pages focused on social proof.",
-    thumbnail: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2669&auto=format&fit=crop",
-    videoUrl: "https://videos.pexels.com/video-files/3191576/3191576-uhd_2560_1440_25fps.mp4", // Video stock de ejemplo (Oficina/Diseñadora)
-    color: COLORS.cyan,
+    id: "nanotise",
+    client: "Nanotise",
+    category: "Protection",
+    icon: Droplets, // Icono de coatings/protección
+    title: "Dominating the Surface Protection Market",
+    description: "Nanotise needed to reach high-net-worth clients. We shifted their strategy to direct-response LinkedIn & Meta ads targeting luxury property owners.",
+    thumbnail: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2670&auto=format&fit=crop",
+    videoUrl: "https://videos.pexels.com/video-files/3252755/3252755-uhd_2560_1440_25fps.mp4", 
+    color: COLORS.cyan, // 2. CYAN
     stats: [
-      { label: "ROAS", value: "6.8x", subtext: "Ad Spend Return", icon: Activity },
-      { label: "Conversion Rate", value: "3.2%", subtext: "Top 1% in Niche", icon: MousePointerClick },
-      { label: "Total Sales", value: "$1.2M", subtext: "In 6 Months", icon: DollarSign },
+      { label: "Pipeline Value", value: "$2.1M", subtext: "Generated Q3", icon: BarChart3 },
+      { label: "Quotes Booked", value: "115", subtext: "+150% Increase", icon: Users },
+      { label: "ROAS", value: "8.4x", subtext: "Ad Spend Return", icon: Activity },
     ],
-    graphData: [10, 15, 12, 25, 40, 35, 50, 70, 65, 85, 95, 100],
+    graphData: [10, 20, 15, 30, 45, 40, 60, 55, 75, 80, 95, 100],
   },
   {
-    id: "software",
-    client: "StreamFlow App",
-    category: "SaaS",
-    icon: Zap,
-    title: "Cracking the B2B Demo Booking Code",
-    description: "We shifted their strategy from 'gate-kept whitepapers' to direct-response LinkedIn ads targeting CTOs, resulting in a massive pipeline unlock.",
-    thumbnail: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2574&auto=format&fit=crop",
-    videoUrl: "https://videos.pexels.com/video-files/3252755/3252755-uhd_2560_1440_25fps.mp4", // Video stock de ejemplo (Corporate)
-    color: COLORS.coral, 
+    id: "landscaping",
+    client: "Lifestyle Concepts",
+    category: "Landscaping",
+    icon: Flower2, // Icono de paisajismo
+    title: "Scaling High-Ticket Landscape Projects",
+    description: "Selling $50k+ garden transformations requires trust. We built a visual-first funnel with high-converting landing pages focused on project reveals.",
+    thumbnail: "https://images.unsplash.com/photo-1558904541-efa843a96f01?q=80&w=2600&auto=format&fit=crop",
+    videoUrl: "https://videos.pexels.com/video-files/3191576/3191576-uhd_2560_1440_25fps.mp4", 
+    color: COLORS.emerald, // 3. EMERALD
     stats: [
-      { label: "Pipeline Value", value: "$3.5M", subtext: "Generated Q3", icon: BarChart3 },
-      { label: "Demo Bookings", value: "142", subtext: "+300% Increase", icon: Users },
-      { label: "CAC", value: "$120", subtext: "30% Below Target", icon: TrendingUp },
+      { label: "Project Value", value: "$850k", subtext: "Booked in 90 Days", icon: DollarSign },
+      { label: "Conversion Rate", value: "4.8%", subtext: "Top 1% in Niche", icon: MousePointerClick },
+      { label: "Lead Cost", value: "$42", subtext: "High Intent", icon: TrendingUp },
     ],
-    graphData: [5, 10, 25, 20, 40, 55, 50, 65, 80, 75, 90, 95],
+    graphData: [15, 25, 20, 40, 35, 50, 65, 60, 80, 85, 90, 100],
+  },
+  {
+    id: "bathrooms",
+    client: "Premier Bathrooms",
+    category: "Renovation",
+    icon: Hammer, // Icono de renovación
+    title: "Filling the Schedule 4 Months Ahead",
+    description: "We automated their lead qualification process and launched a 'Dream Bathroom' campaign that filled their renovation slots for the entire season.",
+    thumbnail: "https://images.unsplash.com/photo-1552321159-5d974a29b8cc?q=80&w=2670&auto=format&fit=crop",
+    videoUrl: "https://videos.pexels.com/video-files/5532766/5532766-uhd_2560_1440_25fps.mp4", 
+    color: COLORS.cyan, // 4. CYAN
+    stats: [
+      { label: "Jobs Won", value: "34", subtext: "Avg $25k Value", icon: Briefcase },
+      { label: "Time Saved", value: "20hrs", subtext: "Per Week (Admin)", icon: Zap },
+      { label: "Growth", value: "185%", subtext: "Year over Year", icon: Activity },
+    ],
+    graphData: [5, 15, 10, 30, 25, 45, 50, 70, 65, 85, 90, 100],
   },
 ];
 
@@ -130,7 +148,7 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
             <svg viewBox="0 0 100 50" className="w-full h-full overflow-visible" preserveAspectRatio="none">
                 <defs>
                     <linearGradient id={`gradient-light-${color}`} x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="0%" stopColor={color} stopOpacity="0.2" />
+                        <stop offset="0%" stopColor={color} stopOpacity="0.15" />
                         <stop offset="100%" stopColor={color} stopOpacity="0" />
                     </linearGradient>
                 </defs>
@@ -145,13 +163,32 @@ const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
                     d={pathD}
                     fill="none"
                     stroke={color}
-                    strokeWidth="2"
+                    // CAMBIO: strokeWidth reducido a 1.2 para ser "muy fino"
+                    strokeWidth="1.2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: 1 }}
                     transition={{ duration: 1.5, ease: "easeInOut" }}
                 />
+                
+                {/* Puntos brillantes sutiles en los picos para dar tech feel */}
+                 {data.map((d, i) => (
+                    (i === data.length - 1) && ( 
+                        <motion.circle
+                            key={i}
+                            cx={(i / (data.length - 1)) * width}
+                            cy={height - (d / 100) * height}
+                            r="1.5"
+                            fill="white"
+                            stroke={color}
+                            strokeWidth="1.2"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: 1.5 }}
+                        />
+                    )
+                ))}
             </svg>
         </div>
     );
@@ -214,7 +251,7 @@ const VideoModal = ({
 
 export default function CaseStudies() {
   const [activeTab, setActiveTab] = useState(0);
-  const [isVideoOpen, setIsVideoOpen] = useState(false); // Estado para el video
+  const [isVideoOpen, setIsVideoOpen] = useState(false); 
   const activeCase = cases[activeTab];
   const containerRef = useRef(null);
 
@@ -226,7 +263,7 @@ export default function CaseStudies() {
       <BackgroundStripes />
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-20" />
 
-      {/* Video Modal (Renderizado a nivel de sección para cubrir todo) */}
+      {/* Video Modal */}
       <VideoModal 
          isOpen={isVideoOpen} 
          onClose={() => setIsVideoOpen(false)} 
@@ -295,7 +332,7 @@ export default function CaseStudies() {
                         )}
                         <span className={cn("relative z-10 flex items-center gap-2", activeTab === idx ? "pl-3" : "")}>
                             {activeTab !== idx && <c.icon size={14} />}
-                            {c.category}
+                            {c.client}
                         </span>
                     </button>
                 ))}
@@ -320,7 +357,7 @@ export default function CaseStudies() {
                                     <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center">
                                         <activeCase.icon size={18} style={{ color: activeCase.color }} />
                                     </div>
-                                    <span className="text-gray-500 font-medium text-sm uppercase tracking-wider">{activeCase.client}</span>
+                                    <span className="text-gray-500 font-medium text-sm uppercase tracking-wider">{activeCase.category}</span>
                                 </div>
                                 
                                 <h3 className="text-3xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
@@ -336,7 +373,7 @@ export default function CaseStudies() {
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => setIsVideoOpen(true)}
-                                    className="group relative w-full h-48 rounded-xl overflow-hidden cursor-pointer shadow-sm mb-6"
+                                    className="group relative w-full h-48 rounded-xl overflow-hidden cursor-pointer shadow-sm mb-6 border border-zinc-100"
                                 >
                                     {/* Image */}
                                     <div className="absolute inset-0">
@@ -345,20 +382,20 @@ export default function CaseStudies() {
                                             alt="Client Video" 
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                         />
-                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
+                                        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-300" />
                                     </div>
 
                                     {/* Play Button & Text */}
                                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
                                         <div 
-                                            className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center pl-1 shadow-lg transition-transform duration-300 group-hover:scale-110"
+                                            className="w-12 h-12 rounded-full bg-white/95 backdrop-blur-sm flex items-center justify-center pl-1 shadow-lg transition-transform duration-300 group-hover:scale-110"
                                             style={{ color: activeCase.color }}
                                         >
                                             <Play size={20} fill="currentColor" />
                                         </div>
-                                        <div className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full border border-white/10">
+                                        <div className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full border border-white/20">
                                             <span className="text-white text-xs font-semibold tracking-wide">
-                                                Hear from {activeCase.client.split(' ')[0]}
+                                                Watch Testimonial
                                             </span>
                                         </div>
                                     </div>

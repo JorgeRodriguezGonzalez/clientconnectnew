@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
-import { ArrowUpRight, TrendingUp, Clapperboard, Zap, Play, Check, Globe, ShieldCheck, Map, PlusIcon, Activity } from 'lucide-react';
+// AÑADIDOS ICONOS MÁS HUMANOS: HeartHandshake, Users, MessageCircleHeart, Smile
+import { ArrowUpRight, TrendingUp, Play, Check, PlusIcon, HeartHandshake, Users, MessageCircleHeart, ShieldCheck, Smile } from 'lucide-react';
 
 // --- STYLES ---
 const fontStyles = `
   .font-sans { font-family: 'Satoshi', sans-serif; }
   
-  /* OPTIMIZACIÓN SAFARI */
   .safari-gpu {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
@@ -15,7 +15,6 @@ const fontStyles = `
     perspective: 1000px;
   }
 
-  /* ANIMACIÓN LÍNEA VERTICAL (Del BentoGrid) */
   @keyframes move-horizontal {
     0% { left: 10%; }
     100% { left: 90%; }
@@ -34,8 +33,8 @@ const cn = (...classes: (string | undefined | null | false)[]) => classes.filter
 // --- COLORS ---
 const COLORS = {
   cyan: "#06b6d4", 
-  emerald: "#34d399", // Verde principal
-  gold: "#edbf86",    // (Ya no se usa en los efectos, se mantiene por referencia si fuera necesario)
+  emerald: "#34d399", 
+  gold: "#edbf86",
 };
 
 // --- LOGO CLOUD COMPONENTS ---
@@ -77,62 +76,22 @@ export function LogoCloud({ isLightMode }: { isLightMode: boolean }) {
   return (
     <div className={cn("relative grid grid-cols-2 border-x md:grid-cols-4 transition-colors duration-500 mb-20", borderColor)}>
       <div className={cn("-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t", borderColor)} />
-
-      <LogoCard
-        isLightMode={isLightMode}
-        className={cn("relative border-r border-b", bgAlt, borderColor)}
-        logo={{ src: "https://svgl.app/library/nvidia-wordmark-light.svg", alt: "Nvidia Logo" }}
-      >
+      {/* Logos se mantienen igual por consistencia de marca */}
+      <LogoCard isLightMode={isLightMode} className={cn("relative border-r border-b", bgAlt, borderColor)} logo={{ src: "https://svgl.app/library/nvidia-wordmark-light.svg", alt: "Nvidia Logo" }}>
         <PlusIcon className={cn("-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 transition-colors duration-500", iconColor)} strokeWidth={1} />
       </LogoCard>
-
-      <LogoCard
-        isLightMode={isLightMode}
-        className={cn("border-b md:border-r", borderColor)}
-        logo={{ src: "https://svgl.app/library/supabase_wordmark_light.svg", alt: "Supabase Logo" }}
-      />
-
-      <LogoCard
-        isLightMode={isLightMode}
-        className={cn("relative border-r border-b md:bg-transparent", borderColor, isLightMode ? "md:bg-white" : "md:bg-white/5")}
-        logo={{ src: "https://svgl.app/library/github_wordmark_light.svg", alt: "GitHub Logo" }}
-      >
+      <LogoCard isLightMode={isLightMode} className={cn("border-b md:border-r", borderColor)} logo={{ src: "https://svgl.app/library/supabase_wordmark_light.svg", alt: "Supabase Logo" }} />
+      <LogoCard isLightMode={isLightMode} className={cn("relative border-r border-b md:bg-transparent", borderColor, isLightMode ? "md:bg-white" : "md:bg-white/5")} logo={{ src: "https://svgl.app/library/github_wordmark_light.svg", alt: "GitHub Logo" }}>
         <PlusIcon className={cn("-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 transition-colors duration-500", iconColor)} strokeWidth={1} />
         <PlusIcon className={cn("-bottom-[12.5px] -left-[12.5px] absolute z-10 hidden size-6 md:block transition-colors duration-500", iconColor)} strokeWidth={1} />
       </LogoCard>
-
-      <LogoCard
-        isLightMode={isLightMode}
-        className={cn("relative border-b", borderColor, bgAlt, isLightMode ? "md:bg-transparent" : "md:bg-transparent")}
-        logo={{ src: "https://svgl.app/library/openai_wordmark_light.svg", alt: "OpenAI Logo" }}
-      />
-
-      <LogoCard
-        isLightMode={isLightMode}
-        className={cn("relative border-r border-b md:border-b-0", bgAlt, borderColor, isLightMode ? "md:bg-transparent" : "md:bg-transparent")}
-        logo={{ src: "https://svgl.app/library/turso-wordmark-light.svg", alt: "Turso Logo" }}
-      >
+      <LogoCard isLightMode={isLightMode} className={cn("relative border-b", borderColor, bgAlt, isLightMode ? "md:bg-transparent" : "md:bg-transparent")} logo={{ src: "https://svgl.app/library/openai_wordmark_light.svg", alt: "OpenAI Logo" }} />
+      <LogoCard isLightMode={isLightMode} className={cn("relative border-r border-b md:border-b-0", bgAlt, borderColor, isLightMode ? "md:bg-transparent" : "md:bg-transparent")} logo={{ src: "https://svgl.app/library/turso-wordmark-light.svg", alt: "Turso Logo" }}>
         <PlusIcon className={cn("-right-[12.5px] -bottom-[12.5px] md:-left-[12.5px] absolute z-10 size-6 md:hidden transition-colors duration-500", iconColor)} strokeWidth={1} />
       </LogoCard>
-
-      <LogoCard
-        isLightMode={isLightMode}
-        className={cn("border-b md:border-r md:border-b-0", borderColor, isLightMode ? "md:bg-white" : "md:bg-white/5")}
-        logo={{ src: "https://svgl.app/library/clerk-wordmark-light.svg", alt: "Clerk Logo" }}
-      />
-
-      <LogoCard
-        isLightMode={isLightMode}
-        className={cn("border-r", borderColor)}
-        logo={{ src: "https://svgl.app/library/claude-ai-wordmark-icon_light.svg", alt: "Claude AI Logo" }}
-      />
-
-      <LogoCard
-        isLightMode={isLightMode}
-        className={cn(bgAlt)}
-        logo={{ src: "https://svgl.app/library/vercel_wordmark.svg", alt: "Vercel Logo" }}
-      />
-
+      <LogoCard isLightMode={isLightMode} className={cn("border-b md:border-r md:border-b-0", borderColor, isLightMode ? "md:bg-white" : "md:bg-white/5")} logo={{ src: "https://svgl.app/library/clerk-wordmark-light.svg", alt: "Clerk Logo" }} />
+      <LogoCard isLightMode={isLightMode} className={cn("border-r", borderColor)} logo={{ src: "https://svgl.app/library/claude-ai-wordmark-icon_light.svg", alt: "Claude AI Logo" }} />
+      <LogoCard isLightMode={isLightMode} className={cn(bgAlt)} logo={{ src: "https://svgl.app/library/vercel_wordmark.svg", alt: "Vercel Logo" }} />
       <div className={cn("-translate-x-1/2 -bottom-px pointer-events-none absolute left-1/2 w-screen border-b", borderColor)} />
     </div>
   );
@@ -326,7 +285,6 @@ const GlowingEffect = React.memo(
               "--active": "0",
               "--glowingeffect-border-width": `${borderWidth}px`,
               "--repeating-conic-gradient-times": "5",
-              // COLORS.gold eliminados y reemplazados solo por emerald y cyan
               "--gradient": `radial-gradient(circle, ${COLORS.emerald} 10%, #34d39900 20%),
                 radial-gradient(circle at 40% 40%, ${COLORS.emerald} 5%, #34d39900 15%),
                 radial-gradient(circle at 60% 60%, ${COLORS.cyan} 10%, #06b6d400 20%), 
@@ -603,7 +561,7 @@ const Sparkles = () => {
   );
 };
 
-// --- NEW COMPONENT: PROFIT CHART ANIMATION ---
+// --- PROFIT CHART ANIMATION (VISUAL ONLY) ---
 const ProfitChart = () => {
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden" 
@@ -615,8 +573,7 @@ const ProfitChart = () => {
       }}
     >
       <svg 
-        // MODIFICADO: left cambiado de -20% a -35% para mostrar más del área verde (derecha)
-        className="absolute bottom-0 left-[-40%] w-[140%] h-[120%]" 
+        className="absolute bottom-0 left-[-35%] w-[140%] h-[120%]" 
         viewBox="0 0 494 286" 
         fill="none" 
         preserveAspectRatio="none"
@@ -627,7 +584,6 @@ const ProfitChart = () => {
             <stop offset="0" stopColor={COLORS.cyan} stopOpacity="0.5" />
             <stop offset="1" stopColor={COLORS.cyan} stopOpacity="0" />
           </linearGradient>
-          {/* Changed coral to emerald */}
           <linearGradient id="chartGradientEmerald" x1="0.5" x2="0.5" y1="0" y2="1">
             <stop offset="0" stopColor={COLORS.emerald} stopOpacity="0.5" />
             <stop offset="1" stopColor={COLORS.emerald} stopOpacity="0" />
@@ -668,7 +624,6 @@ const ProfitChart = () => {
         </g>
         
         <g clipPath="url(#clipAboveLine)">
-          {/* Replaced chartGradientCoral and COLORS.coral with Emerald versions */}
           <motion.path 
             d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 Z" 
             fill="url(#chartGradientEmerald)" 
@@ -723,11 +678,7 @@ export const FounderSection = () => {
   const [isResizing, setIsResizing] = useState(false);
   const [chartKey, setChartKey] = useState(0); 
   
-  // STATE PARA VIDEO "CASE STUDIES"
   const [isCaseStudyActive, setIsCaseStudyActive] = useState(false);
-
-  // --- ANIMATION CONSTANTS FOR BUTTON ---
-  // Replaced coral with emerald
   const buttonColorSequence = [COLORS.emerald, COLORS.emerald, COLORS.cyan, COLORS.cyan, COLORS.emerald];
   const buttonColorDuration = 10;
 
@@ -737,7 +688,6 @@ export const FounderSection = () => {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // CAMBIO: Trigger para Light Mode ajustado al 15% (0.15)
     if (latest > 0.30 && !isLightMode) {
       setIsLightMode(true);
     } else if (latest <= 0.30 && isLightMode) {
@@ -758,25 +708,18 @@ export const FounderSection = () => {
       ref={containerRef} 
       className={cn(
         "relative w-full py-24 lg:py-32 transition-colors duration-0 z-10 font-sans", 
-        // CAMBIO: Fondo actualizado a #FAFAFA
         isLightMode ? "bg-[#FAFAFA]" : "bg-[#050505]"
       )}
     >
       <style>{fontStyles}</style>
 
-      {/* 
-         LOGO CLOUD INTEGRATED AT THE TOP 
-         Replaces the white line div.
-      */}
       <div className="absolute top-0 left-0 w-full z-50">
          <LogoCloud isLightMode={isLightMode} />
       </div>
 
-      {/* BACKGROUND EFFECTS */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
          <motion.div 
             animate={{
-              // Replaced coral with emerald
               backgroundColor: [COLORS.emerald, COLORS.cyan, COLORS.emerald],
             }}
             transition={{
@@ -793,14 +736,12 @@ export const FounderSection = () => {
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
-        {/* LAYOUT GRID - CAMBIO: mt-40 para dar 160px de espacio superior */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-40">
           
-          {/* --- LEFT COLUMN: STICKY --- */}
+          {/* --- IZQUIERDA: TEXTOS ENFOCADOS EN ACOMPAÑAMIENTO --- */}
           <div className="lg:w-[40%] sticky top-32">
             <div className="flex flex-col gap-6 pb-10">
               
-              {/* Badge */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -814,7 +755,7 @@ export const FounderSection = () => {
                 GROWTH PARTNERS
               </motion.div>
 
-              {/* Headline */}
+              {/* Headline (Mantenido) */}
               <h2 className={cn(
                 "font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tight transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
@@ -830,7 +771,6 @@ export const FounderSection = () => {
                   }}
                   style={{
                     display: "inline-block",
-                    // REMOVED COLORS.gold HERE
                     backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
@@ -844,21 +784,21 @@ export const FounderSection = () => {
                 <span>.</span>
               </h2>
 
-              {/* Description */}
+              {/* Description (Modificado para ser más humano) */}
               <p className={cn(
                 "font-sans text-[15px] leading-[1.6] font-medium transition-colors duration-0 max-w-sm",
                 isLightMode ? "text-gray-500" : "text-gray-400"
               )}>
-                Client Connect Australia isn't just another agency. We are your data-driven partners in <strong className={isLightMode ? "text-gray-900" : "text-white"}>Profitable Scaling</strong>. 
-                We integrate paid media, creative, and retention into one national growth engine.
+                More than an agency, we are the <strong className={isLightMode ? "text-gray-900" : "text-white"}>team in your corner</strong>. 
+                We combine powerful data with deep empathy, ensuring you never face your growth journey alone. Your challenges are our challenges.
               </p>
 
-              {/* Checklist */}
+              {/* Checklist (Modificado para soporte/personas) */}
               <div className="flex flex-col gap-3 mt-2">
                 {[
-                  "National Acquisition Strategy",
-                  "Conversion Rate Optimization",
-                  "Australian Market Expertise"
+                  "Dedicated Success Managers",
+                  "Transparent Communication",
+                  "Proactive Strategy Sessions"
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 group cursor-default">
                     <div className={cn(
@@ -875,7 +815,7 @@ export const FounderSection = () => {
                 ))}
               </div>
 
-              {/* CTA - UPDATED BUTTON */}
+              {/* CTA (Modificado) */}
               <div className="mt-4">
                 <motion.button
                   animate={{
@@ -887,14 +827,12 @@ export const FounderSection = () => {
                     repeat: Infinity
                   }}
                   className={cn(
-                    // Updated rgba shadow to match emerald (#34d399 is roughly 52, 211, 153)
                     "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)]",
                     "bg-black text-white hover:bg-zinc-900"
                   )}
                 >
                   <span className="flex items-center gap-2">
-                    Start Scaling
-                    {/* Flecha animada independiente */}
+                    Meet Your Team
                     <motion.span
                       animate={{
                         color: buttonColorSequence
@@ -905,7 +843,8 @@ export const FounderSection = () => {
                         repeat: Infinity
                       }}
                     >
-                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      {/* Icono de sonrisa para invitar a la conexión humana */}
+                      <Smile className="w-4 h-4 transition-transform group-hover:scale-110" />
                     </motion.span>
                   </span>
                 </motion.button>
@@ -914,7 +853,7 @@ export const FounderSection = () => {
             </div>
           </div>
 
-          {/* --- RIGHT COLUMN: DYNAMIC GRID --- */}
+          {/* --- DERECHA: TARJETAS ENFOCADAS EN LO HUMANO --- */}
           <div className="lg:w-[60%] relative pt-0 lg:pt-0">
             
             <motion.div 
@@ -922,9 +861,7 @@ export const FounderSection = () => {
                className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-[minmax(200px,auto)]"
             >
 
-              {/* 
-                 ITEM 1: MAIN IMAGE CARD
-              */}
+              {/* CARD 1: FOTO DEL EQUIPO/FUNDADOR */}
               <TiltCard 
                 layoutId="miguel-card"
                 layout
@@ -953,7 +890,7 @@ export const FounderSection = () => {
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-none">
                   <motion.img 
                     layout
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" 
+                    src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1632&auto=format&fit=crop" 
                     alt="Client Connect Australia Team" 
                     loading="eager"
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
@@ -968,18 +905,19 @@ export const FounderSection = () => {
                   
                   <motion.div layout className="absolute bottom-6 left-6 right-6 z-30">
                     <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-none">
-                       <p className="text-white font-sans font-bold text-base">The Connect Team</p>
-                       <p className="text-white/60 font-sans text-[11px]">Your Australian Growth Partners</p>
+                       {/* CAMBIO TEXTO: Más personal */}
+                       <p className="text-white font-sans font-bold text-base">People First, Growth Second</p>
+                       <p className="text-white/60 font-sans text-[11px]">Your dedicated growth squad.</p>
                     </div>
                   </motion.div>
                 </div>
               </TiltCard>
 
-              {/* ITEMS 2 & 3: STATS & VIDEO */}
+              {/* ITEMS 2 & 3: PARTNERSHIP & STORIES */}
               <AnimatePresence mode="popLayout">
                  {isLightMode && (
                     <>
-                       {/* ITEM 2 - RESULTS WITH PROFIT CHART GRAPHIC */}
+                       {/* CARD 2: VICTORIAS COMPARTIDAS (Antes Chart analítico) */}
                        <TiltCard 
                         layout="position"
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -987,39 +925,37 @@ export const FounderSection = () => {
                         exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
                         className="h-[280px] group safari-gpu cursor-default"
                         innerClassName="bg-white border border-zinc-200 overflow-hidden"
-                        onMouseEnter={() => setChartKey(prev => prev + 1)} // Replays animation on hover
+                        onMouseEnter={() => setChartKey(prev => prev + 1)}
                        >
-                          {/* Glow Effect from Top Right */}
                           <div className="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 blur-[60px] opacity-40 group-hover:opacity-60 transition-opacity" />
                           
-                          {/* Text Content - Top Half */}
                           <div className="relative z-10 p-6 flex flex-col items-start">
                              <div className="flex justify-between items-center w-full mb-2">
                                 <div className="p-2 bg-zinc-50 border border-zinc-100 rounded-none text-emerald-500">
-                                   {/* MODIFICADO: Color del icono a emerald directamente */}
-                                   <Activity size={20} style={{ color: COLORS.emerald }} />
+                                   {/* ICONO CAMBIADO: HeartHandshake en vez de Activity */}
+                                   <HeartHandshake size={20} style={{ color: COLORS.emerald }} />
                                 </div>
                                 <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                                   Results
+                                   Partnership
                                 </span>
                              </div>
                              <div>
+                                {/* TEXTO CAMBIADO: Shared Victories */}
                                 <h3 className="text-3xl font-sans font-bold text-gray-900 leading-tight">
-                                  4.5x <span className="text-gray-400 text-xl">ROAS</span>
+                                  Shared <span className="text-gray-400">Victories</span>
                                 </h3>
                                 <p className="font-sans text-xs text-gray-500 font-medium mt-1">
-                                  Average return for partners.
+                                  We celebrate every win with you.
                                 </p>
                              </div>
                           </div>
 
-                          {/* Chart Content - Bottom Half (Absolute) */}
                           <div className="absolute bottom-0 left-0 right-0 h-[140px] w-full z-0">
                              <ProfitChart key={chartKey} />
                           </div>
                        </TiltCard>
 
-                       {/* ITEM 3: VIDEO CASE STUDY (INTERACTIVE) */}
+                       {/* CARD 3: VIDEO (Testimonios/Historias) */}
                        <TiltCard 
                         layout="position"
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -1040,7 +976,7 @@ export const FounderSection = () => {
                                    isCaseStudyActive ? "grayscale-0" : "grayscale opacity-60 group-hover:opacity-80"
                                 )}
                              >
-                                <source src="https://videos.pexels.com/video-files/5854659/5854659-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                                <source src="https://videos.pexels.com/video-files/3196071/3196071-uhd_2560_1440_25fps.mp4" type="video/mp4" />
                              </video>
                           </div>
 
@@ -1059,7 +995,7 @@ export const FounderSection = () => {
 
                              <div className="absolute bottom-5 left-5">
                                 <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-[11px] font-sans font-medium">
-                                   View Case Studies
+                                   Hear our Stories
                                 </span>
                              </div>
                           </motion.div>
@@ -1068,7 +1004,7 @@ export const FounderSection = () => {
                  )}
               </AnimatePresence>
 
-              {/* ITEM 4: PROCESS CARD (THE ECOSYSTEM) */}
+              {/* CARD 4: ECOSYSTEM (Human-led tech) */}
               <TiltCard 
                 layout
                 initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} 
@@ -1091,21 +1027,23 @@ export const FounderSection = () => {
                     : "bg-zinc-900 border-zinc-800"
                 )}
               >
-                 {/* BADGE ABSOLUTE */}
                  <div className={cn(
                     "absolute top-6 right-6 rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium z-20",
                     isLightMode 
                         ? "border-zinc-200 text-gray-500" 
                         : "border-white/20 text-white/60"
                  )}>
-                    Reach
+                    Expertise
                  </div>
 
                  <div className="grid grid-cols-12 gap-4 h-full items-center">
                     <div className="col-span-5 flex flex-col justify-center h-full">
-                        <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>The Ecosystem</h3>
+                        {/* TEXTO CAMBIADO: Enfoque en expertos */}
+                        <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>
+                          Expert Hands
+                        </h3>
                         <p className={cn("font-sans font-medium text-xs leading-relaxed", isLightMode ? "text-gray-500" : "text-white/70")}>
-                          Strategic campaigns across SEO, Google Ads, Social Media and more to capture high-intent prospects.
+                          We master the complex ecosystem of digital tools so you can focus on your business. Human strategy, powerful tech.
                         </p>
                     </div>
 
@@ -1117,8 +1055,7 @@ export const FounderSection = () => {
                  </div>
               </TiltCard>
 
-              {/* TARJETAS INFERIORES */}
-               {/* CARD A (National) */}
+               {/* CARD 5 (Inferior A): CERCANÍA */}
                <TiltCard 
                   layout
                   initial={{ opacity: 0, y: 20 }}
@@ -1130,14 +1067,15 @@ export const FounderSection = () => {
                >
                    <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
                       <div className="p-2.5 rounded-none mb-3 bg-zinc-50 border border-zinc-100">
-                         <Map className="w-5 h-5 text-gray-900" />
+                         {/* ICONO: Users para cercanía */}
+                         <Users className="w-5 h-5 text-gray-900" />
                       </div>
                       <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
-                         National<br/>
-                         <span className="text-gray-400">Scale</span>
+                         Always<br/>
+                         <span className="text-gray-400">Close</span>
                       </div>
                       <p className="text-[12px] font-sans font-medium leading-[1.4] text-gray-500">
-                        Scaling campaigns across every state and territory.
+                        Support that feels local, anywhere in Australia.
                       </p>
                    </div>
 
@@ -1145,15 +1083,15 @@ export const FounderSection = () => {
                       <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
                           <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
                           <img 
-                             src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?q=80&w=800&auto=format&fit=crop" 
-                             alt="Australian National Reach"
+                             src="https://images.unsplash.com/photo-1577415124269-1085074988ee?q=80&w=800&auto=format&fit=crop" 
+                             alt="Australian National Support"
                              className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
                           />
                       </div>
                    </div>
                </TiltCard>
 
-               {/* CARD B (Retention) */}
+               {/* CARD 6 (Inferior B): CONFIANZA */}
                <TiltCard 
                   layout
                   initial={{ opacity: 0, y: 20 }}
@@ -1172,7 +1110,7 @@ export const FounderSection = () => {
                             playsInline
                             className="w-full h-full object-cover grayscale scale-105 group-hover:scale-100 group-hover:grayscale-0 transition-all duration-700 ease-out"
                           >
-                            <source src="https://videos.pexels.com/video-files/3191572/3191572-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                            <source src="https://videos.pexels.com/video-files/3252038/3252038-uhd_2560_1440_25fps.mp4" type="video/mp4" />
                           </video>
                        </div>
 
@@ -1181,10 +1119,11 @@ export const FounderSection = () => {
                        <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
                          <div className="flex items-baseline gap-2 mb-1">
                            <span className="text-5xl font-sans font-semibold leading-none tracking-tighter">95%</span>
+                           {/* ICONO: ShieldCheck para confianza/seguridad */}
                            <ShieldCheck className="w-6 h-6 mb-2 text-white/80" />
                          </div>
                          <span className="text-[12px] font-sans font-medium leading-[1.4] text-white/60">
-                           Client retention rate over the last 12 months.
+                           Clients stay because they trust us.
                          </span>
                        </div>
                    </div>
@@ -1206,8 +1145,8 @@ export const FounderSection = () => {
                }}
                className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
             >
-              {/* MODIFICADO: Icono de TrendingUp y texto relacionado con crecimiento */}
-              <StatBadge icon={TrendingUp} label="Revenue Generated" value="$250M+" isLight={isLightMode} />
+              {/* Stat más humano: "Client Love" con corazón */}
+              <StatBadge icon={MessageCircleHeart} label="Client Satisfaction" value="100%" isLight={isLightMode} />
             </motion.div>
 
           </div>
