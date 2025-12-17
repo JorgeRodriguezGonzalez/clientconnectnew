@@ -409,12 +409,12 @@ export const SuperHero = ({
         { icon: XCircle, text: "0 Leads Today", color: "text-red-500", bg: "bg-red-500/10", border: "border-red-500/20" },
         { icon: TrendingDown, text: "High Cost Per Click", color: "text-orange-400", bg: "bg-orange-500/10", border: "border-orange-500/20" },
         { icon: DollarSign, text: "Ad Spend Wasted", color: "text-red-300", bg: "bg-red-900/20", border: "border-red-500/20" }
-        // Removed "No Time"
     ];
     
     // Generate more items for "noise"
-    // CHANGED: Reduced length from 25 to 22 (approx 10% less)
-    const lines = Array.from({ length: 22 }).map((_, i) => { 
+    // CHANGED: Reduced length to 15 (Option A)
+    const lines = Array.from({ length: 15 }).map((_, i) => { 
+      // CHANGED: Use simple random * 90 to match full height potential
       const topPos = Math.random() * 90;
       const problem = problems[Math.floor(Math.random() * problems.length)];
 
@@ -423,8 +423,7 @@ export const SuperHero = ({
         ...problem,
         top: `${topPos}%`,
         delay: `${Math.random() * 8}s`,
-        // CHANGED: Reduced duration (faster speed)
-        duration: `${5.4 + Math.random() * 4.5}s`, // Was 6 + ...
+        duration: `${5.4 + Math.random() * 4.5}s`,
       };
     });
     setPainPoints(lines);
@@ -450,15 +449,17 @@ export const SuperHero = ({
         return {
             id: Math.random().toString(36).substr(2, 9) + Date.now(),
             type: type, 
-            top: `${15 + Math.random() * 70}%`, 
+            // CHANGED: Use simple random * 90 to match inputs height range
+            top: `${Math.random() * 90}%`, 
             delay: `${delay}s`,
-            duration: `${6 + Math.random() * 3}s`, // Smooth flow
+            duration: `${6 + Math.random() * 3}s`, 
         };
     });
   };
 
   useEffect(() => {
-    setSuccessWidgets(generateSuccessWidgets('leads', 12, false));
+    // CHANGED: Initial count to 15 (Option A)
+    setSuccessWidgets(generateSuccessWidgets('leads', 15, false));
   }, []);
 
   const handlePhoneOptionChange = (id: string) => {
@@ -705,7 +706,6 @@ export const SuperHero = ({
                           <CheckCircle size={20} className="text-emerald-400" />
                        </div>
                        <div className="flex flex-col">
-                          {/* CHANGED: Text to Lead Booked */}
                           <span className="text-[15px] font-bold text-white leading-tight">Lead Booked</span>
                           <span className="text-[12px] text-emerald-400/80 font-medium">Ready for outreach</span>
                        </div>
@@ -725,7 +725,6 @@ export const SuperHero = ({
                   )}
 
                   {widget.type === 'call' && (
-                    // CHANGED: Colors to Lime to distinguish from Lead Booked
                     <div className="flex items-center gap-3 px-5 py-3 bg-lime-900/40 border-l-4 border-lime-500 rounded-r-lg shadow-xl backdrop-blur-sm">
                        <PhoneCall size={18} className="text-lime-400" />
                        <span className="text-[14px] font-medium text-white">Incoming Call: <span className="text-gray-400">04XX...</span></span>
