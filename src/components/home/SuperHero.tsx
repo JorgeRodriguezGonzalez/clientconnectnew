@@ -493,25 +493,31 @@ export const SuperHero = ({
       <style>{fontStyles}</style>
 
        {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
-         {/* 1. Video de Fondo (Marketing Office) - CORREGIDO */}
-         <video 
-            ref={(el) => {
-              if (el) {
-                // Forzamos la reproducción por código si el autoplay falla
-                el.play().catch(e => console.log("Autoplay prevented:", e));
-              }
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#050505]">
+         {/* 
+            SOLUCIÓN DEFINITIVA: 
+            Usamos dangerouslySetInnerHTML para inyectar el video como HTML puro.
+            Esto evita que React interfiera con los atributos 'muted' y 'autoplay',
+            lo cual es la causa #1 de que los videos no se reproduzcan automáticamente.
+            Usamos un vídeo de Mixkit (servidor rápido y fiable).
+         */}
+         <div 
+            className="absolute inset-0 w-full h-full"
+            dangerouslySetInnerHTML={{
+                __html: `
+                <video 
+                    class="absolute inset-0 w-full h-full object-cover opacity-60"
+                    autoplay 
+                    loop 
+                    muted 
+                    playsinline
+                    poster="https://assets.mixkit.co/videos/preview/mixkit-group-of-people-working-in-an-office-4977-0.jpg"
+                >
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-group-of-people-working-in-an-office-4977-large.mp4" type="video/mp4" />
+                </video>
+                `
             }}
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-            poster="https://images.pexels.com/photos/3129671/pexels-photo-3129671.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            className="absolute inset-0 w-full h-full object-cover opacity-80"
-         >
-            {/* Usamos una versión HD estándar (1920x1080) más rápida y compatible que la UHD */}
-            <source src="https://videos.pexels.com/video-files/3129671/3129671-hd_1920_1080_25fps.mp4" type="video/mp4" />
-         </video>
+         />
 
          {/* 2. El Overlay Final (Estático) */}
          <div 
@@ -520,14 +526,8 @@ export const SuperHero = ({
                 background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.7) 0%, rgba(5,5,5,0.88) 50%, #050505 100%)'
             }}
          ></div>
-
-         {/* 3. La "Cortina" Negra Sólida (Efecto fade-in) */}
-         <motion.div 
-            className="absolute inset-0 bg-[#050505]"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 0 }}
-            transition={{ delay: 0.2, duration: 1.5, ease: "easeInOut" }}
-         ></motion.div>
+         
+         {/* He eliminado la animación de la "cortina negra" inicial para asegurar que el video sea visible inmediatamente */}
       </div>
       
       <div className="relative z-10 w-full flex flex-col items-center">
