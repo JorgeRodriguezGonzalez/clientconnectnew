@@ -27,6 +27,7 @@ import { FloatingBanner } from "@/components/home/floatingbanner";
 import { Header } from "@/components/home/header";
 import { Footer } from "@/components/home/footer";
 import FAQSection from "@/components/home/faqs";
+import CaseStudiesSection from "@/components/home/case-studies";
 
 const Index = () => {
   return (
@@ -46,6 +47,7 @@ const Index = () => {
 
         <OurStepsVersion2 />
 
+        <CaseStudiesSection />
         <CloudHero />
         <BoxCards />
         <ComparisonSection />
