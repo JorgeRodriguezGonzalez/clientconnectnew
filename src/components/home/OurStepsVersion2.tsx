@@ -377,42 +377,63 @@ export default function FounderStory() {
           </div>
 
           {/* LISTA DE CAPITULOS (STORIES) */}
-          {/* MODIFICACIÓN: Aumentado el space-y para evitar que se cierren muy pronto al hacer scroll */}
-          <div className="mx-auto max-w-3xl space-y-32 md:space-y-60">
+          {/* CAMBIO 1: max-w-6xl en lugar de 3xl para permitir que el lado derecho sea ancho */}
+          <div className="mx-auto max-w-6xl space-y-40 md:space-y-64">
             {founderStoryEntries.map((entry, index) => {
               const isActive = index === activeIndex;
 
               return (
                 <div
                   key={index}
-                  className="relative flex flex-col gap-4 md:flex-row md:gap-16"
+                  className="relative flex flex-col md:flex-row gap-8 md:gap-20"
                   ref={(el) => setItemRef(el, index)}
                   aria-current={isActive ? "true" : "false"}
                 >
-                  {/* STICKY COLUMN (LEFT) - Icon & Title */}
-                  {/* MODIFICACIÓN: Aumentado ancho a w-80 y tamaños de fuente */}
-                  <div className="top-32 flex h-min w-auto md:w-80 shrink-0 items-start gap-4 md:sticky">
-                    <div className="flex items-center gap-4">
-                      {/* Icon Container */}
-                      <div 
+                  {/* STICKY COLUMN (LEFT) - REDISEÑO VISUAL */}
+                  {/* Ahora es más ancho (w-80 -> w-96 aprox) para acomodar el nuevo diseño */}
+                  <div className="top-40 flex h-min w-full md:w-[380px] shrink-0 flex-col md:sticky">
+                    
+                    {/* Número de fondo gigante */}
+                    <div 
                         className={cn(
-                          "p-2.5 rounded-none transition-colors duration-300 border border-transparent mt-1",
-                          isActive ? "text-black" : "bg-white/5 text-zinc-500 border-white/5"
+                            "absolute -top-10 -left-4 text-[120px] leading-none font-bold select-none transition-all duration-700",
+                            isActive ? "text-white/10 translate-y-0" : "text-white/0 translate-y-4"
                         )}
-                        style={{
-                          backgroundColor: isActive ? COLORS.cyan : undefined
-                        }}
-                      >
-                        <entry.icon className="h-5 w-5" />
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <span className={cn("text-xl md:text-2xl font-bold transition-colors duration-300 leading-tight", isActive ? "text-white" : "text-zinc-500")}>
-                          {entry.title}
-                        </span>
-                        <span className="text-sm text-zinc-600 font-medium">
-                          {entry.subtitle}
-                        </span>
-                      </div>
+                        style={{ fontFamily: 'Arial, sans-serif' }} // O tu fuente principal
+                    >
+                        0{index + 1}
+                    </div>
+
+                    <div className="relative z-10 flex flex-col gap-3 pl-2">
+                        {/* Subtítulo + Icono estilizados */}
+                        <div className="flex items-center gap-3">
+                            <div className={cn(
+                                "transition-colors duration-500",
+                                isActive ? "text-[#34d399]" : "text-zinc-600"
+                            )}>
+                                <entry.icon className="w-5 h-5" />
+                            </div>
+                            <span className={cn(
+                                "text-xs font-bold uppercase tracking-[0.15em] transition-colors duration-500",
+                                isActive ? "text-[#34d399]" : "text-zinc-600"
+                            )}>
+                                {entry.subtitle.split("•")[0]} {/* Solo mostramos la primera parte para limpieza visual */}
+                            </span>
+                        </div>
+
+                        {/* Título Grande */}
+                        <h3 className={cn(
+                            "text-3xl md:text-4xl font-bold leading-[1.1] transition-all duration-500",
+                            isActive ? "text-white" : "text-zinc-700"
+                        )}>
+                            {entry.title}
+                        </h3>
+
+                        {/* Barra decorativa animada */}
+                        <div className={cn(
+                            "h-1 mt-2 w-12 transition-all duration-700 rounded-full",
+                            isActive ? "bg-gradient-to-r from-emerald-400 to-cyan-400 w-24 opacity-100" : "bg-zinc-800 w-8 opacity-0"
+                        )} />
                     </div>
                   </div>
 
@@ -424,7 +445,8 @@ export default function FounderStory() {
                   />
 
                   {/* CONTENT COLUMN (RIGHT) */}
-                  <div className="relative flex-1">
+                  {/* Al aumentar el max-w del padre a 6xl, este flex-1 recupera su ancho original */}
+                  <div className="relative flex-1 min-w-0">
                     
                     {/* Glowing Effect Wrapper */}
                     <div className="absolute -inset-[1px] rounded-none opacity-0 transition-opacity duration-500" style={{ opacity: isActive ? 1 : 0 }}>
@@ -440,14 +462,14 @@ export default function FounderStory() {
 
                     <article
                       className={
-                        "relative flex flex-col rounded-none border p-6 transition-all duration-300 " +
+                        "relative flex flex-col rounded-none border p-8 transition-all duration-300 " +
                         (isActive
-                          ? "bg-zinc-900 z-10 border-transparent"
-                          : "bg-white/5 border-white/5 opacity-60 grayscale")
+                          ? "bg-zinc-900 z-10 border-transparent shadow-2xl shadow-black/50"
+                          : "bg-white/5 border-white/5 opacity-40 grayscale blur-[1px]")
                       }
                     >
                       {entry.image && (
-                        <div className="mb-6 w-full h-64 overflow-hidden bg-black border-b border-white/10 relative group">
+                        <div className="mb-8 w-full h-[320px] overflow-hidden bg-black border-b border-white/10 relative group">
                             <img
                                 src={entry.image}
                                 alt={`${entry.title} visual`}
@@ -458,11 +480,11 @@ export default function FounderStory() {
                         </div>
                       )}
                       
-                      <div className="space-y-4">
+                      <div className="space-y-6">
                         <div className="space-y-2">
                           <p
                             className={
-                              "text-sm leading-relaxed md:text-base transition-all duration-300 font-medium " +
+                              "text-base leading-relaxed md:text-lg transition-all duration-300 font-medium " +
                               (isActive 
                                 ? "text-zinc-300" 
                                 : "text-zinc-500")
@@ -484,15 +506,15 @@ export default function FounderStory() {
                           <div className="overflow-hidden">
                             <div className="space-y-6 pt-2">
                               {entry.items && entry.items.length > 0 && (
-                                <div className="rounded-none border-l-2 border-white/10 pl-4 py-1">
-                                  <ul className="space-y-3">
+                                <div className="rounded-none border-l-2 border-white/10 pl-6 py-2">
+                                  <ul className="space-y-4">
                                     {entry.items.map((item, itemIndex) => (
                                       <li 
                                         key={itemIndex} 
-                                        className="flex items-start gap-3 text-sm text-zinc-400"
+                                        className="flex items-start gap-3 text-sm md:text-base text-zinc-400"
                                       >
                                         <div 
-                                          className="mt-1.5 h-1.5 w-1.5 rounded-none flex-shrink-0"
+                                          className="mt-2 h-1.5 w-1.5 rounded-none flex-shrink-0"
                                           style={{ backgroundColor: COLORS.emerald }}
                                         />
                                         <span className="leading-relaxed">{item}</span>
@@ -503,10 +525,10 @@ export default function FounderStory() {
                               )}
 
                               {entry.button && (
-                                <div className="flex justify-start pt-2">
+                                <div className="flex justify-start pt-4">
                                   <Button 
                                     size="lg"
-                                    className="group font-bold transition-all duration-200 text-white rounded-none border-none px-8"
+                                    className="group font-bold transition-all duration-200 text-white rounded-none border-none px-8 h-12 text-base"
                                     style={{
                                       backgroundImage: `linear-gradient(135deg, ${COLORS.emerald}, ${COLORS.cyan})`,
                                     }}
@@ -514,7 +536,7 @@ export default function FounderStory() {
                                   >
                                     <a href={entry.button.url}>
                                       {entry.button.text} 
-                                      <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                                      <ArrowUpRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                                     </a>
                                   </Button>
                                 </div>
