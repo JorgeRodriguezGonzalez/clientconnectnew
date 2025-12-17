@@ -386,15 +386,17 @@ export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
 }: SuperHeroProps) => {
-  const lampColor = "#06b6d4"; 
+  // --- COLOR MODIFICADO: Cyan casi blanco ---
+  const lampColor = "#ecfeff"; 
   const emeraldColor = "#34d399"; 
 
   const [isHovered, setIsHovered] = useState(false);
 
+  // --- SECUENCIA DE COLOR MODIFICADA: Tonos muy claros ---
   const radialColorSequence = [
-    "radial-gradient(circle at bottom center, #06b6d4, transparent 70%)", 
-    "radial-gradient(circle at bottom center, #22d3ee, transparent 70%)", 
-    "radial-gradient(circle at bottom center, #06b6d4, transparent 70%)"
+    "radial-gradient(circle at bottom center, #ecfeff, transparent 70%)", 
+    "radial-gradient(circle at bottom center, #cffafe, transparent 70%)", 
+    "radial-gradient(circle at bottom center, #ecfeff, transparent 70%)"
   ];
 
   // --- LOGIC FOR INPUTS (Left Side) - Pain Points ---
@@ -577,7 +579,7 @@ export const SuperHero = ({
                     </motion.div>
                 </div>
                 
-                {/* --- CYAN LINE --- */}
+                {/* --- CYAN LINE (Modified to be much whiter) --- */}
                 <motion.div 
                     initial={{ opacity: 0, width: "15rem" }} 
                     animate={{ opacity: 1, width: "28rem", backgroundColor: lampColor }} 
