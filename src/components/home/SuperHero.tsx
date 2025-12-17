@@ -539,7 +539,7 @@ export const SuperHero = ({
                         {/* Right Cone */}
                         <motion.div
                           initial={{ opacity: 0, width: "15rem" }}
-                          animate={{ opacity: 0.2, width: "28rem", "--gradient-color": lampColor }} 
+                          animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }} 
                           transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
                           style={{ 
                               backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 35%, transparent 100%)`, 
@@ -551,7 +551,7 @@ export const SuperHero = ({
                         {/* Left Cone */}
                         <motion.div
                           initial={{ opacity: 0, width: "15rem" }}
-                          animate={{ opacity: 0.2, width: "28rem", "--gradient-color": lampColor }}
+                          animate={{ opacity: 0.5, width: "28rem", "--gradient-color": lampColor }}
                           transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
                           style={{ 
                               backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 65%, var(--gradient-color) 100%)`, 
@@ -563,13 +563,13 @@ export const SuperHero = ({
                         {/* GLOWS */}
                         <motion.div 
                             initial={{ opacity: 0 }} 
-                            animate={{ opacity: 0.2, backgroundColor: lampColor }} 
+                            animate={{ opacity: 0.4, backgroundColor: lampColor }} 
                             transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
                             className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-[28rem] rounded-full blur-3xl" 
                         />
                         <motion.div 
                             initial={{ opacity: 0, width: "8rem" }} 
-                            animate={{ opacity: 0.5, width: "16rem", backgroundColor: lampColor }} 
+                            animate={{ opacity: 0.8, width: "16rem", backgroundColor: lampColor }} 
                             transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }} 
                             className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-64 rounded-full blur-2xl" 
                         />
