@@ -184,7 +184,6 @@ export const founderStoryEntries: StoryEntry[] = [
       "Contracts that locked us in while we bled cash",
       "The realization: 'No one is coming to save us'",
     ],
-    // FOTO SUSTITUIDA
     image: "/images/tradies.jpg",
   },
   {
@@ -376,7 +375,8 @@ export default function FounderStory() {
           </div>
 
           {/* LISTA DE CAPITULOS (STORIES) */}
-          <div className="mx-auto w-full space-y-40 md:space-y-64">
+          {/* CAMBIO CLAVE 1: Aumentado el space-y para que tarde más en cambiar de foco al hacer scroll */}
+          <div className="mx-auto w-full space-y-60 md:space-y-[32rem]">
             {founderStoryEntries.map((entry, index) => {
               const isActive = index === activeIndex;
 
@@ -434,11 +434,11 @@ export default function FounderStory() {
                     </div>
                   </div>
 
-                  {/* Invisible sentinel for scroll detection */}
+                  {/* CAMBIO CLAVE 2: Posicionamiento del Sentinel en el centro absoluto (top-1/2) */}
                   <div
                     ref={(el) => setSentinelRef(el, index)}
                     aria-hidden
-                    className="absolute -top-24 left-0 h-12 w-12 opacity-0"
+                    className="absolute top-1/2 -translate-y-1/2 left-0 h-12 w-12 opacity-0 pointer-events-none"
                   />
 
                   {/* CONTENT COLUMN (TARJETAS) */}
