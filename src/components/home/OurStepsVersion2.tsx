@@ -184,9 +184,8 @@ export const founderStoryEntries: StoryEntry[] = [
       "Contracts that locked us in while we bled cash",
       "The realization: 'No one is coming to save us'",
     ],
-    // FOTO: Tools/Laptop
-    image:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2670&auto=format&fit=crop",
+    // FOTO SUSTITUIDA
+    image: "/images/tradies.jpg",
   },
   {
     icon: HardHat,
@@ -200,7 +199,6 @@ export const founderStoryEntries: StoryEntry[] = [
       "Testing strategies with our own money, not yours",
       "Understanding the difference between a lead and a job",
     ],
-    // FOTO: Stressed/Night
     image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2600&auto=format&fit=crop",
   },
   {
@@ -467,7 +465,6 @@ export default function FounderStory() {
                       }
                     >
                       {entry.image && (
-                        // MODIFICACIÓN: Altura reducida a h-[240px] para efecto panorámico
                         <div className="mb-8 w-full h-[240px] overflow-hidden bg-black border-b border-white/10 relative group">
                             <img
                                 src={entry.image}
