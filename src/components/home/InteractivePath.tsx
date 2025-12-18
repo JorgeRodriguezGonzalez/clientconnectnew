@@ -1,8 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView, Variants } from 'framer-motion';
 import { 
-  Megaphone, Search, Layout, Target, Mail, BarChart3, 
-  TrendingUp, Users, MousePointer2, Zap 
+  Megaphone,      // Para Ads
+  Search,         // Para SEO
+  Layout,         // Para Web Dev
+  Target,         // Para Estrategia
+  Mail,           // Para CRM/Email
+  BarChart3,      // Para Analytics
+  TrendingUp,     // Icono extra stats
+  Users,          // Icono extra stats
+  MousePointer2,  // Icono extra stats
+  Zap             // Icono extra stats
 } from 'lucide-react';
 
 // --- UTILS & CONFIG ---
@@ -24,6 +32,7 @@ const BackgroundDotPattern = () => (
   />
 );
 
+// --- ANIMATION VARIANTS ---
 const PATH_VARIANTS: Variants = {
   hidden: { pathLength: 0, opacity: 0 },
   visible: { 
@@ -34,11 +43,12 @@ const PATH_VARIANTS: Variants = {
 };
 
 const NODE_VARIANTS: Variants = {
-  idle: { scale: 1 },
-  hover: { scale: 1.1, transition: { duration: 0.3 } },
+  idle: { scale: 1, strokeWidth: 2 },
+  hover: { scale: 1.1, strokeWidth: 3, transition: { duration: 0.3 } },
   tap: { scale: 0.95 }
 };
 
+// --- TYPES ---
 type NodePoint = {
   id: string;
   x: number;
@@ -49,16 +59,77 @@ type NodePoint = {
   stat: string;
 };
 
+// --- DATOS DE MARKETING ---
 const nodes: NodePoint[] = [
-  { id: 'strategy', x: 225, y: 30, label: 'Strategy', icon: Target, description: 'Market positioning, audience targeting, and core messaging.', stat: 'Data-Driven' },
-  { id: 'ads', x: 100, y: 90, label: 'Paid Media', icon: Megaphone, description: 'High-ROI campaigns on Meta, Google, and LinkedIn.', stat: '4.5x ROAS' },
-  { id: 'seo', x: 350, y: 90, label: 'SEO & Content', icon: Search, description: 'Organic authority building and keyword dominance.', stat: '+150% Traffic' },
-  { id: 'web', x: 225, y: 150, label: 'Web Development', icon: Layout, description: 'High-performance conversion engines and landing pages.', stat: '5% Conv. Rate' },
-  { id: 'crm', x: 100, y: 210, label: 'Automation', icon: Mail, description: 'Lead nurturing sequences and CRM integration.', stat: '24/7 Active' },
-  { id: 'analytics', x: 350, y: 210, label: 'Analytics', icon: BarChart3, description: 'Real-time performance tracking and optimization.', stat: '100% Clarity' }
+  {
+    id: 'strategy',
+    x: 225, 
+    y: 30,
+    label: 'Strategy',
+    icon: Target,
+    description: 'Market positioning, audience targeting, and core messaging.',
+    stat: 'Data-Driven'
+  },
+  {
+    id: 'ads',
+    x: 100,
+    y: 90,
+    label: 'Paid Media',
+    icon: Megaphone,
+    description: 'High-ROI campaigns on Meta, Google, and LinkedIn.',
+    stat: '4.5x ROAS'
+  },
+  {
+    id: 'seo',
+    x: 350,
+    y: 90,
+    label: 'SEO & Content',
+    icon: Search,
+    description: 'Organic authority building and keyword dominance.',
+    stat: '+150% Traffic'
+  },
+  {
+    id: 'web',
+    x: 225, // Centro (Donde converge el tráfico)
+    y: 150,
+    label: 'Web Development',
+    icon: Layout,
+    description: 'High-performance conversion engines and landing pages.',
+    stat: '5% Conv. Rate'
+  },
+  {
+    id: 'crm',
+    x: 100,
+    y: 210,
+    label: 'Automation',
+    icon: Mail,
+    description: 'Lead nurturing sequences and CRM integration.',
+    stat: '24/7 Active'
+  },
+  {
+    id: 'analytics',
+    x: 350,
+    y: 210,
+    label: 'Analytics',
+    icon: BarChart3,
+    description: 'Real-time performance tracking and optimization.',
+    stat: '100% Clarity'
+  }
 ];
 
-const NodeIcon = ({ node, active, onClick }: { node: NodePoint; active: boolean; onClick: (e: React.MouseEvent) => void }) => {
+// --- SUB-COMPONENT: NODE ---
+const NodeIcon = ({
+  node,
+  active,
+  onClick
+}: {
+  node: NodePoint;
+  active: boolean;
+  onClick: () => void;
+}) => {
+  // Lógica de color: Tráfico (Cyan) vs Conversión/Retención (Emerald)
+  // Strategy, Ads, SEO = Cyan
+  // Web, CRM, Analytics = Emerald
   const isEmerald = ['web', 'crm', 'analytics'].includes(node.id);
   const activeColor = isEmerald ? COLORS.emerald : COLORS.cyan;
   const activeClass = isEmerald ? 'text-emerald-500' : 'text-cyan-500';
@@ -67,64 +138,116 @@ const NodeIcon = ({ node, active, onClick }: { node: NodePoint; active: boolean;
     <motion.g 
       className="cursor-pointer group" 
       variants={NODE_VARIANTS} 
-      initial="idle" whileHover="hover" whileTap="tap" 
+      initial="idle"
+      whileHover="hover" 
+      whileTap="tap" 
       onClick={onClick}
     >
+      {/* Outer Glow Ring (Only on Active) */}
       <AnimatePresence>
         {active && (
-          <motion.circle cx={node.x} cy={node.y} r="32" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 0.2, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} fill={activeColor} />
+          <motion.circle
+            cx={node.x}
+            cy={node.y}
+            r="32"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.2, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            fill={activeColor}
+          />
         )}
       </AnimatePresence>
-      <circle cx={node.x} cy={node.y} r="24" className={cn("transition-all duration-300", active ? "fill-white" : "fill-white group-hover:fill-zinc-50")} stroke={active ? activeColor : "#e4e4e7"} strokeWidth={active ? 2 : 1} />
+
+      {/* Main Circle Background */}
+      <circle 
+        cx={node.x} 
+        cy={node.y} 
+        r="24" 
+        className={cn(
+          "transition-all duration-300",
+          active ? "fill-white" : "fill-white group-hover:fill-zinc-50"
+        )}
+        stroke={active ? activeColor : "#e4e4e7"}
+        strokeWidth={active ? 2 : 1}
+      />
+      
+      {/* Icon */}
       <foreignObject x={node.x - 12} y={node.y - 12} width="24" height="24" className="pointer-events-none">
         <div className="w-full h-full flex items-center justify-center">
-            <node.icon size={18} className={cn("transition-colors duration-300", active ? activeClass : "text-zinc-400 group-hover:text-zinc-600")} />
+            <node.icon 
+                size={18}
+                className={cn(
+                    "transition-colors duration-300",
+                    active ? activeClass : "text-zinc-400 group-hover:text-zinc-600"
+                )} 
+            />
         </div>
       </foreignObject>
-      <text x={node.x} y={node.y + 45} textAnchor="middle" className={cn("text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-sans", active ? "fill-zinc-900" : "fill-zinc-400")}>
+
+      {/* Label Underneath */}
+      <text 
+        x={node.x} 
+        y={node.y + 45} 
+        textAnchor="middle" 
+        className={cn(
+            "text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-sans",
+            active ? "fill-zinc-900" : "fill-zinc-400"
+        )}
+      >
         {node.label}
       </text>
     </motion.g>
   );
 };
 
+// --- MAIN COMPONENT ---
 const InteractivePath = () => {
   const [activeNode, setActiveNode] = useState<NodePoint | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
-  // Cerrar al clicar fuera de la tarjeta
-  useEffect(() => {
-    const handleGlobalClick = (e: MouseEvent) => {
-      // Si hay una tarjeta abierta y el clic NO es dentro de la tarjeta, cerramos
-      if (activeNode && cardRef.current && !cardRef.current.contains(e.target as Node)) {
-        setActiveNode(null);
-      }
-    };
-    // Usamos mousedown para que sea más reactivo
-    document.addEventListener('mousedown', handleGlobalClick);
-    return () => document.removeEventListener('mousedown', handleGlobalClick);
-  }, [activeNode]);
-
   return (
-    <section ref={containerRef} className="relative w-full py-24 bg-[#FAFAFA] overflow-hidden border-t border-zinc-200">
+    <section className="relative w-full py-24 bg-[#FAFAFA] overflow-hidden border-t border-zinc-200">
       <BackgroundDotPattern />
       
-      <div className="relative z-10 max-w-5xl mx-auto px-6">
+      <div className="relative z-10 max-w-5xl mx-auto px-6" ref={containerRef}>
+        
+        {/* HEADER SECTION */}
         <div className="flex flex-col items-center text-center mb-16 gap-4">
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 bg-white/50 backdrop-blur-sm">
+            <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 bg-white/50 backdrop-blur-sm"
+            >
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] font-bold uppercase tracking-[2px] text-zinc-500">Growth Ecosystem</span>
+                <span className="text-[10px] font-bold uppercase tracking-[2px] text-zinc-500">
+                    Growth Ecosystem
+                </span>
             </motion.div>
-            <motion.h2 initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900">
+
+            <motion.h2 
+                initial={{ opacity: 0, y: 10 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.1 }}
+                className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900"
+            >
                 Integrated <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Growth Engine</span>
             </motion.h2>
+            
+            <motion.p 
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.2 }}
+                className="text-zinc-500 max-w-lg leading-relaxed text-sm md:text-base"
+            >
+                Visualizing how we attract, convert, and retain your ideal customers. Click on any node to see how the pieces fit together.
+            </motion.p>
         </div>
 
-        <div className="relative w-full bg-white border border-zinc-200 rounded-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-visible">
+        {/* INTERACTIVE DIAGRAM */}
+        <div className="relative w-full bg-white border border-zinc-200 rounded-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
             
-            {/* Decoración superior: Gradiente y los 3 puntos originales (zinc-200) a la IZQUIERDA */}
+            {/* Top Bar Decoration */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 opacity-50" />
             <div className="absolute top-4 left-4 flex gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-zinc-200" />
@@ -134,61 +257,135 @@ const InteractivePath = () => {
 
             <div className="relative w-full aspect-[16/9] md:aspect-[2/1] p-8 md:p-12">
                 <svg viewBox="0 0 450 260" className="w-full h-full overflow-visible">
-                    <motion.path d="M 225 30 L 100 90 L 225 150 L 350 90 Z" fill="none" stroke={COLORS.cyan} strokeWidth="1.5" strokeOpacity="0.2" strokeDasharray="4 4" variants={PATH_VARIANTS} initial="hidden" animate={isInView ? "visible" : "hidden"} />
-                    <motion.path d="M 100 90 L 100 210 L 225 150 M 350 90 L 350 210 L 225 150" fill="none" stroke={COLORS.emerald} strokeWidth="1.5" strokeOpacity="0.2" variants={PATH_VARIANTS} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.5 }} />
+                    
+                    {/* CONNECTIONS (Lines) */}
+                    
+                    {/* PATH 1: Traffic Injection (Cyan) - Strategy -> Ads/SEO -> Web */}
+                    <motion.path 
+                        d="M 225 30 L 100 90 L 225 150 L 350 90 Z" 
+                        fill="none" 
+                        stroke="#f4f4f5" 
+                        strokeWidth="1" 
+                    />
+                    <motion.path 
+                        d="M 225 30 L 100 90 L 225 150 L 350 90 Z" 
+                        fill="none" 
+                        stroke={COLORS.cyan} 
+                        strokeWidth="1.5" 
+                        strokeOpacity="0.4"
+                        strokeDasharray="4 4"
+                        variants={PATH_VARIANTS} 
+                        initial="hidden" 
+                        animate={isInView ? "visible" : "hidden"} 
+                    />
 
+                    {/* PATH 2: Conversion & Retention (Emerald) - Web -> CRM/Analytics */}
+                    <motion.path 
+                        d="M 100 90 L 100 210 L 225 150 M 350 90 L 350 210 L 225 150" 
+                        fill="none" 
+                        stroke="#f4f4f5" 
+                        strokeWidth="1" 
+                    />
+                    <motion.path 
+                        d="M 100 90 L 100 210 L 225 150 M 350 90 L 350 210 L 225 150" 
+                        fill="none" 
+                        stroke={COLORS.emerald} 
+                        strokeWidth="1.5" 
+                        strokeOpacity="0.4"
+                        variants={PATH_VARIANTS} 
+                        initial="hidden" 
+                        animate={isInView ? "visible" : "hidden"}
+                        transition={{ delay: 0.5 }} 
+                    />
+
+                    {/* Active Path Highlight (Dynamic) */}
+                    <AnimatePresence>
+                        {activeNode && (
+                        <motion.path 
+                            key="active-path" 
+                            d="M 225 30 L 100 90 L 225 150 L 350 90 Z" 
+                            fill="none" 
+                            // Color dinámico según si es nodo de tráfico o conversión
+                            stroke={['web', 'crm', 'analytics'].includes(activeNode.id) ? COLORS.emerald : COLORS.cyan} 
+                            strokeWidth="2" 
+                            initial={{ pathLength: 0, opacity: 0 }} 
+                            animate={{ pathLength: 1, opacity: 1 }} 
+                            exit={{ opacity: 0 }} 
+                            transition={{ duration: 0.8 }} 
+                        />
+                        )}
+                    </AnimatePresence>
+
+                    {/* Nodes */}
                     {nodes.map(node => (
                         <NodeIcon 
                             key={node.id} 
                             node={node} 
                             active={activeNode?.id === node.id} 
-                            onClick={(e) => {
-                                e.stopPropagation(); // Evita que el clic en el nodo cierre la tarjeta inmediatamente
-                                setActiveNode(node);
-                            }} 
+                            onClick={() => setActiveNode(node)} 
                         />
                     ))}
                 </svg>
 
-                {/* --- TARJETA EXPLICATIVA POSICIONADA --- */}
-                <AnimatePresence>
-                    {activeNode && (
+                {/* Floating Info Card (Bottom Center) */}
+                <AnimatePresence mode="wait">
+                    {activeNode ? (
                         <motion.div 
-                            ref={cardRef}
-                            initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                            animate={{ 
-                                opacity: 1, scale: 1, y: 0,
-                                left: activeNode.x < 150 ? '20px' : (activeNode.x > 300 ? 'auto' : `${(activeNode.x / 450) * 100}%`),
-                                right: activeNode.x > 300 ? '20px' : 'auto',
-                                top: `${(activeNode.y / 260) * 100}%`
-                            }}
-                            exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                            style={{ 
-                                position: 'absolute',
-                                transform: `translate(${activeNode.x >= 150 && activeNode.x <= 300 ? '-50%' : '0%'}, ${activeNode.y > 150 ? '-120%' : '35px'})`,
-                                pointerEvents: 'auto'
-                            }}
-                            className="w-64 bg-white border border-zinc-200 shadow-2xl z-50 rounded-lg overflow-hidden"
-                            onClick={(e) => e.stopPropagation()} // Clics dentro de la tarjeta no la cierran
+                            key={activeNode.id}
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute bottom-6 left-1/2 -translate-x-1/2 w-72 bg-white/90 backdrop-blur-md border border-zinc-200 shadow-xl z-20 rounded-sm"
                         >
                             <div className="p-4">
                                 <div className="flex items-center gap-3 mb-2">
-                                    <div className={cn("p-1.5 rounded-md border", ['web', 'crm', 'analytics'].includes(activeNode.id) ? "bg-emerald-50 border-emerald-100 text-emerald-600" : "bg-cyan-50 border-cyan-100 text-cyan-600")}>
+                                    <div className={cn(
+                                        "p-1.5 rounded-sm border",
+                                        ['web', 'crm', 'analytics'].includes(activeNode.id) 
+                                            ? "bg-emerald-50 border-emerald-100 text-emerald-600" 
+                                            : "bg-cyan-50 border-cyan-100 text-cyan-600"
+                                    )}>
                                         <activeNode.icon size={16} />
                                     </div>
-                                    <h3 className="font-bold text-zinc-900 text-sm uppercase tracking-wide">{activeNode.label}</h3>
+                                    <h3 className="font-bold text-zinc-900 text-sm uppercase tracking-wide">
+                                        {activeNode.label}
+                                    </h3>
                                 </div>
-                                <p className="text-xs text-zinc-500 leading-relaxed font-medium mb-3">{activeNode.description}</p>
+                                
+                                <p className="text-xs text-zinc-500 leading-relaxed font-medium mb-3">
+                                    {activeNode.description}
+                                </p>
+                                
                                 <div className="pt-3 border-t border-zinc-100 flex justify-between items-center">
                                     <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Performance</span>
-                                    <span className={cn("text-[10px] font-bold font-mono", ['web', 'crm', 'analytics'].includes(activeNode.id) ? "text-emerald-600" : "text-cyan-600")}>{activeNode.stat}</span>
+                                    <span className={cn(
+                                        "text-[10px] font-bold font-mono",
+                                        ['web', 'crm', 'analytics'].includes(activeNode.id) 
+                                            ? "text-emerald-600" 
+                                            : "text-cyan-600"
+                                    )}>
+                                        {activeNode.stat}
+                                    </span>
                                 </div>
                             </div>
+                        </motion.div>
+                    ) : (
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none"
+                        >
+                            <span className="px-3 py-1.5 bg-zinc-100 border border-zinc-200 text-zinc-400 text-[10px] font-bold uppercase tracking-widest rounded-sm">
+                                Explore the ecosystem
+                            </span>
                         </motion.div>
                     )}
                 </AnimatePresence>
             </div>
 
+            {/* Bottom Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 border-t border-zinc-200 divide-x divide-zinc-200 bg-zinc-50/50">
                 {[
                    { label: "Client ROAS", value: "450%", icon: TrendingUp, color: "text-emerald-600" },
@@ -201,7 +398,9 @@ const InteractivePath = () => {
                             <stat.icon size={12} className="text-zinc-400" />
                             <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">{stat.label}</span>
                         </div>
-                        <span className={cn("text-xl md:text-2xl font-bold tracking-tight", stat.color)}>{stat.value}</span>
+                        <span className={cn("text-xl md:text-2xl font-bold tracking-tight", stat.color)}>
+                            {stat.value}
+                        </span>
                     </div>
                 ))}
             </div>
