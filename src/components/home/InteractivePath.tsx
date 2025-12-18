@@ -1,6 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView, Variants } from 'framer-motion';
-import { Network, Database, Cloud, ShieldCheck, Layers, Cpu, Zap, Activity, Server, Lock } from 'lucide-react';
+import { 
+  Megaphone,      // Para Ads
+  Search,         // Para SEO
+  Layout,         // Para Web Dev
+  Target,         // Para Estrategia
+  Mail,           // Para CRM/Email
+  BarChart3,      // Para Analytics
+  TrendingUp,     // Icono extra stats
+  Users,          // Icono extra stats
+  MousePointer2,  // Icono extra stats
+  Zap             // Icono extra stats
+} from 'lucide-react';
 
 // --- UTILS & CONFIG ---
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
@@ -21,7 +32,7 @@ const BackgroundDotPattern = () => (
   />
 );
 
-// --- ANIMATION VARIANTS (FIXED TYPE) ---
+// --- ANIMATION VARIANTS ---
 const PATH_VARIANTS: Variants = {
   hidden: { pathLength: 0, opacity: 0 },
   visible: { 
@@ -48,60 +59,61 @@ type NodePoint = {
   stat: string;
 };
 
+// --- DATOS DE MARKETING ---
 const nodes: NodePoint[] = [
   {
-    id: 'cloud',
+    id: 'strategy',
     x: 225, 
     y: 30,
-    label: 'Ingress API',
-    icon: Cloud,
-    description: 'High-throughput entry point handling external requests.',
-    stat: '1.2M req/s'
+    label: 'Strategy',
+    icon: Target,
+    description: 'Market positioning, audience targeting, and core messaging.',
+    stat: 'Data-Driven'
   },
   {
-    id: 'db',
+    id: 'ads',
     x: 100,
     y: 90,
-    label: 'Data Store',
-    icon: Database,
-    description: 'Distributed persistence layer with sharding.',
-    stat: '0.4ms Latency'
+    label: 'Paid Media',
+    icon: Megaphone,
+    description: 'High-ROI campaigns on Meta, Google, and LinkedIn.',
+    stat: '4.5x ROAS'
   },
   {
-    id: 'cpu',
+    id: 'seo',
     x: 350,
     y: 90,
-    label: 'Compute Unit',
-    icon: Cpu,
-    description: 'Serverless execution environment for business logic.',
-    stat: 'Auto-Scaling'
+    label: 'SEO & Content',
+    icon: Search,
+    description: 'Organic authority building and keyword dominance.',
+    stat: '+150% Traffic'
   },
   {
-    id: 'shield',
-    x: 225,
+    id: 'web',
+    x: 225, // Centro (Donde converge el tráfico)
     y: 150,
-    label: 'Firewall',
-    icon: ShieldCheck,
-    description: 'Real-time threat detection and packet filtering.',
-    stat: '0 Threats'
+    label: 'Web Development',
+    icon: Layout,
+    description: 'High-performance conversion engines and landing pages.',
+    stat: '5% Conv. Rate'
   },
   {
-    id: 'layers',
+    id: 'crm',
     x: 100,
     y: 210,
-    label: 'Integration',
-    icon: Layers,
-    description: 'Middleware processing and message queuing.',
-    stat: '99.99% Uptime'
+    label: 'Automation',
+    icon: Mail,
+    description: 'Lead nurturing sequences and CRM integration.',
+    stat: '24/7 Active'
   },
   {
-    id: 'network',
+    id: 'analytics',
     x: 350,
     y: 210,
-    label: 'Gateway',
-    icon: Network,
-    description: 'Final edge distribution and load balancing.',
-    stat: 'Global CDN'
+    label: 'Analytics',
+    icon: BarChart3,
+    description: 'Real-time performance tracking and optimization.',
+    stat: '100% Clarity'
   }
 ];
 
@@ -115,7 +127,10 @@ const NodeIcon = ({
   active: boolean;
   onClick: () => void;
 }) => {
-  const isEmerald = ['db', 'layers', 'shield'].includes(node.id);
+  // Lógica de color: Tráfico (Cyan) vs Conversión/Retención (Emerald)
+  // Strategy, Ads, SEO = Cyan
+  // Web, CRM, Analytics = Emerald
+  const isEmerald = ['web', 'crm', 'analytics'].includes(node.id);
   const activeColor = isEmerald ? COLORS.emerald : COLORS.cyan;
   const activeClass = isEmerald ? 'text-emerald-500' : 'text-cyan-500';
 
@@ -206,7 +221,7 @@ const InteractivePath = () => {
             >
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-[10px] font-bold uppercase tracking-[2px] text-zinc-500">
-                    System Architecture
+                    Growth Ecosystem
                 </span>
             </motion.div>
 
@@ -216,7 +231,7 @@ const InteractivePath = () => {
                 transition={{ delay: 0.1 }}
                 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900"
             >
-                Intelligent <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Data Flow</span>
+                Integrated <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Growth Engine</span>
             </motion.h2>
             
             <motion.p 
@@ -225,7 +240,7 @@ const InteractivePath = () => {
                 transition={{ delay: 0.2 }}
                 className="text-zinc-500 max-w-lg leading-relaxed text-sm md:text-base"
             >
-                Visualizing the interconnected nodes of our proprietary growth engine. Click on any node to inspect layer details.
+                Visualizing how we attract, convert, and retain your ideal customers. Click on any node to see how the pieces fit together.
             </motion.p>
         </div>
 
@@ -244,7 +259,8 @@ const InteractivePath = () => {
                 <svg viewBox="0 0 450 260" className="w-full h-full overflow-visible">
                     
                     {/* CONNECTIONS (Lines) */}
-                    {/* Left Diamond */}
+                    
+                    {/* PATH 1: Traffic Injection (Cyan) - Strategy -> Ads/SEO -> Web */}
                     <motion.path 
                         d="M 225 30 L 100 90 L 225 150 L 350 90 Z" 
                         fill="none" 
@@ -263,7 +279,7 @@ const InteractivePath = () => {
                         animate={isInView ? "visible" : "hidden"} 
                     />
 
-                    {/* Right Diamond / Bottom connection */}
+                    {/* PATH 2: Conversion & Retention (Emerald) - Web -> CRM/Analytics */}
                     <motion.path 
                         d="M 100 90 L 100 210 L 225 150 M 350 90 L 350 210 L 225 150" 
                         fill="none" 
@@ -289,7 +305,8 @@ const InteractivePath = () => {
                             key="active-path" 
                             d="M 225 30 L 100 90 L 225 150 L 350 90 Z" 
                             fill="none" 
-                            stroke={['db', 'layers', 'shield'].includes(activeNode.id) ? COLORS.emerald : COLORS.cyan} 
+                            // Color dinámico según si es nodo de tráfico o conversión
+                            stroke={['web', 'crm', 'analytics'].includes(activeNode.id) ? COLORS.emerald : COLORS.cyan} 
                             strokeWidth="2" 
                             initial={{ pathLength: 0, opacity: 0 }} 
                             animate={{ pathLength: 1, opacity: 1 }} 
@@ -325,7 +342,7 @@ const InteractivePath = () => {
                                 <div className="flex items-center gap-3 mb-2">
                                     <div className={cn(
                                         "p-1.5 rounded-sm border",
-                                        ['db', 'layers', 'shield'].includes(activeNode.id) 
+                                        ['web', 'crm', 'analytics'].includes(activeNode.id) 
                                             ? "bg-emerald-50 border-emerald-100 text-emerald-600" 
                                             : "bg-cyan-50 border-cyan-100 text-cyan-600"
                                     )}>
@@ -341,10 +358,10 @@ const InteractivePath = () => {
                                 </p>
                                 
                                 <div className="pt-3 border-t border-zinc-100 flex justify-between items-center">
-                                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Metric</span>
+                                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Performance</span>
                                     <span className={cn(
                                         "text-[10px] font-bold font-mono",
-                                        ['db', 'layers', 'shield'].includes(activeNode.id) 
+                                        ['web', 'crm', 'analytics'].includes(activeNode.id) 
                                             ? "text-emerald-600" 
                                             : "text-cyan-600"
                                     )}>
@@ -361,7 +378,7 @@ const InteractivePath = () => {
                             className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none"
                         >
                             <span className="px-3 py-1.5 bg-zinc-100 border border-zinc-200 text-zinc-400 text-[10px] font-bold uppercase tracking-widest rounded-sm">
-                                Select a node to inspect
+                                Explore the ecosystem
                             </span>
                         </motion.div>
                     )}
@@ -371,10 +388,10 @@ const InteractivePath = () => {
             {/* Bottom Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 border-t border-zinc-200 divide-x divide-zinc-200 bg-zinc-50/50">
                 {[
-                   { label: "Total Uptime", value: "99.99%", icon: Activity, color: "text-emerald-600" },
-                   { label: "Latency", value: "24ms", icon: Zap, color: "text-cyan-600" },
-                   { label: "Security", value: "Encrypted", icon: Lock, color: "text-zinc-700" },
-                   { label: "Nodes", value: "14/14 Active", icon: Server, color: "text-emerald-600" }
+                   { label: "Client ROAS", value: "450%", icon: TrendingUp, color: "text-emerald-600" },
+                   { label: "Leads Gen", value: "15k+", icon: Users, color: "text-cyan-600" },
+                   { label: "Avg CTR", value: "2.4%", icon: MousePointer2, color: "text-zinc-700" },
+                   { label: "Speed", value: "98/100", icon: Zap, color: "text-emerald-600" }
                 ].map((stat, i) => (
                     <div key={i} className="p-4 md:p-6 flex flex-col items-center justify-center gap-1 hover:bg-white transition-colors duration-300">
                         <div className="flex items-center gap-1.5 mb-1">
