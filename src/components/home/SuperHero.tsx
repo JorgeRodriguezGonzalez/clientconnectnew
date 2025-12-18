@@ -523,7 +523,7 @@ export const SuperHero = ({
          <div 
             className="absolute inset-0"
             style={{ 
-                background: 'radial-gradient(ellipse at center, rgba(5, 5, 5, 0.1) 30%, rgba(5,5,5,0.75) 50%, #050505 100%)'
+                background: 'radial-gradient(ellipse at center, rgba(5, 5, 5, 0.1) 5%, rgba(5,5,5,0.75) 50%, #050505 100%)'
             }}
          ></div>
          
