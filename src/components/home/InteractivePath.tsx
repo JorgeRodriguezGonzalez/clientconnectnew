@@ -94,15 +94,12 @@ const InteractivePath = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
-  // Cerrar al clicar fuera de la tarjeta
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
-      // Si hay una tarjeta abierta y el clic NO es dentro de la tarjeta, cerramos
       if (activeNode && cardRef.current && !cardRef.current.contains(e.target as Node)) {
         setActiveNode(null);
       }
     };
-    // Usamos mousedown para que sea más reactivo
     document.addEventListener('mousedown', handleGlobalClick);
     return () => document.removeEventListener('mousedown', handleGlobalClick);
   }, [activeNode]);
@@ -112,20 +109,35 @@ const InteractivePath = () => {
       <BackgroundDotPattern />
       
       <div className="relative z-10 max-w-5xl mx-auto px-6">
+        
+        {/* HEADER SECTION */}
         <div className="flex flex-col items-center text-center mb-16 gap-4">
             <motion.div initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 bg-white/50 backdrop-blur-sm">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-[10px] font-bold uppercase tracking-[2px] text-zinc-500">Growth Ecosystem</span>
             </motion.div>
-            <motion.h2 initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900">
+
+            <motion.h2 initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.1 }} className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900">
                 Integrated <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Growth Engine</span>
             </motion.h2>
+
+            {/* TEXTO DESCRIPTIVO RECUPERADO */}
+            <motion.p 
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.2 }}
+                className="text-zinc-500 max-w-lg leading-relaxed text-sm md:text-base"
+            >
+                Visualizing how we attract, convert, and retain your ideal customers. Click on any node to see how the pieces fit together.
+            </motion.p>
         </div>
 
+        {/* INTERACTIVE DIAGRAM */}
         <div className="relative w-full bg-white border border-zinc-200 rounded-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-visible">
             
-            {/* Decoración superior: Gradiente y los 3 puntos originales (zinc-200) a la IZQUIERDA */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 opacity-50" />
+            
+            {/* 3 puntos originales (zinc-200) a la IZQUIERDA */}
             <div className="absolute top-4 left-4 flex gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-zinc-200" />
                 <div className="w-2 h-2 rounded-full bg-zinc-200" />
@@ -143,14 +155,13 @@ const InteractivePath = () => {
                             node={node} 
                             active={activeNode?.id === node.id} 
                             onClick={(e) => {
-                                e.stopPropagation(); // Evita que el clic en el nodo cierre la tarjeta inmediatamente
+                                e.stopPropagation();
                                 setActiveNode(node);
                             }} 
                         />
                     ))}
                 </svg>
 
-                {/* --- TARJETA EXPLICATIVA POSICIONADA --- */}
                 <AnimatePresence>
                     {activeNode && (
                         <motion.div 
@@ -163,13 +174,14 @@ const InteractivePath = () => {
                                 top: `${(activeNode.y / 260) * 100}%`
                             }}
                             exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                            transition={{ duration: 0.2 }}
                             style={{ 
                                 position: 'absolute',
-                                transform: `translate(${activeNode.x >= 150 && activeNode.x <= 300 ? '-50%' : '0%'}, ${activeNode.y > 150 ? '-120%' : '35px'})`,
+                                transform: `translate(${activeNode.x > 150 && activeNode.x < 300 ? '-50%' : '0%'}, ${activeNode.y > 150 ? '-120%' : '35px'})`,
                                 pointerEvents: 'auto'
                             }}
                             className="w-64 bg-white border border-zinc-200 shadow-2xl z-50 rounded-lg overflow-hidden"
-                            onClick={(e) => e.stopPropagation()} // Clics dentro de la tarjeta no la cierran
+                            onClick={(e) => e.stopPropagation()}
                         >
                             <div className="p-4">
                                 <div className="flex items-center gap-3 mb-2">
@@ -212,3 +224,4 @@ const InteractivePath = () => {
 };
 
 export default InteractivePath;
+```[[5](https://www.google.com/url?sa=E&q=https%3A%2F%2Fvertexaisearch.cloud.google.com%2Fgrounding-api-redirect%2FAUZIYQFBjx9HEtNdpbwyRh-PPLyAwZfasb8fqZXi2r6XLcMn977apUCs6AQB6aTNQjQgNOjZntGpFlE0IVpwHSQ1ie5s2iJInGAFMhSAvspeLcPyQB07pEg4JCZxEfIpck4nyvw%3D)]
