@@ -1,19 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useInView, Variants } from 'framer-motion';
 import { 
-  Megaphone, 
-  Search, 
-  Layout, 
-  Target, 
-  Mail, 
-  BarChart3, 
-  TrendingUp, 
-  Users, 
-  MousePointer2, 
-  Zap 
+  Megaphone, Search, Layout, Target, Mail, BarChart3, 
+  TrendingUp, Users, MousePointer2, Zap 
 } from 'lucide-react';
 
-// --- CONFIG & UTILS ---
+// --- UTILS & CONFIG ---
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
 const COLORS = {
@@ -47,7 +39,6 @@ const NODE_VARIANTS: Variants = {
   tap: { scale: 0.95 }
 };
 
-// --- TYPES & DATA ---
 type NodePoint = {
   id: string;
   x: number;
@@ -59,72 +50,62 @@ type NodePoint = {
 };
 
 const nodes: NodePoint[] = [
-  { id: 'strategy', x: 225, y: 30, label: 'Strategy', icon: Target, description: 'Market positioning and audience targeting.', stat: 'Data-Driven' },
+  { id: 'strategy', x: 225, y: 30, label: 'Strategy', icon: Target, description: 'Market positioning, audience targeting, and core messaging.', stat: 'Data-Driven' },
   { id: 'ads', x: 100, y: 90, label: 'Paid Media', icon: Megaphone, description: 'High-ROI campaigns on Meta, Google, and LinkedIn.', stat: '4.5x ROAS' },
-  { id: 'seo', x: 350, y: 90, label: 'SEO & Content', icon: Search, description: 'Organic authority and keyword dominance.', stat: '+150% Traffic' },
-  { id: 'web', x: 225, y: 150, label: 'Web Development', icon: Layout, description: 'High-performance conversion engines.', stat: '5% Conv. Rate' },
-  { id: 'crm', x: 100, y: 210, label: 'Automation', icon: Mail, description: 'Lead nurturing and CRM integration.', stat: '24/7 Active' },
-  { id: 'analytics', x: 350, y: 210, label: 'Analytics', icon: BarChart3, description: 'Real-time performance tracking.', stat: '100% Clarity' }
+  { id: 'seo', x: 350, y: 90, label: 'SEO & Content', icon: Search, description: 'Organic authority building and keyword dominance.', stat: '+150% Traffic' },
+  { id: 'web', x: 225, y: 150, label: 'Web Development', icon: Layout, description: 'High-performance conversion engines and landing pages.', stat: '5% Conv. Rate' },
+  { id: 'crm', x: 100, y: 210, label: 'Automation', icon: Mail, description: 'Lead nurturing sequences and CRM integration.', stat: '24/7 Active' },
+  { id: 'analytics', x: 350, y: 210, label: 'Analytics', icon: BarChart3, description: 'Real-time performance tracking and optimization.', stat: '100% Clarity' }
 ];
 
-// --- SUB-COMPONENT: NODE ---
 const NodeIcon = ({ node, active, onClick }: { node: NodePoint; active: boolean; onClick: (e: React.MouseEvent) => void }) => {
   const isEmerald = ['web', 'crm', 'analytics'].includes(node.id);
   const activeColor = isEmerald ? COLORS.emerald : COLORS.cyan;
-  
+  const activeClass = isEmerald ? 'text-emerald-500' : 'text-cyan-500';
+
   return (
     <motion.g 
       className="cursor-pointer group" 
       variants={NODE_VARIANTS} 
       initial="idle" whileHover="hover" whileTap="tap" 
-      onMouseDown={onClick} 
+      onClick={onClick}
     >
       <AnimatePresence>
         {active && (
-          <motion.circle
-            cx={node.x} cy={node.y} r="32"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 0.2, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            fill={activeColor}
-          />
+          <motion.circle cx={node.x} cy={node.y} r="32" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 0.2, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} fill={activeColor} />
         )}
       </AnimatePresence>
-      <circle 
-        cx={node.x} cy={node.y} r="24" 
-        className={cn("transition-all duration-300", active ? "fill-white" : "fill-white group-hover:fill-zinc-50")}
-        stroke={active ? activeColor : "#e4e4e7"}
-        strokeWidth={active ? 2 : 1}
-      />
+      <circle cx={node.x} cy={node.y} r="24" className={cn("transition-all duration-300", active ? "fill-white" : "fill-white group-hover:fill-zinc-50")} stroke={active ? activeColor : "#e4e4e7"} strokeWidth={active ? 2 : 1} />
       <foreignObject x={node.x - 12} y={node.y - 12} width="24" height="24" className="pointer-events-none">
         <div className="w-full h-full flex items-center justify-center">
-            <node.icon size={18} className={cn("transition-colors duration-300", active ? (isEmerald ? "text-emerald-500" : "text-cyan-500") : "text-zinc-400 group-hover:text-zinc-600")} />
+            <node.icon size={18} className={cn("transition-colors duration-300", active ? activeClass : "text-zinc-400 group-hover:text-zinc-600")} />
         </div>
       </foreignObject>
-      <text x={node.x} y={node.y + 45} textAnchor="middle" className={cn("text-[10px] font-bold uppercase tracking-wider transition-colors duration-300", active ? "fill-zinc-900" : "fill-zinc-400")}>
+      <text x={node.x} y={node.y + 45} textAnchor="middle" className={cn("text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-sans", active ? "fill-zinc-900" : "fill-zinc-400")}>
         {node.label}
       </text>
     </motion.g>
   );
 };
 
-// --- MAIN COMPONENT ---
 const InteractivePath = () => {
   const [activeNode, setActiveNode] = useState<NodePoint | null>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
-  // Cerrar si se clica en cualquier sitio que no sea la tarjeta abierta
+  // Cerrar al clicar fuera de la tarjeta
   useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
+    const handleGlobalClick = (e: MouseEvent) => {
+      // Si hay una tarjeta abierta y el clic NO es dentro de la tarjeta, cerramos
+      if (activeNode && cardRef.current && !cardRef.current.contains(e.target as Node)) {
         setActiveNode(null);
       }
     };
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, []);
+    // Usamos mousedown para que sea más reactivo
+    document.addEventListener('mousedown', handleGlobalClick);
+    return () => document.removeEventListener('mousedown', handleGlobalClick);
+  }, [activeNode]);
 
   return (
     <section ref={containerRef} className="relative w-full py-24 bg-[#FAFAFA] overflow-hidden border-t border-zinc-200">
@@ -141,13 +122,14 @@ const InteractivePath = () => {
             </motion.h2>
         </div>
 
-        <div className="relative w-full bg-white border border-zinc-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-visible">
+        <div className="relative w-full bg-white border border-zinc-200 rounded-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-visible">
             
-            {/* 3 puntos decorativos a la IZQUIERDA con colores Cyan, Emerald, Zinc */}
-            <div className="absolute top-5 left-5 flex gap-1.5 z-20">
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS.cyan }} />
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS.emerald }} />
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS.zinc }} />
+            {/* Decoración superior: Gradiente y los 3 puntos originales (zinc-200) a la IZQUIERDA */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 opacity-50" />
+            <div className="absolute top-4 left-4 flex gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-zinc-200" />
+                <div className="w-2 h-2 rounded-full bg-zinc-200" />
+                <div className="w-2 h-2 rounded-full bg-zinc-200" />
             </div>
 
             <div className="relative w-full aspect-[16/9] md:aspect-[2/1] p-8 md:p-12">
@@ -161,13 +143,14 @@ const InteractivePath = () => {
                             node={node} 
                             active={activeNode?.id === node.id} 
                             onClick={(e) => {
-                                e.stopPropagation(); 
+                                e.stopPropagation(); // Evita que el clic en el nodo cierre la tarjeta inmediatamente
                                 setActiveNode(node);
                             }} 
                         />
                     ))}
                 </svg>
 
+                {/* --- TARJETA EXPLICATIVA POSICIONADA --- */}
                 <AnimatePresence>
                     {activeNode && (
                         <motion.div 
@@ -175,21 +158,18 @@ const InteractivePath = () => {
                             initial={{ opacity: 0, scale: 0.95, y: 10 }}
                             animate={{ 
                                 opacity: 1, scale: 1, y: 0,
-                                // Posicionamiento: si es Ads/CRM (x=100) va a la izquierda, si es SEO/Analytics (x=350) va a la derecha
                                 left: activeNode.x < 150 ? '20px' : (activeNode.x > 300 ? 'auto' : `${(activeNode.x / 450) * 100}%`),
                                 right: activeNode.x > 300 ? '20px' : 'auto',
                                 top: `${(activeNode.y / 260) * 100}%`
                             }}
                             exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                            transition={{ duration: 0.2 }}
                             style={{ 
                                 position: 'absolute',
-                                // Centramos solo si está en el medio (Strategy/Web)
-                                transform: `translate(${activeNode.x > 150 && activeNode.x < 300 ? '-50%' : '0%'}, ${activeNode.y > 150 ? '-125%' : '35px'})`,
+                                transform: `translate(${activeNode.x >= 150 && activeNode.x <= 300 ? '-50%' : '0%'}, ${activeNode.y > 150 ? '-120%' : '35px'})`,
                                 pointerEvents: 'auto'
                             }}
                             className="w-64 bg-white border border-zinc-200 shadow-2xl z-50 rounded-lg overflow-hidden"
-                            onMouseDown={(e) => e.stopPropagation()} 
+                            onClick={(e) => e.stopPropagation()} // Clics dentro de la tarjeta no la cierran
                         >
                             <div className="p-4">
                                 <div className="flex items-center gap-3 mb-2">
@@ -216,7 +196,7 @@ const InteractivePath = () => {
                    { label: "Avg CTR", value: "2.4%", icon: MousePointer2, color: "text-zinc-700" },
                    { label: "Speed", value: "98/100", icon: Zap, color: "text-emerald-600" }
                 ].map((stat, i) => (
-                    <div key={i} className="p-4 md:p-6 flex flex-col items-center justify-center gap-1 hover:bg-white transition-colors">
+                    <div key={i} className="p-4 md:p-6 flex flex-col items-center justify-center gap-1 hover:bg-white transition-colors duration-300">
                         <div className="flex items-center gap-1.5 mb-1">
                             <stat.icon size={12} className="text-zinc-400" />
                             <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">{stat.label}</span>
