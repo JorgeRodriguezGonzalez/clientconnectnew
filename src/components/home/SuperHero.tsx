@@ -633,7 +633,7 @@ export const SuperHero = ({
                 className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-white max-w-3xl mx-auto"
               >
                 <p>Stop relying on guesswork. We act as your entire growth engine.</p>
-                <p className="text-gray-300">
+                <p className="text-white">
                   Combining <span className="text-emerald-400 font-semibold">Paid Media</span>, <span className="text-emerald-400 font-semibold">Creative Strategy</span>, and <span className="text-emerald-400 font-semibold">CRO</span> to maximize ROI.
                 </p>
               </motion.div>
