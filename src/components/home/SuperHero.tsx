@@ -494,13 +494,6 @@ export const SuperHero = ({
 
        {/* --- FIXED PARALLAX BACKGROUND (FULL SCREEN) --- */}
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#050505]">
-         {/* 
-            SOLUCIÓN DEFINITIVA: 
-            Usamos dangerouslySetInnerHTML para inyectar el video como HTML puro.
-            Esto evita que React interfiera con los atributos 'muted' y 'autoplay',
-            lo cual es la causa #1 de que los videos no se reproduzcan automáticamente.
-            Usamos un vídeo de Mixkit (servidor rápido y fiable).
-         */}
          <div 
             className="absolute inset-0 w-full h-full"
             dangerouslySetInnerHTML={{
@@ -519,15 +512,23 @@ export const SuperHero = ({
             }}
          />
 
-         {/* 2. El Overlay Final (Estático) */}
+         {/* 2. El Overlay Final (Estático, siempre presente) */}
          <div 
             className="absolute inset-0"
             style={{ 
                 background: 'radial-gradient(ellipse at center, rgba(5, 5, 5, 0.1) 5%, rgba(5,5,5,0.75) 50%, #050505 100%)'
             }}
          ></div>
+
+         {/* --- CAMBIO: Capa Negra de Transición --- */}
+         {/* Esta capa empieza negra sólida y se desvanece al mismo tiempo que la lámpara se enciende (delay 0.2s) */}
+         <motion.div 
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            transition={{ delay: 0.2, duration: 1.2, ease: "easeInOut" }}
+            className="absolute inset-0 bg-[#050505] z-10"
+         />
          
-         {/* He eliminado la animación de la "cortina negra" inicial para asegurar que el video sea visible inmediatamente */}
       </div>
       
       <div className="relative z-10 w-full flex flex-col items-center">
@@ -628,7 +629,8 @@ export const SuperHero = ({
                 initial={{ opacity: 0, y: 20 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ delay: 0.9, duration: 1.0, ease: "easeOut" }} 
-                className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-gray-400 max-w-3xl mx-auto"
+                // --- CAMBIO: Cambiado de 'text-gray-400' a 'text-white' ---
+                className="flex flex-col items-center gap-2 font-inter font-light text-[14px] md:text-[16px] text-white max-w-3xl mx-auto"
               >
                 <p>Stop relying on guesswork. We act as your entire growth engine.</p>
                 <p className="text-gray-300">
