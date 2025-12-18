@@ -376,7 +376,7 @@ export default function FounderStory() {
 
           {/* LISTA DE CAPITULOS (STORIES) */}
           {/* CAMBIO CLAVE 1: Aumentado el space-y para que tarde más en cambiar de foco al hacer scroll */}
-          <div className="mx-auto w-full space-y-60 md:space-y-[32rem]">
+          <div className="mx-auto w-full space-y-40 md:space-y-[32rem]">
             {founderStoryEntries.map((entry, index) => {
               const isActive = index === activeIndex;
 
