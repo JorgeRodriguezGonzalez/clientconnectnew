@@ -29,6 +29,7 @@ import { Footer } from "@/components/home/footer";
 import FAQSection from "@/components/home/faqs";
 import CaseStudiesSection from "@/components/home/case-studies";
 import HowWeDoIt from "@/components/home/HowWeDoIt";
+import InteractivePath from "@/components/home/InteractivePath";
 
 const Index = () => {
   return (
@@ -52,6 +53,7 @@ const Index = () => {
         <HowWeDoIt />
         <CloudHero />
         <BoxCards />
+        <InteractivePath />
         <ComparisonSection />
         <Services />
         <Pricing />
