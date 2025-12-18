@@ -224,4 +224,3 @@ const InteractivePath = () => {
 };
 
 export default InteractivePath;
-```[[5](https://www.google.com/url?sa=E&q=https%3A%2F%2Fvertexaisearch.cloud.google.com%2Fgrounding-api-redirect%2FAUZIYQFBjx9HEtNdpbwyRh-PPLyAwZfasb8fqZXi2r6XLcMn977apUCs6AQB6aTNQjQgNOjZntGpFlE0IVpwHSQ1ie5s2iJInGAFMhSAvspeLcPyQB07pEg4JCZxEfIpck4nyvw%3D)]
