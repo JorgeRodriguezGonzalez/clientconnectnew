@@ -375,8 +375,8 @@ export default function FounderStory() {
           </div>
 
           {/* LISTA DE CAPITULOS (STORIES) */}
-          {/* CAMBIO CLAVE 1: Aumentado el space-y para que tarde más en cambiar de foco al hacer scroll */}
-          <div className="mx-auto w-full space-y-40 md:space-y-[32rem]">
+          {/* REVERTIDO: Vuelto al espaciado original que te gustaba */}
+          <div className="mx-auto w-full space-y-40 md:space-y-64">
             {founderStoryEntries.map((entry, index) => {
               const isActive = index === activeIndex;
 
@@ -434,7 +434,8 @@ export default function FounderStory() {
                     </div>
                   </div>
 
-                  {/* CAMBIO CLAVE 2: Posicionamiento del Sentinel en el centro absoluto (top-1/2) */}
+                  {/* SENTINEL POSICIONADO EN EL CENTRO (Invisible) */}
+                  {/* Esto es lo que permite que la tarjeta tarde más en colapsarse sin cambiar el diseño */}
                   <div
                     ref={(el) => setSentinelRef(el, index)}
                     aria-hidden
