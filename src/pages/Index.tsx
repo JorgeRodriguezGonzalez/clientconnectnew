@@ -28,6 +28,7 @@ import { Header } from "@/components/home/header";
 import { Footer } from "@/components/home/footer";
 import FAQSection from "@/components/home/faqs";
 import CaseStudiesSection from "@/components/home/case-studies";
+import HowWeDoIt from "@/components/home/HowWeDoIt";
 
 const Index = () => {
   return (
@@ -48,6 +49,7 @@ const Index = () => {
         <OurStepsVersion2 />
 
         <CaseStudiesSection />
+        <HowWeDoIt />
         <CloudHero />
         <BoxCards />
         <ComparisonSection />
