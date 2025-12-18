@@ -376,7 +376,7 @@ export default function FounderStory() {
 
           {/* LISTA DE CAPITULOS (STORIES) */}
           {/* REVERTIDO: Vuelto al espaciado original que te gustaba */}
-          <div className="mx-auto w-full space-y-40 md:space-y-64">
+          <div className="mx-auto w-full space-y-30 md:space-y-64">
             {founderStoryEntries.map((entry, index) => {
               const isActive = index === activeIndex;
 
