@@ -2,24 +2,13 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Workflow } from "lucide-react";
+import { Network } from "lucide-react";
 
 // --- CONSTANTES DE COLOR ---
 const COLORS = {
   cyan: "#06b6d4",
   emerald: "#34d399",
 };
-
-// --- BACKGROUND PATTERN ---
-const BackgroundDotPattern = () => (
-  <div 
-    className="absolute inset-0 z-0 opacity-[0.4]"
-    style={{
-      backgroundImage: `radial-gradient(#e4e4e7 1px, transparent 1px)`,
-      backgroundSize: '24px 24px'
-    }}
-  />
-);
 
 export default function HowWeDoIt() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -48,8 +37,7 @@ export default function HowWeDoIt() {
       ref={containerRef} 
       className="relative w-full bg-[#FAFAFA] pt-32 pb-20 overflow-hidden flex flex-col items-center justify-center border-t border-zinc-200"
     >
-      <BackgroundDotPattern />
-
+      
       <motion.div 
         style={{ opacity, y, scale }}
         className="relative z-10 flex flex-col items-center text-center max-w-4xl px-6"
@@ -65,8 +53,8 @@ export default function HowWeDoIt() {
             </span>
         </div>
 
-        {/* 2. TITULO PRINCIPAL CON EFECTO GRADIENTE ANIMADO */}
-        <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight text-zinc-900 mb-8 leading-[1.1]">
+        {/* 2. TITULO PRINCIPAL (Tamaño original restaurado) */}
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 mb-8 leading-[1.1]">
           Architecture of <br className="hidden md:block" />
           <motion.span
             initial={{ backgroundPosition: "400% 50%" }}
@@ -90,20 +78,20 @@ export default function HowWeDoIt() {
           </motion.span>
         </h2>
 
-        {/* 3. SUBTITULO */}
-        <p className="text-zinc-500 text-sm md:text-lg max-w-2xl leading-relaxed font-medium mb-12">
+        {/* 3. SUBTITULO (Tamaño original restaurado) */}
+        <p className="text-zinc-500 text-sm md:text-base max-w-xl leading-relaxed font-medium mb-12">
           We build custom acquisition infrastructures using a battle-tested blueprint designed for high-intent conversion.
         </p>
 
-        {/* 4. ELEMENTO INTERACTIVO "CORE" GRANDE */}
+        {/* 4. ELEMENTO INTERACTIVO "CORE" */}
         <div className="relative group cursor-default mb-10">
-            {/* Brillo Intenso Cyan/Emerald (Sombras más potentes) */}
+            {/* Brillo Intenso Cyan/Emerald */}
             <div className="absolute inset-[-20px] bg-gradient-to-r from-emerald-400/40 to-cyan-400/40 blur-[40px] rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-700 animate-pulse" />
             
             <div className="relative w-24 h-24 bg-white border border-zinc-200 rounded-none flex items-center justify-center shadow-[0_10px_50px_rgba(6,182,212,0.15)] z-10">
-                {/* Icono Workflow (Nuevos nodos) */}
+                {/* Nuevo Icono: Network */}
                 <motion.div style={{ rotate }} className="text-zinc-900">
-                    <Workflow size={40} strokeWidth={1.2} />
+                    <Network size={40} strokeWidth={1.2} />
                 </motion.div>
                 
                 {/* Micro-puntos de detalle técnico en esquinas */}
@@ -116,7 +104,7 @@ export default function HowWeDoIt() {
                 <div className="absolute inset-1.5 border border-zinc-100 pointer-events-none" />
             </div>
 
-            {/* Línea conectora hacia abajo (Data flow) */}
+            {/* Línea conectora hacia abajo */}
             <div className="absolute left-1/2 -translate-x-1/2 top-full h-32 w-[1px] bg-gradient-to-b from-zinc-300 to-transparent">
                  <motion.div 
                     animate={{ y: [0, 128] }}
