@@ -20,6 +20,12 @@ const fontStyles = `
   }
 `;
 
+const ANIMATION_CONFIG = {
+  type: "spring",
+  stiffness: 260,
+  damping: 20
+};
+
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
 const COLORS = {
@@ -28,7 +34,7 @@ const COLORS = {
   gold: "#edbf86",
 };
 
-// --- LOGO COMPONENTS CON COLOR (CALCO DE FOUNDERSECTION) ---
+// --- LOGO COMPONENTS (CALCO DE FOUNDERSECTION) ---
 const InstagramLogo = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="none">
     <defs>
@@ -104,7 +110,7 @@ function TechnicalScanner({ isLightMode }: { isLightMode: boolean }) {
   }, []);
 
   return (
-    <div className="overflow-hidden h-full relative flex items-center justify-center w-full px-4">
+    <div className="overflow-visible h-full relative flex items-center justify-center w-full">
       <div className="flex flex-row flex-shrink-0 justify-center items-center gap-2">
         {icons.map((icon, i) => (
           <LogoContainer key={i} className={`${sizeMap[icon.size]} logo-circle-${i + 1} ${isLightMode ? "bg-white/90" : "bg-neutral-800/80"}`}>{icon.icon}</LogoContainer>
@@ -115,11 +121,17 @@ function TechnicalScanner({ isLightMode }: { isLightMode: boolean }) {
   );
 }
 
-// --- LOGO CLOUD COMPONENTS (8 LOGOS DE FOUNDERSECTION) ---
-function LogoCard({ logo, className, children, isLightMode }: any) {
+// --- LOGO CLOUD COMPONENTS ---
+function LogoCard({ logo, className, children, isLightMode, isCustomLogo }: any) {
   return (
     <div className={cn("flex items-center justify-center px-4 py-8 md:p-8 transition-colors duration-500", className)}>
-      <img alt={logo.alt} className={cn("pointer-events-none h-4 select-none md:h-5 transition-all duration-500", !isLightMode && "brightness-0 invert")} src={logo.src} />
+      {isCustomLogo ? (
+        <div className={cn("h-4 md:h-5 transition-all duration-500", isLightMode ? "text-black" : "text-white")}>
+          {logo}
+        </div>
+      ) : (
+        <img alt={logo.alt} className={cn("pointer-events-none h-4 select-none md:h-5 transition-all duration-500", !isLightMode && "brightness-0 invert")} src={logo.src} />
+      )}
       {children}
     </div>
   );
@@ -145,9 +157,9 @@ export function LogoCloud({ isLightMode }: { isLightMode: boolean }) {
         <PlusIcon className={cn("-bottom-[12.5px] -left-[12.5px] absolute z-10 hidden size-6 md:block transition-colors duration-500", iconColor)} strokeWidth={1} />
       </LogoCard>
       
-      <LogoCard isLightMode={isLightMode} className={cn("relative border-b", borderColor, bgAlt)} logo={{ src: "https://svgl.app/library/openai_wordmark_light.svg", alt: "OpenAI Logo" }} />
+      {/* OPENAI LOGO COMO SVG PARA CALCO EXACTO */}
+      <LogoCard isLightMode={isLightMode} isCustomLogo={true} className={cn("relative border-b", borderColor, bgAlt)} logo={<OpenAILogo className="h-full w-auto" />} />
       
-      {/* SEGUNDA FILA - LOGOS ADICIONALES */}
       <LogoCard isLightMode={isLightMode} className={cn("relative border-r border-b md:border-b-0", bgAlt, borderColor, isLightMode ? "md:bg-transparent" : "md:bg-transparent")} logo={{ src: "https://svgl.app/library/turso-wordmark-light.svg", alt: "Turso Logo" }}>
          <PlusIcon className={cn("-right-[12.5px] -bottom-[12.5px] md:-left-[12.5px] absolute z-10 size-6 md:hidden transition-colors duration-500", iconColor)} strokeWidth={1} />
       </LogoCard>
@@ -164,7 +176,7 @@ export function LogoCloud({ isLightMode }: { isLightMode: boolean }) {
 }
 
 const TiltCard = ({ children, className, innerClassName, ...props }: any) => (
-  <motion.div whileHover={{ y: -5 }} className={cn("relative rounded-none p-[1px] transition-colors duration-300 safari-gpu", className)} {...props}>
+  <motion.div whileHover={{ y: -5 }} transition={ANIMATION_CONFIG} className={cn("relative rounded-none p-[1px] safari-gpu", className)} {...props}>
     <div className={cn("relative h-full w-full overflow-hidden rounded-none", innerClassName)}>{children}</div>
   </motion.div>
 );
@@ -221,21 +233,22 @@ export const WhatWeDoSection = () => {
             </p>
           </div>
 
-          {/* TARJETAS AGENCIA: MÁS JUNTAS (VALORES X, Y, R AJUSTADOS) */}
-          <div className="lg:col-span-6 relative h-[300px] lg:pl-20 mt-10 lg:mt-0">
+          {/* AGENCIA CARDS: FLUIDEZ Y POSICIÓN DERECHA */}
+          <div className="lg:col-span-6 relative h-[300px] mt-10 lg:mt-0">
              {[
-               { id: 1, title: "Agency #1", text: "$8K Website. Looked amazing. Got zero leads. No SEO, just a pretty brochure no one saw.", y: 0, x: -10, r: -5, z: 10 },
-               { id: 2, title: "Agency #2", text: "$12K Google Ads. Got clicks, but the website was so shit no one called. They blamed us.", y: 50, x: 10, r: 0, z: 20 },
-               { id: 3, title: "Agency #3", text: "'SEO experts'. Vanity metrics only. Ranking for keywords no one searches. Zero jobs.", y: 100, x: 30, r: 5, z: 30 },
+               { id: 1, title: "Agency #1", text: "$8K Website. Looked amazing. Got zero leads. No SEO, just a pretty brochure no one saw.", y: 0, x: 60, r: -5, z: 10 },
+               { id: 2, title: "Agency #2", text: "$12K Google Ads. Got clicks, but the website was so shit no one called. They blamed us.", y: 50, x: 100, r: 0, z: 20 },
+               { id: 3, title: "Agency #3", text: "'SEO experts'. Vanity metrics only. Ranking for keywords no one searches. Zero jobs.", y: 100, x: 140, r: 5, z: 30 },
              ].map((card) => (
                <motion.div
                 key={card.id}
                 initial={{ y: card.y, x: card.x, rotate: card.r, opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                whileHover={{ y: card.y - 25, scale: 1.05, zIndex: 50, rotate: 0, x: 0 }}
+                whileHover={{ y: card.y - 30, scale: 1.05, zIndex: 100, rotate: 0, x: card.x + 10 }}
+                transition={ANIMATION_CONFIG}
                 style={{ zIndex: card.z, top: card.y, left: card.x }}
                 className={cn(
-                  "absolute inset-x-0 p-6 border backdrop-blur-md transition-all duration-300 cursor-help shadow-2xl max-w-[400px]",
+                  "absolute p-6 border backdrop-blur-md cursor-help shadow-2xl max-w-[380px] w-full",
                   isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-emerald-500/30",
                 )}
                >
@@ -299,7 +312,7 @@ export const WhatWeDoSection = () => {
                 <div className="flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-widest"><Check size={12} strokeWidth={4}/> LOCAL RANKING</div>
               </TiltCard>
 
-              {/* TECHNICAL SEO SCANNER CARD - CORREGIDO (Logos en color y sin recortes) */}
+              {/* TECHNICAL SEO SCANNER CARD - LOGOS EN COLOR Y SIN CORTES */}
               <TiltCard className="md:col-span-2 h-[220px]" innerClassName={cn("p-8 border relative", isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-zinc-800")}>
                  <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-full items-center">
                     <div className="md:col-span-7">
@@ -312,8 +325,8 @@ export const WhatWeDoSection = () => {
                           Schema markup, citations and meta tags. We don't bullshit you with vanity metrics. We track: "How many people found you on Google?"
                         </p>
                     </div>
-                    <div className="md:col-span-5 h-full relative flex items-center justify-center overflow-visible">
-                       <div className="w-full max-w-[280px]">
+                    <div className="md:col-span-5 h-full relative flex items-center justify-center">
+                       <div className="w-full">
                           <TechnicalScanner isLightMode={isLightMode} />
                        </div>
                     </div>
