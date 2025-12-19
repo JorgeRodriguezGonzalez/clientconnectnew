@@ -30,6 +30,7 @@ import FAQSection from "@/components/home/faqs";
 import CaseStudiesSection from "@/components/home/case-studies";
 import HowWeDoIt from "@/components/home/HowWeDoIt";
 import InteractivePath from "@/components/home/InteractivePath";
+import { WhatWeDoSection2 } from "@/components/home/WhatWeDoSection2";
 
 const Index = () => {
   return (
@@ -45,6 +46,9 @@ const Index = () => {
         */}
         <div className="relative z-[50] -mt-[180px]">
           <WhatWeDoSection />
+        </div>
+        <div className="relative z-[50] -mt-[180px]">
+          <WhatWeDoSection2 />
         </div>
 
         <OurStepsVersion2 />
