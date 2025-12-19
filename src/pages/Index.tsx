@@ -11,7 +11,7 @@ import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
 import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 import BoxCards from "@/components/home/BoxCards";
-import { FounderSection } from "@/components/home/FounderSection";
+import { WhatWeDoSection } from "@/components/home/FounderSection";
 
 // IMPORTACIÓN DE LOS NUEVOS COMPONENTES
 import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
@@ -44,7 +44,7 @@ const Index = () => {
             3. -mt-[100px]: margen negativo para subirlo 100px. 
         */}
         <div className="relative z-[50] -mt-[180px]">
-          <FounderSection />
+          <WhatWeDoSection />
         </div>
 
         <OurStepsVersion2 />
