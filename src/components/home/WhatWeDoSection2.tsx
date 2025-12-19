@@ -16,7 +16,7 @@ const cn = (...classes: (string | undefined | null | false)[]) => classes.filter
 
 // --- REUSABLE COMPONENTS ---
 
-const TiltCard = ({ children, className, innerClassName }: any) => {
+const TiltCard = ({ children, className, innerClassName, delay = 0 }: any) => {
   const x = useSpring(0, { stiffness: 150, damping: 20 });
   const y = useSpring(0, { stiffness: 150, damping: 20 });
 
@@ -29,6 +29,10 @@ const TiltCard = ({ children, className, innerClassName }: any) => {
 
   return (
     <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, delay }}
       onMouseMove={handleMove} 
       onMouseLeave={handleLeave} 
       style={{ rotateY: x, rotateX: y, transformStyle: "preserve-3d", perspective: 1000 }} 
@@ -41,8 +45,8 @@ const TiltCard = ({ children, className, innerClassName }: any) => {
   );
 };
 
-const StatBadge = ({ icon: Icon, label, value }: any) => (
-  <div className="flex items-center gap-3 px-4 py-3 rounded-none border border-zinc-200 bg-white/80 backdrop-blur-md shadow-sm">
+const StatBadge = ({ icon: Icon, label, value, className }: any) => (
+  <div className={cn("flex items-center gap-3 px-4 py-3 rounded-none border border-zinc-200 bg-white shadow-xl z-30", className)}>
     <div className="p-2 bg-emerald-500/10 text-emerald-500"><Icon size={16} /></div>
     <div>
       <div className="font-sans font-bold text-lg leading-none text-gray-900">{value}</div>
@@ -60,69 +64,78 @@ export const WhatWeDoSection2 = () => {
     offset: ["start end", "end start"] 
   });
 
-  // Efecto de movimiento para el badge flotante
-  const yStats = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const yBadge = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
     <section 
       ref={containerRef} 
-      className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans overflow-hidden"
+      className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans"
     >
       <style>{fontStyles}</style>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
-        {/* PARTE 1: COLUMNAS INVERTIDAS (Tarjetas Izquierda, Texto Derecha) */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mb-32">
+        {/* PARTE 1: ESTRUCTURA CON STICKY INVERTIDO */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           
-          {/* IZQUIERDA: TARJETAS (Ocupa más espacio para el grid) */}
-          <div className="lg:w-[60%] relative order-2 lg:order-1">
+          {/* IZQUIERDA: TARJETAS (60%) */}
+          <div className="lg:w-[60%] relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
 
-              {/* CARD 1: GOOGLE ADS QUALIFIED */}
-              <TiltCard className="md:col-span-2" innerClassName="p-8">
-                <div className="flex flex-col md:flex-row gap-8 items-center">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 text-cyan-500 mb-4">
-                      <Target size={20} />
-                      <span className="text-[10px] font-bold uppercase tracking-widest">Qualified Traffic Only</span>
+              {/* CARD 1: GOOGLE ADS (Contiene el Badge flotante) */}
+              <div className="md:col-span-2 relative">
+                {/* Badge Corregido: Ahora posicionado sobre la tarjeta azul */}
+                <motion.div 
+                    style={{ y: yBadge }}
+                    className="absolute -top-6 right-8 z-40 hidden md:block"
+                >
+                    <StatBadge icon={Zap} label="Leads Generated" value="1,240+" />
+                </motion.div>
+
+                <TiltCard innerClassName="p-8">
+                  <div className="flex flex-col md:flex-row gap-8 items-center">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 text-cyan-500 mb-4">
+                        <Target size={20} />
+                        <span className="text-[10px] font-bold uppercase tracking-widest">Qualified Traffic Only</span>
+                      </div>
+                      <h4 className="text-2xl font-bold mb-4 text-gray-900">Ads That Get Jobs, Not Just Clicks</h4>
+                      <p className="text-sm leading-relaxed mb-6 text-gray-500">
+                        We filter for quality. No tyre-kickers asking for $500 renos when you do $50K jobs. We target by suburb, time of day, and intent.
+                      </p>
+                      <div className="grid grid-cols-2 gap-4">
+                          <div className="p-3 bg-zinc-50 text-[11px] font-bold border border-zinc-100">
+                              <Check size={14} className="inline mr-2 text-emerald-500"/> Geographic targeting
+                          </div>
+                          <div className="p-3 bg-zinc-50 text-[11px] font-bold border border-zinc-100">
+                              <Check size={14} className="inline mr-2 text-emerald-500"/> Keyword filtering
+                          </div>
+                      </div>
                     </div>
-                    <h4 className="text-2xl font-bold mb-4 text-gray-900">Ads That Get Jobs, Not Just Clicks</h4>
-                    <p className="text-sm leading-relaxed mb-6 text-gray-500">
-                      We filter for quality. No tyre-kickers asking for $500 renos when you do $50K jobs. We target by suburb, time of day, and intent.
-                    </p>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="p-3 bg-zinc-50 text-[11px] font-bold border border-zinc-100">
-                            <Check size={14} className="inline mr-2 text-emerald-500"/> Geographic targeting
-                        </div>
-                        <div className="p-3 bg-zinc-50 text-[11px] font-bold border border-zinc-100">
-                            <Check size={14} className="inline mr-2 text-emerald-500"/> Keyword filtering
-                        </div>
+                    <div className="w-full md:w-48 h-48 bg-cyan-500/5 border border-cyan-500/10 flex items-center justify-center relative overflow-hidden">
+                      <MousePointer2 className="text-cyan-500 animate-pulse" size={40} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent" />
                     </div>
                   </div>
-                  <div className="w-full md:w-48 h-48 bg-cyan-500/5 border border-cyan-500/10 flex items-center justify-center relative overflow-hidden">
-                    <MousePointer2 className="text-cyan-500 animate-pulse" size={40} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent" />
-                  </div>
-                </div>
-              </TiltCard>
+                </TiltCard>
+              </div>
 
               {/* CARD 2: REAL NUMBERS */}
-              <TiltCard innerClassName="p-8 flex flex-col justify-between">
+              <TiltCard delay={0.1} innerClassName="p-8 flex flex-col justify-between">
                 <div className="w-12 h-12 bg-zinc-100 flex items-center justify-center mb-6"><PhoneCall className="text-emerald-500" /></div>
                 <div>
                   <h4 className="text-xl font-bold text-gray-900 leading-tight">Real Numbers</h4>
                   <p className="text-xs text-gray-500 mt-2 leading-relaxed">Every week you get: Exact number of calls, form submissions, and cost per lead. <strong>No fluff jargon.</strong></p>
                 </div>
-                <div className="pt-4 mt-6 border-t border-zinc-100 flex justify-between items-center">
+                <div className="pt-4 mt-6 border-t border-zinc-100 flex justify-between items-center text-emerald-500">
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Calls tracked</span>
-                  <span className="text-emerald-500 font-black text-lg">LIVE</span>
+                  <span className="font-black text-lg">LIVE</span>
                 </div>
               </TiltCard>
 
               {/* CARD 3: CONTINUOUS TESTING */}
-              <TiltCard innerClassName="p-8 flex flex-col justify-between bg-zinc-900 border-zinc-800">
-                <div className="w-12 h-12 bg-white/5 flex items-center justify-center mb-6"><RefreshCw className="text-cyan-400" /></div>
+              <TiltCard delay={0.2} innerClassName="p-8 flex flex-col justify-between bg-zinc-900 border-zinc-800">
+                <div className="w-12 h-12 bg-white/5 flex items-center justify-center mb-6"><RefreshCw className="text-cyan-400 animate-spin-slow" /></div>
                 <div className="text-white">
                   <h4 className="text-xl font-bold">Daily Testing</h4>
                   <p className="text-xs text-white/50 mt-2 leading-relaxed">New landing pages, bid adjustments, and A/B testing weekly. We don't "wait 3 months to gather data".</p>
@@ -134,10 +147,10 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
-              {/* CARD 4: THE SCIENCE EXPERIMENT */}
-              <TiltCard className="md:col-span-2" innerClassName="bg-emerald-500 p-8 border-none text-black">
-                <div className="flex items-start gap-6">
-                  <div className="shrink-0 p-4 bg-black/10"><BarChart3 size={32} /></div>
+              {/* CARD 4: SCIENCE EXPERIMENT (Texto centrado corregido) */}
+              <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-emerald-500 p-8 border-none text-black flex items-center justify-center">
+                <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left max-w-2xl">
+                  <div className="shrink-0 p-4 bg-black/10 rounded-none"><BarChart3 size={40} /></div>
                   <div>
                     <h4 className="text-2xl font-black italic uppercase tracking-tighter mb-2 leading-none">Agencies treat this like a science experiment</h4>
                     <p className="text-sm font-medium leading-relaxed opacity-90">
@@ -147,19 +160,18 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
             </div>
-
-            {/* FLOATING STATS */}
-            <motion.div style={{ y: yStats }} className="absolute -left-8 top-[20%] z-20 hidden lg:block pointer-events-none">
-              <StatBadge icon={Zap} label="Leads Generated" value="1,240+" />
-            </motion.div>
           </div>
 
-          {/* DERECHA: TEXTO (Ocupa el 40%) */}
-          <div className="lg:w-[40%] sticky top-32 order-1 lg:order-2">
+          {/* DERECHA: TEXTO STICKY (40%) */}
+          <div className="lg:w-[40%] sticky top-32 self-start">
             <div className="flex flex-col gap-6">
-              <div className="w-fit px-3 py-1.5 border border-zinc-200 bg-white text-gray-500 text-[10px] font-sans font-semibold uppercase tracking-[2px]">
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="w-fit px-3 py-1.5 border border-zinc-200 bg-white text-gray-500 text-[10px] font-sans font-semibold uppercase tracking-[2px]"
+              >
                 STEP 2: THE FUEL
-              </div>
+              </motion.div>
 
               <h3 className="font-sans font-bold text-[32px] md:text-[48px] leading-[1.1] tracking-tighter text-gray-900">
                 Then, We Turn That Foundation Into <span className="text-cyan-500">Leads</span>
@@ -193,7 +205,7 @@ export const WhatWeDoSection2 = () => {
               </div>
 
               <div className="mt-6">
-                <button className="group relative h-[56px] px-10 py-3 flex items-center justify-center gap-3 rounded-none font-sans font-bold text-[15px] border transition-all duration-500 bg-black text-white hover:bg-zinc-800 hover:shadow-xl">
+                <button className="group relative h-[56px] px-10 py-3 flex items-center justify-center gap-3 rounded-none font-sans font-bold text-[15px] border transition-all duration-500 bg-black text-white hover:bg-zinc-800 hover:shadow-xl w-full md:w-fit">
                   Scale My Business <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </button>
               </div>
@@ -205,7 +217,7 @@ export const WhatWeDoSection2 = () => {
         <motion.div 
           initial={{ opacity: 0, y: 40 }} 
           whileInView={{ opacity: 1, y: 0 }} 
-          viewport={{ once: true }} 
+          viewport={{ once: true, margin: "-100px" }} 
           className="relative mt-40"
         >
           <div className="relative p-8 md:p-16 border border-zinc-200 bg-white shadow-2xl overflow-hidden">
@@ -236,30 +248,30 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </div>
 
-              {/* SPLIT SCREEN VISUAL (Corregido enlace de imagen) */}
+              {/* SPLIT SCREEN VISUAL (Imágenes actualizadas y estables) */}
               <div className="relative h-[450px] w-full border border-zinc-200 overflow-hidden shadow-inner">
                 <div className="absolute inset-0 grid grid-cols-2">
-                  {/* Left Side: Roof (Imagen Corregida) */}
+                  {/* Left Side: Roof */}
                   <div className="relative group/side overflow-hidden border-r border-zinc-200">
                     <img 
-                      src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop" 
+                      src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" 
                       className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 group-hover/side:grayscale-0 group-hover/side:scale-105" 
-                      alt="Tradie working on roof" 
+                      alt="Roofing construction" 
                     />
-                    <div className="absolute inset-0 bg-black/40" />
+                    <div className="absolute inset-0 bg-black/40 group-hover/side:bg-black/10 transition-colors" />
                     <div className="absolute bottom-6 left-6 right-6">
                       <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-1">Morning</p>
                       <p className="text-white font-bold text-sm tracking-tight">ON THE TOOLS</p>
                     </div>
                   </div>
-                  {/* Right Side: Laptop */}
+                  {/* Right Side: Dashboard (Imagen Corregida) */}
                   <div className="relative group/side overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1551288049-bbbda546697a?q=80&w=800&auto=format&fit=crop" 
                       className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 group-hover/side:grayscale-0 group-hover/side:scale-105" 
-                      alt="Google Ads Dashboard" 
+                      alt="Data Dashboard" 
                     />
-                    <div className="absolute inset-0 bg-cyan-900/20" />
+                    <div className="absolute inset-0 bg-cyan-900/20 group-hover/side:bg-transparent transition-colors" />
                     <div className="absolute bottom-6 left-6 right-6">
                       <p className="text-[10px] font-black uppercase tracking-widest text-cyan-400 mb-1">Afternoon</p>
                       <p className="text-white font-bold text-sm tracking-tight">12 NEW LEADS</p>
