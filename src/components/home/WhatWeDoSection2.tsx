@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useSpring, useTransform, animate } from 'framer-motion';
-import { Zap, BarChart3, Target, RefreshCw, Check, ArrowUpRight, MousePointer2, PhoneCall } from 'lucide-react';
+import { Zap, BarChart3, Target, RefreshCw, Check, ArrowUpRight, MousePointer2, PhoneCall, ShieldCheck } from 'lucide-react';
 
 // --- STYLES ---
 const fontStyles = `
@@ -17,7 +17,7 @@ const cn = (...classes: (string | undefined | null | false)[]) => classes.filter
 // --- COLORS ---
 const COLORS = {
   cyan: "#06b6d4", 
-  emerald: "#10b981", // Un poco más saturado para visibilidad
+  emerald: "#10b981", 
   zinc: "#71717a"
 };
 
@@ -28,7 +28,6 @@ const GlowingEffect = React.memo(
     inactiveZone = 0.1,
     proximity = 80,
     spread = 60,
-    variant = "default",
     glow = true,
     className,
     movementDuration = 1.5,
@@ -39,7 +38,6 @@ const GlowingEffect = React.memo(
     inactiveZone?: number;
     proximity?: number;
     spread?: number;
-    variant?: "default" | "white";
     glow?: boolean;
     className?: string;
     disabled?: boolean;
@@ -53,10 +51,7 @@ const GlowingEffect = React.memo(
     const handleMove = React.useCallback(
       (e?: MouseEvent | { x: number; y: number }) => {
         if (!containerRef.current) return;
-
-        if (animationFrameRef.current) {
-          cancelAnimationFrame(animationFrameRef.current);
-        }
+        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
 
         animationFrameRef.current = requestAnimationFrame(() => {
           const element = containerRef.current;
@@ -66,9 +61,7 @@ const GlowingEffect = React.memo(
           const mouseX = e?.x ?? lastPosition.current.x;
           const mouseY = e?.y ?? lastPosition.current.y;
 
-          if (e) {
-            lastPosition.current = { x: mouseX, y: mouseY };
-          }
+          if (e) lastPosition.current = { x: mouseX, y: mouseY };
 
           const center = [left + width * 0.5, top + height * 0.5];
           const isActive =
@@ -81,13 +74,8 @@ const GlowingEffect = React.memo(
 
           if (!isActive) return;
 
-          const currentAngle =
-            parseFloat(element.style.getPropertyValue("--start")) || 0;
-          let targetAngle =
-            (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
-              Math.PI +
-            90;
-
+          const currentAngle = parseFloat(element.style.getPropertyValue("--start")) || 0;
+          let targetAngle = (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) / Math.PI + 90;
           const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
           const newAngle = currentAngle + angleDiff;
 
@@ -189,7 +177,6 @@ const TiltCard = ({ children, className, innerClassName, delay = 0 }: any) => {
         proximity={100} 
         borderWidth={2} 
       />
-
       <div className={cn("relative h-full w-full overflow-hidden rounded-none bg-white border border-zinc-200", innerClassName)}>
         {children}
       </div>
@@ -210,23 +197,14 @@ const StatBadge = ({ icon: Icon, label, value, className }: any) => (
 // --- MAIN COMPONENT ---
 export const WhatWeDoSection2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({ 
-    target: containerRef, 
-    offset: ["start end", "end start"] 
-  });
-
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
   const yBadge = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
-    <section 
-      ref={containerRef} 
-      className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans"
-    >
+    <section ref={containerRef} className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans">
       <style>{fontStyles}</style>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
-        
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           
           {/* IZQUIERDA: TARJETAS (60%) */}
@@ -235,13 +213,9 @@ export const WhatWeDoSection2 = () => {
 
               {/* CARD 1: GOOGLE ADS */}
               <div className="md:col-span-2 relative">
-                <motion.div 
-                    style={{ y: yBadge }}
-                    className="absolute -top-6 right-8 z-40 hidden md:block"
-                >
+                <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
                     <StatBadge icon={Zap} label="Leads Generated" value="1,240+" />
                 </motion.div>
-
                 <TiltCard innerClassName="p-8">
                   <div className="flex flex-col md:flex-row gap-8 items-center">
                     <div className="flex-1">
@@ -297,15 +271,38 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
-              {/* CARD 4: SCIENCE EXPERIMENT */}
-              <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-emerald-500 p-8 border-none text-black flex items-center justify-center">
-                <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left max-w-2xl">
-                  <div className="shrink-0 p-4 bg-black/10 rounded-none"><BarChart3 size={40} /></div>
-                  <div>
-                    <h4 className="text-2xl font-black italic uppercase tracking-tighter mb-2 leading-none">Agencies treat this like a science experiment</h4>
-                    <p className="text-sm font-medium leading-relaxed opacity-90">
-                      "Let's see what happens in 6 months!" — Mate, we have bills due in 30 days. That's why we optimize daily and our guarantee is 30 days, not 90.
+              {/* CARD 4: REDISEÑADA - THE EXECUTION CARD */}
+              <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-black border-none relative min-h-[280px]">
+                {/* Background Image de Tradies */}
+                <div className="absolute inset-0 z-0">
+                    <img 
+                        src="https://images.unsplash.com/photo-1504307651254-35680f3366d4?q=80&w=1200&auto=format&fit=crop" 
+                        alt="Tradies working" 
+                        className="w-full h-full object-cover opacity-40 grayscale"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+                </div>
+
+                <div className="relative z-10 h-full p-8 md:p-12 flex flex-col md:flex-row items-center md:items-stretch gap-8">
+                  <div className="flex-1 flex flex-col justify-center">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="px-2 py-1 bg-emerald-500 text-black text-[10px] font-black uppercase tracking-tighter">Fast Results</div>
+                        <div className="h-px w-12 bg-zinc-700" />
+                    </div>
+                    <h4 className="text-3xl md:text-4xl font-black text-white italic uppercase tracking-tighter mb-4 leading-[0.9]">
+                      Agencies experiment. <br/>
+                      <span className="text-emerald-500">We execute.</span>
+                    </h4>
+                    <p className="text-sm md:text-base text-zinc-400 max-w-md font-medium leading-relaxed">
+                      Bills are due in 30 days—not 90. We optimize daily because your business needs cash flow now, not "eventually". That's our 30-day guarantee.
                     </p>
+                  </div>
+                  
+                  <div className="shrink-0 flex items-center">
+                    <div className="w-24 h-24 md:w-32 md:h-32 border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center">
+                        <ShieldCheck className="text-emerald-500 mb-1" size={32} />
+                        <span className="text-[10px] font-bold text-white uppercase leading-none">Optimized Daily</span>
+                    </div>
                   </div>
                 </div>
               </TiltCard>
@@ -324,7 +321,24 @@ export const WhatWeDoSection2 = () => {
               </motion.div>
 
               <h3 className="font-sans font-bold text-[32px] md:text-[48px] leading-[1.1] tracking-tighter text-gray-900">
-                Then, We Turn That Foundation Into <span className="text-cyan-500">Leads</span>
+                Then, We Turn That Foundation Into{' '}
+                <motion.span
+                  initial={{ backgroundPosition: "400% 50%" }}
+                  animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                  transition={{ duration: 12, ease: "linear", repeat: Infinity }}
+                  style={{
+                    display: "inline-block",
+                    backgroundImage: `linear-gradient(45deg, rgba(6, 182, 212, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(6, 182, 212, 0))`,
+                    backgroundSize: "400% 100%",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    color: "transparent"
+                  }}
+                >
+                  Leads
+                </motion.span>
+                <span className="text-black">.</span>
               </h3>
 
               <p className="font-sans text-[17px] leading-[1.6] font-medium text-gray-600">
@@ -362,7 +376,6 @@ export const WhatWeDoSection2 = () => {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
