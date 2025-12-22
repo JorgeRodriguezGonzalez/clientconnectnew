@@ -47,9 +47,9 @@ const Index = () => {
         <div className="relative z-[50] -mt-[180px]">
           <WhatWeDoSection />
         </div>
-        <div className="relative z-[50] -mt-[180px]">
+        
           <WhatWeDoSection2 />
-        </div>
+        
 
         <OurStepsVersion2 />
 
