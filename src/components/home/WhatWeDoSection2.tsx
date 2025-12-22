@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useSpring, useTransform, animate } from 'framer-motion';
-import { Zap, BarChart3, Target, RefreshCw, Check, ArrowUpRight, MousePointer2, PhoneCall, ShieldCheck, HardHat, Drill } from 'lucide-react';
+import { Zap, Target, RefreshCw, Check, ArrowUpRight, MousePointer2, PhoneCall, ShieldCheck, HardHat, Drill } from 'lucide-react';
 
 // --- STYLES ---
 const fontStyles = `
@@ -20,6 +20,9 @@ const COLORS = {
   emerald: "#10b981", 
   zinc: "#71717a"
 };
+
+const buttonColorSequence = [COLORS.emerald, COLORS.emerald, COLORS.cyan, COLORS.cyan, COLORS.emerald];
+const buttonColorDuration = 10;
 
 // --- COMPONENTE GLOWING EFFECT ---
 const GlowingEffect = React.memo(
@@ -242,18 +245,19 @@ export const WhatWeDoSection2 = () => {
                 </TiltCard>
               </div>
 
-              {/* CARD 2: JARGON-FREE NUMBERS (Imagen Corregida) */}
-              <TiltCard delay={0.1} innerClassName="bg-white border border-zinc-200 p-8 flex flex-col justify-between">
-                <div className="absolute inset-0 z-0 opacity-[0.07]">
+              {/* CARD 2: JARGON-FREE NUMBERS (Imagen Corregida y Texto Censurado) */}
+              <TiltCard delay={0.1} innerClassName="bg-white border border-zinc-200 p-8 flex flex-col justify-between overflow-hidden">
+                <div className="absolute inset-0 z-0 pointer-events-none">
                     <img 
-                      src="https://images.unsplash.com/photo-1503387762-5929606ba39c?q=80&w=800&auto=format&fit=crop" 
-                      className="w-full h-full object-cover" 
+                      src="https://images.unsplash.com/photo-1504307651254-35680f3366d4?q=80&w=800&auto=format&fit=crop" 
+                      className="w-full h-full object-cover opacity-10 grayscale" 
                       alt="Construction planning" 
                     />
+                    <div className="absolute inset-0 bg-white/40" />
                 </div>
                 <div className="relative z-10">
                   <div className="w-12 h-12 bg-emerald-500/10 flex items-center justify-center mb-6 rounded-none"><PhoneCall className="text-emerald-500" /></div>
-                  <h4 className="text-xl font-bold text-gray-900 leading-tight">No Marketing Bullshit</h4>
+                  <h4 className="text-xl font-bold text-gray-900 leading-tight">No Marketing Bulsh*&%!</h4>
                   <p className="text-xs text-gray-500 mt-2 leading-relaxed font-medium">
                     We don't talk about "impressions" or "reach". We show you <strong>calls, quotes, and cash.</strong> Reporting designed for business owners, not data nerds.
                   </p>
@@ -264,25 +268,25 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
-              {/* CARD 3: SKIN IN THE GAME (Textos Blancos Corregidos) */}
+              {/* CARD 3: SKIN IN THE GAME (Contraste Asegurado) */}
               <TiltCard delay={0.2} innerClassName="bg-zinc-900 border-zinc-800 p-8 flex flex-col justify-between overflow-hidden">
-                <div className="absolute inset-0 z-0 opacity-25 grayscale">
+                <div className="absolute inset-0 z-0 opacity-30 grayscale pointer-events-none">
                     <img 
                       src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" 
                       className="w-full h-full object-cover" 
                       alt="Roofer working" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                 </div>
                 <div className="relative z-10">
                   <div className="w-12 h-12 bg-white/10 flex items-center justify-center mb-6 rounded-none"><Drill className="text-cyan-400" /></div>
                   <h4 className="text-xl font-bold text-white">Our Own Skin in the Game</h4>
-                  <p className="text-xs text-zinc-100 mt-2 leading-relaxed font-medium opacity-90">
+                  <p className="text-xs text-zinc-100 mt-2 leading-relaxed font-medium opacity-100">
                     We still run ads for our own roofing company today. If the strategy doesn't work for our business, we don't dare sell it to yours.
                   </p>
                 </div>
                 <div className="relative z-10 flex mt-6">
-                  <span className="text-[10px] font-bold text-cyan-400 uppercase border border-cyan-400/30 px-2 py-1 bg-cyan-400/10">Tested on our site first</span>
+                  <span className="text-[10px] font-bold text-cyan-400 uppercase border border-cyan-400/30 px-2 py-1 bg-cyan-400/10 backdrop-blur-sm">Tested on our site first</span>
                 </div>
               </TiltCard>
 
@@ -323,8 +327,8 @@ export const WhatWeDoSection2 = () => {
             </div>
           </div>
 
-          {/* DERECHA: TEXTO STICKY (40%) - Corregido */}
-          <div className="lg:w-[40%] sticky top-32 self-start">
+          {/* DERECHA: TEXTO STICKY (40%) */}
+          <div className="lg:w-[40%] sticky top-32 self-start h-full">
             <div className="flex flex-col gap-6">
               <motion.div 
                 initial={{ opacity: 0, x: 20 }}
@@ -355,7 +359,8 @@ export const WhatWeDoSection2 = () => {
                 <span className="text-black">.</span>
               </h3>
 
-              <p className="font-sans text-[17px] leading-[1.6] font-medium text-gray-600">
+              {/* Descripción con el estilo de FounderSection */}
+              <p className="font-sans text-[15px] leading-[1.6] font-medium text-gray-500 max-w-sm">
                 Agencies treat your business like a spreadsheet. We treat it like our own roofing business. No fancy talk, no corporate excuses—just the leads you need to keep your crews busy.
               </p>
 
@@ -382,10 +387,38 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </div>
 
+              {/* Botón con el estilo y efectos de FounderSection */}
               <div className="mt-6">
-                <button className="group relative h-[56px] px-10 py-3 flex items-center justify-center gap-3 rounded-none font-sans font-bold text-[15px] border transition-all duration-500 bg-black text-white hover:bg-zinc-800 hover:shadow-xl w-full md:w-fit">
-                  Scale My Tradie Business <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </button>
+                <motion.button
+                  animate={{
+                    borderColor: buttonColorSequence
+                  }}
+                  transition={{
+                    duration: buttonColorDuration,
+                    ease: "linear",
+                    repeat: Infinity
+                  }}
+                  className={cn(
+                    "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)]",
+                    "bg-black text-white hover:bg-zinc-900 w-full md:w-fit"
+                  )}
+                >
+                  <span className="flex items-center gap-2">
+                    Scale My Business
+                    <motion.span
+                      animate={{
+                        color: buttonColorSequence
+                      }}
+                      transition={{
+                        duration: buttonColorDuration,
+                        ease: "linear",
+                        repeat: Infinity
+                      }}
+                    >
+                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    </motion.span>
+                  </span>
+                </motion.button>
               </div>
             </div>
           </div>
