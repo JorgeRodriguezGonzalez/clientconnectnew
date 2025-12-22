@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useSpring, useTransform, animate } from 'framer-motion';
-import { Zap, BarChart3, Target, RefreshCw, Check, ArrowUpRight, MousePointer2, PhoneCall, Construction } from 'lucide-react';
+import { Zap, BarChart3, Target, RefreshCw, Check, ArrowUpRight, MousePointer2, PhoneCall } from 'lucide-react';
 
 // --- STYLES ---
 const fontStyles = `
@@ -10,9 +10,6 @@ const fontStyles = `
     -webkit-transform: translate3d(0, 0, 0);
     perspective: 1000px;
   }
-  .glow {
-    filter: blur(var(--blur));
-  }
 `;
 
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
@@ -20,7 +17,7 @@ const cn = (...classes: (string | undefined | null | false)[]) => classes.filter
 // --- COLORS ---
 const COLORS = {
   cyan: "#06b6d4", 
-  emerald: "#34d399", 
+  emerald: "#10b981", // Un poco más saturado para visibilidad
   zinc: "#71717a"
 };
 
@@ -28,14 +25,14 @@ const COLORS = {
 const GlowingEffect = React.memo(
   ({
     blur = 0,
-    inactiveZone = 0.7,
-    proximity = 0,
-    spread = 20,
+    inactiveZone = 0.1,
+    proximity = 80,
+    spread = 60,
     variant = "default",
-    glow = false,
+    glow = true,
     className,
-    movementDuration = 2,
-    borderWidth = 1,
+    movementDuration = 1.5,
+    borderWidth = 2,
     disabled = false,
   }: {
     blur?: number;
@@ -74,17 +71,6 @@ const GlowingEffect = React.memo(
           }
 
           const center = [left + width * 0.5, top + height * 0.5];
-          const distanceFromCenter = Math.hypot(
-            mouseX - center[0],
-            mouseY - center[1]
-          );
-          const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
-
-          if (distanceFromCenter < inactiveRadius) {
-            element.style.setProperty("--active", "0");
-            return;
-          }
-
           const isActive =
             mouseX > left - proximity &&
             mouseX < left + width + proximity &&
@@ -114,79 +100,60 @@ const GlowingEffect = React.memo(
           });
         });
       },
-      [inactiveZone, proximity, movementDuration]
+      [proximity, movementDuration]
     );
 
     useEffect(() => {
       if (disabled) return;
-      const handleScroll = () => handleMove();
-      const handlePointerMove = (e: PointerEvent) => handleMove(e as any);
-      window.addEventListener("scroll", handleScroll, { passive: true } as any);
-      document.body.addEventListener("pointermove", handlePointerMove, { passive: true } as any);
+      const handlePointerMove = (e: PointerEvent) => handleMove({ x: e.clientX, y: e.clientY });
+      window.addEventListener("pointermove", handlePointerMove);
       return () => {
         if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
-        window.removeEventListener("scroll", handleScroll);
-        document.body.removeEventListener("pointermove", handlePointerMove);
+        window.removeEventListener("pointermove", handlePointerMove);
       };
     }, [handleMove, disabled]);
 
     return (
-      <>
+      <div
+        ref={containerRef}
+        style={
+          {
+            "--blur": `${blur}px`,
+            "--spread": spread,
+            "--start": "0",
+            "--active": "0",
+            "--glowingeffect-border-width": `${borderWidth}px`,
+            "--repeating-conic-gradient-times": "5",
+            "--gradient": `radial-gradient(circle, ${COLORS.emerald} 20%, transparent 80%),
+              repeating-conic-gradient(
+                from 236.84deg at 50% 50%,
+                ${COLORS.emerald} 0%,
+                ${COLORS.cyan} calc(25% / var(--repeating-conic-gradient-times)),
+                ${COLORS.emerald} calc(50% / var(--repeating-conic-gradient-times)), 
+                ${COLORS.cyan} calc(75% / var(--repeating-conic-gradient-times)),
+                ${COLORS.emerald} calc(100% / var(--repeating-conic-gradient-times))
+              )`,
+          } as React.CSSProperties
+        }
+        className={cn(
+          "pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300",
+          glow ? "opacity-100" : "opacity-0",
+          className
+        )}
+      >
         <div
           className={cn(
-            "pointer-events-none absolute -inset-px hidden rounded-[inherit] border opacity-0 transition-opacity",
-            glow && "opacity-100",
-            variant === "white" && "border-white",
-            disabled && "!block"
+            "rounded-[inherit] absolute inset-0",
+            'after:content-[""] after:rounded-[inherit] after:absolute after:inset-0',
+            "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
+            "after:[background:var(--gradient)] after:[background-attachment:fixed]",
+            "after:opacity-[var(--active)] after:transition-opacity after:duration-500",
+            "after:[mask-clip:padding-box,border-box]",
+            "after:[mask-composite:intersect]",
+            "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
           )}
         />
-        <div
-          ref={containerRef}
-          style={
-            {
-              "--blur": `${blur}px`,
-              "--spread": spread,
-              "--start": "0",
-              "--active": "0",
-              "--glowingeffect-border-width": `${borderWidth}px`,
-              "--repeating-conic-gradient-times": "5",
-              "--gradient": `radial-gradient(circle, ${COLORS.emerald} 10%, #34d39900 20%),
-                radial-gradient(circle at 40% 40%, ${COLORS.emerald} 5%, #34d39900 15%),
-                radial-gradient(circle at 60% 60%, ${COLORS.cyan} 10%, #06b6d400 20%), 
-                radial-gradient(circle at 40% 60%, ${COLORS.cyan} 10%, #06b6d400 20%),
-                repeating-conic-gradient(
-                  from 236.84deg at 50% 50%,
-                  ${COLORS.emerald} 0%,
-                  ${COLORS.cyan} calc(25% / var(--repeating-conic-gradient-times)),
-                  ${COLORS.emerald} calc(50% / var(--repeating-conic-gradient-times)), 
-                  ${COLORS.cyan} calc(75% / var(--repeating-conic-gradient-times)),
-                  ${COLORS.emerald} calc(100% / var(--repeating-conic-gradient-times))
-                )`,
-            } as React.CSSProperties
-          }
-          className={cn(
-            "pointer-events-none absolute inset-0 rounded-[inherit] opacity-100 transition-opacity",
-            glow && "opacity-100",
-            blur > 0 && "blur-[var(--blur)] ",
-            className,
-            disabled && "!hidden"
-          )}
-        >
-          <div
-            className={cn(
-              "glow",
-              "rounded-[inherit]",
-              'after:content-[""] after:rounded-[inherit] after:absolute after:inset-[calc(-1*var(--glowingeffect-border-width))]',
-              "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
-              "after:[background:var(--gradient)] after:[background-attachment:fixed]",
-              "after:opacity-[var(--active)] after:transition-opacity after:duration-300",
-              "after:[mask-clip:padding-box,border-box]",
-              "after:[mask-composite:intersect]",
-              "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
-            )}
-          />
-        </div>
-      </>
+      </div>
     );
   }
 );
@@ -214,15 +181,12 @@ const TiltCard = ({ children, className, innerClassName, delay = 0 }: any) => {
       onMouseMove={handleMove} 
       onMouseLeave={handleLeave} 
       style={{ rotateY: x, rotateX: y, transformStyle: "preserve-3d", perspective: 1000 }} 
-      className={cn("relative rounded-none p-[2px] transition-colors duration-300 h-full safari-gpu", className)}
+      className={cn("relative rounded-none p-[2px] h-full safari-gpu", className)}
     >
-      {/* Efecto Glow añadido aquí */}
       <GlowingEffect 
-        spread={40} 
+        spread={60} 
         glow={true} 
-        disabled={false} 
-        proximity={64} 
-        inactiveZone={0.01} 
+        proximity={100} 
         borderWidth={2} 
       />
 
@@ -263,7 +227,6 @@ export const WhatWeDoSection2 = () => {
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
-        {/* PARTE 1: ESTRUCTURA CON STICKY INVERTIDO */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           
           {/* IZQUIERDA: TARJETAS (60%) */}
@@ -322,7 +285,7 @@ export const WhatWeDoSection2 = () => {
 
               {/* CARD 3: CONTINUOUS TESTING */}
               <TiltCard delay={0.2} innerClassName="p-8 flex flex-col justify-between bg-zinc-900 border-zinc-800">
-                <div className="w-12 h-12 bg-white/5 flex items-center justify-center mb-6"><RefreshCw className="text-cyan-400" /></div>
+                <div className="w-12 h-12 bg-white/5 flex items-center justify-center mb-6"><RefreshCw className="text-cyan-400 animate-spin-slow" /></div>
                 <div className="text-white">
                   <h4 className="text-xl font-bold">Daily Testing</h4>
                   <p className="text-xs text-white/50 mt-2 leading-relaxed">New landing pages, bid adjustments, and A/B testing weekly. We don't "wait 3 months to gather data".</p>
@@ -399,77 +362,6 @@ export const WhatWeDoSection2 = () => {
             </div>
           </div>
         </div>
-
-        {/* PARTE 2: WHY OTHER AGENCIES FAIL TRADIES */}
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
-          viewport={{ once: true, margin: "-100px" }} 
-          className="relative mt-40"
-        >
-          {/* Añadimos TiltCard aquí también para que el cierre tenga glow */}
-          <TiltCard innerClassName="p-8 md:p-16 border border-zinc-200 bg-white shadow-2xl">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <h3 className="text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-none text-gray-900">
-                  Why Other Agencies <br/>
-                  <span className="text-emerald-500">Fail Tradies</span>
-                </h3>
-
-                <div className="space-y-6">
-                  {[
-                    { t: "The $90K Lesson", desc: "After wasting $90K on agencies that did ONE thing (only web or only ads), we built a system that does BOTH." },
-                    { t: "Foundation + Fuel", desc: "You can't run ads to a shit website, and a beautiful website is useless with zero traffic." },
-                    { t: "Tradie Timelines", desc: "We optimize daily because you're on the tools every morning and need leads every afternoon." }
-                  ].map((item, i) => (
-                    <div key={i} className="flex gap-4">
-                      <div className="h-6 w-6 rounded-none bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-1">
-                        <Check size={14} strokeWidth={4} />
-                      </div>
-                      <div>
-                        <p className="font-bold text-lg text-gray-900">{item.t}</p>
-                        <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="relative h-[450px] w-full border border-zinc-200 overflow-hidden shadow-inner">
-                <div className="absolute inset-0 grid grid-cols-2">
-                  <div className="relative group/side overflow-hidden border-r border-zinc-200">
-                    <img 
-                      src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" 
-                      className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 group-hover/side:grayscale-0 group-hover/side:scale-105" 
-                      alt="Roofing construction" 
-                    />
-                    <div className="absolute inset-0 bg-black/40 group-hover/side:bg-black/10 transition-colors" />
-                    <div className="absolute bottom-6 left-6 right-6">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-1">Morning</p>
-                      <p className="text-white font-bold text-sm tracking-tight">ON THE TOOLS</p>
-                    </div>
-                  </div>
-                  <div className="relative group/side overflow-hidden">
-                    <img 
-                      src="https://images.unsplash.com/photo-1551288049-bbbda546697a?q=80&w=800&auto=format&fit=crop" 
-                      className="absolute inset-0 w-full h-full object-cover grayscale transition-all duration-700 group-hover/side:grayscale-0 group-hover/side:scale-105" 
-                      alt="Data Dashboard" 
-                    />
-                    <div className="absolute inset-0 bg-cyan-900/20 group-hover/side:bg-transparent transition-colors" />
-                    <div className="absolute bottom-6 left-6 right-6">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-cyan-400 mb-1">Afternoon</p>
-                      <p className="text-white font-bold text-sm tracking-tight">12 NEW LEADS</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-black px-6 py-4 border border-zinc-200 shadow-2xl z-20 min-w-[140px]">
-                    <Construction size={24} className="text-emerald-500 mb-2 mx-auto" />
-                    <p className="text-[10px] font-black uppercase tracking-tighter text-center">Built by tradies</p>
-                </div>
-              </div>
-            </div>
-          </TiltCard>
-        </motion.div>
 
       </div>
     </section>
