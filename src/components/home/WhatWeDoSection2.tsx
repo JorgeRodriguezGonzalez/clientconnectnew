@@ -196,7 +196,7 @@ export const WhatWeDoSection2 = () => {
   const yBadge = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans overflow-hidden">
+    <section ref={containerRef} className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans">
       <style>{fontStyles}</style>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
@@ -242,15 +242,19 @@ export const WhatWeDoSection2 = () => {
                 </TiltCard>
               </div>
 
-              {/* CARD 2: JARGON-FREE NUMBERS */}
+              {/* CARD 2: JARGON-FREE NUMBERS (Imagen Corregida) */}
               <TiltCard delay={0.1} innerClassName="bg-white border border-zinc-200 p-8 flex flex-col justify-between">
-                <div className="absolute inset-0 z-0 opacity-5">
-                    <img src="https://images.unsplash.com/photo-1541888941259-792739460579?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Construction site" />
+                <div className="absolute inset-0 z-0 opacity-[0.07]">
+                    <img 
+                      src="https://images.unsplash.com/photo-1503387762-5929606ba39c?q=80&w=800&auto=format&fit=crop" 
+                      className="w-full h-full object-cover" 
+                      alt="Construction planning" 
+                    />
                 </div>
                 <div className="relative z-10">
                   <div className="w-12 h-12 bg-emerald-500/10 flex items-center justify-center mb-6 rounded-none"><PhoneCall className="text-emerald-500" /></div>
                   <h4 className="text-xl font-bold text-gray-900 leading-tight">No Marketing Bullshit</h4>
-                  <p className="text-xs text-gray-500 mt-2 leading-relaxed">
+                  <p className="text-xs text-gray-500 mt-2 leading-relaxed font-medium">
                     We don't talk about "impressions" or "reach". We show you <strong>calls, quotes, and cash.</strong> Reporting designed for business owners, not data nerds.
                   </p>
                 </div>
@@ -260,19 +264,24 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
-              {/* CARD 3: SKIN IN THE GAME */}
+              {/* CARD 3: SKIN IN THE GAME (Textos Blancos Corregidos) */}
               <TiltCard delay={0.2} innerClassName="bg-zinc-900 border-zinc-800 p-8 flex flex-col justify-between overflow-hidden">
-                <div className="absolute inset-0 z-0 opacity-20 grayscale">
-                    <img src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Roofer working" />
+                <div className="absolute inset-0 z-0 opacity-25 grayscale">
+                    <img 
+                      src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" 
+                      className="w-full h-full object-cover" 
+                      alt="Roofer working" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                 </div>
-                <div className="relative z-10 text-white">
-                  <div className="w-12 h-12 bg-white/5 flex items-center justify-center mb-6 rounded-none"><Drill className="text-cyan-400" /></div>
-                  <h4 className="text-xl font-bold">Our Own Skin in the Game</h4>
-                  <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
+                <div className="relative z-10">
+                  <div className="w-12 h-12 bg-white/10 flex items-center justify-center mb-6 rounded-none"><Drill className="text-cyan-400" /></div>
+                  <h4 className="text-xl font-bold text-white">Our Own Skin in the Game</h4>
+                  <p className="text-xs text-zinc-100 mt-2 leading-relaxed font-medium opacity-90">
                     We still run ads for our own roofing company today. If the strategy doesn't work for our business, we don't dare sell it to yours.
                   </p>
                 </div>
-                <div className="relative z-10 flex -space-x-2 mt-6">
+                <div className="relative z-10 flex mt-6">
                   <span className="text-[10px] font-bold text-cyan-400 uppercase border border-cyan-400/30 px-2 py-1 bg-cyan-400/10">Tested on our site first</span>
                 </div>
               </TiltCard>
@@ -314,7 +323,7 @@ export const WhatWeDoSection2 = () => {
             </div>
           </div>
 
-          {/* DERECHA: TEXTO STICKY (40%) */}
+          {/* DERECHA: TEXTO STICKY (40%) - Corregido */}
           <div className="lg:w-[40%] sticky top-32 self-start">
             <div className="flex flex-col gap-6">
               <motion.div 
