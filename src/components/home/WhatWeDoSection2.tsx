@@ -14,7 +14,6 @@ const fontStyles = `
 
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
-// --- COLORS ---
 const COLORS = {
   cyan: "#06b6d4", 
   emerald: "#34d399", 
@@ -119,7 +118,6 @@ const GlowingEffect = React.memo(
 );
 GlowingEffect.displayName = "GlowingEffect";
 
-// --- REUSABLE COMPONENTS ---
 const TiltCard = ({ children, className, innerClassName, delay = 0 }: any) => {
   const x = useSpring(0, { stiffness: 150, damping: 20 });
   const y = useSpring(0, { stiffness: 150, damping: 20 });
@@ -147,31 +145,30 @@ const StatBadge = ({ icon: Icon, label, value, className }: any) => (
   </div>
 );
 
-// --- MAIN COMPONENT ---
 export const WhatWeDoSection2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
   const yBadge = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans overflow-hidden">
+    <section ref={containerRef} className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans">
       <style>{fontStyles}</style>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           
-          {/* IZQUIERDA: TARJETAS (60%) */}
+          {/* IZQUIERDA: TARJETAS */}
           <div className="lg:w-[60%] relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
 
-              {/* CARD 1: TYRE KICKER FILTERING */}
+              {/* CARD 1 */}
               <div className="md:col-span-2 relative">
                 <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
                     <StatBadge icon={Zap} label="Leads Generated" value="1,240+" />
                 </motion.div>
                 <TiltCard innerClassName="bg-white border border-zinc-200 min-h-[320px]">
-                  <div className="absolute inset-0 z-0 pointer-events-none opacity-10">
-                    <img src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover grayscale" alt="Roofing detail" />
+                  <div className="absolute inset-0 z-0 pointer-events-none opacity-10 grayscale">
+                    <img src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover" alt="Roofing detail" />
                   </div>
                   <div className="relative z-10 p-8 flex flex-col md:flex-row gap-8 items-center h-full">
                     <div className="flex-1">
@@ -192,14 +189,10 @@ export const WhatWeDoSection2 = () => {
                 </TiltCard>
               </div>
 
-              {/* CARD 2: JARGON-FREE NUMBERS (IMAGEN VISIBLE) */}
+              {/* CARD 2 */}
               <TiltCard delay={0.1} innerClassName="bg-white border border-zinc-200 p-8 flex flex-col justify-between overflow-hidden">
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08]">
-                    <img 
-                      src="https://images.unsplash.com/photo-1551288049-bbbda546697a?q=80&w=800&auto=format&fit=crop" 
-                      className="w-full h-full object-cover grayscale" 
-                      alt="Dashboard visualization" 
-                    />
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] grayscale">
+                    <img src="https://images.unsplash.com/photo-1551288049-bbbda546697a?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Dashboard" />
                 </div>
                 <div className="relative z-10">
                   <div className="w-12 h-12 bg-emerald-500/10 flex items-center justify-center mb-6 rounded-none"><PhoneCall className="text-emerald-500" /></div>
@@ -214,10 +207,10 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
-              {/* CARD 3: SKIN IN THE GAME (TEXTO BLANCO) */}
+              {/* CARD 3 */}
               <TiltCard delay={0.2} innerClassName="bg-zinc-900 border-zinc-800 p-8 flex flex-col justify-between overflow-hidden">
                 <div className="absolute inset-0 z-0 opacity-25 grayscale pointer-events-none">
-                    <img src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Roofer working" />
+                    <img src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Roofer" />
                 </div>
                 <div className="relative z-10">
                   <div className="w-12 h-12 bg-white/10 flex items-center justify-center mb-6 rounded-none"><Drill className="text-cyan-400" /></div>
@@ -231,10 +224,10 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
-              {/* CARD 4: THE 20-YEAR DIFFERENCE */}
+              {/* CARD 4 */}
               <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-black border-none relative min-h-[280px]">
-                <div className="absolute inset-0 z-0">
-                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop" alt="20 years Tools" className="w-full h-full object-cover opacity-50 grayscale" />
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-50 grayscale">
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop" alt="20 years" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
                 </div>
                 <div className="relative z-10 h-full p-8 md:p-12 flex flex-col md:flex-row items-center md:items-stretch gap-8">
@@ -262,7 +255,7 @@ export const WhatWeDoSection2 = () => {
             </div>
           </div>
 
-          {/* DERECHA: TEXTO STICKY (40%) - TAMAÑOS RECUPERADOS */}
+          {/* DERECHA: TEXTO STICKY */}
           <div className="lg:w-[40%] sticky top-32 self-start">
             <div className="flex flex-col gap-6">
               <motion.div 
@@ -303,7 +296,8 @@ export const WhatWeDoSection2 = () => {
                   <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-3 flex items-center gap-2">
                     Traditional Agencies <span className="h-px flex-1 bg-zinc-100" />
                   </p>
-                  <div className="flex flex-col gap-2">
+                  {/* Corregido: flex-wrap para ocupar máximo 2 líneas */}
+                  <div className="flex flex-wrap gap-x-4 gap-y-1">
                     {["Never worked on site", "Obsessed with vanity metrics", "Set and forget"].map(t => (
                       <span key={t} className="text-[13px] text-gray-400 font-medium italic">/ {t}</span>
                     ))}
@@ -313,7 +307,8 @@ export const WhatWeDoSection2 = () => {
                   <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-3 flex items-center gap-2">
                     Our Partnership <span className="h-px flex-1 bg-emerald-100" />
                   </p>
-                  <div className="flex flex-col gap-2">
+                  {/* Corregido: flex-wrap para ocupar máximo 2 líneas */}
+                  <div className="flex flex-wrap gap-x-4 gap-y-1">
                     {["20 years on the tools", "Focused on cash flow", "Skin in the game"].map(t => (
                       <span key={t} className="text-[13px] text-gray-900 font-bold">/ {t}</span>
                     ))}
@@ -321,7 +316,6 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </div>
 
-              {/* Botón Scale My Business (Efecto FounderSection) */}
               <div className="mt-4">
                 <motion.button
                   animate={{ borderColor: buttonColorSequence }}
