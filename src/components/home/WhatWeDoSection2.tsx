@@ -14,9 +14,10 @@ const fontStyles = `
 
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
+// --- COLORS ---
 const COLORS = {
   cyan: "#06b6d4", 
-  emerald: "#10b981", 
+  emerald: "#34d399", 
   zinc: "#71717a"
 };
 
@@ -153,105 +154,107 @@ export const WhatWeDoSection2 = () => {
   const yBadge = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
-    <section ref={containerRef} className="relative w-full py-16 lg:py-24 bg-[#FAFAFA] font-sans">
+    <section ref={containerRef} className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans overflow-hidden">
       <style>{fontStyles}</style>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           
           {/* IZQUIERDA: TARJETAS (60%) */}
           <div className="lg:w-[60%] relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
 
               {/* CARD 1: TYRE KICKER FILTERING */}
               <div className="md:col-span-2 relative">
                 <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
                     <StatBadge icon={Zap} label="Leads Generated" value="1,240+" />
                 </motion.div>
-                <TiltCard innerClassName="bg-white border border-zinc-200 min-h-[280px]">
-                  <div className="absolute inset-0 z-0">
-                    <img src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover opacity-10 grayscale" alt="Roofing detail" />
+                <TiltCard innerClassName="bg-white border border-zinc-200 min-h-[320px]">
+                  <div className="absolute inset-0 z-0 pointer-events-none opacity-10">
+                    <img src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover grayscale" alt="Roofing detail" />
                   </div>
-                  <div className="relative z-10 p-7 flex flex-col md:flex-row gap-8 items-center h-full">
+                  <div className="relative z-10 p-8 flex flex-col md:flex-row gap-8 items-center h-full">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 text-emerald-600 mb-3">
-                        <HardHat size={18} />
+                      <div className="flex items-center gap-2 text-emerald-600 mb-4">
+                        <HardHat size={20} />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Built by Real Roofers</span>
                       </div>
-                      <h4 className="text-xl font-bold mb-3 text-gray-900 tracking-tight">Stop Wasting Time on "Tyre-Kickers"</h4>
-                      <p className="text-sm leading-relaxed mb-5 text-gray-600">
+                      <h4 className="text-2xl font-bold mb-4 text-gray-900 tracking-tight">Stop Wasting Time on "Tyre-Kickers"</h4>
+                      <p className="text-sm leading-relaxed mb-6 text-gray-600">
                         We filter by high-intent keywords so you only pick up for <strong>real jobs.</strong> No more $200 repair calls while you're on a roof.
                       </p>
-                      <div className="flex gap-3">
-                          <div className="px-3 py-2 bg-zinc-50/50 text-[10px] font-bold border border-zinc-100 flex items-center gap-2"><Check size={12} className="text-emerald-500"/> Suburb Targeting</div>
-                          <div className="px-3 py-2 bg-zinc-50/50 text-[10px] font-bold border border-zinc-100 flex items-center gap-2"><Check size={12} className="text-emerald-500"/> Quality Filter</div>
+                      <div className="grid grid-cols-2 gap-4">
+                          <div className="p-3 bg-zinc-50/50 text-[11px] font-bold border border-zinc-100"><Check size={14} className="inline mr-2 text-emerald-500"/> Suburb Targeting</div>
+                          <div className="p-3 bg-zinc-50/50 text-[11px] font-bold border border-zinc-100"><Check size={14} className="inline mr-2 text-emerald-500"/> Job Quality Filter</div>
                       </div>
                     </div>
                   </div>
                 </TiltCard>
               </div>
 
-              {/* CARD 2: JARGON-FREE NUMBERS (IMAGEN CORREGIDA) */}
-              <TiltCard delay={0.1} innerClassName="bg-white border border-zinc-200 p-7 flex flex-col justify-between overflow-hidden">
-                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.15]">
+              {/* CARD 2: JARGON-FREE NUMBERS (IMAGEN VISIBLE) */}
+              <TiltCard delay={0.1} innerClassName="bg-white border border-zinc-200 p-8 flex flex-col justify-between overflow-hidden">
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08]">
                     <img 
-                      src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" 
+                      src="https://images.unsplash.com/photo-1551288049-bbbda546697a?q=80&w=800&auto=format&fit=crop" 
                       className="w-full h-full object-cover grayscale" 
-                      alt="Data and charts" 
+                      alt="Dashboard visualization" 
                     />
                 </div>
                 <div className="relative z-10">
-                  <div className="w-10 h-10 bg-emerald-500/10 flex items-center justify-center mb-5 rounded-none"><PhoneCall className="text-emerald-500" size={18} /></div>
-                  <h4 className="text-lg font-bold text-gray-900 leading-tight">No Marketing Bulsh*&%!</h4>
-                  <p className="text-[12px] text-gray-500 mt-2 leading-relaxed font-medium">
-                    We don't talk about "impressions". We show you <strong>calls, quotes, and cash.</strong> Designed for tradies.
+                  <div className="w-12 h-12 bg-emerald-500/10 flex items-center justify-center mb-6 rounded-none"><PhoneCall className="text-emerald-500" /></div>
+                  <h4 className="text-xl font-bold text-gray-900 leading-tight">No Marketing Bulsh*&%!</h4>
+                  <p className="text-xs text-gray-500 mt-2 leading-relaxed font-medium">
+                    We don't talk about "impressions" or "reach". We show you <strong>calls, quotes, and cash.</strong> Reporting designed for business owners, not data nerds.
                   </p>
                 </div>
-                <div className="relative z-10 pt-4 mt-5 border-t border-zinc-100 flex justify-between items-center text-emerald-600">
+                <div className="relative z-10 pt-4 mt-6 border-t border-zinc-100 flex justify-between items-center text-emerald-600">
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Calls that pay</span>
-                  <span className="font-black text-sm">TRACKED</span>
+                  <span className="font-black text-lg">TRACKED</span>
                 </div>
               </TiltCard>
 
-              {/* CARD 3: SKIN IN THE GAME */}
-              <TiltCard delay={0.2} innerClassName="bg-zinc-900 border-zinc-800 p-7 flex flex-col justify-between overflow-hidden">
-                <div className="absolute inset-0 z-0 opacity-30 grayscale pointer-events-none">
+              {/* CARD 3: SKIN IN THE GAME (TEXTO BLANCO) */}
+              <TiltCard delay={0.2} innerClassName="bg-zinc-900 border-zinc-800 p-8 flex flex-col justify-between overflow-hidden">
+                <div className="absolute inset-0 z-0 opacity-25 grayscale pointer-events-none">
                     <img src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Roofer working" />
                 </div>
                 <div className="relative z-10">
-                  <div className="w-10 h-10 bg-white/10 flex items-center justify-center mb-5 rounded-none"><Drill className="text-cyan-400" size={18} /></div>
-                  <h4 className="text-lg font-bold text-white">Skin in the Game</h4>
-                  <p className="text-[12px] text-zinc-300 mt-2 leading-relaxed font-medium">
-                    We still run ads for our own roofing company. If it doesn't work for us, we don't sell it to you.
+                  <div className="w-12 h-12 bg-white/10 flex items-center justify-center mb-6 rounded-none"><Drill className="text-cyan-400" /></div>
+                  <h4 className="text-xl font-bold text-white">Our Own Skin in the Game</h4>
+                  <p className="text-xs text-zinc-100 mt-2 leading-relaxed font-medium opacity-100">
+                    We still run ads for our own roofing company today. If the strategy doesn't work for our business, we don't dare sell it to yours.
                   </p>
                 </div>
-                <div className="relative z-10 flex mt-5">
-                  <span className="text-[9px] font-bold text-cyan-400 uppercase border border-cyan-400/30 px-2 py-1 bg-cyan-400/10 backdrop-blur-sm">Tested on site</span>
+                <div className="relative z-10 flex mt-6">
+                  <span className="text-[10px] font-bold text-cyan-400 uppercase border border-cyan-400/30 px-2 py-1 bg-cyan-400/10 backdrop-blur-sm">Tested on our site first</span>
                 </div>
               </TiltCard>
 
               {/* CARD 4: THE 20-YEAR DIFFERENCE */}
-              <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-black border-none relative min-h-[250px]">
+              <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-black border-none relative min-h-[280px]">
                 <div className="absolute inset-0 z-0">
-                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop" alt="20 years" className="w-full h-full object-cover opacity-50 grayscale" />
+                    <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop" alt="20 years Tools" className="w-full h-full object-cover opacity-50 grayscale" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
                 </div>
-                <div className="relative z-10 h-full p-8 flex flex-col md:flex-row items-center gap-8">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3 text-emerald-500">
-                        <div className="px-2 py-1 bg-emerald-500 text-black text-[9px] font-black uppercase tracking-tighter">20 Years on the Tools</div>
+                <div className="relative z-10 h-full p-8 md:p-12 flex flex-col md:flex-row items-center md:items-stretch gap-8">
+                  <div className="flex-1 flex flex-col justify-center">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="px-2 py-1 bg-emerald-500 text-black text-[10px] font-black uppercase tracking-tighter">20 Years on the Tools</div>
+                        <div className="h-px w-12 bg-zinc-700" />
                     </div>
-                    <h4 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tighter mb-3 leading-none">
-                      Agencies experiment. <span className="text-emerald-500">We build.</span>
+                    <h4 className="text-3xl md:text-4xl font-black text-white italic uppercase tracking-tighter mb-4 leading-[0.9]">
+                      Marketing agencies experiment. <br/>
+                      <span className="text-emerald-500">We just build.</span>
                     </h4>
-                    <p className="text-sm text-zinc-400 max-w-sm font-medium leading-relaxed">
-                      Two décadas on roofs across Australia. We speak to homeowners every day—we know exactly what makes them call.
+                    <p className="text-sm md:text-base text-zinc-400 max-w-md font-medium leading-relaxed">
+                      Two décadas on roofs across Australia. We don’t guess what homeowners want—we’ve spoken to thousands of them in their driveways. 
                     </p>
                   </div>
-                  <div className="shrink-0">
-                    <div className="w-20 h-20 border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm flex flex-col items-center justify-center p-2 text-center">
-                        <ShieldCheck className="text-emerald-500 mb-1" size={24} />
-                        <span className="text-[8px] font-bold text-white uppercase leading-none">Founder led</span>
+                  <div className="shrink-0 flex items-center">
+                    <div className="w-24 h-24 md:w-32 md:h-32 border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center">
+                        <ShieldCheck className="text-emerald-500 mb-1" size={32} />
+                        <span className="text-[10px] font-bold text-white uppercase leading-none">Founder<br/>Led</span>
                     </div>
                   </div>
                 </div>
@@ -259,15 +262,19 @@ export const WhatWeDoSection2 = () => {
             </div>
           </div>
 
-          {/* DERECHA: TEXTO STICKY (40%) - COMPACTADO */}
-          <div className="lg:w-[40%] sticky top-20 self-start">
-            <div className="flex flex-col gap-5">
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} className="w-fit px-3 py-1 border border-zinc-200 bg-white text-gray-500 text-[9px] font-sans font-semibold uppercase tracking-[2px]">
+          {/* DERECHA: TEXTO STICKY (40%) - TAMAÑOS RECUPERADOS */}
+          <div className="lg:w-[40%] sticky top-32 self-start">
+            <div className="flex flex-col gap-6">
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                className="w-fit px-3 py-1.5 border border-zinc-200 bg-white text-gray-500 text-[10px] font-sans font-semibold uppercase tracking-[2px]"
+              >
                 THE TRADIE WAY
               </motion.div>
 
-              <h3 className="font-sans font-bold text-[30px] md:text-[38px] leading-[1.1] tracking-tighter text-gray-900">
-                You’re on tools. <br/> We generate{' '}
+              <h3 className="font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tighter text-gray-900">
+                You’re on the tools. <br/> We’re generating{' '}
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}
                   animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -287,23 +294,35 @@ export const WhatWeDoSection2 = () => {
                 <span className="text-black">.</span>
               </h3>
 
-              <p className="font-sans text-[15px] leading-[1.5] font-medium text-gray-500 max-w-sm">
-                Agencies see spreadsheets. We see a roofing business like ours. No fancy talk—just the leads you need to keep crews busy.
+              <p className="font-sans text-[15px] leading-[1.6] font-medium text-gray-500 max-w-sm">
+                Agencies treat your business like a spreadsheet. We treat it like our own roofing business. No fancy talk, no corporate excuses—just the leads you need to keep your crews busy.
               </p>
 
-              <div className="flex flex-col gap-3">
-                <div className="p-4 border border-zinc-100 bg-white shadow-sm">
-                  <p className="text-[9px] font-bold text-red-500 uppercase tracking-widest mb-2">Lazy Habits</p>
-                  <p className="text-[11px] text-gray-400 font-medium italic">Monthly check-ins & vanity metrics.</p>
+              <div className="flex flex-col gap-5 mt-2">
+                <div className="p-5 border border-zinc-200 bg-white shadow-sm">
+                  <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    Traditional Agencies <span className="h-px flex-1 bg-zinc-100" />
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    {["Never worked on site", "Obsessed with vanity metrics", "Set and forget"].map(t => (
+                      <span key={t} className="text-[13px] text-gray-400 font-medium italic">/ {t}</span>
+                    ))}
+                  </div>
                 </div>
-                <div className="p-4 border border-emerald-100 bg-emerald-50/30">
-                  <p className="text-[9px] font-bold text-emerald-600 uppercase tracking-widest mb-2">Our Strategy</p>
-                  <p className="text-[11px] text-gray-900 font-bold">20 years experience & skin in the game.</p>
+                <div className="p-5 border border-emerald-100 bg-emerald-50/30">
+                  <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    Our Partnership <span className="h-px flex-1 bg-emerald-100" />
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    {["20 years on the tools", "Focused on cash flow", "Skin in the game"].map(t => (
+                      <span key={t} className="text-[13px] text-gray-900 font-bold">/ {t}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Botón Scale My Business (Estilo FounderSection) */}
-              <div className="mt-2">
+              {/* Botón Scale My Business (Efecto FounderSection) */}
+              <div className="mt-4">
                 <motion.button
                   animate={{ borderColor: buttonColorSequence }}
                   transition={{ duration: buttonColorDuration, ease: "linear", repeat: Infinity }}
