@@ -34,7 +34,7 @@ const COLORS = {
   gold: "#edbf86",
 };
 
-// --- LOGO COMPONENTS ---
+// --- LOGO COMPONENTS (EXACT CLONES FROM FOUNDERSECTION) ---
 const InstagramLogo = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="none">
     <defs>
@@ -123,7 +123,7 @@ function TechnicalScanner({ isLightMode }: { isLightMode: boolean }) {
   );
 }
 
-// --- LOGO CLOUD ---
+// --- LOGO CLOUD (8 LOGOS) ---
 function LogoCard({ logo, className, children, isLightMode, isCustomLogo }: any) {
   return (
     <div className={cn("flex items-center justify-center px-4 py-8 md:p-8 transition-colors duration-500", className)}>
@@ -220,49 +220,25 @@ export const WhatWeDoSection = () => {
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10 pb-20">
         
-        {/* --- INTRO SECTION --- */}
-        <div className="lg:grid lg:grid-cols-12 gap-12 items-center mb-16 pt-5">
-          <div className="lg:col-span-5">
+        {/* --- INTRO SECTION (FULL WIDTH) --- */}
+        <div className="lg:grid lg:grid-cols-12 mb-16 pt-5">
+          <div className="lg:col-span-12 max-w-3xl">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} className={cn("w-fit px-3 py-1 mb-4 border text-[10px] font-sans font-semibold uppercase tracking-[2px]", isLightMode ? "bg-zinc-50 border-zinc-200 text-gray-500" : "bg-white/5 border-white/10 text-gray-400")}>
                 WHAT WE DO DIFFERENTLY
             </motion.div>
-            <h2 className={cn("font-sans font-bold text-4xl md:text-5xl leading-tight tracking-tighter mb-5 transition-colors duration-0", isLightMode ? "text-gray-900" : "text-white")}>
+            <h2 className={cn("font-sans font-bold text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tighter mb-5 transition-colors duration-0", isLightMode ? "text-gray-900" : "text-white")}>
                 We Handle Everything. Because We've Been <span className="text-emerald-500">Burned By Agencies</span> That Don't.
             </h2>
-            <p className={cn("text-lg font-medium mb-6 max-w-lg leading-relaxed transition-colors duration-0", isLightMode ? "text-gray-600" : "text-gray-400")}>
+            <p className={cn("text-lg md:text-xl font-medium mb-6 leading-relaxed transition-colors duration-0", isLightMode ? "text-gray-600" : "text-gray-400")}>
                 Most agencies do websites OR ads. Never both. And they sure as hell don't understand what a tradie actually needs to get jobs. <span className={isLightMode ? "text-gray-900" : "text-white"}>We do. Because we ARE tradies.</span>
             </p>
           </div>
-
-          <div className="lg:col-span-7 relative h-[320px] mt-10 lg:mt-0 overflow-visible">
-             {[
-               { id: 1, title: "Agency #1", text: "$8K Website. Looked amazing. Got zero leads. No SEO, just a pretty brochure no one saw.", y: 0, x: 120, r: -5, z: 10 },
-               { id: 2, title: "Agency #2", text: "$12K Google Ads. Got clicks, but the website was so shit no one called. They blamed us.", y: 60, x: 160, r: 0, z: 20 },
-               { id: 3, title: "Agency #3", text: "'SEO experts'. Vanity metrics only. Ranking for keywords no one searches. Zero jobs.", y: 120, x: 200, r: 5, z: 30 },
-             ].map((card) => (
-               <motion.div
-                key={card.id}
-                initial={{ y: card.y, x: card.x, rotate: card.r, opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                whileHover={{ y: card.y - 35, scale: 1.05, zIndex: 100, rotate: 0, x: card.x + 15 }}
-                transition={ANIMATION_CONFIG}
-                style={{ zIndex: card.z, top: card.y, left: card.x }}
-                className={cn(
-                  "absolute p-6 border backdrop-blur-md cursor-help shadow-2xl max-w-[380px] w-full transition-shadow duration-300",
-                  isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-emerald-500/30",
-                )}
-               >
-                 <div className="text-emerald-500 font-black text-xs uppercase mb-2 tracking-widest">{card.title}</div>
-                 <p className={cn("text-sm font-medium leading-relaxed transition-colors duration-0", isLightMode ? "text-zinc-600" : "text-zinc-400")}>{card.text}</p>
-               </motion.div>
-             ))}
-          </div>
         </div>
 
-        {/* --- BLOCK 1: FOUNDATION (COLUMNA IZQUIERDA STICKY) --- */}
+        {/* --- MAIN BLOCK --- */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-10 relative">
           
-          {/* COLUMNA IZQUIERDA: STICKY APLICADO */}
+          {/* LEFT COLUMN: STICKY */}
           <div className="lg:w-[40%] lg:sticky lg:top-32 self-start">
             <div className="flex flex-col gap-6">
               <h3 className={cn("font-sans font-bold text-4xl leading-none tracking-tight transition-colors duration-0", isLightMode ? "text-gray-900" : "text-white")}>
@@ -285,11 +261,13 @@ export const WhatWeDoSection = () => {
             </div>
           </div>
 
-          {/* COLUMNA DERECHA: TARJETAS QUE HACEN SCROLL */}
+          {/* RIGHT COLUMN: SCROLLING CARDS WITH IMAGES */}
           <div className="lg:w-[60%] relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
+              
+              {/* IMAGE HERO CARD */}
               <TiltCard className="md:row-span-2 min-h-[500px]" innerClassName={cn("border bg-zinc-900", isLightMode ? "border-zinc-200" : "border-white/10")}>
-                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1469&auto=format&fit=crop" className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" alt="Tradie" />
+                <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7edd?q=80&w=1470&auto=format&fit=crop" className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" alt="Tradie working" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 p-4 bg-white/10 backdrop-blur-md border border-white/20">
                    <p className="text-white font-bold text-lg uppercase leading-none">Real Work, Real Leads</p>
@@ -297,26 +275,34 @@ export const WhatWeDoSection = () => {
                 </div>
               </TiltCard>
 
-              <TiltCard innerClassName={cn("p-6 border flex flex-col justify-between h-full", isLightMode ? "bg-white border-zinc-200" : "bg-white/5 border-white/10")}>
-                <div>
+              {/* LEAD GEN WEBSITE CARD */}
+              <TiltCard innerClassName={cn("p-6 border flex flex-col justify-between h-full relative group", isLightMode ? "bg-white border-zinc-200" : "bg-white/5 border-white/10")}>
+                <img src="https://images.unsplash.com/photo-1504307651254-35680f3366d4?q=80&w=1470&auto=format&fit=crop" className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 transition-all duration-500" alt="Plumbing work" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent" />
+                <div className="relative z-10">
                   <Globe className="text-emerald-500 mb-4" size={24} />
                   <h4 className={cn("font-bold text-lg leading-tight transition-colors duration-0", isLightMode ? "text-zinc-900" : "text-white")}>Lead Gen Website</h4>
-                  <p className="text-xs text-gray-500 mt-2 leading-relaxed font-medium">Built in 48h. Fast-loading, mobile-first, and CTA everywhere. Phone number visible at all times.</p>
+                  <p className="text-xs text-gray-300 md:text-gray-500 mt-2 leading-relaxed font-medium">Built in 48h. Fast-loading, mobile-first, and CTA everywhere. Phone number visible at all times.</p>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-black text-emerald-500 uppercase tracking-widest"><Check size={12} strokeWidth={4}/> CONVERSION READY</div>
+                <div className="relative z-10 flex items-center gap-2 text-[10px] font-black text-emerald-500 uppercase tracking-widest"><Check size={12} strokeWidth={4}/> CONVERSION READY</div>
               </TiltCard>
 
-              <TiltCard innerClassName={cn("p-6 border flex flex-col justify-between h-full", isLightMode ? "bg-white border-zinc-200" : "bg-white/5 border-white/10")}>
-                <div>
+              {/* GMB DOMINATION CARD */}
+              <TiltCard innerClassName={cn("p-6 border flex flex-col justify-between h-full relative group", isLightMode ? "bg-white border-zinc-200" : "bg-white/5 border-white/10")}>
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1469&auto=format&fit=crop" className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 transition-all duration-500" alt="Electrician" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent" />
+                <div className="relative z-10">
                   <MapPin className="text-cyan-500 mb-4" size={24} />
                   <h4 className={cn("font-bold text-lg leading-tight transition-colors duration-0", isLightMode ? "text-zinc-900" : "text-white")}>GMB Domination</h4>
-                  <p className="text-xs text-gray-500 mt-2 leading-relaxed font-medium">We optimize every field. Actual job photos, review systems, and posts. Top 3 on Maps or bust.</p>
+                  <p className="text-xs text-gray-300 md:text-gray-500 mt-2 leading-relaxed font-medium">We optimize every field. Actual job photos, review systems, and posts. Top 3 on Maps or bust.</p>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-widest"><Check size={12} strokeWidth={4}/> LOCAL RANKING</div>
+                <div className="relative z-10 flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-widest"><Check size={12} strokeWidth={4}/> LOCAL RANKING</div>
               </TiltCard>
 
-              <TiltCard className="md:col-span-2 h-[220px]" innerClassName={cn("p-8 border relative", isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-zinc-800")}>
-                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-full items-center">
+              {/* TECHNICAL SEO CARD WITH BG IMAGE */}
+              <TiltCard className="md:col-span-2 h-[220px]" innerClassName={cn("p-8 border relative group", isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-zinc-800")}>
+                 <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=1470&auto=format&fit=crop" className="absolute inset-0 w-full h-full object-cover opacity-10 grayscale group-hover:grayscale-0 transition-all duration-700" alt="Construction detail" />
+                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-full items-center relative z-10">
                     <div className="md:col-span-7">
                         <div className="flex items-center gap-2 text-emerald-500 mb-2">
                             <Search size={18} />
@@ -333,14 +319,21 @@ export const WhatWeDoSection = () => {
                  </div>
               </TiltCard>
 
-              <TiltCard innerClassName="bg-emerald-500 p-8 flex flex-col justify-center text-black h-full">
-                   <Clock size={32} className="mb-4" />
-                   <div className="text-3xl font-black leading-none mb-1 tracking-tighter uppercase">1-2 WEEKS</div>
-                   <p className="text-xs font-bold uppercase opacity-80 mb-3 tracking-widest">Speed Guarantee</p>
-                   <p className="text-xs font-bold leading-tight">Week 1: Live. Week 2: Found. We build fast because you have bills to pay.</p>
+              {/* SPEED GUARANTEE WITH IMAGE */}
+              <TiltCard innerClassName="relative p-8 flex flex-col justify-center text-white h-full overflow-hidden">
+                   <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1631&auto=format&fit=crop" className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" alt="Modern construction" />
+                   <div className="absolute inset-0 bg-emerald-500 mix-blend-multiply" />
+                   <div className="relative z-10">
+                     <Clock size={32} className="mb-4" />
+                     <div className="text-3xl font-black leading-none mb-1 tracking-tighter uppercase">1-2 WEEKS</div>
+                     <p className="text-xs font-bold uppercase opacity-80 mb-3 tracking-widest">Speed Guarantee</p>
+                     <p className="text-xs font-bold leading-tight">Week 1: Live. Week 2: Found. We build fast because you have bills to pay.</p>
+                   </div>
               </TiltCard>
 
-              <TiltCard innerClassName={cn("p-8 border relative flex flex-col justify-end h-full", isLightMode ? "bg-white border-zinc-200" : "bg-white/5 border-white/10")}>
+              {/* CALL TRACKING WITH IMAGE */}
+              <TiltCard innerClassName={cn("p-8 border relative flex flex-col justify-end h-full group", isLightMode ? "bg-white border-zinc-200" : "bg-white/5 border-white/10")}>
+                   <img src="https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?q=80&w=1470&auto=format&fit=crop" className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 transition-all duration-500" alt="Tradie on phone" />
                    <ProfitChart />
                    <div className="relative z-10">
                        <BarChart3 className="text-emerald-500 mb-4" size={24} />
