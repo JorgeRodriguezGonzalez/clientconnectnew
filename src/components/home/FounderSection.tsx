@@ -20,7 +20,6 @@ const fontStyles = `
   }
 `;
 
-// CORRECCIÓN DEL ERROR DE TIPO: Añadimos "as const"
 const ANIMATION_CONFIG = {
   type: "spring" as const,
   stiffness: 260,
@@ -215,7 +214,7 @@ export const WhatWeDoSection = () => {
   const yStats = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
   return (
-    <section ref={containerRef} className={cn("relative w-full transition-colors duration-500 font-sans overflow-hidden", isLightMode ? "bg-[#FAFAFA]" : "bg-[#050505]")}>
+    <section ref={containerRef} className={cn("relative w-full transition-colors duration-500 font-sans", isLightMode ? "bg-[#FAFAFA]" : "bg-[#050505]")}>
       <style>{fontStyles}</style>
       <LogoCloud isLightMode={isLightMode} />
 
@@ -235,7 +234,6 @@ export const WhatWeDoSection = () => {
             </p>
           </div>
 
-          {/* AGENCIA CARDS: AÚN MÁS A LA DERECHA Y FLUIDEZ CORREGIDA */}
           <div className="lg:col-span-7 relative h-[320px] mt-10 lg:mt-0 overflow-visible">
              {[
                { id: 1, title: "Agency #1", text: "$8K Website. Looked amazing. Got zero leads. No SEO, just a pretty brochure no one saw.", y: 0, x: 120, r: -5, z: 10 },
@@ -250,7 +248,7 @@ export const WhatWeDoSection = () => {
                 transition={ANIMATION_CONFIG}
                 style={{ zIndex: card.z, top: card.y, left: card.x }}
                 className={cn(
-                  "absolute p-6 border backdrop-blur-md cursor-help shadow-2xl max-w-[380px] w-full",
+                  "absolute p-6 border backdrop-blur-md cursor-help shadow-2xl max-w-[380px] w-full transition-shadow duration-300",
                   isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-emerald-500/30",
                 )}
                >
@@ -261,9 +259,11 @@ export const WhatWeDoSection = () => {
           </div>
         </div>
 
-        {/* --- BLOCK 1: THE FOUNDATION --- */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-10">
-          <div className="lg:w-[40%] sticky top-32">
+        {/* --- BLOCK 1: FOUNDATION (COLUMNA IZQUIERDA STICKY) --- */}
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-10 relative">
+          
+          {/* COLUMNA IZQUIERDA: STICKY APLICADO */}
+          <div className="lg:w-[40%] lg:sticky lg:top-32 self-start">
             <div className="flex flex-col gap-6">
               <h3 className={cn("font-sans font-bold text-4xl leading-none tracking-tight transition-colors duration-0", isLightMode ? "text-gray-900" : "text-white")}>
                 First, We Fix <br/>What's Broken
@@ -285,6 +285,7 @@ export const WhatWeDoSection = () => {
             </div>
           </div>
 
+          {/* COLUMNA DERECHA: TARJETAS QUE HACEN SCROLL */}
           <div className="lg:w-[60%] relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
               <TiltCard className="md:row-span-2 min-h-[500px]" innerClassName={cn("border bg-zinc-900", isLightMode ? "border-zinc-200" : "border-white/10")}>
@@ -314,7 +315,6 @@ export const WhatWeDoSection = () => {
                 <div className="flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-widest"><Check size={12} strokeWidth={4}/> LOCAL RANKING</div>
               </TiltCard>
 
-              {/* TECHNICAL SEO CARD: SIN RECORTES Y CON LOGOS ORIGINALES */}
               <TiltCard className="md:col-span-2 h-[220px]" innerClassName={cn("p-8 border relative", isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-zinc-800")}>
                  <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-full items-center">
                     <div className="md:col-span-7">
