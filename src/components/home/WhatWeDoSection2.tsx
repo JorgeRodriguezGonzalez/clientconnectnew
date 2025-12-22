@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import React, { useRef, useEffect } from 'react';
+import { motion, useScroll, useSpring, useTransform, animate } from 'framer-motion';
 import { Zap, BarChart3, Target, RefreshCw, Check, ArrowUpRight, MousePointer2, PhoneCall, Construction } from 'lucide-react';
 
 // --- STYLES ---
@@ -10,9 +10,187 @@ const fontStyles = `
     -webkit-transform: translate3d(0, 0, 0);
     perspective: 1000px;
   }
+  .glow {
+    filter: blur(var(--blur));
+  }
 `;
 
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
+
+// --- COLORS ---
+const COLORS = {
+  cyan: "#06b6d4", 
+  emerald: "#34d399", 
+  zinc: "#71717a"
+};
+
+// --- COMPONENTE GLOWING EFFECT ---
+const GlowingEffect = React.memo(
+  ({
+    blur = 0,
+    inactiveZone = 0.7,
+    proximity = 0,
+    spread = 20,
+    variant = "default",
+    glow = false,
+    className,
+    movementDuration = 2,
+    borderWidth = 1,
+    disabled = false,
+  }: {
+    blur?: number;
+    inactiveZone?: number;
+    proximity?: number;
+    spread?: number;
+    variant?: "default" | "white";
+    glow?: boolean;
+    className?: string;
+    disabled?: boolean;
+    movementDuration?: number;
+    borderWidth?: number;
+  }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const lastPosition = useRef({ x: 0, y: 0 });
+    const animationFrameRef = useRef<number>(0);
+
+    const handleMove = React.useCallback(
+      (e?: MouseEvent | { x: number; y: number }) => {
+        if (!containerRef.current) return;
+
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+
+        animationFrameRef.current = requestAnimationFrame(() => {
+          const element = containerRef.current;
+          if (!element) return;
+
+          const { left, top, width, height } = element.getBoundingClientRect();
+          const mouseX = e?.x ?? lastPosition.current.x;
+          const mouseY = e?.y ?? lastPosition.current.y;
+
+          if (e) {
+            lastPosition.current = { x: mouseX, y: mouseY };
+          }
+
+          const center = [left + width * 0.5, top + height * 0.5];
+          const distanceFromCenter = Math.hypot(
+            mouseX - center[0],
+            mouseY - center[1]
+          );
+          const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
+
+          if (distanceFromCenter < inactiveRadius) {
+            element.style.setProperty("--active", "0");
+            return;
+          }
+
+          const isActive =
+            mouseX > left - proximity &&
+            mouseX < left + width + proximity &&
+            mouseY > top - proximity &&
+            mouseY < top + height + proximity;
+
+          element.style.setProperty("--active", isActive ? "1" : "0");
+
+          if (!isActive) return;
+
+          const currentAngle =
+            parseFloat(element.style.getPropertyValue("--start")) || 0;
+          let targetAngle =
+            (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) /
+              Math.PI +
+            90;
+
+          const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
+          const newAngle = currentAngle + angleDiff;
+
+          animate(currentAngle, newAngle, {
+            duration: movementDuration,
+            ease: [0.16, 1, 0.3, 1],
+            onUpdate: (value) => {
+              element.style.setProperty("--start", String(value));
+            },
+          });
+        });
+      },
+      [inactiveZone, proximity, movementDuration]
+    );
+
+    useEffect(() => {
+      if (disabled) return;
+      const handleScroll = () => handleMove();
+      const handlePointerMove = (e: PointerEvent) => handleMove(e as any);
+      window.addEventListener("scroll", handleScroll, { passive: true } as any);
+      document.body.addEventListener("pointermove", handlePointerMove, { passive: true } as any);
+      return () => {
+        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+        window.removeEventListener("scroll", handleScroll);
+        document.body.removeEventListener("pointermove", handlePointerMove);
+      };
+    }, [handleMove, disabled]);
+
+    return (
+      <>
+        <div
+          className={cn(
+            "pointer-events-none absolute -inset-px hidden rounded-[inherit] border opacity-0 transition-opacity",
+            glow && "opacity-100",
+            variant === "white" && "border-white",
+            disabled && "!block"
+          )}
+        />
+        <div
+          ref={containerRef}
+          style={
+            {
+              "--blur": `${blur}px`,
+              "--spread": spread,
+              "--start": "0",
+              "--active": "0",
+              "--glowingeffect-border-width": `${borderWidth}px`,
+              "--repeating-conic-gradient-times": "5",
+              "--gradient": `radial-gradient(circle, ${COLORS.emerald} 10%, #34d39900 20%),
+                radial-gradient(circle at 40% 40%, ${COLORS.emerald} 5%, #34d39900 15%),
+                radial-gradient(circle at 60% 60%, ${COLORS.cyan} 10%, #06b6d400 20%), 
+                radial-gradient(circle at 40% 60%, ${COLORS.cyan} 10%, #06b6d400 20%),
+                repeating-conic-gradient(
+                  from 236.84deg at 50% 50%,
+                  ${COLORS.emerald} 0%,
+                  ${COLORS.cyan} calc(25% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.emerald} calc(50% / var(--repeating-conic-gradient-times)), 
+                  ${COLORS.cyan} calc(75% / var(--repeating-conic-gradient-times)),
+                  ${COLORS.emerald} calc(100% / var(--repeating-conic-gradient-times))
+                )`,
+            } as React.CSSProperties
+          }
+          className={cn(
+            "pointer-events-none absolute inset-0 rounded-[inherit] opacity-100 transition-opacity",
+            glow && "opacity-100",
+            blur > 0 && "blur-[var(--blur)] ",
+            className,
+            disabled && "!hidden"
+          )}
+        >
+          <div
+            className={cn(
+              "glow",
+              "rounded-[inherit]",
+              'after:content-[""] after:rounded-[inherit] after:absolute after:inset-[calc(-1*var(--glowingeffect-border-width))]',
+              "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
+              "after:[background:var(--gradient)] after:[background-attachment:fixed]",
+              "after:opacity-[var(--active)] after:transition-opacity after:duration-300",
+              "after:[mask-clip:padding-box,border-box]",
+              "after:[mask-composite:intersect]",
+              "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
+            )}
+          />
+        </div>
+      </>
+    );
+  }
+);
+GlowingEffect.displayName = "GlowingEffect";
 
 // --- REUSABLE COMPONENTS ---
 
@@ -36,8 +214,18 @@ const TiltCard = ({ children, className, innerClassName, delay = 0 }: any) => {
       onMouseMove={handleMove} 
       onMouseLeave={handleLeave} 
       style={{ rotateY: x, rotateX: y, transformStyle: "preserve-3d", perspective: 1000 }} 
-      className={cn("relative rounded-none p-[2px] transition-colors duration-300 h-full", className)}
+      className={cn("relative rounded-none p-[2px] transition-colors duration-300 h-full safari-gpu", className)}
     >
+      {/* Efecto Glow añadido aquí */}
+      <GlowingEffect 
+        spread={40} 
+        glow={true} 
+        disabled={false} 
+        proximity={64} 
+        inactiveZone={0.01} 
+        borderWidth={2} 
+      />
+
       <div className={cn("relative h-full w-full overflow-hidden rounded-none bg-white border border-zinc-200", innerClassName)}>
         {children}
       </div>
@@ -82,9 +270,8 @@ export const WhatWeDoSection2 = () => {
           <div className="lg:w-[60%] relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
 
-              {/* CARD 1: GOOGLE ADS (Contiene el Badge flotante) */}
+              {/* CARD 1: GOOGLE ADS */}
               <div className="md:col-span-2 relative">
-                {/* Badge Corregido: Ahora posicionado sobre la tarjeta azul */}
                 <motion.div 
                     style={{ y: yBadge }}
                     className="absolute -top-6 right-8 z-40 hidden md:block"
@@ -135,7 +322,7 @@ export const WhatWeDoSection2 = () => {
 
               {/* CARD 3: CONTINUOUS TESTING */}
               <TiltCard delay={0.2} innerClassName="p-8 flex flex-col justify-between bg-zinc-900 border-zinc-800">
-                <div className="w-12 h-12 bg-white/5 flex items-center justify-center mb-6"><RefreshCw className="text-cyan-400 animate-spin-slow" /></div>
+                <div className="w-12 h-12 bg-white/5 flex items-center justify-center mb-6"><RefreshCw className="text-cyan-400" /></div>
                 <div className="text-white">
                   <h4 className="text-xl font-bold">Daily Testing</h4>
                   <p className="text-xs text-white/50 mt-2 leading-relaxed">New landing pages, bid adjustments, and A/B testing weekly. We don't "wait 3 months to gather data".</p>
@@ -147,7 +334,7 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
-              {/* CARD 4: SCIENCE EXPERIMENT (Texto centrado corregido) */}
+              {/* CARD 4: SCIENCE EXPERIMENT */}
               <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-emerald-500 p-8 border-none text-black flex items-center justify-center">
                 <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left max-w-2xl">
                   <div className="shrink-0 p-4 bg-black/10 rounded-none"><BarChart3 size={40} /></div>
@@ -213,16 +400,16 @@ export const WhatWeDoSection2 = () => {
           </div>
         </div>
 
-        {/* PARTE 2: WHY OTHER AGENCIES FAIL TRADIES (Cierre Final) */}
+        {/* PARTE 2: WHY OTHER AGENCIES FAIL TRADIES */}
         <motion.div 
           initial={{ opacity: 0, y: 40 }} 
           whileInView={{ opacity: 1, y: 0 }} 
           viewport={{ once: true, margin: "-100px" }} 
           className="relative mt-40"
         >
-          <div className="relative p-8 md:p-16 border border-zinc-200 bg-white shadow-2xl overflow-hidden">
+          {/* Añadimos TiltCard aquí también para que el cierre tenga glow */}
+          <TiltCard innerClassName="p-8 md:p-16 border border-zinc-200 bg-white shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              
               <div>
                 <h3 className="text-3xl md:text-5xl font-black tracking-tighter mb-8 leading-none text-gray-900">
                   Why Other Agencies <br/>
@@ -248,10 +435,8 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </div>
 
-              {/* SPLIT SCREEN VISUAL (Imágenes actualizadas y estables) */}
               <div className="relative h-[450px] w-full border border-zinc-200 overflow-hidden shadow-inner">
                 <div className="absolute inset-0 grid grid-cols-2">
-                  {/* Left Side: Roof */}
                   <div className="relative group/side overflow-hidden border-r border-zinc-200">
                     <img 
                       src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800&auto=format&fit=crop" 
@@ -264,7 +449,6 @@ export const WhatWeDoSection2 = () => {
                       <p className="text-white font-bold text-sm tracking-tight">ON THE TOOLS</p>
                     </div>
                   </div>
-                  {/* Right Side: Dashboard (Imagen Corregida) */}
                   <div className="relative group/side overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1551288049-bbbda546697a?q=80&w=800&auto=format&fit=crop" 
@@ -283,9 +467,8 @@ export const WhatWeDoSection2 = () => {
                     <p className="text-[10px] font-black uppercase tracking-tighter text-center">Built by tradies</p>
                 </div>
               </div>
-
             </div>
-          </div>
+          </TiltCard>
         </motion.div>
 
       </div>
