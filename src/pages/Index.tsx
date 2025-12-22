@@ -51,13 +51,16 @@ const Index = () => {
           <WhatWeDoSection2 />
         
 
-        <OurStepsVersion2 />
-
         <CaseStudiesSection />
+
         <HowWeDoIt />
         <CloudHero />
         <BoxCards />
         <InteractivePath />
+        
+        <OurStepsVersion2 />
+
+        
         <ComparisonSection />
         <Services />
         <Pricing />
