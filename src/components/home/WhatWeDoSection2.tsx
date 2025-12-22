@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useScroll, useSpring, useTransform, animate } from 'framer-motion';
-import { Zap, BarChart3, Target, RefreshCw, Check, ArrowUpRight, MousePointer2, PhoneCall, ShieldCheck } from 'lucide-react';
+import { Zap, BarChart3, Target, RefreshCw, Check, ArrowUpRight, MousePointer2, PhoneCall, ShieldCheck, HardHat, Drill } from 'lucide-react';
 
 // --- STYLES ---
 const fontStyles = `
@@ -171,13 +171,8 @@ const TiltCard = ({ children, className, innerClassName, delay = 0 }: any) => {
       style={{ rotateY: x, rotateX: y, transformStyle: "preserve-3d", perspective: 1000 }} 
       className={cn("relative rounded-none p-[2px] h-full safari-gpu", className)}
     >
-      <GlowingEffect 
-        spread={60} 
-        glow={true} 
-        proximity={100} 
-        borderWidth={2} 
-      />
-      <div className={cn("relative h-full w-full overflow-hidden rounded-none bg-white border border-zinc-200", innerClassName)}>
+      <GlowingEffect spread={60} glow={true} proximity={100} borderWidth={2} />
+      <div className={cn("relative h-full w-full overflow-hidden rounded-none", innerClassName)}>
         {children}
       </div>
     </motion.div>
@@ -201,7 +196,7 @@ export const WhatWeDoSection2 = () => {
   const yBadge = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans">
+    <section ref={containerRef} className="relative w-full py-24 lg:py-32 bg-[#FAFAFA] font-sans overflow-hidden">
       <style>{fontStyles}</style>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
@@ -211,97 +206,107 @@ export const WhatWeDoSection2 = () => {
           <div className="lg:w-[60%] relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
 
-              {/* CARD 1: GOOGLE ADS */}
+              {/* CARD 1: TYRE KICKER FILTERING */}
               <div className="md:col-span-2 relative">
                 <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
                     <StatBadge icon={Zap} label="Leads Generated" value="1,240+" />
                 </motion.div>
-                <TiltCard innerClassName="p-8">
-                  <div className="flex flex-col md:flex-row gap-8 items-center">
+                <TiltCard innerClassName="bg-white border border-zinc-200 min-h-[320px]">
+                  <div className="absolute inset-0 z-0">
+                    <img 
+                      src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?q=80&w=1200&auto=format&fit=crop" 
+                      className="w-full h-full object-cover opacity-10 grayscale" 
+                      alt="Roofing detail"
+                    />
+                  </div>
+                  <div className="relative z-10 p-8 flex flex-col md:flex-row gap-8 items-center h-full">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 text-cyan-500 mb-4">
-                        <Target size={20} />
-                        <span className="text-[10px] font-bold uppercase tracking-widest">Qualified Traffic Only</span>
+                      <div className="flex items-center gap-2 text-emerald-600 mb-4">
+                        <HardHat size={20} />
+                        <span className="text-[10px] font-bold uppercase tracking-widest">Built by Real Roofers</span>
                       </div>
-                      <h4 className="text-2xl font-bold mb-4 text-gray-900">Ads That Get Jobs, Not Just Clicks</h4>
-                      <p className="text-sm leading-relaxed mb-6 text-gray-500">
-                        We filter for quality. No tyre-kickers asking for $500 renos when you do $50K jobs. We target by suburb, time of day, and intent.
+                      <h4 className="text-2xl font-bold mb-4 text-gray-900">Stop Wasting Time on "Tyre-Kickers"</h4>
+                      <p className="text-sm leading-relaxed mb-6 text-gray-600">
+                        We know the pain of getting a call while you're on a roof, only for it to be someone asking for a $200 repair. We filter by high-intent keywords so you only pick up for <strong>real jobs.</strong>
                       </p>
                       <div className="grid grid-cols-2 gap-4">
-                          <div className="p-3 bg-zinc-50 text-[11px] font-bold border border-zinc-100">
-                              <Check size={14} className="inline mr-2 text-emerald-500"/> Geographic targeting
+                          <div className="p-3 bg-zinc-50/50 text-[11px] font-bold border border-zinc-100">
+                              <Check size={14} className="inline mr-2 text-emerald-500"/> Suburb Targeting
                           </div>
-                          <div className="p-3 bg-zinc-50 text-[11px] font-bold border border-zinc-100">
-                              <Check size={14} className="inline mr-2 text-emerald-500"/> Keyword filtering
+                          <div className="p-3 bg-zinc-50/50 text-[11px] font-bold border border-zinc-100">
+                              <Check size={14} className="inline mr-2 text-emerald-500"/> Job Quality Filter
                           </div>
                       </div>
-                    </div>
-                    <div className="w-full md:w-48 h-48 bg-cyan-500/5 border border-cyan-500/10 flex items-center justify-center relative overflow-hidden">
-                      <MousePointer2 className="text-cyan-500 animate-pulse" size={40} />
-                      <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent" />
                     </div>
                   </div>
                 </TiltCard>
               </div>
 
-              {/* CARD 2: REAL NUMBERS */}
-              <TiltCard delay={0.1} innerClassName="p-8 flex flex-col justify-between">
-                <div className="w-12 h-12 bg-zinc-100 flex items-center justify-center mb-6"><PhoneCall className="text-emerald-500" /></div>
-                <div>
-                  <h4 className="text-xl font-bold text-gray-900 leading-tight">Real Numbers</h4>
-                  <p className="text-xs text-gray-500 mt-2 leading-relaxed">Every week you get: Exact number of calls, form submissions, and cost per lead. <strong>No fluff jargon.</strong></p>
+              {/* CARD 2: JARGON-FREE NUMBERS */}
+              <TiltCard delay={0.1} innerClassName="bg-white border border-zinc-200 p-8 flex flex-col justify-between">
+                <div className="absolute inset-0 z-0 opacity-5">
+                    <img src="https://images.unsplash.com/photo-1541888941259-792739460579?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Construction site" />
                 </div>
-                <div className="pt-4 mt-6 border-t border-zinc-100 flex justify-between items-center text-emerald-500">
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Calls tracked</span>
-                  <span className="font-black text-lg">LIVE</span>
+                <div className="relative z-10">
+                  <div className="w-12 h-12 bg-emerald-500/10 flex items-center justify-center mb-6 rounded-none"><PhoneCall className="text-emerald-500" /></div>
+                  <h4 className="text-xl font-bold text-gray-900 leading-tight">No Marketing Bullshit</h4>
+                  <p className="text-xs text-gray-500 mt-2 leading-relaxed">
+                    We don't talk about "impressions" or "reach". We show you <strong>calls, quotes, and cash.</strong> Reporting designed for business owners, not data nerds.
+                  </p>
                 </div>
-              </TiltCard>
-
-              {/* CARD 3: CONTINUOUS TESTING */}
-              <TiltCard delay={0.2} innerClassName="p-8 flex flex-col justify-between bg-zinc-900 border-zinc-800">
-                <div className="w-12 h-12 bg-white/5 flex items-center justify-center mb-6"><RefreshCw className="text-cyan-400 animate-spin-slow" /></div>
-                <div className="text-white">
-                  <h4 className="text-xl font-bold">Daily Testing</h4>
-                  <p className="text-xs text-white/50 mt-2 leading-relaxed">New landing pages, bid adjustments, and A/B testing weekly. We don't "wait 3 months to gather data".</p>
-                </div>
-                <div className="flex -space-x-2 mt-6">
-                  {[1, 2, 3].map(i => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-zinc-900 bg-cyan-500/20 flex items-center justify-center text-[10px] text-cyan-400 font-bold">V{i}</div>
-                  ))}
+                <div className="relative z-10 pt-4 mt-6 border-t border-zinc-100 flex justify-between items-center text-emerald-600">
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Calls that pay</span>
+                  <span className="font-black text-lg">TRACKED</span>
                 </div>
               </TiltCard>
 
-              {/* CARD 4: REDISEÑADA - THE EXECUTION CARD */}
+              {/* CARD 3: SKIN IN THE GAME */}
+              <TiltCard delay={0.2} innerClassName="bg-zinc-900 border-zinc-800 p-8 flex flex-col justify-between overflow-hidden">
+                <div className="absolute inset-0 z-0 opacity-20 grayscale">
+                    <img src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Roofer working" />
+                </div>
+                <div className="relative z-10 text-white">
+                  <div className="w-12 h-12 bg-white/5 flex items-center justify-center mb-6 rounded-none"><Drill className="text-cyan-400" /></div>
+                  <h4 className="text-xl font-bold">Our Own Skin in the Game</h4>
+                  <p className="text-xs text-zinc-400 mt-2 leading-relaxed">
+                    We still run ads for our own roofing company today. If the strategy doesn't work for our business, we don't dare sell it to yours.
+                  </p>
+                </div>
+                <div className="relative z-10 flex -space-x-2 mt-6">
+                  <span className="text-[10px] font-bold text-cyan-400 uppercase border border-cyan-400/30 px-2 py-1 bg-cyan-400/10">Tested on our site first</span>
+                </div>
+              </TiltCard>
+
+              {/* CARD 4: THE 20-YEAR DIFFERENCE */}
               <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-black border-none relative min-h-[280px]">
-                {/* Background Image de Tradies */}
                 <div className="absolute inset-0 z-0">
                     <img 
-                        src="https://images.unsplash.com/photo-1504307651254-35680f3366d4?q=80&w=1200&auto=format&fit=crop" 
-                        alt="Tradies working" 
-                        className="w-full h-full object-cover opacity-40 grayscale"
+                        src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop" 
+                        alt="20 years on the tools" 
+                        className="w-full h-full object-cover opacity-50 grayscale"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
                 </div>
 
                 <div className="relative z-10 h-full p-8 md:p-12 flex flex-col md:flex-row items-center md:items-stretch gap-8">
                   <div className="flex-1 flex flex-col justify-center">
                     <div className="flex items-center gap-3 mb-4">
-                        <div className="px-2 py-1 bg-emerald-500 text-black text-[10px] font-black uppercase tracking-tighter">Fast Results</div>
+                        <div className="px-2 py-1 bg-emerald-500 text-black text-[10px] font-black uppercase tracking-tighter">20 Years on the Tools</div>
                         <div className="h-px w-12 bg-zinc-700" />
                     </div>
                     <h4 className="text-3xl md:text-4xl font-black text-white italic uppercase tracking-tighter mb-4 leading-[0.9]">
-                      Agencies experiment. <br/>
-                      <span className="text-emerald-500">We execute.</span>
+                      Marketing agencies experiment. <br/>
+                      <span className="text-emerald-500">We just build.</span>
                     </h4>
                     <p className="text-sm md:text-base text-zinc-400 max-w-md font-medium leading-relaxed">
-                      Bills are due in 30 days—not 90. We optimize daily because your business needs cash flow now, not "eventually". That's our 30-day guarantee.
+                      We’ve spent two décadas on roofs across Australia. We don’t guess what homeowners want—we’ve spoken to thousands of them in their driveways. 
                     </p>
                   </div>
                   
                   <div className="shrink-0 flex items-center">
                     <div className="w-24 h-24 md:w-32 md:h-32 border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center">
                         <ShieldCheck className="text-emerald-500 mb-1" size={32} />
-                        <span className="text-[10px] font-bold text-white uppercase leading-none">Optimized Daily</span>
+                        <span className="text-[10px] font-bold text-white uppercase leading-none">Founder<br/>Led</span>
                     </div>
                   </div>
                 </div>
@@ -317,11 +322,11 @@ export const WhatWeDoSection2 = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 className="w-fit px-3 py-1.5 border border-zinc-200 bg-white text-gray-500 text-[10px] font-sans font-semibold uppercase tracking-[2px]"
               >
-                STEP 2: THE FUEL
+                THE TRADIE WAY
               </motion.div>
 
               <h3 className="font-sans font-bold text-[32px] md:text-[48px] leading-[1.1] tracking-tighter text-gray-900">
-                Then, We Turn That Foundation Into{' '}
+                You’re on the tools. <br/> We’re generating{' '}
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}
                   animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -342,26 +347,26 @@ export const WhatWeDoSection2 = () => {
               </h3>
 
               <p className="font-sans text-[17px] leading-[1.6] font-medium text-gray-600">
-                <strong>Time to pour fuel on the fire.</strong> Agencies love to "set and forget". We don't. We run ads for our own roofing business every day. If our ads don't work, we don't eat.
+                Agencies treat your business like a spreadsheet. We treat it like our own roofing business. No fancy talk, no corporate excuses—just the leads you need to keep your crews busy.
               </p>
 
               <div className="flex flex-col gap-4 mt-4">
                 <div className="p-5 border border-zinc-200 bg-white shadow-sm">
                   <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    Lazy Agency Habits <span className="h-px flex-1 bg-zinc-100" />
+                    Traditional Agencies <span className="h-px flex-1 bg-zinc-100" />
                   </p>
                   <div className="flex flex-wrap gap-x-4 gap-y-2">
-                    {["Monthly check-ins", "Impressions", "Generic reports"].map(t => (
+                    {["Never worked on site", "Obsessed with vanity metrics", "Set and forget"].map(t => (
                       <span key={t} className="text-[12px] text-gray-400 font-medium">/ {t}</span>
                     ))}
                   </div>
                 </div>
                 <div className="p-5 border border-emerald-100 bg-emerald-50/30">
                   <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    Our Strategy <span className="h-px flex-1 bg-emerald-100" />
+                    Our Partnership <span className="h-px flex-1 bg-emerald-100" />
                   </p>
                   <div className="flex flex-wrap gap-x-4 gap-y-2">
-                    {["Daily optimization", "Qualified leads", "ROI tracking"].map(t => (
+                    {["20 years on the tools", "Focused on cash flow", "Skin in the game"].map(t => (
                       <span key={t} className="text-[12px] text-gray-900 font-bold">/ {t}</span>
                     ))}
                   </div>
@@ -370,7 +375,7 @@ export const WhatWeDoSection2 = () => {
 
               <div className="mt-6">
                 <button className="group relative h-[56px] px-10 py-3 flex items-center justify-center gap-3 rounded-none font-sans font-bold text-[15px] border transition-all duration-500 bg-black text-white hover:bg-zinc-800 hover:shadow-xl w-full md:w-fit">
-                  Scale My Business <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  Scale My Tradie Business <ArrowUpRight className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </button>
               </div>
             </div>
