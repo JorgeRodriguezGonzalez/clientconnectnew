@@ -191,7 +191,7 @@ export const SuperHero = ({
           </div>
 
           {/* HERO TEXT */}
-          <div className="relative z-10 text-center mb-8 pb-[115px]">
+          <div className="relative z-10 text-center mb-8 pb-[180px]">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
