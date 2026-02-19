@@ -93,7 +93,7 @@ export const SuperHero = ({
 
   return (
     <div
-      className="w-full min-h-screen relative flex flex-col items-center justify-start pt-8 px-0 overflow-hidden pb-32 font-inter"
+      className="w-full min-h-screen relative flex flex-col items-center justify-between pt-8 px-0 overflow-hidden pb-0 font-inter"
       style={{ background: '#050505' }}
     >
       <style>{fontStyles}</style>
@@ -131,7 +131,7 @@ export const SuperHero = ({
           />
         </div>
 
-        <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
+        <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 flex flex-col justify-center" style={{ minHeight: 'calc(100vh - 80px)' }}>
 
           {/* LAMP */}
           <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible" style={{ transform: 'scale(0.85)' }}>
@@ -188,7 +188,7 @@ export const SuperHero = ({
           </div>
 
           {/* HERO TEXT */}
-          <div className="relative z-10 text-center mb-16">
+          <div className="relative z-10 text-center mb-8">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
