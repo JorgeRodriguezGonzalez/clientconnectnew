@@ -101,7 +101,7 @@ export const SuperHero = ({
 
   return (
     <div
-      className="w-full min-h-screen relative flex flex-col items-center justify-start pt-8 px-0 overflow-hidden pb-0 font-inter"
+      className="w-full min-h-screen relative flex flex-col items-center justify-start pt-8 px-0 overflow-hidden pb-[320px] font-inter"
       style={{ background: '#050505' }}
     >
       <style>{fontStyles}</style>
@@ -184,7 +184,7 @@ export const SuperHero = ({
           </div>
 
           {/* HERO TEXT */}
-          <div className="relative z-10 text-center mb-8 pb-[180px]">
+          <div className="relative z-10 text-center mb-8 pb-[320px]">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
