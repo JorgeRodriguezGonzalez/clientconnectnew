@@ -81,10 +81,10 @@ const Sparkles = ({ id, background, minSize, maxSize, speed, particleColor, dens
   );
 };
 
-export default function SuperHero({
+export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
-}) {
+) => {
   const lampColor = "#06b6d4";
   const emeraldColor = "#34d399";
   const [isHovered, setIsHovered] = useState(false);
@@ -151,7 +151,6 @@ export default function SuperHero({
                     animate={{ opacity: 0.5, width: "28rem" }}
                     transition={{ opacity: { delay: 0.2, duration: 1.0, ease: "easeInOut" }, width: { delay: 0.2, duration: 1.0, ease: "easeInOut" } }}
                     style={{
-                      backgroundImage: `conic-gradient(from_70deg_at_center_top, ${lampColor} 0%, transparent 35%, transparent 100%)`,
                       backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor} 0%, transparent 35%, transparent 100%)`,
                     }}
                     className="absolute top-0 right-1/2 h-56 overflow-visible w-[28rem] text-white [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
