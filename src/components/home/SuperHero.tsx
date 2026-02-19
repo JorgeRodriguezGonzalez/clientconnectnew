@@ -11,7 +11,7 @@ const fontStyles = `
 const Sparkles = ({ minSize, maxSize, speed, particleColor, density, className }: {
   minSize?: number; maxSize?: number; speed?: number;
   particleColor?: string; density?: number; className?: string;
-}) => {
+) => {
   const [init, setInit] = useState(false);
   useEffect(() => { setInit(true); }, []);
   const controls = useAnimation();
@@ -188,7 +188,7 @@ export const SuperHero = ({
           </div>
 
           {/* HERO TEXT */}
-          <div className="relative z-10 text-center mb-8 pb-24">
+          <div className="relative z-10 text-center mb-8 pb-[115px]">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
