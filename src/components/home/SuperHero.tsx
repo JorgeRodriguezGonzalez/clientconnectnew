@@ -123,19 +123,12 @@ export const SuperHero = ({
 
       <div className="relative z-10 w-full flex flex-col items-center">
 
-        {/* SPARKLES + GLOW */}
+        {/* GLOW */}
         <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-0">
           <motion.div
             className="absolute inset-0 opacity-30"
             animate={{ background: radialColorSequence }}
             transition={{ duration: 10, ease: 'linear', repeat: Infinity }}
-          />
-          <Sparkles
-            density={800}
-            className="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
-            particleColor="#ffffff"
-            minSize={0.5}
-            maxSize={1.5}
           />
         </div>
 
