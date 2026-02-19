@@ -101,7 +101,7 @@ export const SuperHero = ({
 
   return (
     <div
-      className="w-full min-h-screen relative flex flex-col items-center justify-start pt-8 px-0 overflow-hidden pb-[200px] font-inter"
+      className="w-full min-h-screen relative flex flex-col items-center justify-center pt-8 px-0 overflow-hidden pb-[200px] font-inter"
       style={{ background: '#050505' }}
     >
       <style>{fontStyles}</style>
@@ -121,7 +121,7 @@ export const SuperHero = ({
         />
       </div>
 
-      <div className="relative z-10 w-full flex flex-col items-center">
+      <div className="relative z-10 w-full flex flex-col items-center justify-center flex-1">
 
         {/* GLOW */}
         <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-0">
