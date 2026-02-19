@@ -8,10 +8,16 @@ const fontStyles = `
   }
 `;
 
-const Sparkles = ({ minSize, maxSize, speed, particleColor, density, className }: {
-  minSize?: number; maxSize?: number; speed?: number;
-  particleColor?: string; density?: number; className?: string;
-) => {
+interface SparklesProps {
+  minSize?: number;
+  maxSize?: number;
+  speed?: number;
+  particleColor?: string;
+  density?: number;
+  className?: string;
+}
+
+const Sparkles = ({ minSize, maxSize, speed, particleColor, density, className }: SparklesProps) => {
   const [init, setInit] = useState(false);
   useEffect(() => { setInit(true); }, []);
   const controls = useAnimation();
@@ -74,13 +80,15 @@ const Sparkles = ({ minSize, maxSize, speed, particleColor, density, className }
   );
 };
 
+interface SuperHeroProps {
+  primaryButtonText?: string;
+  secondaryButtonText?: string;
+}
+
 export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
-}: {
-  primaryButtonText?: string;
-  secondaryButtonText?: string;
-}) => {
+}: SuperHeroProps) => {
   const lampColor = '#06b6d4';
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
@@ -136,13 +144,11 @@ export const SuperHero = ({
           {/* LAMP */}
           <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible" style={{ transform: 'scale(0.85)' }}>
             <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
-
               <div className="absolute inset-auto z-30 h-56 w-full flex items-center justify-center pointer-events-none">
                 <motion.div
                   className="w-[60rem] h-full relative"
                   style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}
                 >
-                  {/* Right Cone */}
                   <motion.div
                     initial={{ opacity: 0, width: '15rem' }}
                     animate={{ opacity: 0.5, width: '28rem' }}
@@ -150,7 +156,6 @@ export const SuperHero = ({
                     style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor} 0%, transparent 35%, transparent 100%)` }}
                     className="absolute top-0 right-1/2 h-56 overflow-visible w-[28rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
                   />
-                  {/* Left Cone */}
                   <motion.div
                     initial={{ opacity: 0, width: '15rem' }}
                     animate={{ opacity: 0.5, width: '28rem' }}
@@ -158,7 +163,6 @@ export const SuperHero = ({
                     style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent 0%, transparent 65%, ${lampColor} 100%)` }}
                     className="absolute top-0 left-1/2 h-56 w-[28rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
                   />
-                  {/* Glows */}
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 0.4 }}
@@ -176,7 +180,6 @@ export const SuperHero = ({
                 </motion.div>
               </div>
 
-              {/* Cyan line */}
               <motion.div
                 initial={{ opacity: 0, width: '15rem' }}
                 animate={{ opacity: 1, width: '28rem' }}
