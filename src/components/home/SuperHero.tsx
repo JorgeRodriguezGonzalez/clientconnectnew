@@ -61,7 +61,7 @@ const clients = [
 ];
 
 const ClientCard = ({ client }: { client: typeof clients[0] }) => (
-  <div className="relative flex-shrink-0 w-[280px] h-[400px] rounded-3xl overflow-hidden cursor-pointer group">
+  <div className="relative flex-shrink-0 w-[260px] h-[340px] rounded-3xl overflow-hidden cursor-pointer group">
     <img
       src={client.image}
       alt={client.name}
@@ -83,7 +83,7 @@ const ClientCard = ({ client }: { client: typeof clients[0] }) => (
 
 const ClientCarousel = () => {
   const [current, setCurrent] = useState(0);
-  const cardWidth = 280;
+  const cardWidth = 260;
   const gap = 20;
   const visibleCards = 4;
   const max = clients.length - visibleCards;
