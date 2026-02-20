@@ -40,82 +40,90 @@ const clients = [
     image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80',
     logo: 'ORCA\nActive',
   },
+  {
+    name: 'North Shore Dental',
+    tags: ['Google Ads', 'SEO', 'Website'],
+    image: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=600&q=80',
+    logo: 'North Shore\nDental',
+  },
+  {
+    name: 'Harbourside Realty',
+    tags: ['Paid Social', 'Content Creation', 'Google Ads'],
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',
+    logo: 'Harbourside\nRealty',
+  },
+  {
+    name: 'Peak Performance Gym',
+    tags: ['Social Media', 'Content Creation', 'Website'],
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80',
+    logo: 'Peak\nPerformance',
+  },
 ];
 
 const ClientCard = ({ client }: { client: typeof clients[0] }) => (
-  <div className="relative flex-shrink-0 w-[260px] h-[340px] rounded-3xl overflow-hidden cursor-pointer group">
-    {/* BG Image */}
+  <div className="relative flex-shrink-0 w-[280px] h-[400px] rounded-3xl overflow-hidden cursor-pointer group">
     <img
       src={client.image}
       alt={client.name}
       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
     />
-    {/* Gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30" />
-
-    {/* Logo top-left */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/40" />
     <div className="absolute top-4 left-4">
       <p className="text-white font-bold text-[15px] leading-tight whitespace-pre-line drop-shadow-lg">
         {client.logo}
       </p>
     </div>
-
-    {/* Tags bottom */}
-    <div className="absolute bottom-4 left-4 right-4">
-      <div className="flex flex-wrap gap-1.5">
-        {client.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-white/90 text-[11px] font-medium"
-          >
-            {tag}
-            {client.tags.indexOf(tag) < client.tags.length - 1 && (
-              <span className="ml-1.5 text-white/40">·</span>
-            )}
-          </span>
-        ))}
-      </div>
+    <div className="absolute bottom-5 left-4 right-4">
+      <p className="text-white/90 text-[12px] font-medium leading-relaxed">
+        {client.tags.join(' · ')}
+      </p>
     </div>
   </div>
 );
 
 const ClientCarousel = () => {
   const [current, setCurrent] = useState(0);
-  const visible = 3;
-  const max = clients.length - visible;
+  const cardWidth = 280;
+  const gap = 20;
+  const visibleCards = 4;
+  const max = clients.length - visibleCards;
 
   const prev = () => setCurrent((c) => Math.max(0, c - 1));
   const next = () => setCurrent((c) => Math.min(max, c + 1));
 
   return (
-    <div className="w-full mt-16 pb-8 relative px-6 max-w-[1296px] mx-auto">
-      <div className="overflow-hidden">
-        <motion.div
-          className="flex gap-5"
-          animate={{ x: `calc(-${current * (260 + 20)}px)` }}
-          transition={{ type: 'spring', stiffness: 300, damping: 35 }}
-        >
-          {clients.map((client) => (
-            <ClientCard key={client.name} client={client} />
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Nav buttons */}
-      <div className="flex justify-center gap-3 mt-8">
+    <div className="w-full pb-24 relative">
+      <div className="relative flex items-center px-16">
+        {/* Left arrow */}
         <button
           onClick={prev}
           disabled={current === 0}
-          className="w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          className="absolute left-4 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all disabled:opacity-20 disabled:cursor-not-allowed"
         >
-          <ChevronLeft size={18} className="text-white" />
+          <ChevronLeft size={20} className="text-white" />
         </button>
+
+        {/* Cards viewport */}
+        <div className="overflow-hidden w-full">
+          <motion.div
+            className="flex"
+            style={{ gap: `${gap}px` }}
+            animate={{ x: -current * (cardWidth + gap) }}
+            transition={{ type: 'spring', stiffness: 300, damping: 35 }}
+          >
+            {clients.map((client) => (
+              <ClientCard key={client.name} client={client} />
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Right arrow */}
         <button
           onClick={next}
           disabled={current >= max}
-          className="w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          className="absolute right-4 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all disabled:opacity-20 disabled:cursor-not-allowed"
         >
-          <ChevronRight size={18} className="text-white" />
+          <ChevronRight size={20} className="text-white" />
         </button>
       </div>
     </div>
