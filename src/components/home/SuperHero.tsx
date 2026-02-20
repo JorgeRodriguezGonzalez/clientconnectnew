@@ -85,20 +85,29 @@ const ClientCarousel = () => {
   const [current, setCurrent] = useState(0);
   const cardWidth = 260;
   const gap = 20;
-  const visibleCards = 4;
-  const max = clients.length - visibleCards;
+  const total = clients.length;
 
-  const prev = () => setCurrent((c) => Math.max(0, c - 1));
-  const next = () => setCurrent((c) => Math.min(max, c + 1));
+  const prev = () => setCurrent((c) => (c - 1 + total) % total);
+  const next = () => setCurrent((c) => (c + 1) % total);
+
+  // Duplicate clients for infinite loop feel
+  const looped = [...clients, ...clients, ...clients];
+  const offset = total; // start in the middle set
 
   return (
     <div className="w-full pb-24 relative">
-      <div className="relative flex items-center px-16">
+      {/* Fade left */}
+      <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to right, #050505 0%, transparent 100%)' }} />
+      {/* Fade right */}
+      <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }} />
+
+      <div className="relative flex items-center">
         {/* Left arrow */}
         <button
           onClick={prev}
-          disabled={current === 0}
-          className="absolute left-4 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+          className="absolute left-6 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all"
         >
           <ChevronLeft size={20} className="text-white" />
         </button>
@@ -108,11 +117,11 @@ const ClientCarousel = () => {
           <motion.div
             className="flex"
             style={{ gap: `${gap}px` }}
-            animate={{ x: -current * (cardWidth + gap) }}
+            animate={{ x: -(offset + current) * (cardWidth + gap) }}
             transition={{ type: 'spring', stiffness: 300, damping: 35 }}
           >
-            {clients.map((client) => (
-              <ClientCard key={client.name} client={client} />
+            {looped.map((client, i) => (
+              <ClientCard key={`${client.name}-${i}`} client={client} />
             ))}
           </motion.div>
         </div>
@@ -120,8 +129,7 @@ const ClientCarousel = () => {
         {/* Right arrow */}
         <button
           onClick={next}
-          disabled={current >= max}
-          className="absolute right-4 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all disabled:opacity-20 disabled:cursor-not-allowed"
+          className="absolute right-6 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all"
         >
           <ChevronRight size={20} className="text-white" />
         </button>
