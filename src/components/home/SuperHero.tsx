@@ -173,7 +173,7 @@ export const SuperHero = ({
           />
         </div>
 
-        <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6">
+        <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-16">
 
           {/* LAMP */}
           <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible" style={{ transform: 'scale(0.85)' }}>
@@ -225,7 +225,7 @@ export const SuperHero = ({
           </div>
 
           {/* HERO TEXT */}
-          <div className="relative z-10 text-center mb-8 pb-[200px]">
+          <div className="relative z-10 text-center mb-8">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
