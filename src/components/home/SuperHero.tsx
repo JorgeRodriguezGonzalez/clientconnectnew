@@ -145,7 +145,7 @@ export const SuperHero = ({
 
   return (
     <div
-      className="w-full min-h-screen relative flex flex-col items-center justify-center pt-8 px-0 overflow-hidden pb-0 font-inter"
+      className="w-full relative flex flex-col items-center justify-start pt-8 px-0 overflow-hidden pb-0 font-inter"
       style={{ background: '#050505' }}
     >
       <style>{fontStyles}</style>
@@ -162,7 +162,7 @@ export const SuperHero = ({
         />
       </div>
 
-      <div className="relative z-10 w-full flex flex-col items-center justify-center flex-1">
+      <div className="relative z-10 w-full flex flex-col items-center justify-center" style={{ minHeight: '100vh' }}>
 
         {/* GLOW */}
         <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-0">
@@ -290,10 +290,13 @@ export const SuperHero = ({
 
         </div>
 
-        {/* CLIENT CAROUSEL */}
-        <ClientCarousel />
-
       </div>
+
+      {/* CLIENT CAROUSEL — fuera del min-height container */}
+      <div className="relative z-10 w-full pb-24">
+        <ClientCarousel />
+      </div>
+
     </div>
   );
 };
