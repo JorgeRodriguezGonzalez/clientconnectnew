@@ -153,11 +153,7 @@ export const SuperHero = ({
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
 
-  const radialColorSequence = [
-    'radial-gradient(circle at bottom center, #06b6d4, transparent 70%)',
-    'radial-gradient(circle at bottom center, #22d3ee, transparent 70%)',
-    'radial-gradient(circle at bottom center, #06b6d4, transparent 70%)',
-  ];
+
 
   return (
     <div
@@ -180,14 +176,7 @@ export const SuperHero = ({
 
       <div className="relative z-10 w-full flex flex-col items-center justify-center" style={{ minHeight: '100vh' }}>
 
-        {/* GLOW */}
-        <div className="absolute inset-x-0 bottom-0 h-[1000px] w-full overflow-hidden pointer-events-none z-0">
-          <motion.div
-            className="absolute inset-0 opacity-30"
-            animate={{ background: radialColorSequence }}
-            transition={{ duration: 10, ease: 'linear', repeat: Infinity }}
-          />
-        </div>
+
 
         <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-16">
 
