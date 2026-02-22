@@ -61,7 +61,7 @@ const clients = [
 ];
 
 const ClientCard = ({ client }: { client: typeof clients[0] }) => (
-  <div className="relative flex-shrink-0 w-[260px] h-[340px] rounded-3xl overflow-hidden cursor-pointer group">
+  <div className="relative flex-shrink-0 w-[260px] h-[340px] rounded-3xl overflow-hidden cursor-pointer group border border-transparent hover:border-gray-500 transition-all duration-300">
     <img
       src={client.image}
       alt={client.name}
