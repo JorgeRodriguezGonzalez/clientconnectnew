@@ -13,19 +13,19 @@ const clients = [
   {
     name: 'Asset Plumbing Solutions',
     tags: ['Google Ads', 'Website', 'SEO'],
-    image: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=600&q=80',
+    image: '/images/asset.jpg',
     logo: 'Asset Plumbing\nSolutions',
   },
   {
     name: 'Nanotise',
     tags: ['Website', 'Rebrand', 'Social Media', 'Content Creation'],
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80',
+    image: '/images/nanotise.jpg',
     logo: 'Nanotise',
   },
   {
     name: 'LC Landscaping',
     tags: ['Google Ads', 'Paid Social', 'Website'],
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80',
+    image: '/images/landscaping.jpg',
     logo: 'LC\nLandscaping',
   },
   {
@@ -37,7 +37,7 @@ const clients = [
   {
     name: 'Pioneer Shades',
     tags: ['Paid Social', 'Google Ads', 'Website'],
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+    image: '/images/pioneer.jpg',
     logo: 'Pioneer\nShades',
   },
   {
@@ -49,14 +49,20 @@ const clients = [
   {
     name: 'Sydney Glass Pool Fencing',
     tags: ['Google Ads', 'Website', 'Content Creation'],
-    image: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&q=80',
+    image: '/images/sydneyglass.jpeg',
     logo: 'Sydney Glass\nPool Fencing',
   },
   {
     name: 'Prolex Bathroom Renovations',
     tags: ['SEO', 'Google Ads', 'Paid Social', 'Website'],
-    image: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=600&q=80',
+    image: '/images/prolex.jpg',
     logo: 'Prolex\nBathrooms',
+  },
+  {
+    name: 'LC Driveways',
+    tags: ['Google Ads', 'Paid Social', 'Website'],
+    image: '/images/117.jpg',
+    logo: 'LC\nDriveways',
   },
 ];
 
