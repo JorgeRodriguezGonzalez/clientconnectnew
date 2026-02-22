@@ -101,7 +101,7 @@ const ClientCarousel = () => {
   const offset = total; // start in the middle set
 
   return (
-    <div className="w-full pb-24 relative">
+    <div className="w-full pb-24 relative mb-16">
       {/* Fade left */}
       <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none"
         style={{ background: 'linear-gradient(to right, #050505 0%, transparent 100%)' }} />
