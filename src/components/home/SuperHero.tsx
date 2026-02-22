@@ -31,7 +31,7 @@ const clients = [
   {
     name: 'Premier Bathrooms',
     tags: ['Website', 'SEO', 'Google Ads', 'Content Creation'],
-    image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=80',
+    image: '/images/premier.jpg',
     logo: 'Premier\nBathrooms',
   },
   {
