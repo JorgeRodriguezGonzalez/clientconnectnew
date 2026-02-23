@@ -50,8 +50,8 @@ const Index = () => {
 
         <InteractivePath />
 
-        <Services />
         <ServicesSection />
+        <Services />
         
         <WhatWeDoSection2 />
 
