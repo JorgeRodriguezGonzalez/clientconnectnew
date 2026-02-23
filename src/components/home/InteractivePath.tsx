@@ -14,7 +14,7 @@ interface WorkItem {
 const RECENT_WORKS: WorkItem[] = [
   {
     id: "1",
-    videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4",
+    videoSrc: "/nanotisevideo.mp4",
     avatarSrc: "https://framerusercontent.com/images/dZTHdqycN3jTN1xqMld5nxZzEU.svg",
     handle: "@tech_startup",
     testimonial: "300% ROAS in just 30 days"
