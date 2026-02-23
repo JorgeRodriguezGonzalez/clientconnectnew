@@ -87,7 +87,6 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
         userSelect: "none",
       }}
     >
-      {/* Video Background */}
       <video
         ref={videoRef}
         src={item.videoSrc}
@@ -95,16 +94,9 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
         muted
         playsInline
         autoPlay
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-        }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
       />
 
-      {/* Dark Overlay Gradient */}
       <div
         style={{
           position: "absolute",
@@ -114,7 +106,6 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
         }}
       />
 
-      {/* Play Button */}
       <div
         style={{
           position: "absolute",
@@ -142,7 +133,6 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
         </div>
       </div>
 
-      {/* Bottom Content */}
       <div
         style={{
           position: "absolute",
@@ -155,7 +145,6 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
           gap: "16px",
         }}
       >
-        {/* Avatar */}
         <div
           style={{
             width: 40,
@@ -169,30 +158,11 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
           <img src={item.avatarSrc} alt={item.handle} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </div>
 
-        {/* Text Info */}
         <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-          <p
-            style={{
-              color: "#fff",
-              fontSize: "22px",
-              fontWeight: 600,
-              lineHeight: 1.2,
-              fontFamily: "'Inter', sans-serif",
-              margin: 0,
-            }}
-          >
+          <p style={{ color: "#fff", fontSize: "22px", fontWeight: 600, lineHeight: 1.2, fontFamily: "'Inter', sans-serif", margin: 0 }}>
             {item.handle}
           </p>
-          <p
-            style={{
-              color: "rgba(255,255,255,0.6)",
-              fontSize: "14px",
-              fontWeight: 300,
-              lineHeight: "22px",
-              fontFamily: "'Inter', sans-serif",
-              margin: 0,
-            }}
-          >
+          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", fontWeight: 300, lineHeight: "22px", fontFamily: "'Inter', sans-serif", margin: 0 }}>
             {item.testimonial}
           </p>
         </div>
@@ -202,7 +172,7 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
 };
 
 // --- Main Section ---
-export default function VideosPhoneSection() {
+export default function TestimonialsSection() {
   return (
     <section
       style={{
@@ -217,11 +187,9 @@ export default function VideosPhoneSection() {
         gap: "56px",
         overflow: "hidden",
         position: "relative",
-        // Dot pattern background from InteractivePath
-
       }}
     >
-      {/* 1. Header Section */}
+      {/* 1. Header */}
       <div
         style={{
           display: "flex",
@@ -233,7 +201,7 @@ export default function VideosPhoneSection() {
           maxWidth: "900px",
         }}
       >
-        {/* Badge — style from InteractivePath */}
+        {/* Badge */}
         <div
           style={{
             display: "inline-flex",
@@ -246,14 +214,7 @@ export default function VideosPhoneSection() {
             backdropFilter: "blur(4px)",
           }}
         >
-          <div
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              backgroundColor: "#34d399",
-            }}
-          />
+          <div style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#34d399" }} />
           <span
             style={{
               fontSize: "10px",
@@ -264,11 +225,11 @@ export default function VideosPhoneSection() {
               fontFamily: "'Inter', sans-serif",
             }}
           >
-            Client Portfolio
+            Client Testimonials
           </span>
         </div>
 
-        {/* Title — style from InteractivePath */}
+        {/* Title */}
         <h2
           style={{
             fontSize: "clamp(36px, 5vw, 56px)",
@@ -280,7 +241,7 @@ export default function VideosPhoneSection() {
             fontFamily: "'Inter', sans-serif",
           }}
         >
-          Campaigns &amp; Videos{" "}
+          Real Results,{" "}
           <span
             style={{
               background: "linear-gradient(to right, #34d399, #06b6d4)",
@@ -291,7 +252,7 @@ export default function VideosPhoneSection() {
               fontWeight: 400,
             }}
           >
-            Worldwide
+            Real Clients
           </span>
         </h2>
 
@@ -306,7 +267,7 @@ export default function VideosPhoneSection() {
             margin: 0,
           }}
         >
-          A selection of campaigns and videos I've produced for brands across Spain, Germany, Australia, and the US. From strategic ad campaigns to high-performance creatives, here's a glimpse of what I do.
+          Don't take our word for it. Here's what the brands we've worked with across Spain, Germany, Australia, and the US have to say about their experience.
         </p>
       </div>
 
@@ -330,12 +291,11 @@ export default function VideosPhoneSection() {
         </div>
       </div>
 
-      {/* 3. Footer Button — style from InteractivePath */}
+      {/* 3. Footer Button */}
       <button
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "12px",
           padding: "12px 28px",
           backgroundColor: "#18181b",
           borderRadius: "9999px",
@@ -346,33 +306,22 @@ export default function VideosPhoneSection() {
           fontFamily: "'Inter', sans-serif",
         }}
         onMouseEnter={e => {
-          (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#34d399";
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 20px rgba(52,211,153,0.4)";
-          (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
+          e.currentTarget.style.backgroundColor = "#34d399";
+          e.currentTarget.style.boxShadow = "0 0 20px rgba(52,211,153,0.4)";
+          e.currentTarget.style.transform = "translateY(-2px)";
         }}
         onMouseLeave={e => {
-          (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#18181b";
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(0,0,0,0.15)";
-          (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+          e.currentTarget.style.backgroundColor = "#18181b";
+          e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.15)";
+          e.currentTarget.style.transform = "translateY(0)";
         }}
       >
-        <span
-          style={{
-            fontWeight: 700,
-            fontSize: "14px",
-            letterSpacing: "1px",
-            textTransform: "uppercase",
-            color: "#fff",
-          }}
-        >
-          See All Work
+        <span style={{ fontWeight: 700, fontSize: "14px", letterSpacing: "1px", textTransform: "uppercase", color: "#fff" }}>
+          See All Testimonials
         </span>
       </button>
 
-      {/* Hide scrollbar for webkit */}
-      <style>{`
-        div::-webkit-scrollbar { display: none; }
-      `}</style>
+      <style>{`div::-webkit-scrollbar { display: none; }`}</style>
     </section>
   );
 }
