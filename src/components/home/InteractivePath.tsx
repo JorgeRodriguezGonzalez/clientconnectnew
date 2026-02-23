@@ -91,9 +91,7 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
         ref={videoRef}
         src={item.videoSrc}
         loop
-        muted
         playsInline
-        autoPlay
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
       />
 
