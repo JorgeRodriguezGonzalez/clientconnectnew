@@ -14,7 +14,7 @@ interface WorkItem {
 const RECENT_WORKS: WorkItem[] = [
   {
     id: "1",
-    videoSrc: "/nanotisevideo.mp4",
+    videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4",
     avatarSrc: "https://framerusercontent.com/images/dZTHdqycN3jTN1xqMld5nxZzEU.svg",
     handle: "@tech_startup",
     testimonial: "300% ROAS in just 30 days"
