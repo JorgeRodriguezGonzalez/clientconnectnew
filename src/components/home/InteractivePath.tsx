@@ -206,15 +206,14 @@ export default function TestimonialsSection() {
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "8px",
-            padding: "4px 12px",
-            borderRadius: "9999px",
+            padding: "6px 12px",
+            borderRadius: "0px",
             border: "1px solid #e4e4e7",
-            backgroundColor: "rgba(255,255,255,0.5)",
-            backdropFilter: "blur(4px)",
+            backgroundColor: "#fafafa",
+            width: "fit-content",
+            transition: "color 0.3s",
           }}
         >
-          <div style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#34d399" }} />
           <span
             style={{
               fontSize: "10px",
