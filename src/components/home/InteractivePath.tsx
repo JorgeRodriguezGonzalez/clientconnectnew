@@ -1,226 +1,378 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useInView, Variants } from 'framer-motion';
-import { 
-  Megaphone, Search, Layout, Target, Mail, BarChart3, 
-  TrendingUp, Users, MousePointer2, Zap 
-} from 'lucide-react';
+import React, { useRef, useState } from "react";
+import { Play } from "lucide-react";
 
-// --- UTILS & CONFIG ---
-const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
-
-const COLORS = {
-  cyan: "#06b6d4",
-  emerald: "#34d399",
-  zinc: "#18181b"
-};
-
-const BackgroundDotPattern = () => (
-  <div 
-    className="absolute inset-0 z-0 opacity-[0.4] pointer-events-none"
-    style={{
-      backgroundImage: `radial-gradient(#e4e4e7 1px, transparent 1px)`,
-      backgroundSize: '24px 24px'
-    }}
-  />
-);
-
-const PATH_VARIANTS: Variants = {
-  hidden: { pathLength: 0, opacity: 0 },
-  visible: { 
-    pathLength: 1, 
-    opacity: 1, 
-    transition: { duration: 2, ease: "easeInOut" } 
-  }
-};
-
-const NODE_VARIANTS: Variants = {
-  idle: { scale: 1 },
-  hover: { scale: 1.1, transition: { duration: 0.3 } },
-  tap: { scale: 0.95 }
-};
-
-type NodePoint = {
+// --- Types ---
+interface WorkItem {
   id: string;
-  x: number;
-  y: number;
-  label: string;
-  icon: React.ElementType;
-  description: string;
-  stat: string;
-};
+  videoSrc: string;
+  avatarSrc: string;
+  handle: string;
+  testimonial: string;
+}
 
-const nodes: NodePoint[] = [
-  { id: 'strategy', x: 225, y: 30, label: 'Strategy', icon: Target, description: 'Market positioning, audience targeting, and core messaging.', stat: 'Data-Driven' },
-  { id: 'ads', x: 100, y: 90, label: 'Paid Media', icon: Megaphone, description: 'High-ROI campaigns on Meta, Google, and LinkedIn.', stat: '4.5x ROAS' },
-  { id: 'seo', x: 350, y: 90, label: 'SEO & Content', icon: Search, description: 'Organic authority building and keyword dominance.', stat: '+150% Traffic' },
-  { id: 'web', x: 225, y: 150, label: 'Web Development', icon: Layout, description: 'High-performance conversion engines and landing pages.', stat: '5% Conv. Rate' },
-  { id: 'crm', x: 100, y: 210, label: 'Automation', icon: Mail, description: 'Lead nurturing sequences and CRM integration.', stat: '24/7 Active' },
-  { id: 'analytics', x: 350, y: 210, label: 'Analytics', icon: BarChart3, description: 'Real-time performance tracking and optimization.', stat: '100% Clarity' }
+// --- Data ---
+const RECENT_WORKS: WorkItem[] = [
+  {
+    id: "1",
+    videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4",
+    avatarSrc: "https://framerusercontent.com/images/dZTHdqycN3jTN1xqMld5nxZzEU.svg",
+    handle: "@tech_startup",
+    testimonial: "300% ROAS in just 30 days"
+  },
+  {
+    id: "2",
+    videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4",
+    avatarSrc: "https://framerusercontent.com/images/sAiv8XpUWxb71XV3uCmVEzAMS0A.svg",
+    handle: "@fitness_empire",
+    testimonial: "CPA reduced by 40% with new creatives"
+  },
+  {
+    id: "3",
+    videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4",
+    avatarSrc: "https://framerusercontent.com/images/QYsfiTUurr8vxkRUjXw7KRx58Q.svg",
+    handle: "@realestate_pro",
+    testimonial: "150 Qualified Leads in one month"
+  },
+  {
+    id: "4",
+    videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4",
+    avatarSrc: "https://framerusercontent.com/images/dZTHdqycN3jTN1xqMld5nxZzEU.svg",
+    handle: "@saas_growth",
+    testimonial: "From cold traffic to loyal users"
+  },
+  {
+    id: "5",
+    videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4",
+    avatarSrc: "https://framerusercontent.com/images/sAiv8XpUWxb71XV3uCmVEzAMS0A.svg",
+    handle: "@ecom_brand",
+    testimonial: "Best creative strategy we've tested"
+  },
+  {
+    id: "6",
+    videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4",
+    avatarSrc: "https://framerusercontent.com/images/QYsfiTUurr8vxkRUjXw7KRx58Q.svg",
+    handle: "@beauty_brand",
+    testimonial: "Our best-performing campaign ever"
+  }
 ];
 
-const NodeIcon = ({ node, active, onClick }: { node: NodePoint; active: boolean; onClick: (e: React.MouseEvent) => void }) => {
-  const isEmerald = ['web', 'crm', 'analytics'].includes(node.id);
-  const activeColor = isEmerald ? COLORS.emerald : COLORS.cyan;
-  const activeClass = isEmerald ? 'text-emerald-500' : 'text-cyan-500';
+// --- WorkCard ---
+const WorkCard = ({ item }: { item: WorkItem }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   return (
-    <motion.g 
-      className="cursor-pointer group" 
-      variants={NODE_VARIANTS} 
-      initial="idle" whileHover="hover" whileTap="tap" 
-      onClick={onClick}
+    <div
+      onClick={togglePlay}
+      style={{
+        flexShrink: 0,
+        width: "300px",
+        height: "500px",
+        borderRadius: "24px",
+        overflow: "hidden",
+        backgroundColor: "#18181b",
+        position: "relative",
+        cursor: "pointer",
+        scrollSnapAlign: "center",
+        userSelect: "none",
+      }}
     >
-      <AnimatePresence>
-        {active && (
-          <motion.circle cx={node.x} cy={node.y} r="32" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 0.2, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} fill={activeColor} />
-        )}
-      </AnimatePresence>
-      <circle cx={node.x} cy={node.y} r="24" className={cn("transition-all duration-300", active ? "fill-white" : "fill-white group-hover:fill-zinc-50")} stroke={active ? activeColor : "#e4e4e7"} strokeWidth={active ? 2 : 1} />
-      <foreignObject x={node.x - 12} y={node.y - 12} width="24" height="24" className="pointer-events-none">
-        <div className="w-full h-full flex items-center justify-center">
-            <node.icon size={18} className={cn("transition-colors duration-300", active ? activeClass : "text-zinc-400 group-hover:text-zinc-600")} />
-        </div>
-      </foreignObject>
-      <text x={node.x} y={node.y + 45} textAnchor="middle" className={cn("text-[10px] font-bold uppercase tracking-wider transition-colors duration-300 font-sans", active ? "fill-zinc-900" : "fill-zinc-400")}>
-        {node.label}
-      </text>
-    </motion.g>
-  );
-};
+      {/* Video Background */}
+      <video
+        ref={videoRef}
+        src={item.videoSrc}
+        loop
+        muted
+        playsInline
+        autoPlay
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
+      />
 
-const InteractivePath = () => {
-  const [activeNode, setActiveNode] = useState<NodePoint | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+      {/* Dark Overlay Gradient */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.9) 100%)",
+          pointerEvents: "none",
+        }}
+      />
 
-  useEffect(() => {
-    const handleGlobalClick = (e: MouseEvent) => {
-      if (activeNode && cardRef.current && !cardRef.current.contains(e.target as Node)) {
-        setActiveNode(null);
-      }
-    };
-    document.addEventListener('mousedown', handleGlobalClick);
-    return () => document.removeEventListener('mousedown', handleGlobalClick);
-  }, [activeNode]);
-
-  return (
-    <section ref={containerRef} className="relative w-full py-24 bg-[#FAFAFA] overflow-hidden border-t border-zinc-200">
-      <BackgroundDotPattern />
-      
-      <div className="relative z-10 max-w-5xl mx-auto px-6">
-        
-        {/* HEADER SECTION */}
-        <div className="flex flex-col items-center text-center mb-16 gap-4">
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-200 bg-white/50 backdrop-blur-sm">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] font-bold uppercase tracking-[2px] text-zinc-500">Growth Ecosystem</span>
-            </motion.div>
-
-            <motion.h2 initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.1 }} className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900">
-                Integrated <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-cyan-500">Growth Engine</span>
-            </motion.h2>
-
-            {/* TEXTO DESCRIPTIVO RECUPERADO */}
-            <motion.p 
-                initial={{ opacity: 0 }}
-                animate={isInView ? { opacity: 1 } : {}}
-                transition={{ delay: 0.2 }}
-                className="text-zinc-500 max-w-lg leading-relaxed text-sm md:text-base"
-            >
-                Visualizing how we attract, convert, and retain your ideal customers. Click on any node to see how the pieces fit together.
-            </motion.p>
-        </div>
-
-        {/* INTERACTIVE DIAGRAM */}
-        <div className="relative w-full bg-white border border-zinc-200 rounded-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-visible">
-            
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 opacity-50" />
-            
-            {/* 3 puntos originales (zinc-200) a la IZQUIERDA */}
-            <div className="absolute top-4 left-4 flex gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-zinc-200" />
-                <div className="w-2 h-2 rounded-full bg-zinc-200" />
-                <div className="w-2 h-2 rounded-full bg-zinc-200" />
-            </div>
-
-            <div className="relative w-full aspect-[16/9] md:aspect-[2/1] p-8 md:p-12">
-                <svg viewBox="0 0 450 260" className="w-full h-full overflow-visible">
-                    <motion.path d="M 225 30 L 100 90 L 225 150 L 350 90 Z" fill="none" stroke={COLORS.cyan} strokeWidth="1.5" strokeOpacity="0.2" strokeDasharray="4 4" variants={PATH_VARIANTS} initial="hidden" animate={isInView ? "visible" : "hidden"} />
-                    <motion.path d="M 100 90 L 100 210 L 225 150 M 350 90 L 350 210 L 225 150" fill="none" stroke={COLORS.emerald} strokeWidth="1.5" strokeOpacity="0.2" variants={PATH_VARIANTS} initial="hidden" animate={isInView ? "visible" : "hidden"} transition={{ delay: 0.5 }} />
-
-                    {nodes.map(node => (
-                        <NodeIcon 
-                            key={node.id} 
-                            node={node} 
-                            active={activeNode?.id === node.id} 
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveNode(node);
-                            }} 
-                        />
-                    ))}
-                </svg>
-
-                <AnimatePresence>
-                    {activeNode && (
-                        <motion.div 
-                            ref={cardRef}
-                            initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                            animate={{ 
-                                opacity: 1, scale: 1, y: 0,
-                                left: activeNode.x < 150 ? '20px' : (activeNode.x > 300 ? 'auto' : `${(activeNode.x / 450) * 100}%`),
-                                right: activeNode.x > 300 ? '20px' : 'auto',
-                                top: `${(activeNode.y / 260) * 100}%`
-                            }}
-                            exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                            transition={{ duration: 0.2 }}
-                            style={{ 
-                                position: 'absolute',
-                                transform: `translate(${activeNode.x > 150 && activeNode.x < 300 ? '-50%' : '0%'}, ${activeNode.y > 150 ? '-120%' : '35px'})`,
-                                pointerEvents: 'auto'
-                            }}
-                            className="w-64 bg-white border border-zinc-200 shadow-2xl z-50 rounded-lg overflow-hidden"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div className="p-4">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <div className={cn("p-1.5 rounded-md border", ['web', 'crm', 'analytics'].includes(activeNode.id) ? "bg-emerald-50 border-emerald-100 text-emerald-600" : "bg-cyan-50 border-cyan-100 text-cyan-600")}>
-                                        <activeNode.icon size={16} />
-                                    </div>
-                                    <h3 className="font-bold text-zinc-900 text-sm uppercase tracking-wide">{activeNode.label}</h3>
-                                </div>
-                                <p className="text-xs text-zinc-500 leading-relaxed font-medium mb-3">{activeNode.description}</p>
-                                <div className="pt-3 border-t border-zinc-100 flex justify-between items-center">
-                                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Performance</span>
-                                    <span className={cn("text-[10px] font-bold font-mono", ['web', 'crm', 'analytics'].includes(activeNode.id) ? "text-emerald-600" : "text-cyan-600")}>{activeNode.stat}</span>
-                                </div>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 border-t border-zinc-200 divide-x divide-zinc-200 bg-zinc-50/50">
-                {[
-                   { label: "Client ROAS", value: "450%", icon: TrendingUp, color: "text-emerald-600" },
-                   { label: "Leads Gen", value: "15k+", icon: Users, color: "text-cyan-600" },
-                   { label: "Avg CTR", value: "2.4%", icon: MousePointer2, color: "text-zinc-700" },
-                   { label: "Speed", value: "98/100", icon: Zap, color: "text-emerald-600" }
-                ].map((stat, i) => (
-                    <div key={i} className="p-4 md:p-6 flex flex-col items-center justify-center gap-1 hover:bg-white transition-colors duration-300">
-                        <div className="flex items-center gap-1.5 mb-1">
-                            <stat.icon size={12} className="text-zinc-400" />
-                            <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">{stat.label}</span>
-                        </div>
-                        <span className={cn("text-xl md:text-2xl font-bold tracking-tight", stat.color)}>{stat.value}</span>
-                    </div>
-                ))}
-            </div>
+      {/* Play Button */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          pointerEvents: "none",
+          opacity: isPlaying ? 0 : 1,
+          transition: "opacity 0.3s",
+        }}
+      >
+        <div
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: "50%",
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Play fill="white" color="white" size={24} style={{ marginLeft: 4 }} />
         </div>
       </div>
-    </section>
+
+      {/* Bottom Content */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: "25px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}
+      >
+        {/* Avatar */}
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: "50%",
+            overflow: "hidden",
+            border: "1px solid rgba(255,255,255,0.1)",
+            backgroundColor: "rgba(255,255,255,0.1)",
+          }}
+        >
+          <img src={item.avatarSrc} alt={item.handle} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        </div>
+
+        {/* Text Info */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+          <p
+            style={{
+              color: "#fff",
+              fontSize: "22px",
+              fontWeight: 600,
+              lineHeight: 1.2,
+              fontFamily: "'Inter', sans-serif",
+              margin: 0,
+            }}
+          >
+            {item.handle}
+          </p>
+          <p
+            style={{
+              color: "rgba(255,255,255,0.6)",
+              fontSize: "14px",
+              fontWeight: 300,
+              lineHeight: "22px",
+              fontFamily: "'Inter', sans-serif",
+              margin: 0,
+            }}
+          >
+            {item.testimonial}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default InteractivePath;
+// --- Main Section ---
+export default function VideosPhoneSection() {
+  return (
+    <section
+      style={{
+        width: "100%",
+        minHeight: "100vh",
+        backgroundColor: "#FAFAFA",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        paddingTop: "96px",
+        paddingBottom: "96px",
+        gap: "56px",
+        overflow: "hidden",
+        position: "relative",
+        // Dot pattern background from InteractivePath
+
+      }}
+    >
+      {/* 1. Header Section */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "20px",
+          padding: "0 24px",
+          textAlign: "center",
+          maxWidth: "900px",
+        }}
+      >
+        {/* Badge — style from InteractivePath */}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "4px 12px",
+            borderRadius: "9999px",
+            border: "1px solid #e4e4e7",
+            backgroundColor: "rgba(255,255,255,0.5)",
+            backdropFilter: "blur(4px)",
+          }}
+        >
+          <div
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              backgroundColor: "#34d399",
+            }}
+          />
+          <span
+            style={{
+              fontSize: "10px",
+              fontWeight: 700,
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: "#71717a",
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            Client Portfolio
+          </span>
+        </div>
+
+        {/* Title — style from InteractivePath */}
+        <h2
+          style={{
+            fontSize: "clamp(36px, 5vw, 56px)",
+            fontWeight: 700,
+            letterSpacing: "-1.5px",
+            lineHeight: 1.1,
+            color: "#18181b",
+            margin: 0,
+            fontFamily: "'Inter', sans-serif",
+          }}
+        >
+          Campaigns &amp; Videos{" "}
+          <span
+            style={{
+              background: "linear-gradient(to right, #34d399, #06b6d4)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              fontStyle: "italic",
+              fontWeight: 400,
+            }}
+          >
+            Worldwide
+          </span>
+        </h2>
+
+        <p
+          style={{
+            fontSize: "16px",
+            fontWeight: 300,
+            color: "#71717a",
+            maxWidth: "600px",
+            lineHeight: 1.7,
+            fontFamily: "'Inter', sans-serif",
+            margin: 0,
+          }}
+        >
+          A selection of campaigns and videos I've produced for brands across Spain, Germany, Australia, and the US. From strategic ad campaigns to high-performance creatives, here's a glimpse of what I do.
+        </p>
+      </div>
+
+      {/* 2. Carousel */}
+      <div style={{ width: "100%", position: "relative" }}>
+        <div
+          style={{
+            width: "100%",
+            overflowX: "auto",
+            display: "flex",
+            gap: "12px",
+            padding: "16px 48px 48px 48px",
+            scrollSnapType: "x mandatory",
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+          }}
+        >
+          {RECENT_WORKS.map((work, index) => (
+            <WorkCard key={`${work.id}-${index}`} item={work} />
+          ))}
+        </div>
+      </div>
+
+      {/* 3. Footer Button — style from InteractivePath */}
+      <button
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          padding: "12px 28px",
+          backgroundColor: "#18181b",
+          borderRadius: "9999px",
+          border: "none",
+          cursor: "pointer",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+          transition: "all 0.3s",
+          fontFamily: "'Inter', sans-serif",
+        }}
+        onMouseEnter={e => {
+          (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#34d399";
+          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 20px rgba(52,211,153,0.4)";
+          (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
+        }}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLButtonElement).style.backgroundColor = "#18181b";
+          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(0,0,0,0.15)";
+          (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+        }}
+      >
+        <span
+          style={{
+            fontWeight: 700,
+            fontSize: "14px",
+            letterSpacing: "1px",
+            textTransform: "uppercase",
+            color: "#fff",
+          }}
+        >
+          See All Work
+        </span>
+      </button>
+
+      {/* Hide scrollbar for webkit */}
+      <style>{`
+        div::-webkit-scrollbar { display: none; }
+      `}</style>
+    </section>
+  );
+}
