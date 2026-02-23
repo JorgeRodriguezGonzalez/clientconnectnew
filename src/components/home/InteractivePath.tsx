@@ -218,11 +218,11 @@ export default function TestimonialsSection() {
           <span
             style={{
               fontSize: "10px",
-              fontWeight: 700,
+              fontWeight: 600,
               letterSpacing: "2px",
               textTransform: "uppercase",
-              color: "#71717a",
-              fontFamily: "'Inter', sans-serif",
+              color: "#6b7280",
+              fontFamily: "'Satoshi', sans-serif",
             }}
           >
             Client Testimonials
@@ -232,24 +232,26 @@ export default function TestimonialsSection() {
         {/* Title */}
         <h2
           style={{
-            fontSize: "clamp(36px, 5vw, 56px)",
+            fontSize: "clamp(32px, 5vw, 48px)",
             fontWeight: 700,
-            letterSpacing: "-1.5px",
+            letterSpacing: "-0.5px",
             lineHeight: 1.1,
-            color: "#18181b",
+            color: "#111827",
             margin: 0,
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Satoshi', sans-serif",
           }}
         >
           Real Results,{" "}
           <span
             style={{
-              background: "linear-gradient(to right, #34d399, #06b6d4)",
+              background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)",
+              backgroundSize: "200% auto",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
-              fontStyle: "italic",
-              fontWeight: 400,
+              fontStyle: "normal",
+              fontWeight: 700,
+              animation: "gradientMove 3s linear infinite",
             }}
           >
             Real Clients
@@ -258,17 +260,25 @@ export default function TestimonialsSection() {
 
         <p
           style={{
-            fontSize: "16px",
-            fontWeight: 300,
-            color: "#71717a",
-            maxWidth: "600px",
-            lineHeight: 1.7,
-            fontFamily: "'Inter', sans-serif",
+            fontSize: "15px",
+            fontWeight: 500,
+            color: "#6b7280",
+            maxWidth: "384px",
+            lineHeight: 1.6,
+            fontFamily: "'Satoshi', sans-serif",
             margin: 0,
           }}
         >
-          Don't take our word for it. Here's what the brands we've worked with across Spain, Germany, Australia, and the US have to say about their experience.
+          Don't take our word for it. Here's what <strong style={{ color: "#111827", fontWeight: 700 }}>brands worldwide</strong> have to say about working with us.
         </p>
+
+        <style>{`
+          @keyframes gradientMove {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+          }
+          @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
+        `}</style>
       </div>
 
       {/* 2. Carousel */}
