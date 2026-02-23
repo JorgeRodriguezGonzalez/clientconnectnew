@@ -47,16 +47,16 @@ const Index = () => {
         <div className="relative z-[50] -mt-[180px]">
           <FounderSection />
         </div>
+
+        <InteractivePath />
         
-          <WhatWeDoSection2 />
-        
+        <WhatWeDoSection2 />
 
         <CaseStudiesSection />
 
         <HowWeDoIt />
         <CloudHero />
         <BoxCards />
-        <InteractivePath />
         
         <OurStepsVersion2 />
 
