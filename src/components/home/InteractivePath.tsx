@@ -15,7 +15,7 @@ const RECENT_WORKS: WorkItem[] = [
   {
     id: "1",
     videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4",
-    avatarSrc: "https://framerusercontent.com/images/dZTHdqycN3jTN1xqMld5nxZzEU.svg",
+    avatarSrc: "",
     handle: "Alex Ross",
     testimonial: "Nanotise"
   },
@@ -143,18 +143,19 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
           gap: "16px",
         }}
       >
-        <div
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: "50%",
-            overflow: "hidden",
-            border: "1px solid rgba(255,255,255,0.1)",
-            backgroundColor: "rgba(255,255,255,0.1)",
-          }}
-        >
-          <img src={item.avatarSrc} alt={item.handle} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        </div>
+        {item.id === "1" ? (
+          <div style={{ display: "flex", gap: "4px" }}>
+            {[...Array(5)].map((_, i) => (
+              <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#06b6d4" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+        ) : (
+          <div style={{ width: 40, height: 40, borderRadius: "50%", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.1)" }}>
+            <img src={item.avatarSrc} alt={item.handle} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+        )}
 
         <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
           <p style={{ color: "#fff", fontSize: "22px", fontWeight: 600, lineHeight: 1.2, fontFamily: "'Inter', sans-serif", margin: 0 }}>
