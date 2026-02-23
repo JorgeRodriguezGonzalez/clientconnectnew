@@ -63,6 +63,7 @@ const Index = () => {
         
         <ComparisonSection />
         <Services />
+        <ServicesSection />
         <Pricing />
         <FAQSection />
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
