@@ -89,7 +89,7 @@ const ServiceCard = ({ service, index }) => {
           <div>
             <div className="flex items-center gap-3 mb-3">
               <div className="p-2 bg-white/5 rounded-full border border-white/10">
-                <service.icon className="w-4 h-4" style={{ color: "#f97316" }} />
+                <service.icon className="w-4 h-4" style={{ color: "#06b6d4" }} />
               </div>
               <h3 className="font-bold text-[22px] leading-tight text-white">
                 {service.title}
@@ -133,8 +133,23 @@ const ServiceCard = ({ service, index }) => {
 
 const ServicesSection = () => {
   return (
-    <section className="py-20 bg-white px-5 lg:px-10">
+    <section className="py-20 bg-white px-5 lg:px-10" style={{ backgroundColor: "#ffffff" }}>
       <div className="max-w-5xl mx-auto flex flex-col items-center gap-16">
+        <style>{`
+          @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500&display=swap');
+          .gradient-text {
+            background: linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+          }
+          @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+          }
+        `}</style>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -142,10 +157,29 @@ const ServicesSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-            Comprehensive Digital Marketing Services
+          <h2
+            className="font-bold tracking-tight mb-4"
+            style={{
+              fontFamily: "'Satoshi', sans-serif",
+              fontSize: "clamp(32px, 5vw, 48px)",
+              lineHeight: 1.1,
+              color: "#111827",
+            }}
+          >
+            Comprehensive Digital{" "}
+            <span className="gradient-text">Marketing Services</span>
           </h2>
-          <p className="text-lg text-gray-500">
+          <p
+            className="font-medium"
+            style={{
+              fontFamily: "'Satoshi', sans-serif",
+              fontSize: "15px",
+              lineHeight: 1.6,
+              color: "#6b7280",
+              maxWidth: "384px",
+              margin: "0 auto",
+            }}
+          >
             Everything you need to grow your business online, all under one roof.
           </p>
         </motion.div>
