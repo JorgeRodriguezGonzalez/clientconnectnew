@@ -133,7 +133,7 @@ const ServiceCard = ({ service, index }) => {
 
 const ServicesSection = () => {
   return (
-    <section className="py-20 px-5 lg:px-10 services-section-bg">
+    <section className="py-20 px-5 lg:px-10" style={{ backgroundColor: "#ffffff", isolation: "isolate", position: "relative", zIndex: 1 }}>
       <div className="max-w-5xl mx-auto flex flex-col items-center gap-16">
         <style>{`
           @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500&display=swap');
@@ -149,9 +149,7 @@ const ServicesSection = () => {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
           }
-          .services-section-bg {
-            background-color: #ffffff !important;
-          }
+
         `}</style>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
