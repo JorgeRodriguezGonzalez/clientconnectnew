@@ -153,8 +153,8 @@ export const SuperHero = ({
 
   return (
     <div
-      className="w-full relative min-h-screen flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-inter"
-      style={{ background: '#050505' }}
+      className="w-full relative flex flex-col items-center justify-start px-0 font-inter"
+      style={{ background: '#050505', height: '100vh', overflow: 'hidden' }}
     >
       <style>{fontStyles}</style>
 
@@ -171,7 +171,7 @@ export const SuperHero = ({
       </div>
 
       {/* HERO — min-h-screen + py-16 + justify-center */}
-      <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-center py-16">
+      <div         className="relative z-10 w-full flex-1 flex flex-col items-center justify-center py-16">
 
         <div
           className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-16"
