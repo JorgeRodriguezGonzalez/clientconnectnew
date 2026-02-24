@@ -50,7 +50,7 @@ export function Header() {
             <div
               className="w-14 h-14 shrink-0"
               style={{
-                background: "linear-gradient(135deg, #de8363 0%, #67bcb7 100%)",
+                background: "#06b6d4",
                 WebkitMaskImage: "url('/images/icon.png')",
                 WebkitMaskSize: "contain",
                 WebkitMaskRepeat: "no-repeat",
