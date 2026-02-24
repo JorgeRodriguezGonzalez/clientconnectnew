@@ -386,7 +386,10 @@ const TiltCard = ({
         perspective: 1000,
         ...style 
       }}
-      className={cn("relative rounded-none p-[2px] transition-colors duration-300 safari-gpu will-change-transform", className)}
+      className={cn(
+        "relative rounded-2xl p-[2px] transition-colors duration-300 safari-gpu will-change-transform",
+        className
+      )}
       {...props} 
     >
       <GlowingEffect 
@@ -397,8 +400,7 @@ const TiltCard = ({
         inactiveZone={0.01} 
         borderWidth={2} 
       />
-
-      <div className={cn("relative h-full w-full overflow-hidden rounded-none", innerClassName)}>
+      <div className={cn("relative h-full w-full overflow-hidden rounded-2xl", innerClassName)}>
         {children}
       </div>
     </motion.div>
@@ -408,12 +410,12 @@ const TiltCard = ({
 // --- SUB-COMPONENTS ---
 const StatBadge = ({ icon: Icon, label, value, isLight }: { icon: any, label: string, value: string, isLight: boolean }) => (
   <div className={cn(
-    "flex items-center gap-3 px-4 py-3 rounded-none border backdrop-blur-md transition-colors duration-300",
+    "flex items-center gap-3 px-4 py-3 rounded-2xl border backdrop-blur-md transition-colors duration-300",
     isLight 
       ? "bg-white/80 border-zinc-200 shadow-sm" 
       : "bg-white/5 border-white/10"
   )}>
-    <div className="p-2 rounded-none bg-zinc-100 text-gray-900">
+    <div className="p-2 rounded-xl bg-zinc-100 text-gray-900">
       <Icon size={16} />
     </div>
     <div>
@@ -448,26 +450,11 @@ LogoContainer.displayName = "LogoContainer";
 
 function AnimatedLogos({ isLightMode }: { isLightMode: boolean }) {
   const icons = [
-    {
-      icon: <InstagramLogo className="h-4 w-4" />,
-      size: "sm" as const,
-    },
-    {
-      icon: <GoogleLogo className="h-5 w-5" />,
-      size: "md" as const,
-    },
-    {
-      icon: <OpenAILogo className="h-6 w-6 text-black dark:text-white" />,
-      size: "lg" as const,
-    },
-    {
-      icon: <MetaIconOutline className="h-5 w-5" />,
-      size: "md" as const,
-    },
-    {
-      icon: <GeminiLogo className="h-4 w-4" />,
-      size: "sm" as const,
-    },
+    { icon: <InstagramLogo className="h-4 w-4" />, size: "sm" as const },
+    { icon: <GoogleLogo className="h-5 w-5" />, size: "md" as const },
+    { icon: <OpenAILogo className="h-6 w-6 text-black dark:text-white" />, size: "lg" as const },
+    { icon: <MetaIconOutline className="h-5 w-5" />, size: "md" as const },
+    { icon: <GeminiLogo className="h-4 w-4" />, size: "sm" as const },
   ];
 
   const scale = [1, 1.1, 1];
@@ -595,14 +582,8 @@ const ProfitChart = () => {
         </defs>
         
         <motion.line
-          x1="80"
-          y1="152"
-          x2="490"
-          y2="152"
-          stroke={COLORS.cyan}
-          strokeWidth="2"
-          strokeDasharray="5,5"
-          strokeOpacity="0.3"
+          x1="80" y1="152" x2="490" y2="152"
+          stroke={COLORS.cyan} strokeWidth="2" strokeDasharray="5,5" strokeOpacity="0.3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: 'easeInOut', delay: 0.5 }}
@@ -611,12 +592,8 @@ const ProfitChart = () => {
         <g clipPath="url(#clipBelowLine)">
           <motion.path 
             d="M 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 L 489.248 283.23 Z" 
-            fill="url(#chartGradientTeal)" 
-            stroke={COLORS.cyan}
-            strokeWidth="2" 
-            strokeMiterlimit="10" 
-            initial={{ pathLength: 0, opacity: 0 }} 
-            animate={{ pathLength: 1, opacity: 1 }} 
+            fill="url(#chartGradientTeal)" stroke={COLORS.cyan} strokeWidth="2" strokeMiterlimit="10" 
+            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} 
             transition={{ duration: 1.5, ease: 'easeInOut', delay: 0 }} 
           />
         </g>
@@ -624,12 +601,8 @@ const ProfitChart = () => {
         <g clipPath="url(#clipAboveLine)">
           <motion.path 
             d="M 489.248 5.489 L 489.248 283.23 L 4.869 279.745 L 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489 Z" 
-            fill="url(#chartGradientEmerald)" 
-            stroke={COLORS.emerald} 
-            strokeWidth="2" 
-            strokeMiterlimit="10" 
-            initial={{ pathLength: 0, opacity: 0 }} 
-            animate={{ pathLength: 1, opacity: 1 }} 
+            fill="url(#chartGradientEmerald)" stroke={COLORS.emerald} strokeWidth="2" strokeMiterlimit="10" 
+            initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} 
             transition={{ duration: 1.5, ease: 'easeInOut', delay: 0 }} 
           />
         </g>
@@ -637,14 +610,8 @@ const ProfitChart = () => {
         <g clipPath="url(#clipBelowLine)">
           <motion.path 
             d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
-            fill="transparent" 
-            stroke={COLORS.cyan} 
-            strokeOpacity="0.5"
-            strokeWidth="2" 
-            strokeMiterlimit="10" 
-            strokeDasharray="9.07,9.07" 
-            initial={{ pathLength: 0 }} 
-            animate={{ pathLength: 1 }} 
+            fill="transparent" stroke={COLORS.cyan} strokeOpacity="0.5" strokeWidth="2" strokeMiterlimit="10" strokeDasharray="9.07,9.07" 
+            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} 
             transition={{ duration: 1, ease: 'easeInOut', delay: 0.1 }} 
           />
         </g>
@@ -652,14 +619,8 @@ const ProfitChart = () => {
         <g clipPath="url(#clipAboveLine)">
           <motion.path 
             d="M 80 240 C 160 195 230 165 280 155 C 300 152 310 151.5 320 152 C 330 152.5 340 152 350 152 C 370 148 400 130 440 95 C 470 65 485 35 489.248 5.489" 
-            fill="transparent" 
-            stroke={COLORS.emerald} 
-            strokeOpacity="0.5"
-            strokeWidth="2" 
-            strokeMiterlimit="10" 
-            strokeDasharray="9.07,9.07" 
-            initial={{ pathLength: 0 }} 
-            animate={{ pathLength: 1 }} 
+            fill="transparent" stroke={COLORS.emerald} strokeOpacity="0.5" strokeWidth="2" strokeMiterlimit="10" strokeDasharray="9.07,9.07" 
+            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} 
             transition={{ duration: 1, ease: 'easeInOut', delay: 0.1 }} 
           />
         </g>
@@ -675,8 +636,8 @@ export const FounderSection = () => {
   const [isLateScroll, setIsLateScroll] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [chartKey, setChartKey] = useState(0); 
-  
   const [isCaseStudyActive, setIsCaseStudyActive] = useState(false);
+
   const buttonColorSequence = [COLORS.emerald, COLORS.emerald, COLORS.cyan, COLORS.cyan, COLORS.emerald];
   const buttonColorDuration = 10;
 
@@ -686,17 +647,11 @@ export const FounderSection = () => {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest > 0.30 && !isLightMode) {
-      setIsLightMode(true);
-    } else if (latest <= 0.30 && isLightMode) {
-      setIsLightMode(false);
-    }
+    if (latest > 0.30 && !isLightMode) setIsLightMode(true);
+    else if (latest <= 0.30 && isLightMode) setIsLightMode(false);
 
-    if (latest > 0.60 && !isLateScroll) {
-      setIsLateScroll(true);
-    } else if (latest < 0.50 && isLateScroll) {
-      setIsLateScroll(false);
-    }
+    if (latest > 0.60 && !isLateScroll) setIsLateScroll(true);
+    else if (latest < 0.50 && isLateScroll) setIsLateScroll(false);
   });
 
   const yStats = useTransform(scrollYProgress, [0, 1], [100, -100]);
@@ -711,32 +666,27 @@ export const FounderSection = () => {
     >
       <style>{fontStyles}</style>
 
-      <div className="absolute top-0 left-0 w-full z-50">
-         <LogoCloud isLightMode={isLightMode} />
+      {/* ✅ CAMBIO CLAVE: de absolute top-0 → flujo normal */}
+      <div className="w-full">
+        <LogoCloud isLightMode={isLightMode} />
       </div>
 
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-         <motion.div 
-            animate={{
-              backgroundColor: [COLORS.emerald, COLORS.cyan, COLORS.emerald],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className={cn(
-              "absolute right-[-10%] top-[20%] w-[600px] h-[600px] blur-[150px] rounded-none transition-opacity duration-500",
-              isLightMode ? "opacity-10" : "opacity-20"
-            )} 
-         />
+        <motion.div 
+          animate={{ backgroundColor: [COLORS.emerald, COLORS.cyan, COLORS.emerald] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className={cn(
+            "absolute right-[-10%] top-[20%] w-[600px] h-[600px] blur-[150px] rounded-none transition-opacity duration-500",
+            isLightMode ? "opacity-10" : "opacity-20"
+          )} 
+        />
       </div>
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-40">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-8">
           
-          {/* --- IZQUIERDA: TEXTOS ENFOCADOS EN ACOMPAÑAMIENTO --- */}
+          {/* --- LEFT: TEXT --- */}
           <div className="lg:w-[40%] sticky top-32">
             <div className="flex flex-col gap-6 pb-10">
               
@@ -744,7 +694,7 @@ export const FounderSection = () => {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 className={cn(
-                  "w-fit px-3 py-1.5 rounded-none border text-[10px] font-sans font-semibold uppercase tracking-[2px] transition-colors duration-300",
+                  "w-fit px-3 py-1.5 rounded-lg border text-[10px] font-sans font-semibold uppercase tracking-[2px] transition-colors duration-300",
                   isLightMode 
                     ? "bg-zinc-50 border-zinc-200 text-gray-500" 
                     : "bg-white/5 border-white/10 text-gray-400"
@@ -753,7 +703,6 @@ export const FounderSection = () => {
                 GROWTH PARTNERS
               </motion.div>
 
-              {/* Headline (Mantenido) */}
               <h2 className={cn(
                 "font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tight transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
@@ -762,11 +711,7 @@ export const FounderSection = () => {
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}
                   animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                  transition={{
-                    duration: 12,
-                    ease: "linear",
-                    repeat: Infinity
-                  }}
+                  transition={{ duration: 12, ease: "linear", repeat: Infinity }}
                   style={{
                     display: "inline-block",
                     backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
@@ -782,7 +727,6 @@ export const FounderSection = () => {
                 <span>.</span>
               </h2>
 
-              {/* Description (Modificado para ser más humano) */}
               <p className={cn(
                 "font-sans text-[15px] leading-[1.6] font-medium transition-colors duration-0 max-w-sm",
                 isLightMode ? "text-gray-500" : "text-gray-400"
@@ -791,7 +735,6 @@ export const FounderSection = () => {
                 We combine powerful data with deep empathy, ensuring you never face your growth journey alone. Your challenges are our challenges.
               </p>
 
-              {/* Checklist (Modificado para soporte/personas) */}
               <div className="flex flex-col gap-3 mt-2">
                 {[
                   "Dedicated Success Managers",
@@ -800,7 +743,7 @@ export const FounderSection = () => {
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 group cursor-default">
                     <div className={cn(
-                      "w-5 h-5 rounded-none flex items-center justify-center transition-all duration-300",
+                      "w-5 h-5 rounded-md flex items-center justify-center transition-all duration-300",
                       isLightMode ? "bg-zinc-900 text-white" : "bg-white text-black"
                     )}>
                       <Check size={10} strokeWidth={3} />
@@ -813,35 +756,21 @@ export const FounderSection = () => {
                 ))}
               </div>
 
-              {/* CTA (Modificado) */}
               <div className="mt-4">
                 <motion.button
-                  animate={{
-                    borderColor: buttonColorSequence
-                  }}
-                  transition={{
-                    duration: buttonColorDuration,
-                    ease: "linear",
-                    repeat: Infinity
-                  }}
+                  animate={{ borderColor: buttonColorSequence }}
+                  transition={{ duration: buttonColorDuration, ease: "linear", repeat: Infinity }}
                   className={cn(
-                    "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)]",
+                    "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-xl font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)]",
                     "bg-black text-white hover:bg-zinc-900"
                   )}
                 >
                   <span className="flex items-center gap-2">
                     Meet Your Team
                     <motion.span
-                      animate={{
-                        color: buttonColorSequence
-                      }}
-                      transition={{
-                        duration: buttonColorDuration,
-                        ease: "linear",
-                        repeat: Infinity
-                      }}
+                      animate={{ color: buttonColorSequence }}
+                      transition={{ duration: buttonColorDuration, ease: "linear", repeat: Infinity }}
                     >
-                      {/* Icono de sonrisa para invitar a la conexión humana */}
                       <Smile className="w-4 h-4 transition-transform group-hover:scale-110" />
                     </motion.span>
                   </span>
@@ -851,27 +780,24 @@ export const FounderSection = () => {
             </div>
           </div>
 
-          {/* --- DERECHA: TARJETAS ENFOCADAS EN LO HUMANO --- */}
+          {/* --- RIGHT: CARDS --- */}
           <div className="lg:w-[60%] relative pt-0 lg:pt-0">
             
             <motion.div 
-               layout 
-               className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-[minmax(200px,auto)]"
+              layout 
+              className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-[minmax(200px,auto)]"
             >
 
-              {/* CARD 1: FOTO DEL EQUIPO/FUNDADOR */}
+              {/* CARD 1: TEAM PHOTO */}
               <TiltCard 
                 layoutId="miguel-card"
                 layout
-                transition={{ 
-                  layout: ANIMATION_CONFIG,
-                  opacity: { duration: 0.5 }
-                }}
+                transition={{ layout: ANIMATION_CONFIG, opacity: { duration: 0.5 } }}
                 onLayoutAnimationStart={() => setIsResizing(true)}
                 onLayoutAnimationComplete={() => setIsResizing(false)}
                 className={cn(
-                   "md:row-span-2 h-[450px] md:h-[600px] group relative z-10 safari-gpu",
-                   isLightMode ? "md:col-span-1" : "md:col-span-2"
+                  "md:row-span-2 h-[450px] md:h-[600px] group relative z-10 safari-gpu",
+                  isLightMode ? "md:col-span-1" : "md:col-span-2"
                 )}
                 innerClassName={cn(
                   "border",
@@ -885,262 +811,225 @@ export const FounderSection = () => {
                   className="absolute inset-0 z-40 bg-white/60 pointer-events-none"
                 />
 
-                <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-none">
+                <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-2xl">
                   <motion.img 
                     layout
                     src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1632&auto=format&fit=crop" 
                     alt="Client Connect Australia Team" 
                     loading="eager"
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
-                    transition={{ 
-                        layout: ANIMATION_CONFIG, 
-                        scale: ANIMATION_CONFIG 
-                    }}
+                    transition={{ layout: ANIMATION_CONFIG, scale: ANIMATION_CONFIG }}
                     className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0 safari-gpu"
                   />
-                  
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
-                  
                   <motion.div layout className="absolute bottom-6 left-6 right-6 z-30">
-                    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-none">
-                       {/* CAMBIO TEXTO: Más personal */}
-                       <p className="text-white font-sans font-bold text-base">People First, Growth Second</p>
-                       <p className="text-white/60 font-sans text-[11px]">Your dedicated growth squad.</p>
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl">
+                      <p className="text-white font-sans font-bold text-base">People First, Growth Second</p>
+                      <p className="text-white/60 font-sans text-[11px]">Your dedicated growth squad.</p>
                     </div>
                   </motion.div>
                 </div>
               </TiltCard>
 
-              {/* ITEMS 2 & 3: PARTNERSHIP & STORIES */}
+              {/* CARDS 2 & 3 */}
               <AnimatePresence mode="popLayout">
-                 {isLightMode && (
-                    <>
-                       {/* CARD 2: VICTORIAS COMPARTIDAS (Antes Chart analítico) */}
-                       <TiltCard 
-                        layout="position"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                        className="h-[280px] group safari-gpu cursor-default"
-                        innerClassName="bg-white border border-zinc-200 overflow-hidden"
-                        onMouseEnter={() => setChartKey(prev => prev + 1)}
-                       >
-                          <div className="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 blur-[60px] opacity-40 group-hover:opacity-60 transition-opacity" />
-                          
-                          <div className="relative z-10 p-6 flex flex-col items-start">
-                             <div className="flex justify-between items-center w-full mb-2">
-                                <div className="p-2 bg-zinc-50 border border-zinc-100 rounded-none text-emerald-500">
-                                   {/* ICONO CAMBIADO: HeartHandshake en vez de Activity */}
-                                   <HeartHandshake size={20} style={{ color: COLORS.emerald }} />
-                                </div>
-                                <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                                   Partnership
-                                </span>
-                             </div>
-                             <div>
-                                {/* TEXTO CAMBIADO: Shared Victories */}
-                                <h3 className="text-3xl font-sans font-bold text-gray-900 leading-tight">
-                                  Shared <span className="text-gray-400">Victories</span>
-                                </h3>
-                                <p className="font-sans text-xs text-gray-500 font-medium mt-1">
-                                  We celebrate every win with you.
-                                </p>
-                             </div>
+                {isLightMode && (
+                  <>
+                    <TiltCard 
+                      layout="position"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+                      className="h-[280px] group safari-gpu cursor-default"
+                      innerClassName="bg-white border border-zinc-200 overflow-hidden"
+                      onMouseEnter={() => setChartKey(prev => prev + 1)}
+                    >
+                      <div className="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 blur-[60px] opacity-40 group-hover:opacity-60 transition-opacity" />
+                      <div className="relative z-10 p-6 flex flex-col items-start">
+                        <div className="flex justify-between items-center w-full mb-2">
+                          <div className="p-2 bg-zinc-50 border border-zinc-100 rounded-xl text-emerald-500">
+                            <HeartHandshake size={20} style={{ color: COLORS.emerald }} />
                           </div>
+                          <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                            Partnership
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="text-3xl font-sans font-bold text-gray-900 leading-tight">
+                            Shared <span className="text-gray-400">Victories</span>
+                          </h3>
+                          <p className="font-sans text-xs text-gray-500 font-medium mt-1">
+                            We celebrate every win with you.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 h-[140px] w-full z-0">
+                        <ProfitChart key={chartKey} />
+                      </div>
+                    </TiltCard>
 
-                          <div className="absolute bottom-0 left-0 right-0 h-[140px] w-full z-0">
-                             <ProfitChart key={chartKey} />
+                    <TiltCard 
+                      layout="position"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+                      className="h-[300px] group cursor-pointer safari-gpu"
+                      innerClassName="bg-black border border-zinc-800"
+                      onClick={() => setIsCaseStudyActive(true)}
+                    >
+                      <div className="absolute inset-0 w-full h-full">
+                        <video 
+                          autoPlay loop muted playsInline 
+                          className={cn(
+                            "w-full h-full object-cover transition-all duration-700 ease-out",
+                            isCaseStudyActive ? "grayscale-0" : "grayscale opacity-60 group-hover:opacity-80"
+                          )}
+                        >
+                          <source src="https://videos.pexels.com/video-files/3196071/3196071-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                        </video>
+                      </div>
+                      <motion.div
+                        className="absolute inset-0 z-20 pointer-events-none"
+                        animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <div className="absolute inset-0 bg-black/40" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
+                            <Play fill="white" className="ml-1 text-white" />
                           </div>
-                       </TiltCard>
-
-                       {/* CARD 3: VIDEO (Testimonios/Historias) */}
-                       <TiltCard 
-                        layout="position"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                        className="h-[300px] group cursor-pointer safari-gpu"
-                        innerClassName="bg-black border border-zinc-800"
-                        onClick={() => setIsCaseStudyActive(true)}
-                       >
-                          <div className="absolute inset-0 w-full h-full">
-                             <video 
-                                autoPlay 
-                                loop 
-                                muted 
-                                playsInline 
-                                className={cn(
-                                   "w-full h-full object-cover transition-all duration-700 ease-out",
-                                   isCaseStudyActive ? "grayscale-0" : "grayscale opacity-60 group-hover:opacity-80"
-                                )}
-                             >
-                                <source src="https://videos.pexels.com/video-files/3196071/3196071-uhd_2560_1440_25fps.mp4" type="video/mp4" />
-                             </video>
-                          </div>
-
-                          <motion.div
-                             className="absolute inset-0 z-20 pointer-events-none"
-                             animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
-                             transition={{ duration: 0.5 }}
-                          >
-                             <div className="absolute inset-0 bg-black/40" />
-
-                             <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-none flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
-                                   <Play fill="white" className="ml-1 text-white" />
-                                </div>
-                             </div>
-
-                             <div className="absolute bottom-5 left-5">
-                                <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-none text-white text-[11px] font-sans font-medium">
-                                   Hear our Stories
-                                </span>
-                             </div>
-                          </motion.div>
-                       </TiltCard>
-                    </>
-                 )}
+                        </div>
+                        <div className="absolute bottom-5 left-5">
+                          <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-[11px] font-sans font-medium">
+                            Hear our Stories
+                          </span>
+                        </div>
+                      </motion.div>
+                    </TiltCard>
+                  </>
+                )}
               </AnimatePresence>
 
-              {/* CARD 4: ECOSYSTEM (Human-led tech) */}
+              {/* CARD 4: ECOSYSTEM */}
               <TiltCard 
                 layout
                 initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} 
                 animate={isLightMode 
-                    ? { opacity: 1, y: 0, filter: "blur(0px)" } 
-                    : { opacity: 0, y: 20, filter: "blur(10px)" }
+                  ? { opacity: 1, y: 0, filter: "blur(0px)" } 
+                  : { opacity: 0, y: 20, filter: "blur(10px)" }
                 }
                 transition={{
-                    duration: isLightMode ? 0.5 : 0, 
-                    delay: isLightMode ? 0.5 : 0, 
-                    ease: "easeOut"
+                  duration: isLightMode ? 0.5 : 0, 
+                  delay: isLightMode ? 0.5 : 0, 
+                  ease: "easeOut"
                 }}
-                className={cn(
-                  "md:col-span-2 group safari-gpu h-[240px]" 
-                )}
+                className="md:col-span-2 group safari-gpu h-[240px]"
                 innerClassName={cn(
                   "p-8 transition-colors duration-0 border relative",
-                  isLightMode 
-                    ? "bg-white border-zinc-200" 
-                    : "bg-zinc-900 border-zinc-800"
+                  isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-zinc-800"
                 )}
               >
-                 <div className={cn(
-                    "absolute top-6 right-6 rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium z-20",
-                    isLightMode 
-                        ? "border-zinc-200 text-gray-500" 
-                        : "border-white/20 text-white/60"
-                 )}>
-                    Expertise
-                 </div>
-
-                 <div className="grid grid-cols-12 gap-4 h-full items-center">
-                    <div className="col-span-5 flex flex-col justify-center h-full">
-                        {/* TEXTO CAMBIADO: Enfoque en expertos */}
-                        <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>
-                          Expert Hands
-                        </h3>
-                        <p className={cn("font-sans font-medium text-xs leading-relaxed", isLightMode ? "text-gray-500" : "text-white/70")}>
-                          We master the complex ecosystem of digital tools so you can focus on your business. Human strategy, powerful tech.
-                        </p>
+                <div className={cn(
+                  "absolute top-6 right-6 rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium z-20",
+                  isLightMode ? "border-zinc-200 text-gray-500" : "border-white/20 text-white/60"
+                )}>
+                  Expertise
+                </div>
+                <div className="grid grid-cols-12 gap-4 h-full items-center">
+                  <div className="col-span-5 flex flex-col justify-center h-full">
+                    <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>
+                      Expert Hands
+                    </h3>
+                    <p className={cn("font-sans font-medium text-xs leading-relaxed", isLightMode ? "text-gray-500" : "text-white/70")}>
+                      We master the complex ecosystem of digital tools so you can focus on your business. Human strategy, powerful tech.
+                    </p>
+                  </div>
+                  <div className="col-span-7 h-full flex items-center justify-center">
+                    <div className="relative w-full max-w-[300px] h-[120px]">
+                      <AnimatedLogos isLightMode={isLightMode} />
                     </div>
-
-                    <div className="col-span-7 h-full flex items-center justify-center">
-                       <div className="relative w-full max-w-[300px] h-[120px]">
-                          <AnimatedLogos isLightMode={isLightMode} />
-                       </div>
-                    </div>
-                 </div>
+                  </div>
+                </div>
               </TiltCard>
 
-               {/* CARD 5 (Inferior A): CERCANÍA */}
-               <TiltCard 
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] group safari-gpu"
-                  innerClassName="bg-white border border-zinc-200 flex flex-row items-stretch"
-               >
-                   <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
-                      <div className="p-2.5 rounded-none mb-3 bg-zinc-50 border border-zinc-100">
-                         {/* ICONO: Users para cercanía */}
-                         <Users className="w-5 h-5 text-gray-900" />
-                      </div>
-                      <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
-                         Always<br/>
-                         <span className="text-gray-400">Close</span>
-                      </div>
-                      <p className="text-[12px] font-sans font-medium leading-[1.4] text-gray-500">
-                        Support that feels local, anywhere in Australia.
-                      </p>
-                   </div>
+              {/* CARD 5: ALWAYS CLOSE */}
+              <TiltCard 
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
+                className="h-[280px] group safari-gpu"
+                innerClassName="bg-white border border-zinc-200 flex flex-row items-stretch"
+              >
+                <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
+                  <div className="p-2.5 rounded-xl mb-3 bg-zinc-50 border border-zinc-100">
+                    <Users className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
+                    Always<br/>
+                    <span className="text-gray-400">Close</span>
+                  </div>
+                  <p className="text-[12px] font-sans font-medium leading-[1.4] text-gray-500">
+                    Support that feels local, anywhere in Australia.
+                  </p>
+                </div>
+                <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden rounded-r-2xl">
+                  <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
+                    <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
+                    <img 
+                      src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
+                      alt="Australian National Support"
+                      className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
+                    />
+                  </div>
+                </div>
+              </TiltCard>
 
-                   <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden">
-                      <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
-                          <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
-                          <img 
-                             src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
-                             alt="Australian National Support"
-                             className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
-                          />
-                      </div>
-                   </div>
-               </TiltCard>
-
-               {/* CARD 6 (Inferior B): CONFIANZA (CON IMAGEN DE HANDSHAKE) */}
-               <TiltCard 
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-                  style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                  className="h-[280px] group safari-gpu"
-                  innerClassName="bg-zinc-900 border border-zinc-800"
-               >
-                   <div className="relative h-full w-full">
-                       <div className="absolute inset-0 w-full h-full opacity-60">
-                          {/* CAMBIO: Usamos una imagen de handshake de alta calidad en vez de video para garantizar la carga */}
-                          <img
-                            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop"
-                            alt="Trust and Partnership Handshake"
-                            className="w-full h-full object-cover grayscale scale-105 group-hover:scale-100 group-hover:grayscale-0 transition-all duration-700 ease-out"
-                          />
-                       </div>
-
-                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                       
-                       <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
-                         <div className="flex items-baseline gap-2 mb-1">
-                           <span className="text-5xl font-sans font-semibold leading-none tracking-tighter">95%</span>
-                           {/* ICONO: ShieldCheck para confianza/seguridad */}
-                           <ShieldCheck className="w-6 h-6 mb-2 text-white/80" />
-                         </div>
-                         <span className="text-[12px] font-sans font-medium leading-[1.4] text-white/60">
-                           Clients stay because they trust us.
-                         </span>
-                       </div>
-                   </div>
-               </TiltCard>
+              {/* CARD 6: TRUST */}
+              <TiltCard 
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
+                className="h-[280px] group safari-gpu"
+                innerClassName="bg-zinc-900 border border-zinc-800"
+              >
+                <div className="relative h-full w-full">
+                  <div className="absolute inset-0 w-full h-full opacity-60">
+                    <img
+                      src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop"
+                      alt="Trust and Partnership Handshake"
+                      className="w-full h-full object-cover grayscale scale-105 group-hover:scale-100 group-hover:grayscale-0 transition-all duration-700 ease-out"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                  <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className="text-5xl font-sans font-semibold leading-none tracking-tighter">95%</span>
+                      <ShieldCheck className="w-6 h-6 mb-2 text-white/80" />
+                    </div>
+                    <span className="text-[12px] font-sans font-medium leading-[1.4] text-white/60">
+                      Clients stay because they trust us.
+                    </span>
+                  </div>
+                </div>
+              </TiltCard>
 
             </motion.div>
 
             {/* FLOATING STATS */}
             <motion.div 
-               style={{ y: yStats }}
-               initial={{ opacity: 0, scale: 0.8 }}
-               animate={{ 
-                 opacity: isLightMode ? 1 : 0,
-                 scale: isLightMode ? 1 : 0.8,
-                 transition: { 
-                    duration: 0.3, 
-                    delay: isLightMode ? 0.8 : 0 
-                 }
-               }}
-               className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
+              style={{ y: yStats }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ 
+                opacity: isLightMode ? 1 : 0,
+                scale: isLightMode ? 1 : 0.8,
+                transition: { duration: 0.3, delay: isLightMode ? 0.8 : 0 }
+              }}
+              className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
             >
-              {/* Stat más humano: "Client Love" con corazón */}
               <StatBadge icon={MessageCircleHeart} label="Client Satisfaction" value="100%" isLight={isLightMode} />
             </motion.div>
 
