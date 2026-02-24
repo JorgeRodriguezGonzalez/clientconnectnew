@@ -684,7 +684,7 @@ export const FounderSection = () => {
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-8">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-16">
           
           {/* --- LEFT: TEXT --- */}
           <div className="lg:w-[40%] sticky top-32">
