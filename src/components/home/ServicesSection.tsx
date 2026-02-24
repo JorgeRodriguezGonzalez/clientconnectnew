@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { motion } from "framer-motion";
 import { ArrowRight, Compass, Palette, Code2, Search, MousePointerClick, TrendingUp } from "lucide-react";
 
 const services = [
@@ -47,10 +46,6 @@ const services = [
   },
 ];
 
-function cn(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 const ServiceCard = ({ service, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef(null);
@@ -71,47 +66,101 @@ const ServiceCard = ({ service, index }) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+    <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full rounded-[30px] overflow-hidden cursor-pointer group min-h-[300px]"
       style={{
+        position: "relative",
+        width: "100%",
+        borderRadius: "30px",
+        overflow: "hidden",
+        cursor: "pointer",
+        minHeight: "260px",
         background: "radial-gradient(50% 50% at 0% 0%, #1a1a1a 2.21%, #050505 100%)",
         border: "1px solid rgba(255,255,255,0.08)",
+        opacity: 0,
+        transform: "translateY(20px)",
+        animation: `fadeInUp 0.6s ease forwards ${index * 0.1}s`,
       }}
+      className="group"
     >
-      <div className="flex flex-col lg:flex-row p-8 relative z-10 gap-6 h-full">
-        <div className="flex flex-col justify-between items-start gap-4 flex-1 z-20 max-w-xl">
+      <div style={{ display: "flex", flexDirection: "row", padding: "40px 48px", position: "relative", zIndex: 10, gap: "32px", height: "100%", alignItems: "center" }}>
+        {/* Left: text content */}
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1, zIndex: 20, gap: "24px" }}>
           <div>
-            <div className="flex items-center gap-3 mb-3">
-              <div className="p-2 bg-white/5 rounded-full border border-white/10">
-                <service.icon className="w-4 h-4" style={{ color: "#06b6d4" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
+              <div style={{ padding: "10px", background: "rgba(255,255,255,0.05)", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.1)", display: "flex" }}>
+                <service.icon style={{ width: "22px", height: "22px", color: "#06b6d4" }} />
               </div>
-              <h3 className="font-bold text-[22px] leading-tight text-white">
+              <h3 style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "28px", lineHeight: 1.2, color: "#fff", margin: 0 }}>
                 {service.title}
               </h3>
             </div>
-            <p className="font-light text-[15px] leading-[24px] text-white/60 max-w-[340px]">
+            <p style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 300, fontSize: "16px", lineHeight: "26px", color: "rgba(255,255,255,0.6)", maxWidth: "520px", margin: 0 }}>
               {service.description}
             </p>
           </div>
-          <div className="mt-4 bg-[#0d0d0d] border border-white/10 backdrop-blur-sm rounded-[27px] pl-5 pr-1 py-1.5 flex items-center gap-2 transition-transform duration-300 origin-left group-hover:scale-105">
-            <span className="font-light text-[11px] uppercase text-white tracking-wide">
+          <div
+            style={{
+              display: "inline-flex",
+              alignSelf: "flex-start",
+              background: "#0d0d0d",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "27px",
+              paddingLeft: "20px",
+              paddingRight: "4px",
+              paddingTop: "6px",
+              paddingBottom: "6px",
+              alignItems: "center",
+              gap: "10px",
+              transition: "transform 0.3s",
+              transform: isHovered ? "scale(1.05)" : "scale(1)",
+              transformOrigin: "left",
+            }}
+          >
+            <span style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 300, fontSize: "11px", textTransform: "uppercase", color: "#fff", letterSpacing: "0.08em" }}>
               Learn More
             </span>
-            <div className="w-[28px] h-[28px] bg-white/10 rounded-full flex items-center justify-center">
-              <ArrowRight className="w-3 h-3 text-white/90 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+            <div style={{ width: "32px", height: "32px", background: "rgba(255,255,255,0.1)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <ArrowRight style={{ width: "14px", height: "14px", color: "rgba(255,255,255,0.9)", transform: isHovered ? "rotate(0deg)" : "rotate(-45deg)", transition: "transform 0.3s" }} />
             </div>
           </div>
         </div>
 
-        <div className="relative w-full lg:w-[220px] h-[180px] lg:h-full lg:absolute lg:-right-4 lg:-top-4 transition-transform duration-700 ease-out lg:group-hover:-translate-x-4 lg:group-hover:translate-y-2 mt-4 lg:mt-0">
-          <div className="absolute inset-0 rounded-[20px] overflow-hidden transform lg:rotate-3 transition-transform duration-700 lg:group-hover:rotate-0 border border-white/5">
-            <div className="absolute inset-0 bg-black/40 z-10 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 pointer-events-none" />
+        {/* Right: video */}
+        <div
+          style={{
+            position: "relative",
+            width: "340px",
+            flexShrink: 0,
+            height: "220px",
+            transition: "transform 0.7s ease",
+            transform: isHovered ? "translateX(-8px) translateY(4px)" : "translateX(0) translateY(0)",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "20px",
+              overflow: "hidden",
+              transform: isHovered ? "rotate(0deg)" : "rotate(3deg)",
+              transition: "transform 0.7s ease",
+              border: "1px solid rgba(255,255,255,0.05)",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "rgba(0,0,0,0.4)",
+                zIndex: 10,
+                mixBlendMode: "multiply",
+                opacity: isHovered ? 0 : 1,
+                transition: "opacity 0.5s",
+                pointerEvents: "none",
+              }}
+            />
             <video
               ref={videoRef}
               src={service.videoSrc}
@@ -119,73 +168,77 @@ const ServiceCard = ({ service, index }) => {
               loop
               playsInline
               preload="metadata"
-              className={cn(
-                "w-full h-full object-cover transition-all duration-700 filter",
-                isHovered ? "grayscale-0 scale-110" : "grayscale-[0.5] scale-100"
-              )}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                transition: "all 0.7s",
+                filter: isHovered ? "grayscale(0)" : "grayscale(0.5)",
+                transform: isHovered ? "scale(1.1)" : "scale(1)",
+              }}
             />
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
 const ServicesSection = () => {
   return (
-    <section className="py-20 px-5 lg:px-10" style={{ backgroundColor: "#ffffff", isolation: "isolate", position: "relative", zIndex: 1 }}>
-      <div className="max-w-5xl mx-auto flex flex-col items-center gap-16">
-        <style>{`
-          @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500&display=swap');
-          .gradient-text {
-            background: linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 3s linear infinite;
-          }
-          @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-          }
+    <section style={{ padding: "80px 20px", backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
+      <style>{`
+        @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,300&display=swap');
+        @keyframes fadeInUp {
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .gradient-text {
+          background: linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+      `}</style>
 
-        `}</style>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl"
-        >
+      <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "60px" }}>
+        {/* Header */}
+        <div style={{ textAlign: "center", maxWidth: "700px" }}>
           <h2
-            className="font-bold tracking-tight mb-4"
             style={{
               fontFamily: "'Satoshi', sans-serif",
-              fontSize: "clamp(32px, 5vw, 48px)",
+              fontWeight: 700,
+              fontSize: "clamp(32px, 5vw, 52px)",
               lineHeight: 1.1,
               color: "#111827",
+              marginBottom: "16px",
             }}
           >
             Comprehensive Digital{" "}
             <span className="gradient-text">Marketing Services</span>
           </h2>
           <p
-            className="font-medium"
             style={{
               fontFamily: "'Satoshi', sans-serif",
-              fontSize: "15px",
+              fontWeight: 500,
+              fontSize: "16px",
               lineHeight: 1.6,
               color: "#6b7280",
-              maxWidth: "384px",
+              maxWidth: "400px",
               margin: "0 auto",
             }}
           >
             Everything you need to grow your business online, all under one roof.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        {/* Cards — 1 column, full width */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "24px", width: "100%" }}>
           {services.map((service, index) => (
             <ServiceCard key={service.id} service={service} index={index} />
           ))}
