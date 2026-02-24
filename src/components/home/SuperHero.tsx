@@ -338,7 +338,7 @@ export const SuperHero = ({
       </div>
 
       {/* CLIENT CAROUSEL — parte superior visible, cortado por overflow hidden */}
-      <div className="relative z-10 w-full mb-16">
+      <div className="relative z-10 w-full mb-24">
         <ClientCarousel />
       </div>
 
