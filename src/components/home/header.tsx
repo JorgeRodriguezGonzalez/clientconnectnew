@@ -146,67 +146,63 @@ export function Header() {
             key="static-header"
             initial={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16, transition: { duration: 0.35, ease: "easeInOut" } }}
-            className="fixed top-0 left-0 right-0 z-[999] px-6 py-6 font-sans"
+            className="fixed top-0 left-0 right-0 z-[999] font-sans"
           >
-            <div
-              className="max-w-4xl mx-auto rounded-full px-6 py-3 border border-white/10"
-              style={{
-                background: "rgba(10, 11, 20, 0.9)",
-                backdropFilter: "blur(40px)",
-                WebkitBackdropFilter: "blur(40px)",
-              }}
-            >
-              <div className="flex items-center justify-between">
+            <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
 
-                <Link to="/" className="flex items-center shrink-0">
-                  <span className="text-lg font-semibold tracking-tight text-white font-sans">
-                    Client Connect<span className="text-[#34d399]">.</span>
-                  </span>
-                </Link>
+              <Link to="/" className="flex items-center gap-3 no-underline">
+                <span className="text-lg font-medium tracking-tight text-white">
+                  Client Connect<span className="text-[#34d399]">.</span>
+                </span>
+              </Link>
 
-                <ul className="hidden lg:flex items-center gap-1 text-sm font-medium text-white/60 list-none m-0 p-0">
-                  {navLinks.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        to={link.href}
-                        className={cn(
-                          "no-underline transition-colors duration-300 px-4 py-2 rounded-full hover:bg-white/5 font-sans block",
-                          location.pathname === link.href ? "text-white" : "text-white/60 hover:text-white"
-                        )}
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+              {/* Mobile toggle */}
+              <button
+                onClick={toggleMenu}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 lg:hidden focus:outline-none"
+                aria-label="Open menu"
+              >
+                <Menu size={18} className="text-white" />
+              </button>
 
-                <div className="flex items-center gap-2">
+              {/* Desktop nav */}
+              <div className="hidden lg:flex items-center gap-8">
+                {navLinks.map((link) => (
                   <Link
-                    to="/contact"
-                    className="hidden lg:flex items-center px-5 py-2 rounded-full font-sans font-semibold text-[13px] tracking-wide transition-all duration-300 no-underline border border-white/10 text-white/80 hover:text-white hover:bg-white/5"
-                    style={{ background: "rgba(255,255,255,0.02)" }}
+                    key={link.name}
+                    to={link.href}
+                    className={cn(
+                      "text-sm font-medium no-underline transition-colors duration-200",
+                      location.pathname === link.href ? "text-white" : "text-slate-300 hover:text-white"
+                    )}
                   >
-                    Start Scaling
+                    {link.name}
                   </Link>
-
-                  <div className="block lg:hidden">
-                    <button onClick={toggleMenu} className="flex items-center justify-center p-2 rounded-full border border-white/5 hover:bg-white/5 transition-all duration-300 focus:outline-none" aria-label="Toggle menu">
-                      <div className="flex flex-col space-y-[4px]">
-                        <span className="block h-[1.5px] w-4 bg-white/60" />
-                        <span className="block h-[1.5px] w-4 bg-white/60" />
-                        <span className="block h-[1.5px] w-4 bg-white/60" />
-                      </div>
-                    </button>
-                  </div>
-                </div>
-
+                ))}
+                <div className="h-6 w-px bg-white/10" />
+                <Link
+                  to="/contact"
+                  className="group relative inline-flex cursor-pointer items-center justify-center rounded-full px-4 py-2 text-sm font-normal text-white/70 hover:text-white transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] hover:scale-[1.05] no-underline"
+                  style={{
+                    boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.1)",
+                    background: "radial-gradient(ellipse at bottom, rgba(71,81,92,1) 0%, rgba(0,0,0,1) 100%)",
+                  }}
+                >
+                  <span className="relative z-10">Start Scaling</span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 opacity-20 transition-all duration-[1000ms] group-hover:opacity-80"
+                    style={{ background: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%)" }}
+                  />
+                </Link>
               </div>
-            </div>
+
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── HEADER SCROLL / HOVER — PILL ASTROLUX STYLE ── */}
+      {/* ── HEADER SCROLL / HOVER ── */}
       <motion.div
         key="scroll-header"
         role="banner"
@@ -214,71 +210,60 @@ export function Header() {
         animate={showScrollHeader ? "visible" : "hidden"}
         variants={scrollHeaderVariants}
         className={cn(
-          "fixed top-0 left-0 right-0 z-[1000] px-6 py-6 font-sans",
+          "fixed top-0 left-0 right-0 z-[1000] font-sans",
           showScrollHeader ? "pointer-events-auto" : "pointer-events-none",
         )}
       >
-        <div
-          className="max-w-4xl mx-auto rounded-full px-6 py-3 border border-white/10"
-          style={{
-            background: "rgba(10, 11, 20, 0.9)",
-            backdropFilter: "blur(40px)",
-            WebkitBackdropFilter: "blur(40px)",
-          }}
-        >
-          <div className="flex items-center justify-between">
+        <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
 
-            {/* Logo */}
-            <Link to="/" className="flex items-center shrink-0">
-              <span className="text-lg font-semibold tracking-tight text-white font-sans">
-                Client Connect<span className="text-[#34d399]">.</span>
-              </span>
-            </Link>
+          <Link to="/" className="flex items-center gap-3 no-underline">
+            <span className="text-lg font-medium tracking-tight text-white">
+              Client Connect<span className="text-[#34d399]">.</span>
+            </span>
+          </Link>
 
-            {/* Desktop Nav */}
-            <ul className="hidden lg:flex items-center gap-1 text-sm font-medium text-white/60 list-none m-0 p-0">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className={cn(
-                      "no-underline transition-colors duration-300 px-4 py-2 rounded-full hover:bg-white/5 font-sans block",
-                      location.pathname === link.href ? "text-white" : "text-white/60 hover:text-white"
-                    )}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Mobile toggle */}
+          <button
+            onClick={toggleMenu}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 lg:hidden focus:outline-none"
+            aria-label="Open menu"
+          >
+            {isMobileMenuOpen ? <X size={18} className="text-white" /> : <Menu size={18} className="text-white" />}
+          </button>
 
-            {/* CTA + Mobile toggle */}
-            <div className="flex items-center gap-2">
+          {/* Desktop nav */}
+          <div className="hidden lg:flex items-center gap-8">
+            {navLinks.map((link) => (
               <Link
-                to="/contact"
-                className="hidden lg:flex items-center px-5 py-2 rounded-full font-sans font-semibold text-[13px] tracking-wide transition-all duration-300 no-underline border border-white/10 text-white/80 hover:text-white hover:bg-white/5"
-                style={{ background: "rgba(255,255,255,0.02)" }}
+                key={link.name}
+                to={link.href}
+                className={cn(
+                  "text-sm font-medium no-underline transition-colors duration-200",
+                  location.pathname === link.href ? "text-white" : "text-slate-300 hover:text-white"
+                )}
               >
-                Start Scaling
+                {link.name}
               </Link>
-
-              <div className="block lg:hidden relative z-[1002]">
-                <button onClick={toggleMenu} className="flex items-center justify-center p-2 rounded-full border border-white/5 hover:bg-white/5 transition-all duration-300 focus:outline-none" aria-label="Toggle menu">
-                  {isMobileMenuOpen ? (
-                    <X size={16} className="text-white/60" />
-                  ) : (
-                    <div className="flex flex-col space-y-[4px]">
-                      <span className="block h-[1.5px] w-4 bg-white/60" />
-                      <span className="block h-[1.5px] w-4 bg-white/60" />
-                      <span className="block h-[1.5px] w-4 bg-white/60" />
-                    </div>
-                  )}
-                </button>
-              </div>
-            </div>
-
+            ))}
+            <div className="h-6 w-px bg-white/10" />
+            <Link
+              to="/contact"
+              className="group relative inline-flex cursor-pointer items-center justify-center rounded-full px-4 py-2 text-sm font-normal text-white/70 hover:text-white transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] hover:scale-[1.05] no-underline"
+              style={{
+                boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.1)",
+                background: "radial-gradient(ellipse at bottom, rgba(71,81,92,1) 0%, rgba(0,0,0,1) 100%)",
+              }}
+            >
+              <span className="relative z-10">Start Scaling</span>
+              <span
+                aria-hidden="true"
+                className="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 opacity-20 transition-all duration-[1000ms] group-hover:opacity-80"
+                style={{ background: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%)" }}
+              />
+            </Link>
           </div>
-        </div>
+
+        </nav>
       </motion.div>
 
       {/* ── MOBILE MENU OVERLAY ── */}
