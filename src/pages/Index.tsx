@@ -13,10 +13,9 @@ import Pricing from "@/components/home/Pricing";
 import BoxCards from "@/components/home/BoxCards";
 import FounderSection from "@/components/home/FounderSection";
 
-// IMPORTACIÓN DE LOS NUEVOS COMPONENTES
 import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import OurSteps from "@/components/home/OurSteps";
-import ScrollableWorkflow from "@/components/home/ScrollableWorkflow"; 
+import ScrollableWorkflow from "@/components/home/ScrollableWorkflow";
 
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
@@ -38,15 +37,8 @@ const Index = () => {
       <main className="flex-1">
         <Header />
         <SuperHero />
-        
-        {/* CAMBIO APLICADO AQUÍ: 
-            1. relative: para que el z-index funcione.
-            2. z-[50]: para asegurar que esté encima del Hero.
-            3. -mt-[100px]: margen negativo para subirlo 100px. 
-        */}
-        <div className="relative z-[50] -mt-[180px]">
-          <FounderSection />
-        </div>
+
+        <FounderSection />
 
         <InteractivePath />
 
@@ -63,7 +55,6 @@ const Index = () => {
         
         <OurStepsVersion2 />
 
-        
         <ComparisonSection />
         <Pricing />
         <FAQSection />
