@@ -142,52 +142,71 @@ export function Header() {
       {/* ── HEADER ESTÁTICO ── */}
       <AnimatePresence>
         {isStaticVisible && (
-          <motion.header
+          <motion.div
             key="static-header"
             initial={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16, transition: { duration: 0.35, ease: "easeInOut" } }}
-            className="fixed top-0 left-0 right-0 z-[999] flex h-[80px] w-full items-center px-6 md:px-10 font-sans bg-transparent"
+            className="fixed top-0 left-0 right-0 z-[999] px-6 py-6 font-sans"
           >
-            <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between">
+            <div
+              className="max-w-4xl mx-auto rounded-full px-6 py-3 border border-white/10"
+              style={{
+                background: "rgba(10, 11, 20, 0.9)",
+                backdropFilter: "blur(40px)",
+                WebkitBackdropFilter: "blur(40px)",
+              }}
+            >
+              <div className="flex items-center justify-between">
 
-              <Link to="/" className="flex items-center gap-2">
-                <span className="font-sans text-lg md:text-xl font-bold tracking-tight text-white">
-                  Client Connect Australia<span className="text-[#34d399]">.</span>
-                </span>
-              </Link>
-
-              <div className="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2">
-                <div className="flex items-center px-6 py-0">
-                  {navLinks.map((link) => (
-                    <StaticNavLink key={link.name} name={link.name} href={link.href} isActive={location.pathname === link.href} />
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <Link
-                  to="/contact"
-                  className="hidden lg:flex px-6 py-2.5 font-sans font-bold text-[13px] uppercase tracking-wide transition-all duration-300 border border-white/30 text-white hover:bg-white hover:text-black"
-                >
-                  Start Scaling
+                <Link to="/" className="flex items-center shrink-0">
+                  <span className="text-lg font-semibold tracking-tight text-white font-sans">
+                    Client Connect<span className="text-[#34d399]">.</span>
+                  </span>
                 </Link>
 
-                <div className="block lg:hidden">
-                  <button onClick={toggleMenu} className="flex items-center justify-center p-2 focus:outline-none" aria-label="Toggle menu">
-                    <div className="flex flex-col space-y-1.5 p-2">
-                      <span className="block h-[2px] w-6 bg-white" />
-                      <span className="block h-[2px] w-6 bg-white" />
-                    </div>
-                  </button>
-                </div>
-              </div>
+                <ul className="hidden lg:flex items-center gap-1 text-sm font-medium text-white/60 list-none m-0 p-0">
+                  {navLinks.map((link) => (
+                    <li key={link.name}>
+                      <Link
+                        to={link.href}
+                        className={cn(
+                          "no-underline transition-colors duration-300 px-4 py-2 rounded-full hover:bg-white/5 font-sans block",
+                          location.pathname === link.href ? "text-white" : "text-white/60 hover:text-white"
+                        )}
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
 
+                <div className="flex items-center gap-2">
+                  <Link
+                    to="/contact"
+                    className="hidden lg:flex items-center px-5 py-2 rounded-full font-sans font-semibold text-[13px] tracking-wide transition-all duration-300 no-underline border border-white/10 text-white/80 hover:text-white hover:bg-white/5"
+                    style={{ background: "rgba(255,255,255,0.02)" }}
+                  >
+                    Start Scaling
+                  </Link>
+
+                  <div className="block lg:hidden">
+                    <button onClick={toggleMenu} className="flex items-center justify-center p-2 rounded-full border border-white/5 hover:bg-white/5 transition-all duration-300 focus:outline-none" aria-label="Toggle menu">
+                      <div className="flex flex-col space-y-[4px]">
+                        <span className="block h-[1.5px] w-4 bg-white/60" />
+                        <span className="block h-[1.5px] w-4 bg-white/60" />
+                        <span className="block h-[1.5px] w-4 bg-white/60" />
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
             </div>
-          </motion.header>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── HEADER SCROLL / HOVER — PILL ── */}
+      {/* ── HEADER SCROLL / HOVER — PILL ASTROLUX STYLE ── */}
       <motion.div
         key="scroll-header"
         role="banner"
@@ -195,71 +214,71 @@ export function Header() {
         animate={showScrollHeader ? "visible" : "hidden"}
         variants={scrollHeaderVariants}
         className={cn(
-          "fixed top-4 left-0 right-0 z-[1000] flex justify-center px-6 font-sans",
+          "fixed top-0 left-0 right-0 z-[1000] px-6 py-6 font-sans",
           showScrollHeader ? "pointer-events-auto" : "pointer-events-none",
         )}
       >
-        <nav
-          className="flex items-center justify-between w-full max-w-[860px] px-5 py-3 rounded-full"
+        <div
+          className="max-w-4xl mx-auto rounded-full px-6 py-3 border border-white/10"
           style={{
-            background: "rgba(28, 28, 30, 0.85)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            boxShadow: "0 4px 32px rgba(0,0,0,0.5)",
+            background: "rgba(10, 11, 20, 0.9)",
+            backdropFilter: "blur(40px)",
+            WebkitBackdropFilter: "blur(40px)",
           }}
         >
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 relative z-[1002] shrink-0">
-            <span className="font-sans text-[17px] font-bold tracking-tight text-white whitespace-nowrap">
-              Client Connect<span className="text-[#34d399]">.</span>
-            </span>
-          </Link>
+          <div className="flex items-center justify-between">
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className="px-4 py-1.5 rounded-full text-[13.5px] font-medium transition-all duration-200 no-underline"
-                style={{
-                  color: location.pathname === link.href ? "#fff" : "rgba(255,255,255,0.5)",
-                  background: location.pathname === link.href ? "rgba(255,255,255,0.08)" : "transparent",
-                }}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-
-          {/* CTA + Mobile toggle */}
-          <div className="flex items-center gap-3">
-            <Link
-              to="/contact"
-              className="hidden lg:flex items-center px-5 py-2 rounded-full font-sans font-bold text-[13px] uppercase tracking-wide transition-all duration-200 no-underline"
-              style={{ background: "#10b981", color: "#000" }}
-              onMouseEnter={e => (e.currentTarget.style.background = "#34d399")}
-              onMouseLeave={e => (e.currentTarget.style.background = "#10b981")}
-            >
-              Start Scaling
+            {/* Logo */}
+            <Link to="/" className="flex items-center shrink-0">
+              <span className="text-lg font-semibold tracking-tight text-white font-sans">
+                Client Connect<span className="text-[#34d399]">.</span>
+              </span>
             </Link>
 
-            <div className="block lg:hidden relative z-[1002]">
-              <button onClick={toggleMenu} className="flex items-center justify-center p-2 focus:outline-none" aria-label="Toggle menu">
-                {isMobileMenuOpen ? (
-                  <X size={22} className="text-white" />
-                ) : (
-                  <div className="flex flex-col space-y-[5px]">
-                    <span className="block h-[2px] w-5 bg-white" />
-                    <span className="block h-[2px] w-5 bg-white" />
-                    <span className="block h-[2px] w-5 bg-white" />
-                  </div>
-                )}
-              </button>
+            {/* Desktop Nav */}
+            <ul className="hidden lg:flex items-center gap-1 text-sm font-medium text-white/60 list-none m-0 p-0">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.href}
+                    className={cn(
+                      "no-underline transition-colors duration-300 px-4 py-2 rounded-full hover:bg-white/5 font-sans block",
+                      location.pathname === link.href ? "text-white" : "text-white/60 hover:text-white"
+                    )}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA + Mobile toggle */}
+            <div className="flex items-center gap-2">
+              <Link
+                to="/contact"
+                className="hidden lg:flex items-center px-5 py-2 rounded-full font-sans font-semibold text-[13px] tracking-wide transition-all duration-300 no-underline border border-white/10 text-white/80 hover:text-white hover:bg-white/5"
+                style={{ background: "rgba(255,255,255,0.02)" }}
+              >
+                Start Scaling
+              </Link>
+
+              <div className="block lg:hidden relative z-[1002]">
+                <button onClick={toggleMenu} className="flex items-center justify-center p-2 rounded-full border border-white/5 hover:bg-white/5 transition-all duration-300 focus:outline-none" aria-label="Toggle menu">
+                  {isMobileMenuOpen ? (
+                    <X size={16} className="text-white/60" />
+                  ) : (
+                    <div className="flex flex-col space-y-[4px]">
+                      <span className="block h-[1.5px] w-4 bg-white/60" />
+                      <span className="block h-[1.5px] w-4 bg-white/60" />
+                      <span className="block h-[1.5px] w-4 bg-white/60" />
+                    </div>
+                  )}
+                </button>
+              </div>
             </div>
+
           </div>
-        </nav>
+        </div>
       </motion.div>
 
       {/* ── MOBILE MENU OVERLAY ── */}
