@@ -660,7 +660,7 @@ export const FounderSection = () => {
     <section 
       ref={containerRef} 
       className={cn(
-        "relative w-full py-24 lg:py-32 transition-colors duration-0 z-10 font-sans", 
+        "relative w-full pb-24 lg:pb-32 transition-colors duration-0 z-10 font-sans", 
         isLightMode ? "bg-[#FAFAFA]" : "bg-[#050505]"
       )}
     >
