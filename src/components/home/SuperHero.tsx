@@ -96,21 +96,17 @@ const ClientCarousel = () => {
   const prev = () => setCurrent((c) => (c - 1 + total) % total);
   const next = () => setCurrent((c) => (c + 1) % total);
 
-  // Duplicate clients for infinite loop feel
   const looped = [...clients, ...clients, ...clients];
-  const offset = total; // start in the middle set
+  const offset = total;
 
   return (
     <div className="w-full pb-24 relative mb-16">
-      {/* Fade left */}
       <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none"
         style={{ background: 'linear-gradient(to right, #050505 0%, transparent 100%)' }} />
-      {/* Fade right */}
       <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
         style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }} />
 
       <div className="relative flex items-center">
-        {/* Left arrow */}
         <button
           onClick={prev}
           className="absolute left-6 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all"
@@ -118,7 +114,6 @@ const ClientCarousel = () => {
           <ChevronLeft size={20} className="text-white" />
         </button>
 
-        {/* Cards viewport */}
         <div className="overflow-hidden w-full">
           <motion.div
             className="flex"
@@ -132,7 +127,6 @@ const ClientCarousel = () => {
           </motion.div>
         </div>
 
-        {/* Right arrow */}
         <button
           onClick={next}
           className="absolute right-6 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all"
@@ -143,8 +137,6 @@ const ClientCarousel = () => {
     </div>
   );
 };
-
-// --- SPARKLES removed ---
 
 interface SuperHeroProps {
   primaryButtonText?: string;
@@ -159,11 +151,9 @@ export const SuperHero = ({
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
 
-
-
   return (
     <div
-      className="w-full relative flex flex-col items-center justify-start pt-8 px-0 overflow-hidden pb-0 font-inter"
+      className="w-full relative flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-inter"
       style={{ background: '#050505' }}
     >
       <style>{fontStyles}</style>
@@ -180,14 +170,16 @@ export const SuperHero = ({
         />
       </div>
 
-      <div className="relative z-10 w-full flex flex-col items-center justify-center" style={{ minHeight: '100vh' }}>
+      {/* HERO — min-h-screen + py-16 + justify-center */}
+      <div className="relative z-10 w-full min-h-screen flex flex-col items-center justify-center py-16">
 
-
-
-        <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-16">
+        <div
+          className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-16"
+          style={{ marginTop: '-10px' }}
+        >
 
           {/* LAMP */}
-          <div className="w-full relative flex items-center justify-center -mb-[32px] overflow-visible" style={{ transform: 'scale(0.85)' }}>
+          <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible" style={{ transform: 'scale(0.85)' }}>
             <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
               <div className="absolute inset-auto z-30 h-56 w-full flex items-center justify-center pointer-events-none">
                 <motion.div
@@ -303,7 +295,7 @@ export const SuperHero = ({
 
       </div>
 
-      {/* CLIENT CAROUSEL — fuera del min-height container */}
+      {/* CLIENT CAROUSEL — fuera del min-h-screen container */}
       <div className="relative z-10 w-full pb-24">
         <ClientCarousel />
       </div>
