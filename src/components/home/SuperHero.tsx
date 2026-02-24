@@ -234,10 +234,18 @@ export const SuperHero = ({
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 1.0, ease: 'easeOut' }}
-              className="font-inter font-bold text-[28px] md:text-[38px] lg:text-[52px] leading-[1.1] tracking-[-1.5px] uppercase text-white mb-6"
+              className="font-inter font-black text-[56px] md:text-[72px] lg:text-[88px] leading-[0.95] tracking-[-3px] text-white mb-6 normal-case"
             >
-              We Bring Light <br className="md:hidden" /> to Your <br className="hidden md:block" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
+              We Bring Light{' '}
+              <br />
+              to Your{' '}
+              <br />
+              <span style={{
+                background: 'linear-gradient(180deg, #ffffff 0%, #555555 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>
                 Business Growth
               </span>
             </motion.h1>
