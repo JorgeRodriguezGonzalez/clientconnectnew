@@ -144,6 +144,21 @@ interface SuperHeroProps {
   secondaryButtonText?: string;
 }
 
+const titleWords = [
+  "Light", "Leads", "Clients", "Sales",
+  "Light", "Leads", "Clients", "Sales",
+  "Light", "Leads", "Clients", "Sales",
+  "Light", "Leads", "Clients", "Sales",
+  "Light", "Leads", "Clients", "Sales",
+];
+
+const wordWidths: Record<string, number> = {
+  "Light": 110,
+  "Leads": 135,
+  "Clients": 150,
+  "Sales": 120,
+};
+
 export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
   secondaryButtonText = 'View Case Studies',
@@ -151,6 +166,14 @@ export const SuperHero = ({
   const lampColor = '#06b6d4';
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
+  const [titleNumber, setTitleNumber] = useState(0);
+
+  useEffect(() => {
+    const interval = setTimeout(() => {
+      setTitleNumber((n) => (n + 1) % titleWords.length);
+    }, 3000);
+    return () => clearTimeout(interval);
+  }, [titleNumber]);
 
   return (
     <div
@@ -236,7 +259,39 @@ export const SuperHero = ({
               transition={{ delay: 0.7, duration: 1.0, ease: 'easeOut' }}
               className="font-inter font-black text-[42px] md:text-[56px] lg:text-[68px] leading-[0.95] tracking-[-3px] text-white mb-6 normal-case"
             >
-              We Bring Light to Your{' '}
+              We Bring{' '}
+              <motion.span
+                className="inline-flex overflow-hidden relative"
+                animate={{ width: wordWidths[titleWords[titleNumber]] }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                style={{ display: 'inline-flex', verticalAlign: 'bottom' }}
+              >
+                {titleWords.map((word, i) => (
+                  <motion.span
+                    key={`${word}-${i}`}
+                    className="absolute left-0"
+                    style={{
+                      background: 'linear-gradient(180deg, #ffffff 0%, #555555 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      whiteSpace: 'nowrap',
+                    }}
+                    initial={{ y: -100, opacity: 0 }}
+                    animate={
+                      i === titleNumber
+                        ? { y: 0, opacity: 1 }
+                        : i < titleNumber
+                        ? { y: 20, opacity: 0 }
+                        : { y: -100, opacity: 0 }
+                    }
+                    transition={{ duration: 0.4, ease: 'easeInOut' }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </motion.span>
+              {' '}to Your
               <br />
               <span style={{
                 background: 'linear-gradient(180deg, #ffffff 0%, #555555 100%)',
