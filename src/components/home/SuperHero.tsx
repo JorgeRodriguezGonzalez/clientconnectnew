@@ -286,15 +286,17 @@ export const SuperHero = ({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.0, duration: 0.8, ease: 'easeOut' }}
-              className="flex flex-wrap items-center justify-center gap-3 mt-6 mb-6"
+              className="flex items-center justify-center gap-0 mt-6 mb-6"
             >
-              {['Google Ads', 'Paid Social', 'SEO', 'Web Design', 'Content Creation', 'CRO'].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-4 py-2 rounded-full border border-white/15 text-white/70 text-[13px] font-inter font-medium bg-white/5"
-                >
-                  {tag}
-                </span>
+              {['Google Ads', 'Paid Social', 'SEO', 'Web Design', 'Content Creation', 'CRO'].map((tag, i, arr) => (
+                <React.Fragment key={tag}>
+                  <span className="text-white/50 text-[13px] font-inter font-medium px-3">
+                    {tag}
+                  </span>
+                  {i < arr.length - 1 && (
+                    <span className="text-white/20 text-[13px]">·</span>
+                  )}
+                </React.Fragment>
               ))}
             </motion.div>
 
