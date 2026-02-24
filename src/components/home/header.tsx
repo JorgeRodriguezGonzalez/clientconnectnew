@@ -47,20 +47,30 @@ export function Header() {
       >
         <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 no-underline">
-            <div
-              className="w-14 h-14 shrink-0"
+            <div className="w-14 h-14 shrink-0 relative flex items-center justify-center rounded-xl"
               style={{
-                background: "#06b6d4",
-                WebkitMaskImage: "url('/images/icon.png')",
-                WebkitMaskSize: "contain",
-                WebkitMaskRepeat: "no-repeat",
-                WebkitMaskPosition: "center",
-                maskImage: "url('/images/icon.png')",
-                maskSize: "contain",
-                maskRepeat: "no-repeat",
-                maskPosition: "center",
+                background: "rgba(255,255,255,0.05)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                boxShadow: "0 4px 16px rgba(6,182,212,0.15), inset 0 1px 0 rgba(255,255,255,0.08)",
               }}
-            />
+            >
+              <div
+                className="w-8 h-8"
+                style={{
+                  background: "linear-gradient(135deg, #06b6d4 0%, #67bcb7 100%)",
+                  WebkitMaskImage: "url('/images/icon.png')",
+                  WebkitMaskSize: "contain",
+                  WebkitMaskRepeat: "no-repeat",
+                  WebkitMaskPosition: "center",
+                  maskImage: "url('/images/icon.png')",
+                  maskSize: "contain",
+                  maskRepeat: "no-repeat",
+                  maskPosition: "center",
+                }}
+              />
+            </div>
             <span className="text-xl font-medium tracking-tight text-white">
               Client Connect <span className="text-[#67bcb7]">Australia</span><span className="text-[#34d399]">.</span>
             </span>
