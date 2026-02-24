@@ -24,7 +24,7 @@ export function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrollHeaderVisible, setIsScrollHeaderVisible] = useState(false);
-  const [isHoveringTop, setIsHoveringTop] = useState(false);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -45,13 +45,7 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setIsHoveringTop(e.clientY < 80);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
@@ -61,7 +55,7 @@ export function Header() {
   const toggleMenu = () => setIsMobileMenuOpen((prev) => !prev);
 
   const isStaticVisible = scrollY < SCROLL_THRESHOLD;
-  const showScrollHeader = isScrollHeaderVisible || isHoveringTop || isMobileMenuOpen;
+  const showScrollHeader = isScrollHeaderVisible || isMobileMenuOpen;
 
   const scrollHeaderVariants: Variants = {
     hidden: { y: -20, opacity: 0, transition: { duration: 0.4, ease: "easeInOut" } },
