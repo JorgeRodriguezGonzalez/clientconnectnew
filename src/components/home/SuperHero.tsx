@@ -153,8 +153,8 @@ export const SuperHero = ({
 
   return (
     <div
-      className="w-full relative flex flex-col items-center justify-start px-0 font-inter"
-      style={{ background: '#050505', height: '100vh', overflow: 'hidden' }}
+      className="w-full relative flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-inter"
+      style={{ background: '#050505' }}
     >
       <style>{fontStyles}</style>
 
@@ -295,10 +295,10 @@ export const SuperHero = ({
 
       </div>
 
-      {/* CLIENT CAROUSEL — asomando desde el bottom del viewport */}
+      {/* CLIENT CAROUSEL — parte superior visible, cortado por overflow hidden */}
       <div
-        className="absolute bottom-0 left-0 w-full z-10 overflow-hidden"
-        style={{ height: '200px' }}
+        className="relative z-10 w-full overflow-hidden"
+        style={{ height: '170px' }}
       >
         <ClientCarousel />
       </div>
