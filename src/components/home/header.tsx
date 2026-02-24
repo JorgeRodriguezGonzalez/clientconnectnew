@@ -187,59 +187,80 @@ export function Header() {
         )}
       </AnimatePresence>
 
-      {/* ── HEADER SCROLL / HOVER ── */}
-      <motion.header
+      {/* ── HEADER SCROLL / HOVER — PILL ── */}
+      <motion.div
         key="scroll-header"
         role="banner"
         initial="hidden"
         animate={showScrollHeader ? "visible" : "hidden"}
         variants={scrollHeaderVariants}
         className={cn(
-          "fixed top-0 left-0 right-0 z-[1000] flex h-[80px] w-full items-center px-6 md:px-10 font-sans",
+          "fixed top-4 left-0 right-0 z-[1000] flex justify-center px-6 font-sans",
           showScrollHeader ? "pointer-events-auto" : "pointer-events-none",
-          "bg-[#050505]/70 backdrop-blur-lg border-b border-white/5 shadow-sm"
         )}
       >
-        <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between">
-
-          <Link to="/" className="flex items-center relative z-[1002] gap-2">
-            <span className="font-sans text-lg md:text-xl font-bold tracking-tight text-white">
-              Client Connect Australia<span className="text-[#34d399]">.</span>
+        <nav
+          className="flex items-center justify-between w-full max-w-[860px] px-5 py-3 rounded-full"
+          style={{
+            background: "rgba(28, 28, 30, 0.85)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow: "0 4px 32px rgba(0,0,0,0.5)",
+          }}
+        >
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2 relative z-[1002] shrink-0">
+            <span className="font-sans text-[17px] font-bold tracking-tight text-white whitespace-nowrap">
+              Client Connect<span className="text-[#34d399]">.</span>
             </span>
           </Link>
 
-          <div className="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2">
-            <div className="flex items-center px-6 py-0 border-x border-white/5">
-              {navLinks.map((link) => (
-                <ScrollNavLink key={link.name} name={link.name} href={link.href} isActive={location.pathname === link.href} />
-              ))}
-            </div>
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className="px-4 py-1.5 rounded-full text-[13.5px] font-medium transition-all duration-200 no-underline"
+                style={{
+                  color: location.pathname === link.href ? "#fff" : "rgba(255,255,255,0.5)",
+                  background: location.pathname === link.href ? "rgba(255,255,255,0.08)" : "transparent",
+                }}
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* CTA + Mobile toggle */}
+          <div className="flex items-center gap-3">
             <Link
               to="/contact"
-              className="hidden lg:flex px-6 py-2.5 font-sans font-bold text-[13px] uppercase tracking-wide transition-all duration-300 bg-white text-black hover:bg-zinc-200 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]"
+              className="hidden lg:flex items-center px-5 py-2 rounded-full font-sans font-bold text-[13px] uppercase tracking-wide transition-all duration-200 no-underline"
+              style={{ background: "#10b981", color: "#000" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "#34d399")}
+              onMouseLeave={e => (e.currentTarget.style.background = "#10b981")}
             >
               Start Scaling
             </Link>
 
             <div className="block lg:hidden relative z-[1002]">
-              <button onClick={toggleMenu} className="flex items-center justify-center p-2 focus:outline-none pointer-events-auto" aria-label="Toggle menu">
+              <button onClick={toggleMenu} className="flex items-center justify-center p-2 focus:outline-none" aria-label="Toggle menu">
                 {isMobileMenuOpen ? (
-                  <X size={24} className="text-white" />
+                  <X size={22} className="text-white" />
                 ) : (
-                  <div className="flex flex-col space-y-1.5 p-2">
-                    <span className="block h-[2px] w-6 bg-white" />
-                    <span className="block h-[2px] w-6 bg-white" />
+                  <div className="flex flex-col space-y-[5px]">
+                    <span className="block h-[2px] w-5 bg-white" />
+                    <span className="block h-[2px] w-5 bg-white" />
+                    <span className="block h-[2px] w-5 bg-white" />
                   </div>
                 )}
               </button>
             </div>
           </div>
-
-        </div>
-      </motion.header>
+        </nav>
+      </motion.div>
 
       {/* ── MOBILE MENU OVERLAY ── */}
       <AnimatePresence>
