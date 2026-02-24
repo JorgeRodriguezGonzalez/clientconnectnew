@@ -281,6 +281,23 @@ export const SuperHero = ({
               </p>
             </motion.div>
 
+            {/* TAGS */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.8, ease: 'easeOut' }}
+              className="flex flex-wrap items-center justify-center gap-3 mt-6 mb-6"
+            >
+              {['Google Ads', 'Paid Social', 'SEO', 'Web Design', 'Content Creation', 'CRO'].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-4 py-2 rounded-full border border-white/15 text-white/70 text-[13px] font-inter font-medium bg-white/5"
+                >
+                  {tag}
+                </span>
+              ))}
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
