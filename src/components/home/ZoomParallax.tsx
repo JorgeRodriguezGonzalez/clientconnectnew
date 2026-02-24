@@ -150,7 +150,7 @@ export default function ZoomParallax() {
                                 color: '#9ca3af',
                             }}
                         >
-                            Portfolio
+                            Our Work
                         </span>
                     </motion.div>
 
@@ -162,7 +162,7 @@ export default function ZoomParallax() {
                             lineHeight: 1.1,
                         }}
                     >
-                        <span style={{ color: '#ffffff' }}>Videos & campaigns that</span>{' '}
+                        <span style={{ color: '#ffffff' }}>Websites built to</span>{' '}
                         <br className="hidden md:block" />
 
                         <motion.span
@@ -180,7 +180,7 @@ export default function ZoomParallax() {
                                 paddingBottom: "10px"
                             }}
                         >
-                            drive real growth.
+                            convert & grow.
                         </motion.span>
                     </h2>
 
@@ -193,10 +193,10 @@ export default function ZoomParallax() {
                             color: '#6b7280',
                         }}
                     >
-                        A selection of work produced for brands across{' '}
-                        <strong style={{ color: '#ffffff', fontWeight: 500 }}>Spain, Germany, Australia, and the US</strong>.
-                        {' '}From strategic ad campaigns to{' '}
-                        <strong style={{ color: '#ffffff', fontWeight: 500 }}>high-performance creatives</strong>.
+                        A selection of websites we've built for{' '}
+                        <strong style={{ color: '#ffffff', fontWeight: 500 }}>Australian businesses</strong>.
+                        {' '}From local service brands to{' '}
+                        <strong style={{ color: '#ffffff', fontWeight: 500 }}>high-converting landing pages</strong>.
                     </p>
                 </div>
 
