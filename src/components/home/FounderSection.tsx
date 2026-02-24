@@ -73,7 +73,7 @@ export function LogoCloud({ isLightMode }: { isLightMode: boolean }) {
   const bgAlt = isLightMode ? "bg-white" : "bg-white/5";
 
   return (
-    <div className={cn("relative grid grid-cols-2 border-x md:grid-cols-4 transition-colors duration-500 mb-20", borderColor)}>
+    <div className={cn("relative grid grid-cols-2 border-x md:grid-cols-4 transition-colors duration-500", borderColor)}>
       <div className={cn("-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t", borderColor)} />
       <LogoCard isLightMode={isLightMode} className={cn("relative border-r border-b", bgAlt, borderColor)} logo={{ src: "https://svgl.app/library/nvidia-wordmark-light.svg", alt: "Nvidia Logo" }}>
         <PlusIcon className={cn("-right-[12.5px] -bottom-[12.5px] absolute z-10 size-6 transition-colors duration-500", iconColor)} strokeWidth={1} />
