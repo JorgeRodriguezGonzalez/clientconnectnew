@@ -296,10 +296,7 @@ export const SuperHero = ({
       </div>
 
       {/* CLIENT CAROUSEL — parte superior visible, cortado por overflow hidden */}
-      <div
-        className="relative z-10 w-full overflow-hidden"
-        style={{ height: '170px' }}
-      >
+      <div className="relative z-10 w-full">
         <ClientCarousel />
       </div>
 
