@@ -12,11 +12,9 @@ import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 import BoxCards from "@/components/home/BoxCards";
 import FounderSection from "@/components/home/FounderSection";
-
 import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import OurSteps from "@/components/home/OurSteps";
 import ScrollableWorkflow from "@/components/home/ScrollableWorkflow";
-
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
 import CloudHero from "@/components/home/section-layers";
@@ -30,6 +28,7 @@ import CaseStudiesSection from "@/components/home/case-studies";
 import HowWeDoIt from "@/components/home/HowWeDoIt";
 import InteractivePath from "@/components/home/InteractivePath";
 import { WhatWeDoSection2 } from "@/components/home/WhatWeDoSection2";
+import ZoomParallax from "@/components/home/ZoomParallax";
 
 const Index = () => {
   return (
@@ -43,8 +42,9 @@ const Index = () => {
         <InteractivePath />
 
         <ServicesSection />
+        <ZoomParallax />
         <Services />
-        
+
         <WhatWeDoSection2 />
 
         <CaseStudiesSection />
@@ -52,7 +52,7 @@ const Index = () => {
         <HowWeDoIt />
         <CloudHero />
         <BoxCards />
-        
+
         <OurStepsVersion2 />
 
         <ComparisonSection />
@@ -61,7 +61,7 @@ const Index = () => {
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
-        
+
         <TestimonialsSection />
         <CTASection />
         <FloatingBanner />
