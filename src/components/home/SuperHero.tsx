@@ -171,7 +171,7 @@ export const SuperHero = ({
       </div>
 
       {/* HERO — min-h-screen + py-16 + justify-center */}
-      <div         className="relative z-10 w-full flex-1 flex flex-col items-center justify-center py-16">
+      <div         className="relative z-10 w-full flex-1 flex flex-col items-center justify-center py-10">
 
         <div
           className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-4"
