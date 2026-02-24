@@ -48,7 +48,7 @@ export function Header() {
         <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 no-underline">
             <div
-              className="w-7 h-7 shrink-0"
+              className="w-14 h-14 shrink-0"
               style={{
                 background: "linear-gradient(135deg, #de8363 0%, #67bcb7 100%)",
                 WebkitMaskImage: "url('/images/icon.png')",
