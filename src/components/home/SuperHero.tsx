@@ -257,7 +257,7 @@ export const SuperHero = ({
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 1.0, ease: 'easeOut' }}
-              className="font-inter font-black text-[42px] md:text-[56px] lg:text-[68px] leading-[0.95] tracking-[-3px] text-white mb-6 normal-case"
+              className="font-inter font-bold text-[42px] md:text-[56px] lg:text-[68px] leading-[0.95] tracking-[-3px] text-white mb-6 normal-case"
             >
               We Bring{' '}
               <motion.span
@@ -270,13 +270,7 @@ export const SuperHero = ({
                   <motion.span
                     key={`${word}-${i}`}
                     className="absolute left-0"
-                    style={{
-                      background: 'linear-gradient(180deg, #ffffff 0%, #555555 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundClip: 'text',
-                      whiteSpace: 'nowrap',
-                    }}
+                    style={{ color: 'white', whiteSpace: 'nowrap' }}
                     initial={{ y: -100, opacity: 0 }}
                     animate={
                       i === titleNumber
@@ -293,12 +287,7 @@ export const SuperHero = ({
               </motion.span>
               {' '}to Your
               <br />
-              <span style={{
-                background: 'linear-gradient(180deg, #ffffff 0%, #555555 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}>
+              <span style={{ color: 'white' }}>
                 Business Growth
               </span>
             </motion.h1>
