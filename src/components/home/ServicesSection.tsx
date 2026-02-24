@@ -52,9 +52,7 @@ const ServiceCard = ({ service, index }) => {
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
+    if (videoRef.current) videoRef.current.play().catch(() => {});
   };
 
   const handleMouseLeave = () => {
@@ -75,113 +73,109 @@ const ServiceCard = ({ service, index }) => {
         borderRadius: "30px",
         overflow: "hidden",
         cursor: "pointer",
-        minHeight: "260px",
+        height: "320px",
         background: "radial-gradient(50% 50% at 0% 0%, #1a1a1a 2.21%, #050505 100%)",
         border: "1px solid rgba(255,255,255,0.08)",
         opacity: 0,
         transform: "translateY(20px)",
         animation: `fadeInUp 0.6s ease forwards ${index * 0.1}s`,
       }}
-      className="group"
     >
-      <div       style={{ display: "flex", flexDirection: "row", padding: "40px 48px", position: "relative", zIndex: 10, gap: "32px", height: "100%", alignItems: "center", paddingRight: "380px" }}>
-        {/* Left: text content */}
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1, zIndex: 20, gap: "24px" }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
-              <div style={{ padding: "10px", background: "rgba(255,255,255,0.05)", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.1)", display: "flex" }}>
-                <service.icon style={{ width: "22px", height: "22px", color: "#06b6d4" }} />
-              </div>
-              <h3 style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "28px", lineHeight: 1.2, color: "#fff", margin: 0 }}>
-                {service.title}
-              </h3>
+      {/* Text content */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 20,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "32px 36px",
+        paddingRight: "52%",
+      }}>
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+            <div style={{ padding: "8px", background: "rgba(255,255,255,0.05)", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.1)", display: "flex" }}>
+              <service.icon style={{ width: "18px", height: "18px", color: "#06b6d4" }} />
             </div>
-            <p style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 300, fontSize: "16px", lineHeight: "26px", color: "rgba(255,255,255,0.6)", maxWidth: "520px", margin: 0 }}>
-              {service.description}
-            </p>
+            <h3 style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "22px", lineHeight: 1.2, color: "#fff", margin: 0 }}>
+              {service.title}
+            </h3>
           </div>
-          <div
-            style={{
-              display: "inline-flex",
-              alignSelf: "flex-start",
-              background: "#0d0d0d",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: "27px",
-              paddingLeft: "20px",
-              paddingRight: "4px",
-              paddingTop: "6px",
-              paddingBottom: "6px",
-              alignItems: "center",
-              gap: "10px",
-              transition: "transform 0.3s",
-              transform: isHovered ? "scale(1.05)" : "scale(1)",
-              transformOrigin: "left",
-            }}
-          >
-            <span style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 300, fontSize: "11px", textTransform: "uppercase", color: "#fff", letterSpacing: "0.08em" }}>
-              Learn More
-            </span>
-            <div style={{ width: "32px", height: "32px", background: "rgba(255,255,255,0.1)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <ArrowRight style={{ width: "14px", height: "14px", color: "rgba(255,255,255,0.9)", transform: isHovered ? "rotate(0deg)" : "rotate(-45deg)", transition: "transform 0.3s" }} />
-            </div>
-          </div>
+          <p style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 300, fontSize: "14px", lineHeight: "22px", color: "rgba(255,255,255,0.6)", margin: 0 }}>
+            {service.description}
+          </p>
         </div>
 
-        {/* Right: video */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            bottom: 0,
-            width: "340px",
-            transition: "transform 0.7s ease",
-            transform: isHovered ? "translateX(0) translateY(0)" : "translateX(12px) translateY(-8px)",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-              borderRadius: "0 30px 30px 0",
-              overflow: "hidden",
-              transform: isHovered ? "rotate(0deg)" : "rotate(3deg)",
-              transition: "transform 0.7s ease",
-              border: "1px solid rgba(255,255,255,0.05)",
-            }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background: "rgba(0,0,0,0.4)",
-                zIndex: 10,
-                mixBlendMode: "multiply",
-                opacity: isHovered ? 0 : 1,
-                transition: "opacity 0.5s",
-                pointerEvents: "none",
-              }}
-            />
-            <video
-              ref={videoRef}
-              src={service.videoSrc}
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                transition: "all 0.7s",
-                filter: isHovered ? "grayscale(0)" : "grayscale(0.5)",
-                transform: isHovered ? "scale(1.1)" : "scale(1)",
-              }}
-            />
+        <div style={{
+          display: "inline-flex",
+          alignSelf: "flex-start",
+          background: "#0d0d0d",
+          border: "1px solid rgba(255,255,255,0.1)",
+          borderRadius: "27px",
+          paddingLeft: "16px",
+          paddingRight: "4px",
+          paddingTop: "5px",
+          paddingBottom: "5px",
+          alignItems: "center",
+          gap: "8px",
+          transition: "transform 0.3s",
+          transform: isHovered ? "scale(1.05)" : "scale(1)",
+          transformOrigin: "left",
+        }}>
+          <span style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 300, fontSize: "10px", textTransform: "uppercase", color: "#fff", letterSpacing: "0.08em" }}>
+            Learn More
+          </span>
+          <div style={{ width: "28px", height: "28px", background: "rgba(255,255,255,0.1)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <ArrowRight style={{ width: "12px", height: "12px", color: "rgba(255,255,255,0.9)", transform: isHovered ? "rotate(0deg)" : "rotate(-45deg)", transition: "transform 0.3s" }} />
           </div>
+        </div>
+      </div>
+
+      {/* Video */}
+      <div style={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        width: "48%",
+        transition: "transform 0.7s ease",
+        transform: isHovered ? "translateX(0) translateY(0)" : "translateX(12px) translateY(-8px)",
+      }}>
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "0 30px 30px 0",
+          overflow: "hidden",
+          transform: isHovered ? "rotate(0deg)" : "rotate(3deg)",
+          transition: "transform 0.7s ease",
+          border: "1px solid rgba(255,255,255,0.05)",
+        }}>
+          <div style={{
+            position: "absolute",
+            inset: 0,
+            background: "rgba(0,0,0,0.4)",
+            zIndex: 10,
+            mixBlendMode: "multiply",
+            opacity: isHovered ? 0 : 1,
+            transition: "opacity 0.5s",
+            pointerEvents: "none",
+          }} />
+          <video
+            ref={videoRef}
+            src={service.videoSrc}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "all 0.7s",
+              filter: isHovered ? "grayscale(0)" : "grayscale(0.5)",
+              transform: isHovered ? "scale(1.1)" : "scale(1)",
+            }}
+          />
         </div>
       </div>
     </div>
@@ -210,39 +204,33 @@ const ServicesSection = () => {
         }
       `}</style>
 
-      <div style={{         maxWidth: "860px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "60px" }}>
-        {/* Header */}
+      <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "60px" }}>
         <div style={{ textAlign: "center", maxWidth: "700px" }}>
-          <h2
-            style={{
-              fontFamily: "'Satoshi', sans-serif",
-              fontWeight: 700,
-              fontSize: "clamp(32px, 5vw, 52px)",
-              lineHeight: 1.1,
-              color: "#111827",
-              marginBottom: "16px",
-            }}
-          >
+          <h2 style={{
+            fontFamily: "'Satoshi', sans-serif",
+            fontWeight: 700,
+            fontSize: "clamp(32px, 5vw, 52px)",
+            lineHeight: 1.1,
+            color: "#111827",
+            marginBottom: "16px",
+          }}>
             Comprehensive Digital{" "}
             <span className="gradient-text">Marketing Services</span>
           </h2>
-          <p
-            style={{
-              fontFamily: "'Satoshi', sans-serif",
-              fontWeight: 500,
-              fontSize: "16px",
-              lineHeight: 1.6,
-              color: "#6b7280",
-              maxWidth: "400px",
-              margin: "0 auto",
-            }}
-          >
+          <p style={{
+            fontFamily: "'Satoshi', sans-serif",
+            fontWeight: 500,
+            fontSize: "16px",
+            lineHeight: 1.6,
+            color: "#6b7280",
+            maxWidth: "400px",
+            margin: "0 auto",
+          }}>
             Everything you need to grow your business online, all under one roof.
           </p>
         </div>
 
-        {/* Cards — 1 column, full width */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px", width: "100%" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", width: "100%" }}>
           {services.map((service, index) => (
             <ServiceCard key={service.id} service={service} index={index} />
           ))}
