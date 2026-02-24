@@ -48,7 +48,7 @@ export function Header() {
         <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
           <Link to="/" className="flex items-center gap-3 no-underline">
             <span className="text-lg font-medium tracking-tight text-white">
-              Client Connect<span className="text-[#34d399]">.</span>
+              Client Connect <span className="text-[#67bcb7]">Australia</span><span className="text-[#34d399]">.</span>
             </span>
           </Link>
 
