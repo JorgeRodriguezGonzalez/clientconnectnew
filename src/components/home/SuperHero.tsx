@@ -153,7 +153,7 @@ export const SuperHero = ({
 
   return (
     <div
-      className="w-full relative flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-inter"
+      className="w-full relative min-h-screen flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-inter"
       style={{ background: '#050505' }}
     >
       <style>{fontStyles}</style>
@@ -295,8 +295,11 @@ export const SuperHero = ({
 
       </div>
 
-      {/* CLIENT CAROUSEL — mt-16 para pegarlo a los botones */}
-      <div className="relative z-10 w-full mt-16 pb-24">
+      {/* CLIENT CAROUSEL — asomando desde el bottom del viewport */}
+      <div
+        className="absolute bottom-0 left-0 w-full z-10 overflow-hidden"
+        style={{ height: '200px' }}
+      >
         <ClientCarousel />
       </div>
 
