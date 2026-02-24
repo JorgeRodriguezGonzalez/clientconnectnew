@@ -6,10 +6,9 @@ import { ArrowDown } from 'lucide-react';
 
 // --- FONT STYLES ---
 const fontStyles = `
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+  @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
   
-  .font-syne { font-family: 'Syne', sans-serif; }
-  .font-inter { font-family: 'Inter', sans-serif; }
+  .font-satoshi { font-family: 'Satoshi', sans-serif; }
 `;
 
 // --- SUB-COMPONENT: PARALLAX VIDEO ---
@@ -125,32 +124,55 @@ export default function ZoomParallax() {
             {/* HEADER SECTION */}
             <div className="relative flex h-[70vh] flex-col items-center justify-center gap-8 px-4 overflow-hidden">
 
+                {/* Glow */}
                 <div
                     aria-hidden="true"
                     className="pointer-events-none absolute -top-1/2 left-1/2 h-[100vmin] w-[100vmin] -translate-x-1/2 rounded-full blur-[100px] opacity-20"
                     style={{
-                        background: 'radial-gradient(circle, rgba(238,156,33,0.3) 0%, rgba(5,5,5,0) 70%)'
+                        background: 'radial-gradient(circle, rgba(52,211,153,0.25) 0%, rgba(5,5,5,0) 70%)'
                     }}
                 />
 
                 <div className="relative z-10 text-center flex flex-col items-center">
-                    <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-6">
-                        <span className="font-inter text-xs md:text-sm font-medium tracking-wider uppercase text-white/60">
+
+                    {/* Badge */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="w-fit px-3 py-1.5 rounded-none border border-white/10 bg-white/5 transition-colors duration-300 mb-6"
+                    >
+                        <span
+                            className="font-satoshi font-semibold uppercase"
+                            style={{
+                                fontSize: '10px',
+                                letterSpacing: '2px',
+                                color: '#9ca3af',
+                            }}
+                        >
                             Portfolio
                         </span>
-                    </div>
+                    </motion.div>
 
-                    <h1 className="font-syne font-bold text-[40px] md:text-[60px] lg:text-[72px] leading-[1.1] tracking-tight max-w-4xl text-white">
-                        <span className="text-white">Videos & campaigns that</span> <br className="hidden md:block" />
+                    {/* Title */}
+                    <h2
+                        className="font-satoshi font-bold tracking-tight max-w-4xl text-white"
+                        style={{
+                            fontSize: 'clamp(32px, 5vw, 48px)',
+                            lineHeight: 1.1,
+                        }}
+                    >
+                        <span style={{ color: '#ffffff' }}>Videos & campaigns that</span>{' '}
+                        <br className="hidden md:block" />
 
                         <motion.span
                             initial={{ backgroundPosition: "400% 50%" }}
                             animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                            transition={{ duration: 5, ease: "linear", repeat: Infinity }}
+                            transition={{ duration: 8, ease: "linear", repeat: Infinity }}
                             style={{
                                 display: "inline-block",
-                                backgroundImage: "linear-gradient(45deg, #AD2624, #C96928, #EE9C21, #ffffff, #EE9C21, #C96928, #AD2624)",
-                                backgroundSize: "300% 100%",
+                                backgroundImage: "linear-gradient(45deg, rgba(255,255,255,0), #34d399, #06b6d4, rgba(255,255,255,0))",
+                                backgroundSize: "400% 100%",
                                 WebkitBackgroundClip: "text",
                                 WebkitTextFillColor: "transparent",
                                 backgroundClip: "text",
@@ -160,20 +182,38 @@ export default function ZoomParallax() {
                         >
                             drive real growth.
                         </motion.span>
-                    </h1>
+                    </h2>
 
-                    <p className="font-inter text-white/50 text-lg md:text-xl max-w-xl mt-6">
-                        A selection of work produced for brands across Spain, Germany, Australia, and the US. From strategic ad campaigns to high-performance creatives.
+                    {/* Description */}
+                    <p
+                        className="font-satoshi font-medium max-w-sm mt-6"
+                        style={{
+                            fontSize: '15px',
+                            lineHeight: 1.6,
+                            color: '#6b7280',
+                        }}
+                    >
+                        A selection of work produced for brands across{' '}
+                        <strong style={{ color: '#ffffff', fontWeight: 500 }}>Spain, Germany, Australia, and the US</strong>.
+                        {' '}From strategic ad campaigns to{' '}
+                        <strong style={{ color: '#ffffff', fontWeight: 500 }}>high-performance creatives</strong>.
                     </p>
                 </div>
 
+                {/* Scroll indicator */}
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1, duration: 1 }}
-                    className="absolute bottom-12 flex flex-col items-center gap-2 text-white/40"
+                    className="absolute bottom-12 flex flex-col items-center gap-2"
+                    style={{ color: '#6b7280' }}
                 >
-                    <span className="font-inter text-xs uppercase tracking-widest">Explore</span>
+                    <span
+                        className="font-satoshi uppercase"
+                        style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '2px' }}
+                    >
+                        Explore
+                    </span>
                     <ArrowDown className="w-5 h-5 animate-bounce" />
                 </motion.div>
             </div>
@@ -183,7 +223,14 @@ export default function ZoomParallax() {
 
             {/* FOOTER SPACER */}
             <div className="h-[50vh] flex items-center justify-center bg-[#050505] relative z-10">
-                <h2 className="font-syne font-bold text-3xl md:text-5xl text-white/20 text-center px-4">
+                <h2
+                    className="font-satoshi font-bold text-center px-4"
+                    style={{
+                        fontSize: 'clamp(24px, 4vw, 48px)',
+                        lineHeight: 1.1,
+                        color: 'rgba(255,255,255,0.15)',
+                    }}
+                >
                     Your brand could be next.
                 </h2>
             </div>
