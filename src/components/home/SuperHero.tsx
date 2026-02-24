@@ -236,9 +236,7 @@ export const SuperHero = ({
               transition={{ delay: 0.7, duration: 1.0, ease: 'easeOut' }}
               className="font-inter font-black text-[42px] md:text-[56px] lg:text-[68px] leading-[0.95] tracking-[-3px] text-white mb-6 normal-case"
             >
-              We Bring Light{' '}
-              <br />
-              to Your{' '}
+              We Bring Light to Your{' '}
               <br />
               <span style={{
                 background: 'linear-gradient(180deg, #ffffff 0%, #555555 100%)',
