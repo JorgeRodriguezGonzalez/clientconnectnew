@@ -206,7 +206,7 @@ const ServicesSection = () => {
         }
       `}</style>
 
-      <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "60px" }}>
+      <div style={{         maxWidth: "860px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "60px" }}>
         {/* Header */}
         <div style={{ textAlign: "center", maxWidth: "700px" }}>
           <h2
