@@ -174,7 +174,7 @@ export const SuperHero = ({
       <div         className="relative z-10 w-full flex-1 flex flex-col items-center justify-center py-16">
 
         <div
-          className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-16"
+          className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-4"
           style={{ marginTop: '-10px' }}
         >
 
