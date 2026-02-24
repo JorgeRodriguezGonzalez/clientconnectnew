@@ -245,7 +245,7 @@ export const SuperHero = ({
                 initial={{ opacity: 0, width: '15rem' }}
                 animate={{ opacity: 1, width: '28rem' }}
                 transition={{ delay: 0.2, duration: 1.0 }}
-                className="absolute inset-auto z-50 h-0.5 -translate-y-[7rem]"
+                className="absolute inset-auto z-50 h-[3px] -translate-y-[7rem]"
                 style={{ backgroundColor: lampColor }}
               />
             </div>
