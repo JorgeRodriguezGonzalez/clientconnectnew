@@ -257,7 +257,7 @@ export const SuperHero = ({
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 1.0, ease: 'easeOut' }}
-              className="font-inter font-bold text-[42px] md:text-[56px] lg:text-[68px] leading-[1.1] tracking-[-3px] text-white mb-6 normal-case"
+              className="font-inter font-semibold text-[42px] md:text-[56px] lg:text-[68px] leading-[1.1] tracking-[-2px] text-white mb-6 normal-case"
             >
               We Bring Light to Your
               <br />
