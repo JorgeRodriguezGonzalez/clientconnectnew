@@ -50,7 +50,7 @@ const ParallaxVideo = ({ src }: { src: string }) => {
 };
 
 // --- SUB-COMPONENT: PARALLAX LOGIC ---
-function ParallaxContent({ sites, getScreenshot }: { sites: { url: string }[], getScreenshot: (url: string) => string }) {
+function ParallaxContent({ videos }: { videos: { src: string }[] }) {
     const container = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: container,
@@ -68,7 +68,7 @@ function ParallaxContent({ sites, getScreenshot }: { sites: { url: string }[], g
     return (
         <div ref={container} className="relative h-[300vh] bg-[#050505]">
             <div className="sticky top-0 h-screen overflow-hidden">
-                {sites.slice(0, 7).map(({ url }, index) => {
+                {videos.map(({ src }, index) => {
                     const scale = scales[index % scales.length];
                     return (
                         <motion.div
@@ -85,11 +85,7 @@ function ParallaxContent({ sites, getScreenshot }: { sites: { url: string }[], g
                         >
                             <div className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl">
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
-                                <img
-                                    src={getScreenshot(url)}
-                                    alt={url}
-                                    className="h-full w-full object-cover object-top grayscale-[20%] hover:grayscale-0 transition-all duration-500"
-                                />
+                                <ParallaxVideo src={src} />
                             </div>
                         </motion.div>
                     );
@@ -111,21 +107,15 @@ export default function ZoomParallax() {
         requestAnimationFrame(raf);
     }, []);
 
-    const sites = [
-        { url: "https://yourlocalroofers.com.au/" },
-        { url: "https://brisbaneroofpaintingsolutions.com.au/" },
-        { url: "https://prolexbathroomrenovations.com.au/" },
-        { url: "https://nanotise.com.au/" },
-        { url: "https://premierbathrooms.com.au/" },
-        { url: "https://jbryantfencing.com.au/" },
-        { url: "https://sedgmanelectrics.com.au/" },
-        { url: "https://lcdriveways.com.au/" },
-        { url: "https://lclandscaping.com.au/" },
-        { url: "https://assetplumbingsolutions.com.au/" },
+    const videos = [
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771972854/0225_qidba6.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771972854/0225_qidba6.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771972854/0225_qidba6.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771972854/0225_qidba6.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771972854/0225_qidba6.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771972854/0225_qidba6.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771972854/0225_qidba6.mov" },
     ];
-
-    const getScreenshot = (url: string) =>
-        `https://shot.screenshotapi.net/screenshot?token=&url=${encodeURIComponent(url)}&width=1280&height=800&output=image&file_type=png&wait_for_event=load`;
 
     return (
         <section className="w-full bg-[#050505] text-white">
@@ -229,7 +219,7 @@ export default function ZoomParallax() {
             </div>
 
             {/* PARALLAX COMPONENT */}
-            <ParallaxContent sites={sites} getScreenshot={getScreenshot} />
+            <ParallaxContent videos={videos} />
 
             {/* FOOTER SPACER */}
             <div className="h-[50vh] flex items-center justify-center bg-[#050505] relative z-10">
