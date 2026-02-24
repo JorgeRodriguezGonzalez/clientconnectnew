@@ -88,16 +88,33 @@ const ClientCard = ({ client }: { client: typeof clients[0] }) => (
 );
 
 const ClientCarousel = () => {
-  const [current, setCurrent] = useState(0);
   const cardWidth = 260;
   const gap = 20;
+  const step = cardWidth + gap;
   const total = clients.length;
+  const looped = [...Array(3)].flatMap(() => clients);
+  const trackWidth = total * step;
 
-  const prev = () => setCurrent((c) => (c - 1 + total) % total);
-  const next = () => setCurrent((c) => (c + 1) % total);
+  const xRef = useRef(0);
+  const [x, setX] = useState(0);
+  const rafRef = useRef<number>();
+  const [paused, setPaused] = useState(false);
+  const speed = 0.5;
 
-  const looped = [...clients, ...clients, ...clients];
-  const offset = total;
+  useEffect(() => {
+    const tick = () => {
+      if (!paused) {
+        xRef.current -= speed;
+        if (Math.abs(xRef.current) >= trackWidth) {
+          xRef.current = 0;
+        }
+        setX(xRef.current);
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current!);
+  }, [paused, trackWidth]);
 
   return (
     <div className="w-full relative">
@@ -106,33 +123,17 @@ const ClientCarousel = () => {
       <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
         style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }} />
 
-      <div className="relative flex items-center">
-        <button
-          onClick={prev}
-          className="absolute left-6 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all"
+      <div className="overflow-hidden w-full">
+        <div
+          className="flex"
+          style={{ gap: `${gap}px`, transform: `translateX(${x}px)`, willChange: 'transform' }}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
         >
-          <ChevronLeft size={20} className="text-white" />
-        </button>
-
-        <div className="overflow-hidden w-full">
-          <motion.div
-            className="flex"
-            style={{ gap: `${gap}px` }}
-            animate={{ x: -(offset + current) * (cardWidth + gap) }}
-            transition={{ type: 'spring', stiffness: 300, damping: 35 }}
-          >
-            {looped.map((client, i) => (
-              <ClientCard key={`${client.name}-${i}`} client={client} />
-            ))}
-          </motion.div>
+          {looped.map((client, i) => (
+            <ClientCard key={`${client.name}-${i}`} client={client} />
+          ))}
         </div>
-
-        <button
-          onClick={next}
-          className="absolute right-6 z-20 w-11 h-11 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/10 flex items-center justify-center transition-all"
-        >
-          <ChevronRight size={20} className="text-white" />
-        </button>
       </div>
     </div>
   );
