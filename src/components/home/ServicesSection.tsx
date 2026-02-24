@@ -84,7 +84,7 @@ const ServiceCard = ({ service, index }) => {
       }}
       className="group"
     >
-      <div style={{ display: "flex", flexDirection: "row", padding: "40px 48px", position: "relative", zIndex: 10, gap: "32px", height: "100%", alignItems: "center" }}>
+      <div       style={{ display: "flex", flexDirection: "row", padding: "40px 48px", position: "relative", zIndex: 10, gap: "32px", height: "100%", alignItems: "center", paddingRight: "380px" }}>
         {/* Left: text content */}
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1, zIndex: 20, gap: "24px" }}>
           <div>
@@ -130,19 +130,23 @@ const ServiceCard = ({ service, index }) => {
         {/* Right: video */}
         <div
           style={{
-            position: "relative",
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
             width: "340px",
-            flexShrink: 0,
-            height: "220px",
             transition: "transform 0.7s ease",
-            transform: isHovered ? "translateX(-8px) translateY(4px)" : "translateX(0) translateY(0)",
+            transform: isHovered ? "translateX(0) translateY(0)" : "translateX(12px) translateY(-8px)",
           }}
         >
           <div
             style={{
               position: "absolute",
-              inset: 0,
-              borderRadius: "20px",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              borderRadius: "0 30px 30px 0",
               overflow: "hidden",
               transform: isHovered ? "rotate(0deg)" : "rotate(3deg)",
               transition: "transform 0.7s ease",
