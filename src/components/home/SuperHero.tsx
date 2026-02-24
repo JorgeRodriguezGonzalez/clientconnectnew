@@ -259,37 +259,9 @@ export const SuperHero = ({
               transition={{ delay: 0.7, duration: 1.0, ease: 'easeOut' }}
               className="font-inter font-bold text-[42px] md:text-[56px] lg:text-[68px] leading-[0.95] tracking-[-3px] text-white mb-6 normal-case"
             >
-              We Bring{' '}
-              <motion.span
-                className="inline-flex overflow-hidden relative"
-                animate={{ width: wordWidths[titleWords[titleNumber]] }}
-                transition={{ duration: 0.4, ease: 'easeInOut' }}
-                style={{ display: 'inline-flex', verticalAlign: 'bottom', height: '1em' }}
-              >
-                {titleWords.map((word, i) => (
-                  <motion.span
-                    key={`${word}-${i}`}
-                    className="absolute left-0"
-                    style={{ color: 'white', whiteSpace: 'nowrap' }}
-                    initial={{ y: -100, opacity: 0 }}
-                    animate={
-                      i === titleNumber
-                        ? { y: 0, opacity: 1 }
-                        : i < titleNumber
-                        ? { y: 20, opacity: 0 }
-                        : { y: -100, opacity: 0 }
-                    }
-                    transition={{ duration: 0.4, ease: 'easeInOut' }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </motion.span>
-              {' '}to Your
+              We Bring Light to Your
               <br />
-              <span style={{ color: 'white' }}>
-                Business Growth
-              </span>
+              Business Growth
             </motion.h1>
 
             <motion.div
