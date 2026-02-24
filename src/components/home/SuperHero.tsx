@@ -264,7 +264,7 @@ export const SuperHero = ({
                 className="inline-flex overflow-hidden relative"
                 animate={{ width: wordWidths[titleWords[titleNumber]] }}
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
-                style={{ display: 'inline-flex', verticalAlign: 'bottom' }}
+                style={{ display: 'inline-flex', verticalAlign: 'bottom', height: '1em' }}
               >
                 {titleWords.map((word, i) => (
                   <motion.span
