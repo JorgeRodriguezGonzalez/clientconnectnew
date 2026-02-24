@@ -295,8 +295,8 @@ export const SuperHero = ({
 
       </div>
 
-      {/* CLIENT CAROUSEL — fuera del min-h-screen container */}
-      <div className="relative z-10 w-full pb-24">
+      {/* CLIENT CAROUSEL — mt-16 para pegarlo a los botones */}
+      <div className="relative z-10 w-full mt-16 pb-24">
         <ClientCarousel />
       </div>
 
