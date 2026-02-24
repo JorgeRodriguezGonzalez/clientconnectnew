@@ -63,7 +63,7 @@ export function Header() {
               }}
             />
             <span className="text-xl font-medium tracking-tight text-white">
-              Client Connect <span className="text-[#67bcb7]">Australia</span><span className="text-[#34d399]">.</span>
+              Client Connect <span className="text-[#34d399]">Australia</span><span className="text-[#34d399]">.</span>
             </span>
           </Link>
 
