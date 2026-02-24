@@ -667,9 +667,9 @@ export const FounderSection = () => {
       <style>{fontStyles}</style>
 
       {/* ✅ CAMBIO CLAVE: de absolute top-0 → flujo normal */}
-      <div className="w-full">
+      {/* <div className="w-full">
         <LogoCloud isLightMode={isLightMode} />
-      </div>
+      </div> */}
 
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div 
