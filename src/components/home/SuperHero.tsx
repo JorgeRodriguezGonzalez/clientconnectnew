@@ -100,7 +100,7 @@ const ClientCarousel = () => {
   const offset = total;
 
   return (
-    <div className="w-full pb-24 relative mb-16">
+    <div className="w-full relative">
       <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none"
         style={{ background: 'linear-gradient(to right, #050505 0%, transparent 100%)' }} />
       <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
@@ -262,7 +262,7 @@ export const SuperHero = ({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1.1, duration: 1.0, ease: 'easeOut' }}
-              className="mt-8"
+              className="mt-6"
             >
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <motion.a
