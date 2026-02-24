@@ -46,7 +46,15 @@ export function Header() {
         style={{ pointerEvents: scrollY > 80 ? "none" : "auto" }}
       >
         <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 no-underline">
+          <Link to="/" className="flex items-center gap-2 no-underline">
+            <img
+              src="/images/icon.png"
+              alt="icon"
+              className="w-5 h-5 object-contain"
+              style={{
+                filter: "brightness(0) saturate(100%) invert(72%) sepia(40%) saturate(400%) hue-rotate(130deg) brightness(90%) contrast(90%)",
+              }}
+            />
             <span className="text-lg font-medium tracking-tight text-white">
               Client Connect <span className="text-[#67bcb7]">Australia</span><span className="text-[#34d399]">.</span>
             </span>
