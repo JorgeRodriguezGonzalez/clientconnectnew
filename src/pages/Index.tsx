@@ -38,11 +38,11 @@ const Index = () => {
         <SuperHero />
 
         <FounderSection />
+        <ZoomParallax />
 
         <InteractivePath />
 
         <ServicesSection />
-        <ZoomParallax />
         <Services />
 
         <WhatWeDoSection2 />
