@@ -109,7 +109,7 @@ export default function ZoomParallax() {
 
     const videos = [
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771974290/prolex_ewdmo7.mov" },
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771972854/0225_qidba6.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771989643/0225_1_jymeqw.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771987258/0225_spcg8h.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978181/driveways_sdxoqa.mov" },
