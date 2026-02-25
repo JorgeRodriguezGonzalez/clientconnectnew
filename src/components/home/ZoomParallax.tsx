@@ -86,7 +86,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                         >
                             <div className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl">
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
-                                <ParallaxVideo src={src} objectPosition={index === 5 ? 'center top' : 'center'} />
+                                <ParallaxVideo src={src} objectPosition={index === 5 || index === 1 ? 'center top' : 'center'} />
                             </div>
                         </motion.div>
                     );
