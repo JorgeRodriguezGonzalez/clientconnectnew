@@ -112,7 +112,7 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white relative z-10 min-h-screen py-20 font-sans text-neutral-900 overflow-x-hidden pl-[8vw]">
+    <div className="w-full bg-black relative z-10 min-h-screen py-20 font-sans text-white overflow-x-hidden pl-[8vw]">
       <style>{`
         .hide-scroll::-webkit-scrollbar { display: none !important; }
         .hide-scroll { -ms-overflow-style: none !important; scrollbar-width: none !important; }
@@ -121,10 +121,10 @@ export const Services = () => {
       {/* Header */}
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: "2vw" }}>
 
-        <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
+        <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-white/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
-            <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">Digital Ecosystem</span>
-            <h2 className="text-3xl font-semibold tracking-tight text-neutral-900 md:text-5xl">
+            <span className="text-xs uppercase tracking-[0.35em] text-white/50">Digital Ecosystem</span>
+            <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
               Specialized in <br />
               <motion.span
                 initial={{ backgroundPosition: "400% 50%" }}
@@ -145,8 +145,8 @@ export const Services = () => {
             </h2>
           </div>
           <div className="lg:w-[427px] lg:ml-auto lg:pb-4">
-            <p className="text-sm font-semibold uppercase tracking-wide text-neutral-900 mb-2">Transform your business.</p>
-            <p className="text-sm leading-relaxed text-neutral-600 md:text-base">
+            <p className="text-sm font-semibold uppercase tracking-wide text-white mb-2">Transform your business.</p>
+            <p className="text-sm leading-relaxed text-white/60 md:text-base">
               From initial strategy to final conversion, we cover every aspect of the digital landscape to ensure sustainable growth and measurable results.
             </p>
           </div>
@@ -177,14 +177,14 @@ export const Services = () => {
                   )}
                   {/* Fondo hover (no activo) */}
                   {!isActive && isHovered && (
-                    <div className="absolute inset-0 -z-10 bg-neutral-100" />
+                    <div className="absolute inset-0 -z-10 bg-white/10" />
                   )}
 
                   {/* Texto: gradient si activo o en hover */}
                   {isActive || isHovered ? (
                     <GradientText>{service.title}</GradientText>
                   ) : (
-                    <span className="text-neutral-500">{service.title}</span>
+                    <span className="text-white/40">{service.title}</span>
                   )}
                 </button>
               );
@@ -250,8 +250,8 @@ export const Services = () => {
 
       {/* CTA */}
       <div className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: "2vw" }}>
-        <div className="flex justify-center mt-4 md:mt-8 border-t border-neutral-900/10 pt-8">
-          <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-neutral-200" onClick={e => e.preventDefault()}>
+        <div className="flex justify-center mt-4 md:mt-8 border-t border-white/10 pt-8">
+          <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 text-white rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-white/20" onClick={e => e.preventDefault()}>
             <span className="text-xs font-semibold uppercase tracking-wide">Explore services</span>
             <div className="w-6 h-6 bg-neutral-900 rounded-full flex items-center justify-center text-white transition-transform duration-300 group-hover:translate-x-1">
               <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
