@@ -50,7 +50,7 @@ const GradientText = ({ children, style = {} }) => (
   </motion.span>
 );
 
-export default function Services() {
+export const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
   const [hoveredTab, setHoveredTab] = useState(null);
   const [paddingLeft, setPaddingLeft] = useState(0);
