@@ -44,7 +44,7 @@ const ParallaxVideo = ({ src }: { src: string }) => {
             loop
             playsInline
             preload="auto"
-            className="h-full w-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-500"
+            className="h-full w-full object-contain grayscale-[20%] hover:grayscale-0 transition-all duration-500"
         />
     );
 };
