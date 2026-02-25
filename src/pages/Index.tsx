@@ -40,10 +40,10 @@ const Index = () => {
         <FounderSection />
 
         <InteractivePath />
+        <Services />
 
         <ServicesSection />
         <ZoomParallax />
-        <Services />
 
         <WhatWeDoSection2 />
 
