@@ -12,7 +12,7 @@ const fontStyles = `
 `;
 
 // --- SUB-COMPONENT: PARALLAX VIDEO ---
-const ParallaxVideo = ({ src }: { src: string }) => {
+const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, objectPosition?: string }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const handlePlay = () => {
@@ -45,6 +45,7 @@ const ParallaxVideo = ({ src }: { src: string }) => {
             playsInline
             preload="auto"
             className="h-full w-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-500"
+            style={{ objectPosition }}
         />
     );
 };
@@ -85,7 +86,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                         >
                             <div className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl">
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
-                                <ParallaxVideo src={src} />
+                                <ParallaxVideo src={src} objectPosition={index === 5 ? 'center top' : 'center'} />
                             </div>
                         </motion.div>
                     );
