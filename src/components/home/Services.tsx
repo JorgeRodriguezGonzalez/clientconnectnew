@@ -112,7 +112,7 @@ export const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-[#FAFAFA] min-h-screen py-20 font-sans text-neutral-900 overflow-x-hidden pl-[8vw]">
+    <div className="w-full bg-white relative z-10 min-h-screen py-20 font-sans text-neutral-900 overflow-x-hidden pl-[8vw]">
       <style>{`
         .hide-scroll::-webkit-scrollbar { display: none !important; }
         .hide-scroll { -ms-overflow-style: none !important; scrollbar-width: none !important; }
