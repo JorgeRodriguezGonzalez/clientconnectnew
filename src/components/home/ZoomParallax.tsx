@@ -83,7 +83,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                 ${index === 6 ? '[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]' : ''} 
                             `}
                         >
-                            <div className={`relative overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl ${index === 0 ? 'h-[25vh] w-[15vw]' : 'h-[25vh] w-[25vw]'}`}>
+                            <div className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl">
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
                                 <ParallaxVideo src={src} />
                             </div>
