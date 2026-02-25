@@ -12,7 +12,7 @@ const fontStyles = `
 `;
 
 // --- SUB-COMPONENT: PARALLAX VIDEO ---
-const ParallaxVideo = ({ src, index }: { src: string, index: number }) => {
+const ParallaxVideo = ({ src, cover = true }: { src: string, cover?: boolean }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const handlePlay = () => {
@@ -44,7 +44,7 @@ const ParallaxVideo = ({ src, index }: { src: string, index: number }) => {
             loop
             playsInline
             preload="auto"
-            className={`h-full w-full ${index === 0 ? 'object-contain' : 'object-cover'} grayscale-[20%] hover:grayscale-0 transition-all duration-500`}
+            className={`h-full w-full ${cover ? 'object-cover' : 'object-contain'} grayscale-[20%] hover:grayscale-0 transition-all duration-500`}
         />
     );
 };
@@ -83,9 +83,9 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                 ${index === 6 ? '[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]' : ''} 
                             `}
                         >
-                            <div className={`relative overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl ${index === 0 ? 'h-[25vh] w-[18vw]' : 'h-[25vh] w-[25vw]'}`}>
+                            <div className={`relative overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl ${index === 4 ? 'h-[25vh] w-[18vw] object-contain' : 'h-[25vh] w-[25vw]'}`}>
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
-                                <ParallaxVideo src={src} index={index} />
+                                <ParallaxVideo src={src} cover={index !== 4} />
                             </div>
                         </motion.div>
                     );
