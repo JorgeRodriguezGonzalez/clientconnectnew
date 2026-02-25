@@ -113,7 +113,7 @@ export default function ZoomParallax() {
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978172/landscaping_lierf1.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978181/driveways_sdxoqa.mov" },
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771974290/prolex_ewdmo7.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978172/landscaping_lierf1.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771972854/0225_qidba6.mov" },
     ];
 
