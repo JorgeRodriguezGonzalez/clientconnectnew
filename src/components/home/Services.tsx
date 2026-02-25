@@ -120,6 +120,34 @@ export const Services = () => {
 
       {/* Header */}
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: "2vw" }}>
+
+        {/* Nuevo título principal */}
+        <div className="mb-12">
+          <h2
+            className="tracking-tight text-[#111827]"
+            style={{
+              fontFamily: "'Satoshi', sans-serif",
+              fontWeight: 700,
+              fontSize: "clamp(32px, 4vw, 48px)",
+              lineHeight: 1.1,
+            }}
+          >
+            Comprehensive Digital Marketing Services
+          </h2>
+          <p
+            className="mt-4 max-w-sm text-[#6b7280]"
+            style={{
+              fontFamily: "'Satoshi', sans-serif",
+              fontWeight: 500,
+              fontSize: "15px",
+              lineHeight: 1.6,
+            }}
+          >
+            Everything you need to grow your business online,{" "}
+            <strong className="text-[#111827]">all under one roof.</strong>
+          </p>
+        </div>
+
         <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-neutral-900/10">
           <div className="lg:w-1/2 flex flex-col gap-2">
             <span className="text-xs uppercase tracking-[0.35em] text-neutral-500">Digital Ecosystem</span>
