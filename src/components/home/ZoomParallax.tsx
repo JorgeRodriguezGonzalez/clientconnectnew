@@ -86,7 +86,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                         >
                             <div className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl">
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
-                                <ParallaxVideo src={src} objectPosition={index === 2 ? 'center top' : 'center'} />
+                                <ParallaxVideo src={src} objectPosition={index === 5 ? 'center top' : 'center'} />
                             </div>
                         </motion.div>
                     );
@@ -111,10 +111,10 @@ export default function ZoomParallax() {
     const videos = [
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771974290/prolex_ewdmo7.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771989643/0225_1_jymeqw.mov" },
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978172/landscaping_lierf1.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771987258/0225_spcg8h.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978181/driveways_sdxoqa.mov" },
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771987258/0225_spcg8h.mov" },
+        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978172/landscaping_lierf1.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771989643/0225_1_jymeqw.mov" },
     ];
 
