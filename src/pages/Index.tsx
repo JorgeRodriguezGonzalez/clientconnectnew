@@ -38,10 +38,10 @@ const Index = () => {
         <SuperHero />
 
         <FounderSection />
+        <ServicesSection />
 
         <InteractivePath />
 
-        <ServicesSection />
         <ZoomParallax />
         <Services />
 
