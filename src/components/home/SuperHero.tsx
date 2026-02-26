@@ -349,18 +349,6 @@ export const SuperHero = ({
 
       </div>
 
-      {/* TRANSICIÓN */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.3, duration: 1.0 }}
-        className="relative z-10 flex items-center justify-center gap-3 mb-6"
-      >
-        <div className="h-px w-16 bg-white/10" />
-        <p className="text-white/30 text-[12px] font-inter font-medium tracking-[1.5px] uppercase">Trusted by Australian businesses</p>
-        <div className="h-px w-16 bg-white/10" />
-      </motion.div>
-
       {/* CLIENT CAROUSEL */}
       <div className="relative z-10 w-full mb-24">
         <ClientCarousel />
