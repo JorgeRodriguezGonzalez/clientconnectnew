@@ -93,11 +93,7 @@ const ClientCarousel = () => {
 };
 
 // --- TEXT ROTATION CONFIG ---
-const words = [
-  "Light", "Leads", "Clients", "Sales",
-  "Light", "Leads", "Clients", "Sales",
-  "Light", "Leads",
-];
+const words = ["Light", "Leads", "Clients", "Sales"];
 const wordWidths: Record<string, number> = {
   "Light":   170,
   "Leads":   165,
