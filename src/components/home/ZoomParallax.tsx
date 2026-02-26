@@ -66,6 +66,12 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
 
     const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
 
+    // Overlay opacity: starts at scroll 0.3, fully visible at 0.6
+    const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
+    // Content (text + buttons) appears slightly after overlay
+    const contentOpacity = useTransform(scrollYProgress, [0.4, 0.65], [0, 1]);
+    const contentY = useTransform(scrollYProgress, [0.4, 0.65], [20, 0]);
+
     return (
         <div ref={container} className="relative h-[300vh] bg-[#050505]">
             <div className="sticky top-0 h-screen overflow-hidden">
@@ -87,6 +93,49 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                             <div className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl">
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
                                 <ParallaxVideo src={src} objectPosition={index === 5 || index === 1 || index === 2 ? 'center top' : 'center'} />
+
+                                {/* Overlay + CTA only on center card (index 0) */}
+                                {index === 0 && (
+                                    <>
+                                        <motion.div
+                                            style={{ opacity: overlayOpacity }}
+                                            className="absolute inset-0 z-20 bg-black/75 backdrop-blur-[2px]"
+                                        />
+                                        <motion.div
+                                            style={{ opacity: contentOpacity, y: contentY }}
+                                            className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 px-6 text-center"
+                                        >
+                                            <h3
+                                                className="font-satoshi font-bold text-white"
+                                                style={{ fontSize: 'clamp(14px, 1.5vw, 22px)', lineHeight: 1.2 }}
+                                            >
+                                                Your brand could be next.
+                                            </h3>
+                                            <p
+                                                className="font-satoshi text-white/60"
+                                                style={{ fontSize: 'clamp(10px, 0.9vw, 14px)' }}
+                                            >
+                                                Let's build something great together.
+                                            </p>
+                                            <div className="flex gap-2 mt-1">
+                                                <a
+                                                    href="#contact"
+                                                    className="font-satoshi font-semibold px-4 py-2 rounded-none bg-white text-black transition-all hover:bg-white/90"
+                                                    style={{ fontSize: 'clamp(9px, 0.8vw, 13px)', letterSpacing: '0.5px' }}
+                                                >
+                                                    Let's chat
+                                                </a>
+                                                <a
+                                                    href="#book"
+                                                    className="font-satoshi font-semibold px-4 py-2 rounded-none border border-white/40 text-white transition-all hover:bg-white/10"
+                                                    style={{ fontSize: 'clamp(9px, 0.8vw, 13px)', letterSpacing: '0.5px' }}
+                                                >
+                                                    Book a Call
+                                                </a>
+                                            </div>
+                                        </motion.div>
+                                    </>
+                                )}
                             </div>
                         </motion.div>
                     );
