@@ -95,10 +95,10 @@ const ClientCarousel = () => {
 // --- ROTATING WORDS CONFIG ---
 const rotatingWords = ["Light", "Leads", "Clients", "Sales"];
 const wordWidths: Record<string, number> = {
-  "Light": 110,
-  "Leads": 135,
-  "Clients": 150,
-  "Sales": 120,
+  "Light": 130,
+  "Leads": 155,
+  "Clients": 170,
+  "Sales": 140,
 };
 
 // Pre-build the full looped array (same pattern as FinalHero)
