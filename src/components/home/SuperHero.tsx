@@ -99,10 +99,10 @@ const words = [
   "Light", "Leads",
 ];
 const wordWidths: Record<string, number> = {
-  "Light":   135,
-  "Leads":   130,
-  "Clients": 165,
-  "Sales":   120,
+  "Light":   170,
+  "Leads":   165,
+  "Clients": 210,
+  "Sales":   155,
 };
 
 interface SuperHeroProps {
@@ -214,7 +214,7 @@ export const SuperHero = ({
                 style={{
                   width: wordWidths[words[titleNumber]] ?? 150,
                   verticalAlign: 'middle',
-                  overflow: 'hidden',
+                  overflow: 'visible',
                   height: '1.15em',
                   lineHeight: '1.15em',
                   transition: 'width 0s',
