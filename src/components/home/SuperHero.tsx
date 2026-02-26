@@ -117,13 +117,23 @@ const ClientCarousel = () => {
   }, [paused, trackWidth]);
 
   return (
-    <div className="w-full relative">
-      <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to right, #050505 0%, transparent 100%)' }} />
-      <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }} />
+    <div className="w-full flex items-center">
 
-      <div className="overflow-hidden w-full">
+      {/* LABEL IZQUIERDO */}
+      <div className="flex-shrink-0 w-[220px] pl-8 pr-4">
+        <p className="text-white/40 text-[11px] font-inter font-semibold uppercase tracking-[2px] mb-1">Our</p>
+        <p className="text-white text-[18px] font-inter font-semibold leading-tight">Australian<br />Clients</p>
+      </div>
+
+      {/* SEPARADOR VERTICAL */}
+      <div className="flex-shrink-0 w-px h-16 bg-white/10 mr-4" />
+
+      {/* CAROUSEL */}
+      <div className="relative flex-1 overflow-hidden">
+        {/* Fade right */}
+        <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
+          style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }} />
+
         <div
           className="flex"
           style={{ gap: `${gap}px`, transform: `translateX(${x}px)`, willChange: 'transform' }}
@@ -135,6 +145,7 @@ const ClientCarousel = () => {
           ))}
         </div>
       </div>
+
     </div>
   );
 };
