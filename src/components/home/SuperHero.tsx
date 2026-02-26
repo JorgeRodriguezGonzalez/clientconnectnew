@@ -209,11 +209,16 @@ export const SuperHero = ({
             >
               We Bring{' '}
               {/* ---- TEXT ROTATION ---- */}
-              <motion.span
+              <span
                 className="relative inline-block"
-                animate={{ width: wordWidths[words[titleNumber]] ?? 150 }}
-                transition={{ duration: 0.4, ease: 'easeInOut' }}
-                style={{ verticalAlign: 'middle', overflow: 'hidden', height: '1.15em', lineHeight: '1.15em' }}
+                style={{
+                  width: wordWidths[words[titleNumber]] ?? 150,
+                  verticalAlign: 'middle',
+                  overflow: 'hidden',
+                  height: '1.15em',
+                  lineHeight: '1.15em',
+                  transition: 'width 0s',
+                }}
               >
                 {words.map((word, index) => (
                   <motion.span
@@ -229,7 +234,7 @@ export const SuperHero = ({
                     transition={{ duration: 0.45, ease: 'easeInOut' }}
                   >
                     {word}
-                  </motion.span>
+                  </span>
                 ))}
               </motion.span>
               {/* ----------------------- */}
