@@ -48,12 +48,12 @@ const Index = () => {
 
         <ComparisonSection />
         <TestimonialsSection />
+        <FAQSection />
 
         <CaseStudiesSection />
 
         <OurStepsVersion2 />
 
-        <FAQSection />
         <CTASection />
         <FloatingBanner />
         <Footer />
