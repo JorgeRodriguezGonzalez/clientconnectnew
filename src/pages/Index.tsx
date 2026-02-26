@@ -52,7 +52,7 @@ const Index = () => {
 
         <OurStepsVersion2 />
 
-        <Pricing />
+
         <FAQSection />
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
