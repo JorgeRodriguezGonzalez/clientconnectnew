@@ -46,12 +46,12 @@ const Index = () => {
         <ServicesSection />
 
         <WhatWeDoSection2 />
+        <ComparisonSection />
 
         <CaseStudiesSection />
 
         <OurStepsVersion2 />
 
-        <ComparisonSection />
         <Pricing />
         <FAQSection />
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
