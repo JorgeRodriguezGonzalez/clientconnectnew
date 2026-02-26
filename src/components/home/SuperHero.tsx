@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 
@@ -63,7 +63,6 @@ const ClientCarousel = () => {
 
   return (
     <div className="w-full relative">
-      {/* Fade izquierdo + texto vertical */}
       <div
         className="absolute left-0 top-0 h-full w-40 z-10 pointer-events-none flex items-center justify-start"
         style={{ background: 'linear-gradient(to right, #050505 70%, transparent 100%)' }}
@@ -75,11 +74,8 @@ const ClientCarousel = () => {
           Our Australian Clients
         </p>
       </div>
-
-      {/* Fade right */}
       <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
         style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }} />
-
       <div className="overflow-hidden w-full">
         <div
           className="flex"
@@ -96,6 +92,18 @@ const ClientCarousel = () => {
   );
 };
 
+// --- ROTATING WORDS CONFIG ---
+const rotatingWords = ["Light", "Leads", "Clients", "Sales"];
+const wordWidths: Record<string, number> = {
+  "Light": 110,
+  "Leads": 135,
+  "Clients": 150,
+  "Sales": 120,
+};
+
+// Pre-build the full looped array (same pattern as FinalHero)
+const wordsLoop = [...Array(5)].flatMap(() => rotatingWords);
+
 interface SuperHeroProps {
   primaryButtonText?: string;
   secondaryButtonText?: string;
@@ -108,6 +116,23 @@ export const SuperHero = ({
   const lampColor = '#06b6d4';
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
+
+  // --- Rotating title state ---
+  const [titleNumber, setTitleNumber] = useState(0);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (titleNumber === wordsLoop.length - 1) {
+        setTitleNumber(0);
+      } else {
+        setTitleNumber(titleNumber + 1);
+      }
+    }, 3000);
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber]);
+
+  const currentWord = wordsLoop[titleNumber];
+  const currentWidth = wordWidths[currentWord] || 100;
 
   return (
     <div
@@ -185,7 +210,36 @@ export const SuperHero = ({
               transition={{ delay: 0.7, duration: 1.0, ease: 'easeOut' }}
               className="font-inter font-semibold text-[42px] md:text-[56px] lg:text-[68px] leading-[1.1] tracking-[-2px] text-white mb-6 normal-case"
             >
-              We Bring Light to Your
+              We Bring{' '}
+              <motion.span
+                className="relative inline-flex items-center overflow-hidden"
+                animate={{ width: currentWidth }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
+                style={{ minHeight: '1em' }}
+              >
+                {wordsLoop.map((word, index) => (
+                  <motion.span
+                    key={index}
+                    className="font-semibold"
+                    initial={{ opacity: 0, y: -100 }}
+                    transition={{ type: 'spring', stiffness: 50, opacity: { duration: 0.2 } }}
+                    animate={
+                      titleNumber === index
+                        ? { y: 0, opacity: 1, position: 'relative' as const }
+                        : {
+                            y: titleNumber > index ? 20 : -50,
+                            opacity: 0,
+                            position: 'absolute' as const,
+                            top: 0,
+                            left: 0,
+                          }
+                    }
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </motion.span>{' '}
+              to Your
               <br />
               Business Growth
             </motion.h1>
