@@ -118,19 +118,19 @@ const ClientCarousel = () => {
 
   return (
     <div className="w-full relative">
-      {/* Fade izquierdo + texto vertical */}
-      <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none flex items-center justify-start"
-        style={{ background: 'linear-gradient(to right, #050505 60%, transparent 100%)' }}
+      {/* Fade izquierdo + texto vertical editorial */}
+      <div
+        className="absolute left-0 top-0 h-full w-40 z-10 pointer-events-none flex items-center justify-start"
+        style={{ background: 'linear-gradient(to right, #050505 70%, transparent 100%)' }}
       >
         <p
-          className="text-white/25 text-[10px] font-inter font-semibold uppercase tracking-[3px] ml-3"
+          className="text-white/30 text-[10px] font-inter font-semibold uppercase tracking-[4px] ml-4"
           style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
-          Our Clients
+          Our Australian Clients
         </p>
       </div>
-      <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to right, #050505 0%, transparent 100%)' }} />
+
       {/* Fade right */}
       <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
         style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }} />
