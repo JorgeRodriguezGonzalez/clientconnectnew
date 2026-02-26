@@ -6,7 +6,7 @@ const services = [
     id: "digital-strategy",
     title: "Digital Strategy",
     description: "We map out a clear path to grow your business online. From market research to channel selection and KPI setting, we build a custom roadmap that aligns your marketing with your business goals.",
-    videoSrc: "https://videos.pexels.com/video-files/7659839/7659839-uhd_2160_3840_25fps.mp4",
+    videoSrc: "/videos/digital.mp4",
     icon: Compass,
   },
   {
@@ -20,7 +20,7 @@ const services = [
     id: "website-development",
     title: "Website Development",
     description: "Beautiful, fast, and conversion-focused websites built to represent your brand perfectly. Every page is designed to guide visitors toward action and deliver an unforgettable user experience.",
-    videoSrc: "https://videos.pexels.com/video-files/1350205/1350205-hd_1920_1080_30fps.mp4",
+    videoSrc: "/videos/websitedevelopment.mp4",
     icon: Code2,
   },
   {
