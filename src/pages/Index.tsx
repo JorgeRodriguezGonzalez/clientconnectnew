@@ -38,12 +38,12 @@ const Index = () => {
         <SuperHero />
 
         <FounderSection />
-        <ZoomParallax />
-
         <InteractivePath />
+
         <Services />
 
         <ServicesSection />
+        <ZoomParallax />
         <ComparisonSection />
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
