@@ -118,11 +118,6 @@ const ClientCarousel = () => {
 
   return (
     <div className="w-full relative">
-      {/* LABEL ENCIMA A LA IZQUIERDA */}
-      <div className="px-8 mb-4">
-        <p className="text-white/40 text-[11px] font-inter font-semibold uppercase tracking-[2px]">Our Australian Clients</p>
-      </div>
-
       {/* Fade left */}
       <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none"
         style={{ background: 'linear-gradient(to right, #050505 0%, transparent 100%)' }} />
@@ -344,7 +339,19 @@ export const SuperHero = ({
 
       </div>
 
-      {/* CLIENT CAROUSEL — parte superior visible, cortado por overflow hidden */}
+      {/* TRANSICIÓN */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.3, duration: 1.0 }}
+        className="relative z-10 flex items-center justify-center gap-3 mb-6"
+      >
+        <div className="h-px w-16 bg-white/10" />
+        <p className="text-white/30 text-[12px] font-inter font-medium tracking-[1.5px] uppercase">Trusted by Australian businesses</p>
+        <div className="h-px w-16 bg-white/10" />
+      </motion.div>
+
+      {/* CLIENT CAROUSEL */}
       <div className="relative z-10 w-full mb-24">
         <ClientCarousel />
       </div>
