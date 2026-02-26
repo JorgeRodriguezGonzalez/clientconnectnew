@@ -41,7 +41,7 @@ const services = [
     id: "paid-social-ads",
     title: "Paid Social Ads",
     description: "Reach your ideal customers on Facebook, Instagram, TikTok, and LinkedIn with precision. Creative-led campaigns with sharp targeting that generate leads and scale profitably across platforms.",
-    videoSrc: "https://videos.pexels.com/video-files/7966582/7966582-hd_1080_1920_25fps.mp4",
+    videoSrc: "/videos/socialmedia.mp4",
     icon: TrendingUp,
   },
 ];
