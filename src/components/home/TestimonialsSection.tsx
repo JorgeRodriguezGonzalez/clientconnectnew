@@ -201,7 +201,7 @@ const TestimonialsSection = () => {
         </motion.div>
 
         {/* Columnas de Testimonios */}
-        <div className="relative flex justify-center gap-6 max-h-[740px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">
+        <div className="relative flex justify-center gap-6 max-h-[740px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_3%,black_97%,transparent)]">
           
           {/* Columna 1 */}
           <TestimonialsColumn 
