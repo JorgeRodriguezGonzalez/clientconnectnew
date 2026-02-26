@@ -124,21 +124,22 @@ const ClientCarousel = () => {
         <p className="text-white/40 text-[11px] font-inter font-semibold uppercase tracking-[2px] mb-1">Our</p>
         <p className="text-white text-[18px] font-inter font-semibold leading-tight">Australian<br />Clients</p>
 
-        {/* CTA - Our proven results */}
+        {/* CTA - Proven Results */}
         <a
           href="#results"
           className="inline-flex items-center gap-1.5 mt-4 group/cta cursor-pointer"
         >
-          <span className="text-cyan-400 text-[12px] font-inter font-medium group-hover/cta:text-emerald-400 transition-colors duration-300">
-            Our proven results
+          <span className="text-cyan-400 text-[11px] font-inter font-semibold uppercase tracking-[1.5px] group-hover/cta:text-emerald-400 transition-colors duration-300">
+            Proven Results
           </span>
           <motion.span
-            animate={{ y: [0, 3, 0] }}
+            animate={{ x: [0, 3, 0], y: [0, -3, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ display: 'inline-flex', transform: 'rotate(-45deg)' }}
           >
             <ChevronDown
               className="text-cyan-400 group-hover/cta:text-emerald-400 transition-colors duration-300"
-              style={{ width: 14, height: 14 }}
+              style={{ width: 14, height: 14, transform: 'rotate(180deg)' }}
             />
           </motion.span>
         </a>
