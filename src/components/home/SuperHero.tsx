@@ -99,10 +99,10 @@ const words = [
   "Light", "Leads",
 ];
 const wordWidths: Record<string, number> = {
-  "Light":   158,
-  "Leads":   154,
-  "Clients": 184,
-  "Sales":   146,
+  "Light":   118,
+  "Leads":   114,
+  "Clients": 148,
+  "Sales":   104,
 };
 
 interface SuperHeroProps {
@@ -209,9 +209,11 @@ export const SuperHero = ({
             >
               We Bring{' '}
               {/* ---- TEXT ROTATION ---- */}
-              <span
+              <motion.span
                 className="relative inline-block"
-                style={{ width: 200, verticalAlign: 'middle', overflow: 'hidden', height: '1.15em', lineHeight: '1.15em' }}
+                animate={{ width: wordWidths[words[titleNumber]] ?? 150 }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                style={{ verticalAlign: 'middle', overflow: 'hidden', height: '1.15em', lineHeight: '1.15em' }}
               >
                 {words.map((word, index) => (
                   <motion.span
@@ -229,7 +231,7 @@ export const SuperHero = ({
                     {word}
                   </motion.span>
                 ))}
-              </span>
+              </motion.span>
               {/* ----------------------- */}
               {' '}to Your
               <br />
