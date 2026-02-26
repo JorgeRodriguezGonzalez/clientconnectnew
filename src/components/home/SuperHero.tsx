@@ -64,11 +64,11 @@ const ClientCarousel = () => {
   return (
     <div className="w-full relative">
       <div
-        className="absolute left-0 top-0 h-full w-40 z-10 pointer-events-none flex items-center justify-start"
-        style={{ background: 'linear-gradient(to right, #050505 70%, transparent 100%)' }}
+        className="absolute left-0 top-0 h-full w-28 z-10 pointer-events-none flex items-center justify-start"
+        style={{ background: 'linear-gradient(to right, #050505 60%, transparent 100%)' }}
       >
         <p
-          className="text-white/30 text-[10px] font-inter font-semibold uppercase tracking-[4px] ml-4"
+          className="text-white/30 text-[10px] font-inter font-semibold uppercase tracking-[4px] ml-8"
           style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
           Our Australian Clients
