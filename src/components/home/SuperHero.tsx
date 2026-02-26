@@ -119,20 +119,24 @@ export const SuperHero = ({
 
   // --- Rotating title state ---
   const [titleNumber, setTitleNumber] = useState(0);
+  const [nextWidth, setNextWidth] = useState(wordWidths[wordsLoop[0]] || 100);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (titleNumber === wordsLoop.length - 1) {
-        setTitleNumber(0);
-      } else {
-        setTitleNumber(titleNumber + 1);
-      }
+      const nextIndex = titleNumber === wordsLoop.length - 1 ? 0 : titleNumber + 1;
+      const nextWord = wordsLoop[nextIndex];
+      // Pre-expand width before word transition
+      setNextWidth(wordWidths[nextWord] || 100);
+      // Small delay then swap the word
+      const wordTimeout = setTimeout(() => {
+        setTitleNumber(nextIndex);
+      }, 150);
+      return () => clearTimeout(wordTimeout);
     }, 3000);
     return () => clearTimeout(timeoutId);
   }, [titleNumber]);
 
-  const currentWord = wordsLoop[titleNumber];
-  const currentWidth = wordWidths[currentWord] || 100;
+  const currentWidth = nextWidth;
 
   return (
     <div
