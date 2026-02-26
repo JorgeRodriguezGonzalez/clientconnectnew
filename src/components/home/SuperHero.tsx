@@ -121,15 +121,14 @@ const ClientCarousel = () => {
 
       {/* LABEL IZQUIERDO */}
       <div className="flex-shrink-0 w-[200px] pl-8 pr-2">
-        <p className="text-white/40 text-[11px] font-inter font-semibold uppercase tracking-[2px] mb-1">Our</p>
-        <p className="text-white text-[18px] font-inter font-semibold leading-tight">Australian<br />Clients</p>
+        <p className="text-white text-[22px] font-inter font-semibold leading-tight">Our Local<br />Clients</p>
 
         {/* CTA - Proven Results */}
         <a
           href="#results"
           className="inline-flex items-center gap-1.5 mt-4 group/cta cursor-pointer"
         >
-          <span className="text-cyan-400 text-[11px] font-inter font-semibold uppercase tracking-[1.5px] group-hover/cta:text-emerald-400 transition-colors duration-300">
+          <span className="text-cyan-400 text-[13px] font-inter font-semibold uppercase tracking-[1.5px] group-hover/cta:text-emerald-400 transition-colors duration-300">
             Proven Results
           </span>
           <span style={{ display: 'inline-flex', transform: 'rotate(-135deg)' }}>
