@@ -311,18 +311,7 @@ export default function ZoomParallax() {
             <ParallaxContent videos={videos} />
 
             {/* FOOTER SPACER */}
-            <div className="h-[50vh] flex items-center justify-center bg-[#050505] relative z-10">
-                <h2
-                    className="font-satoshi font-bold text-center px-4"
-                    style={{
-                        fontSize: 'clamp(24px, 4vw, 48px)',
-                        lineHeight: 1.1,
-                        color: 'rgba(255,255,255,0.15)',
-                    }}
-                >
-                    Your brand could be next.
-                </h2>
-            </div>
+            <div className="h-[10vh] bg-[#050505] relative z-10" />
         </section>
     );
 }
