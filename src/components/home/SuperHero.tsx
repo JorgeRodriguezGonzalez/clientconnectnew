@@ -317,7 +317,7 @@ export const SuperHero = ({
       </div>
 
       {/* CLIENT CAROUSEL */}
-      <div className="relative z-10 w-full mb-24">
+      <div className="relative z-10 w-full">
         <ClientCarousel />
       </div>
 
