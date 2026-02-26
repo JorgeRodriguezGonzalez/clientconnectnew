@@ -118,7 +118,17 @@ const ClientCarousel = () => {
 
   return (
     <div className="w-full relative">
-      {/* Fade left */}
+      {/* Fade izquierdo + texto vertical */}
+      <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none flex items-center justify-start"
+        style={{ background: 'linear-gradient(to right, #050505 60%, transparent 100%)' }}
+      >
+        <p
+          className="text-white/25 text-[10px] font-inter font-semibold uppercase tracking-[3px] ml-3"
+          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+        >
+          Our Clients
+        </p>
+      </div>
       <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none"
         style={{ background: 'linear-gradient(to right, #050505 0%, transparent 100%)' }} />
       {/* Fade right */}
