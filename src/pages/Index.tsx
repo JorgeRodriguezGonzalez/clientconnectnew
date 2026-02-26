@@ -18,7 +18,7 @@ import ScrollableWorkflow from "@/components/home/ScrollableWorkflow";
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
 import CloudHero from "@/components/home/section-layers";
-import { Services } from "@/components/home/Services";
+import Services from "@/components/home/Services";
 import { SuperHero } from "@/components/home/SuperHero";
 import { FloatingBanner } from "@/components/home/floatingbanner";
 import { Header } from "@/components/home/header";
