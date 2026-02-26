@@ -44,17 +44,16 @@ const Index = () => {
 
         <ServicesSection />
         <ZoomParallax />
+        <WhatWeDoSection2 />
+
         <ComparisonSection />
         <div className="w-full flex justify-center pb-16 relative z-[999999]">
           <BentoGrid />
         </div>
 
-        <WhatWeDoSection2 />
-
         <CaseStudiesSection />
 
         <OurStepsVersion2 />
-
 
         <FAQSection />
 
