@@ -110,6 +110,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                                     style={{
                                                         fontSize: '56px',
                                                         lineHeight: 1.1,
+                                                        whiteSpace: 'nowrap',
                                                     }}
                                                 >
                                                     Your{' '}
