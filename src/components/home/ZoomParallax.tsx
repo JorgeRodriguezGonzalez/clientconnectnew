@@ -106,19 +106,30 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                             className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 px-6 text-center"
                                         >
                                             <h3
-                                                    className="font-satoshi font-bold"
+                                                    className="font-satoshi font-bold text-white"
                                                     style={{
-                                                        fontSize: '28px',
-                                                        lineHeight: 1.2,
-                                                        backgroundImage: "linear-gradient(45deg, rgba(255,255,255,0), #34d399, #06b6d4, rgba(255,255,255,0))",
-                                                        backgroundSize: "400% 100%",
-                                                        WebkitBackgroundClip: "text",
-                                                        WebkitTextFillColor: "transparent",
-                                                        backgroundClip: "text",
-                                                        color: "transparent",
+                                                        fontSize: '56px',
+                                                        lineHeight: 1.1,
                                                     }}
                                                 >
-                                                    Your brand could be next.
+                                                    Your{' '}
+                                                    <motion.span
+                                                        initial={{ backgroundPosition: "400% 50%" }}
+                                                        animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                                                        transition={{ duration: 8, ease: "linear", repeat: Infinity }}
+                                                        style={{
+                                                            display: "inline-block",
+                                                            backgroundImage: "linear-gradient(45deg, rgba(255,255,255,0), #34d399, #06b6d4, rgba(255,255,255,0))",
+                                                            backgroundSize: "400% 100%",
+                                                            WebkitBackgroundClip: "text",
+                                                            WebkitTextFillColor: "transparent",
+                                                            backgroundClip: "text",
+                                                            color: "transparent",
+                                                        }}
+                                                    >
+                                                        brand
+                                                    </motion.span>{' '}
+                                                    could be next.
                                                 </h3>
                                             <div className="flex gap-3 mt-2">
                                                 <motion.a
