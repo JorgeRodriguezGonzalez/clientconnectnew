@@ -236,7 +236,7 @@ export default function ZoomParallax() {
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="w-fit px-3 py-1.5 rounded-none border border-white/10 bg-white/5 transition-colors duration-300 mb-6"
+                        className="w-fit px-3 py-1.5 rounded-full border border-white/10 bg-white/5 transition-colors duration-300 mb-6"
                     >
                         <span
                             className="font-satoshi font-semibold uppercase"
