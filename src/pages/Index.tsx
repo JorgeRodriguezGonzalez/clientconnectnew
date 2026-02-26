@@ -12,8 +12,6 @@ import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 import BoxCards from "@/components/home/BoxCards";
 import FounderSection from "@/components/home/FounderSection";
-import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
-import OurSteps from "@/components/home/OurSteps";
 import ScrollableWorkflow from "@/components/home/ScrollableWorkflow";
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 import { InteractiveCardStack } from "@/components/home/InteractiveCardStack";
@@ -24,7 +22,6 @@ import { FloatingBanner } from "@/components/home/floatingbanner";
 import { Header } from "@/components/home/header";
 import { Footer } from "@/components/home/footer";
 import FAQSection from "@/components/home/faqs";
-import CaseStudiesSection from "@/components/home/case-studies";
 import HowWeDoIt from "@/components/home/HowWeDoIt";
 import InteractivePath from "@/components/home/InteractivePath";
 import { WhatWeDoSection2 } from "@/components/home/WhatWeDoSection2";
@@ -49,10 +46,6 @@ const Index = () => {
         <ComparisonSection />
         <TestimonialsSection />
         <FAQSection />
-
-        <CaseStudiesSection />
-
-        <OurStepsVersion2 />
 
         <CTASection />
         <FloatingBanner />
