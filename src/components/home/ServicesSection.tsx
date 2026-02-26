@@ -13,7 +13,7 @@ const services = [
     id: "brand-identity",
     title: "Brand Identity",
     description: "Your brand is more than a logo. We craft a cohesive visual and verbal identity — from color palettes and typography to tone of voice — that makes your business instantly recognizable and memorable.",
-    videoSrc: "https://videos.pexels.com/video-files/7204567/7204567-hd_1080_1920_24fps.mp4",
+    videoSrc: "/videos/brand.mp4",
     icon: Palette,
   },
   {
@@ -27,7 +27,7 @@ const services = [
     id: "seo",
     title: "SEO",
     description: "Rank higher on Google and drive organic traffic that converts into customers. We build long-term visibility through technical excellence, content strategy, and authoritative link building.",
-    videoSrc: "https://videos.pexels.com/video-files/3130284/3130284-hd_1920_1080_25fps.mp4",
+    videoSrc: "/videos/seo.mp4",
     icon: Search,
   },
   {
