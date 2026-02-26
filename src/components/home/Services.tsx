@@ -50,7 +50,7 @@ const GradientText = ({ children, style = {} }) => (
   </motion.span>
 );
 
-export const Services = () => {
+const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
   const [hoveredTab, setHoveredTab] = useState(null);
   const [paddingLeft, setPaddingLeft] = useState(0);
@@ -118,34 +118,31 @@ export const Services = () => {
         .hide-scroll { -ms-overflow-style: none !important; scrollbar-width: none !important; }
       `}</style>
 
-      {/* Header */}
+      {/* Header - Centrado */}
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: "2vw" }}>
 
-        <div className="flex flex-col lg:flex-row lg:items-end gap-8 mb-16 pb-6 border-b border-white/10">
-          <div className="lg:w-1/2 flex flex-col gap-2">
-            <span className="text-xs uppercase tracking-[0.35em] text-white/50">Digital Ecosystem</span>
-            <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
-              Specialized in <br />
-              <motion.span
-                initial={{ backgroundPosition: "400% 50%" }}
-                animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                transition={{ duration: 12, ease: "linear", repeat: Infinity }}
-                style={{
-                  display: "inline-block",
-                  backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255,255,255,0))`,
-                  backgroundSize: "400% 100%",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  color: "transparent",
-                }}
-              >
-                10 vital services
-              </motion.span>
-            </h2>
-          </div>
-          <div className="lg:w-[427px] lg:ml-auto lg:pb-4">
-            <p className="text-sm font-semibold uppercase tracking-wide text-white mb-2">Transform your business.</p>
+        <div className="flex flex-col items-center text-center gap-4 mb-16 pb-6 border-b border-white/10">
+          <span className="text-xs uppercase tracking-[0.35em] text-white/50">Digital Ecosystem</span>
+          <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
+            Specialized in <br />
+            <motion.span
+              initial={{ backgroundPosition: "400% 50%" }}
+              animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+              transition={{ duration: 12, ease: "linear", repeat: Infinity }}
+              style={{
+                display: "inline-block",
+                backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255,255,255,0))`,
+                backgroundSize: "400% 100%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              10 vital services
+            </motion.span>
+          </h2>
+          <div className="max-w-lg">
             <p className="text-sm leading-relaxed text-white/60 md:text-base">
               From initial strategy to final conversion, we cover every aspect of the digital landscape to ensure sustainable growth and measurable results.
             </p>
@@ -167,7 +164,6 @@ export const Services = () => {
                   onMouseLeave={() => setHoveredTab(null)}
                   className="relative px-4 py-3 rounded-none text-xs font-bold uppercase tracking-wide whitespace-nowrap transition-all duration-200 flex-shrink-0 z-10"
                 >
-                  {/* Fondo negro activo */}
                   {isActive && (
                     <motion.div
                       layoutId="activeTab"
@@ -175,12 +171,9 @@ export const Services = () => {
                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                     />
                   )}
-                  {/* Fondo hover (no activo) */}
                   {!isActive && isHovered && (
                     <div className="absolute inset-0 -z-10 bg-white/10" />
                   )}
-
-                  {/* Texto: gradient si activo o en hover */}
                   {isActive || isHovered ? (
                     <GradientText>{service.title}</GradientText>
                   ) : (
@@ -205,7 +198,6 @@ export const Services = () => {
             id={`card-${service.id}`}
             className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
           >
-            {/* ✅ rounded-2xl en la card */}
             <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
               <div
                 className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105"
@@ -216,7 +208,6 @@ export const Services = () => {
                   backgroundRepeat: "no-repeat",
                 }}
               />
-              {/* ✅ Overlay más oscuro: bg-black/60 en reposo, bg-black/50 en hover */}
               <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-500" />
               <div className="relative h-full flex flex-col justify-between p-5 z-10">
                 <div className="space-y-2 pt-1">
@@ -261,4 +252,6 @@ export const Services = () => {
       </div>
     </div>
   );
-}
+};
+
+export default Services;
