@@ -311,7 +311,7 @@ export default function ZoomParallax() {
             <ParallaxContent videos={videos} />
 
             {/* FOOTER SPACER */}
-            <div className="h-[50vh] bg-[#050505] relative z-10" />
+            <div className="h-[25vh] bg-[#050505] relative z-10" />
         </section>
     );
 }
