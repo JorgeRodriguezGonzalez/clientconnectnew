@@ -108,7 +108,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                             <h3
                                                     className="font-satoshi font-bold"
                                                     style={{
-                                                        fontSize: '18px',
+                                                        fontSize: '28px',
                                                         lineHeight: 1.2,
                                                         backgroundImage: "linear-gradient(45deg, rgba(255,255,255,0), #34d399, #06b6d4, rgba(255,255,255,0))",
                                                         backgroundSize: "400% 100%",
@@ -120,21 +120,52 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                                 >
                                                     Your brand could be next.
                                                 </h3>
-                                            <div className="flex gap-2 mt-1">
-                                                <a
+                                            <div className="flex gap-3 mt-2">
+                                                <motion.a
                                                     href="#contact"
-                                                    className="font-satoshi font-semibold px-4 py-2 rounded-none bg-white text-black transition-all hover:bg-white/90"
-                                                    style={{ fontSize: '11px', letterSpacing: '0.5px' }}
+                                                    whileHover={{
+                                                        backgroundColor: 'rgba(255,255,255,0.2)',
+                                                        boxShadow: '0 0 20px rgba(255,255,255,0.3)',
+                                                        borderColor: 'rgba(255,255,255,1)',
+                                                    }}
+                                                    className="font-satoshi font-semibold whitespace-nowrap flex items-center"
+                                                    style={{
+                                                        fontSize: '15px',
+                                                        height: '48px',
+                                                        padding: '12px 24px',
+                                                        borderRadius: '50px',
+                                                        background: 'rgba(255,255,255,0.1)',
+                                                        backdropFilter: 'blur(8px)',
+                                                        border: '1px solid rgba(255,255,255,0.2)',
+                                                        color: '#ffffff',
+                                                        transition: 'all 0.3s ease',
+                                                    }}
                                                 >
                                                     Let's chat
-                                                </a>
-                                                <a
+                                                </motion.a>
+                                                <motion.a
                                                     href="#book"
-                                                    className="font-satoshi font-semibold px-4 py-2 rounded-none border border-white/40 text-white transition-all hover:bg-white/10"
-                                                    style={{ fontSize: '11px', letterSpacing: '0.5px' }}
+                                                    whileHover={{
+                                                        backgroundColor: 'rgba(255,255,255,0.2)',
+                                                        boxShadow: '0 0 20px rgba(52,211,153,0.5)',
+                                                        borderColor: '#34d399',
+                                                        color: '#34d399',
+                                                    }}
+                                                    className="font-satoshi font-semibold whitespace-nowrap flex items-center gap-2"
+                                                    style={{
+                                                        fontSize: '15px',
+                                                        height: '48px',
+                                                        padding: '12px 24px',
+                                                        borderRadius: '50px',
+                                                        background: 'rgba(255,255,255,0.1)',
+                                                        backdropFilter: 'blur(8px)',
+                                                        border: '1px solid #06b6d4',
+                                                        color: '#06b6d4',
+                                                        transition: 'all 0.3s ease',
+                                                    }}
                                                 >
                                                     Book a Call
-                                                </a>
+                                                </motion.a>
                                             </div>
                                         </motion.div>
                                     </>
