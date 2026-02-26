@@ -34,7 +34,7 @@ const services = [
     id: "google-ads",
     title: "Google Ads",
     description: "Get instant visibility with targeted campaigns that maximize your ROI. Smart bidding, compelling ad copy, and continuous optimization to turn every dollar into measurable growth.",
-    videoSrc: "https://videos.pexels.com/video-files/4514642/4514642-hd_1080_1920_24fps.mp4",
+    videoSrc: "/videos/googleads.mp4",
     icon: MousePointerClick,
   },
   {
