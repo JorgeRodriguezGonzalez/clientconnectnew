@@ -59,7 +59,13 @@ const ServiceCard = ({ service, index }) => {
     setIsHovered(false);
     if (videoRef.current) {
       videoRef.current.pause();
-      videoRef.current.currentTime = 0;
+      videoRef.current.currentTime = videoRef.current.duration * 0.8;
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = videoRef.current.duration * 0.8;
     }
   };
 
@@ -167,12 +173,13 @@ const ServiceCard = ({ service, index }) => {
             loop
             playsInline
             preload="metadata"
+            onLoadedMetadata={handleLoadedMetadata}
             style={{
               width: "100%",
               height: "100%",
               objectFit: "cover",
               transition: "all 0.7s",
-              filter: isHovered ? "grayscale(0)" : "grayscale(0.5)",
+              filter: isHovered ? "grayscale(0)" : "grayscale(0.3)",
               transform: isHovered ? "scale(1.1)" : "scale(1)",
             }}
           />
