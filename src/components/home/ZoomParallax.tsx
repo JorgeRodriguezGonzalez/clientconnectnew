@@ -236,16 +236,9 @@ export default function ZoomParallax() {
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="w-fit px-3 py-1.5 rounded-full border border-white/10 bg-white/5 transition-colors duration-300 mb-6"
+                        className="w-fit px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 mb-6"
                     >
-                        <span
-                            className="font-satoshi font-semibold uppercase"
-                            style={{
-                                fontSize: '10px',
-                                letterSpacing: '2px',
-                                color: '#9ca3af',
-                            }}
-                        >
+                        <span className="text-[10px] font-sans font-semibold uppercase tracking-[2px] text-gray-400">
                             Our Work
                         </span>
                     </motion.div>
