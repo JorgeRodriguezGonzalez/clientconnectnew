@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, ChevronDown } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 
 const fontStyles = `
   .font-inter {
@@ -10,79 +10,26 @@ const fontStyles = `
 
 // --- CLIENTS DATA ---
 const clients = [
-  {
-    name: 'Asset Plumbing Solutions',
-    tags: ['Google Ads', 'Website', 'SEO'],
-    image: '/images/asset.jpg',
-    logo: 'Asset Plumbing\nSolutions',
-  },
-  {
-    name: 'Nanotise',
-    tags: ['Website', 'Rebrand', 'Social Media', 'Content Creation'],
-    image: '/images/nanotise.jpg',
-    logo: 'Nanotise',
-  },
-  {
-    name: 'LC Landscaping',
-    tags: ['Google Ads', 'Paid Social', 'Website'],
-    image: '/images/landscaping.jpg',
-    logo: 'LC\nLandscaping',
-  },
-  {
-    name: 'Premier Bathrooms',
-    tags: ['Website', 'SEO', 'Google Ads', 'Content Creation'],
-    image: '/images/premier.jpg',
-    logo: 'Premier\nBathrooms',
-  },
-  {
-    name: 'Pioneer Shades',
-    tags: ['Paid Social', 'Google Ads', 'Website'],
-    image: '/images/pioneer.jpg',
-    logo: 'Pioneer\nShades',
-  },
-  {
-    name: 'Turnbull Pools',
-    tags: ['Google Ads', 'SEO', 'Social Media', 'Website'],
-    image: 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=600&q=80',
-    logo: 'Turnbull\nPools',
-  },
-  {
-    name: 'Sydney Glass Pool Fencing',
-    tags: ['Google Ads', 'Website', 'Content Creation'],
-    image: '/images/sydneyglass.jpeg',
-    logo: 'Sydney Glass\nPool Fencing',
-  },
-  {
-    name: 'Prolex Bathroom Renovations',
-    tags: ['SEO', 'Google Ads', 'Paid Social', 'Website'],
-    image: '/images/prolex.jpg',
-    logo: 'Prolex\nBathrooms',
-  },
-  {
-    name: 'LC Driveways',
-    tags: ['Google Ads', 'Paid Social', 'Website'],
-    image: '/images/117.jpg',
-    logo: 'LC\nDriveways',
-  },
+  { name: 'Asset Plumbing Solutions', tags: ['Google Ads', 'Website', 'SEO'], image: '/images/asset.jpg', logo: 'Asset Plumbing\nSolutions' },
+  { name: 'Nanotise', tags: ['Website', 'Rebrand', 'Social Media', 'Content Creation'], image: '/images/nanotise.jpg', logo: 'Nanotise' },
+  { name: 'LC Landscaping', tags: ['Google Ads', 'Paid Social', 'Website'], image: '/images/landscaping.jpg', logo: 'LC\nLandscaping' },
+  { name: 'Premier Bathrooms', tags: ['Website', 'SEO', 'Google Ads', 'Content Creation'], image: '/images/premier.jpg', logo: 'Premier\nBathrooms' },
+  { name: 'Pioneer Shades', tags: ['Paid Social', 'Google Ads', 'Website'], image: '/images/pioneer.jpg', logo: 'Pioneer\nShades' },
+  { name: 'Turnbull Pools', tags: ['Google Ads', 'SEO', 'Social Media', 'Website'], image: 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=600&q=80', logo: 'Turnbull\nPools' },
+  { name: 'Sydney Glass Pool Fencing', tags: ['Google Ads', 'Website', 'Content Creation'], image: '/images/sydneyglass.jpeg', logo: 'Sydney Glass\nPool Fencing' },
+  { name: 'Prolex Bathroom Renovations', tags: ['SEO', 'Google Ads', 'Paid Social', 'Website'], image: '/images/prolex.jpg', logo: 'Prolex\nBathrooms' },
+  { name: 'LC Driveways', tags: ['Google Ads', 'Paid Social', 'Website'], image: '/images/117.jpg', logo: 'LC\nDriveways' },
 ];
 
 const ClientCard = ({ client }: { client: typeof clients[0] }) => (
   <div className="relative flex-shrink-0 w-[260px] h-[340px] rounded-3xl overflow-hidden cursor-pointer group border border-transparent hover:border-gray-500 transition-all duration-300">
-    <img
-      src={client.image}
-      alt={client.name}
-      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-    />
+    <img src={client.image} alt={client.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/40" />
     <div className="absolute top-4 left-4">
-      <p className="text-white font-bold text-[15px] leading-tight whitespace-pre-line drop-shadow-lg">
-        {client.logo}
-      </p>
+      <p className="text-white font-bold text-[15px] leading-tight whitespace-pre-line drop-shadow-lg">{client.logo}</p>
     </div>
     <div className="absolute bottom-5 left-4 right-4">
-      <p className="text-white/90 text-[12px] font-medium leading-relaxed">
-        {client.tags.join(' · ')}
-      </p>
+      <p className="text-white/90 text-[12px] font-medium leading-relaxed">{client.tags.join(' · ')}</p>
     </div>
   </div>
 );
@@ -105,9 +52,7 @@ const ClientCarousel = () => {
     const tick = () => {
       if (!paused) {
         xRef.current -= speed;
-        if (Math.abs(xRef.current) >= trackWidth) {
-          xRef.current = 0;
-        }
+        if (Math.abs(xRef.current) >= trackWidth) xRef.current = 0;
         setX(xRef.current);
       }
       rafRef.current = requestAnimationFrame(tick);
@@ -117,46 +62,21 @@ const ClientCarousel = () => {
   }, [paused, trackWidth]);
 
   return (
-    <div className="w-full flex items-center">
-
-      {/* LABEL IZQUIERDO */}
-      <div className="flex-shrink-0 w-[200px] pl-8 pr-2">
-        <p className="text-white text-[22px] font-inter font-semibold leading-tight">Our Local<br />Clients</p>
-
-        {/* CTA - Proven Results */}
-        <a
-          href="#results"
-          className="inline-flex items-center gap-1.5 mt-4 group/cta cursor-pointer"
+    <div className="w-full relative">
+      <div
+        className="absolute left-0 top-0 h-full w-28 z-10 pointer-events-none flex items-center justify-start"
+        style={{ background: 'linear-gradient(to right, #050505 60%, transparent 100%)' }}
+      >
+        <p
+          className="text-white/30 text-[10px] font-inter font-semibold uppercase tracking-[4px] ml-8"
+          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
-          <span className="text-cyan-400 text-[13px] font-inter font-semibold uppercase tracking-[1.5px] group-hover/cta:text-emerald-400 transition-colors duration-300">
-            Proven Results
-          </span>
-          <span style={{ display: 'inline-flex', transform: 'rotate(-135deg)' }}>
-            <ChevronDown
-              className="text-cyan-400 group-hover/cta:text-emerald-400 transition-colors duration-300"
-              style={{ width: 14, height: 14 }}
-            />
-          </span>
-        </a>
+          Our Australian Clients
+        </p>
       </div>
-
-      {/* SEPARADOR VERTICAL */}
-      <div className="flex-shrink-0 w-px h-16 bg-white/10 mr-2" />
-
-      {/* CAROUSEL */}
-      <div className="relative flex-1 overflow-hidden">
-        {/* Fade left - cerca del título */}
-        <div
-          className="absolute left-0 top-0 h-full w-16 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to right, #050505 0%, transparent 100%)' }}
-        />
-
-        {/* Fade right */}
-        <div
-          className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }}
-        />
-
+      <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }} />
+      <div className="overflow-hidden w-full">
         <div
           className="flex"
           style={{ gap: `${gap}px`, transform: `translateX(${x}px)`, willChange: 'transform' }}
@@ -168,30 +88,26 @@ const ClientCarousel = () => {
           ))}
         </div>
       </div>
-
     </div>
   );
 };
+
+// --- ROTATING WORDS CONFIG ---
+const rotatingWords = ["Light", "Leads", "Clients", "Sales"];
+const wordWidths: Record<string, number> = {
+  "Light": 145,
+  "Leads": 175,
+  "Clients": 200,
+  "Sales": 155,
+};
+
+// Pre-build the full looped array (same pattern as FinalHero)
+const wordsLoop = [...Array(5)].flatMap(() => rotatingWords);
 
 interface SuperHeroProps {
   primaryButtonText?: string;
   secondaryButtonText?: string;
 }
-
-const titleWords = [
-  "Light", "Leads", "Clients", "Sales",
-  "Light", "Leads", "Clients", "Sales",
-  "Light", "Leads", "Clients", "Sales",
-  "Light", "Leads", "Clients", "Sales",
-  "Light", "Leads", "Clients", "Sales",
-];
-
-const wordWidths: Record<string, number> = {
-  "Light": 110,
-  "Leads": 135,
-  "Clients": 150,
-  "Sales": 120,
-};
 
 export const SuperHero = ({
   primaryButtonText = 'Start Scaling',
@@ -200,14 +116,27 @@ export const SuperHero = ({
   const lampColor = '#06b6d4';
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
+
+  // --- Rotating title state ---
   const [titleNumber, setTitleNumber] = useState(0);
+  const [nextWidth, setNextWidth] = useState(wordWidths[wordsLoop[0]] || 100);
 
   useEffect(() => {
-    const interval = setTimeout(() => {
-      setTitleNumber((n) => (n + 1) % titleWords.length);
+    const timeoutId = setTimeout(() => {
+      const nextIndex = titleNumber === wordsLoop.length - 1 ? 0 : titleNumber + 1;
+      const nextWord = wordsLoop[nextIndex];
+      // Pre-expand width before word transition
+      setNextWidth(wordWidths[nextWord] || 100);
+      // Small delay then swap the word
+      const wordTimeout = setTimeout(() => {
+        setTitleNumber(nextIndex);
+      }, 150);
+      return () => clearTimeout(wordTimeout);
     }, 3000);
-    return () => clearTimeout(interval);
+    return () => clearTimeout(timeoutId);
   }, [titleNumber]);
+
+  const currentWidth = nextWidth;
 
   return (
     <div
@@ -230,20 +159,13 @@ export const SuperHero = ({
 
       {/* HERO */}
       <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center py-16">
-
-        <div
-          className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-4"
-          style={{ marginTop: '-10px' }}
-        >
+        <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-4" style={{ marginTop: '-10px' }}>
 
           {/* LAMP */}
           <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible" style={{ transform: 'scale(0.85)' }}>
             <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
               <div className="absolute inset-auto z-30 h-56 w-full flex items-center justify-center pointer-events-none">
-                <motion.div
-                  className="w-[60rem] h-full relative"
-                  style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}
-                >
+                <motion.div className="w-[60rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
                   <motion.div
                     initial={{ opacity: 0, width: '15rem' }}
                     animate={{ opacity: 0.5, width: '28rem' }}
@@ -274,7 +196,6 @@ export const SuperHero = ({
                   />
                 </motion.div>
               </div>
-
               <motion.div
                 initial={{ opacity: 0, width: '15rem' }}
                 animate={{ opacity: 1, width: '28rem' }}
@@ -293,7 +214,36 @@ export const SuperHero = ({
               transition={{ delay: 0.7, duration: 1.0, ease: 'easeOut' }}
               className="font-inter font-semibold text-[42px] md:text-[56px] lg:text-[68px] leading-[1.1] tracking-[-2px] text-white mb-6 normal-case"
             >
-              We Bring Light to Your
+              We Bring{' '}
+              <motion.span
+                className="relative inline-flex items-center overflow-hidden"
+                animate={{ width: currentWidth }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
+                style={{ minHeight: '1em' }}
+              >
+                {wordsLoop.map((word, index) => (
+                  <motion.span
+                    key={index}
+                    className="font-semibold"
+                    initial={{ opacity: 0, y: -100 }}
+                    transition={{ type: 'spring', stiffness: 50, opacity: { duration: 0.2 } }}
+                    animate={
+                      titleNumber === index
+                        ? { y: 0, opacity: 1, position: 'relative' as const }
+                        : {
+                            y: titleNumber > index ? 20 : -50,
+                            opacity: 0,
+                            position: 'absolute' as const,
+                            top: 0,
+                            left: 0,
+                          }
+                    }
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </motion.span>{' '}
+              to Your
               <br />
               Business Growth
             </motion.h1>
@@ -324,12 +274,8 @@ export const SuperHero = ({
             >
               {['Google Ads', 'Paid Social', 'SEO', 'Web Design', 'Content Creation', 'CRO'].map((tag, i, arr) => (
                 <React.Fragment key={tag}>
-                  <span className="text-white/50 text-[13px] font-inter font-medium px-3">
-                    {tag}
-                  </span>
-                  {i < arr.length - 1 && (
-                    <span className="text-white/20 text-[13px]">·</span>
-                  )}
+                  <span className="text-white/50 text-[13px] font-inter font-medium px-3">{tag}</span>
+                  {i < arr.length - 1 && <span className="text-white/20 text-[13px]">·</span>}
                 </React.Fragment>
               ))}
             </motion.div>
@@ -368,11 +314,10 @@ export const SuperHero = ({
           </div>
 
         </div>
-
       </div>
 
       {/* CLIENT CAROUSEL */}
-      <div className="relative z-10 w-full mb-24">
+      <div className="relative z-10 w-full mb-12">
         <ClientCarousel />
       </div>
 
