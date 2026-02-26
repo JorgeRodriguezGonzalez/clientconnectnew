@@ -234,9 +234,9 @@ export const SuperHero = ({
                     transition={{ duration: 0.45, ease: 'easeInOut' }}
                   >
                     {word}
-                  </span>
+                  </motion.span>
                 ))}
-              </motion.span>
+              </span>
               {/* ----------------------- */}
               {' '}to Your
               <br />
