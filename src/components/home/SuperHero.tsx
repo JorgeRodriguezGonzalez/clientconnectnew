@@ -99,10 +99,10 @@ const words = [
   "Light", "Leads",
 ];
 const wordWidths: Record<string, number> = {
-  "Light":   118,
-  "Leads":   114,
-  "Clients": 148,
-  "Sales":   104,
+  "Light":   135,
+  "Leads":   130,
+  "Clients": 165,
+  "Sales":   120,
 };
 
 interface SuperHeroProps {
