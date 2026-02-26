@@ -47,14 +47,13 @@ const Index = () => {
         <WhatWeDoSection2 />
 
         <ComparisonSection />
+        <TestimonialsSection />
 
         <CaseStudiesSection />
 
         <OurStepsVersion2 />
 
         <FAQSection />
-
-        <TestimonialsSection />
         <CTASection />
         <FloatingBanner />
         <Footer />
