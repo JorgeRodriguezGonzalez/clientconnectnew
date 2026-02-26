@@ -980,7 +980,7 @@ export const FounderSection = () => {
                     <img 
                       src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
                       alt="Australian National Support"
-                      className="w-full h-full object-cover grayscale opacity-90 transition-all duration-500 group-hover:grayscale-0"
+                      className="w-full h-full object-cover opacity-90 transition-all duration-500 group-hover:grayscale"
                     />
                   </div>
                 </div>
