@@ -19,41 +19,11 @@ const RECENT_WORKS: WorkItem[] = [
     handle: "Alex Ross",
     testimonial: "Nanotise"
   },
-  {
-    id: "2",
-    videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4",
-    avatarSrc: "https://framerusercontent.com/images/sAiv8XpUWxb71XV3uCmVEzAMS0A.svg",
-    handle: "@fitness_empire",
-    testimonial: "CPA reduced by 40% with new creatives"
-  },
-  {
-    id: "3",
-    videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4",
-    avatarSrc: "https://framerusercontent.com/images/QYsfiTUurr8vxkRUjXw7KRx58Q.svg",
-    handle: "@realestate_pro",
-    testimonial: "150 Qualified Leads in one month"
-  },
-  {
-    id: "4",
-    videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4",
-    avatarSrc: "https://framerusercontent.com/images/dZTHdqycN3jTN1xqMld5nxZzEU.svg",
-    handle: "@saas_growth",
-    testimonial: "From cold traffic to loyal users"
-  },
-  {
-    id: "5",
-    videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4",
-    avatarSrc: "https://framerusercontent.com/images/sAiv8XpUWxb71XV3uCmVEzAMS0A.svg",
-    handle: "@ecom_brand",
-    testimonial: "Best creative strategy we've tested"
-  },
-  {
-    id: "6",
-    videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4",
-    avatarSrc: "https://framerusercontent.com/images/QYsfiTUurr8vxkRUjXw7KRx58Q.svg",
-    handle: "@beauty_brand",
-    testimonial: "Our best-performing campaign ever"
-  }
+  { id: "2", videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", avatarSrc: "", handle: "Kieren", testimonial: "Lc Landscaping" },
+  { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", avatarSrc: "", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
+  { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", avatarSrc: "", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
+  { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", avatarSrc: "", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
+  { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", avatarSrc: "", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" }
 ];
 
 // --- WorkCard ---
@@ -143,19 +113,13 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
           gap: "16px",
         }}
       >
-        {item.id === "1" ? (
-          <div style={{ display: "flex", gap: "4px" }}>
+        <div style={{ display: "flex", gap: "4px" }}>
             {[...Array(5)].map((_, i) => (
               <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#06b6d4" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
               </svg>
             ))}
           </div>
-        ) : (
-          <div style={{ width: 40, height: 40, borderRadius: "50%", overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.1)" }}>
-            <img src={item.avatarSrc} alt={item.handle} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-        )}
 
         <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
           <p style={{ color: "#fff", fontSize: "22px", fontWeight: 600, lineHeight: 1.2, fontFamily: "'Inter', sans-serif", margin: 0 }}>
