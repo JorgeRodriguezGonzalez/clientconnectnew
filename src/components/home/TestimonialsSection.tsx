@@ -13,8 +13,7 @@ const COLORS = {
 
 const BackgroundStripes = () => (
   <div
-    // 'invert' para que las lineas se vean blancas/grises sobre el fondo negro
-    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05] invert"
+    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05]"
     style={{
       backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
       backgroundRepeat: 'repeat',
@@ -110,7 +109,6 @@ const TestimonialsColumn = (props: {
               {props.testimonials.map(({ text, image, name, role }, i) => (
                 <div 
                   key={i}
-                  // CAMBIOS DARK MODE: bg-zinc-900, border-white/10, text colors
                   className="group relative p-8 rounded-none border border-white/10 bg-zinc-900 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 w-full"
                 >
                   <Quote className="absolute top-6 right-6 w-5 h-5 text-zinc-700 group-hover:text-emerald-500/40 transition-colors" />
@@ -151,11 +149,10 @@ const TestimonialsColumn = (props: {
 // --- COMPONENTE PRINCIPAL ---
 const TestimonialsSection = () => {
   return (
-    // CAMBIO: Fondo negro (#050505)
-    <section className="relative w-full bg-[#050505] py-24 sm:py-32 overflow-hidden">
+    <section className="relative w-full bg-white py-24 sm:py-32 overflow-hidden">
       
       {/* Top Border */}
-      <div className="w-full h-[1px] bg-white/10 absolute top-0 z-20" />
+      <div className="w-full h-[1px] bg-black/10 absolute top-0 z-20" />
 
       {/* Background Pattern */}
       <BackgroundStripes />
@@ -170,11 +167,11 @@ const TestimonialsSection = () => {
           viewport={{ once: true }}
           className="flex flex-col items-center justify-center max-w-[640px] mx-auto text-center mb-16"
         >
-          <div className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500 mb-4">
+          <div className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-400 mb-4">
             SOCIAL PROOF
           </div>
 
-          <h2 className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-white mb-6">
+          <h2 className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-zinc-900 mb-6">
             Trusted by founders and{' '}
             <motion.span
               initial={{ backgroundPosition: "400% 50%" }}
@@ -186,7 +183,7 @@ const TestimonialsSection = () => {
               }}
               style={{
                 display: "inline-block",
-                backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
+                backgroundImage: `linear-gradient(45deg, rgba(0, 0, 0, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(0, 0, 0, 0))`,
                 backgroundSize: "400% 100%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -198,7 +195,7 @@ const TestimonialsSection = () => {
             </motion.span>
           </h2>
           
-          <p className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-400 tracking-tight">
+          <p className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-500 tracking-tight">
             See what happens when data-driven strategy meets creative excellence. Real results from real partners.
           </p>
         </motion.div>
