@@ -209,28 +209,27 @@ export const SuperHero = ({
             >
               We Bring{' '}
               {/* ---- TEXT ROTATION ---- */}
-              <motion.span
-                className="relative inline-flex items-center"
-                animate={{ width: wordWidths[words[titleNumber]] ?? 150 }}
-                transition={{ duration: 0.5, ease: 'easeInOut' }}
-                style={{ minHeight: '1.2em', verticalAlign: 'middle', overflow: 'visible', padding: '0 6px' }}
+              <span
+                className="relative inline-block"
+                style={{ width: 200, verticalAlign: 'middle', overflow: 'hidden', height: '1.15em', lineHeight: '1.15em' }}
               >
                 {words.map((word, index) => (
                   <motion.span
                     key={index}
+                    className="absolute left-0 w-full text-center"
                     style={{ color: '#ffffff' }}
-                    initial={{ opacity: 0, y: 60 }}
-                    transition={{ type: 'spring', stiffness: 50, opacity: { duration: 0.2 } }}
+                    initial={{ opacity: 0, y: '100%' }}
                     animate={
                       titleNumber === index
-                        ? { y: 0, opacity: 1, position: 'relative' }
-                        : { y: titleNumber > index ? 20 : -50, opacity: 0, position: 'absolute', top: 0, left: 0 }
+                        ? { opacity: 1, y: '0%' }
+                        : { opacity: 0, y: '-100%' }
                     }
+                    transition={{ duration: 0.45, ease: 'easeInOut' }}
                   >
                     {word}
                   </motion.span>
                 ))}
-              </motion.span>
+              </span>
               {/* ----------------------- */}
               {' '}to Your
               <br />
