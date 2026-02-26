@@ -132,16 +132,12 @@ const ClientCarousel = () => {
           <span className="text-cyan-400 text-[11px] font-inter font-semibold uppercase tracking-[1.5px] group-hover/cta:text-emerald-400 transition-colors duration-300">
             Proven Results
           </span>
-          <motion.span
-            animate={{ x: [0, 3, 0], y: [0, -3, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ display: 'inline-flex', transform: 'rotate(-45deg)' }}
-          >
+          <span style={{ display: 'inline-flex', transform: 'rotate(-135deg)' }}>
             <ChevronDown
               className="text-cyan-400 group-hover/cta:text-emerald-400 transition-colors duration-300"
-              style={{ width: 14, height: 14, transform: 'rotate(180deg)' }}
+              style={{ width: 14, height: 14 }}
             />
-          </motion.span>
+          </span>
         </a>
       </div>
 
