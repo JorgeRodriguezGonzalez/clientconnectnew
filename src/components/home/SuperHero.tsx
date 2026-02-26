@@ -71,7 +71,7 @@ const ClientCarousel = () => {
           className="text-white/30 text-[10px] font-inter font-semibold uppercase tracking-[4px] ml-8"
           style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
-          Our Australian Clients
+          Our Local Clients
         </p>
       </div>
       <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
