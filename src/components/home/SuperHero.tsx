@@ -93,12 +93,16 @@ const ClientCarousel = () => {
 };
 
 // --- TEXT ROTATION CONFIG ---
-const words = ["Light", "Leads", "Clients", "Sales"];
+const words = [
+  "Light", "Leads", "Clients", "Sales",
+  "Light", "Leads", "Clients", "Sales",
+  "Light", "Leads",
+];
 const wordWidths: Record<string, number> = {
-  "Light":   142,
-  "Leads":   138,
-  "Clients": 168,
-  "Sales":   130,
+  "Light":   158,
+  "Leads":   154,
+  "Clients": 184,
+  "Sales":   146,
 };
 
 interface SuperHeroProps {
@@ -206,10 +210,10 @@ export const SuperHero = ({
               We Bring{' '}
               {/* ---- TEXT ROTATION ---- */}
               <motion.span
-                className="relative inline-flex items-center overflow-hidden"
+                className="relative inline-flex items-center"
                 animate={{ width: wordWidths[words[titleNumber]] ?? 150 }}
                 transition={{ duration: 0.5, ease: 'easeInOut' }}
-                style={{ minHeight: '1.2em', verticalAlign: 'bottom', overflow: 'visible' }}
+                style={{ minHeight: '1.2em', verticalAlign: 'middle', overflow: 'visible', padding: '0 6px' }}
               >
                 {words.map((word, index) => (
                   <motion.span
