@@ -170,7 +170,7 @@ export default function TestimonialsSection() {
             display: "inline-flex",
             alignItems: "center",
             padding: "6px 12px",
-            borderRadius: "0px",
+            borderRadius: "8px",
             border: "1px solid #e4e4e7",
             backgroundColor: "#fafafa",
             width: "fit-content",
