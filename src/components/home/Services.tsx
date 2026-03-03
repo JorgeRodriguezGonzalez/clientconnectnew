@@ -200,7 +200,7 @@ const Services = () => {
       <div ref={headerRef} className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: "2vw" }}>
 
         <div className="flex flex-col items-center text-center gap-4 mb-16 pb-6 border-b border-white/10">
-          <span className="text-xs uppercase tracking-[0.35em] text-white/50">Digital Ecosystem</span>
+          <span className="w-fit px-3 py-1.5 rounded-lg border bg-white/5 border-white/10 text-gray-400 font-semibold text-[10px] uppercase tracking-[2px]" style={{ fontFamily: "'Satoshi', sans-serif" }}>Digital Ecosystem</span>
           <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
             Specialized in <br />
             <motion.span
