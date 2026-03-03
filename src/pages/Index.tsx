@@ -41,8 +41,6 @@ const Index = () => {
         <Services />
         <InteractivePath />
 
-        <Services />
-
         <ZoomParallax />
         <WhatWeDoSection2 />
 
