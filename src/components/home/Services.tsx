@@ -18,11 +18,11 @@ const PANORAMIC_IMAGES = {
 };
 
 const SERVICES = [
-  { id: "digital-strategy", title: "Digital Strategy", description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.", capabilityCount: 4, tags: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "0% 50%" },
-  { id: "brand-identity", title: "Brand Identity", description: "Define your visual language and voice to create a lasting impression in the market.", capabilityCount: 4, tags: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "100% 50%" },
-  { id: "seo", title: "SEO", description: "Dominate search results and drive organic traffic with technical and on-page optimization.", capabilityCount: 4, tags: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "0% 50%" },
-  { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], imageUrl: "/images/image2.jpg", bgSize: "cover", bgPosition: "center" },
-  { id: "social-media", title: "Social Media", description: "Build community and engagement with strategic content calendars and management.", capabilityCount: 4, tags: ["Content Strategy", "Community Mgmt", "Influencer Marketing", "Trend Analysis"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "100% 50%" },
+  { id: "digital-strategy", title: "Digital Strategy", description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.", capabilityCount: 4, tags: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "0% 50%", videoUrl: "/videos/digital.mp4" },
+  { id: "brand-identity", title: "Brand Identity", description: "Define your visual language and voice to create a lasting impression in the market.", capabilityCount: 4, tags: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "100% 50%", videoUrl: "/videos/brand.mp4" },
+  { id: "seo", title: "SEO", description: "Dominate search results and drive organic traffic with technical and on-page optimization.", capabilityCount: 4, tags: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "0% 50%", videoUrl: "/videos/seo.mp4" },
+  { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], imageUrl: "/images/image2.jpg", bgSize: "cover", bgPosition: "center", videoUrl: "/videos/googleads.mp4" },
+  { id: "social-media", title: "Social Media", description: "Build community and engagement with strategic content calendars and management.", capabilityCount: 4, tags: ["Content Strategy", "Community Mgmt", "Influencer Marketing", "Trend Analysis"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "100% 50%", videoUrl: "/videos/socialmedia.mp4" },
   { id: "content-marketing", title: "Content Marketing", description: "Attract and convert your audience with value-driven storytelling and copywriting.", capabilityCount: 4, tags: ["Blog Writing", "Whitepapers", "Case Studies", "Copywriting"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "200% 100%", bgPosition: "0% 50%" },
   { id: "video-production", title: "Video Production", description: "Captivate your audience with high-end motion graphics and video storytelling.", capabilityCount: 4, tags: ["Motion Graphics", "Video Editing", "Scriptwriting", "Post-Production"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "200% 100%", bgPosition: "100% 50%" },
   { id: "email-marketing", title: "Email Marketing", description: "Nurture leads and retain customers with personalized automated email flows.", capabilityCount: 4, tags: ["Automation Flows", "Newsletter", "List Segmentation", "A/B Testing"], imageUrl: PANORAMIC_IMAGES.data, bgSize: "300% 100%", bgPosition: "0% 50%" },
@@ -49,6 +49,84 @@ const GradientText = ({ children, style = {} }) => (
     {children}
   </motion.span>
 );
+
+const ServiceCard = ({ service }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (!videoRef.current || !service.videoUrl) return;
+    if (isHovered) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    } else {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [isHovered, service.videoUrl]);
+
+  return (
+    <div
+      className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105"
+        style={{
+          backgroundImage: `url('${service.imageUrl}')`,
+          backgroundSize: service.bgSize,
+          backgroundPosition: service.bgPosition,
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+
+      {/* Video on hover */}
+      {service.videoUrl && (
+        <video
+          ref={videoRef}
+          src={service.videoUrl}
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+          style={{ opacity: isHovered ? 1 : 0 }}
+        />
+      )}
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-500" />
+
+      {/* Content */}
+      <div className="relative h-full flex flex-col justify-between p-5 z-10">
+        <div className="space-y-2 pt-1">
+          <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
+            {service.title}
+          </h3>
+          <p className="text-sm leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
+            {service.description}
+          </p>
+        </div>
+        <div className="space-y-3 pb-1">
+          <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1 drop-shadow-sm">
+            Includes {service.capabilityCount} capabilities
+          </div>
+          <div className="flex flex-wrap gap-1">
+            <div className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center mr-1 border border-white/20">
+              <Check className="w-3 h-3 text-white" strokeWidth={2} />
+            </div>
+            {service.tags.map((tag, idx) => (
+              <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-black/30 backdrop-blur-md border border-white/10 text-white shadow-sm">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
@@ -198,43 +276,7 @@ const Services = () => {
             id={`card-${service.id}`}
             className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
           >
-            <div className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500">
-              <div
-                className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105"
-                style={{
-                  backgroundImage: `url('${service.imageUrl}')`,
-                  backgroundSize: service.bgSize,
-                  backgroundPosition: service.bgPosition,
-                  backgroundRepeat: "no-repeat",
-                }}
-              />
-              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-500" />
-              <div className="relative h-full flex flex-col justify-between p-5 z-10">
-                <div className="space-y-2 pt-1">
-                  <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-white/90 max-w-[95%] drop-shadow-sm">
-                    {service.description}
-                  </p>
-                </div>
-                <div className="space-y-3 pb-1">
-                  <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/90 px-1 drop-shadow-sm">
-                    Includes {service.capabilityCount} capabilities
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    <div className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center mr-1 border border-white/20">
-                      <Check className="w-3 h-3 text-white" strokeWidth={2} />
-                    </div>
-                    {service.tags.map((tag, idx) => (
-                      <span key={idx} className="inline-flex items-center px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider bg-black/30 backdrop-blur-md border border-white/10 text-white shadow-sm">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ServiceCard service={service} />
           </div>
         ))}
       </motion.div>
