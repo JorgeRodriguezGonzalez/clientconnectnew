@@ -199,7 +199,7 @@ const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-white relative z-10 min-h-screen py-20 font-sans text-white overflow-x-hidden pl-[3vw]">
+    <div className="w-full bg-black relative z-10 min-h-screen py-20 font-sans text-white overflow-x-hidden pl-[3vw]">
       <style>{`
         .hide-scroll::-webkit-scrollbar { display: none !important; }
         .hide-scroll { -ms-overflow-style: none !important; scrollbar-width: none !important; }
