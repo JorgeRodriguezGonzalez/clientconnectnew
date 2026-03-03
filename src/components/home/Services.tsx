@@ -14,7 +14,7 @@ const CARD_COLORS = [
   "linear-gradient(135deg, #06b6d4, #0891b2)",
   "linear-gradient(135deg, #34d399, #10b981)",
   "linear-gradient(135deg, #3f3f46, #52525b)",
-  "linear-gradient(135deg, #0891b2, #34d399)",
+  "linear-gradient(135deg, #ffa93b, #e89430)",
   "linear-gradient(135deg, #06b6d4, #22d3ee)",
   "linear-gradient(135deg, #10b981, #06b6d4)",
   "linear-gradient(135deg, #52525b, #3f3f46)",
