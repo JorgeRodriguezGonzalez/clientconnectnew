@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, ChevronLeft, ChevronRight } from "lucide-react";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 
@@ -20,6 +20,7 @@ const PANORAMIC_IMAGES = {
 const SERVICES = [
   { id: "digital-strategy", title: "Digital Strategy", description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.", capabilityCount: 4, tags: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "0% 50%", videoUrl: "/videos/digital.mp4" },
   { id: "brand-identity", title: "Brand Identity", description: "Define your visual language and voice to create a lasting impression in the market.", capabilityCount: 4, tags: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "100% 50%", videoUrl: "/videos/brand.mp4" },
+  { id: "website-development", title: "Website Development", description: "Build fast, responsive, and conversion-focused websites that elevate your digital presence.", capabilityCount: 4, tags: ["Custom Design", "Responsive Dev", "CMS Integration", "Performance"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "cover", bgPosition: "center", videoUrl: "/videos/websitedevelopment.mp4" },
   { id: "seo", title: "SEO", description: "Dominate search results and drive organic traffic with technical and on-page optimization.", capabilityCount: 4, tags: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "0% 50%", videoUrl: "/videos/seo.mp4" },
   { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], imageUrl: "/images/image2.jpg", bgSize: "cover", bgPosition: "center", videoUrl: "/videos/googleads.mp4" },
   { id: "social-media", title: "Social Media", description: "Build community and engagement with strategic content calendars and management.", capabilityCount: 4, tags: ["Content Strategy", "Community Mgmt", "Influencer Marketing", "Trend Analysis"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "100% 50%", videoUrl: "/videos/socialmedia.mp4" },
@@ -71,7 +72,6 @@ const ServiceCard = ({ service }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Background Image */}
       <div
         className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105"
         style={{
@@ -81,8 +81,6 @@ const ServiceCard = ({ service }) => {
           backgroundRepeat: "no-repeat",
         }}
       />
-
-      {/* Video on hover */}
       {service.videoUrl && (
         <video
           ref={videoRef}
@@ -94,11 +92,7 @@ const ServiceCard = ({ service }) => {
           style={{ opacity: isHovered ? 1 : 0 }}
         />
       )}
-
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-500" />
-
-      {/* Content */}
       <div className="relative h-full flex flex-col justify-between p-5 z-10">
         <div className="space-y-2 pt-1">
           <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
@@ -132,6 +126,8 @@ const Services = () => {
   const [activeTab, setActiveTab] = useState(SERVICES[0].id);
   const [hoveredTab, setHoveredTab] = useState(null);
   const [paddingLeft, setPaddingLeft] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollContainerRef = useRef(null);
   const tabsContainerRef = useRef(null);
   const headerRef = useRef(null);
@@ -152,6 +148,18 @@ const Services = () => {
     return () => { window.removeEventListener("resize", calc); clearTimeout(t); };
   }, []);
 
+  const checkScrollBounds = () => {
+    if (!scrollContainerRef.current) return;
+    const el = scrollContainerRef.current;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  };
+
+  const scrollByAmount = (dir) => {
+    if (!scrollContainerRef.current) return;
+    scrollContainerRef.current.scrollBy({ left: dir * 370, behavior: "smooth" });
+  };
+
   const scrollToCard = (id) => {
     setActiveTab(id);
     const card = document.getElementById(`card-${id}`);
@@ -163,6 +171,7 @@ const Services = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (!scrollContainerRef.current) return;
+      checkScrollBounds();
       const scrollPosition = scrollContainerRef.current.scrollLeft;
       let closestId = activeTab;
       let minDist = Infinity;
@@ -264,22 +273,58 @@ const Services = () => {
         </div>
       </div>
 
-      {/* Carousel */}
-      <motion.div
-        ref={scrollContainerRef}
-        className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
-        style={{ paddingLeft: animatedPadding, paddingRight: "85vw" }}
-      >
-        {SERVICES.map(service => (
-          <div
-            key={service.id}
-            id={`card-${service.id}`}
-            className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
-          >
-            <ServiceCard service={service} />
-          </div>
-        ))}
-      </motion.div>
+      {/* Carousel with pagination */}
+      <div className="relative">
+        {/* Left arrow */}
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: canScrollLeft ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+          onClick={() => scrollByAmount(-1)}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center cursor-pointer border border-white/20"
+          style={{
+            background: "rgba(255,255,255,0.1)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            pointerEvents: canScrollLeft ? "auto" : "none",
+          }}
+        >
+          <ChevronLeft className="w-5 h-5 text-white" strokeWidth={2} />
+        </motion.button>
+
+        {/* Right arrow */}
+        <motion.button
+          initial={{ opacity: 1 }}
+          animate={{ opacity: canScrollRight ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+          onClick={() => scrollByAmount(1)}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center cursor-pointer border border-white/20"
+          style={{
+            background: "rgba(255,255,255,0.1)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            pointerEvents: canScrollRight ? "auto" : "none",
+          }}
+        >
+          <ChevronRight className="w-5 h-5 text-white" strokeWidth={2} />
+        </motion.button>
+
+        <motion.div
+          ref={scrollContainerRef}
+          className="flex gap-4 overflow-x-auto pb-12 pt-4 snap-x snap-mandatory w-full hide-scroll"
+          style={{ paddingLeft: animatedPadding, paddingRight: "85vw" }}
+        >
+          {SERVICES.map(service => (
+            <div
+              key={service.id}
+              id={`card-${service.id}`}
+              className="flex-shrink-0 snap-start w-[280px] sm:w-[305px] md:w-[350px]"
+            >
+              <ServiceCard service={service} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
 
       {/* CTA */}
       <div className="max-w-6xl mx-auto px-4 md:px-8" style={{ marginLeft: "2vw" }}>
