@@ -40,9 +40,9 @@ const Index = () => {
         <FounderSection />
         <Services />
         <ServicesSection />
+        <ZoomParallax />
         <InteractivePath />
 
-        <ZoomParallax />
         <WhatWeDoSection2 />
 
         <ComparisonSection />
