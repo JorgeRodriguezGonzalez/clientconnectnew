@@ -236,8 +236,8 @@ const ServicesSection = () => {
 
           {/* Col 1: big top + small bottom */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            <ServiceCard service={byArea["top-left"]} style={{ height: "560px" }} />
-            <ServiceCard service={byArea["bottom-left"]} style={{ height: "180px" }} />
+            <ServiceCard service={byArea["top-left"]} style={{ height: "480px" }} />
+            <ServiceCard service={byArea["bottom-left"]} style={{ height: "260px" }} />
           </div>
 
           {/* Col 2: small top + big bottom */}
