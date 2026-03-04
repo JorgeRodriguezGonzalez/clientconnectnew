@@ -43,11 +43,11 @@ const fontStyles = `
     aspect-ratio: 1;
     transform-origin: center;
     background: conic-gradient(
-      rgba(52, 211, 153, 0.7),
+      rgba(6, 182, 212, 0.7),
       rgba(6, 182, 212, 0.25) 25%,
-      rgba(52, 211, 153, 0.6) 50%,
+      rgba(6, 182, 212, 0.6) 50%,
       rgba(6, 182, 212, 0.25) 75%,
-      rgba(52, 211, 153, 0.7)
+      rgba(6, 182, 212, 0.7)
     );
     animation: borderSpin 4s linear infinite;
     z-index: -2;
@@ -69,7 +69,7 @@ const fontStyles = `
     left: -50%;
     width: 40%;
     height: 200%;
-    background: radial-gradient(ellipse at center, rgba(52, 211, 153, 0.25), transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.25), transparent 70%);
     animation: shimmer 3.5s ease-in-out infinite;
     pointer-events: none;
     z-index: 0;
