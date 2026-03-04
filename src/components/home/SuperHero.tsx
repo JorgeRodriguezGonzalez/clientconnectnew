@@ -383,9 +383,18 @@ export const SuperHero = ({
                     <input
                       type="email"
                       placeholder="Enter your email for a free audit"
-                      className="w-full h-[48px] bg-white/10 backdrop-blur-sm rounded-[50px] px-6 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none transition-all duration-300"
+                      className="w-full h-[48px] bg-white/10 backdrop-blur-sm rounded-[50px] px-6 pr-14 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none transition-all duration-300"
                       style={{ border: `1px solid ${emeraldColor}` }}
                     />
+                    <button
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2 w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-300"
+                      style={{ background: emeraldColor }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#050505" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    </button>
                   </div>
                   <motion.a
                     href="#contact"
