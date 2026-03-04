@@ -11,6 +11,69 @@ const fontStyles = `
     0% { background-position: -200% center; }
     100% { background-position: 200% center; }
   }
+
+  @keyframes borderSpin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @keyframes shimmer {
+    0% { left: -50%; opacity: 0; }
+    15% { opacity: 1; }
+    50% { left: 120%; opacity: 1; }
+    65% { opacity: 0; }
+    100% { left: 120%; opacity: 0; }
+  }
+
+  .glowing-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .glowing-input-wrap::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    aspect-ratio: 1;
+    transform-origin: center;
+    background: conic-gradient(
+      rgba(52, 211, 153, 0.7),
+      rgba(6, 182, 212, 0.25) 25%,
+      rgba(52, 211, 153, 0.6) 50%,
+      rgba(6, 182, 212, 0.25) 75%,
+      rgba(52, 211, 153, 0.7)
+    );
+    animation: borderSpin 4s linear infinite;
+    z-index: -2;
+    transform: translate(-50%, -50%);
+  }
+
+  .glowing-input-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 1.5px;
+    border-radius: 100px;
+    background: rgba(5, 5, 5, 0.95);
+    z-index: -1;
+  }
+
+  .glowing-input-shimmer {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 40%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(52, 211, 153, 0.25), transparent 70%);
+    animation: shimmer 3.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
 `;
 
 // --- CLIENTS DATA ---
@@ -379,15 +442,15 @@ export const SuperHero = ({
             >
               {isMobile ? (
                 <div className="flex flex-col items-center gap-3 w-full px-2">
-                  <div className="w-full relative">
+                  <div className="glowing-input-wrap w-full h-[48px]">
+                    <div className="glowing-input-shimmer" />
                     <input
                       type="email"
                       placeholder="Enter your email for a free audit"
-                      className="w-full h-[48px] bg-white/10 backdrop-blur-sm rounded-[50px] px-6 pr-14 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none transition-all duration-300"
-                      style={{ border: `1px solid ${lampColor}` }}
+                      className="relative w-full h-full bg-transparent rounded-[50px] px-6 pr-14 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none z-10"
                     />
                     <button
-                      className="absolute right-1.5 top-1/2 -translate-y-1/2 w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-300"
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2 w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-300 z-10"
                       style={{ background: emeraldColor }}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#050505" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
