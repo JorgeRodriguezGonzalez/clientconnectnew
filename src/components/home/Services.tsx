@@ -40,7 +40,6 @@ const SERVICES = [
   { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], imageUrl: "/images/image2.jpg", bgSize: "cover", bgPosition: "center", videoUrl: "/videos/googleads.mp4" },
   { id: "social-media", title: "Social Media", description: "Build community and engagement with strategic content calendars and management.", capabilityCount: 4, tags: ["Content Strategy", "Community Mgmt", "Influencer Marketing", "Trend Analysis"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "100% 50%", videoUrl: "/videos/socialmedia.mp4" },
   { id: "content-creation", title: "Content Creation", description: "Bring your brand to life with compelling visuals, video, and copy that captivate your audience.", capabilityCount: 4, tags: ["Video Production", "Photography", "Copywriting", "Graphic Design"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "200% 100%", bgPosition: "0% 50%" },
-  { id: "video-production", title: "Video Production", description: "Captivate your audience with high-end motion graphics and video storytelling.", capabilityCount: 4, tags: ["Motion Graphics", "Video Editing", "Scriptwriting", "Post-Production"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "200% 100%", bgPosition: "100% 50%" },
     { id: "cro", title: "CRO", description: "Maximize the value of every visitor by optimizing your conversion funnels.", capabilityCount: 4, tags: ["User Testing", "Heatmaps", "Funnel Analysis", "UX Optimization"], imageUrl: PANORAMIC_IMAGES.data, bgSize: "300% 100%", bgPosition: "50% 50%" },
 ];
 
@@ -263,7 +262,7 @@ const Services = () => {
         <div className="flex flex-col items-center text-center gap-4 mb-16 pb-6 border-b border-white/10">
           <span className="w-fit px-3 py-1.5 rounded-lg border bg-white/5 border-white/10 text-gray-400 font-semibold text-[10px] uppercase tracking-[2px]" style={{ fontFamily: "'Satoshi', sans-serif" }}>Digital Ecosystem</span>
           <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "clamp(32px, 5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.5px" }} className="text-white">
-            Your entire digital ecosystem,{" "}
+            Services built to{" "}
             <motion.span
               initial={{ backgroundPosition: "400% 50%" }}
               animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -278,7 +277,7 @@ const Services = () => {
                 color: "transparent",
               }}
             >
-              sorted
+              scale you
             </motion.span>
           </h2>
           <div className="max-w-lg">
