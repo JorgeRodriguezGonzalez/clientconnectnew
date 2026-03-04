@@ -10,11 +10,18 @@ const COLORS = {
   gold: "rgb(237, 191, 134)",
 };
 
+const PANORAMIC_IMAGES = {
+  strategy: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop",
+  traffic: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2600&auto=format&fit=crop",
+  creative: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2600&auto=format&fit=crop",
+  data: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2600&auto=format&fit=crop",
+};
+
 const CARD_COLORS = [
   "linear-gradient(135deg, #06b6d4, #0891b2)",
   "linear-gradient(135deg, #34d399, #10b981)",
   "linear-gradient(135deg, #3f3f46, #52525b)",
-  "linear-gradient(135deg, #ffa93b, #e89430)",
+  "linear-gradient(135deg, #0891b2, #34d399)",
   "linear-gradient(135deg, #06b6d4, #22d3ee)",
   "linear-gradient(135deg, #10b981, #06b6d4)",
   "linear-gradient(135deg, #52525b, #3f3f46)",
@@ -25,17 +32,17 @@ const CARD_COLORS = [
 ];
 
 const SERVICES = [
-  { id: "digital-strategy", title: "Digital Strategy", description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.", capabilityCount: 4, tags: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"], videoUrl: "/videos/digital.mp4" },
-  { id: "brand-identity", title: "Brand Identity", description: "Define your visual language and voice to create a lasting impression in the market.", capabilityCount: 4, tags: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"], videoUrl: "/videos/brand.mp4" },
-  { id: "website-development", title: "Website Development", description: "Build fast, responsive, and conversion-focused websites that elevate your digital presence.", capabilityCount: 4, tags: ["Custom Design", "Responsive Dev", "CMS Integration", "Performance"], videoUrl: "/videos/websitedevelopment.mp4" },
-  { id: "seo", title: "SEO", description: "Dominate search results and drive organic traffic with technical and on-page optimization.", capabilityCount: 4, tags: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"], videoUrl: "/videos/seo.mp4" },
-  { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], videoUrl: "/videos/googleads.mp4" },
-  { id: "social-media", title: "Social Media", description: "Build community and engagement with strategic content calendars and management.", capabilityCount: 4, tags: ["Content Strategy", "Community Mgmt", "Influencer Marketing", "Trend Analysis"], videoUrl: "/videos/socialmedia.mp4" },
-  { id: "content-marketing", title: "Content Marketing", description: "Attract and convert your audience with value-driven storytelling and copywriting.", capabilityCount: 4, tags: ["Blog Writing", "Whitepapers", "Case Studies", "Copywriting"] },
-  { id: "video-production", title: "Video Production", description: "Captivate your audience with high-end motion graphics and video storytelling.", capabilityCount: 4, tags: ["Motion Graphics", "Video Editing", "Scriptwriting", "Post-Production"] },
-  { id: "email-marketing", title: "Email Marketing", description: "Nurture leads and retain customers with personalized automated email flows.", capabilityCount: 4, tags: ["Automation Flows", "Newsletter", "List Segmentation", "A/B Testing"] },
-  { id: "cro", title: "CRO", description: "Maximize the value of every visitor by optimizing your conversion funnels.", capabilityCount: 4, tags: ["User Testing", "Heatmaps", "Funnel Analysis", "UX Optimization"] },
-  { id: "data-analytics", title: "Data Analytics", description: "Make informed decisions with custom reporting and real-time performance tracking.", capabilityCount: 4, tags: ["GA4 Setup", "Looker Studio", "Attribution Models", "ROI Tracking"] },
+  { id: "digital-strategy", title: "Digital Strategy", description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.", capabilityCount: 4, tags: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "0% 50%", videoUrl: "/videos/digital.mp4" },
+  { id: "brand-identity", title: "Brand Identity", description: "Define your visual language and voice to create a lasting impression in the market.", capabilityCount: 4, tags: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "100% 50%", videoUrl: "/videos/brand.mp4" },
+  { id: "website-development", title: "Website Development", description: "Build fast, responsive, and conversion-focused websites that elevate your digital presence.", capabilityCount: 4, tags: ["Custom Design", "Responsive Dev", "CMS Integration", "Performance"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "cover", bgPosition: "center", videoUrl: "/videos/websitedevelopment.mp4" },
+  { id: "seo", title: "SEO", description: "Dominate search results and drive organic traffic with technical and on-page optimization.", capabilityCount: 4, tags: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "0% 50%", videoUrl: "/videos/seo.mp4" },
+  { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], imageUrl: "/images/image2.jpg", bgSize: "cover", bgPosition: "center", videoUrl: "/videos/googleads.mp4" },
+  { id: "social-media", title: "Social Media", description: "Build community and engagement with strategic content calendars and management.", capabilityCount: 4, tags: ["Content Strategy", "Community Mgmt", "Influencer Marketing", "Trend Analysis"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "100% 50%", videoUrl: "/videos/socialmedia.mp4" },
+  { id: "content-marketing", title: "Content Marketing", description: "Attract and convert your audience with value-driven storytelling and copywriting.", capabilityCount: 4, tags: ["Blog Writing", "Whitepapers", "Case Studies", "Copywriting"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "200% 100%", bgPosition: "0% 50%" },
+  { id: "video-production", title: "Video Production", description: "Captivate your audience with high-end motion graphics and video storytelling.", capabilityCount: 4, tags: ["Motion Graphics", "Video Editing", "Scriptwriting", "Post-Production"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "200% 100%", bgPosition: "100% 50%" },
+  { id: "email-marketing", title: "Email Marketing", description: "Nurture leads and retain customers with personalized automated email flows.", capabilityCount: 4, tags: ["Automation Flows", "Newsletter", "List Segmentation", "A/B Testing"], imageUrl: PANORAMIC_IMAGES.data, bgSize: "300% 100%", bgPosition: "0% 50%" },
+  { id: "cro", title: "CRO", description: "Maximize the value of every visitor by optimizing your conversion funnels.", capabilityCount: 4, tags: ["User Testing", "Heatmaps", "Funnel Analysis", "UX Optimization"], imageUrl: PANORAMIC_IMAGES.data, bgSize: "300% 100%", bgPosition: "50% 50%" },
+  { id: "data-analytics", title: "Data Analytics", description: "Make informed decisions with custom reporting and real-time performance tracking.", capabilityCount: 4, tags: ["GA4 Setup", "Looker Studio", "Attribution Models", "ROI Tracking"], imageUrl: PANORAMIC_IMAGES.data, bgSize: "300% 100%", bgPosition: "100% 50%" },
 ];
 
 const GradientText = ({ children, style = {} }) => (
@@ -58,9 +65,21 @@ const GradientText = ({ children, style = {} }) => (
   </motion.span>
 );
 
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+};
+
 const ServiceCard = ({ service, colorIndex }) => {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (!videoRef.current || !service.videoUrl) return;
@@ -75,11 +94,24 @@ const ServiceCard = ({ service, colorIndex }) => {
 
   return (
     <div
-      className="group relative h-[420px] w-full overflow-hidden rounded-2xl text-white transition-all duration-500"
+      className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ background: CARD_COLORS[colorIndex % CARD_COLORS.length] }}
+      style={isMobile ? { background: CARD_COLORS[colorIndex % CARD_COLORS.length] } : undefined}
     >
+      {/* Background Image - only on desktop */}
+      {!isMobile && (
+        <div
+          className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105"
+          style={{
+            backgroundImage: `url('${service.imageUrl}')`,
+            backgroundSize: service.bgSize,
+            backgroundPosition: service.bgPosition,
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+      )}
+
       {/* Video on hover */}
       {service.videoUrl && (
         <video
@@ -88,17 +120,17 @@ const ServiceCard = ({ service, colorIndex }) => {
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 z-[1]"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
           style={{ opacity: isHovered ? 1 : 0 }}
         />
       )}
 
-      {/* Overlay for video */}
-      {service.videoUrl && (
-        <div
-          className="absolute inset-0 bg-black/50 transition-opacity duration-500 z-[2]"
-          style={{ opacity: isHovered ? 1 : 0 }}
-        />
+      {/* Overlay */}
+      {!isMobile && (
+        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-500" />
+      )}
+      {isMobile && isHovered && service.videoUrl && (
+        <div className="absolute inset-0 bg-black/50 transition-opacity duration-500" />
       )}
 
       {/* Content */}
