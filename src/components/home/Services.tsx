@@ -263,7 +263,7 @@ const Services = () => {
         <div className="flex flex-col items-center text-center gap-4 mb-16 pb-6 border-b border-white/10">
           <span className="w-fit px-3 py-1.5 rounded-lg border bg-white/5 border-white/10 text-gray-400 font-semibold text-[10px] uppercase tracking-[2px]" style={{ fontFamily: "'Satoshi', sans-serif" }}>Digital Ecosystem</span>
           <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "clamp(32px, 5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.5px" }} className="text-white">
-            Specialized in <br />
+            Your entire digital ecosystem,{" "}
             <motion.span
               initial={{ backgroundPosition: "400% 50%" }}
               animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -278,7 +278,7 @@ const Services = () => {
                 color: "transparent",
               }}
             >
-              10 vital services
+              sorted
             </motion.span>
           </h2>
           <div className="max-w-lg">
