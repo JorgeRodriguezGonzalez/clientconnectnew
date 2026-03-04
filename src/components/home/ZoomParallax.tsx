@@ -180,7 +180,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                                 </motion.a>
                                             </div>
                                             <motion.div
-                                                className="flex flex-col items-center gap-1 mt-4 text-white/40 cursor-pointer"
+                                                className="flex flex-col items-center gap-1 mt-4 text-white/40 cursor-pointer absolute bottom-6"
                                                 animate={{ y: [0, 6, 0] }}
                                                 transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                                             >
