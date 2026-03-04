@@ -17,14 +17,17 @@ const services = [
     badges: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"],
     videoSrc: null,
     area: "bottom-left",
+    bgColor: "radial-gradient(50% 50% at 0% 0%, #0e4f6b 2%, #061e2a 100%)",
   },
   {
     id: "website-development",
     title: "Website Development",
     description: "Beautiful, fast websites built to convert visitors into customers.",
     badges: ["UI/UX Design", "CMS Integration", "Performance", "SEO Ready"],
-    videoSrc: "/videos/websitedevelopment.mp4",
+    videoSrc: null,
     area: "top-center",
+    bgColor: "radial-gradient(50% 50% at 0% 0%, #0d4a33 2%, #051a12 100%)",
+  },
   },
   {
     id: "seo",
@@ -57,6 +60,7 @@ const services = [
     badges: ["Copywriting", "Video Scripts", "Social Content", "Blog Posts"],
     videoSrc: null,
     area: "bottom-right",
+    bgColor: "radial-gradient(50% 50% at 0% 0%, #2a2a2a 2%, #0a0a0a 100%)",
   },
 ];
 
@@ -111,7 +115,7 @@ const ServiceCard = ({ service, style = {} }) => {
         borderRadius: "24px",
         overflow: "hidden",
         cursor: "pointer",
-        background: "radial-gradient(50% 50% at 0% 0%, #1e1e1e 2%, #080808 100%)",
+        background: service.bgColor || "radial-gradient(50% 50% at 0% 0%, #1e1e1e 2%, #080808 100%)",
         border: "1px solid rgba(255,255,255,0.07)",
         transition: "transform 0.4s ease, box-shadow 0.4s ease",
         transform: !hasVideo && isHovered ? "translateY(-6px)" : "translateY(0)",
