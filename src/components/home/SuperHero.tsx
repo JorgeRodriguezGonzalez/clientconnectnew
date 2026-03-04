@@ -6,6 +6,11 @@ const fontStyles = `
   .font-inter {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
+
+  @keyframes gradientMove {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
 `;
 
 // --- CLIENTS DATA ---
@@ -101,8 +106,19 @@ const wordWidths: Record<string, number> = {
   "Sales": 155,
 };
 
-// Pre-build the full looped array (same pattern as FinalHero)
 const wordsLoop = [...Array(5)].flatMap(() => rotatingWords);
+
+// --- MOBILE DETECTION HOOK ---
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+};
 
 interface SuperHeroProps {
   primaryButtonText?: string;
@@ -116,25 +132,25 @@ export const SuperHero = ({
   const lampColor = '#06b6d4';
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
+  const isMobile = useIsMobile();
 
-  // --- Rotating title state ---
+  // --- Rotating title state (desktop only) ---
   const [titleNumber, setTitleNumber] = useState(0);
   const [nextWidth, setNextWidth] = useState(wordWidths[wordsLoop[0]] || 100);
 
   useEffect(() => {
+    if (isMobile) return;
     const timeoutId = setTimeout(() => {
       const nextIndex = titleNumber === wordsLoop.length - 1 ? 0 : titleNumber + 1;
       const nextWord = wordsLoop[nextIndex];
-      // Pre-expand width before word transition
       setNextWidth(wordWidths[nextWord] || 100);
-      // Small delay then swap the word
       const wordTimeout = setTimeout(() => {
         setTitleNumber(nextIndex);
       }, 150);
       return () => clearTimeout(wordTimeout);
     }, 3000);
     return () => clearTimeout(timeoutId);
-  }, [titleNumber]);
+  }, [titleNumber, isMobile]);
 
   const currentWidth = nextWidth;
 
@@ -161,50 +177,52 @@ export const SuperHero = ({
       <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center py-16">
         <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-4" style={{ marginTop: '-10px' }}>
 
-          {/* LAMP */}
-          <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible" style={{ transform: 'scale(0.85)' }}>
-            <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
-              <div className="absolute inset-auto z-30 h-56 w-full flex items-center justify-center pointer-events-none">
-                <motion.div className="w-[60rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
-                  <motion.div
-                    initial={{ opacity: 0, width: '15rem' }}
-                    animate={{ opacity: 0.5, width: '28rem' }}
-                    transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
-                    style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor} 0%, transparent 35%, transparent 100%)` }}
-                    className="absolute top-0 right-1/2 h-56 overflow-visible w-[28rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
-                  />
-                  <motion.div
-                    initial={{ opacity: 0, width: '15rem' }}
-                    animate={{ opacity: 0.5, width: '28rem' }}
-                    transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
-                    style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent 0%, transparent 65%, ${lampColor} 100%)` }}
-                    className="absolute top-0 left-1/2 h-56 w-[28rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
-                  />
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.4 }}
-                    transition={{ delay: 0.2, duration: 1.0 }}
-                    className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-[28rem] rounded-full blur-3xl"
-                    style={{ backgroundColor: lampColor }}
-                  />
-                  <motion.div
-                    initial={{ opacity: 0, width: '8rem' }}
-                    animate={{ opacity: 0.8, width: '16rem' }}
-                    transition={{ delay: 0.2, duration: 1.0 }}
-                    className="absolute top-0 left-1/2 -translate-x-1/2 h-36 rounded-full blur-2xl"
-                    style={{ backgroundColor: lampColor }}
-                  />
-                </motion.div>
+          {/* LAMP — DESKTOP ONLY */}
+          {!isMobile && (
+            <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible" style={{ transform: 'scale(0.85)' }}>
+              <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
+                <div className="absolute inset-auto z-30 h-56 w-full flex items-center justify-center pointer-events-none">
+                  <motion.div className="w-[60rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
+                    <motion.div
+                      initial={{ opacity: 0, width: '15rem' }}
+                      animate={{ opacity: 0.5, width: '28rem' }}
+                      transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
+                      style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor} 0%, transparent 35%, transparent 100%)` }}
+                      className="absolute top-0 right-1/2 h-56 overflow-visible w-[28rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, width: '15rem' }}
+                      animate={{ opacity: 0.5, width: '28rem' }}
+                      transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
+                      style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent 0%, transparent 65%, ${lampColor} 100%)` }}
+                      className="absolute top-0 left-1/2 h-56 w-[28rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                    />
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.4 }}
+                      transition={{ delay: 0.2, duration: 1.0 }}
+                      className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-[28rem] rounded-full blur-3xl"
+                      style={{ backgroundColor: lampColor }}
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, width: '8rem' }}
+                      animate={{ opacity: 0.8, width: '16rem' }}
+                      transition={{ delay: 0.2, duration: 1.0 }}
+                      className="absolute top-0 left-1/2 -translate-x-1/2 h-36 rounded-full blur-2xl"
+                      style={{ backgroundColor: lampColor }}
+                    />
+                  </motion.div>
+                </div>
+                <motion.div
+                  initial={{ opacity: 0, width: '15rem' }}
+                  animate={{ opacity: 1, width: '28rem' }}
+                  transition={{ delay: 0.2, duration: 1.0 }}
+                  className="absolute inset-auto z-50 h-[3px] -translate-y-[7rem]"
+                  style={{ backgroundColor: lampColor }}
+                />
               </div>
-              <motion.div
-                initial={{ opacity: 0, width: '15rem' }}
-                animate={{ opacity: 1, width: '28rem' }}
-                transition={{ delay: 0.2, duration: 1.0 }}
-                className="absolute inset-auto z-50 h-[3px] -translate-y-[7rem]"
-                style={{ backgroundColor: lampColor }}
-              />
             </div>
-          </div>
+          )}
 
           {/* HERO TEXT */}
           <div className="relative z-10 text-center mb-8">
@@ -215,34 +233,49 @@ export const SuperHero = ({
               className="font-inter font-semibold text-[42px] md:text-[56px] lg:text-[68px] leading-[1.1] tracking-[-2px] text-white mb-6 normal-case"
             >
               We Bring{' '}
-              <motion.span
-                className="relative inline-flex items-center overflow-hidden"
-                animate={{ width: currentWidth }}
-                transition={{ duration: 0.5, ease: 'easeInOut' }}
-                style={{ minHeight: '1em' }}
-              >
-                {wordsLoop.map((word, index) => (
-                  <motion.span
-                    key={index}
-                    className="font-semibold"
-                    initial={{ opacity: 0, y: -100 }}
-                    transition={{ type: 'spring', stiffness: 50, opacity: { duration: 0.2 } }}
-                    animate={
-                      titleNumber === index
-                        ? { y: 0, opacity: 1, position: 'relative' as const }
-                        : {
-                            y: titleNumber > index ? 20 : -50,
-                            opacity: 0,
-                            position: 'absolute' as const,
-                            top: 0,
-                            left: 0,
-                          }
-                    }
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </motion.span>{' '}
+              {isMobile ? (
+                <span
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)',
+                    backgroundSize: '200% auto',
+                    animation: 'gradientMove 3s linear infinite',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  Leads
+                </span>
+              ) : (
+                <motion.span
+                  className="relative inline-flex items-center overflow-hidden"
+                  animate={{ width: currentWidth }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  style={{ minHeight: '1em' }}
+                >
+                  {wordsLoop.map((word, index) => (
+                    <motion.span
+                      key={index}
+                      className="font-semibold"
+                      initial={{ opacity: 0, y: -100 }}
+                      transition={{ type: 'spring', stiffness: 50, opacity: { duration: 0.2 } }}
+                      animate={
+                        titleNumber === index
+                          ? { y: 0, opacity: 1, position: 'relative' as const }
+                          : {
+                              y: titleNumber > index ? 20 : -50,
+                              opacity: 0,
+                              position: 'absolute' as const,
+                              top: 0,
+                              left: 0,
+                            }
+                      }
+                    >
+                      {word}
+                    </motion.span>
+                  ))}
+                </motion.span>
+              )}{' '}
               to Your
               <br />
               Business Growth
