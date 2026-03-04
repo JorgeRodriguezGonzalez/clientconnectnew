@@ -377,30 +377,49 @@ export const SuperHero = ({
               transition={{ delay: 1.1, duration: 1.0, ease: 'easeOut' }}
               className="mt-6"
             >
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <motion.a
-                  href="#contact"
-                  className="flex items-center justify-center gap-1.5 cursor-pointer w-full sm:w-auto relative z-[100]"
-                  style={{ height: 48, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 50, padding: '12px 24px', backdropFilter: 'blur(8px)' }}
-                  whileHover={{ boxShadow: '0 0 20px rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.2)' }}
-                >
-                  <p className="font-inter font-semibold text-white whitespace-nowrap" style={{ fontSize: 15 }}>{secondaryButtonText}</p>
-                </motion.a>
+              {isMobile ? (
+                <div className="flex flex-col items-center gap-3 w-full px-2">
+                  <input
+                    type="email"
+                    placeholder="Enter your email for a free audit"
+                    className="w-full h-[48px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none focus:border-white/40 transition-all duration-300"
+                  />
+                  <motion.a
+                    href="#contact"
+                    className="flex items-center justify-center gap-1.5 cursor-pointer w-full relative z-[100]"
+                    style={{ height: 48, background: 'rgba(255,255,255,0.1)', border: `1px solid ${lampColor}`, borderRadius: 50, padding: '12px 24px', backdropFilter: 'blur(8px)' }}
+                  >
+                    <p className="font-inter font-semibold whitespace-nowrap" style={{ fontSize: 15, color: lampColor }}>
+                      View Case Studies
+                    </p>
+                  </motion.a>
+                </div>
+              ) : (
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <motion.a
+                    href="#contact"
+                    className="flex items-center justify-center gap-1.5 cursor-pointer w-full sm:w-auto relative z-[100]"
+                    style={{ height: 48, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 50, padding: '12px 24px', backdropFilter: 'blur(8px)' }}
+                    whileHover={{ boxShadow: '0 0 20px rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.2)' }}
+                  >
+                    <p className="font-inter font-semibold text-white whitespace-nowrap" style={{ fontSize: 15 }}>{secondaryButtonText}</p>
+                  </motion.a>
 
-                <motion.a
-                  href="#contact"
-                  onHoverStart={() => setIsHovered(true)}
-                  onHoverEnd={() => setIsHovered(false)}
-                  className="flex items-center justify-center gap-1.5 cursor-pointer w-full sm:w-auto relative z-[100]"
-                  style={{ height: 48, background: 'rgba(255,255,255,0.1)', border: `1px solid ${isHovered ? emeraldColor : lampColor}`, borderRadius: 50, padding: '12px 24px', backdropFilter: 'blur(8px)' }}
-                  whileHover={{ boxShadow: '0 0 20px rgba(52,211,153,0.5)', background: 'rgba(255,255,255,0.2)' }}
-                >
-                  <Calendar style={{ width: 17, height: 14, color: isHovered ? emeraldColor : lampColor }} />
-                  <p className="font-inter font-semibold whitespace-nowrap" style={{ fontSize: 15, color: isHovered ? emeraldColor : lampColor }}>
-                    {primaryButtonText}
-                  </p>
-                </motion.a>
-              </div>
+                  <motion.a
+                    href="#contact"
+                    onHoverStart={() => setIsHovered(true)}
+                    onHoverEnd={() => setIsHovered(false)}
+                    className="flex items-center justify-center gap-1.5 cursor-pointer w-full sm:w-auto relative z-[100]"
+                    style={{ height: 48, background: 'rgba(255,255,255,0.1)', border: `1px solid ${isHovered ? emeraldColor : lampColor}`, borderRadius: 50, padding: '12px 24px', backdropFilter: 'blur(8px)' }}
+                    whileHover={{ boxShadow: '0 0 20px rgba(52,211,153,0.5)', background: 'rgba(255,255,255,0.2)' }}
+                  >
+                    <Calendar style={{ width: 17, height: 14, color: isHovered ? emeraldColor : lampColor }} />
+                    <p className="font-inter font-semibold whitespace-nowrap" style={{ fontSize: 15, color: isHovered ? emeraldColor : lampColor }}>
+                      {primaryButtonText}
+                    </p>
+                  </motion.a>
+                </div>
+              )}
             </motion.div>
           </div>
 
