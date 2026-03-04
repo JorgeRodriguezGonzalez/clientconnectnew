@@ -450,7 +450,7 @@ export const SuperHero = ({
                       className="relative w-full h-full bg-transparent rounded-[50px] px-6 pr-14 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none z-10"
                     />
                     <button
-                      className="absolute right-[3px] top-1/2 -translate-y-1/2 w-[56px] h-[42px] rounded-[50px] flex items-center justify-center transition-all duration-300 z-10"
+                      className="absolute right-[5px] top-1/2 -translate-y-1/2 w-[48px] h-[36px] rounded-[50px] flex items-center justify-center transition-all duration-300 z-10"
                       style={{ background: 'rgba(255, 255, 255, 0.4)' }}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
