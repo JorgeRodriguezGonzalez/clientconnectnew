@@ -193,7 +193,7 @@ const ServicesSection = () => {
   const byArea = Object.fromEntries(services.map(s => [s.area, s]));
 
   return (
-    <section style={{ padding: "80px 40px", backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
+    <section style={{ padding: "80px 80px", backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
       <style>{`
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap');
         .gradient-text {
