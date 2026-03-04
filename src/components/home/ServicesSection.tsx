@@ -1,14 +1,14 @@
 import { useState, useRef } from "react";
-import { Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 const services = [
   {
-    id: "digital-strategy",
-    title: "Digital Strategy",
-    description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.",
-    badges: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"],
-    videoSrc: "/videos/digital.mp4",
-    link: "/services/digital-strategy",
+    id: "website-development",
+    title: "Website Development",
+    description: "Beautiful, fast websites built to convert visitors into customers.",
+    badges: ["UI/UX Design", "CMS Integration", "Performance", "SEO Ready"],
+    videoSrc: "/videos/websitedevelopment.mp4",
+    link: "/services/website-development",
     area: "top-left",
   },
   {
@@ -17,17 +17,17 @@ const services = [
     description: "Craft a cohesive visual identity that makes your business instantly recognizable.",
     badges: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"],
     videoSrc: null,
+    link: "/services/brand-identity",
     area: "bottom-left",
-    bgColor: "linear-gradient(135deg, #34d399, #10b981)",
   },
   {
-    id: "website-development",
-    title: "Website Development",
-    description: "Beautiful, fast websites built to convert visitors into customers.",
-    badges: ["UI/UX Design", "CMS Integration", "Performance", "SEO Ready"],
-    videoSrc: null,
+    id: "digital-strategy",
+    title: "Digital Strategy",
+    description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.",
+    badges: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"],
+    videoSrc: "/videos/digital.mp4",
+    link: "/services/digital-strategy",
     area: "top-center",
-    bgColor: "linear-gradient(135deg, #06b6d4, #0891b2)",
   },
   {
     id: "seo",
@@ -62,8 +62,8 @@ const services = [
     description: "Compelling content that tells your brand story and drives engagement across every channel.",
     badges: ["Copywriting", "Video Scripts", "Social Content", "Blog Posts"],
     videoSrc: null,
+    link: "/services/content-creation",
     area: "bottom-right",
-    bgColor: "linear-gradient(135deg, #3f3f46, #52525b)",
   },
 ];
 
@@ -110,7 +110,7 @@ const ServiceCard = ({ service, style = {} }) => {
   };
 
   return (
-        <div
+    <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -148,7 +148,7 @@ const ServiceCard = ({ service, style = {} }) => {
         </div>
       )}
 
-      {/* Grid pattern for no-video cards */}
+      {/* Grid pattern for no-video */}
       {!hasVideo && (
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <svg width="100%" height="100%" style={{ opacity: 0.05 }}>
@@ -159,10 +159,6 @@ const ServiceCard = ({ service, style = {} }) => {
             </defs>
             <rect width="100%" height="100%" fill={`url(#grid-${service.id})`} />
           </svg>
-          <div style={{
-            position: "absolute", bottom: 0, left: 0, right: 0, height: "50%",
-            background: "linear-gradient(to top, rgba(6,182,212,0.05), transparent)",
-          }} />
         </div>
       )}
 
@@ -172,9 +168,9 @@ const ServiceCard = ({ service, style = {} }) => {
         display: "flex", flexDirection: "column", justifyContent: "space-between",
         padding: "28px", height: "100%", boxSizing: "border-box",
       }}>
-        {/* Top row: title/desc + link button */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px" }}>
-          <div style={{ flex: 1 }}>
+        {/* Top row */}
+        <div>
+          <div>
             <h3 style={{
               fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
               fontSize: "22px", lineHeight: 1.15, color: "#ffffff", margin: "0 0 10px 0",
@@ -190,20 +186,24 @@ const ServiceCard = ({ service, style = {} }) => {
             </p>
           </div>
 
-          {/* Link button */}
-          <a href={service.link || "#"} style={{ textDecoration: "none", flexShrink: 0 }}>
+          {/* Arrow link button - top right corner */}
+          <a
+            href={service.link || "#"}
+            style={{ textDecoration: "none", position: "absolute", top: "16px", right: "16px", zIndex: 10 }}
+            onClick={e => e.stopPropagation()}
+          >
             <div style={{
               width: "40px", height: "40px", borderRadius: "50%",
               backgroundColor: "#06b6d4",
               display: "flex", alignItems: "center", justifyContent: "center",
               boxShadow: "0 4px 12px rgba(6,182,212,0.4)",
-              transition: "transform 0.2s, box-shadow 0.2s",
             }}>
               <ArrowRight style={{ width: "16px", height: "16px", color: "#fff", transform: "rotate(-45deg)" }} />
             </div>
           </a>
         </div>
 
+        {/* Badges */}
         <div style={{ marginTop: "20px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
             {service.badges.map((b, i) => <Badge key={i} label={b} />)}
@@ -249,7 +249,7 @@ const ServicesSection = () => {
           </h2>
           <p style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 500,
-            fontSize: "16px", lineHeight: 1.6,             color: "#6b7280",
+            fontSize: "16px", lineHeight: 1.6, color: "#6b7280",
             maxWidth: "400px", margin: "0 auto",
           }}>
             Everything you need to grow your business online, all under one roof.
@@ -257,26 +257,26 @@ const ServicesSection = () => {
         </div>
 
         {/* Bento Grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px", width: "100%", alignItems: "stretch" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px", width: "100%" }}>
 
-          {/* Col 1: big top + small bottom */}
+          {/* Col 1 */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <ServiceCard service={byArea["top-left"]} style={{ height: "480px" }} />
             <ServiceCard service={byArea["bottom-left"]} style={{ height: "260px" }} />
           </div>
 
-          {/* Col 2: small top + big bottom */}
+          {/* Col 2 */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <ServiceCard service={byArea["top-center"]} style={{ height: "300px" }} />
             <ServiceCard service={byArea["bottom-center"]} style={{ height: "440px" }} />
           </div>
 
-          {/* Col 3: single full height card */}
+          {/* Col 3 */}
           <div style={{ height: "756px" }}>
             <ServiceCard service={byArea["right"]} style={{ height: "100%" }} />
           </div>
 
-          {/* Row 2: horizontal card spanning col 1+2 + square card col 3 */}
+          {/* Row 2 */}
           <div style={{ gridColumn: "1 / 3", height: "280px" }}>
             <ServiceCard service={byArea["bottom-wide"]} style={{ height: "100%" }} />
           </div>
@@ -285,7 +285,6 @@ const ServicesSection = () => {
           </div>
 
         </div>
-
       </div>
     </section>
   );
