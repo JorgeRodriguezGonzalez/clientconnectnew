@@ -290,7 +290,7 @@ const Services = () => {
 
         {/* Tabs */}
         <div className="relative mb-12">
-          <div ref={tabsContainerRef} className="flex overflow-x-auto gap-1 pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:justify-center hide-scroll">
+          <div ref={tabsContainerRef} className="flex overflow-x-auto gap-2 pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:justify-center hide-scroll">
             {SERVICES.map(service => {
               const isActive = activeTab === service.id;
               const isHovered = hoveredTab === service.id;
