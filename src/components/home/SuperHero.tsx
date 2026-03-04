@@ -360,7 +360,7 @@ export const SuperHero = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9, duration: 0.8, ease: 'easeOut' }}
-                className="flex items-center justify-center gap-0 mt-2 mb-6"
+                className="flex items-center justify-center gap-0 mt-2 mb-10"
               >
                 {['SEO', 'Paid Ads', 'Websites', 'Social Media'].map((tag, i, arr) => (
                   <React.Fragment key={tag}>
