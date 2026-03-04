@@ -17,7 +17,7 @@ const services = [
     badges: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"],
     videoSrc: null,
     area: "bottom-left",
-    bgColor: "radial-gradient(50% 50% at 0% 0%, #0e4f6b 2%, #061e2a 100%)",
+    bgColor: "linear-gradient(135deg, #34d399, #10b981)",
   },
   {
     id: "website-development",
@@ -26,7 +26,7 @@ const services = [
     badges: ["UI/UX Design", "CMS Integration", "Performance", "SEO Ready"],
     videoSrc: null,
     area: "top-center",
-    bgColor: "radial-gradient(50% 50% at 0% 0%, #0d4a33 2%, #051a12 100%)",
+    bgColor: "linear-gradient(135deg, #06b6d4, #0891b2)",
   },
   {
     id: "seo",
@@ -59,7 +59,7 @@ const services = [
     badges: ["Copywriting", "Video Scripts", "Social Content", "Blog Posts"],
     videoSrc: null,
     area: "bottom-right",
-    bgColor: "radial-gradient(50% 50% at 0% 0%, #2a2a2a 2%, #0a0a0a 100%)",
+    bgColor: "linear-gradient(135deg, #3f3f46, #52525b)",
   },
 ];
 
