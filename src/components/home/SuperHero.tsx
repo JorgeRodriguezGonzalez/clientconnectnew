@@ -11,6 +11,54 @@ const fontStyles = `
     0% { background-position: -200% center; }
     100% { background-position: 200% center; }
   }
+
+  @keyframes borderRotate {
+    0% { --border-angle: 0deg; }
+    100% { --border-angle: 360deg; }
+  }
+
+  @property --border-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .glowing-border {
+    --border-angle: 0deg;
+    animation: borderRotate 4s linear infinite;
+    border: 2px solid transparent;
+    background:
+      linear-gradient(#050505, #050505) padding-box,
+      repeating-conic-gradient(
+        from var(--border-angle),
+        #34d399 0%,
+        #06b6d4 25%,
+        transparent 30%,
+        transparent 70%,
+        #34d399 75%,
+        #06b6d4 100%
+      ) border-box;
+  }
+
+  .glowing-border::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50px;
+    background: repeating-conic-gradient(
+      from var(--border-angle),
+      #34d399 0%,
+      #06b6d4 25%,
+      transparent 30%,
+      transparent 70%,
+      #34d399 75%,
+      #06b6d4 100%
+    );
+    filter: blur(8px);
+    opacity: 0.4;
+    z-index: -1;
+    animation: borderRotate 4s linear infinite;
+  }
 `;
 
 // --- CLIENTS DATA ---
@@ -379,11 +427,13 @@ export const SuperHero = ({
             >
               {isMobile ? (
                 <div className="flex flex-col items-center gap-3 w-full px-2">
-                  <input
-                    type="email"
-                    placeholder="Enter your email for a free audit"
-                    className="w-full h-[48px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-[50px] px-6 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none focus:border-white/40 transition-all duration-300"
-                  />
+                  <div className="w-full relative">
+                    <input
+                      type="email"
+                      placeholder="Enter your email for a free audit"
+                      className="glowing-border relative w-full h-[48px] bg-transparent backdrop-blur-sm rounded-[50px] px-6 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none transition-all duration-300 z-10"
+                    />
+                  </div>
                   <motion.a
                     href="#contact"
                     className="flex items-center justify-center gap-1.5 cursor-pointer w-full relative z-[100]"
