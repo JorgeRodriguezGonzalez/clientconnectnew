@@ -660,13 +660,13 @@ export const FounderSection = () => {
     <section 
       ref={containerRef} 
       className={cn(
-        // ✅ ÚNICO CAMBIO: pb-24 → lg:pb-16 (la mitad de lg:pb-32)
-        "relative w-full pt-24 pb-24 lg:pt-24 lg:pb-16 transition-colors duration-0 z-10 font-sans", 
+        "relative w-full pt-24 pb-32 lg:pb-40 transition-colors duration-0 z-10 font-sans", 
         isLightMode ? "bg-[#FAFAFA]" : "bg-[#050505]"
       )}
     >
       <style>{fontStyles}</style>
 
+      {/* ✅ CAMBIO CLAVE: de absolute top-0 → flujo normal */}
       {/* <div className="w-full">
         <LogoCloud isLightMode={isLightMode} />
       </div> */}
