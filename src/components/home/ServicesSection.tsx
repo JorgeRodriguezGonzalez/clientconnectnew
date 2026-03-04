@@ -25,7 +25,7 @@ const services = [
     title: "Digital Strategy",
     description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.",
     badges: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"],
-    videoSrc: "/videos/digital.mp4",
+    videoSrc: null,
     link: "/services/digital-strategy",
     area: "top-center",
   },
