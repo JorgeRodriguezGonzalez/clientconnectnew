@@ -212,7 +212,7 @@ const ServicesSection = () => {
   const byArea = Object.fromEntries(services.map(s => [s.area, s]));
 
   return (
-    <section style={{ padding: "80px 80px", backgroundColor: "#000000", position: "relative", zIndex: 1 }}>
+    <section style={{ padding: "80px 80px", backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
       <style>{`
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap');
         .gradient-text {
@@ -236,14 +236,14 @@ const ServicesSection = () => {
           <h2 style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
             fontSize: "clamp(32px, 5vw, 52px)", lineHeight: 1.1,
-            color: "#ffffff", marginBottom: "16px",
+            color: "#111827", marginBottom: "16px",
           }}>
             Comprehensive Digital{" "}
             <span className="gradient-text">Marketing Services</span>
           </h2>
           <p style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 500,
-            fontSize: "16px", lineHeight: 1.6,             color: "#9ca3af",
+            fontSize: "16px", lineHeight: 1.6,             color: "#6b7280",
             maxWidth: "400px", margin: "0 auto",
           }}>
             Everything you need to grow your business online, all under one roof.
