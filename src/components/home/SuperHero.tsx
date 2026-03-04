@@ -226,7 +226,7 @@ export const SuperHero = ({
 
           {/* LAMP — MOBILE (smaller) */}
           {isMobile && (
-            <div className="w-full relative flex items-center justify-center mt-2 -mb-[22px] overflow-visible" style={{ transform: 'scale(0.62)' }}>
+            <div className="w-full relative flex items-center justify-center mt-6 -mb-[18px] overflow-visible" style={{ transform: 'scale(0.62)' }}>
               <div className="w-full h-[55px] relative flex items-center justify-center pt-40 overflow-visible">
                 <div className="absolute inset-auto z-30 h-40 w-full flex items-center justify-center pointer-events-none">
                   <motion.div className="w-[44rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
