@@ -465,7 +465,7 @@ export const SuperHero = ({
               >
                 {['SEO', 'Paid Ads', 'Websites', 'Social Media'].map((tag, i, arr) => (
                   <React.Fragment key={tag}>
-                    <span className="text-white/50 text-[13px] font-inter font-medium px-3">{tag}</span>
+                    <span className="text-[13px] font-inter font-medium px-3" style={{ color: emeraldColor }}>{tag}</span>
                     {i < arr.length - 1 && <span className="text-white/20 text-[13.5px] font-bold">·</span>}
                   </React.Fragment>
                 ))}
