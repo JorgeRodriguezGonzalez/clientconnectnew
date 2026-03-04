@@ -231,34 +231,26 @@ const ServicesSection = () => {
           </p>
         </div>
 
-        {/* Bento Grid — 3 cols, left: big+small, center: small+big, right: full height */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gridTemplateRows: "520px 320px",
-          gap: "16px",
-          width: "100%",
-        }}>
-          {/* Col 1 top — big */}
-          <div style={{ gridColumn: "1", gridRow: "1" }}>
-            <ServiceCard service={byArea["top-left"]} style={{ height: "100%" }} />
+        {/* Bento Grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px", width: "100%", alignItems: "stretch" }}>
+
+          {/* Col 1: big top + small bottom */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <ServiceCard service={byArea["top-left"]} style={{ height: "560px" }} />
+            <ServiceCard service={byArea["bottom-left"]} style={{ height: "180px" }} />
           </div>
-          {/* Col 1 bottom — small */}
-          <div style={{ gridColumn: "1", gridRow: "2" }}>
-            <ServiceCard service={byArea["bottom-left"]} style={{ height: "100%" }} />
+
+          {/* Col 2: small top + big bottom */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <ServiceCard service={byArea["top-center"]} style={{ height: "300px" }} />
+            <ServiceCard service={byArea["bottom-center"]} style={{ height: "440px" }} />
           </div>
-          {/* Col 2 top — small */}
-          <div style={{ gridColumn: "2", gridRow: "1" }}>
-            <ServiceCard service={byArea["top-center"]} style={{ height: "100%" }} />
-          </div>
-          {/* Col 2 bottom — big */}
-          <div style={{ gridColumn: "2", gridRow: "2" }}>
-            <ServiceCard service={byArea["bottom-center"]} style={{ height: "100%" }} />
-          </div>
-          {/* Col 3 — full height */}
-          <div style={{ gridColumn: "3", gridRow: "1 / 3" }}>
+
+          {/* Col 3: single full height card */}
+          <div style={{ height: "756px" }}>
             <ServiceCard service={byArea["right"]} style={{ height: "100%" }} />
           </div>
+
         </div>
 
       </div>
