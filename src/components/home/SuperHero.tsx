@@ -226,45 +226,45 @@ export const SuperHero = ({
 
           {/* LAMP — MOBILE (smaller) */}
           {isMobile && (
-            <div className="w-full relative flex items-center justify-center mt-2 -mb-[20px] overflow-visible" style={{ transform: 'scale(0.55)' }}>
-              <div className="w-full h-[50px] relative flex items-center justify-center pt-36 overflow-visible">
-                <div className="absolute inset-auto z-30 h-36 w-full flex items-center justify-center pointer-events-none">
-                  <motion.div className="w-[40rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
+            <div className="w-full relative flex items-center justify-center mt-2 -mb-[22px] overflow-visible" style={{ transform: 'scale(0.62)' }}>
+              <div className="w-full h-[55px] relative flex items-center justify-center pt-40 overflow-visible">
+                <div className="absolute inset-auto z-30 h-40 w-full flex items-center justify-center pointer-events-none">
+                  <motion.div className="w-[44rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
                     <motion.div
-                      initial={{ opacity: 0, width: '10rem' }}
-                      animate={{ opacity: 0.5, width: '18rem' }}
+                      initial={{ opacity: 0, width: '11rem' }}
+                      animate={{ opacity: 0.5, width: '20rem' }}
                       transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
                       style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor} 0%, transparent 35%, transparent 100%)` }}
-                      className="absolute top-0 right-1/2 h-36 overflow-visible w-[18rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                      className="absolute top-0 right-1/2 h-40 overflow-visible w-[20rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
                     />
                     <motion.div
-                      initial={{ opacity: 0, width: '10rem' }}
-                      animate={{ opacity: 0.5, width: '18rem' }}
+                      initial={{ opacity: 0, width: '11rem' }}
+                      animate={{ opacity: 0.5, width: '20rem' }}
                       transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
                       style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent 0%, transparent 65%, ${lampColor} 100%)` }}
-                      className="absolute top-0 left-1/2 h-36 w-[18rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                      className="absolute top-0 left-1/2 h-40 w-[20rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
                     />
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 0.4 }}
                       transition={{ delay: 0.2, duration: 1.0 }}
-                      className="absolute top-0 left-1/2 -translate-x-1/2 h-24 w-[18rem] rounded-full blur-3xl"
+                      className="absolute top-0 left-1/2 -translate-x-1/2 h-28 w-[20rem] rounded-full blur-3xl"
                       style={{ backgroundColor: lampColor }}
                     />
                     <motion.div
-                      initial={{ opacity: 0, width: '5rem' }}
-                      animate={{ opacity: 0.8, width: '10rem' }}
+                      initial={{ opacity: 0, width: '6rem' }}
+                      animate={{ opacity: 0.8, width: '11rem' }}
                       transition={{ delay: 0.2, duration: 1.0 }}
-                      className="absolute top-0 left-1/2 -translate-x-1/2 h-24 rounded-full blur-2xl"
+                      className="absolute top-0 left-1/2 -translate-x-1/2 h-28 rounded-full blur-2xl"
                       style={{ backgroundColor: lampColor }}
                     />
                   </motion.div>
                 </div>
                 <motion.div
-                  initial={{ opacity: 0, width: '10rem' }}
-                  animate={{ opacity: 1, width: '18rem' }}
+                  initial={{ opacity: 0, width: '11rem' }}
+                  animate={{ opacity: 1, width: '20rem' }}
                   transition={{ delay: 0.2, duration: 1.0 }}
-                  className="absolute inset-auto z-50 h-[2px] -translate-y-[4.5rem]"
+                  className="absolute inset-auto z-50 h-[3px] -translate-y-[5rem]"
                   style={{ backgroundColor: lampColor }}
                 />
               </div>
