@@ -179,6 +179,14 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                                     Book a Call
                                                 </motion.a>
                                             </div>
+                                            <motion.div
+                                                className="flex flex-col items-center gap-1 mt-4 text-white/40 cursor-pointer"
+                                                animate={{ y: [0, 6, 0] }}
+                                                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                                            >
+                                                <span className="font-satoshi text-[11px] uppercase tracking-[2px]">See our testimonials</span>
+                                                <ArrowDown className="w-4 h-4" />
+                                            </motion.div>
                                         </motion.div>
                                     </>
                                 )}
