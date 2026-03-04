@@ -451,7 +451,7 @@ export const SuperHero = ({
                     />
                     <button
                       className="absolute right-[5px] top-1/2 -translate-y-1/2 w-[48px] h-[36px] rounded-[50px] flex items-center justify-center transition-all duration-300 z-10"
-                      style={{ background: 'rgba(6, 182, 212, 0.5)' }}
+                      style={{ background: lampColor }}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#050505" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12" />
