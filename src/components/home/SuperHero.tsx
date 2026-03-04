@@ -298,7 +298,7 @@ export const SuperHero = ({
 
           {/* LAMP — MOBILE */}
           {isMobile && (
-            <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible" style={{ zIndex: 1, maskImage: 'linear-gradient(to bottom, white 60%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 60%, transparent 100%)' }}>
+            <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible" style={{ zIndex: 1, maskImage: 'linear-gradient(to bottom, white 80%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, white 80%, transparent 100%)' }}>
               <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
                 <div className="absolute inset-auto z-30 h-56 w-full flex items-center justify-center pointer-events-none">
                   <motion.div className="w-[40rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
