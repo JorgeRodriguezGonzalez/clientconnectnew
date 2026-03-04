@@ -272,7 +272,7 @@ export const SuperHero = ({
           )}
 
           {/* HERO TEXT */}
-          <div className={`relative text-center mb-8 ${isMobile ? 'z-20' : 'z-10'}`}>
+          <div className={`relative text-center mb-8 ${isMobile ? 'z-20 -mt-3' : 'z-10'}`}>
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
