@@ -453,7 +453,7 @@ export const SuperHero = ({
                       className="absolute right-[3px] top-1/2 -translate-y-1/2 w-[56px] h-[42px] rounded-[50px] flex items-center justify-center transition-all duration-300 z-10"
                       style={{ background: 'transparent' }}
                     >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12" />
                         <polyline points="12 5 19 12 12 19" />
                       </svg>
