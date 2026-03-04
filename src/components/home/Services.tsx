@@ -99,10 +99,22 @@ const ServiceCard = ({ service, colorIndex }) => {
       onMouseLeave={() => setIsHovered(false)}
       style={isMobile ? { background: CARD_COLORS[colorIndex % CARD_COLORS.length] } : undefined}
     >
-      {/* Background Image - only on desktop */}
-      {!isMobile && (
+      {/* Desktop: video as background, plays on hover */}
+      {!isMobile && service.videoUrl && (
+        <video
+          ref={videoRef}
+          src={service.videoUrl}
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+
+      {/* Desktop: fallback image if no video */}
+      {!isMobile && !service.videoUrl && (
         <div
-          className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105"
+          className="absolute inset-0 w-full h-full"
           style={{
             backgroundImage: `url('${service.imageUrl}')`,
             backgroundSize: service.bgSize,
@@ -112,8 +124,8 @@ const ServiceCard = ({ service, colorIndex }) => {
         />
       )}
 
-      {/* Video on hover */}
-      {service.videoUrl && (
+      {/* Mobile: video on hover */}
+      {isMobile && service.videoUrl && (
         <video
           ref={videoRef}
           src={service.videoUrl}
