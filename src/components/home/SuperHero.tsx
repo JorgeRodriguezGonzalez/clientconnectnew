@@ -388,7 +388,7 @@ export const SuperHero = ({
                     />
                     <button
                       className="absolute right-1.5 top-1/2 -translate-y-1/2 w-[38px] h-[38px] rounded-full flex items-center justify-center transition-all duration-300"
-                      style={{ background: emeraldColor }}
+                      style={{ background: 'linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)' }}
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#050505" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12" />
