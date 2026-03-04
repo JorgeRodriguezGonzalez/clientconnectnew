@@ -42,6 +42,22 @@ const services = [
     videoSrc: "/videos/brand.mp4",
     area: "right",
   },
+  {
+    id: "google-ads",
+    title: "Google Ads",
+    description: "Get instant visibility with targeted campaigns that maximize your ROI. Smart bidding, compelling ad copy, and continuous optimization to turn every dollar into measurable growth.",
+    badges: ["Search Ads", "Display Network", "Shopping Ads", "Remarketing"],
+    videoSrc: "/videos/googleads.mp4",
+    area: "bottom-wide",
+  },
+  {
+    id: "content-creation",
+    title: "Content Creation",
+    description: "Compelling content that tells your brand story and drives engagement across every channel.",
+    badges: ["Copywriting", "Video Scripts", "Social Content", "Blog Posts"],
+    videoSrc: null,
+    area: "bottom-right",
+  },
 ];
 
 const Badge = ({ label }) => (
@@ -249,6 +265,14 @@ const ServicesSection = () => {
           {/* Col 3: single full height card */}
           <div style={{ height: "756px" }}>
             <ServiceCard service={byArea["right"]} style={{ height: "100%" }} />
+          </div>
+
+          {/* Row 2: horizontal card spanning col 1+2 + square card col 3 */}
+          <div style={{ gridColumn: "1 / 3", height: "280px" }}>
+            <ServiceCard service={byArea["bottom-wide"]} style={{ height: "100%" }} />
+          </div>
+          <div style={{ gridColumn: "3", height: "280px" }}>
+            <ServiceCard service={byArea["bottom-right"]} style={{ height: "100%" }} />
           </div>
 
         </div>
