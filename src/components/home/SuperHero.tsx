@@ -328,37 +328,59 @@ export const SuperHero = ({
               Business Growth
             </motion.h1>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 1.0, ease: 'easeOut' }}
-              className="flex flex-col items-center gap-2 font-inter font-light text-white max-w-3xl mx-auto"
-              style={{ fontSize: 'clamp(14px, 1.5vw, 16px)' }}
-            >
-              <p>Stop relying on guesswork. We act as your entire growth engine.</p>
-              <p>
-                Combining{' '}
-                <span style={{ color: emeraldColor, fontWeight: 600 }}>Paid Media</span>,{' '}
-                <span style={{ color: emeraldColor, fontWeight: 600 }}>Creative Strategy</span>, and{' '}
-                <span style={{ color: emeraldColor, fontWeight: 600 }}>CRO</span>{' '}
-                to maximize ROI.
-              </p>
-            </motion.div>
+            {/* SUBTITLE — DESKTOP */}
+            {!isMobile && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 1.0, ease: 'easeOut' }}
+                className="flex flex-col items-center gap-2 font-inter font-light text-white max-w-3xl mx-auto"
+                style={{ fontSize: 'clamp(14px, 1.5vw, 16px)' }}
+              >
+                <p>Stop relying on guesswork. We act as your entire growth engine.</p>
+                <p>
+                  Combining{' '}
+                  <span style={{ color: emeraldColor, fontWeight: 600 }}>Paid Media</span>,{' '}
+                  <span style={{ color: emeraldColor, fontWeight: 600 }}>Creative Strategy</span>, and{' '}
+                  <span style={{ color: emeraldColor, fontWeight: 600 }}>CRO</span>{' '}
+                  to maximize ROI.
+                </p>
+              </motion.div>
+            )}
 
-            {/* TAGS */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.8, ease: 'easeOut' }}
-              className="flex items-center justify-center gap-0 mt-6 mb-6"
-            >
-              {['Google Ads', 'Paid Social', 'SEO', 'Web Design', 'Content Creation', 'CRO'].map((tag, i, arr) => (
-                <React.Fragment key={tag}>
-                  <span className="text-white/50 text-[13px] font-inter font-medium px-3">{tag}</span>
-                  {i < arr.length - 1 && <span className="text-white/20 text-[13px]">·</span>}
-                </React.Fragment>
-              ))}
-            </motion.div>
+            {/* TAGS — DESKTOP */}
+            {!isMobile && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.0, duration: 0.8, ease: 'easeOut' }}
+                className="flex items-center justify-center gap-0 mt-6 mb-6"
+              >
+                {['Google Ads', 'Paid Social', 'SEO', 'Web Design', 'Content Creation', 'CRO'].map((tag, i, arr) => (
+                  <React.Fragment key={tag}>
+                    <span className="text-white/50 text-[13px] font-inter font-medium px-3">{tag}</span>
+                    {i < arr.length - 1 && <span className="text-white/20 text-[13px]">·</span>}
+                  </React.Fragment>
+                ))}
+              </motion.div>
+            )}
+
+            {/* TAGS — MOBILE */}
+            {isMobile && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.8, ease: 'easeOut' }}
+                className="flex items-center justify-center gap-0 mt-2 mb-6"
+              >
+                {['SEO', 'Paid Ads', 'Websites', 'Social Media'].map((tag, i, arr) => (
+                  <React.Fragment key={tag}>
+                    <span className="text-white/50 text-[13px] font-inter font-medium px-3">{tag}</span>
+                    {i < arr.length - 1 && <span className="text-white/20 text-[13.5px] font-bold">·</span>}
+                  </React.Fragment>
+                ))}
+              </motion.div>
+            )}
 
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
