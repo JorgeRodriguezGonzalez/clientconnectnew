@@ -28,7 +28,6 @@ const services = [
     area: "top-center",
     bgColor: "radial-gradient(50% 50% at 0% 0%, #0d4a33 2%, #051a12 100%)",
   },
-  },
   {
     id: "seo",
     title: "SEO",
