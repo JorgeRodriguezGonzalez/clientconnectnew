@@ -11,54 +11,6 @@ const fontStyles = `
     0% { background-position: -200% center; }
     100% { background-position: 200% center; }
   }
-
-  @keyframes borderRotate {
-    0% { --border-angle: 0deg; }
-    100% { --border-angle: 360deg; }
-  }
-
-  @property --border-angle {
-    syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false;
-  }
-
-  .glowing-border {
-    --border-angle: 0deg;
-    animation: borderRotate 4s linear infinite;
-    border: 2px solid transparent;
-    background:
-      linear-gradient(#050505, #050505) padding-box,
-      repeating-conic-gradient(
-        from var(--border-angle),
-        #34d399 0%,
-        #06b6d4 25%,
-        transparent 30%,
-        transparent 70%,
-        #34d399 75%,
-        #06b6d4 100%
-      ) border-box;
-  }
-
-  .glowing-border::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50px;
-    background: repeating-conic-gradient(
-      from var(--border-angle),
-      #34d399 0%,
-      #06b6d4 25%,
-      transparent 30%,
-      transparent 70%,
-      #34d399 75%,
-      #06b6d4 100%
-    );
-    filter: blur(8px);
-    opacity: 0.4;
-    z-index: -1;
-    animation: borderRotate 4s linear infinite;
-  }
 `;
 
 // --- CLIENTS DATA ---
@@ -431,7 +383,8 @@ export const SuperHero = ({
                     <input
                       type="email"
                       placeholder="Enter your email for a free audit"
-                      className="glowing-border relative w-full h-[48px] bg-transparent backdrop-blur-sm rounded-[50px] px-6 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none transition-all duration-300 z-10"
+                      className="w-full h-[48px] bg-white/10 backdrop-blur-sm rounded-[50px] px-6 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none transition-all duration-300"
+                      style={{ border: `1px solid ${emeraldColor}` }}
                     />
                   </div>
                   <motion.a
