@@ -103,7 +103,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                         />
                                         <motion.div
                                             style={{ opacity: contentOpacity, scale: inverseScale }}
-                                            className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 px-6 text-center h-full"
+                                            className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 px-6 text-center"
                                         >
                                             <h3
                                                     className="font-satoshi font-bold text-white"
@@ -180,7 +180,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
                                                 </motion.a>
                                             </div>
                                             <motion.div
-                                                className="flex flex-col items-center gap-1 mt-4 text-white/40 cursor-pointer absolute bottom-6"
+                                                className="flex flex-col items-center gap-1 mt-4 text-white/40 cursor-pointer"
                                                 animate={{ y: [0, 6, 0] }}
                                                 transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                                             >
