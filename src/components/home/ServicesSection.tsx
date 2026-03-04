@@ -185,21 +185,7 @@ const ServiceCard = ({ service, style = {} }) => {
         </div>
 
         <div style={{ marginTop: "20px" }}>
-          <div style={{
-            fontSize: "9px", fontWeight: 700, letterSpacing: "0.2em",
-            textTransform: "uppercase", color: "rgba(255,255,255,0.35)",
-            fontFamily: "'Satoshi', sans-serif", marginBottom: "10px",
-          }}>
-            Includes {service.badges.length} capabilities
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", alignItems: "center" }}>
-            <div style={{
-              width: "24px", height: "24px", borderRadius: "50%",
-              background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
-              display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-            }}>
-              <Check style={{ width: "12px", height: "12px", color: "#06b6d4" }} strokeWidth={2.5} />
-            </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
             {service.badges.map((b, i) => <Badge key={i} label={b} />)}
           </div>
         </div>
