@@ -177,7 +177,7 @@ export const SuperHero = ({
       <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center py-16">
         <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-4" style={{ marginTop: '-10px' }}>
 
-          {/* LAMP — DESKTOP ONLY */}
+          {/* LAMP — DESKTOP */}
           {!isMobile && (
             <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible" style={{ transform: 'scale(0.85)' }}>
               <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
@@ -218,6 +218,53 @@ export const SuperHero = ({
                   animate={{ opacity: 1, width: '28rem' }}
                   transition={{ delay: 0.2, duration: 1.0 }}
                   className="absolute inset-auto z-50 h-[3px] -translate-y-[7rem]"
+                  style={{ backgroundColor: lampColor }}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* LAMP — MOBILE (smaller) */}
+          {isMobile && (
+            <div className="w-full relative flex items-center justify-center mt-2 -mb-[20px] overflow-visible" style={{ transform: 'scale(0.55)' }}>
+              <div className="w-full h-[50px] relative flex items-center justify-center pt-36 overflow-visible">
+                <div className="absolute inset-auto z-30 h-36 w-full flex items-center justify-center pointer-events-none">
+                  <motion.div className="w-[40rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
+                    <motion.div
+                      initial={{ opacity: 0, width: '10rem' }}
+                      animate={{ opacity: 0.5, width: '18rem' }}
+                      transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
+                      style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor} 0%, transparent 35%, transparent 100%)` }}
+                      className="absolute top-0 right-1/2 h-36 overflow-visible w-[18rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, width: '10rem' }}
+                      animate={{ opacity: 0.5, width: '18rem' }}
+                      transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
+                      style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent 0%, transparent 65%, ${lampColor} 100%)` }}
+                      className="absolute top-0 left-1/2 h-36 w-[18rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                    />
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.4 }}
+                      transition={{ delay: 0.2, duration: 1.0 }}
+                      className="absolute top-0 left-1/2 -translate-x-1/2 h-24 w-[18rem] rounded-full blur-3xl"
+                      style={{ backgroundColor: lampColor }}
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, width: '5rem' }}
+                      animate={{ opacity: 0.8, width: '10rem' }}
+                      transition={{ delay: 0.2, duration: 1.0 }}
+                      className="absolute top-0 left-1/2 -translate-x-1/2 h-24 rounded-full blur-2xl"
+                      style={{ backgroundColor: lampColor }}
+                    />
+                  </motion.div>
+                </div>
+                <motion.div
+                  initial={{ opacity: 0, width: '10rem' }}
+                  animate={{ opacity: 1, width: '18rem' }}
+                  transition={{ delay: 0.2, duration: 1.0 }}
+                  className="absolute inset-auto z-50 h-[2px] -translate-y-[4.5rem]"
                   style={{ backgroundColor: lampColor }}
                 />
               </div>
