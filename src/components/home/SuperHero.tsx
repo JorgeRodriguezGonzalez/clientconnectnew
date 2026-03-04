@@ -226,7 +226,7 @@ export const SuperHero = ({
 
           {/* LAMP — MOBILE */}
           {isMobile && (
-            <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible">
+            <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible" style={{ zIndex: 1 }}>
               <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
                 <div className="absolute inset-auto z-30 h-56 w-full flex items-center justify-center pointer-events-none">
                   <motion.div className="w-[40rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
@@ -272,7 +272,7 @@ export const SuperHero = ({
           )}
 
           {/* HERO TEXT */}
-          <div className="relative z-10 text-center mb-8">
+          <div className={`relative text-center mb-8 ${isMobile ? 'z-20' : 'z-10'}`}>
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
