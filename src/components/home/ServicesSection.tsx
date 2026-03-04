@@ -8,6 +8,7 @@ const services = [
     description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.",
     badges: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"],
     videoSrc: "/videos/digital.mp4",
+    link: "/services/digital-strategy",
     area: "top-left",
   },
   {
@@ -34,6 +35,7 @@ const services = [
     description: "Dominate search results and drive organic traffic with technical optimization.",
     badges: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"],
     videoSrc: "/videos/seo.mp4",
+    link: "/services/seo",
     area: "bottom-center",
   },
   {
@@ -42,6 +44,7 @@ const services = [
     description: "Reach your ideal customers on Meta, TikTok and LinkedIn with precision targeting.",
     badges: ["Meta Ads", "TikTok Ads", "LinkedIn Ads", "Retargeting"],
     videoSrc: "/videos/brand.mp4",
+    link: "/services/paid-social-ads",
     area: "right",
   },
   {
@@ -50,6 +53,7 @@ const services = [
     description: "Get instant visibility with targeted campaigns that maximize your ROI. Smart bidding, compelling ad copy, and continuous optimization to turn every dollar into measurable growth.",
     badges: ["Search Ads", "Display Network", "Shopping Ads", "Remarketing"],
     videoSrc: "/videos/googleads.mp4",
+    link: "/services/google-ads",
     area: "bottom-wide",
   },
   {
@@ -106,7 +110,7 @@ const ServiceCard = ({ service, style = {} }) => {
   };
 
   return (
-    <div
+        <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -168,20 +172,36 @@ const ServiceCard = ({ service, style = {} }) => {
         display: "flex", flexDirection: "column", justifyContent: "space-between",
         padding: "28px", height: "100%", boxSizing: "border-box",
       }}>
-        <div>
-          <h3 style={{
-            fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
-            fontSize: "22px", lineHeight: 1.15, color: "#ffffff", margin: "0 0 10px 0",
-          }}>
-            {service.title}
-          </h3>
-          <p style={{
-            fontFamily: "'Satoshi', sans-serif", fontWeight: 400,
-            fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.6)",
-            margin: 0, maxWidth: "260px",
-          }}>
-            {service.description}
-          </p>
+        {/* Top row: title/desc + link button */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px" }}>
+          <div style={{ flex: 1 }}>
+            <h3 style={{
+              fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
+              fontSize: "22px", lineHeight: 1.15, color: "#ffffff", margin: "0 0 10px 0",
+            }}>
+              {service.title}
+            </h3>
+            <p style={{
+              fontFamily: "'Satoshi', sans-serif", fontWeight: 400,
+              fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.6)",
+              margin: 0, maxWidth: "260px",
+            }}>
+              {service.description}
+            </p>
+          </div>
+
+          {/* Link button */}
+          <a href={service.link || "#"} style={{ textDecoration: "none", flexShrink: 0 }}>
+            <div style={{
+              width: "40px", height: "40px", borderRadius: "50%",
+              backgroundColor: "#06b6d4",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 4px 12px rgba(6,182,212,0.4)",
+              transition: "transform 0.2s, box-shadow 0.2s",
+            }}>
+              <ArrowRight style={{ width: "16px", height: "16px", color: "#fff", transform: "rotate(-45deg)" }} />
+            </div>
+          </a>
         </div>
 
         <div style={{ marginTop: "20px" }}>
