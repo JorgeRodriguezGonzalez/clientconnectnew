@@ -459,15 +459,6 @@ export const SuperHero = ({
                       </svg>
                     </button>
                   </div>
-                  <motion.a
-                    href="#contact"
-                    className="flex items-center justify-center gap-1.5 cursor-pointer w-full relative z-[100]"
-                    style={{ height: 48, background: 'rgba(255,255,255,0.1)', border: `1px solid ${lampColor}`, borderRadius: 50, padding: '12px 24px', backdropFilter: 'blur(8px)' }}
-                  >
-                    <p className="font-inter font-semibold whitespace-nowrap" style={{ fontSize: 15, color: lampColor }}>
-                      View Case Studies
-                    </p>
-                  </motion.a>
                 </div>
               ) : (
                 <div className="flex flex-wrap items-center justify-center gap-3">
