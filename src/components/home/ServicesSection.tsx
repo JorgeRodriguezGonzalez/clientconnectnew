@@ -114,7 +114,7 @@ const ServiceCard = ({ service, style = {} }) => {
         borderRadius: "24px",
         overflow: "hidden",
         cursor: "pointer",
-        background: service.bgColor || "radial-gradient(50% 50% at 0% 0%, #1e1e1e 2%, #080808 100%)",
+        background: "radial-gradient(50% 50% at 0% 0%, #1e1e1e 2%, #080808 100%)",
         border: "1px solid rgba(255,255,255,0.07)",
         transition: "transform 0.4s ease, box-shadow 0.4s ease",
         transform: !hasVideo && isHovered ? "translateY(-6px)" : "translateY(0)",
