@@ -232,7 +232,7 @@ export const SuperHero = ({
                   <motion.div className="w-[40rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
                     <motion.div
                       initial={{ opacity: 0, width: '8rem' }}
-                      animate={{ opacity: 0.35, width: '18rem' }}
+                      animate={{ opacity: 0.5, width: '18rem' }}
                       transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
                       style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor} 0%, transparent 35%, transparent 100%)` }}
                       className="absolute top-0 right-1/2 h-56 overflow-visible w-[18rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
@@ -246,14 +246,14 @@ export const SuperHero = ({
                     />
                     <motion.div
                       initial={{ opacity: 0 }}
-                      animate={{ opacity: 0.3 }}
+                      animate={{ opacity: 0.45 }}
                       transition={{ delay: 0.2, duration: 1.0 }}
                       className="absolute top-0 left-1/2 -translate-x-1/2 h-44 w-[18rem] rounded-full blur-3xl"
                       style={{ backgroundColor: lampColor }}
                     />
                     <motion.div
                       initial={{ opacity: 0, width: '5rem' }}
-                      animate={{ opacity: 0.6, width: '10rem' }}
+                      animate={{ opacity: 0.8, width: '10rem' }}
                       transition={{ delay: 0.2, duration: 1.0 }}
                       className="absolute top-0 left-1/2 -translate-x-1/2 h-44 rounded-full blur-2xl"
                       style={{ backgroundColor: lampColor }}
@@ -262,7 +262,7 @@ export const SuperHero = ({
                 </div>
                 <motion.div
                   initial={{ opacity: 0, width: '8rem' }}
-                  animate={{ opacity: 0.7, width: '18rem' }}
+                  animate={{ opacity: 1, width: '18rem' }}
                   transition={{ delay: 0.2, duration: 1.0 }}
                   className="absolute inset-auto z-50 h-[3px] -translate-y-[7rem]"
                   style={{ backgroundColor: lampColor }}
