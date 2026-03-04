@@ -169,6 +169,13 @@ const wordWidths: Record<string, number> = {
   "Sales": 155,
 };
 
+const mobileWordWidths: Record<string, number> = {
+  "Light": 90,
+  "Leads": 108,
+  "Clients": 125,
+  "Sales": 96,
+};
+
 const wordsLoop = [...Array(5)].flatMap(() => rotatingWords);
 
 // --- MOBILE DETECTION HOOK ---
@@ -202,7 +209,6 @@ export const SuperHero = ({
   const [nextWidth, setNextWidth] = useState(wordWidths[wordsLoop[0]] || 100);
 
   useEffect(() => {
-    if (isMobile) return;
     const timeoutId = setTimeout(() => {
       const nextIndex = titleNumber === wordsLoop.length - 1 ? 0 : titleNumber + 1;
       const nextWord = wordsLoop[nextIndex];
@@ -213,9 +219,12 @@ export const SuperHero = ({
       return () => clearTimeout(wordTimeout);
     }, 3000);
     return () => clearTimeout(timeoutId);
-  }, [titleNumber, isMobile]);
+  }, [titleNumber]);
 
-  const currentWidth = nextWidth;
+  const currentWord = wordsLoop[titleNumber];
+  const currentWidth = isMobile
+    ? (mobileWordWidths[currentWord] || 80)
+    : nextWidth;
 
   return (
     <div
@@ -344,7 +353,34 @@ export const SuperHero = ({
             >
               We Bring{' '}
               {isMobile ? (
-                <span className="text-white">Leads</span>
+                <motion.span
+                  className="relative inline-flex items-center overflow-hidden"
+                  animate={{ width: currentWidth }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  style={{ minHeight: '1em' }}
+                >
+                  {wordsLoop.map((word, index) => (
+                    <motion.span
+                      key={index}
+                      className="font-semibold"
+                      initial={{ opacity: 0, y: -100 }}
+                      transition={{ type: 'spring', stiffness: 50, opacity: { duration: 0.2 } }}
+                      animate={
+                        titleNumber === index
+                          ? { y: 0, opacity: 1, position: 'relative' as const }
+                          : {
+                              y: titleNumber > index ? 20 : -50,
+                              opacity: 0,
+                              position: 'absolute' as const,
+                              top: 0,
+                              left: 0,
+                            }
+                      }
+                    >
+                      {word}
+                    </motion.span>
+                  ))}
+                </motion.span>
               ) : (
                 <motion.span
                   className="relative inline-flex items-center overflow-hidden"
@@ -375,9 +411,11 @@ export const SuperHero = ({
                   ))}
                 </motion.span>
               )}{' '}
-              to Your
-              <br />
-              Business Growth
+              {isMobile ? (
+                <>to<br />Your Business Growth</>
+              ) : (
+                <>to Your<br />Business Growth</>
+              )}
             </motion.h1>
 
             {/* SUBTITLE — DESKTOP */}
