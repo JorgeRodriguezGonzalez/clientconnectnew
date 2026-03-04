@@ -281,18 +281,7 @@ export const SuperHero = ({
             >
               We Bring{' '}
               {isMobile ? (
-                <span
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)',
-                    backgroundSize: '200% auto',
-                    animation: 'gradientMove 3s linear infinite',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  Leads
-                </span>
+                <span className="text-white">Leads</span>
               ) : (
                 <motion.span
                   className="relative inline-flex items-center overflow-hidden"
