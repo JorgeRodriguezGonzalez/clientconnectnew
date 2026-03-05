@@ -258,25 +258,19 @@ export const WhatWeDoSection2 = () => {
                       <div className="grid grid-cols-3 gap-3">
                         <div className="p-4 bg-zinc-900 border border-zinc-700 rounded-xl">
                           <span className="text-zinc-500 text-lg">$</span>
-                          <div className="text-2xl font-black text-white tracking-tight mt-1">
-                            <Counter prefix="$" end={145} suffix="k" />
-                          </div>
+                          <div className="text-2xl font-black text-white tracking-tight mt-1">$145k</div>
                           <div className="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider mt-1">Monthly Revenue</div>
                           <div className="text-[11px] font-bold text-emerald-400 mt-0.5">+210% YoY</div>
                         </div>
                         <div className="p-4 bg-zinc-900 border border-zinc-700 rounded-xl">
                           <Target size={18} className="text-zinc-500" />
-                          <div className="text-2xl font-black text-white tracking-tight mt-1">
-                            <Counter prefix="$" end={24.50} suffix="" decimals={2} />
-                          </div>
+                          <div className="text-2xl font-black text-white tracking-tight mt-1">$24.50</div>
                           <div className="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider mt-1">Cost Per Lead</div>
                           <div className="text-[11px] font-bold text-emerald-400 mt-0.5">-45% Decrease</div>
                         </div>
                         <div className="p-4 bg-zinc-900 border border-zinc-700 rounded-xl">
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-500"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="18" cy="9" r="3"/><path d="M21 21v-1.5a3 3 0 0 0-3-3"/></svg>
-                          <div className="text-2xl font-black text-white tracking-tight mt-1">
-                            <Counter end={86} />
-                          </div>
+                          <div className="text-2xl font-black text-white tracking-tight mt-1">86</div>
                           <div className="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider mt-1">Qualified Leads</div>
                           <div className="text-[11px] font-bold text-emerald-400 mt-0.5">Per Month</div>
                         </div>
@@ -300,9 +294,7 @@ export const WhatWeDoSection2 = () => {
                   <p className="text-xs text-gray-500 mt-2 leading-relaxed font-medium">
                     Automated lead qualification and a 'Dream Bathroom' campaign that <strong>filled renovation slots for the entire season.</strong>
                   </p>
-                  <div className="text-3xl font-black text-gray-900 tracking-tight mt-4 mb-1">
-                    <Counter end={185} suffix="%" />
-                  </div>
+                  <div className="text-3xl font-black text-gray-900 tracking-tight mt-4 mb-1">185%</div>
                   <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Growth Year over Year</div>
                 </div>
                 <div className="relative z-10 pt-4 mt-6 border-t border-zinc-100">
@@ -324,9 +316,7 @@ export const WhatWeDoSection2 = () => {
                   <p className="text-xs text-zinc-100 mt-2 leading-relaxed font-medium">
                     Direct-response LinkedIn & Meta ads targeting <strong>luxury property owners.</strong> High-net-worth clients at scale.
                   </p>
-                  <div className="text-3xl font-black text-white tracking-tight mt-4 mb-1">
-                    <Counter prefix="$" end={2.1} suffix="M" decimals={1} />
-                  </div>
+                  <div className="text-3xl font-black text-white tracking-tight mt-4 mb-1">$2.1M</div>
                   <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Pipeline Value</div>
                   <div className="text-[11px] font-bold text-cyan-400 mt-0.5">Generated in Q3</div>
                 </div>
@@ -353,9 +343,7 @@ export const WhatWeDoSection2 = () => {
                     <p className="text-sm md:text-base text-zinc-400 max-w-md font-medium leading-relaxed mb-4">
                       Visual-first funnel with high-converting landing pages focused on project reveals. Scaling $50k+ garden transformations.
                     </p>
-                    <div className="text-4xl md:text-5xl font-black text-white tracking-tight mb-1">
-                      <Counter prefix="$" end={850} suffix="k" />
-                    </div>
+                    <div className="text-4xl md:text-5xl font-black text-white tracking-tight mb-1">$850k</div>
                     <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Project Value</div>
                     <div className="text-[11px] font-bold text-emerald-400 mt-0.5">Booked in 90 Days</div>
                     <div className="mt-6 max-w-xs">
