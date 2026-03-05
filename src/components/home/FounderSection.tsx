@@ -684,10 +684,10 @@ export const FounderSection = () => {
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start mt-16">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start mt-8 lg:mt-16">
           
           {/* --- LEFT: TEXT --- */}
-          <div className="lg:w-[40%] sticky top-32">
+          <div className="lg:w-[40%] lg:sticky lg:top-32">
             <div className="flex flex-col gap-6 pb-10">
               
               <motion.div 
@@ -785,7 +785,7 @@ export const FounderSection = () => {
             
             <motion.div 
               layout 
-              className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-[minmax(200px,auto)]"
+              className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 auto-rows-[minmax(200px,auto)]"
             >
 
               {/* CARD 1: TEAM PHOTO */}
@@ -796,7 +796,7 @@ export const FounderSection = () => {
                 onLayoutAnimationStart={() => setIsResizing(true)}
                 onLayoutAnimationComplete={() => setIsResizing(false)}
                 className={cn(
-                  "md:row-span-2 h-[450px] md:h-[600px] group relative z-10 safari-gpu",
+                  "md:row-span-2 h-[350px] md:h-[600px] group relative z-10 safari-gpu",
                   isLightMode ? "md:col-span-1" : "md:col-span-2"
                 )}
                 innerClassName={cn(
