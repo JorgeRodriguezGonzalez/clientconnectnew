@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Header } from "@/components/home/header";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -56,6 +57,7 @@ export default function About() {
 
   return (
     <div style={{ fontFamily: FONT, background: BG, color: TEXT_DARK, minHeight: "100vh" }}>
+      <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section style={{ position: "relative", overflow: "hidden", background: TEXT_DARK, paddingBottom: "60px" }}>
