@@ -1,9 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useSpring, useTransform, animate } from 'framer-motion';
-import {
-  ArrowUpRight, Home, Shield, Hammer, Leaf,
-  CheckCircle2, Activity
-} from 'lucide-react';
+import { Zap, Target, ArrowUpRight, Check, ShieldCheck, HardHat, Drill, PhoneCall } from 'lucide-react';
 
 // --- STYLES ---
 const fontStyles = `
@@ -182,7 +179,32 @@ const ProgressBar = ({ value, label, color = COLORS.emerald }: {
   );
 };
 
-// --- FLOATING BADGE ---
+const ProgressBarDark = ({ value, label, color = COLORS.cyan }: {
+  value: number; label: string; color?: string;
+}) => {
+  const [w, setW] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setTimeout(() => setW(value), 100); obs.disconnect(); }
+    }, { threshold: 0.3 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [value]);
+  return (
+    <div ref={ref} className="w-full">
+      <div className="flex justify-between mb-1.5">
+        <span className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">{label}</span>
+        <span className="text-[11px] font-bold" style={{ color }}>{value}%</span>
+      </div>
+      <div className="h-2 bg-zinc-700 rounded-full overflow-hidden">
+        <div className="h-full rounded-full" style={{ width: `${w}%`, background: `linear-gradient(90deg, ${color}, ${color}bb)`, transition: "width 1.5s cubic-bezier(0.16, 1, 0.3, 1)" }} />
+      </div>
+    </div>
+  );
+};
+
+// --- FLOATING STAT BADGE ---
 const StatBadge = ({ icon: Icon, label, value, className }: {
   icon: React.ElementType; label: string; value: string; className?: string;
 }) => (
@@ -194,54 +216,6 @@ const StatBadge = ({ icon: Icon, label, value, className }: {
     </div>
   </div>
 );
-
-// --- CASE STUDY DATA ---
-const caseStudies = [
-  {
-    client: "Your Local Roofers",
-    icon: Home,
-    niche: "Roofing",
-    color: COLORS.emerald,
-    stat: { value: 145, prefix: "$", suffix: "k", decimals: 0 },
-    statLabel: "Monthly Revenue",
-    statSub: "+210% YoY",
-    sparkData: [12, 18, 22, 28, 35, 42, 48, 55, 62, 70, 78, 86],
-    progress: { value: 95, label: "Revenue Target" },
-  },
-  {
-    client: "Nanotise",
-    icon: Shield,
-    niche: "Protection",
-    color: COLORS.cyan,
-    stat: { value: 2.1, prefix: "$", suffix: "M", decimals: 1 },
-    statLabel: "Pipeline Value",
-    statSub: "Generated Q3",
-    sparkData: [8, 15, 22, 35, 42, 55, 65, 72, 85, 95, 105, 115],
-    progress: { value: 88, label: "Quote Conversion" },
-  },
-  {
-    client: "Premier Bathrooms",
-    icon: Hammer,
-    niche: "Renovation",
-    color: COLORS.emerald,
-    stat: { value: 185, prefix: "", suffix: "%", decimals: 0 },
-    statLabel: "Growth",
-    statSub: "Year over Year",
-    sparkData: [3, 6, 8, 12, 15, 18, 22, 25, 28, 30, 32, 34],
-    progress: { value: 92, label: "Schedule Fill Rate" },
-  },
-  {
-    client: "Lifestyle Concepts",
-    icon: Leaf,
-    niche: "Landscaping",
-    color: COLORS.cyan,
-    stat: { value: 850, prefix: "$", suffix: "k", decimals: 0 },
-    statLabel: "Project Value",
-    statSub: "Booked in 90 Days",
-    sparkData: [50, 120, 180, 280, 380, 450, 520, 600, 680, 750, 800, 850],
-    progress: { value: 97, label: "Client Satisfaction" },
-  },
-];
 
 // ============================
 // MAIN COMPONENT
@@ -258,65 +232,137 @@ export const WhatWeDoSection2 = () => {
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
 
-          {/* ========== LEFT: CARDS ========== */}
+          {/* LEFT: CARDS */}
           <div className="lg:w-[60%] relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
 
-              {/* Floating badge */}
-              <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
-                <StatBadge icon={Activity} label="Total Pipeline" value="$4.2M+" />
-              </motion.div>
-
-              {caseStudies.map((cs, i) => (
-                <TiltCard
-                  key={cs.client}
-                  delay={i * 0.1}
-                  innerClassName="bg-white border border-zinc-200 p-6 flex flex-col justify-between"
-                >
-                  <div className="relative z-10 flex flex-col h-full">
-                    {/* Niche tag */}
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: `${cs.color}15` }}>
-                          <cs.icon size={14} style={{ color: cs.color }} />
-                        </div>
-                        <span className="text-[10px] font-bold uppercase tracking-[2px]" style={{ color: cs.color }}>{cs.niche}</span>
+              {/* ===== CARD 1: YOUR LOCAL ROOFERS (wide, white bg + image) ===== */}
+              <div className="md:col-span-2 relative">
+                <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
+                  <StatBadge icon={Zap} label="Monthly Revenue" value="$145k" />
+                </motion.div>
+                <TiltCard innerClassName="bg-white border border-zinc-200 min-h-[320px]">
+                  <div className="absolute inset-0 z-0 pointer-events-none opacity-10 grayscale">
+                    <img src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover" alt="Roofing" />
+                  </div>
+                  <div className="relative z-10 p-8 flex flex-col md:flex-row gap-8 items-center h-full">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 text-emerald-600 mb-4">
+                        <HardHat size={20} />
+                        <span className="text-[10px] font-bold uppercase tracking-widest">Roofing</span>
                       </div>
-                    </div>
-
-                    {/* Client name */}
-                    <h4 className="text-base font-bold text-gray-900 mb-1 leading-tight">{cs.client}</h4>
-
-                    {/* Hero stat */}
-                    <div className="my-5">
-                      <div className="text-4xl font-black text-gray-900 leading-none tracking-tight">
-                        <Counter end={cs.stat.value} prefix={cs.stat.prefix} suffix={cs.stat.suffix} decimals={cs.stat.decimals} />
+                      <h4 className="text-2xl font-bold mb-2 text-gray-900 tracking-tight">Your Local Roofers</h4>
+                      <p className="text-sm leading-relaxed mb-6 text-gray-600">
+                        From feast-and-famine to fully booked. We implemented hyper-local SEO & Google Ads that captured <strong>high-intent storm damage queries.</strong>
+                      </p>
+                      <div className="text-4xl font-black text-gray-900 tracking-tight mb-1">
+                        <Counter prefix="$" end={145} suffix="k" />
                       </div>
-                      <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mt-1">{cs.statLabel}</div>
-                      <div className="text-[11px] font-bold mt-0.5" style={{ color: cs.color }}>{cs.statSub}</div>
-                    </div>
-
-                    {/* Progress bar */}
-                    <div className="mt-auto pt-4 border-t border-zinc-100">
-                      <ProgressBar value={cs.progress.value} label={cs.progress.label} color={cs.color} />
+                      <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Monthly Revenue</div>
+                      <div className="text-[11px] font-bold text-emerald-500 mt-0.5">+210% Year over Year</div>
+                      <div className="mt-6 max-w-xs">
+                        <ProgressBar value={95} label="Revenue Target Hit" color={COLORS.emerald} />
+                      </div>
                     </div>
                   </div>
                 </TiltCard>
-              ))}
+              </div>
+
+              {/* ===== CARD 2: PREMIER BATHROOMS (white bg) ===== */}
+              <TiltCard delay={0.1} innerClassName="bg-white border border-zinc-200 p-8 flex flex-col justify-between overflow-hidden">
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] grayscale">
+                  <img src="https://images.unsplash.com/photo-1551288049-bbbda546697a?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Bathroom" />
+                </div>
+                <div className="relative z-10">
+                  <div className="w-12 h-12 bg-emerald-500/10 flex items-center justify-center mb-6 rounded-none">
+                    <PhoneCall className="text-emerald-500" />
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-900 leading-tight">Premier Bathrooms</h4>
+                  <p className="text-xs text-gray-500 mt-2 leading-relaxed font-medium">
+                    Automated lead qualification and a 'Dream Bathroom' campaign that <strong>filled renovation slots for the entire season.</strong>
+                  </p>
+                  <div className="text-3xl font-black text-gray-900 tracking-tight mt-4 mb-1">
+                    <Counter end={185} suffix="%" />
+                  </div>
+                  <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Growth Year over Year</div>
+                </div>
+                <div className="relative z-10 pt-4 mt-6 border-t border-zinc-100">
+                  <ProgressBar value={92} label="Schedule Fill Rate" color={COLORS.emerald} />
+                </div>
+              </TiltCard>
+
+              {/* ===== CARD 3: NANOTISE (dark bg) ===== */}
+              <TiltCard delay={0.2} innerClassName="bg-zinc-900 border-zinc-800 p-8 flex flex-col justify-between overflow-hidden">
+                <div className="absolute inset-0 z-0 opacity-25 grayscale pointer-events-none">
+                  <img src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Protection" />
+                </div>
+                <div className="relative z-10">
+                  <div className="w-12 h-12 bg-white/10 flex items-center justify-center mb-6 rounded-none">
+                    <Drill className="text-cyan-400" />
+                  </div>
+                  <h4 className="text-xl font-bold text-white">Nanotise</h4>
+                  <p className="text-xs text-zinc-100 mt-2 leading-relaxed font-medium">
+                    Direct-response LinkedIn & Meta ads targeting <strong>luxury property owners.</strong> High-net-worth clients at scale.
+                  </p>
+                  <div className="text-3xl font-black text-white tracking-tight mt-4 mb-1">
+                    <Counter prefix="$" end={2.1} suffix="M" decimals={1} />
+                  </div>
+                  <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Pipeline Value</div>
+                  <div className="text-[11px] font-bold text-cyan-400 mt-0.5">Generated in Q3</div>
+                </div>
+                <div className="relative z-10 pt-4 mt-6 border-t border-zinc-700">
+                  <ProgressBarDark value={88} label="Quote Conversion" color={COLORS.cyan} />
+                </div>
+              </TiltCard>
+
+              {/* ===== CARD 4: LIFESTYLE CONCEPTS (black bg + image, wide) ===== */}
+              <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-black border-none relative min-h-[280px]">
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-50 grayscale">
+                  <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop" alt="Landscaping" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
+                </div>
+                <div className="relative z-10 h-full p-8 md:p-12 flex flex-col md:flex-row items-center md:items-stretch gap-8">
+                  <div className="flex-1 flex flex-col justify-center">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="px-2 py-1 bg-emerald-500 text-black text-[10px] font-black uppercase tracking-tighter">Landscaping</div>
+                      <div className="h-px w-12 bg-zinc-700" />
+                    </div>
+                    <h4 className="text-3xl md:text-4xl font-black text-white italic uppercase tracking-tighter mb-2 leading-[0.9]">
+                      Lifestyle Concepts
+                    </h4>
+                    <p className="text-sm md:text-base text-zinc-400 max-w-md font-medium leading-relaxed mb-4">
+                      Visual-first funnel with high-converting landing pages focused on project reveals. Scaling $50k+ garden transformations.
+                    </p>
+                    <div className="text-4xl md:text-5xl font-black text-white tracking-tight mb-1">
+                      <Counter prefix="$" end={850} suffix="k" />
+                    </div>
+                    <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Project Value</div>
+                    <div className="text-[11px] font-bold text-emerald-400 mt-0.5">Booked in 90 Days</div>
+                    <div className="mt-6 max-w-xs">
+                      <ProgressBarDark value={97} label="Client Satisfaction" color={COLORS.emerald} />
+                    </div>
+                  </div>
+                  <div className="shrink-0 flex items-center">
+                    <div className="w-24 h-24 md:w-32 md:h-32 border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center">
+                      <ShieldCheck className="text-emerald-500 mb-1" size={32} />
+                      <span className="text-[10px] font-bold text-white uppercase leading-none">Top 1%<br/>Conv. Rate</span>
+                    </div>
+                  </div>
+                </div>
+              </TiltCard>
 
             </div>
           </div>
 
-          {/* ========== RIGHT: STICKY TEXT ========== */}
+          {/* RIGHT: STICKY TEXT */}
           <div className="lg:w-[40%] sticky top-32 self-start">
             <div className="flex flex-col gap-6">
-
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 className="w-fit px-3 py-1.5 border border-zinc-200 bg-white text-gray-500 text-[10px] font-sans font-semibold uppercase tracking-[2px]"
               >
-                Proven Results
+                PROVEN RESULTS
               </motion.div>
 
               <h3 className="font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tighter text-gray-900">
@@ -344,26 +390,29 @@ export const WhatWeDoSection2 = () => {
                 No vanity metrics. No fluff. Just verified numbers from trade businesses we've scaled across Australia.
               </p>
 
-              {/* Trust box */}
-              <div className="p-5 border border-zinc-200 bg-white shadow-sm">
-                <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-4 flex items-center gap-2">
-                  Why Tradies Trust Us <span className="h-px flex-1 bg-zinc-100" />
-                </p>
-                <div className="flex flex-col gap-3">
-                  {[
-                    "We run ads for our own roofing company first",
-                    "20+ years on the tools across Australia",
-                    "Every dollar tracked — no vanity metrics"
-                  ].map((t, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <CheckCircle2 size={14} className="mt-0.5 flex-shrink-0 text-emerald-500" />
-                      <span className="text-[12px] text-gray-600 font-medium leading-relaxed">{t}</span>
-                    </div>
-                  ))}
+              <div className="flex flex-col gap-5 mt-2">
+                <div className="p-5 border border-zinc-200 bg-white shadow-sm">
+                  <p className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    Traditional Agencies <span className="h-px flex-1 bg-zinc-100" />
+                  </p>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1">
+                    {["Never worked on site", "Obsessed with vanity metrics", "Set and forget"].map(t => (
+                      <span key={t} className="text-[13px] text-gray-400 font-medium italic">/ {t}</span>
+                    ))}
+                  </div>
+                </div>
+                <div className="p-5 border border-emerald-100 bg-emerald-50/30">
+                  <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    Our Partnership <span className="h-px flex-1 bg-emerald-100" />
+                  </p>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1">
+                    {["20 years on the tools", "Focused on cash flow", "Skin in the game"].map(t => (
+                      <span key={t} className="text-[13px] text-gray-900 font-bold">/ {t}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* CTA */}
               <div className="mt-4">
                 <motion.button
                   animate={{ borderColor: buttonColorSequence }}
@@ -382,7 +431,6 @@ export const WhatWeDoSection2 = () => {
                   </span>
                 </motion.button>
               </div>
-
             </div>
           </div>
 
