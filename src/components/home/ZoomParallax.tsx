@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useScroll, useTransform, motion } from 'framer-motion';
 import Lenis from 'lenis';
 import { ArrowDown } from 'lucide-react';
@@ -10,6 +10,18 @@ const fontStyles = `
   
   .font-satoshi { font-family: 'Satoshi', sans-serif; }
 `;
+
+// --- HOOK: useIsMobile ---
+function useIsMobile(breakpoint = 768) {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < breakpoint);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, [breakpoint]);
+    return isMobile;
+}
 
 // --- SUB-COMPONENT: PARALLAX VIDEO ---
 const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, objectPosition?: string }) => {
@@ -51,7 +63,7 @@ const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, object
 };
 
 // --- SUB-COMPONENT: PARALLAX LOGIC ---
-function ParallaxContent({ videos }: { videos: { src: string }[] }) {
+function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMobile: boolean }) {
     const container = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: container,
@@ -67,30 +79,40 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
     const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
 
     // Inverse scale to keep CTA text fixed size
-    const inverseScale = useTransform(scale4, v => 1 / v);    const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
-    // Content (text + buttons) appears slightly after overlay
+    const inverseScale = useTransform(scale4, v => 1 / v);
+    const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
     const contentOpacity = useTransform(scrollYProgress, [0.4, 0.65], [0, 1]);
     const contentY = useTransform(scrollYProgress, [0.4, 0.65], [20, 0]);
+
+    // Mobile overrides per card index (only applied on mobile)
+    const mobileOverrides: Record<number, React.CSSProperties> = {
+        2: { top: '-10vh', left: '-25vw', height: '30vh', width: '25vw' },
+    };
 
     return (
         <div ref={container} className="relative h-[300vh] bg-[#050505]">
             <div className="sticky top-0 h-screen overflow-hidden">
                 {videos.map(({ src }, index) => {
                     const scale = scales[index % scales.length];
+                    const hasMobileOverride = isMobile && mobileOverrides[index];
+
                     return (
                         <motion.div
                             key={index}
                             style={{ scale }}
                             className={`absolute top-0 flex h-full w-full items-center justify-center 
                                 ${index === 1 ? '[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]' : ''} 
-                                ${index === 2 ? '[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]' : ''} 
+                                ${index === 2 && !isMobile ? '[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]' : ''} 
                                 ${index === 3 ? '[&>div]:!left-[27.5vw] [&>div]:!h-[25vh] [&>div]:!w-[25vw]' : ''} 
                                 ${index === 4 ? '[&>div]:!top-[27.5vh] [&>div]:!left-[5vw] [&>div]:!h-[25vh] [&>div]:!w-[20vw]' : ''} 
                                 ${index === 5 ? '[&>div]:!top-[27.5vh] [&>div]:!-left-[22.5vw] [&>div]:!h-[25vh] [&>div]:!w-[30vw]' : ''} 
                                 ${index === 6 ? '[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]' : ''} 
                             `}
                         >
-                            <div className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl">
+                            <div
+                                className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl"
+                                style={hasMobileOverride ? mobileOverrides[index] : undefined}
+                            >
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
                                 <ParallaxVideo src={src} objectPosition={index === 5 || index === 1 || index === 2 ? 'center top' : 'center'} />
 
@@ -201,6 +223,7 @@ function ParallaxContent({ videos }: { videos: { src: string }[] }) {
 
 // --- MAIN COMPONENT ---
 export default function ZoomParallax() {
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         const lenis = new Lenis();
@@ -316,7 +339,7 @@ export default function ZoomParallax() {
             </div>
 
             {/* PARALLAX COMPONENT */}
-            <ParallaxContent videos={videos} />
+            <ParallaxContent videos={videos} isMobile={isMobile} />
 
             {/* FOOTER SPACER */}
             <div className="h-[25vh] bg-[#050505] relative z-10" />
