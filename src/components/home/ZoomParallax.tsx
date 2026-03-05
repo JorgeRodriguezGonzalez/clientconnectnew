@@ -79,7 +79,8 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
     const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
 
     // Inverse scale to keep CTA text fixed size
-    const inverseScale = useTransform(scale4, v => 1 / v);
+    // On mobile: text starts smaller and grows as card expands
+    const inverseScale = useTransform(scale4, v => isMobile ? 0.7 / v : 1 / v);
     const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
     const contentOpacity = useTransform(scrollYProgress, [0.4, 0.65], [0, 1]);
     const contentY = useTransform(scrollYProgress, [0.4, 0.65], [20, 0]);
