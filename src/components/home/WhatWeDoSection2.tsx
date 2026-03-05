@@ -320,7 +320,7 @@ export const WhatWeDoSection2 = () => {
               {/* ===== CARD 4: LIFESTYLE CONCEPTS (black bg + image, wide) ===== */}
               <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-black border-none relative min-h-[280px]">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-50 grayscale">
-                  <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop" alt="Landscaping" className="w-full h-full object-cover" />
+                  <img src="/images/landscaping.jpg" alt="Landscaping" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent" />
                 </div>
                 <div className="relative z-10 h-full p-8 md:p-12 flex flex-col md:flex-row items-center md:items-stretch gap-8">
