@@ -180,10 +180,12 @@ const wordsLoop = [...Array(5)].flatMap(() => rotatingWords);
 
 // --- MOBILE DETECTION HOOK ---
 const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') return window.innerWidth < 768;
+    return false;
+  });
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
-    check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
