@@ -247,9 +247,9 @@ export const WhatWeDoSection2 = () => {
                   </div>
                   <div className="relative z-10 p-8 flex flex-col md:flex-row gap-8 items-center h-full">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 text-emerald-600 mb-4">
-                        <HardHat size={20} />
-                        <span className="text-[10px] font-bold uppercase tracking-widest">Roofing</span>
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="px-2 py-1 bg-emerald-500 text-black text-[10px] font-black uppercase tracking-tighter">Roofing</div>
+                        <div className="h-px w-12 bg-zinc-300" />
                       </div>
                       <h4 className="text-2xl font-bold mb-2 text-gray-900 tracking-tight">Your Local Roofers</h4>
                       <p className="text-sm leading-relaxed mb-6 text-gray-600">
@@ -274,8 +274,9 @@ export const WhatWeDoSection2 = () => {
                   <img src="https://images.unsplash.com/photo-1551288049-bbbda546697a?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Bathroom" />
                 </div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 bg-emerald-500/10 flex items-center justify-center mb-6 rounded-none">
-                    <PhoneCall className="text-emerald-500" />
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="px-2 py-1 bg-emerald-500 text-black text-[10px] font-black uppercase tracking-tighter">Renovations</div>
+                    <div className="h-px w-12 bg-zinc-300" />
                   </div>
                   <h4 className="text-xl font-bold text-gray-900 leading-tight">Premier Bathrooms</h4>
                   <p className="text-xs text-gray-500 mt-2 leading-relaxed font-medium">
@@ -297,8 +298,9 @@ export const WhatWeDoSection2 = () => {
                   <img src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Protection" />
                 </div>
                 <div className="relative z-10">
-                  <div className="w-12 h-12 bg-white/10 flex items-center justify-center mb-6 rounded-none">
-                    <Drill className="text-cyan-400" />
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="px-2 py-1 bg-cyan-400 text-black text-[10px] font-black uppercase tracking-tighter">Mould Remediation</div>
+                    <div className="h-px w-12 bg-zinc-600" />
                   </div>
                   <h4 className="text-xl font-bold text-white">Nanotise</h4>
                   <p className="text-xs text-zinc-100 mt-2 leading-relaxed font-medium">
