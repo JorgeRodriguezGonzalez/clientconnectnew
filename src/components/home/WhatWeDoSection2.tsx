@@ -271,7 +271,7 @@ export const WhatWeDoSection2 = () => {
               {/* ===== CARD 2: PREMIER BATHROOMS (white bg) ===== */}
               <TiltCard delay={0.1} innerClassName="bg-white border border-zinc-200 p-8 flex flex-col justify-between overflow-hidden">
                 <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.08] grayscale">
-                  <img src="https://images.unsplash.com/photo-1551288049-bbbda546697a?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Bathroom" />
+                  <img src="/images/premier.jpg" className="w-full h-full object-cover" alt="Bathroom" />
                 </div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-3">
