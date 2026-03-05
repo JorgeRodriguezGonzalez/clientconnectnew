@@ -66,12 +66,13 @@ export default function About() {
         {/* Title */}
         <div style={{ textAlign: "center", paddingTop: "80px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
           <h1 style={{
-            fontSize: "clamp(3rem, 8vw, 7rem)", fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.03em", margin: 0, color: "#fff",
+            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
+            textTransform: "none",
             ...anim(0.1),
           }}>
-            <span style={{ display: "block" }}>About</span>
+            <span>About </span>
             <span style={{
-              display: "block",
               background: `linear-gradient(135deg, ${PRIMARY}, ${SECONDARY})`,
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             }}>Us.</span>
