@@ -60,13 +60,13 @@ export default function About() {
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section style={{ position: "relative", overflow: "hidden", background: TEXT_DARK, paddingBottom: "60px" }}>
+      <section style={{ position: "relative", overflow: "hidden", background: TEXT_DARK, paddingBottom: "100px" }}>
         {/* Gradient orbs */}
         <div style={{ position: "absolute", top: "-200px", left: "-100px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "-100px", right: "-150px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
         {/* Title */}
-        <div style={{ textAlign: "center", paddingTop: "80px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
+        <div style={{ textAlign: "center", paddingTop: "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
           <h1 style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
             fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
