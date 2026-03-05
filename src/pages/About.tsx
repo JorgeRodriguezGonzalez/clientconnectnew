@@ -120,7 +120,7 @@ export default function About() {
                 height: i === 2 ? "260px" : "220px",
                 borderRadius: "20px", overflow: "hidden", position: "relative", cursor: "pointer",
                 transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.08 : 1})`,
-                transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
+                transition: "all 0.15s ease-out",
                 boxShadow: hImg === i
                   ? `0 20px 60px rgba(${PRIMARY_RGB},0.35), 0 0 0 2px ${PRIMARY}`
                   : "0 10px 40px rgba(0,0,0,0.4)",
