@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useScroll, useTransform, motion } from 'framer-motion';
 import Lenis from 'lenis';
 import { ArrowDown } from 'lucide-react';
@@ -10,18 +10,6 @@ const fontStyles = `
   
   .font-satoshi { font-family: 'Satoshi', sans-serif; }
 `;
-
-// --- HOOK: useIsMobile ---
-function useIsMobile(breakpoint = 768) {
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-        const check = () => setIsMobile(window.innerWidth < breakpoint);
-        check();
-        window.addEventListener('resize', check);
-        return () => window.removeEventListener('resize', check);
-    }, [breakpoint]);
-    return isMobile;
-}
 
 // --- SUB-COMPONENT: PARALLAX VIDEO ---
 const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, objectPosition?: string }) => {
@@ -63,89 +51,48 @@ const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, object
 };
 
 // --- SUB-COMPONENT: PARALLAX LOGIC ---
-function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMobile: boolean }) {
+function ParallaxContent({ videos }: { videos: { src: string }[] }) {
     const container = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: container,
         offset: ['start start', 'end end'],
     });
 
-    // Desktop scales (original, untouched)
-    const dScale4 = useTransform(scrollYProgress, [0, 1], [1, 4]);
-    const dScale5 = useTransform(scrollYProgress, [0, 1], [1, 5]);
-    const dScale6 = useTransform(scrollYProgress, [0, 1], [1, 6]);
-    const dScale8 = useTransform(scrollYProgress, [0, 1], [1, 8]);
-    const dScale9 = useTransform(scrollYProgress, [0, 1], [1, 9]);
-    const desktopScales = [dScale4, dScale5, dScale6, dScale5, dScale6, dScale8, dScale9];
+    const scale4 = useTransform(scrollYProgress, [0, 1], [1, 4]);
+    const scale5 = useTransform(scrollYProgress, [0, 1], [1, 5]);
+    const scale6 = useTransform(scrollYProgress, [0, 1], [1, 6]);
+    const scale8 = useTransform(scrollYProgress, [0, 1], [1, 8]);
+    const scale9 = useTransform(scrollYProgress, [0, 1], [1, 9]);
 
-    // Mobile scales — much gentler so cards don't explode off screen
-    const mScale3 = useTransform(scrollYProgress, [0, 1], [1, 3]);
-    const mScale35 = useTransform(scrollYProgress, [0, 1], [1, 3.5]);
-    const mScale4 = useTransform(scrollYProgress, [0, 1], [1, 4]);
-    const mScale45 = useTransform(scrollYProgress, [0, 1], [1, 4.5]);
-    const mScale5 = useTransform(scrollYProgress, [0, 1], [1, 5]);
-    const mobileScales = [mScale3, mScale35, mScale4, mScale35, mScale4, mScale45, mScale5];
+    const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
 
-    const scales = isMobile ? mobileScales : desktopScales;
-
-    const primaryScale = scales[0];
-    const inverseScale = useTransform(primaryScale, v => 1 / v);
-    const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
+    // Inverse scale to keep CTA text fixed size
+    const inverseScale = useTransform(scale4, v => 1 / v);    const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
+    // Content (text + buttons) appears slightly after overlay
     const contentOpacity = useTransform(scrollYProgress, [0.4, 0.65], [0, 1]);
     const contentY = useTransform(scrollYProgress, [0.4, 0.65], [20, 0]);
-
-    // Mobile layout: position & size overrides per card index
-    // Center card (0) stays centered via flexbox, others get explicit positions
-    const mobilePositions: Record<number, React.CSSProperties> = {
-        0: { height: '30vh', width: '45vw' },
-        1: { height: '18vh', width: '28vw', top: '-22vh', left: '8vw' },
-        2: { height: '22vh', width: '22vw', top: '-8vh', left: '-28vw' },
-        3: { height: '16vh', width: '24vw', left: '30vw', top: '2vh' },
-        4: { height: '16vh', width: '22vw', top: '24vh', left: '8vw' },
-        5: { height: '16vh', width: '24vw', top: '22vh', left: '-26vw' },
-        6: { height: '12vh', width: '16vw', top: '20vh', left: '30vw' },
-    };
 
     return (
         <div ref={container} className="relative h-[300vh] bg-[#050505]">
             <div className="sticky top-0 h-screen overflow-hidden">
                 {videos.map(({ src }, index) => {
                     const scale = scales[index % scales.length];
-
-                    // Desktop: use original className-based positioning (unchanged)
-                    // Mobile: use inline style positioning
-                    const mPos = mobilePositions[index] || {};
-
                     return (
                         <motion.div
                             key={index}
                             style={{ scale }}
                             className={`absolute top-0 flex h-full w-full items-center justify-center 
-                                ${!isMobile && index === 1 ? '[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]' : ''} 
-                                ${!isMobile && index === 2 ? '[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]' : ''} 
-                                ${!isMobile && index === 3 ? '[&>div]:!left-[27.5vw] [&>div]:!h-[25vh] [&>div]:!w-[25vw]' : ''} 
-                                ${!isMobile && index === 4 ? '[&>div]:!top-[27.5vh] [&>div]:!left-[5vw] [&>div]:!h-[25vh] [&>div]:!w-[20vw]' : ''} 
-                                ${!isMobile && index === 5 ? '[&>div]:!top-[27.5vh] [&>div]:!-left-[22.5vw] [&>div]:!h-[25vh] [&>div]:!w-[30vw]' : ''} 
-                                ${!isMobile && index === 6 ? '[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]' : ''} 
+                                ${index === 1 ? '[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]' : ''} 
+                                ${index === 2 ? '[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]' : ''} 
+                                ${index === 3 ? '[&>div]:!left-[27.5vw] [&>div]:!h-[25vh] [&>div]:!w-[25vw]' : ''} 
+                                ${index === 4 ? '[&>div]:!top-[27.5vh] [&>div]:!left-[5vw] [&>div]:!h-[25vh] [&>div]:!w-[20vw]' : ''} 
+                                ${index === 5 ? '[&>div]:!top-[27.5vh] [&>div]:!-left-[22.5vw] [&>div]:!h-[25vh] [&>div]:!w-[30vw]' : ''} 
+                                ${index === 6 ? '[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]' : ''} 
                             `}
                         >
-                            <div
-                                className="relative overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl"
-                                style={isMobile ? {
-                                    height: mPos.height,
-                                    width: mPos.width,
-                                    ...(index !== 0 ? { top: mPos.top, left: mPos.left } : {}),
-                                    borderRadius: '12px',
-                                } : {
-                                    height: '25vh',
-                                    width: '25vw',
-                                }}
-                            >
+                            <div className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl">
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
-                                <ParallaxVideo
-                                    src={src}
-                                    objectPosition={index === 5 || index === 1 || index === 2 ? 'center top' : 'center'}
-                                />
+                                <ParallaxVideo src={src} objectPosition={index === 5 || index === 1 || index === 2 ? 'center top' : 'center'} />
 
                                 {/* Overlay + CTA only on center card (index 0) */}
                                 {index === 0 && (
@@ -158,166 +105,88 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                             style={{ opacity: contentOpacity, scale: inverseScale }}
                                             className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 px-6 text-center"
                                         >
-                                            {isMobile ? (
-                                                /* ---- MOBILE CTA ---- */
-                                                <>
-                                                    <h3
-                                                        className="font-satoshi font-bold text-white"
+                                            <h3
+                                                    className="font-satoshi font-bold text-white"
+                                                    style={{
+                                                        fontSize: '56px',
+                                                        lineHeight: 1.1,
+                                                        whiteSpace: 'nowrap',
+                                                    }}
+                                                >
+                                                    Your{' '}
+                                                    <motion.span
+                                                        initial={{ backgroundPosition: "400% 50%" }}
+                                                        animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                                                        transition={{ duration: 8, ease: "linear", repeat: Infinity }}
                                                         style={{
-                                                            fontSize: '24px',
-                                                            lineHeight: 1.15,
-                                                            whiteSpace: 'nowrap',
+                                                            display: "inline-block",
+                                                            backgroundImage: "linear-gradient(45deg, rgba(255,255,255,0), #34d399, #06b6d4, rgba(255,255,255,0))",
+                                                            backgroundSize: "400% 100%",
+                                                            WebkitBackgroundClip: "text",
+                                                            WebkitTextFillColor: "transparent",
+                                                            backgroundClip: "text",
+                                                            color: "transparent",
                                                         }}
                                                     >
-                                                        Your{' '}
-                                                        <motion.span
-                                                            initial={{ backgroundPosition: "400% 50%" }}
-                                                            animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                                                            transition={{ duration: 8, ease: "linear", repeat: Infinity }}
-                                                            style={{
-                                                                display: "inline-block",
-                                                                backgroundImage: "linear-gradient(45deg, rgba(255,255,255,0), #34d399, #06b6d4, rgba(255,255,255,0))",
-                                                                backgroundSize: "400% 100%",
-                                                                WebkitBackgroundClip: "text",
-                                                                WebkitTextFillColor: "transparent",
-                                                                backgroundClip: "text",
-                                                                color: "transparent",
-                                                            }}
-                                                        >
-                                                            brand
-                                                        </motion.span>{' '}
-                                                        could be next.
-                                                    </h3>
-                                                    <div className="flex gap-2 mt-1">
-                                                        <motion.a
-                                                            href="#contact"
-                                                            className="font-satoshi font-semibold whitespace-nowrap flex items-center"
-                                                            style={{
-                                                                fontSize: '11px',
-                                                                height: '34px',
-                                                                padding: '8px 14px',
-                                                                borderRadius: '50px',
-                                                                background: 'rgba(255,255,255,0.1)',
-                                                                backdropFilter: 'blur(8px)',
-                                                                border: '1px solid rgba(255,255,255,0.2)',
-                                                                color: '#ffffff',
-                                                            }}
-                                                        >
-                                                            Let's chat
-                                                        </motion.a>
-                                                        <motion.a
-                                                            href="#book"
-                                                            className="font-satoshi font-semibold whitespace-nowrap flex items-center gap-1"
-                                                            style={{
-                                                                fontSize: '11px',
-                                                                height: '34px',
-                                                                padding: '8px 14px',
-                                                                borderRadius: '50px',
-                                                                background: 'rgba(255,255,255,0.1)',
-                                                                backdropFilter: 'blur(8px)',
-                                                                border: '1px solid #06b6d4',
-                                                                color: '#06b6d4',
-                                                            }}
-                                                        >
-                                                            Book a Call
-                                                        </motion.a>
-                                                    </div>
-                                                    <motion.div
-                                                        className="flex flex-col items-center gap-0.5 mt-1 text-white/40 cursor-pointer"
-                                                        animate={{ y: [0, 4, 0] }}
-                                                        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                                                    >
-                                                        <span className="font-satoshi text-[8px] uppercase tracking-[1.5px]">Testimonials</span>
-                                                        <ArrowDown className="w-3 h-3" />
-                                                    </motion.div>
-                                                </>
-                                            ) : (
-                                                /* ---- DESKTOP CTA (original, untouched) ---- */
-                                                <>
-                                                    <h3
-                                                        className="font-satoshi font-bold text-white"
-                                                        style={{
-                                                            fontSize: '56px',
-                                                            lineHeight: 1.1,
-                                                            whiteSpace: 'nowrap',
-                                                        }}
-                                                    >
-                                                        Your{' '}
-                                                        <motion.span
-                                                            initial={{ backgroundPosition: "400% 50%" }}
-                                                            animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                                                            transition={{ duration: 8, ease: "linear", repeat: Infinity }}
-                                                            style={{
-                                                                display: "inline-block",
-                                                                backgroundImage: "linear-gradient(45deg, rgba(255,255,255,0), #34d399, #06b6d4, rgba(255,255,255,0))",
-                                                                backgroundSize: "400% 100%",
-                                                                WebkitBackgroundClip: "text",
-                                                                WebkitTextFillColor: "transparent",
-                                                                backgroundClip: "text",
-                                                                color: "transparent",
-                                                            }}
-                                                        >
-                                                            brand
-                                                        </motion.span>{' '}
-                                                        could be next.
-                                                    </h3>
-                                                    <div className="flex gap-3 mt-2">
-                                                        <motion.a
-                                                            href="#contact"
-                                                            whileHover={{
-                                                                backgroundColor: 'rgba(255,255,255,0.2)',
-                                                                boxShadow: '0 0 20px rgba(255,255,255,0.3)',
-                                                                borderColor: 'rgba(255,255,255,1)',
-                                                            }}
-                                                            className="font-satoshi font-semibold whitespace-nowrap flex items-center"
-                                                            style={{
-                                                                fontSize: '15px',
-                                                                height: '48px',
-                                                                padding: '12px 24px',
-                                                                borderRadius: '50px',
-                                                                background: 'rgba(255,255,255,0.1)',
-                                                                backdropFilter: 'blur(8px)',
-                                                                border: '1px solid rgba(255,255,255,0.2)',
-                                                                color: '#ffffff',
-                                                                transition: 'all 0.3s ease',
-                                                            }}
-                                                        >
-                                                            Let's chat
-                                                        </motion.a>
-                                                        <motion.a
-                                                            href="#book"
-                                                            whileHover={{
-                                                                backgroundColor: 'rgba(255,255,255,0.2)',
-                                                                boxShadow: '0 0 20px rgba(52,211,153,0.5)',
-                                                                borderColor: '#34d399',
-                                                                color: '#34d399',
-                                                            }}
-                                                            className="font-satoshi font-semibold whitespace-nowrap flex items-center gap-2"
-                                                            style={{
-                                                                fontSize: '15px',
-                                                                height: '48px',
-                                                                padding: '12px 24px',
-                                                                borderRadius: '50px',
-                                                                background: 'rgba(255,255,255,0.1)',
-                                                                backdropFilter: 'blur(8px)',
-                                                                border: '1px solid #06b6d4',
-                                                                color: '#06b6d4',
-                                                                transition: 'all 0.3s ease',
-                                                            }}
-                                                        >
-                                                            Book a Call
-                                                        </motion.a>
-                                                    </div>
-                                                    <motion.div
-                                                        className="flex flex-col items-center gap-1 mt-4 text-white/40 cursor-pointer"
-                                                        animate={{ y: [0, 6, 0] }}
-                                                        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                                                    >
-                                                        <span className="font-satoshi text-[11px] uppercase tracking-[2px]">See our testimonials</span>
-                                                        <ArrowDown className="w-4 h-4" />
-                                                    </motion.div>
-                                                </>
-                                            )}
+                                                        brand
+                                                    </motion.span>{' '}
+                                                    could be next.
+                                                </h3>
+                                            <div className="flex gap-3 mt-2">
+                                                <motion.a
+                                                    href="#contact"
+                                                    whileHover={{
+                                                        backgroundColor: 'rgba(255,255,255,0.2)',
+                                                        boxShadow: '0 0 20px rgba(255,255,255,0.3)',
+                                                        borderColor: 'rgba(255,255,255,1)',
+                                                    }}
+                                                    className="font-satoshi font-semibold whitespace-nowrap flex items-center"
+                                                    style={{
+                                                        fontSize: '15px',
+                                                        height: '48px',
+                                                        padding: '12px 24px',
+                                                        borderRadius: '50px',
+                                                        background: 'rgba(255,255,255,0.1)',
+                                                        backdropFilter: 'blur(8px)',
+                                                        border: '1px solid rgba(255,255,255,0.2)',
+                                                        color: '#ffffff',
+                                                        transition: 'all 0.3s ease',
+                                                    }}
+                                                >
+                                                    Let's chat
+                                                </motion.a>
+                                                <motion.a
+                                                    href="#book"
+                                                    whileHover={{
+                                                        backgroundColor: 'rgba(255,255,255,0.2)',
+                                                        boxShadow: '0 0 20px rgba(52,211,153,0.5)',
+                                                        borderColor: '#34d399',
+                                                        color: '#34d399',
+                                                    }}
+                                                    className="font-satoshi font-semibold whitespace-nowrap flex items-center gap-2"
+                                                    style={{
+                                                        fontSize: '15px',
+                                                        height: '48px',
+                                                        padding: '12px 24px',
+                                                        borderRadius: '50px',
+                                                        background: 'rgba(255,255,255,0.1)',
+                                                        backdropFilter: 'blur(8px)',
+                                                        border: '1px solid #06b6d4',
+                                                        color: '#06b6d4',
+                                                        transition: 'all 0.3s ease',
+                                                    }}
+                                                >
+                                                    Book a Call
+                                                </motion.a>
+                                            </div>
+                                            <motion.div
+                                                className="flex flex-col items-center gap-1 mt-4 text-white/40 cursor-pointer"
+                                                animate={{ y: [0, 6, 0] }}
+                                                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                                            >
+                                                <span className="font-satoshi text-[11px] uppercase tracking-[2px]">See our testimonials</span>
+                                                <ArrowDown className="w-4 h-4" />
+                                            </motion.div>
                                         </motion.div>
                                     </>
                                 )}
@@ -332,7 +201,6 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
 
 // --- MAIN COMPONENT ---
 export default function ZoomParallax() {
-    const isMobile = useIsMobile();
 
     useEffect(() => {
         const lenis = new Lenis();
@@ -448,7 +316,7 @@ export default function ZoomParallax() {
             </div>
 
             {/* PARALLAX COMPONENT */}
-            <ParallaxContent videos={videos} isMobile={isMobile} />
+            <ParallaxContent videos={videos} />
 
             {/* FOOTER SPACER */}
             <div className="h-[25vh] bg-[#050505] relative z-10" />
