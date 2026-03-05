@@ -75,8 +75,7 @@ export default function About() {
           }}>
             <span>About </span>
             <span style={{
-              background: `linear-gradient(135deg, ${PRIMARY}, ${SECONDARY})`,
-              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+              color: "#fff",
             }}>Us.</span>
           </h1>
           <p style={{
