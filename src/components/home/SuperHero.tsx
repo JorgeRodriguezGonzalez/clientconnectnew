@@ -89,22 +89,22 @@ const clients = [
   { name: 'LC Driveways', tags: ['Google Ads', 'Paid Social', 'Website'], image: '/images/117.jpg', logo: 'LC\nDriveways' },
 ];
 
-const ClientCard = ({ client }: { client: typeof clients[0] }) => (
-  <div className="relative flex-shrink-0 w-[260px] h-[340px] rounded-3xl overflow-hidden cursor-pointer group border border-transparent hover:border-gray-500 transition-all duration-300">
+const ClientCard = ({ client, isMobile }: { client: typeof clients[0]; isMobile?: boolean }) => (
+  <div className={`relative flex-shrink-0 ${isMobile ? 'w-[220px] h-[290px]' : 'w-[260px] h-[340px]'} rounded-3xl overflow-hidden cursor-pointer group border border-transparent hover:border-gray-500 transition-all duration-300`}>
     <img src={client.image} alt={client.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/40" />
     <div className="absolute top-4 left-4">
-      <p className="text-white font-bold text-[15px] leading-tight whitespace-pre-line drop-shadow-lg">{client.logo}</p>
+      <p className={`text-white font-bold ${isMobile ? 'text-[13px]' : 'text-[15px]'} leading-tight whitespace-pre-line drop-shadow-lg`}>{client.logo}</p>
     </div>
     <div className="absolute bottom-5 left-4 right-4">
-      <p className="text-white/90 text-[12px] font-medium leading-relaxed">{client.tags.join(' · ')}</p>
+      <p className={`text-white/90 ${isMobile ? 'text-[11px]' : 'text-[12px]'} font-medium leading-relaxed`}>{client.tags.join(' · ')}</p>
     </div>
   </div>
 );
 
-const ClientCarousel = () => {
-  const cardWidth = 260;
-  const gap = 20;
+const ClientCarousel = ({ isMobile }: { isMobile?: boolean }) => {
+  const cardWidth = isMobile ? 220 : 260;
+  const gap = isMobile ? 16 : 20;
   const step = cardWidth + gap;
   const total = clients.length;
   const looped = [...Array(3)].flatMap(() => clients);
@@ -152,7 +152,7 @@ const ClientCarousel = () => {
           onMouseLeave={() => setPaused(false)}
         >
           {looped.map((client, i) => (
-            <ClientCard key={`${client.name}-${i}`} client={client} />
+            <ClientCard key={`${client.name}-${i}`} client={client} isMobile={isMobile} />
           ))}
         </div>
       </div>
@@ -532,7 +532,7 @@ export const SuperHero = ({
 
       {/* CLIENT CAROUSEL */}
       <div className="relative z-10 w-full mb-12">
-        <ClientCarousel />
+        <ClientCarousel isMobile={isMobile} />
       </div>
 
     </div>
