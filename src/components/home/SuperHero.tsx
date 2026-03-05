@@ -298,7 +298,7 @@ export const SuperHero = ({
 
           {/* LAMP — MOBILE */}
           {isMobile && (
-            <div className="w-full relative flex items-center justify-center mt-[6vh] -mb-[32px] overflow-visible" style={{ zIndex: 1 }}>
+            <div className="w-full relative flex items-center justify-center mt-[9vh] -mb-[32px] overflow-visible" style={{ zIndex: 1 }}>
               <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
                 <div className="absolute inset-auto z-30 h-56 w-full flex items-center justify-center pointer-events-none">
                   <motion.div className="w-[30rem] h-full relative">
