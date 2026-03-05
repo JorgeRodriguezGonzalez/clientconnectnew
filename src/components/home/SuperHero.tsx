@@ -229,12 +229,13 @@ const wordsLoop = [...Array(5)].flatMap(() => rotatingWords);
 
 // --- MOBILE DETECTION HOOK ---
 const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(() => {
+  const [isMobile, setIsMobile] = useState<boolean | null>(() => {
     if (typeof window !== 'undefined') return window.innerWidth < 768;
-    return false;
+    return null;
   });
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
+    check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
@@ -254,6 +255,15 @@ export const SuperHero = ({
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
   const isMobile = useIsMobile();
+
+  // Wait until isMobile is determined to prevent layout shift
+  if (isMobile === null) {
+    return (
+      <div className="w-full flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-inter" style={{ background: '#050505', minHeight: '100vh' }}>
+        <style>{fontStyles}</style>
+      </div>
+    );
+  }
 
   // --- Rotating title state (desktop only) ---
   const [titleNumber, setTitleNumber] = useState(0);
