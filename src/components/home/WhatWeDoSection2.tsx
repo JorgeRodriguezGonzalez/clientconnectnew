@@ -241,19 +241,19 @@ export const WhatWeDoSection2 = () => {
                 <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
                   <StatBadge icon={Zap} label="Monthly Revenue" value="$145k" />
                 </motion.div>
-                <TiltCard innerClassName="bg-white border border-zinc-200 min-h-[320px]">
-                  <div className="absolute inset-0 z-0 pointer-events-none opacity-10 grayscale">
+                <TiltCard innerClassName="bg-zinc-900 border border-zinc-800 min-h-[320px]">
+                  <div className="absolute inset-0 z-0 pointer-events-none opacity-15 grayscale">
                     <img src="/images/YLRimage.jpg" className="w-full h-full object-cover" alt="Roofing" />
                   </div>
                   <div className="relative z-10 p-8 flex flex-col md:flex-row gap-8 items-center h-full">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-4">
                         <div className="px-2 py-1 bg-emerald-500 text-black text-[10px] font-black uppercase tracking-tighter">Roofing</div>
-                        <div className="h-px w-12 bg-zinc-300" />
+                        <div className="h-px w-12 bg-zinc-600" />
                       </div>
-                      <h4 className="text-2xl font-bold mb-2 text-gray-900 tracking-tight">Your Local Roofers</h4>
-                      <p className="text-sm leading-relaxed mb-6 text-gray-600">
-                        From feast-and-famine to fully booked. We implemented hyper-local SEO & Google Ads that captured <strong>high-intent storm damage queries.</strong>
+                      <h4 className="text-2xl font-bold mb-2 text-white tracking-tight">Your Local Roofers</h4>
+                      <p className="text-sm leading-relaxed mb-6 text-zinc-400">
+                        From feast-and-famine to fully booked. We implemented hyper-local SEO & Google Ads that captured <strong className="text-zinc-200">high-intent storm damage queries.</strong>
                       </p>
                       <div className="grid grid-cols-3 gap-3">
                         <div className="p-4 bg-zinc-900 border border-zinc-700 rounded-xl">
