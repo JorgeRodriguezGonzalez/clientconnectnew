@@ -79,26 +79,59 @@ export default function About() {
             }}>Us.</span>
           </h1>
           <p style={{
-            fontSize: "clamp(1rem, 2vw, 1.2rem)", color: "rgba(255,255,255,0.5)", maxWidth: "480px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
+            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff", maxWidth: "520px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
             ...anim(0.3),
           }}>
-            Your dedicated growth partner, helping Sydney businesses thrive in the digital age.
+            Your dedicated <span style={{ color: "#34d399", fontWeight: 600 }}>growth partner</span>, helping Sydney businesses thrive in the <span style={{ color: "#34d399", fontWeight: 600 }}>digital age</span>.
           </p>
 
-          {/* Badges */}
-          <div style={{ display: "flex", justifyContent: "center", gap: "12px", marginTop: "28px", flexWrap: "wrap", padding: "0 20px", ...anim(0.45) }}>
-            {[
-              { label: "Sydney Based", c: PRIMARY_RGB },
-              { label: "Est. 2018", c: SECONDARY_RGB },
-              { label: "150+ Clients", c: PRIMARY_RGB },
-            ].map((b, i) => (
-              <span key={i} style={{
-                padding: "8px 18px", borderRadius: "50px", fontSize: "13px", fontWeight: 600,
-                background: `rgba(${b.c},0.12)`,
-                color: i === 1 ? SECONDARY : PRIMARY,
-                border: `1px solid rgba(${b.c},0.25)`,
-              }}>{b.label}</span>
-            ))}
+          {/* Tags */}
+          <div style={{
+            display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", marginTop: "24px", flexWrap: "wrap", padding: "0 20px",
+            fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.5)",
+            ...anim(0.4),
+          }}>
+            <span>Sydney Based</span>
+            <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
+            <span>Est. 2018</span>
+            <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
+            <span>150+ Clients</span>
+          </div>
+
+          {/* Buttons */}
+          <div style={{
+            display: "flex", justifyContent: "center", gap: "12px", marginTop: "32px", flexWrap: "wrap", padding: "0 20px",
+            ...anim(0.5),
+          }}>
+            <button
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.2)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(255,255,255,0.3)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.boxShadow = "none"; }}
+              style={{
+                height: "48px", padding: "0 28px", borderRadius: "50px",
+                background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)",
+                backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+                fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 600, fontSize: "15px", color: "#fff",
+                cursor: "pointer", transition: "all 0.2s ease",
+              }}
+            >
+              View Our Work
+            </button>
+            <button
+              onMouseEnter={e => { e.currentTarget.style.borderColor = "#34d399"; e.currentTarget.style.boxShadow = "0 0 20px rgba(52,211,153,0.5)"; e.currentTarget.style.color = "#34d399"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#06b6d4"; e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.color = "#06b6d4"; }}
+              style={{
+                height: "48px", padding: "0 28px", borderRadius: "50px",
+                background: "transparent", border: "1px solid #06b6d4",
+                backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+                fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 600, fontSize: "15px", color: "#06b6d4",
+                cursor: "pointer", transition: "all 0.2s ease",
+                display: "flex", alignItems: "center", gap: "8px",
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Start Scaling
+            </button>
           </div>
         </div>
 
