@@ -301,20 +301,20 @@ export const SuperHero = ({
             <div className="w-full relative flex items-center justify-center mt-4 -mb-[32px] overflow-visible" style={{ zIndex: 1 }}>
               <div className="w-full h-[80px] relative flex items-center justify-center pt-56 overflow-visible">
                 <div className="absolute inset-auto z-30 h-56 w-full flex items-center justify-center pointer-events-none">
-                  <motion.div className="w-[34rem] h-full relative" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}>
+                  <motion.div className="w-[34rem] h-full relative">
                     <motion.div
                       initial={{ opacity: 0, width: '7rem' }}
                       animate={{ opacity: 0.5, width: '15rem' }}
                       transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
                       style={{ backgroundImage: `conic-gradient(from 70deg at center top, ${lampColor} 0%, transparent 35%, transparent 100%)` }}
-                      className="absolute top-0 right-1/2 h-56 overflow-visible w-[15rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                      className="absolute top-0 right-1/2 h-56 overflow-visible w-[15rem] [mask-image:radial-gradient(ellipse_at_top,white_30%,transparent_70%)]"
                     />
                     <motion.div
                       initial={{ opacity: 0, width: '7rem' }}
                       animate={{ opacity: 0.5, width: '15rem' }}
                       transition={{ opacity: { delay: 0.2, duration: 1.0 }, width: { delay: 0.2, duration: 1.0 } }}
                       style={{ backgroundImage: `conic-gradient(from 290deg at center top, transparent 0%, transparent 65%, ${lampColor} 100%)` }}
-                      className="absolute top-0 left-1/2 h-56 w-[15rem] [mask-image:linear-gradient(to_bottom,white_10%,transparent_100%)]"
+                      className="absolute top-0 left-1/2 h-56 w-[15rem] [mask-image:radial-gradient(ellipse_at_top,white_30%,transparent_70%)]"
                     />
                     <motion.div
                       initial={{ opacity: 0 }}
