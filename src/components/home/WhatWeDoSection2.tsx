@@ -255,13 +255,31 @@ export const WhatWeDoSection2 = () => {
                       <p className="text-sm leading-relaxed mb-6 text-gray-600">
                         From feast-and-famine to fully booked. We implemented hyper-local SEO & Google Ads that captured <strong>high-intent storm damage queries.</strong>
                       </p>
-                      <div className="text-4xl font-black text-gray-900 tracking-tight mb-1">
-                        <Counter prefix="$" end={145} suffix="k" />
-                      </div>
-                      <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Monthly Revenue</div>
-                      <div className="text-[11px] font-bold text-emerald-500 mt-0.5">+210% Year over Year</div>
-                      <div className="mt-6 max-w-xs">
-                        <ProgressBar value={95} label="Revenue Target Hit" color={COLORS.emerald} />
+                      <div className="grid grid-cols-3 gap-3">
+                        <div className="p-4 bg-zinc-900 border border-zinc-700 rounded-xl">
+                          <span className="text-zinc-500 text-lg">$</span>
+                          <div className="text-2xl font-black text-white tracking-tight mt-1">
+                            <Counter prefix="$" end={145} suffix="k" />
+                          </div>
+                          <div className="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider mt-1">Monthly Revenue</div>
+                          <div className="text-[11px] font-bold text-emerald-400 mt-0.5">+210% YoY</div>
+                        </div>
+                        <div className="p-4 bg-zinc-900 border border-zinc-700 rounded-xl">
+                          <Target size={18} className="text-zinc-500" />
+                          <div className="text-2xl font-black text-white tracking-tight mt-1">
+                            <Counter prefix="$" end={24.50} suffix="" decimals={2} />
+                          </div>
+                          <div className="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider mt-1">Cost Per Lead</div>
+                          <div className="text-[11px] font-bold text-emerald-400 mt-0.5">-45% Decrease</div>
+                        </div>
+                        <div className="p-4 bg-zinc-900 border border-zinc-700 rounded-xl">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-500"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="18" cy="9" r="3"/><path d="M21 21v-1.5a3 3 0 0 0-3-3"/></svg>
+                          <div className="text-2xl font-black text-white tracking-tight mt-1">
+                            <Counter end={86} />
+                          </div>
+                          <div className="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider mt-1">Qualified Leads</div>
+                          <div className="text-[11px] font-bold text-emerald-400 mt-0.5">Per Month</div>
+                        </div>
                       </div>
                     </div>
                   </div>
