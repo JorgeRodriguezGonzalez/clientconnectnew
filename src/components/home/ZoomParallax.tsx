@@ -89,20 +89,8 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
         2: { top: '-3vh', left: '-30vw', height: '30vh', width: '25vw' },
     };
 
-    // Mobile: force all videos to fit/cover their cards properly
-    const mobileVideoStyle = `
-        @media (max-width: 767px) {
-            .parallax-card video {
-                object-fit: cover;
-                width: 100%;
-                height: 100%;
-            }
-        }
-    `;
-
     return (
         <div ref={container} className="relative h-[300vh] bg-[#050505]">
-            {isMobile && <style>{mobileVideoStyle}</style>}
             <div className="sticky top-0 h-screen overflow-hidden">
                 {videos.map(({ src }, index) => {
                     const scale = scales[index % scales.length];
@@ -122,7 +110,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                             `}
                         >
                             <div
-                                className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl parallax-card"
+                                className="relative h-[25vh] w-[25vw] overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1a1a] shadow-2xl"
                                 style={hasMobileOverride ? mobileOverrides[index] : undefined}
                             >
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
