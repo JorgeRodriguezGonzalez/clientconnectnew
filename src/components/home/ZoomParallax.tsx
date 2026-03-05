@@ -130,7 +130,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                             <h3
                                                     className="font-satoshi font-bold text-white"
                                                     style={{
-                                                        fontSize: '56px',
+                                                        fontSize: isMobile ? '28px' : '56px',
                                                         lineHeight: 1.1,
                                                         whiteSpace: 'nowrap',
                                                     }}
