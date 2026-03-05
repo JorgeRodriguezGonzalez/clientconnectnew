@@ -18,17 +18,17 @@ All colors MUST be HSL.
     --popover-foreground: 0 0% 10%;
 
     /* Client Connect Australia Brand Colors */
-    --primary: 223 67% 50%; /* Blue #3255D2 */
+    --primary: 187 94% 43%; /* Cyan #06b6d4 */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 32 92% 54%; /* Orange #F6941D */
+    --secondary: 160 64% 52%; /* Green #34d399 */
     --secondary-foreground: 0 0% 100%;
 
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 70%;
-    --muted-foreground-pricing: 0 0% 75%; /* Lighter gray for pricing section */
+    --muted-foreground-pricing: 0 0% 75%;
 
-    --accent: 223 67% 50%;
+    --accent: 187 94% 43%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -36,7 +36,7 @@ All colors MUST be HSL.
 
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 223 67% 50%;
+    --ring: 187 94% 43%;
 
     --radius: 0.75rem;
 
@@ -48,8 +48,8 @@ All colors MUST be HSL.
     --bg-lighter: 0 0% 96%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(223 67% 50%), hsl(223 67% 60%));
-    --gradient-secondary: linear-gradient(135deg, hsl(32 92% 54%), hsl(32 92% 64%));
+    --gradient-primary: linear-gradient(135deg, hsl(187 94% 43%), hsl(187 94% 53%));
+    --gradient-secondary: linear-gradient(135deg, hsl(160 64% 52%), hsl(160 64% 62%));
     
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -59,12 +59,12 @@ All colors MUST be HSL.
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 10%;
-    --sidebar-primary: 223 67% 50%;
+    --sidebar-primary: 187 94% 43%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 96%;
     --sidebar-accent-foreground: 0 0% 10%;
     --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 223 67% 50%;
+    --sidebar-ring: 187 94% 43%;
   }
 }
 
@@ -95,8 +95,6 @@ All colors MUST be HSL.
     color: hsl(0 0% 75%);
   }
 
-  /* Red corner shadow for Traditional Way card */
-
   .corner-shadow-red::before {
     content: '';
     position: absolute;
@@ -108,15 +106,15 @@ All colors MUST be HSL.
     border-radius: 0.5rem 0 0 0;
     pointer-events: none;
   }
-  /* Blue to Cyan gradient for PromptGenius branding */
+
+  /* Cyan to Green gradient for branding */
   .gradient-text {
-    background: linear-gradient(135deg, hsl(223 67% 50%), hsl(180 100% 50%));
+    background: linear-gradient(135deg, hsl(187 94% 43%), hsl(160 64% 52%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Glass card effect */
   .glass-card {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
@@ -125,16 +123,16 @@ All colors MUST be HSL.
 
   /* Glow effect for primary color */
   .glow-primary {
-    box-shadow: 0 0 20px rgba(50, 85, 210, 0.3);
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
   }
 
   /* Shadow variations with primary color */
   .shadow-primary {
-    box-shadow: 0 10px 30px -3px rgba(50, 85, 210, 0.6), 0 4px 10px -4px rgba(50, 85, 210, 0.4);
+    box-shadow: 0 10px 30px -3px rgba(52, 211, 153, 0.6), 0 4px 10px -4px rgba(52, 211, 153, 0.4);
   }
 
   .shadow-primary-lg {
-    box-shadow: 0 20px 40px -5px rgba(50, 85, 210, 0.8), 0 8px 15px -6px rgba(50, 85, 210, 0.6);
+    box-shadow: 0 20px 40px -5px rgba(52, 211, 153, 0.8), 0 8px 15px -6px rgba(52, 211, 153, 0.6);
   }
 
   .container-custom {
@@ -146,7 +144,6 @@ All colors MUST be HSL.
   }
 }
 
-/* Animation for MarketingCard animated line - HORIZONTAL movement */
 @keyframes move-horizontal {
   0% {
     left: -100px;
@@ -160,7 +157,6 @@ All colors MUST be HSL.
   animation: move-horizontal 5s linear infinite;
 }
 
-/* Floating animation for background elements */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -174,7 +170,6 @@ All colors MUST be HSL.
   animation: float 6s ease-in-out infinite;
 }
 
-/* Fade in animation */
 @keyframes fade-in {
   0% {
     opacity: 0;
