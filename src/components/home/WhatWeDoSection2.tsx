@@ -243,7 +243,7 @@ export const WhatWeDoSection2 = () => {
                 </motion.div>
                 <TiltCard innerClassName="bg-white border border-zinc-200 min-h-[320px]">
                   <div className="absolute inset-0 z-0 pointer-events-none opacity-10 grayscale">
-                    <img src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover" alt="Roofing" />
+                    <img src="/images/YLRimage.jpg" className="w-full h-full object-cover" alt="Roofing" />
                   </div>
                   <div className="relative z-10 p-8 flex flex-col md:flex-row gap-8 items-center h-full">
                     <div className="flex-1">
@@ -295,7 +295,7 @@ export const WhatWeDoSection2 = () => {
               {/* ===== CARD 3: NANOTISE (dark bg) ===== */}
               <TiltCard delay={0.2} innerClassName="bg-zinc-900 border-zinc-800 p-8 flex flex-col justify-between overflow-hidden">
                 <div className="absolute inset-0 z-0 opacity-25 grayscale pointer-events-none">
-                  <img src="https://images.unsplash.com/photo-1516216628859-9bccecab13ca?q=80&w=800&auto=format&fit=crop" className="w-full h-full object-cover" alt="Protection" />
+                  <img src="/images/nanotise.jpg" className="w-full h-full object-cover" alt="Protection" />
                 </div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-3">
@@ -368,7 +368,7 @@ export const WhatWeDoSection2 = () => {
               </motion.div>
 
               <h3 className="font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tighter text-gray-900">
-                Real clients.{' '}
+                Built for tradies.{' '}
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}
                   animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -383,7 +383,7 @@ export const WhatWeDoSection2 = () => {
                     color: "transparent"
                   }}
                 >
-                  Real results
+                  Backed by data
                 </motion.span>
                 <span className="text-black">.</span>
               </h3>
