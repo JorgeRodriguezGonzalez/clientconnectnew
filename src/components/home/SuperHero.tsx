@@ -246,7 +246,7 @@ export const SuperHero = ({
       </div>
 
       {/* HERO */}
-      <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center py-16">
+      <div className={`relative z-10 w-full flex-1 flex flex-col items-center justify-center ${isMobile ? 'py-[4vh]' : 'py-16'}`}>
         <div className="max-w-[1296px] w-full mx-auto relative z-[30] px-6 mb-4" style={{ marginTop: '-10px' }}>
 
           {/* LAMP — DESKTOP */}
@@ -344,7 +344,7 @@ export const SuperHero = ({
           )}
 
           {/* HERO TEXT */}
-          <div className={`relative text-center mb-8 ${isMobile ? 'z-20 -mt-14' : 'z-10'}`}>
+          <div className={`relative text-center mb-8 ${isMobile ? 'z-20 -mt-[2vh]' : 'z-10'}`}>
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -461,7 +461,7 @@ export const SuperHero = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9, duration: 0.8, ease: 'easeOut' }}
-                className="flex items-center justify-center gap-0 mt-10 mb-10"
+                className="flex items-center justify-center gap-0 mt-[3vh] mb-[3vh]"
               >
                 {['SEO', 'Paid Ads', 'Websites', 'Social Media'].map((tag, i, arr) => (
                   <React.Fragment key={tag}>
@@ -476,7 +476,7 @@ export const SuperHero = ({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1.1, duration: 1.0, ease: 'easeOut' }}
-              className="mt-6"
+              className={isMobile ? "mt-[2vh]" : "mt-6"}
             >
               {isMobile ? (
                 <div className="flex flex-col items-center gap-3 w-full px-2">
@@ -531,7 +531,7 @@ export const SuperHero = ({
       </div>
 
       {/* CLIENT CAROUSEL */}
-      <div className="relative z-10 w-full mb-12">
+      <div className={`relative z-10 w-full ${isMobile ? 'mb-[3vh]' : 'mb-12'}`}>
         <ClientCarousel isMobile={isMobile} />
       </div>
 
