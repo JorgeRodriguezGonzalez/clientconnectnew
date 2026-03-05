@@ -120,9 +120,9 @@ const TiltCard = ({ children, className, innerClassName, delay = 0 }: {
   };
   const hl = () => { x.set(0); y.set(0); };
   return (
-    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6, delay }} onMouseMove={hm} onMouseLeave={hl} style={{ rotateY: x, rotateX: y, transformStyle: "preserve-3d", perspective: 1000 }} className={cn("relative rounded-none p-[2px] h-full safari-gpu", className)}>
+    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6, delay }} onMouseMove={hm} onMouseLeave={hl} style={{ rotateY: x, rotateX: y, transformStyle: "preserve-3d", perspective: 1000 }} className={cn("relative rounded-2xl p-[2px] h-full safari-gpu", className)}>
       <GlowingEffect spread={60} glow proximity={100} borderWidth={2} />
-      <div className={cn("relative h-full w-full overflow-hidden rounded-none", innerClassName)}>{children}</div>
+      <div className={cn("relative h-full w-full overflow-hidden rounded-2xl", innerClassName)}>{children}</div>
     </motion.div>
   );
 };
