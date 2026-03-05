@@ -79,8 +79,9 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
     const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
 
     // Inverse scale to keep CTA text fixed size
-    // On mobile: text starts smaller and grows as card expands
-    const inverseScale = useTransform(scale4, v => isMobile ? 0.7 / v : 1 / v);
+    const inverseScale = useTransform(scale4, v => 1 / v);
+    // On mobile: text starts small and grows as card expands
+    const mobileCtaScale = useTransform(scrollYProgress, [0.4, 0.85], [0.5, 1.2]);
     const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
     const contentOpacity = useTransform(scrollYProgress, [0.4, 0.65], [0, 1]);
     const contentY = useTransform(scrollYProgress, [0.4, 0.65], [20, 0]);
@@ -125,7 +126,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                             className="absolute inset-0 z-20 bg-black/75 backdrop-blur-[2px]"
                                         />
                                         <motion.div
-                                            style={{ opacity: contentOpacity, scale: inverseScale }}
+                                            style={{ opacity: contentOpacity, scale: isMobile ? mobileCtaScale : inverseScale }}
                                             className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 px-6 text-center"
                                         >
                                             <h3
