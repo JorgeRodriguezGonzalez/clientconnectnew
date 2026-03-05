@@ -86,7 +86,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
 
     // Mobile overrides per card index (only applied on mobile)
     const mobileOverrides: Record<number, React.CSSProperties> = {
-        2: { top: '-5vh', left: '-30vw', height: '30vh', width: '25vw' },
+        2: { top: '0vh', left: '-30vw', height: '30vh', width: '25vw' },
     };
 
     return (
