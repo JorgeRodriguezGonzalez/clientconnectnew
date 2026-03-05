@@ -398,7 +398,7 @@ const landData = [50, 120, 180, 280, 380, 450, 520, 600, 680, 750, 800, 850];
 // ============================
 // MAIN EXPORT
 // ============================
-export const ProvenResultsSection = () => {
+export const WhatWeDoSection2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -707,4 +707,4 @@ export const ProvenResultsSection = () => {
   );
 };
 
-export default ProvenResultsSection;
+export default WhatWeDoSection2;
