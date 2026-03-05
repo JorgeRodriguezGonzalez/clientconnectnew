@@ -106,7 +106,7 @@ export default function About() {
         {/* Image Gallery */}
         <div style={{
           display: "flex", justifyContent: "center", alignItems: "center", gap: "16px",
-          marginTop: "48px", padding: "0 20px", overflowX: "auto", overflowY: "visible",
+          marginTop: "48px", padding: "0 20px", overflowX: "hidden", overflowY: "visible",
           position: "relative", zIndex: 2,
         }}>
           {images.map((img, i) => (
@@ -138,9 +138,6 @@ export default function About() {
             </div>
           ))}
         </div>
-
-        {/* Bottom fade to white */}
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "100px", background: `linear-gradient(transparent, ${BG})`, pointerEvents: "none", zIndex: 3 }} />
       </section>
 
       {/* ═══════════════ OUR STORY ═══════════════ */}
