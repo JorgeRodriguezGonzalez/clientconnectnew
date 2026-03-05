@@ -60,7 +60,7 @@ export default function About() {
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section style={{ position: "relative", overflow: "hidden", background: TEXT_DARK, paddingBottom: "100px" }}>
+      <section style={{ position: "relative", overflow: "clip", background: TEXT_DARK, paddingBottom: "130px" }}>
         {/* Gradient orbs */}
         <div style={{ position: "absolute", top: "-200px", left: "-100px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "-100px", right: "-150px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
@@ -106,7 +106,7 @@ export default function About() {
         {/* Image Gallery */}
         <div style={{
           display: "flex", justifyContent: "center", alignItems: "center", gap: "16px",
-          marginTop: "48px", padding: "0 20px", overflow: "hidden",
+          marginTop: "48px", padding: "20px 20px", overflow: "visible",
           position: "relative", zIndex: 2,
         }}>
           {images.map((img, i) => (
