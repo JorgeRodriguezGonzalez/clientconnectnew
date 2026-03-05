@@ -56,7 +56,7 @@ export default function About() {
   });
 
   return (
-    <div style={{ fontFamily: FONT, background: BG, color: TEXT_DARK, minHeight: "100vh" }}>
+    <div style={{ fontFamily: FONT, background: BG, color: TEXT_DARK, minHeight: "100vh", overflowX: "hidden" }}>
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}
@@ -106,7 +106,7 @@ export default function About() {
         {/* Image Gallery */}
         <div style={{
           display: "flex", justifyContent: "center", alignItems: "center", gap: "16px",
-          marginTop: "48px", padding: "0 20px", overflowX: "hidden", overflowY: "visible",
+          marginTop: "48px", padding: "0 20px", overflow: "hidden",
           position: "relative", zIndex: 2,
         }}>
           {images.map((img, i) => (
