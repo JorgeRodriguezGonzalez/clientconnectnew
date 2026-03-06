@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "@/components/layout/Header";
+import CaseStudiesSection from "@/components/home/case-studies";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -74,6 +75,7 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
   return (
     <div ref={ref} className={className} style={{ opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(30px)", transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s` }}>
       {children}
+      <CaseStudiesSection />
     </div>
   );
 };
