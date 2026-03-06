@@ -12,7 +12,6 @@ import ComparisonSection from "@/components/home/ComparisonSection";
 import Pricing from "@/components/home/Pricing";
 import BoxCards from "@/components/home/BoxCards";
 import FounderSection from "@/components/home/FounderSection";
-import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import OurSteps from "@/components/home/OurSteps";
 import ScrollableWorkflow from "@/components/home/ScrollableWorkflow";
 import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
@@ -50,8 +49,6 @@ const Index = () => {
         <FAQSection />
 
         <CaseStudiesSection />
-
-        <OurStepsVersion2 />
 
         <CTASection />
         <FloatingBanner />
