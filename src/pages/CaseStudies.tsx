@@ -3,8 +3,10 @@ import Header from "@/components/layout/Header";
 import CaseStudiesSection from "@/components/home/case-studies";
 import Footer from "@/components/layout/Footer";
 import { HowWeWork } from "@/components/home/HowWeWork";
-import { WhySubscribeBento } from "@/components/home/WhySubscribeBento";
-import { UseCasesShowcase } from "@/components/home/UseCasesShowcase";
+import BoxCards from "@/components/home/BoxCards";
+import OurSteps from "@/components/home/OurSteps";
+import ScrollableWorkflow from "@/components/home/ScrollableWorkflow";
+import { BlueprintVisualization } from "@/components/home/BlueprintVisualization";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -354,8 +356,10 @@ export default function CaseStudies() {
 
       <CaseStudiesSection />
       <HowWeWork />
-      <WhySubscribeBento />
-      <UseCasesShowcase />
+      <BoxCards />
+      <OurSteps />
+      <ScrollableWorkflow />
+      <BlueprintVisualization />
       <Footer />
     </div>
   );
