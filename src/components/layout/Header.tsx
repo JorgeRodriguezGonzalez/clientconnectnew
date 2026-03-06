@@ -17,7 +17,7 @@ const navLinks = [
 ];
 
 // --- MAIN COMPONENT ---
-export function Header() {
+export default function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
