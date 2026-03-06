@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import Header from "@/components/layout/Header";
 import CaseStudiesSection from "@/components/home/case-studies";
 import Footer from "@/components/layout/Footer";
-import { AnimatedGallerySection } from "@/components/animated-gallery-section";
 import { HowWeWork } from "@/components/home/HowWeWork";
 
 const PRIMARY = "#34d399";
@@ -352,7 +351,6 @@ export default function CaseStudies() {
       </section>
 
       <CaseStudiesSection />
-      <AnimatedGallerySection />
       <HowWeWork />
       <Footer />
     </div>
