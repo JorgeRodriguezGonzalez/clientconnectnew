@@ -1,120 +1,145 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { X, ArrowRight, Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+// --- UTILS ---
+function cn(...classes: (string | undefined | null | false)[]) {
+  return classes.filter(Boolean).join(" ");
+}
 
-  const services = [
-    { name: "SEO", path: "/services/seo" },
-    { name: "Google Ads", path: "/services/google-ads" },
-    { name: "Web Design", path: "/services/web-design" },
-    { name: "Social Media Management", path: "/services/social-media-management" },
-    { name: "Social Media Advertising", path: "/services/social-media-ads" },
-  ];
+// --- DATA ---
+const navLinks = [
+  { name: "About Us", href: "/about" },
+  { name: "Services", href: "/services" },
+  { name: "Case Studies", href: "/case-studies" },
+  { name: "Contact", href: "/contact" },
+];
+
+// --- MAIN COMPONENT ---
+export function Header() {
+  const [scrollY, setScrollY] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
+    return () => { document.body.style.overflow = "unset"; };
+  }, [isMobileMenuOpen]);
+
+  const toggleMenu = () => setIsMobileMenuOpen((prev) => !prev);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-      <nav className="container-custom">
-        <div className="flex h-20 items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="flex flex-col">
-              <span className="text-2xl font-bold text-primary">Client Connect</span>
-              <span className="text-xs text-text-medium">AUSTRALIA</span>
-            </div>
+    <>
+      {/* ── HEADER ESTÁTICO ── */}
+      <motion.div
+        initial={{ opacity: 1, y: 0 }}
+        animate={{ opacity: scrollY > 80 ? 0 : 1, y: scrollY > 80 ? -16 : 0 }}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+        className="fixed top-0 left-0 right-0 z-[999] font-sans pointer-events-auto"
+        style={{ pointerEvents: scrollY > 80 ? "none" : "auto" }}
+      >
+        <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
+          <Link to="/" className="flex items-center gap-2 no-underline">
+            <img
+              src="/images/logoCCA2.png"
+              alt="Client Connect Australia"
+              className="w-14 h-14 shrink-0 object-contain"
+            />
+            <span className="text-xl font-medium tracking-tight text-white">
+              Client Connect <span className="text-[#34d399]">Australia</span><span className="text-[#ffa93b]">.</span>
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-sm font-medium text-text-medium hover:text-primary transition-colors">
-              Home
-            </Link>
-            <div className="relative group">
-              <button className="text-sm font-medium text-text-medium hover:text-primary transition-colors">
-                Services
-              </button>
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="py-2">
-                  {services.map((service) => (
-                    <Link
-                      key={service.path}
-                      to={service.path}
-                      className="block px-4 py-2 text-sm text-text-medium hover:bg-bg-light hover:text-primary transition-colors"
-                    >
-                      {service.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <Link to="/about" className="text-sm font-medium text-text-medium hover:text-primary transition-colors">
-              About
-            </Link>
-            <Link to="/contact" className="text-sm font-medium text-text-medium hover:text-primary transition-colors">
-              Contact
-            </Link>
-            <Button asChild>
-              <Link to="/contact">Get Free Audit</Link>
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+            onClick={toggleMenu}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 lg:hidden focus:outline-none"
+            aria-label="Open menu"
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <Menu size={18} className="text-white" />
           </button>
-        </div>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden pb-4 space-y-2">
-            <Link
-              to="/"
-              className="block py-2 text-sm font-medium text-text-medium hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-text-dark">Services</p>
-              {services.map((service) => (
-                <Link
-                  key={service.path}
-                  to={service.path}
-                  className="block py-2 pl-4 text-sm text-text-medium hover:text-primary transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {service.name}
-                </Link>
-              ))}
-            </div>
-            <Link
-              to="/about"
-              className="block py-2 text-sm font-medium text-text-medium hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </Link>
+          <div className="hidden lg:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                className={cn(
+                  "text-sm font-medium no-underline transition-colors duration-200",
+                  location.pathname === link.href ? "text-white" : "text-slate-300 hover:text-white"
+                )}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <div className="h-6 w-px bg-white/10" />
             <Link
               to="/contact"
-              className="block py-2 text-sm font-medium text-text-medium hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
+              className="group relative inline-flex cursor-pointer items-center justify-center rounded-full px-4 py-2 text-sm font-normal text-white/70 hover:text-white transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] hover:scale-[1.05] no-underline"
+              style={{
+                boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.1)",
+                background: "radial-gradient(ellipse at bottom, rgba(71,81,92,1) 0%, rgba(0,0,0,1) 100%)",
+              }}
             >
-              Contact
+              <span className="relative z-10">Start Scaling</span>
+              <span
+                aria-hidden="true"
+                className="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 opacity-20 transition-all duration-[1000ms] group-hover:opacity-80"
+                style={{ background: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%)" }}
+              />
             </Link>
-            <Button asChild className="w-full mt-4">
-              <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Get Free Audit</Link>
-            </Button>
           </div>
-        )}
-      </nav>
-    </header>
-  );
-};
+        </nav>
+      </motion.div>
 
-export default Header;
+      {/* ── MOBILE MENU OVERLAY ── */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[1001] flex flex-col bg-[#050505] px-4 pt-24 font-sans"
+          >
+            <button
+              onClick={toggleMenu}
+              className="absolute top-4 right-4 flex items-center justify-center h-9 w-9 rounded-lg border border-white/10 bg-white/5 focus:outline-none"
+              aria-label="Close menu"
+            >
+              <X size={18} className="text-white" />
+            </button>
+
+            <div className="space-y-1 rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={toggleMenu}
+                  className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-200 hover:bg-white/5 no-underline"
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <div className="my-2 h-px w-full bg-white/10" />
+              <Link
+                to="/contact"
+                onClick={toggleMenu}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-medium text-black hover:bg-white/90 no-underline"
+              >
+                Start Scaling
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
