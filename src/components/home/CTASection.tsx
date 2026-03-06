@@ -226,12 +226,12 @@ const FormInput = ({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
   <div className="relative">
-    <label htmlFor={name} className="block text-sm font-semibold text-gray-700 mb-1.5 text-left">
+    <label htmlFor={name} className="block text-sm font-semibold text-gray-300 mb-1.5 text-left">
       {label} {required && <span style={{ color: COLORS.primary }}>*</span>}
     </label>
     <div className="relative">
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5">
-        <Icon className="h-4 w-4" style={{ color: COLORS.textLight }} />
+        <Icon className="h-4 w-4 text-gray-500" />
       </div>
       <input
         id={name}
@@ -241,7 +241,7 @@ const FormInput = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full rounded-lg border border-zinc-200 bg-white py-3 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 transition-all duration-200 outline-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
+        className="w-full rounded-lg border border-white/10 bg-white/5 py-3 pl-10 pr-4 text-sm text-white placeholder:text-gray-500 transition-all duration-200 outline-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
       />
     </div>
   </div>
@@ -272,15 +272,9 @@ const CTASection = () => {
   };
 
   return (
-    <section className="relative bg-white py-24 sm:py-32 overflow-hidden">
+    <section className="relative bg-[#FAFAFA] py-24 sm:py-32 overflow-hidden">
       {/* --- TOP BORDER LINE --- */}
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-20" />
-
-      {/* Background Pattern */}
-      <BackgroundStripes />
-
-      {/* Background Gradient Blurs */}
-      <div className="pointer-events-none absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-gray-50/50 to-transparent -z-10" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         {/* Large Central Card */}
@@ -302,17 +296,17 @@ const CTASection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative bg-white border border-zinc-200 rounded-2xl p-8 md:p-16 shadow-2xl shadow-gray-200/50"
+            className="relative bg-[#0F1117] border border-white/10 rounded-2xl p-8 md:p-16 shadow-2xl shadow-black/20"
           >
             {/* Top Label */}
             <div className="flex justify-center mb-6">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-xs font-bold uppercase tracking-widest text-gray-500">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest text-gray-400">
                 <Sparkles className="w-3 h-3" style={{ color: COLORS.primary }} />
                 Start Your Journey
               </span>
             </div>
 
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 tracking-tight leading-[1.1] text-center">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white tracking-tight leading-[1.1] text-center">
               Ready to grow your
               <br className="hidden md:block" />
               <motion.span
@@ -354,8 +348,8 @@ const CTASection = () => {
                 >
                   <Check className="h-8 w-8" style={{ color: COLORS.secondary }} strokeWidth={2.5} />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Message Sent!</h3>
-                <p className="text-gray-500 max-w-md text-center">
+                <h3 className="text-2xl font-bold text-white">Message Sent!</h3>
+                <p className="text-gray-400 max-w-md text-center">
                   Thanks for reaching out. One of our strategists will review your details and contact you shortly.
                 </p>
               </motion.div>
@@ -419,12 +413,12 @@ const CTASection = () => {
 
                 {/* Row 4: Message */}
                 <div className="relative">
-                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-1.5 text-left">
+                  <label htmlFor="message" className="block text-sm font-semibold text-gray-300 mb-1.5 text-left">
                     How can we help? <span style={{ color: COLORS.primary }}>*</span>
                   </label>
                   <div className="relative">
                     <div className="pointer-events-none absolute top-3.5 left-0 flex items-start pl-3.5">
-                      <MessageSquare className="h-4 w-4" style={{ color: COLORS.textLight }} />
+                      <MessageSquare className="h-4 w-4 text-gray-500" />
                     </div>
                     <textarea
                       id="message"
@@ -434,7 +428,7 @@ const CTASection = () => {
                       placeholder="Tell us about your goals — more traffic, better conversions, brand awareness…"
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full rounded-lg border border-zinc-200 bg-white py-3 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 transition-all duration-200 outline-none resize-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
+                      className="w-full rounded-lg border border-white/10 bg-white/5 py-3 pl-10 pr-4 text-sm text-white placeholder:text-gray-500 transition-all duration-200 outline-none resize-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
                     />
                   </div>
                 </div>
@@ -468,24 +462,24 @@ const CTASection = () => {
                 </div>
 
                 {/* Trust Signals */}
-                <div className="grid md:grid-cols-3 gap-4 pt-6 border-t border-zinc-100">
+                <div className="grid md:grid-cols-3 gap-4 pt-6 border-t border-white/10">
                   <div className="flex items-center justify-center gap-2">
                     <div className="rounded-full p-1" style={{ backgroundColor: "hsl(160 64% 52% / 0.1)" }}>
                       <Check className="h-3.5 w-3.5" style={{ color: COLORS.secondary }} strokeWidth={3} />
                     </div>
-                    <span className="text-xs font-semibold text-gray-500">No long-term contracts</span>
+                    <span className="text-xs font-semibold text-gray-400">No long-term contracts</span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <div className="rounded-full p-1" style={{ backgroundColor: "hsl(160 64% 52% / 0.1)" }}>
                       <Check className="h-3.5 w-3.5" style={{ color: COLORS.secondary }} strokeWidth={3} />
                     </div>
-                    <span className="text-xs font-semibold text-gray-500">Free strategy session</span>
+                    <span className="text-xs font-semibold text-gray-400">Free strategy session</span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <div className="rounded-full p-1" style={{ backgroundColor: "hsl(160 64% 52% / 0.1)" }}>
                       <Check className="h-3.5 w-3.5" style={{ color: COLORS.secondary }} strokeWidth={3} />
                     </div>
-                    <span className="text-xs font-semibold text-gray-500">Response within 24h</span>
+                    <span className="text-xs font-semibold text-gray-400">Response within 24h</span>
                   </div>
                 </div>
               </div>
