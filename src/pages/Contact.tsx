@@ -34,7 +34,7 @@ const Contact = () => {
       <Header />
       <main className="flex-1">
         {/* Hero */}
-        <section className="section-padding bg-gradient-to-br from-primary/5 to-secondary/5">
+        <section className="section-padding bg-black">
           <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}

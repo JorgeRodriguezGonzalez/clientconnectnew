@@ -62,7 +62,7 @@ const SEOService = () => {
       <Header />
       <main className="flex-1">
         {/* Hero */}
-        <section className="section-padding bg-gradient-to-br from-primary/5 to-secondary/5">
+        <section className="section-padding bg-black">
           <div className="container-custom">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <motion.div
