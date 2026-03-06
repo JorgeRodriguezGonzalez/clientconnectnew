@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Header from "@/components/layout/Header";
 import CaseStudiesSection from "@/components/home/case-studies";
 import Footer from "@/components/layout/Footer";
-import { FinalHero } from "@/components/home/FinalHero";
 import { AnimatedGallerySection } from "@/components/animated-gallery-section";
-import WhyUsSection from "@/components/home/WhyUsSection";
 import { HowWeWork } from "@/components/home/HowWeWork";
 
 const PRIMARY = "#34d399";
@@ -355,9 +353,7 @@ export default function CaseStudies() {
 
       <CaseStudiesSection />
       <AnimatedGallerySection />
-      <WhyUsSection />
       <HowWeWork />
-      <FinalHero />
       <Footer />
     </div>
   );
