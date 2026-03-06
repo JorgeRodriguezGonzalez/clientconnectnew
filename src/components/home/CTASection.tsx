@@ -9,11 +9,15 @@ const cn = (...classes: (string | undefined | null | false)[]) => {
   return classes.filter(Boolean).join(' ');
 };
 
-// --- CONSTANTES ---
+// --- CONSTANTES (Brand Colors) ---
 const COLORS = {
-  turquoise: "rgb(103, 188, 183)", // #67bcb7
-  coral: "rgb(222, 131, 99)",     // #de8363
-  gold: "rgb(237, 191, 134)",     // #edbf86
+  primary: "hsl(187, 94%, 43%)",       // Cyan #06b6d4
+  primaryLight: "hsl(187, 94%, 53%)",   // Cyan claro
+  secondary: "hsl(160, 64%, 52%)",      // Green #34d399
+  secondaryLight: "hsl(160, 64%, 62%)", // Green claro
+  textDark: "hsl(0, 0%, 10%)",
+  textMedium: "hsl(0, 0%, 33%)",
+  textLight: "hsl(0, 0%, 46%)",
 };
 
 // --- COMPONENTE GLOWING EFFECT ---
@@ -149,17 +153,17 @@ const GlowingEffect = React.memo(
               "--active": "0",
               "--glowingeffect-border-width": `${borderWidth}px`,
               "--repeating-conic-gradient-times": "5",
-              "--gradient": `radial-gradient(circle, #EDBF86 10%, #EDBF8600 20%),
-                radial-gradient(circle at 40% 40%, #DE8363 5%, #DE836300 15%),
-                radial-gradient(circle at 60% 60%, #67BCB7 10%, #67BCB700 20%), 
-                radial-gradient(circle at 40% 60%, #94A3B8 10%, #94A3B800 20%),
+              "--gradient": `radial-gradient(circle, hsl(187 94% 43%) 10%, hsl(187 94% 43% / 0) 20%),
+                radial-gradient(circle at 40% 40%, hsl(187 94% 53%) 5%, hsl(187 94% 53% / 0) 15%),
+                radial-gradient(circle at 60% 60%, hsl(160 64% 52%) 10%, hsl(160 64% 52% / 0) 20%), 
+                radial-gradient(circle at 40% 60%, hsl(160 64% 62%) 10%, hsl(160 64% 62% / 0) 20%),
                 repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
-                  #EDBF86 0%,
-                  #DE8363 calc(25% / var(--repeating-conic-gradient-times)),
-                  #67BCB7 calc(50% / var(--repeating-conic-gradient-times)), 
-                  #94A3B8 calc(75% / var(--repeating-conic-gradient-times)),
-                  #EDBF86 calc(100% / var(--repeating-conic-gradient-times))
+                  hsl(187 94% 43%) 0%,
+                  hsl(187 94% 53%) calc(25% / var(--repeating-conic-gradient-times)),
+                  hsl(160 64% 52%) calc(50% / var(--repeating-conic-gradient-times)), 
+                  hsl(160 64% 62%) calc(75% / var(--repeating-conic-gradient-times)),
+                  hsl(187 94% 43%) calc(100% / var(--repeating-conic-gradient-times))
                 )`,
             } as React.CSSProperties
           }
@@ -240,7 +244,7 @@ const CTASection = () => {
             {/* Top Label */}
             <div className="flex justify-center mb-6">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-xs font-bold uppercase tracking-widest text-gray-500">
-                <Sparkles className="w-3 h-3 text-[rgb(103,188,183)]" />
+                <Sparkles className="w-3 h-3" style={{ color: COLORS.primary }} />
                 Start Your Journey
               </span>
             </div>
@@ -258,7 +262,7 @@ const CTASection = () => {
                 }}
                 className="mt-2 inline-block"
                 style={{
-                  backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.gold}, ${COLORS.coral}, ${COLORS.turquoise}, rgba(255, 255, 255, 0))`,
+                  backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.primary}, ${COLORS.primaryLight}, ${COLORS.secondary}, ${COLORS.secondaryLight}, rgba(255, 255, 255, 0))`,
                   backgroundSize: "400% 100%",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -270,7 +274,7 @@ const CTASection = () => {
               </motion.span>
             </h2>
 
-            <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed" style={{ color: COLORS.textLight }}>
               Book your free consultation and discover exactly how we can help you achieve your goals with a data-driven strategy.
             </p>
 
@@ -280,7 +284,7 @@ const CTASection = () => {
                 asChild 
                 className="h-14 px-8 text-lg font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 rounded-none border-0"
                 style={{
-                  backgroundImage: `linear-gradient(135deg, ${COLORS.turquoise}, ${COLORS.coral})`
+                  backgroundImage: `linear-gradient(135deg, ${COLORS.primary}, ${COLORS.secondary})`
                 }}
               >
                 <Link to="/contact">
@@ -293,20 +297,20 @@ const CTASection = () => {
             {/* Trust Signals Grid */}
             <div className="grid md:grid-cols-3 gap-6 pt-10 border-t border-zinc-100">
               <div className="flex items-center justify-center gap-3">
-                <div className="rounded-full bg-green-50 p-1">
-                  <Check className="h-4 w-4" style={{ color: COLORS.turquoise }} strokeWidth={3} />
+                <div className="rounded-full p-1" style={{ backgroundColor: "hsl(160 64% 52% / 0.1)" }}>
+                  <Check className="h-4 w-4" style={{ color: COLORS.secondary }} strokeWidth={3} />
                 </div>
                 <span className="text-sm font-semibold text-gray-700">No long-term contracts</span>
               </div>
               <div className="flex items-center justify-center gap-3">
-                <div className="rounded-full bg-green-50 p-1">
-                  <Check className="h-4 w-4" style={{ color: COLORS.turquoise }} strokeWidth={3} />
+                <div className="rounded-full p-1" style={{ backgroundColor: "hsl(160 64% 52% / 0.1)" }}>
+                  <Check className="h-4 w-4" style={{ color: COLORS.secondary }} strokeWidth={3} />
                 </div>
                 <span className="text-sm font-semibold text-gray-700">Results in 30-90 days</span>
               </div>
               <div className="flex items-center justify-center gap-3">
-                 <div className="rounded-full bg-green-50 p-1">
-                  <Check className="h-4 w-4" style={{ color: COLORS.turquoise }} strokeWidth={3} />
+                <div className="rounded-full p-1" style={{ backgroundColor: "hsl(160 64% 52% / 0.1)" }}>
+                  <Check className="h-4 w-4" style={{ color: COLORS.secondary }} strokeWidth={3} />
                 </div>
                 <span className="text-sm font-semibold text-gray-700">100% Transparency</span>
               </div>
