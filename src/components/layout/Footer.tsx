@@ -29,11 +29,11 @@ const navigation = {
   ]
 };
 
-export function Footer(): JSX.Element {
+function Footer(): JSX.Element {
   return (
     <footer className="relative bg-black text-white pt-24 pb-12 overflow-hidden font-sans border-t border-zinc-800">
       
-      {/* Decorative Grid Pattern (Opacidad muy baja) */}
+      {/* Decorative Grid Pattern */}
       <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.2]">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -50,7 +50,6 @@ export function Footer(): JSX.Element {
         {/* 1. TOP SECTION: CTA */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 border-b border-zinc-800 pb-16 mb-16">
           <div className="max-w-3xl">
-            {/* Tagline */}
             <div className="flex items-center gap-2 mb-6">
                <div className="w-2 h-2 bg-emerald-500 rounded-none"></div>
                <span className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Growth Partners</span>
@@ -69,7 +68,6 @@ export function Footer(): JSX.Element {
                 }}
                 style={{
                   display: "inline-block",
-                  // Gradiente Esmeralda/Cyan
                   backgroundImage: `linear-gradient(45deg, ${COLORS.emerald}, ${COLORS.cyan}, #ffffff, ${COLORS.cyan}, ${COLORS.emerald})`,
                   backgroundSize: "300% 100%",
                   WebkitBackgroundClip: "text",
@@ -101,7 +99,7 @@ export function Footer(): JSX.Element {
         {/* 2. MIDDLE SECTION: LINKS & INFO */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
           
-          {/* Brand Column (4 cols) */}
+          {/* Brand Column */}
           <div className="md:col-span-4 flex flex-col gap-6">
              <Link to="/" className="inline-block">
                 <span className="font-sans text-2xl font-bold tracking-tight text-white flex items-center gap-2">
@@ -127,7 +125,7 @@ export function Footer(): JSX.Element {
              </div>
           </div>
 
-          {/* Links Column (2 cols) */}
+          {/* Links Column */}
           <div className="md:col-span-2 md:col-start-6">
              <h3 className="font-sans font-bold text-white text-sm uppercase tracking-wider mb-6">Explore</h3>
              <ul className="flex flex-col gap-3">
@@ -144,7 +142,7 @@ export function Footer(): JSX.Element {
              </ul>
           </div>
 
-          {/* Contact Column (4 cols) */}
+          {/* Contact Column */}
           <div className="md:col-span-4 md:col-start-9">
              <h3 className="font-sans font-bold text-white text-sm uppercase tracking-wider mb-6">Contact</h3>
              <ul className="flex flex-col gap-4">
@@ -182,7 +180,7 @@ export function Footer(): JSX.Element {
           </div>
         </div>
 
-        {/* 3. BIG TYPE BOTTOM - INDUSTRIAL STYLE */}
+        {/* 3. BIG TYPE BOTTOM */}
         <div className="w-full border-t border-zinc-800 pt-16 pb-4 flex flex-col items-center select-none pointer-events-none">
            <h1 className="font-sans font-black text-[12vw] leading-[0.8] tracking-tighter text-zinc-900 text-center whitespace-nowrap opacity-80">
               CLIENT CONNECT
@@ -211,3 +209,5 @@ export function Footer(): JSX.Element {
     </footer>
   );
 }
+
+export default Footer;
