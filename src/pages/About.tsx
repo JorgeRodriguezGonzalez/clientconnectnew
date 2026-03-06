@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Header from "@/components/layout/Header";
 import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import Footer from "@/components/layout/Footer";
+import CTASection from "@/components/home/CTASection";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -300,6 +301,7 @@ export default function About() {
         </div>
       </section>
 
+      <CTASection />
       <Footer />
     </div>
   );
