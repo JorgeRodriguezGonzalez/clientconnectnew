@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "@/components/layout/Header";
+import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -184,6 +185,8 @@ export default function About() {
           ))}
         </div>
       </section>
+
+      <OurStepsVersion2 />
 
       {/* ═══════════════ OUR STORY ═══════════════ */}
       <section style={{ padding: "80px 20px", maxWidth: "1000px", margin: "0 auto" }}>
