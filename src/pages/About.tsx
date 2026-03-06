@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Header } from "@/components/home/header";
+import Header from "@/components/layout/Header";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
