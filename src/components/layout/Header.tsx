@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { X, ArrowRight, Menu } from "lucide-react";
+import { X, ArrowRight, Menu, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // --- UTILS ---
@@ -9,9 +9,17 @@ function cn(...classes: (string | undefined | null | false)[]) {
 }
 
 // --- DATA ---
+const serviceLinks = [
+  { name: "Web Design", href: "/services/web-design" },
+  { name: "Social Media Management", href: "/services/social-media-management" },
+  { name: "Social Media Ads", href: "/services/social-media-ads" },
+  { name: "SEO", href: "/services/seo" },
+  { name: "Google Ads", href: "/services/google-ads" },
+];
+
 const navLinks = [
   { name: "About Us", href: "/about" },
-  { name: "Services", href: "/services" },
+  { name: "Services", href: "/services", children: serviceLinks },
   { name: "Case Studies", href: "/case-studies" },
   { name: "Contact", href: "/contact" },
 ];
@@ -20,6 +28,10 @@ const navLinks = [
 export default function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -33,11 +45,26 @@ export default function Header() {
     return () => { document.body.style.overflow = "unset"; };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsServicesOpen(false);
+    setIsMobileServicesOpen(false);
+  }, [location.pathname]);
+
   const toggleMenu = () => setIsMobileMenuOpen((prev) => !prev);
+
+  const handleServicesEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsServicesOpen(true);
+  };
+
+  const handleServicesLeave = () => {
+    timeoutRef.current = setTimeout(() => setIsServicesOpen(false), 150);
+  };
 
   return (
     <>
-      {/* ── HEADER ESTÁTICO ── */}
+      {/* ── HEADER ── */}
       <motion.div
         initial={{ opacity: 1, y: 0 }}
         animate={{ opacity: scrollY > 80 ? 0 : 1, y: scrollY > 80 ? -16 : 0 }}
@@ -65,19 +92,73 @@ export default function Header() {
             <Menu size={18} className="text-white" />
           </button>
 
+          {/* ── DESKTOP NAV ── */}
           <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className={cn(
-                  "text-sm font-medium no-underline transition-colors duration-200",
-                  location.pathname === link.href ? "text-white" : "text-slate-300 hover:text-white"
-                )}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.children ? (
+                <div
+                  key={link.name}
+                  ref={servicesRef}
+                  className="relative"
+                  onMouseEnter={handleServicesEnter}
+                  onMouseLeave={handleServicesLeave}
+                >
+                  <button
+                    className={cn(
+                      "flex items-center gap-1 text-sm font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer",
+                      location.pathname.startsWith("/services") ? "text-white" : "text-slate-300 hover:text-white"
+                    )}
+                  >
+                    {link.name}
+                    <ChevronDown
+                      size={14}
+                      className={cn(
+                        "transition-transform duration-200",
+                        isServicesOpen ? "rotate-180" : ""
+                      )}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {isServicesOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 rounded-xl border border-white/10 bg-[#0a0a0a]/95 backdrop-blur-xl p-2 shadow-2xl"
+                      >
+                        {link.children.map((child) => (
+                          <Link
+                            key={child.name}
+                            to={child.href}
+                            className={cn(
+                              "block rounded-lg px-3 py-2.5 text-sm font-medium no-underline transition-colors duration-150",
+                              location.pathname === child.href
+                                ? "text-white bg-white/10"
+                                : "text-slate-300 hover:text-white hover:bg-white/5"
+                            )}
+                          >
+                            {child.name}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className={cn(
+                    "text-sm font-medium no-underline transition-colors duration-200",
+                    location.pathname === link.href ? "text-white" : "text-slate-300 hover:text-white"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
             <div className="h-6 w-px bg-white/10" />
             <Link
               to="/contact"
@@ -117,16 +198,58 @@ export default function Header() {
             </button>
 
             <div className="space-y-1 rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  onClick={toggleMenu}
-                  className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-200 hover:bg-white/5 no-underline"
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) =>
+                link.children ? (
+                  <div key={link.name}>
+                    <button
+                      onClick={() => setIsMobileServicesOpen((prev) => !prev)}
+                      className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-slate-200 hover:bg-white/5 bg-transparent border-none cursor-pointer"
+                    >
+                      {link.name}
+                      <ChevronDown
+                        size={14}
+                        className={cn(
+                          "text-slate-400 transition-transform duration-200",
+                          isMobileServicesOpen ? "rotate-180" : ""
+                        )}
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {isMobileServicesOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pl-4 space-y-1 py-1">
+                            {link.children.map((child) => (
+                              <Link
+                                key={child.name}
+                                to={child.href}
+                                onClick={toggleMenu}
+                                className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-white/5 no-underline"
+                              >
+                                {child.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    onClick={toggleMenu}
+                    className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-200 hover:bg-white/5 no-underline"
+                  >
+                    {link.name}
+                  </Link>
+                )
+              )}
               <div className="my-2 h-px w-full bg-white/10" />
               <Link
                 to="/contact"
