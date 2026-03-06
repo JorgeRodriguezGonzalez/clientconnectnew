@@ -80,6 +80,7 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 
 export default function CaseStudies() {
   const [hCard, setHCard] = useState<number | null>(null);
+  const [hImg, setHImg] = useState<number | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [activeFilter, setActiveFilter] = useState("All");
 
@@ -137,10 +138,54 @@ export default function CaseStudies() {
             <span>Multiple Industries</span>
           </div>
 
+          {/* Image Gallery */}
+          <div style={{
+            display: "flex", justifyContent: "center", alignItems: "center", gap: "16px",
+            marginTop: "40px", padding: "20px 20px", overflow: "visible",
+            position: "relative", zIndex: 2,
+            ...anim(0.5),
+          }}>
+            {[
+              { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=500&fit=crop", alt: "Team collaboration", rotate: -6 },
+              { url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=350&h=450&fit=crop", alt: "Strategy meeting", rotate: 3 },
+              { url: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=500&fit=crop", alt: "Digital marketing", rotate: -2 },
+              { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=380&h=480&fit=crop", alt: "Presentation", rotate: 5 },
+              { url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=350&h=450&fit=crop", alt: "Workspace", rotate: -4 },
+              { url: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop", alt: "Planning", rotate: 3 },
+            ].map((img, i) => (
+              <div
+                key={i}
+                onMouseEnter={() => setHImg(i)}
+                onMouseLeave={() => setHImg(null)}
+                style={{
+                  flex: "0 0 auto",
+                  width: i === 2 ? "200px" : "160px",
+                  height: i === 2 ? "260px" : "220px",
+                  borderRadius: "20px", overflow: "hidden", position: "relative", cursor: "grab",
+                  transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.1 : 1}) rotateZ(${hImg === i ? (img.rotate < 0 ? -2 : 2) : 0}deg)`,
+                  transition: "all 0.15s ease-out",
+                  boxShadow: hImg === i
+                    ? `0 20px 60px rgba(${PRIMARY_RGB},0.35), 0 0 0 1px ${PRIMARY}`
+                    : "0 10px 40px rgba(0,0,0,0.4)",
+                  opacity: loaded ? 1 : 0,
+                  transitionDelay: hImg === i ? "0s" : `${0.3 + i * 0.08}s`,
+                  zIndex: hImg === i ? 10 : 1,
+                }}
+              >
+                <img src={img.url} alt={img.alt} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: hImg === i ? "transparent" : "linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%)",
+                  transition: "all 0.4s ease",
+                }} />
+              </div>
+            ))}
+          </div>
+
           {/* Email CTA */}
           <div style={{
             display: "flex", justifyContent: "center", marginTop: "32px", padding: "0 20px",
-            ...anim(0.5),
+            ...anim(0.6),
           }}>
             <div style={{
               display: "flex", alignItems: "center", gap: "0",
