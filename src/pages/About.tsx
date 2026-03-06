@@ -99,39 +99,52 @@ export default function About() {
             <span>150+ Clients</span>
           </div>
 
-          {/* Buttons */}
+          {/* Email CTA */}
           <div style={{
-            display: "flex", justifyContent: "center", gap: "12px", marginTop: "32px", flexWrap: "wrap", padding: "0 20px",
+            display: "flex", justifyContent: "center", marginTop: "32px", padding: "0 20px",
             ...anim(0.5),
           }}>
-            <button
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.2)"; e.currentTarget.style.boxShadow = "0 0 20px rgba(255,255,255,0.3)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.boxShadow = "none"; }}
-              style={{
-                height: "48px", padding: "0 28px", borderRadius: "50px",
-                background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)",
-                backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
-                fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 600, fontSize: "15px", color: "#fff",
-                cursor: "pointer", transition: "all 0.2s ease",
-              }}
-            >
-              View Our Work
-            </button>
-            <button
-              onMouseEnter={e => { e.currentTarget.style.borderColor = "#34d399"; e.currentTarget.style.boxShadow = "0 0 20px rgba(52,211,153,0.5)"; e.currentTarget.style.color = "#34d399"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#06b6d4"; e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.color = "#06b6d4"; }}
-              style={{
-                height: "48px", padding: "0 28px", borderRadius: "50px",
-                background: "transparent", border: "1px solid #06b6d4",
-                backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
-                fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 600, fontSize: "15px", color: "#06b6d4",
-                cursor: "pointer", transition: "all 0.2s ease",
-                display: "flex", alignItems: "center", gap: "8px",
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Start Scaling
-            </button>
+            <div style={{
+              display: "flex", alignItems: "center", gap: "0",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "50px",
+              padding: "5px 5px 5px 24px",
+              maxWidth: "520px",
+              width: "100%",
+              backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+            }}>
+              <input
+                type="email"
+                placeholder="Enter your email for a free audit"
+                style={{
+                  flex: 1,
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  fontFamily: 'Inter, -apple-system, sans-serif',
+                  fontWeight: 500,
+                  fontSize: "14px",
+                  color: "#fff",
+                  minWidth: 0,
+                }}
+              />
+              <button
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 20px rgba(52,211,153,0.5)"; e.currentTarget.style.background = "linear-gradient(135deg, #34d399, #06b6d4)"; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = "#06b6d4"; }}
+                style={{
+                  height: "40px", padding: "0 20px", borderRadius: "50px",
+                  background: "#06b6d4", border: "none",
+                  fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 600, fontSize: "14px", color: "#000",
+                  cursor: "pointer", transition: "all 0.2s ease",
+                  display: "flex", alignItems: "center", gap: "8px",
+                  whiteSpace: "nowrap", flexShrink: 0,
+                }}
+              >
+                Start Scaling
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
           </div>
         </div>
 
