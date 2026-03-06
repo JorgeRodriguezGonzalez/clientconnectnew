@@ -149,22 +149,22 @@ function Footer(): JSX.Element {
              <h3 className="font-sans font-bold text-white text-sm uppercase tracking-wider mb-6">Contact</h3>
              <ul className="flex flex-col gap-4">
                 <li>
-                   <a href="mailto:hello@clientconnect.com.au" className="flex items-center gap-3 group">
+                   <a href="mailto:info@clientconnectaustralia.com.au" className="flex items-center gap-3 group">
                       <div className="p-2 border border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:text-emerald-400 group-hover:border-emerald-500/30 transition-colors rounded-none">
                         <Mail size={16} />
                       </div>
                       <span className="font-sans text-sm text-zinc-400 group-hover:text-white transition-colors">
-                        hello@clientconnect.com.au
+                        info@clientconnectaustralia.com.au
                       </span>
                    </a>
                 </li>
                 <li>
-                   <a href="tel:0290734731" className="flex items-center gap-3 group">
+                   <a href="tel:+61272071038" className="flex items-center gap-3 group">
                       <div className="p-2 border border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:text-emerald-400 group-hover:border-emerald-500/30 transition-colors rounded-none">
                         <Phone size={16} />
                       </div>
                       <span className="font-sans text-sm text-zinc-400 group-hover:text-white transition-colors">
-                        (02) 9073 4731
+                        (02) 7207 1038
                       </span>
                    </a>
                 </li>
