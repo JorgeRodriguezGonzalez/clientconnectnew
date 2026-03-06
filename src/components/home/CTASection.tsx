@@ -241,7 +241,7 @@ const FormInput = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full rounded-none border border-zinc-200 bg-white py-3 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 transition-all duration-200 outline-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
+        className="w-full rounded-lg border border-zinc-200 bg-white py-3 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 transition-all duration-200 outline-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
       />
     </div>
   </div>
@@ -302,7 +302,7 @@ const CTASection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative bg-white border border-zinc-200 p-8 md:p-16 shadow-2xl shadow-gray-200/50"
+            className="relative bg-white border border-zinc-200 rounded-2xl p-8 md:p-16 shadow-2xl shadow-gray-200/50"
           >
             {/* Top Label */}
             <div className="flex justify-center mb-6">
@@ -434,7 +434,7 @@ const CTASection = () => {
                       placeholder="Tell us about your goals — more traffic, better conversions, brand awareness…"
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full rounded-none border border-zinc-200 bg-white py-3 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 transition-all duration-200 outline-none resize-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
+                      className="w-full rounded-lg border border-zinc-200 bg-white py-3 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 transition-all duration-200 outline-none resize-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
                     />
                   </div>
                 </div>
@@ -445,7 +445,7 @@ const CTASection = () => {
                     size="lg"
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="w-full h-14 text-lg font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-300 rounded-none border-0 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full h-14 text-lg font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-300 rounded-lg border-0 disabled:opacity-70 disabled:cursor-not-allowed"
                     style={{
                       backgroundImage: `linear-gradient(135deg, ${COLORS.primary}, ${COLORS.secondary})`,
                     }}
