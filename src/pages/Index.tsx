@@ -21,7 +21,7 @@ import CloudHero from "@/components/home/section-layers";
 import Services from "@/components/home/Services";
 import { SuperHero } from "@/components/home/SuperHero";
 import { FloatingBanner } from "@/components/home/floatingbanner";
-import { Header } from "@/components/home/header";
+import Header from "@/components/layout/Header";
 import { Footer } from "@/components/home/footer";
 import FAQSection from "@/components/home/faqs";
 import CaseStudiesSection from "@/components/home/case-studies";
