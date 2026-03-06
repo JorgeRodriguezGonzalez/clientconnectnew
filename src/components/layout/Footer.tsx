@@ -101,12 +101,14 @@ function Footer(): JSX.Element {
           
           {/* Brand Column */}
           <div className="md:col-span-4 flex flex-col gap-6">
-             <Link to="/" className="inline-block">
-                <span className="font-sans text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-                  <div className="w-6 h-6 bg-emerald-500 flex items-center justify-center">
-                    <div className="w-2 h-2 bg-black"></div>
-                  </div>
-                  Client Connect<span className="text-zinc-600">.</span>
+             <Link to="/" className="inline-flex items-center gap-2 no-underline">
+                <img
+                  src="/images/logoCCA2.png"
+                  alt="Client Connect Australia"
+                  className="w-14 h-14 shrink-0 object-contain"
+                />
+                <span className="text-xl font-medium tracking-tight text-white">
+                  Client Connect <span className="text-[#34d399]">Australia</span><span className="text-[#ffa93b]">.</span>
                 </span>
              </Link>
              <p className="font-sans text-zinc-500 leading-relaxed max-w-sm text-sm">
