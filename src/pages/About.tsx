@@ -163,14 +163,14 @@ export default function About() {
                 flex: "0 0 auto",
                 width: i === 2 ? "200px" : "160px",
                 height: i === 2 ? "260px" : "220px",
-                borderRadius: "20px", overflow: "hidden", position: "relative", cursor: "pointer",
-                transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.08 : 1})`,
+                borderRadius: "20px", overflow: "hidden", position: "relative", cursor: "grab",
+                transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.1 : 1}) rotateZ(${hImg === i ? (img.rotate < 0 ? -2 : 2) : 0}deg)`,
                 transition: "all 0.15s ease-out",
                 boxShadow: hImg === i
                   ? `0 20px 60px rgba(${PRIMARY_RGB},0.35), 0 0 0 2px ${PRIMARY}`
                   : "0 10px 40px rgba(0,0,0,0.4)",
                 opacity: loaded ? 1 : 0,
-                transitionDelay: `${0.3 + i * 0.08}s`,
+                transitionDelay: hImg === i ? "0s" : `${0.3 + i * 0.08}s`,
                 zIndex: hImg === i ? 10 : 1,
               }}
             >
