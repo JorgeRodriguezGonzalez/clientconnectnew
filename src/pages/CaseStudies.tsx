@@ -64,6 +64,15 @@ const caseStudies = [
   },
 ];
 
+const heroImages = [
+  { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=500&fit=crop", alt: "Team collaboration", rotate: -6 },
+  { url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=350&h=450&fit=crop", alt: "Strategy meeting", rotate: 3 },
+  { url: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=500&fit=crop", alt: "Digital marketing", rotate: -2 },
+  { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=380&h=480&fit=crop", alt: "Presentation", rotate: 5 },
+  { url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=350&h=450&fit=crop", alt: "Workspace", rotate: -4 },
+  { url: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop", alt: "Planning", rotate: 3 },
+];
+
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => {
   const [vis, setVis] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -75,7 +84,6 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
   return (
     <div ref={ref} className={className} style={{ opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(30px)", transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s` }}>
       {children}
-      <CaseStudiesSection />
     </div>
   );
 };
@@ -107,24 +115,25 @@ export default function CaseStudies() {
         <div style={{ position: "absolute", top: "-200px", left: "-100px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "-100px", right: "-150px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
-        {/* Title */}
-        <div style={{ textAlign: "center", paddingTop: "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
+        <div style={{ textAlign: "center", paddingTop: "140px", position: "relative", zIndex: 2 }}>
+          {/* Title */}
           <h1 style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
             fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
-            textTransform: "none",
             ...anim(0.1),
           }}>
             <span>Case </span>
             <span>Studies.</span>
           </h1>
+
+          {/* Subtitle */}
           <p style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
             fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff", maxWidth: "520px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
             ...anim(0.3),
           }}>
-            Real <span style={{ color: "#34d399", fontWeight: 600 }}>results</span> for real businesses. See how we've helped Sydney brands achieve{" "}
-            <span style={{ color: "#34d399", fontWeight: 600 }}>measurable growth</span>.
+            Real <span style={{ color: PRIMARY, fontWeight: 600 }}>results</span> for real businesses. See how we've helped Sydney brands achieve{" "}
+            <span style={{ color: PRIMARY, fontWeight: 600 }}>measurable growth</span>.
           </p>
 
           {/* Tags */}
@@ -159,15 +168,8 @@ export default function CaseStudies() {
                 type="email"
                 placeholder="Enter your email for a free audit"
                 style={{
-                  flex: 1,
-                  background: "transparent",
-                  border: "none",
-                  outline: "none",
-                  fontFamily: 'Inter, -apple-system, sans-serif',
-                  fontWeight: 500,
-                  fontSize: "14px",
-                  color: "#fff",
-                  minWidth: 0,
+                  flex: 1, background: "transparent", border: "none", outline: "none",
+                  fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 500, fontSize: "14px", color: "#fff", minWidth: 0,
                 }}
               />
               <button
@@ -187,20 +189,15 @@ export default function CaseStudies() {
               </button>
             </div>
           </div>
+        </div>
+
         {/* Image Gallery */}
         <div style={{
           display: "flex", justifyContent: "center", alignItems: "center", gap: "16px",
           marginTop: "48px", padding: "20px 20px", overflow: "visible",
           position: "relative", zIndex: 2,
         }}>
-          {[
-            { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=500&fit=crop", alt: "Team collaboration", rotate: -6 },
-            { url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=350&h=450&fit=crop", alt: "Strategy meeting", rotate: 3 },
-            { url: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=500&fit=crop", alt: "Digital marketing", rotate: -2 },
-            { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=380&h=480&fit=crop", alt: "Presentation", rotate: 5 },
-            { url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=350&h=450&fit=crop", alt: "Workspace", rotate: -4 },
-            { url: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop", alt: "Planning", rotate: 3 },
-          ].map((img, i) => (
+          {heroImages.map((img, i) => (
             <div
               key={i}
               onMouseEnter={() => setHImg(i)}
@@ -229,7 +226,6 @@ export default function CaseStudies() {
             </div>
           ))}
         </div>
-        </div>
       </section>
 
       {/* ═══════════════ FILTER TABS ═══════════════ */}
@@ -241,16 +237,12 @@ export default function CaseStudies() {
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
                 style={{
-                  padding: "8px 20px",
-                  borderRadius: "50px",
+                  padding: "8px 20px", borderRadius: "50px",
                   border: activeFilter === cat ? `1px solid ${PRIMARY}` : "1px solid hsl(0,0%,88%)",
                   background: activeFilter === cat ? `rgba(${PRIMARY_RGB},0.1)` : "transparent",
                   color: activeFilter === cat ? PRIMARY : TEXT_MEDIUM,
-                  fontFamily: 'Inter, -apple-system, sans-serif',
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  transition: "all 0.2s ease",
+                  fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "13px", fontWeight: 600,
+                  cursor: "pointer", transition: "all 0.2s ease",
                 }}
               >
                 {cat}
@@ -269,71 +261,43 @@ export default function CaseStudies() {
                 onMouseEnter={() => setHCard(i)}
                 onMouseLeave={() => setHCard(null)}
                 style={{
-                  borderRadius: "20px",
-                  overflow: "hidden",
-                  background: BG,
-                  border: "1px solid hsl(0,0%,92%)",
-                  transition: "all 0.3s ease",
-                  cursor: "pointer",
+                  borderRadius: "20px", overflow: "hidden", background: BG,
+                  border: "1px solid hsl(0,0%,92%)", transition: "all 0.3s ease", cursor: "pointer",
                   transform: hCard === i ? "translateY(-6px)" : "translateY(0)",
                   boxShadow: hCard === i ? `0 16px 40px rgba(${PRIMARY_RGB},0.12)` : "0 2px 8px rgba(0,0,0,0.04)",
                 }}
               >
-                {/* Image */}
                 <div style={{ position: "relative", overflow: "hidden", height: "220px" }}>
-                  <img
-                    src={cs.url}
-                    alt={cs.alt}
-                    style={{
-                      width: "100%", height: "100%", objectFit: "cover", display: "block",
-                      transform: hCard === i ? "scale(1.05)" : "scale(1)",
-                      transition: "transform 0.4s ease",
-                    }}
-                  />
-                  <div style={{
-                    position: "absolute", inset: 0,
-                    background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%)",
+                  <img src={cs.url} alt={cs.alt} style={{
+                    width: "100%", height: "100%", objectFit: "cover", display: "block",
+                    transform: hCard === i ? "scale(1.05)" : "scale(1)", transition: "transform 0.4s ease",
                   }} />
-                  {/* Metric badge */}
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%)" }} />
                   <div style={{
                     position: "absolute", bottom: "16px", left: "16px",
-                    background: "rgba(0,0,0,0.6)",
-                    backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)",
-                    borderRadius: "12px",
-                    padding: "10px 16px",
-                    display: "flex", alignItems: "baseline", gap: "6px",
+                    background: "rgba(0,0,0,0.6)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)",
+                    borderRadius: "12px", padding: "10px 16px", display: "flex", alignItems: "baseline", gap: "6px",
                   }}>
                     <span style={{ fontSize: "24px", fontWeight: 800, color: PRIMARY, fontFamily: 'Inter, -apple-system, sans-serif' }}>{cs.metric}</span>
                     <span style={{ fontSize: "12px", fontWeight: 500, color: "rgba(255,255,255,0.7)", fontFamily: 'Inter, -apple-system, sans-serif' }}>{cs.metricLabel}</span>
                   </div>
-                  {/* Category pill */}
                   <div style={{
                     position: "absolute", top: "16px", right: "16px",
-                    background: "rgba(255,255,255,0.15)",
-                    backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)",
-                    borderRadius: "50px",
-                    padding: "5px 14px",
-                    fontSize: "11px", fontWeight: 600, color: "#fff",
-                    fontFamily: 'Inter, -apple-system, sans-serif',
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
+                    background: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)",
+                    borderRadius: "50px", padding: "5px 14px",
+                    fontSize: "11px", fontWeight: 600, color: "#fff", fontFamily: 'Inter, -apple-system, sans-serif',
+                    textTransform: "uppercase", letterSpacing: "0.05em",
                   }}>
                     {cs.category}
                   </div>
                 </div>
-
-                {/* Content */}
                 <div style={{ padding: "24px" }}>
-                  <h3 style={{
-                    fontSize: "17px", fontWeight: 700, color: TEXT_DARK, lineHeight: 1.35, margin: 0,
-                    fontFamily: 'Inter, -apple-system, sans-serif',
-                  }}>
+                  <h3 style={{ fontSize: "17px", fontWeight: 700, color: TEXT_DARK, lineHeight: 1.35, margin: 0, fontFamily: 'Inter, -apple-system, sans-serif' }}>
                     {cs.title}
                   </h3>
                   <div style={{
                     display: "flex", alignItems: "center", gap: "6px", marginTop: "16px",
-                    fontSize: "13px", fontWeight: 600, color: PRIMARY,
-                    fontFamily: 'Inter, -apple-system, sans-serif',
+                    fontSize: "13px", fontWeight: 600, color: PRIMARY, fontFamily: 'Inter, -apple-system, sans-serif',
                   }}>
                     Read Case Study
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -349,11 +313,8 @@ export default function CaseStudies() {
       <section style={{ padding: "0 20px 80px" }}>
         <FadeIn>
           <div style={{
-            maxWidth: "900px", margin: "0 auto",
-            padding: "56px 40px", borderRadius: "24px",
-            background: TEXT_DARK,
-            textAlign: "center",
-            position: "relative", overflow: "hidden",
+            maxWidth: "900px", margin: "0 auto", padding: "56px 40px", borderRadius: "24px",
+            background: TEXT_DARK, textAlign: "center", position: "relative", overflow: "hidden",
           }}>
             <div style={{ position: "absolute", top: "-100px", left: "-80px", width: "300px", height: "300px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.15) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: "-80px", right: "-60px", width: "250px", height: "250px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.1) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
@@ -373,13 +334,11 @@ export default function CaseStudies() {
               onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 0 30px rgba(${PRIMARY_RGB},0.5)`; e.currentTarget.style.background = `linear-gradient(135deg, ${PRIMARY}, ${SECONDARY})`; }}
               onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = PRIMARY; }}
               style={{
-                marginTop: "28px",
-                height: "48px", padding: "0 32px", borderRadius: "50px",
+                marginTop: "28px", height: "48px", padding: "0 32px", borderRadius: "50px",
                 background: PRIMARY, border: "none",
                 fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 700, fontSize: "15px", color: "#000",
                 cursor: "pointer", transition: "all 0.2s ease",
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                position: "relative", zIndex: 1,
+                display: "inline-flex", alignItems: "center", gap: "8px", position: "relative", zIndex: 1,
               }}
             >
               Book a Free Strategy Call
@@ -388,6 +347,8 @@ export default function CaseStudies() {
           </div>
         </FadeIn>
       </section>
+
+      <CaseStudiesSection />
     </div>
   );
 }
