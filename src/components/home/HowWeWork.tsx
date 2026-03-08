@@ -218,7 +218,7 @@ const TaskCardBackground = () => (
   </div>
 );
 
-export default function HowWeWork() {
+export const HowWeWork = () => {
   return (
     <div
       className="w-full min-h-screen flex flex-col items-center gap-24 px-10 py-40"
@@ -341,4 +341,4 @@ export default function HowWeWork() {
       </div>
     </div>
   );
-}
+};
