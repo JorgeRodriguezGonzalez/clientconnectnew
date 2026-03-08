@@ -231,6 +231,8 @@ export default function CaseStudies() {
         </div>
       </section>
 
+      <CaseStudiesSection />
+
       {/* ═══════════════ FILTER TABS ═══════════════ */}
       <section style={{ padding: "48px 20px 0", maxWidth: "1100px", margin: "0 auto" }}>
         <FadeIn>
@@ -294,7 +296,6 @@ export default function CaseStudies() {
         </FadeIn>
       </section>
 
-      <CaseStudiesSection />
       <HowWeWork />
       <CTASection />
       <Footer />
