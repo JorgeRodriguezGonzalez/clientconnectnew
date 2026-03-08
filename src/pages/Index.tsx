@@ -21,7 +21,7 @@ import { FloatingBanner } from "@/components/home/floatingbanner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FAQSection from "@/components/home/faqs";
-import CaseStudiesSection from "@/components/home/case-studies";
+
 import HowWeDoIt from "@/components/home/HowWeDoIt";
 import InteractivePath from "@/components/home/InteractivePath";
 import { WhatWeDoSection2 } from "@/components/home/WhatWeDoSection2";
@@ -44,8 +44,6 @@ const Index = () => {
         <ComparisonSection />
         <TestimonialsSection />
         <FAQSection />
-
-        <CaseStudiesSection />
 
         <CTASection />
         <FloatingBanner />
