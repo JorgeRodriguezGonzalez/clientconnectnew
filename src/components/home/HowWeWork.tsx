@@ -222,7 +222,7 @@ export const HowWeWork = () => {
   return (
     <div
       className="w-full min-h-screen flex flex-col items-center px-10 py-40"
-      style={{ background: "#ffffff" }}
+      style={{ background: "#000000" }}
     >
       <style>{`
         @keyframes gradientMove {
@@ -237,9 +237,9 @@ export const HowWeWork = () => {
         style={{
           fontSize: 10,
           letterSpacing: 2,
-          background: "rgb(250,250,250)",
-          borderColor: "rgb(228,228,231)",
-          color: "rgb(107,114,128)",
+          background: "rgba(255,255,255,0.05)",
+          borderColor: "rgba(255,255,255,0.1)",
+          color: "rgb(156,163,175)",
           transition: "color 0.3s, background 0.3s, border-color 0.3s",
         }}
       >
@@ -257,7 +257,7 @@ export const HowWeWork = () => {
           fontStyle: "normal",
         }}
       >
-        <span style={{ color: "#111827" }}>Our Proven </span>
+        <span style={{ color: "#ffffff" }}>Our Proven </span>
         <span
           style={{
             background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)",
@@ -279,7 +279,7 @@ export const HowWeWork = () => {
           fontWeight: 500,
           fontSize: 16,
           lineHeight: 1.6,
-          color: "#6b7280",
+          color: "rgba(255,255,255,0.5)",
           maxWidth: 400,
         }}
       >
