@@ -115,8 +115,8 @@ export default function CaseStudies() {
       {/* ═══════════════ HERO ═══════════════ */}
       <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: "80px" }}>
         {/* Gradient orbs */}
-        <div style={{ position: "absolute", top: "80px", left: "-150px", width: "400px", height: "400px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", top: "60px", right: "-150px", width: "400px", height: "400px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "180px", left: "-100px", width: "400px", height: "400px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "160px", right: "-100px", width: "400px", height: "400px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
         <div style={{ textAlign: "center", paddingTop: "140px", position: "relative", zIndex: 2 }}>
           {/* Title */}
