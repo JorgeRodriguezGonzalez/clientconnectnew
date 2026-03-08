@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "@/components/layout/Header";
-import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import CaseStudiesSection from "@/components/home/case-studies";
 import Footer from "@/components/layout/Footer";
 import { HowWeWork } from "@/components/home/HowWeWork";
@@ -232,7 +231,7 @@ export default function CaseStudies() {
         </div>
       </section>
 
-      <OurStepsVersion2 />
+      <HowWeWork />
 
       {/* ═══════════════ FILTER TABS ═══════════════ */}
       <section style={{ padding: "48px 20px 0", maxWidth: "1100px", margin: "0 auto" }}>
@@ -355,7 +354,6 @@ export default function CaseStudies() {
       </section>
 
       <CaseStudiesSection />
-      <HowWeWork />
       <CTASection />
       <Footer />
     </div>
