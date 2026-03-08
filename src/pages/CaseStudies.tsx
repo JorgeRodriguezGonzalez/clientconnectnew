@@ -213,7 +213,7 @@ export default function CaseStudies() {
                 transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.1 : 1}) rotateZ(${hImg === i ? (img.rotate < 0 ? -2 : 2) : 0}deg)`,
                 transition: "all 0.15s ease-out",
                 boxShadow: hImg === i
-                  ? `0 20px 60px rgba(${PRIMARY_RGB},0.35), 0 0 0 1px ${PRIMARY}`
+                  ? `0 20px 60px rgba(${PRIMARY_RGB},0.35)`
                   : "0 10px 40px rgba(0,0,0,0.4)",
                 opacity: loaded ? 1 : 0,
                 transitionDelay: hImg === i ? "0s" : `${0.3 + i * 0.08}s`,
