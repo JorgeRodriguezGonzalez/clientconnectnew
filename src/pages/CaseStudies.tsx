@@ -295,8 +295,8 @@ export default function CaseStudies() {
       </section>
 
       <CaseStudiesSection />
-      <CTASection />
       <HowWeWork />
+      <CTASection />
       <Footer />
     </div>
   );
