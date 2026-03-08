@@ -233,69 +233,6 @@ export default function CaseStudies() {
 
       <CaseStudiesSection />
 
-      {/* ═══════════════ FILTER TABS ═══════════════ */}
-      <section style={{ padding: "48px 20px 0", maxWidth: "1100px", margin: "0 auto" }}>
-        <FadeIn>
-          <div style={{ display: "flex", justifyContent: "center", gap: "8px", flexWrap: "wrap" }}>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveFilter(cat)}
-                style={{
-                  padding: "8px 20px", borderRadius: "50px",
-                  border: activeFilter === cat ? `1px solid ${PRIMARY}` : "1px solid hsl(0,0%,88%)",
-                  background: activeFilter === cat ? `rgba(${PRIMARY_RGB},0.1)` : "transparent",
-                  color: activeFilter === cat ? PRIMARY : TEXT_MEDIUM,
-                  fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "13px", fontWeight: 600,
-                  cursor: "pointer", transition: "all 0.2s ease",
-                }}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
-
-      {/* ═══════════════ CTA BANNER ═══════════════ */}
-      <section style={{ padding: "0 20px 80px" }}>
-        <FadeIn>
-          <div style={{
-            maxWidth: "900px", margin: "0 auto", padding: "56px 40px", borderRadius: "24px",
-            background: TEXT_DARK, textAlign: "center", position: "relative", overflow: "hidden",
-          }}>
-            <div style={{ position: "absolute", top: "-100px", left: "-80px", width: "300px", height: "300px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.15) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
-            <div style={{ position: "absolute", bottom: "-80px", right: "-60px", width: "250px", height: "250px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.1) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
-            <h2 style={{
-              fontFamily: 'Inter, -apple-system, sans-serif',
-              fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 700, color: "#fff", margin: 0, letterSpacing: "-0.02em", position: "relative", zIndex: 1,
-            }}>
-              Want Results Like These?
-            </h2>
-            <p style={{
-              fontFamily: 'Inter, -apple-system, sans-serif',
-              fontSize: "15px", fontWeight: 400, color: "rgba(255,255,255,0.6)", marginTop: "12px", position: "relative", zIndex: 1,
-            }}>
-              Let's talk about how we can grow your business.
-            </p>
-            <button
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 0 30px rgba(${PRIMARY_RGB},0.5)`; e.currentTarget.style.background = `linear-gradient(135deg, ${PRIMARY}, ${SECONDARY})`; }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = PRIMARY; }}
-              style={{
-                marginTop: "28px", height: "48px", padding: "0 32px", borderRadius: "50px",
-                background: PRIMARY, border: "none",
-                fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 700, fontSize: "15px", color: "#000",
-                cursor: "pointer", transition: "all 0.2s ease",
-                display: "inline-flex", alignItems: "center", gap: "8px", position: "relative", zIndex: 1,
-              }}
-            >
-              Book a Free Strategy Call
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          </div>
-        </FadeIn>
-      </section>
-
       <HowWeWork />
       <CTASection />
       <Footer />
