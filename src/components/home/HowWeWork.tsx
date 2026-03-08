@@ -221,7 +221,7 @@ const TaskCardBackground = () => (
 export const HowWeWork = () => {
   return (
     <div
-      className="w-full min-h-screen flex flex-col items-center gap-24 px-10 py-40"
+      className="w-full min-h-screen flex flex-col items-center px-10 py-40"
       style={{ background: "#ffffff" }}
     >
       <style>{`
@@ -231,6 +231,7 @@ export const HowWeWork = () => {
         }
       `}</style>
 
+      <div className="flex flex-col items-center" style={{ gap: 16 }}>
       <span
         className="px-3 py-1.5 rounded-lg border font-semibold uppercase tracking-widest"
         style={{
@@ -284,8 +285,9 @@ export const HowWeWork = () => {
       >
         From discovery to optimization, every step is designed to deliver measurable growth for your business.
       </p>
+      </div>
 
-      <div className="flex flex-col gap-8 w-full" style={{ maxWidth: 1000 }}>
+      <div className="flex flex-col gap-8 w-full" style={{ maxWidth: 1000, marginTop: 96 }}>
         {workSteps.map((step, index) => {
           const Icon = step.icon;
           return (
