@@ -1,7 +1,28 @@
 import { useState, useRef } from "react";
 import { ArrowRight, Check } from "lucide-react";
 
-const services = [
+// ─── Types ──────────────────────────────────────────────────
+
+export interface ServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  badges: string[];
+  videoSrc: string | null;
+  link: string;
+  area: "top-left" | "bottom-left" | "top-center" | "bottom-center" | "right" | "bottom-wide" | "bottom-right";
+}
+
+export interface ServicesSectionProps {
+  heading?: string;
+  headingHighlight?: string;
+  subtitle?: string;
+  services?: ServiceItem[];
+}
+
+// ─── Default data (used on home page) ───────────────────────
+
+const defaultServices: ServiceItem[] = [
   {
     id: "website-development",
     title: "Website Development",
@@ -67,7 +88,9 @@ const services = [
   },
 ];
 
-const Badge = ({ label }) => (
+// ─── Sub-components ─────────────────────────────────────────
+
+const Badge = ({ label }: { label: string }) => (
   <span style={{
     display: "inline-flex",
     alignItems: "center",
@@ -87,9 +110,9 @@ const Badge = ({ label }) => (
   </span>
 );
 
-const ServiceCard = ({ service, style = {} }) => {
+const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: React.CSSProperties }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const hasVideo = !!service.videoSrc;
 
   const handleMouseEnter = () => {
@@ -126,7 +149,6 @@ const ServiceCard = ({ service, style = {} }) => {
         ...style,
       }}
     >
-      {/* Video BG */}
       {hasVideo && (
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <div style={{
@@ -135,7 +157,7 @@ const ServiceCard = ({ service, style = {} }) => {
           }} />
           <video
             ref={videoRef}
-            src={service.videoSrc}
+            src={service.videoSrc!}
             muted loop playsInline preload="metadata"
             onLoadedMetadata={handleLoadedMetadata}
             style={{
@@ -148,7 +170,6 @@ const ServiceCard = ({ service, style = {} }) => {
         </div>
       )}
 
-      {/* Grid pattern for no-video */}
       {!hasVideo && (
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <svg width="100%" height="100%" style={{ opacity: 0.05 }}>
@@ -162,13 +183,11 @@ const ServiceCard = ({ service, style = {} }) => {
         </div>
       )}
 
-      {/* Content */}
       <div style={{
         position: "relative", zIndex: 2,
         display: "flex", flexDirection: "column", justifyContent: "space-between",
         padding: "28px", height: "100%", boxSizing: "border-box",
       }}>
-        {/* Top row */}
         <div>
           <div>
             <h3 style={{
@@ -186,7 +205,6 @@ const ServiceCard = ({ service, style = {} }) => {
             </p>
           </div>
 
-          {/* Arrow link button - top right corner */}
           <a
             href={service.link || "#"}
             style={{ textDecoration: "none", position: "absolute", top: "16px", right: "16px", zIndex: 10 }}
@@ -203,7 +221,6 @@ const ServiceCard = ({ service, style = {} }) => {
           </a>
         </div>
 
-        {/* Badges */}
         <div style={{ marginTop: "20px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
             {service.badges.map((b, i) => <Badge key={i} label={b} />)}
@@ -214,8 +231,16 @@ const ServiceCard = ({ service, style = {} }) => {
   );
 };
 
-const ServicesSection = () => {
-  const byArea = Object.fromEntries(services.map(s => [s.area, s]));
+// ─── Main Component ─────────────────────────────────────────
+
+const ServicesSection = ({
+  heading = "Comprehensive Digital",
+  headingHighlight = "Marketing Services",
+  subtitle = "Everything you need to grow your business online, all under one roof.",
+  services,
+}: ServicesSectionProps) => {
+  const items = services || defaultServices;
+  const byArea = Object.fromEntries(items.map(s => [s.area, s]));
 
   return (
     <section style={{ padding: "80px 80px", backgroundColor: "#ffffff", position: "relative", zIndex: 1 }} className="hidden md:block">
@@ -237,53 +262,42 @@ const ServicesSection = () => {
 
       <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "60px" }}>
 
-        {/* Header */}
         <div style={{ textAlign: "center", maxWidth: "700px" }}>
           <h2 style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
             fontSize: "clamp(32px, 5vw, 52px)", lineHeight: 1.1,
             color: "#111827", marginBottom: "16px",
           }}>
-            Comprehensive Digital{" "}
-            <span className="gradient-text">Marketing Services</span>
+            {heading}{" "}
+            <span className="gradient-text">{headingHighlight}</span>
           </h2>
           <p style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 500,
             fontSize: "16px", lineHeight: 1.6, color: "#6b7280",
             maxWidth: "400px", margin: "0 auto",
           }}>
-            Everything you need to grow your business online, all under one roof.
+            {subtitle}
           </p>
         </div>
 
-        {/* Bento Grid */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px", width: "100%" }}>
-
-          {/* Col 1 */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <ServiceCard service={byArea["top-left"]} style={{ height: "480px" }} />
             <ServiceCard service={byArea["bottom-left"]} style={{ height: "260px" }} />
           </div>
-
-          {/* Col 2 */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <ServiceCard service={byArea["top-center"]} style={{ height: "300px" }} />
             <ServiceCard service={byArea["bottom-center"]} style={{ height: "440px" }} />
           </div>
-
-          {/* Col 3 */}
           <div style={{ height: "756px" }}>
             <ServiceCard service={byArea["right"]} style={{ height: "100%" }} />
           </div>
-
-          {/* Row 2 */}
           <div style={{ gridColumn: "1 / 3", height: "280px" }}>
             <ServiceCard service={byArea["bottom-wide"]} style={{ height: "100%" }} />
           </div>
           <div style={{ gridColumn: "3", height: "280px" }}>
             <ServiceCard service={byArea["bottom-right"]} style={{ height: "100%" }} />
           </div>
-
         </div>
       </div>
     </section>

@@ -7,8 +7,7 @@ import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code } from "lucide-react";
-import ServicePageTemplate from "@/components/ServicePageTemplate";
-import { websiteDevelopmentData } from "@/data/services";
+import { webdesignServices, webdesignHeading, webdesignHighlight, webdesignSubtitle } from "@/data/services/webdesign-services";
 
 const C = {
   cyan: "#06b6d4",
@@ -390,13 +389,16 @@ const WebDesign = () => {
           </div>
         </section>
 
-        <ServicesSection />
+        {/* ═══════════════ SERVICES GRID ═══════════════ */}
+        <ServicesSection
+          heading={webdesignHeading}
+          headingHighlight={webdesignHighlight}
+          subtitle={webdesignSubtitle}
+          services={webdesignServices}
+        />
 
         {/* ═══════════════ OUR PROCESS ═══════════════ */}
         <OurProcess />
-
-        {/* ═══════════════ SERVICE TEMPLATE ═══════════════ */}
-        <ServicePageTemplate data={websiteDevelopmentData} />
 
         <CTASection />
       </main>
