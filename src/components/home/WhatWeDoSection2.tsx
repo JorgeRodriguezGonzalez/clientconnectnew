@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useSpring, useTransform, animate } from 'framer-motion';
 import {
   Zap, Target, ArrowUpRight, Home, Shield, Hammer, Leaf,
-  DollarSign, TrendingUp, Users, BarChart3, Clock, Percent,
+  DollarSign, TrendingUp, Users, BarChart3, Percent,
   CheckCircle2, Activity
 } from 'lucide-react';
 
@@ -29,7 +29,6 @@ const buttonColorDuration = 10;
 const GlowingEffect = React.memo(
   ({
     blur = 0,
-    inactiveZone = 0.1,
     proximity = 80,
     spread = 60,
     glow = true,
@@ -39,7 +38,6 @@ const GlowingEffect = React.memo(
     disabled = false,
   }: {
     blur?: number;
-    inactiveZone?: number;
     proximity?: number;
     spread?: number;
     glow?: boolean;
@@ -337,27 +335,6 @@ const NicheTag = ({
   </div>
 );
 
-const StatMini = ({
-  icon: Icon,
-  value,
-  label,
-  sub,
-  color = COLORS.emerald
-}: {
-  icon: React.ElementType;
-  value: React.ReactNode;
-  label: string;
-  sub?: string;
-  color?: string;
-}) => (
-  <div className="flex flex-col gap-1 p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50 backdrop-blur-sm">
-    <Icon size={12} className="text-zinc-500" />
-    <span className="text-xl font-black text-white leading-none">{value}</span>
-    <span className="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider">{label}</span>
-    {sub && <span className="text-[10px] font-bold" style={{ color }}>{sub}</span>}
-  </div>
-);
-
 const StatBadge = ({
   icon: Icon,
   label,
@@ -382,8 +359,6 @@ const StatBadge = ({
 );
 
 const roofData = [12, 18, 22, 28, 35, 42, 48, 55, 62, 70, 78, 86];
-const protData = [8, 15, 22, 35, 42, 55, 65, 72, 85, 95, 105, 115];
-const landData = [50, 120, 180, 280, 380, 450, 520, 600, 680, 750, 800, 850];
 
 export const WhatWeDoSection2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -414,14 +389,15 @@ export const WhatWeDoSection2 = () => {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
 
           <div className="lg:w-[60%] relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
+              {/* CARD 1: HERO AGGREGATE (wide) */}
               <div className="md:col-span-2 relative">
                 <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
                   <StatBadge icon={Activity} label="Pipeline Generated" value="$4.2M+" />
                 </motion.div>
 
-                <TiltCard innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl min-h-[240px]">
+                <TiltCard innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl min-h-[200px]">
                   <div className="relative z-10 p-8 md:p-10">
                     <div className="flex items-center gap-2 mb-6">
                       <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -457,6 +433,7 @@ export const WhatWeDoSection2 = () => {
                 </TiltCard>
               </div>
 
+              {/* CARD 2: ROOFING — con sparkline */}
               <TiltCard delay={0.1} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
                   <NicheTag icon={Home} label="Roofing" />
@@ -467,10 +444,17 @@ export const WhatWeDoSection2 = () => {
                     Hyper-local SEO & Google Ads capturing high-intent storm damage queries.
                   </p>
 
-                  <div className="grid grid-cols-3 gap-2 mb-5">
-                    <StatMini icon={DollarSign} value={<Counter prefix="$" end={145} suffix="k" />} label="Revenue" sub="+210% YoY" />
-                    <StatMini icon={TrendingUp} value={<Counter prefix="$" end={24.5} suffix="" decimals={1} />} label="CPL" sub="-45% Down" color={COLORS.cyan} />
-                    <StatMini icon={Users} value={<Counter end={86} />} label="Leads" sub="Per Month" />
+                  <div className="grid grid-cols-2 gap-3 mb-5">
+                    <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
+                      <div className="text-xl font-black text-white"><Counter prefix="$" end={145} suffix="k" /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Revenue</div>
+                      <div className="text-[10px] font-bold text-emerald-400">+210% YoY</div>
+                    </div>
+                    <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
+                      <div className="text-xl font-black text-white"><Counter end={86} /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Leads / Mo</div>
+                      <div className="text-[10px] font-bold text-emerald-400">$24.50 CPL</div>
+                    </div>
                   </div>
 
                   <div className="mt-auto border-t border-zinc-800 pt-4">
@@ -483,6 +467,7 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
+              {/* CARD 3: PROTECTION — sin sparkline */}
               <TiltCard delay={0.2} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
                   <NicheTag icon={Shield} label="Protection" color={COLORS.cyan} />
@@ -493,92 +478,93 @@ export const WhatWeDoSection2 = () => {
                     Direct-response LinkedIn & Meta ads targeting luxury property owners.
                   </p>
 
-                  <div className="grid grid-cols-3 gap-2 mb-5">
-                    <StatMini icon={BarChart3} value={<Counter prefix="$" end={2.1} suffix="M" decimals={1} />} label="Pipeline" sub="Generated Q3" color={COLORS.cyan} />
-                    <StatMini icon={Target} value={<Counter end={115} />} label="Quotes" sub="+150% Up" color={COLORS.cyan} />
-                    <StatMini icon={Zap} value={<Counter end={8.4} suffix="x" decimals={1} />} label="ROAS" sub="Ad Return" color={COLORS.cyan} />
+                  <div className="grid grid-cols-2 gap-3 mb-5">
+                    <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
+                      <div className="text-xl font-black text-white"><Counter prefix="$" end={2.1} suffix="M" decimals={1} /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Pipeline</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>Generated Q3</div>
+                    </div>
+                    <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
+                      <div className="text-xl font-black text-white"><Counter end={8.4} suffix="x" decimals={1} /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">ROAS</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>115 Quotes</div>
+                    </div>
                   </div>
 
-                  <div className="mt-auto border-t border-zinc-800 pt-4">
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: COLORS.cyan }} />
-                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Quotes Booked</span>
-                    </div>
-                    <Sparkline data={protData} color={COLORS.cyan} height={45} className="w-full h-[45px]" />
+                  <div className="mt-auto space-y-2.5">
+                    <ProgressBar value={92} label="Quote Close Rate" color={COLORS.cyan} />
+                    <ProgressBar value={78} label="Client Retention" color={COLORS.cyan} delay={200} />
                   </div>
                 </div>
               </TiltCard>
 
-              <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5">
-                <TiltCard delay={0.3} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl">
-                  <div className="relative z-10 p-6 md:p-8 flex flex-col h-full">
-                    <NicheTag icon={Hammer} label="Renovation" />
-                    <h4 className="text-base font-bold text-white mb-1">
-                      Filling the Schedule 4 Months Ahead
-                    </h4>
-                    <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
-                      Automated lead qualification + 'Dream Bathroom' campaign.
-                    </p>
+              {/* CARD 4: RENOVATION — sin sparkline */}
+              <TiltCard delay={0.3} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
+                <div className="relative z-10 flex flex-col h-full">
+                  <NicheTag icon={Hammer} label="Renovation" />
+                  <h4 className="text-lg font-bold text-white mb-1 leading-tight">
+                    Filling the Schedule 4 Months Ahead
+                  </h4>
+                  <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
+                    Automated lead qualification + 'Dream Bathroom' campaign.
+                  </p>
 
-                    <div className="grid grid-cols-3 gap-2 mb-5">
-                      {[
-                        { val: <Counter end={34} />, label: "Jobs Won", sub: "Avg $25k" },
-                        { val: <Counter end={20} suffix="hrs" />, label: "Saved", sub: "Per Week" },
-                        { val: <Counter end={185} suffix="%" />, label: "Growth", sub: "Year / Year" },
-                      ].map((s, i) => (
-                        <div key={i} className="text-center">
-                          <div className="text-xl font-black text-white">{s.val}</div>
-                          <div className="text-[8px] font-semibold text-zinc-500 uppercase">{s.label}</div>
-                          <div className="text-[9px] font-bold text-emerald-400">{s.sub}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-auto space-y-2.5">
-                      <ProgressBar value={92} label="Schedule Fill Rate" color={COLORS.emerald} />
-                      <ProgressBar value={85} label="Lead Quality Score" color={COLORS.emerald} delay={200} />
-                    </div>
-                  </div>
-                </TiltCard>
-
-                <TiltCard delay={0.4} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl">
-                  <div className="relative z-10 p-6 md:p-8 flex flex-col h-full">
-                    <NicheTag icon={Leaf} label="Landscaping" color={COLORS.cyan} />
-                    <h4 className="text-base font-bold text-white mb-1">
-                      Scaling High-Ticket Landscape Projects
-                    </h4>
-                    <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
-                      Visual-first funnel with high-converting project reveal pages.
-                    </p>
-
-                    <div className="grid grid-cols-3 gap-2 mb-5">
-                      {[
-                        { val: <Counter prefix="$" end={850} suffix="k" />, label: "Value", sub: "In 90 Days", color: COLORS.cyan },
-                        { val: <Counter end={4.8} suffix="%" decimals={1} />, label: "Conv. Rate", sub: "Top 1%", color: COLORS.cyan },
-                        { val: <Counter prefix="$" end={42} />, label: "CPL", sub: "High Intent", color: COLORS.cyan },
-                      ].map((s, i) => (
-                        <div key={i} className="text-center">
-                          <div className="text-xl font-black text-white">{s.val}</div>
-                          <div className="text-[8px] font-semibold text-zinc-500 uppercase">{s.label}</div>
-                          <div className="text-[9px] font-bold" style={{ color: s.color }}>{s.sub}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-auto border-t border-zinc-800 pt-4">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: COLORS.cyan }} />
-                        <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Project Value Growth</span>
+                  <div className="grid grid-cols-3 gap-2 mb-5">
+                    {[
+                      { val: <Counter end={34} />, label: "Jobs Won", sub: "Avg $25k" },
+                      { val: <Counter end={20} suffix="hrs" />, label: "Saved", sub: "Per Week" },
+                      { val: <Counter end={185} suffix="%" />, label: "Growth", sub: "Year / Year" },
+                    ].map((s, i) => (
+                      <div key={i} className="text-center">
+                        <div className="text-xl font-black text-white">{s.val}</div>
+                        <div className="text-[8px] font-semibold text-zinc-500 uppercase">{s.label}</div>
+                        <div className="text-[9px] font-bold text-emerald-400">{s.sub}</div>
                       </div>
-                      <Sparkline data={landData} color={COLORS.cyan} height={40} className="w-full h-[40px]" />
+                    ))}
+                  </div>
+
+                  <div className="mt-auto space-y-2.5">
+                    <ProgressBar value={92} label="Schedule Fill Rate" color={COLORS.emerald} />
+                    <ProgressBar value={85} label="Lead Quality Score" color={COLORS.emerald} delay={200} />
+                  </div>
+                </div>
+              </TiltCard>
+
+              {/* CARD 5: LANDSCAPING — sin sparkline */}
+              <TiltCard delay={0.4} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
+                <div className="relative z-10 flex flex-col h-full">
+                  <NicheTag icon={Leaf} label="Landscaping" color={COLORS.cyan} />
+                  <h4 className="text-lg font-bold text-white mb-1 leading-tight">
+                    Scaling High-Ticket Landscape Projects
+                  </h4>
+                  <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
+                    Visual-first funnel with high-converting project reveal pages.
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-3 mb-5">
+                    <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
+                      <div className="text-xl font-black text-white"><Counter prefix="$" end={850} suffix="k" /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Value</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>In 90 Days</div>
+                    </div>
+                    <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
+                      <div className="text-xl font-black text-white"><Counter end={4.8} suffix="%" decimals={1} /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Conv. Rate</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>$42 CPL</div>
                     </div>
                   </div>
-                </TiltCard>
-              </div>
+
+                  <div className="mt-auto space-y-2.5">
+                    <ProgressBar value={96} label="Project Win Rate" color={COLORS.cyan} />
+                    <ProgressBar value={88} label="Avg Ticket Growth" color={COLORS.cyan} delay={200} />
+                  </div>
+                </div>
+              </TiltCard>
 
             </div>
           </div>
 
+          {/* RIGHT: STICKY TEXT */}
           <div className="lg:w-[40%] sticky top-32 self-start">
             <div className="flex flex-col gap-6">
 
