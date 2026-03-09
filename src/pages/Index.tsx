@@ -1,7 +1,3 @@
-import ServicesSection from "@/components/home/ServicesSection";
-import { BentoGrid } from "@/components/home/BentoGrid";
-import { AnimatedGallerySection } from "@/components/animated-gallery-section";
-
 import { HowWeWork } from "@/components/home/HowWeWork";
 import { WhySubscribeBento } from "@/components/home/WhySubscribeBento";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
@@ -37,7 +33,6 @@ const Index = () => {
 
         <FounderSection />
         <Services />
-        <ServicesSection />
         <ZoomParallax />
         <InteractivePath />
 
