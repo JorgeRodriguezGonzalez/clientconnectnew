@@ -128,7 +128,13 @@ const WebDesign = () => {
                   <Globe className="h-4 w-4" style={{ color: C.cyan }} />
                   <span className="text-sm font-medium" style={{ color: C.cyan }}>Web Design & Development</span>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                <h1 className="font-semibold mb-6 text-white" style={{
+                  fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+                  fontSize: "clamp(42px, 5vw, 68px)",
+                  lineHeight: 1.1,
+                  letterSpacing: "-2px",
+                  textTransform: "none",
+                }}>
                   Websites That Turn{" "}
                   <span style={{
                     background: C.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
