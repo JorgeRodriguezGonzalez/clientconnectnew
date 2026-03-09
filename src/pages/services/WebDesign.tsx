@@ -20,36 +20,36 @@ const C = {
 
 const carouselImages = {
   row1: [
-    { id: 1, gradient: "linear-gradient(135deg, #06b6d4 0%, #0e7490 100%)", label: "E-commerce" },
-    { id: 2, gradient: "linear-gradient(135deg, #34d399 0%, #059669 100%)", label: "Portfolio" },
-    { id: 3, gradient: "linear-gradient(135deg, #06b6d4 0%, #34d399 100%)", label: "SaaS Landing" },
-    { id: 4, gradient: "linear-gradient(135deg, #0891b2 0%, #2dd4bf 100%)", label: "Restaurant" },
-    { id: 5, gradient: "linear-gradient(135deg, #22d3ee 0%, #a7f3d0 100%)", label: "Fitness" },
-    { id: 6, gradient: "linear-gradient(135deg, #155e75 0%, #065f46 100%)", label: "Blog" },
-    { id: 7, gradient: "linear-gradient(135deg, #67e8f9 0%, #6ee7b7 100%)", label: "Agency" },
+    { id: 1, src: "/images/brisbane.png" },
+    { id: 2, src: "/images/premierwebsite.png" },
+    { id: 3, src: "/images/assetwebsite.png" },
+    { id: 4, src: "/images/turnbullwebsite.png" },
+    { id: 5, src: "/images/nanotisewebsite.png" },
+    { id: 6, src: "/images/prolexwebsite.png" },
   ],
   row2: [
-    { id: 8, gradient: "linear-gradient(135deg, #0e7490 0%, #047857 100%)", label: "Medical" },
-    { id: 9, gradient: "linear-gradient(135deg, #a5f3fc 0%, #d1fae5 100%)", label: "Real Estate" },
-    { id: 10, gradient: "linear-gradient(135deg, #06b6d4 0%, #10b981 100%)", label: "Education" },
-    { id: 11, gradient: "linear-gradient(135deg, #164e63 0%, #34d399 100%)", label: "Tech Startup" },
-    { id: 12, gradient: "linear-gradient(135deg, #22d3ee 0%, #059669 100%)", label: "Travel" },
-    { id: 13, gradient: "linear-gradient(135deg, #0891b2 0%, #6ee7b7 100%)", label: "Wellness" },
-    { id: 14, gradient: "linear-gradient(135deg, #155e75 0%, #34d399 100%)", label: "Finance" },
+    { id: 7, src: "/images/commercialstratawebsite.png" },
+    { id: 8, src: "/images/pioneerwebsite.png" },
+    { id: 9, src: "/images/LCLwebsite.png" },
+    { id: 10, src: "/images/YLRwebsite.png" },
+    { id: 11, src: "/images/LCDwebsite.png" },
   ],
 };
 
 const ImageCard = ({ item }) => (
   <div style={{
-    background: item.gradient, width: 180, height: 140, borderRadius: 16, flexShrink: 0,
-    display: "flex", alignItems: "flex-end", justifyContent: "center", padding: 12,
-    position: "relative", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+    width: 220, height: 150, borderRadius: 16, flexShrink: 0,
+    overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+    background: "#111",
   }}>
-    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)" }} />
-    <span style={{
-      position: "relative", color: "#fff", fontSize: 13, fontWeight: 600,
-      letterSpacing: 0.5, textShadow: "0 1px 4px rgba(0,0,0,0.4)",
-    }}>{item.label}</span>
+    <img
+      src={item.src}
+      alt=""
+      style={{
+        width: "100%", height: "100%", objectFit: "cover",
+        display: "block",
+      }}
+    />
   </div>
 );
 
@@ -58,7 +58,7 @@ const InfiniteRow = ({ items, direction = "left", speed = 30 }) => {
   const animRef = useRef(null);
   const lastTime = useRef(null);
   const gap = 16;
-  const cardW = 180 + gap;
+  const cardW = 220 + gap;
   const totalW = items.length * cardW;
 
   useEffect(() => {
