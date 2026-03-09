@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ServicesSection from "@/components/home/ServicesSection";
+import SubServicesSection from "@/components/home/SubServicesSection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Search, TrendingUp, FileText, BarChart, Link2, Users } from "lucide-react";
@@ -153,7 +153,7 @@ const SEOService = () => {
         </section>
 
         {/* ═══════════════ SERVICES GRID ═══════════════ */}
-        <ServicesSection
+        <SubServicesSection
           heading={seoHeading}
           headingHighlight={seoHighlight}
           subtitle={seoSubtitle}

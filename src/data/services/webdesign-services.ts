@@ -1,4 +1,4 @@
-import type { ServiceItem } from "@/components/home/ServicesSection";
+import type { ServiceItem } from "@/components/home/SubServicesSection";
 
 export const webdesignHeading = "What We Include in";
 export const webdesignHighlight = "Web Design";

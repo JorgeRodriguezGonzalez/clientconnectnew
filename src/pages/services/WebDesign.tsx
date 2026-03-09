@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ServicesSection from "@/components/home/ServicesSection";
+import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -390,7 +390,7 @@ const WebDesign = () => {
         </section>
 
         {/* ═══════════════ SERVICES GRID ═══════════════ */}
-        <ServicesSection
+        <SubServicesSection
           heading={webdesignHeading}
           headingHighlight={webdesignHighlight}
           subtitle={webdesignSubtitle}

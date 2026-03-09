@@ -13,7 +13,7 @@ export interface ServiceItem {
   area: "top-left" | "bottom-left" | "top-center" | "bottom-center" | "right" | "bottom-wide" | "bottom-right";
 }
 
-export interface ServicesSectionProps {
+export interface SubServicesSectionProps {
   heading?: string;
   headingHighlight?: string;
   subtitle?: string;
@@ -220,12 +220,12 @@ const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: Re
 
 // ─── Main Component ─────────────────────────────────────────
 
-const ServicesSection = ({
+const SubServicesSection = ({
   heading = "Comprehensive Digital",
   headingHighlight = "Marketing Services",
   subtitle = "Everything you need to grow your business online, all under one roof.",
   services,
-}: ServicesSectionProps) => {
+}: SubServicesSectionProps) => {
   const items = services || defaultServices;
   const byArea = Object.fromEntries(items.map(s => [s.area, s]));
 
@@ -291,4 +291,4 @@ const ServicesSection = ({
   );
 };
 
-export default ServicesSection;
+export default SubServicesSection;

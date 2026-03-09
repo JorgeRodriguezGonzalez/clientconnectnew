@@ -1,4 +1,4 @@
-import type { ServiceItem } from "@/components/home/ServicesSection";
+import type { ServiceItem } from "@/components/home/SubServicesSection";
 
 export const seoHeading = "What's Included in Our";
 export const seoHighlight = "SEO Services";
