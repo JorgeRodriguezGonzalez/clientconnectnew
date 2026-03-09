@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ServicesSection from "@/components/home/ServicesSection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code } from "lucide-react";
@@ -262,6 +263,8 @@ const WebDesign = () => {
             </div>
           </div>
         </section>
+
+        <ServicesSection />
 
         {/* ═══════════════ WHAT WE DELIVER ═══════════════ */}
         <section className="section-padding bg-bg-light">
