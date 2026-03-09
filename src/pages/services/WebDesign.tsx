@@ -115,7 +115,7 @@ const WebDesign = () => {
       <main className="flex-1">
 
         {/* HERO */}
-        <section className="section-padding bg-black" style={{ overflow: "hidden" }}>
+        <section className="section-padding bg-black" style={{ overflow: "hidden", paddingTop: "120px", paddingBottom: "100px" }}>
           <div className="container-custom">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <motion.div
