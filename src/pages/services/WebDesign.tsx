@@ -16,7 +16,11 @@ const C = {
   gradient: "linear-gradient(135deg, #06b6d4 0%, #34d399 100%)",
   text: "#a1a1aa",
   cardBorder: "rgba(255,255,255,0.06)",
+  primaryRGB: "52,211,153",
+  secondaryRGB: "6,182,212",
 };
+
+const FONT = 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
 const carouselImages = {
   row1: [
@@ -45,10 +49,7 @@ const ImageCard = ({ item }) => (
     <img
       src={item.src}
       alt=""
-      style={{
-        width: "100%", height: "100%", objectFit: "cover",
-        display: "block",
-      }}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
     />
   </div>
 );
@@ -109,71 +110,121 @@ const benefits = [
 ];
 
 const WebDesign = () => {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
+
+  const anim = (d = 0) => ({
+    opacity: loaded ? 1 : 0,
+    transform: loaded ? "translateY(0)" : "translateY(30px)",
+    transition: `all 0.8s cubic-bezier(0.16,1,0.3,1) ${d}s`,
+  });
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
 
-        {/* HERO */}
-        <section className="section-padding bg-black" style={{ overflow: "hidden", paddingTop: "120px", paddingBottom: "100px" }}>
-          <div className="container-custom">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-                  style={{ background: C.cyanBg }}>
-                  <Globe className="h-4 w-4" style={{ color: C.cyan }} />
-                  <span className="text-sm font-medium" style={{ color: C.cyan }}>Web Design & Development</span>
-                </div>
-                <h1 className="font-semibold mb-6 text-white" style={{
-                  fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-                  fontSize: "clamp(42px, 5vw, 68px)",
-                  lineHeight: 1.1,
-                  letterSpacing: "-2px",
-                  textTransform: "none",
-                }}>
-                  Websites That Turn{" "}
-                  <span style={{
-                    background: C.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-                  }}>Visitors</span>{" "}
-                  Into Customers
-                </h1>
-                <p className="text-xl text-text-medium mb-8">
-                  We create beautiful, high-converting websites that represent your Sydney business
-                  perfectly and drive real results.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" asChild style={{ background: C.gradient, border: "none", boxShadow: "0 4px 24px rgba(6,182,212,0.35)" }}>
-                    <Link to="/contact">Start Your Project</Link>
-                  </Button>
-                  <Button size="lg" variant="outline" asChild>
-                    <Link to="/contact">See Our Work</Link>
-                  </Button>
-                </div>
-              </motion.div>
+        {/* ═══════════════ HERO ═══════════════ */}
+        <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: "80px" }}>
+          {/* Gradient orbs */}
+          <div style={{ position: "absolute", top: "180px", left: "50%", marginLeft: "-250px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${C.primaryRGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${C.secondaryRGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                style={{
-                  display: "flex", flexDirection: "column", gap: 16,
-                  borderRadius: 24, overflow: "hidden", padding: "24px 0",
-                  maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-                  WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-                }}
-              >
-                <InfiniteRow items={carouselImages.row1} direction="left" speed={25} />
-                <InfiniteRow items={carouselImages.row2} direction="right" speed={20} />
-              </motion.div>
+          {/* Content */}
+          <div style={{ textAlign: "center", paddingTop: "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
+            <h1 style={{
+              fontFamily: FONT,
+              fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px",
+              margin: 0, color: "#fff", textTransform: "none",
+              ...anim(0.1),
+            }}>
+              Websites That Turn{" "}
+              <span style={{ background: C.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                Visitors
+              </span>{" "}
+              Into Customers.
+            </h1>
+
+            <p style={{
+              fontFamily: FONT,
+              fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff",
+              maxWidth: "560px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
+              ...anim(0.3),
+            }}>
+              We create beautiful, <span style={{ color: C.green, fontWeight: 600 }}>high-converting websites</span> that represent your Sydney business perfectly and drive <span style={{ color: C.green, fontWeight: 600 }}>real results</span>.
+            </p>
+
+            {/* Tags */}
+            <div style={{
+              display: "flex", justifyContent: "center", alignItems: "center", gap: "8px",
+              marginTop: "24px", flexWrap: "wrap", padding: "0 20px",
+              fontFamily: FONT, fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.5)",
+              ...anim(0.4),
+            }}>
+              <span>Custom Design</span>
+              <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
+              <span>Mobile-First</span>
+              <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
+              <span>SEO Optimised</span>
+              <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
+              <span>2-4 Weeks</span>
             </div>
+
+            {/* CTA Button */}
+            <div style={{
+              display: "flex", justifyContent: "center", gap: "12px", marginTop: "32px", padding: "0 20px",
+              ...anim(0.5),
+            }}>
+              <div style={{
+                display: "flex", alignItems: "center", gap: "0",
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "50px",
+                padding: "5px 5px 5px 24px",
+                maxWidth: "520px", width: "100%",
+                backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+              }}>
+                <input
+                  type="email"
+                  placeholder="Enter your email for a free quote"
+                  style={{
+                    flex: 1, background: "transparent", border: "none", outline: "none",
+                    fontFamily: FONT, fontWeight: 500, fontSize: "14px", color: "#fff", minWidth: 0,
+                  }}
+                />
+                <button
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 0 20px rgba(${C.primaryRGB},0.5)`; e.currentTarget.style.background = C.gradient; }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = C.cyan; }}
+                  style={{
+                    height: "40px", padding: "0 20px", borderRadius: "50px",
+                    background: C.cyan, border: "none",
+                    fontFamily: FONT, fontWeight: 600, fontSize: "14px", color: "#000",
+                    cursor: "pointer", transition: "all 0.2s ease",
+                    display: "flex", alignItems: "center", gap: "8px",
+                    whiteSpace: "nowrap", flexShrink: 0,
+                  }}
+                >
+                  Start Your Project
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Carousel */}
+          <div style={{
+            marginTop: "56px", position: "relative", zIndex: 2,
+            display: "flex", flexDirection: "column", gap: 16,
+            maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+            WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+            ...anim(0.6),
+          }}>
+            <InfiniteRow items={carouselImages.row1} direction="left" speed={25} />
+            <InfiniteRow items={carouselImages.row2} direction="right" speed={20} />
           </div>
         </section>
 
-        {/* YOUR WEBSITE IS YOUR BEST SALESPERSON */}
+        {/* ═══════════════ BEST SALESPERSON ═══════════════ */}
         <section className="section-padding bg-background">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
@@ -210,7 +261,7 @@ const WebDesign = () => {
           </div>
         </section>
 
-        {/* WHAT WE DELIVER */}
+        {/* ═══════════════ WHAT WE DELIVER ═══════════════ */}
         <section className="section-padding bg-bg-light">
           <div className="container-custom">
             <motion.div
@@ -249,7 +300,7 @@ const WebDesign = () => {
           </div>
         </section>
 
-        {/* PACKAGE INCLUDES */}
+        {/* ═══════════════ PACKAGE INCLUDES ═══════════════ */}
         <section className="section-padding bg-background">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
@@ -282,7 +333,7 @@ const WebDesign = () => {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* ═══════════════ CTA ═══════════════ */}
         <section className="section-padding" style={{ background: C.gradient }}>
           <div className="container-custom">
             <motion.div
