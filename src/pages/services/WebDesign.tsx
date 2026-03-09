@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -88,41 +88,6 @@ const InfiniteRow = ({ items, direction = "left", speed = 30 }) => {
         {tripled.map((item, i) => (
           <ImageCard key={`${item.id}-${i}`} item={item} />
         ))}
-      </div>
-    </div>
-  );
-};
-
-const Word = ({ children, progress, range }) => {
-  const opacity = useTransform(progress, range, [0, 1]);
-  return (
-    <span className="xl:lg-3 relative mx-1 lg:mx-2.5">
-      <span className="absolute opacity-30">{children}</span>
-      <motion.span style={{ opacity }} className="text-black dark:text-white">
-        {children}
-      </motion.span>
-    </span>
-  );
-};
-
-const TextRevealByWord = ({ text, className = "" }) => {
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: targetRef });
-  const words = text.split(" ");
-  return (
-    <div ref={targetRef} className={`relative z-0 h-[200vh] ${className}`}>
-      <div className="sticky top-0 mx-auto flex h-[50%] max-w-4xl items-center bg-transparent px-[1rem] py-[5rem]">
-        <p className="flex flex-wrap p-5 text-2xl font-bold text-black/20 dark:text-white/20 md:p-8 md:text-3xl lg:p-10 lg:text-4xl xl:text-5xl">
-          {words.map((word, i) => {
-            const start = i / words.length;
-            const end = start + 1 / words.length;
-            return (
-              <Word key={i} progress={scrollYProgress} range={[start, end]}>
-                {word}
-              </Word>
-            );
-          })}
-        </p>
       </div>
     </div>
   );
@@ -261,11 +226,42 @@ const WebDesign = () => {
           </div>
         </section>
 
-        {/* ═══════════════ TEXT REVEAL ═══════════════ */}
-        <TextRevealByWord
-          text="Your website is your best salesperson. In today's digital world, it's often the first impression potential customers have of your business. We build websites that not only look great but are strategically designed to convert visitors into customers. Every element is carefully planned based on proven conversion principles."
-          className="bg-background"
-        />
+        {/* ═══════════════ BEST SALESPERSON ═══════════════ */}
+        <section className="section-padding bg-background">
+          <div className="container-custom">
+            <div className="max-w-4xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  Your Website is Your{" "}
+                  <span style={{ background: C.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                    Best Salesperson
+                  </span>
+                </h2>
+                <div className="space-y-4 text-lg text-text-medium">
+                  <p>
+                    In today's digital world, your website is often the first impression potential
+                    customers have of your business. A poorly designed website can cost you thousands
+                    in lost revenue.
+                  </p>
+                  <p>
+                    We build websites that not only look great but are strategically designed to convert
+                    visitors into customers. Every element – from the color scheme to the call-to-action
+                    buttons – is carefully planned based on proven conversion principles.
+                  </p>
+                  <p>
+                    Plus, all our websites are built with SEO in mind, giving you a head start in
+                    ranking on Google.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
         {/* ═══════════════ WHAT WE DELIVER ═══════════════ */}
         <section className="section-padding bg-bg-light">
