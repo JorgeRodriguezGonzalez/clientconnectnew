@@ -215,6 +215,7 @@ const WebDesign = () => {
           <div style={{
             marginTop: "56px", position: "relative", zIndex: 2,
             display: "flex", flexDirection: "column", gap: 16,
+            maxWidth: "900px", margin: "56px auto 0",
             maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
             WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
             ...anim(0.6),
