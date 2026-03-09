@@ -68,12 +68,12 @@ const caseStudies = [
 ];
 
 const heroImages = [
-  { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=500&fit=crop", alt: "Team collaboration", rotate: -6 },
-  { url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=350&h=450&fit=crop", alt: "Strategy meeting", rotate: 3 },
+  { url: "/images/assetplumbing.jpg", alt: "Asset Plumbing", rotate: -6 },
+  { url: "/images/driveways11.jpg", alt: "Driveways", rotate: 3 },
   { url: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=500&fit=crop", alt: "Digital marketing", rotate: -2 },
-  { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=380&h=480&fit=crop", alt: "Presentation", rotate: 5 },
-  { url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=350&h=450&fit=crop", alt: "Workspace", rotate: -4 },
-  { url: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop", alt: "Planning", rotate: 3 },
+  { url: "/images/landscaping11.jpg", alt: "Landscaping", rotate: 5 },
+  { url: "/images/nanotise10.jpg", alt: "Nanotise", rotate: -4 },
+  { url: "/images/premier.jpg", alt: "Premier", rotate: 3 },
 ];
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => {
