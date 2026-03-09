@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ServicesSection from "@/components/home/ServicesSection";
+import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code } from "lucide-react";
@@ -91,6 +92,134 @@ const InfiniteRow = ({ items, direction = "left", speed = 30 }) => {
         ))}
       </div>
     </div>
+  );
+};
+
+const processSteps = [
+  {
+    step: "Step 1",
+    title: "Discovery & Strategy",
+    description: "We learn about your business, goals, target audience, and competitors. Together we define the sitemap, content strategy, and conversion goals.",
+  },
+  {
+    step: "Step 2",
+    title: "Design & Prototype",
+    description: "We create high-fidelity designs tailored to your brand. You'll see interactive prototypes before any code is written, so we get it right.",
+  },
+  {
+    step: "Step 3",
+    title: "Development & Testing",
+    description: "Clean, fast code built with SEO best practices. We test across all devices and browsers to ensure a flawless experience everywhere.",
+  },
+  {
+    step: "Step 4",
+    title: "Launch & Growth",
+    description: "Your new website goes live. We provide training, ongoing support, and performance monitoring to keep driving results.",
+  },
+];
+
+const OurProcess = () => {
+  const containerRef = useRef(null);
+  const cardCount = processSteps.length;
+  const cardHeight = 280;
+  const stackOffset = 20;
+
+  return (
+    <section style={{ background: "#000", padding: "80px 0 0" }}>
+      <div style={{ textAlign: "center", marginBottom: "48px", padding: "0 24px" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <span style={{
+            fontFamily: FONT, fontSize: "13px", fontWeight: 700,
+            textTransform: "uppercase", letterSpacing: "0.15em", color: C.cyan,
+          }}>How We Work</span>
+          <h2 style={{
+            fontFamily: FONT, fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 600,
+            lineHeight: 1.1, letterSpacing: "-1.5px", color: "#fff", marginTop: "12px",
+          }}>
+            Our Process
+          </h2>
+        </motion.div>
+      </div>
+
+      <div
+        ref={containerRef}
+        style={{
+          position: "relative",
+          height: `${cardCount * 100 + 50}vh`,
+          maxWidth: "900px",
+          margin: "0 auto",
+          padding: "0 24px",
+        }}
+      >
+        {processSteps.map((item, i) => (
+          <div
+            key={i}
+            style={{
+              position: "sticky",
+              top: `calc(112px + ${i * stackOffset}px)`,
+              marginBottom: `${100 / cardCount}vh`,
+              zIndex: 10 + i,
+            }}
+          >
+            <div
+              style={{
+                background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
+                border: "1px solid rgba(255,255,255,0.15)",
+                borderRadius: "20px",
+                padding: "48px 40px",
+                textAlign: "center",
+                position: "relative",
+                overflow: "hidden",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
+                minHeight: `${cardHeight}px`,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {/* Top highlight line */}
+              <div style={{
+                position: "absolute", top: 0, left: "24px", right: "24px", height: "1px",
+                background: "linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent)",
+              }} />
+
+              <h3 style={{
+                fontFamily: FONT, fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 600,
+                color: "#fff", lineHeight: 1.2, marginBottom: "16px", letterSpacing: "-1px",
+              }}>
+                {item.title}
+              </h3>
+
+              <p style={{
+                fontFamily: FONT, fontSize: "18px", color: "rgba(255,255,255,0.6)",
+                maxWidth: "600px", lineHeight: 1.65, marginBottom: "24px",
+              }}>
+                {item.description}
+              </p>
+
+              <span style={{
+                display: "inline-flex", alignItems: "center",
+                fontFamily: FONT, fontSize: "14px", color: "rgba(255,255,255,0.8)",
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.15)",
+                borderRadius: "999px", padding: "8px 16px",
+                backdropFilter: "blur(4px)",
+              }}>
+                {item.step}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 };
 
@@ -267,6 +396,10 @@ const WebDesign = () => {
 
         <ServicesSection />
 
+        {/* ═══════════════ OUR PROCESS ═══════════════ */}
+        <OurProcess />
+
+        <CTASection />
       </main>
       <Footer />
     </div>
