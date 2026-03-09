@@ -38,7 +38,7 @@ const carouselImages = {
 
 const ImageCard = ({ item }) => (
   <div style={{
-    width: 220, height: 150, borderRadius: 16, flexShrink: 0,
+    width: 280, height: 150, borderRadius: 16, flexShrink: 0,
     overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
     background: "#111",
   }}>
@@ -58,7 +58,7 @@ const InfiniteRow = ({ items, direction = "left", speed = 30 }) => {
   const animRef = useRef(null);
   const lastTime = useRef(null);
   const gap = 16;
-  const cardW = 220 + gap;
+  const cardW = 280 + gap;
   const totalW = items.length * cardW;
 
   useEffect(() => {
