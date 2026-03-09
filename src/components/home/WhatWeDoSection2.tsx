@@ -6,7 +6,6 @@ import {
   CheckCircle2, Activity
 } from 'lucide-react';
 
-// --- STYLES ---
 const fontStyles = `
   .font-sans { font-family: 'Satoshi', sans-serif; }
   .safari-gpu {
@@ -27,7 +26,6 @@ const COLORS = {
 const buttonColorSequence = [COLORS.emerald, COLORS.emerald, COLORS.cyan, COLORS.cyan, COLORS.emerald];
 const buttonColorDuration = 10;
 
-// --- GLOWING EFFECT ---
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -143,7 +141,6 @@ const GlowingEffect = React.memo(
 );
 GlowingEffect.displayName = "GlowingEffect";
 
-// --- TILT CARD ---
 const TiltCard = ({ children, className, innerClassName, delay = 0 }: {
   children: React.ReactNode;
   className?: string;
@@ -167,17 +164,16 @@ const TiltCard = ({ children, className, innerClassName, delay = 0 }: {
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{ rotateY: x, rotateX: y, transformStyle: "preserve-3d", perspective: 1000 }}
-      className={cn("relative rounded-none p-[2px] h-full safari-gpu", className)}
+      className={cn("relative rounded-2xl p-[2px] h-full safari-gpu", className)}
     >
       <GlowingEffect spread={60} glow={true} proximity={100} borderWidth={2} />
-      <div className={cn("relative h-full w-full overflow-hidden rounded-none", innerClassName)}>
+      <div className={cn("relative h-full w-full overflow-hidden rounded-2xl", innerClassName)}>
         {children}
       </div>
     </motion.div>
   );
 };
 
-// --- SPARKLINE SVG ---
 const Sparkline = ({
   data,
   color = COLORS.emerald,
@@ -237,7 +233,6 @@ const Sparkline = ({
   );
 };
 
-// --- ANIMATED COUNTER ---
 const Counter = ({
   end,
   prefix = "",
@@ -280,7 +275,6 @@ const Counter = ({
   );
 };
 
-// --- PROGRESS BAR ---
 const ProgressBar = ({
   value,
   max = 100,
@@ -326,7 +320,6 @@ const ProgressBar = ({
   );
 };
 
-// --- NICHE TAG ---
 const NicheTag = ({
   icon: Icon,
   label,
@@ -344,7 +337,6 @@ const NicheTag = ({
   </div>
 );
 
-// --- STAT MINI BADGE (inside cards) ---
 const StatMini = ({
   icon: Icon,
   value,
@@ -358,7 +350,7 @@ const StatMini = ({
   sub?: string;
   color?: string;
 }) => (
-  <div className="flex flex-col gap-1 p-3 border border-zinc-700/50 bg-zinc-800/50 backdrop-blur-sm">
+  <div className="flex flex-col gap-1 p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50 backdrop-blur-sm">
     <Icon size={12} className="text-zinc-500" />
     <span className="text-xl font-black text-white leading-none">{value}</span>
     <span className="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider">{label}</span>
@@ -366,7 +358,6 @@ const StatMini = ({
   </div>
 );
 
-// --- FLOATING STAT BADGE (original style) ---
 const StatBadge = ({
   icon: Icon,
   label,
@@ -379,10 +370,10 @@ const StatBadge = ({
   className?: string;
 }) => (
   <div className={cn(
-    "flex items-center gap-3 px-4 py-3 rounded-none border border-zinc-700 bg-zinc-900 shadow-xl z-30",
+    "flex items-center gap-3 px-4 py-3 rounded-2xl border border-zinc-700 bg-zinc-900 shadow-xl z-30",
     className
   )}>
-    <div className="p-2 bg-emerald-500/10 text-emerald-500"><Icon size={16} /></div>
+    <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-500"><Icon size={16} /></div>
     <div>
       <div className="font-sans font-bold text-lg leading-none text-white">{value}</div>
       <div className="font-sans text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">{label}</div>
@@ -390,14 +381,10 @@ const StatBadge = ({
   </div>
 );
 
-// --- SPARKLINE DATA ---
 const roofData = [12, 18, 22, 28, 35, 42, 48, 55, 62, 70, 78, 86];
 const protData = [8, 15, 22, 35, 42, 55, 65, 72, 85, 95, 105, 115];
 const landData = [50, 120, 180, 280, 380, 450, 520, 600, 680, 750, 800, 850];
 
-// ============================
-// MAIN EXPORT
-// ============================
 export const WhatWeDoSection2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -414,7 +401,6 @@ export const WhatWeDoSection2 = () => {
     >
       <style>{fontStyles}</style>
 
-      {/* BG grid */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -427,18 +413,15 @@ export const WhatWeDoSection2 = () => {
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
 
-          {/* ========== LEFT: CARDS ========== */}
           <div className="lg:w-[60%] relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-fr">
 
-              {/* ===== CARD 1: HERO AGGREGATE (wide) ===== */}
               <div className="md:col-span-2 relative">
-                {/* Floating badge */}
                 <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
                   <StatBadge icon={Activity} label="Pipeline Generated" value="$4.2M+" />
                 </motion.div>
 
-                <TiltCard innerClassName="bg-zinc-900 border border-zinc-800 min-h-[240px]">
+                <TiltCard innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl min-h-[240px]">
                   <div className="relative z-10 p-8 md:p-10">
                     <div className="flex items-center gap-2 mb-6">
                       <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -463,7 +446,7 @@ export const WhatWeDoSection2 = () => {
                         { icon: TrendingUp, val: <Counter end={8.4} suffix="x" decimals={1} />, label: "Avg. ROAS" },
                         { icon: Percent, val: <Counter prefix="-" end={45} suffix="%" />, label: "Cost / Lead" },
                       ].map((s, i) => (
-                        <div key={i} className="p-3 border border-zinc-700/30 bg-zinc-800/30">
+                        <div key={i} className="p-3 rounded-xl border border-zinc-700/30 bg-zinc-800/30">
                           <s.icon size={12} className="text-zinc-600 mb-1" />
                           <div className="text-lg font-black text-white">{s.val}</div>
                           <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">{s.label}</div>
@@ -474,8 +457,7 @@ export const WhatWeDoSection2 = () => {
                 </TiltCard>
               </div>
 
-              {/* ===== CARD 2: ROOFING ===== */}
-              <TiltCard delay={0.1} innerClassName="bg-zinc-900 border border-zinc-800 p-6 flex flex-col justify-between">
+              <TiltCard delay={0.1} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
                   <NicheTag icon={Home} label="Roofing" />
                   <h4 className="text-lg font-bold text-white mb-1 leading-tight">
@@ -501,8 +483,7 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
-              {/* ===== CARD 3: PROTECTION ===== */}
-              <TiltCard delay={0.2} innerClassName="bg-zinc-900 border border-zinc-800 p-6 flex flex-col justify-between">
+              <TiltCard delay={0.2} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
                   <NicheTag icon={Shield} label="Protection" color={COLORS.cyan} />
                   <h4 className="text-lg font-bold text-white mb-1 leading-tight">
@@ -528,12 +509,9 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </TiltCard>
 
-              {/* ===== CARD 4: RENOVATION + LANDSCAPING (wide) ===== */}
-              <TiltCard delay={0.3} className="md:col-span-2" innerClassName="bg-zinc-900 border border-zinc-800 relative">
-                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-zinc-800">
-
-                  {/* RENOVATION */}
-                  <div className="p-6 md:p-8 flex flex-col">
+              <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5">
+                <TiltCard delay={0.3} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl">
+                  <div className="relative z-10 p-6 md:p-8 flex flex-col h-full">
                     <NicheTag icon={Hammer} label="Renovation" />
                     <h4 className="text-base font-bold text-white mb-1">
                       Filling the Schedule 4 Months Ahead
@@ -561,9 +539,10 @@ export const WhatWeDoSection2 = () => {
                       <ProgressBar value={85} label="Lead Quality Score" color={COLORS.emerald} delay={200} />
                     </div>
                   </div>
+                </TiltCard>
 
-                  {/* LANDSCAPING */}
-                  <div className="p-6 md:p-8 flex flex-col">
+                <TiltCard delay={0.4} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl">
+                  <div className="relative z-10 p-6 md:p-8 flex flex-col h-full">
                     <NicheTag icon={Leaf} label="Landscaping" color={COLORS.cyan} />
                     <h4 className="text-base font-bold text-white mb-1">
                       Scaling High-Ticket Landscape Projects
@@ -594,20 +573,19 @@ export const WhatWeDoSection2 = () => {
                       <Sparkline data={landData} color={COLORS.cyan} height={40} className="w-full h-[40px]" />
                     </div>
                   </div>
-                </div>
-              </TiltCard>
+                </TiltCard>
+              </div>
 
             </div>
           </div>
 
-          {/* ========== RIGHT: STICKY TEXT ========== */}
           <div className="lg:w-[40%] sticky top-32 self-start">
             <div className="flex flex-col gap-6">
 
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className="w-fit px-3 py-1.5 border border-zinc-700 bg-zinc-900 text-zinc-400 text-[10px] font-sans font-semibold uppercase tracking-[2px]"
+                className="w-fit px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-900 text-zinc-400 text-[10px] font-sans font-semibold uppercase tracking-[2px]"
               >
                 Proven Results
               </motion.div>
@@ -637,7 +615,6 @@ export const WhatWeDoSection2 = () => {
                 We don't talk about "impressions" or "reach." Here are real results from real trade businesses across Australia — tracked, verified, and still growing.
               </p>
 
-              {/* Industry badges */}
               <div className="flex flex-wrap gap-2 mt-2">
                 {[
                   { icon: Home, label: "Roofing", color: COLORS.emerald },
@@ -647,7 +624,7 @@ export const WhatWeDoSection2 = () => {
                 ].map(n => (
                   <div
                     key={n.label}
-                    className="flex items-center gap-1.5 px-3 py-1.5 border border-zinc-800 bg-zinc-900/80 text-[10px] font-bold uppercase tracking-wider text-zinc-400"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-zinc-800 bg-zinc-900/80 text-[10px] font-bold uppercase tracking-wider text-zinc-400"
                   >
                     <n.icon size={12} style={{ color: n.color }} />
                     <span>{n.label}</span>
@@ -656,8 +633,7 @@ export const WhatWeDoSection2 = () => {
                 ))}
               </div>
 
-              {/* Trust box */}
-              <div className="mt-4 p-5 border border-zinc-800 bg-zinc-900/50">
+              <div className="mt-4 p-5 rounded-2xl border border-zinc-800 bg-zinc-900/50">
                 <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                   Why Tradies Trust Us <span className="h-px flex-1 bg-zinc-800" />
                 </p>
@@ -675,13 +651,12 @@ export const WhatWeDoSection2 = () => {
                 </div>
               </div>
 
-              {/* CTA Button */}
               <div className="mt-4">
                 <motion.button
                   animate={{ borderColor: buttonColorSequence }}
                   transition={{ duration: buttonColorDuration, ease: "linear", repeat: Infinity }}
                   className={cn(
-                    "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-none",
+                    "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-full",
                     "font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500",
                     "hover:shadow-[0_0_20px_rgba(52,211,153,0.3)] bg-black text-white hover:bg-zinc-900 w-full md:w-fit"
                   )}
