@@ -1,60 +1,82 @@
 import React, { useRef, useState } from "react";
-import { Play } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 
-// --- Types ---
 interface WorkItem {
   id: string;
   videoSrc: string;
-  avatarSrc: string;
   handle: string;
   testimonial: string;
 }
 
-// --- Data ---
 const RECENT_WORKS: WorkItem[] = [
-  {
-    id: "1",
-    videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4",
-    avatarSrc: "",
-    handle: "Alex Ross",
-    testimonial: "Nanotise"
-  },
-  { id: "2", videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", avatarSrc: "", handle: "Kieren", testimonial: "Lc Landscaping" },
-  { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", avatarSrc: "", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
-  { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", avatarSrc: "", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
-  { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", avatarSrc: "", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
-  { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", avatarSrc: "", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" }
+  { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", handle: "Alex Ross", testimonial: "Nanotise" },
+  { id: "2", videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", handle: "Kieren", testimonial: "Lc Landscaping" },
+  { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
+  { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
+  { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
+  { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" },
 ];
 
-// --- WorkCard ---
-const WorkCard = ({ item }: { item: WorkItem }) => {
+const Stars = () => (
+  <div style={{ display: "flex", gap: "4px" }}>
+    {[...Array(5)].map((_, i) => (
+      <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="#06b6d4">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    ))}
+  </div>
+);
+
+const VideoCard = ({
+  item, position, onClick, isActive
+}: {
+  item: WorkItem;
+  position: number;
+  onClick: () => void;
+  isActive: boolean;
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const togglePlay = () => {
+  const togglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!isActive) { onClick(); return; }
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
+      setIsPlaying(false);
     } else {
       videoRef.current.play();
+      setIsPlaying(true);
     }
-    setIsPlaying(!isPlaying);
   };
+
+  // position: -2, -1, 0 (center), 1, 2
+  const abs = Math.abs(position);
+  const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
+  const rotate = position * 7;
+  const translateX = position * 220;
+  const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
+  const zIndex = 10 - abs * 3;
+  const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
 
   return (
     <div
-      onClick={togglePlay}
+      onClick={onClick}
       style={{
-        flexShrink: 0,
-        width: "300px",
-        height: "500px",
-        borderRadius: "24px",
+        position: "absolute",
+        width: "280px",
+        height: "460px",
+        borderRadius: "20px",
         overflow: "hidden",
         backgroundColor: "#18181b",
-        position: "relative",
-        cursor: "pointer",
-        scrollSnapAlign: "center",
-        userSelect: "none",
+        cursor: isActive ? "default" : "pointer",
+        transform: `translateX(${translateX}px) rotate(${rotate}deg) scale(${scale})`,
+        opacity,
+        zIndex,
+        filter: `blur(${blur}px)`,
+        transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+        boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.4)" : "0 8px 24px rgba(0,0,0,0.2)",
       }}
     >
       <video
@@ -65,67 +87,50 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
       />
 
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.9) 100%)",
-          pointerEvents: "none",
-        }}
-      />
+      {/* Gradient overlay */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.95) 100%)",
+        pointerEvents: "none",
+      }} />
 
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          pointerEvents: "none",
-          opacity: isPlaying ? 0 : 1,
-          transition: "opacity 0.3s",
-        }}
-      >
+      {/* Play/Pause button */}
+      {isActive && (
         <div
+          onClick={togglePlay}
           style={{
-            width: 60,
-            height: 60,
-            borderRadius: "50%",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            position: "absolute", inset: 0,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            opacity: isPlaying ? 0 : 1,
+            transition: "opacity 0.3s",
+            cursor: "pointer",
           }}
         >
-          <Play fill="white" color="white" size={24} style={{ marginLeft: 4 }} />
-        </div>
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: "25px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-        }}
-      >
-        <div style={{ display: "flex", gap: "4px" }}>
-            {[...Array(5)].map((_, i) => (
-              <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#06b6d4" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-            ))}
+          <div style={{
+            width: 56, height: 56, borderRadius: "50%",
+            backgroundColor: "rgba(0,0,0,0.55)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            {isPlaying
+              ? <Pause fill="white" color="white" size={20} />
+              : <Play fill="white" color="white" size={20} style={{ marginLeft: 3 }} />
+            }
           </div>
+        </div>
+      )}
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-          <p style={{ color: "#fff", fontSize: "22px", fontWeight: 600, lineHeight: 1.2, fontFamily: "'Inter', sans-serif", margin: 0 }}>
+      {/* Bottom content */}
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0,
+        padding: "20px",
+        display: "flex", flexDirection: "column", gap: "10px",
+      }}>
+        <Stars />
+        <div>
+          <p style={{ color: "#fff", fontSize: "17px", fontWeight: 600, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.handle}
           </p>
-          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", fontWeight: 300, lineHeight: "22px", fontFamily: "'Inter', sans-serif", margin: 0 }}>
+          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px", fontWeight: 400, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.testimonial}
           </p>
         </div>
@@ -134,166 +139,111 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
   );
 };
 
-// --- Main Section ---
 export default function TestimonialsSection() {
+  const [active, setActive] = useState(0);
+
+  const prev = () => setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
+  const next = () => setActive(i => (i + 1) % RECENT_WORKS.length);
+
   return (
-    <section
-      style={{
-        width: "100%",
-        minHeight: "100vh",
-        backgroundColor: "#FAFAFA",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        paddingTop: "96px",
-        paddingBottom: "96px",
-        gap: "56px",
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
-      {/* 1. Header */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "20px",
-          padding: "0 24px",
-          textAlign: "center",
-          maxWidth: "900px",
-        }}
-      >
-        {/* Badge */}
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            padding: "6px 12px",
-            borderRadius: "8px",
-            border: "1px solid #e4e4e7",
-            backgroundColor: "#fafafa",
-            width: "fit-content",
-            transition: "color 0.3s",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "10px",
-              fontWeight: 600,
-              letterSpacing: "2px",
-              textTransform: "uppercase",
-              color: "#6b7280",
-              fontFamily: "'Satoshi', sans-serif",
-            }}
-          >
+    <section style={{
+      width: "100%",
+      minHeight: "100vh",
+      backgroundColor: "#FAFAFA",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      paddingTop: "96px",
+      paddingBottom: "96px",
+      gap: "56px",
+      overflow: "hidden",
+      position: "relative",
+    }}>
+
+      {/* Header */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", padding: "0 24px", textAlign: "center", maxWidth: "900px" }}>
+        <div style={{
+          display: "inline-flex", alignItems: "center", padding: "6px 12px",
+          borderRadius: "8px", border: "1px solid #e4e4e7",
+          backgroundColor: "#fafafa", width: "fit-content",
+        }}>
+          <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#6b7280", fontFamily: "'Satoshi', sans-serif" }}>
             Client Testimonials
           </span>
         </div>
 
-        {/* Title */}
-        <h2
-          style={{
-            fontSize: "clamp(32px, 5vw, 48px)",
-            fontWeight: 700,
-            letterSpacing: "-0.5px",
-            lineHeight: 1.1,
-            color: "#111827",
-            margin: 0,
-            fontFamily: "'Satoshi', sans-serif",
-          }}
-        >
+        <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700, letterSpacing: "-0.5px", lineHeight: 1.1, color: "#111827", margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
           Real Results,{" "}
-          <span
-            style={{
-              background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)",
-              backgroundSize: "200% auto",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              fontStyle: "normal",
-              fontWeight: 700,
-              animation: "gradientMove 3s linear infinite",
-            }}
-          >
+          <span style={{
+            background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)",
+            backgroundSize: "200% auto",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+            fontWeight: 700,
+            animation: "gradientMove 3s linear infinite",
+          }}>
             Real Clients
           </span>
         </h2>
 
-        <p
-          style={{
-            fontSize: "15px",
-            fontWeight: 500,
-            color: "#6b7280",
-            maxWidth: "384px",
-            lineHeight: 1.6,
-            fontFamily: "'Satoshi', sans-serif",
-            margin: 0,
-          }}
-        >
-          Don't take our word for it. Here's what <strong style={{ color: "#111827", fontWeight: 700 }}>brands worldwide</strong> have to say about working with us.
+        <p style={{ fontSize: "15px", fontWeight: 500, color: "#6b7280", maxWidth: "384px", lineHeight: 1.6, fontFamily: "'Satoshi', sans-serif", margin: 0 }}>
+          Don't take our word for it. Here's what <strong style={{ color: "#111827" }}>brands worldwide</strong> have to say about working with us.
         </p>
-
-        <style>{`
-          @keyframes gradientMove {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-          }
-          @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
-        `}</style>
       </div>
 
-      {/* 2. Carousel */}
-      <div style={{ width: "100%", position: "relative" }}>
-        <div
-          style={{
-            width: "100%",
-            overflowX: "auto",
-            display: "flex",
-            gap: "12px",
-            padding: "16px 48px 48px 48px",
-            scrollSnapType: "x mandatory",
-            msOverflowStyle: "none",
-            scrollbarWidth: "none",
-          }}
-        >
-          {RECENT_WORKS.map((work, index) => (
-            <WorkCard key={`${work.id}-${index}`} item={work} />
+      {/* Fan Carousel */}
+      <div style={{ position: "relative", width: "100%", height: "520px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {RECENT_WORKS.map((item, i) => {
+          const position = i - active;
+          const wrapped =
+            position > RECENT_WORKS.length / 2 ? position - RECENT_WORKS.length :
+            position < -RECENT_WORKS.length / 2 ? position + RECENT_WORKS.length :
+            position;
+          if (Math.abs(wrapped) > 2) return null;
+          return (
+            <VideoCard
+              key={item.id}
+              item={item}
+              position={wrapped}
+              isActive={wrapped === 0}
+              onClick={() => setActive(i)}
+            />
+          );
+        })}
+      </div>
+
+      {/* Dots + Arrows */}
+      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <button onClick={prev} style={{ background: "none", border: "1px solid #e4e4e7", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#6b7280", fontSize: "16px" }}>‹</button>
+
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          {RECENT_WORKS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              style={{
+                width: i === active ? 24 : 8,
+                height: 8,
+                borderRadius: "9999px",
+                backgroundColor: i === active ? "#06b6d4" : "#e4e4e7",
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                padding: 0,
+              }}
+            />
           ))}
         </div>
+
+        <button onClick={next} style={{ background: "none", border: "1px solid #e4e4e7", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#6b7280", fontSize: "16px" }}>›</button>
       </div>
 
-      {/* 3. Footer Button */}
-      <button
-        style={{
-          display: "flex",
-          alignItems: "center",
-          padding: "12px 28px",
-          backgroundColor: "#18181b",
-          borderRadius: "9999px",
-          border: "none",
-          cursor: "pointer",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-          transition: "all 0.3s",
-          fontFamily: "'Inter', sans-serif",
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.backgroundColor = "#34d399";
-          e.currentTarget.style.boxShadow = "0 0 20px rgba(52,211,153,0.4)";
-          e.currentTarget.style.transform = "translateY(-2px)";
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.backgroundColor = "#18181b";
-          e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.15)";
-          e.currentTarget.style.transform = "translateY(0)";
-        }}
-      >
-        <span style={{ fontWeight: 700, fontSize: "14px", letterSpacing: "1px", textTransform: "uppercase", color: "#fff" }}>
-          See All Testimonials
-        </span>
-      </button>
-
-      <style>{`div::-webkit-scrollbar { display: none; }`}</style>
+      <style>{`
+        @keyframes gradientMove {
+          0% { background-position: 0% center; }
+          100% { background-position: 200% center; }
+        }
+        @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
+      `}</style>
     </section>
   );
 }
