@@ -7,6 +7,8 @@ import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code } from "lucide-react";
+import ServicePageTemplate from "@/components/ServicePageTemplate";
+import { websiteDevelopmentData } from "@/data/services";
 
 const C = {
   cyan: "#06b6d4",
@@ -185,7 +187,6 @@ const OurProcess = () => {
                 justifyContent: "center",
               }}
             >
-              {/* Top highlight line */}
               <div style={{
                 position: "absolute", top: 0, left: "24px", right: "24px", height: "1px",
                 background: "linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent)",
@@ -256,11 +257,9 @@ const WebDesign = () => {
 
         {/* ═══════════════ HERO ═══════════════ */}
         <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: "80px" }}>
-          {/* Gradient orbs */}
           <div style={{ position: "absolute", top: "180px", left: "50%", marginLeft: "-250px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${C.primaryRGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
           <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${C.secondaryRGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
-          {/* Content */}
           <div style={{ textAlign: "center", paddingTop: "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
             <h1 style={{
               fontFamily: FONT,
@@ -285,7 +284,6 @@ const WebDesign = () => {
               We create beautiful, <span style={{ color: C.green, fontWeight: 600 }}>high-converting websites</span> that represent your Sydney business perfectly and drive <span style={{ color: C.green, fontWeight: 600 }}>real results</span>.
             </p>
 
-            {/* Tags */}
             <div style={{
               display: "flex", justifyContent: "center", alignItems: "center", gap: "8px",
               marginTop: "24px", flexWrap: "wrap", padding: "0 20px",
@@ -301,7 +299,6 @@ const WebDesign = () => {
               <span>2-4 Weeks</span>
             </div>
 
-            {/* CTA Button */}
             <div style={{
               display: "flex", justifyContent: "center", gap: "12px", marginTop: "32px", padding: "0 20px",
               ...anim(0.5),
@@ -342,7 +339,6 @@ const WebDesign = () => {
             </div>
           </div>
 
-          {/* Carousel */}
           <div style={{
             marginTop: "56px", position: "relative", zIndex: 2,
             display: "flex", flexDirection: "column", gap: 16,
@@ -398,6 +394,9 @@ const WebDesign = () => {
 
         {/* ═══════════════ OUR PROCESS ═══════════════ */}
         <OurProcess />
+
+        {/* ═══════════════ SERVICE TEMPLATE ═══════════════ */}
+        <ServicePageTemplate data={websiteDevelopmentData} />
 
         <CTASection />
       </main>
