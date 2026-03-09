@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ServicesSection from "@/components/home/ServicesSection";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Search, TrendingUp, FileText, BarChart, Link2, Users } from "lucide-react";
+import { seoServices, seoHeading, seoHighlight, seoSubtitle } from "@/data/services/seo-services";
 
 const features = [
   {
@@ -149,6 +151,14 @@ const SEOService = () => {
             </div>
           </div>
         </section>
+
+        {/* ═══════════════ SERVICES GRID ═══════════════ */}
+        <ServicesSection
+          heading={seoHeading}
+          headingHighlight={seoHighlight}
+          subtitle={seoSubtitle}
+          services={seoServices}
+        />
 
         {/* How We Do It */}
         <section className="section-padding bg-bg-light">
