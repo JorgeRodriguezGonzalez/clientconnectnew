@@ -222,7 +222,7 @@ export const HowWeWork = () => {
   return (
     <div
       className="w-full min-h-screen flex flex-col items-center px-10 py-40"
-      style={{ background: "#ffffff" }}
+      style={{ background: "#FAFAFA" }}
     >
       <style>{`
         @keyframes gradientMove {
