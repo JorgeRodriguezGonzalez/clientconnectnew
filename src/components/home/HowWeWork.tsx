@@ -257,7 +257,7 @@ export const HowWeWork = () => {
           fontStyle: "normal",
         }}
       >
-        <span style={{ color: "#111827" }}>Our Proven </span>
+        <span style={{ color: "#111827" }}>Our </span>
         <span
           style={{
             background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)",
@@ -268,7 +268,7 @@ export const HowWeWork = () => {
             animation: "gradientMove 3s linear infinite",
           }}
         >
-          Process
+          Work
         </span>
       </h2>
 
@@ -283,7 +283,7 @@ export const HowWeWork = () => {
           maxWidth: 400,
         }}
       >
-        From discovery to optimization, every step is designed to deliver measurable growth for your business.
+        Real results from real clients. See how we help businesses grow with tailored digital strategies.
       </p>
       </div>
 
