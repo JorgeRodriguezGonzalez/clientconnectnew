@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 
 // ─── Types ──────────────────────────────────────────────────
 
@@ -205,20 +205,7 @@ const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: Re
             </p>
           </div>
 
-          <a
-            href={service.link || "#"}
-            style={{ textDecoration: "none", position: "absolute", top: "16px", right: "16px", zIndex: 10 }}
-            onClick={e => e.stopPropagation()}
-          >
-            <div style={{
-              width: "40px", height: "40px", borderRadius: "50%",
-              backgroundColor: "#06b6d4",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "0 4px 12px rgba(6,182,212,0.4)",
-            }}>
-              <ArrowRight style={{ width: "16px", height: "16px", color: "#fff", transform: "rotate(-45deg)" }} />
-            </div>
-          </a>
+
         </div>
 
         <div style={{ marginTop: "20px" }}>
