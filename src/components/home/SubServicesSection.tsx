@@ -1,5 +1,4 @@
-import { useState, useRef } from "react";
-import { Check } from "lucide-react";
+import { useState } from "react";
 
 // ─── Types ──────────────────────────────────────────────────
 
@@ -8,7 +7,6 @@ export interface ServiceItem {
   title: string;
   description: string;
   badges: string[];
-  videoSrc: string | null;
   link: string;
   area: "top-left" | "bottom-left" | "top-center" | "bottom-center" | "right" | "bottom-wide" | "bottom-right";
 }
@@ -20,7 +18,7 @@ export interface SubServicesSectionProps {
   services?: ServiceItem[];
 }
 
-// ─── Default data (used on home page) ───────────────────────
+// ─── Default data ───────────────────────────────────────────
 
 const defaultServices: ServiceItem[] = [
   {
@@ -28,7 +26,6 @@ const defaultServices: ServiceItem[] = [
     title: "Website Development",
     description: "Beautiful, fast websites built to convert visitors into customers.",
     badges: ["UI/UX Design", "CMS Integration", "Performance", "SEO Ready"],
-    videoSrc: "/videos/websitedevelopment.mp4",
     link: "/services/website-development",
     area: "top-left",
   },
@@ -37,7 +34,6 @@ const defaultServices: ServiceItem[] = [
     title: "Brand Identity",
     description: "Craft a cohesive visual identity that makes your business instantly recognizable.",
     badges: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"],
-    videoSrc: null,
     link: "/services/brand-identity",
     area: "bottom-left",
   },
@@ -46,7 +42,6 @@ const defaultServices: ServiceItem[] = [
     title: "Digital Strategy",
     description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.",
     badges: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"],
-    videoSrc: null,
     link: "/services/digital-strategy",
     area: "top-center",
   },
@@ -55,7 +50,6 @@ const defaultServices: ServiceItem[] = [
     title: "SEO",
     description: "Dominate search results and drive organic traffic with technical optimization.",
     badges: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"],
-    videoSrc: "/videos/seo.mp4",
     link: "/services/seo",
     area: "bottom-center",
   },
@@ -64,7 +58,6 @@ const defaultServices: ServiceItem[] = [
     title: "Paid Social Ads",
     description: "Reach your ideal customers on Meta, TikTok and LinkedIn with precision targeting.",
     badges: ["Meta Ads", "TikTok Ads", "LinkedIn Ads", "Retargeting"],
-    videoSrc: "/videos/brand.mp4",
     link: "/services/paid-social-ads",
     area: "right",
   },
@@ -73,7 +66,6 @@ const defaultServices: ServiceItem[] = [
     title: "Google Ads",
     description: "Get instant visibility with targeted campaigns that maximize your ROI. Smart bidding, compelling ad copy, and continuous optimization to turn every dollar into measurable growth.",
     badges: ["Search Ads", "Display Network", "Shopping Ads", "Remarketing"],
-    videoSrc: "/videos/googleads.mp4",
     link: "/services/google-ads",
     area: "bottom-wide",
   },
@@ -82,7 +74,6 @@ const defaultServices: ServiceItem[] = [
     title: "Content Creation",
     description: "Compelling content that tells your brand story and drives engagement across every channel.",
     badges: ["Copywriting", "Video Scripts", "Social Content", "Blog Posts"],
-    videoSrc: null,
     link: "/services/content-creation",
     area: "bottom-right",
   },
@@ -112,30 +103,11 @@ const Badge = ({ label }: { label: string }) => (
 
 const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: React.CSSProperties }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const hasVideo = !!service.videoSrc;
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    if (hasVideo && videoRef.current) videoRef.current.play().catch(() => {});
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    if (hasVideo && videoRef.current) {
-      videoRef.current.pause();
-      if (videoRef.current.duration) videoRef.current.currentTime = videoRef.current.duration * 0.8;
-    }
-  };
-
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) videoRef.current.currentTime = videoRef.current.duration * 0.8;
-  };
 
   return (
     <div
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
         position: "relative",
         borderRadius: "24px",
@@ -144,68 +116,43 @@ const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: Re
         background: "radial-gradient(50% 50% at 0% 0%, #1e1e1e 2%, #080808 100%)",
         border: "1px solid rgba(255,255,255,0.07)",
         transition: "transform 0.4s ease, box-shadow 0.4s ease",
-        transform: !hasVideo && isHovered ? "translateY(-6px)" : "translateY(0)",
-        boxShadow: !hasVideo && isHovered ? "0 20px 40px rgba(0,0,0,0.5)" : "0 4px 20px rgba(0,0,0,0.2)",
+        transform: isHovered ? "translateY(-6px)" : "translateY(0)",
+        boxShadow: isHovered ? "0 20px 40px rgba(0,0,0,0.5)" : "0 4px 20px rgba(0,0,0,0.2)",
         ...style,
       }}
     >
-      {hasVideo && (
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-          <div style={{
-            position: "absolute", inset: 0, zIndex: 1,
-            background: "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.8) 100%)",
-          }} />
-          <video
-            ref={videoRef}
-            src={service.videoSrc!}
-            muted loop playsInline preload="metadata"
-            onLoadedMetadata={handleLoadedMetadata}
-            style={{
-              width: "100%", height: "100%", objectFit: "cover",
-              transition: "transform 0.7s ease, filter 0.7s ease",
-              transform: isHovered ? "scale(1.06)" : "scale(1)",
-              filter: isHovered ? "grayscale(0) brightness(0.85)" : "grayscale(0.25) brightness(0.65)",
-            }}
-          />
-        </div>
-      )}
+      {/* Grid pattern BG */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <svg width="100%" height="100%" style={{ opacity: 0.05 }}>
+          <defs>
+            <pattern id={`grid-${service.id}`} width="32" height="32" patternUnits="userSpaceOnUse">
+              <path d="M 32 0 L 0 0 0 32" fill="none" stroke="white" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill={`url(#grid-${service.id})`} />
+        </svg>
+      </div>
 
-      {!hasVideo && (
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-          <svg width="100%" height="100%" style={{ opacity: 0.05 }}>
-            <defs>
-              <pattern id={`grid-${service.id}`} width="32" height="32" patternUnits="userSpaceOnUse">
-                <path d="M 32 0 L 0 0 0 32" fill="none" stroke="white" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill={`url(#grid-${service.id})`} />
-          </svg>
-        </div>
-      )}
-
+      {/* Content */}
       <div style={{
         position: "relative", zIndex: 2,
         display: "flex", flexDirection: "column", justifyContent: "space-between",
         padding: "28px", height: "100%", boxSizing: "border-box",
       }}>
         <div>
-          <div>
-            <h3 style={{
-              fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
-              fontSize: "22px", lineHeight: 1.15, color: "#ffffff", margin: "0 0 10px 0",
-            }}>
-              {service.title}
-            </h3>
-            <p style={{
-              fontFamily: "'Satoshi', sans-serif", fontWeight: 400,
-              fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.6)",
-              margin: 0, maxWidth: "260px",
-            }}>
-              {service.description}
-            </p>
-          </div>
-
-
+          <h3 style={{
+            fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
+            fontSize: "22px", lineHeight: 1.15, color: "#ffffff", margin: "0 0 10px 0",
+          }}>
+            {service.title}
+          </h3>
+          <p style={{
+            fontFamily: "'Satoshi', sans-serif", fontWeight: 400,
+            fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.6)",
+            margin: 0, maxWidth: "260px",
+          }}>
+            {service.description}
+          </p>
         </div>
 
         <div style={{ marginTop: "20px" }}>
