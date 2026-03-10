@@ -170,7 +170,7 @@ const OurProcess = () => {
         ref={containerRef}
         style={{
           position: "relative",
-          height: `${cardCount * 100 + 50}vh`,
+          height: `${cardCount * 60 + 40}vh`,
           maxWidth: "900px",
           margin: "0 auto",
           padding: "0 24px",
@@ -185,7 +185,7 @@ const OurProcess = () => {
               style={{
                 position: "sticky",
                 top: `calc(112px + ${i * stackOffset}px)`,
-                marginBottom: `${100 / cardCount}vh`,
+                marginBottom: `${60 / cardCount}vh`,
                 zIndex: 10 + i,
               }}
             >
