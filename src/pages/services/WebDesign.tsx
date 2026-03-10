@@ -616,35 +616,36 @@ const WebDesign = () => {
               transition={{ duration: 0.6 }}
               style={{ textAlign: "center" }}
             >
-              <div style={{ opacity: 0.1, color: "#fff", marginBottom: "32px", display: "flex", justifyContent: "center" }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
-                  <path d="M7 7h3v10H5V9a2 2 0 0 1 2-2Zm9 0h3v10h-5V9a2 2 0 0 1 2-2Z" />
-                </svg>
-              </div>
+              <h2 style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(32px, 6vw, 64px)",
+                fontWeight: 300,
+                lineHeight: 1.1,
+                letterSpacing: "-2px",
+                color: "#fff",
+                margin: "0 auto 40px",
+                maxWidth: "900px",
+              }}>
+                Your website is your{" "}
+                <span style={{ color: C.cyan, fontWeight: 300 }}>best salesperson</span>
+                .
+              </h2>
 
               <p style={{
                 fontFamily: "'Satoshi', sans-serif",
-                fontSize: "clamp(28px, 5vw, 56px)",
+                fontSize: "clamp(18px, 2.5vw, 28px)",
                 fontWeight: 300,
-                lineHeight: 1.15,
-                letterSpacing: "-1.5px",
-                color: "#fff",
+                lineHeight: 1.45,
+                letterSpacing: "-0.5px",
+                color: "rgba(255,255,255,0.45)",
                 margin: "0 auto",
-                maxWidth: "1000px",
+                maxWidth: "800px",
               }}>
-                We completely{" "}
-                <span style={{ color: C.cyan, fontWeight: 300 }}>transformed their online presence</span>
-                {" "}with a website that converts. Professional, fast, and built to grow —{" "}
-                <span style={{ color: C.cyan, fontWeight: 300 }}>without compromising on design</span>
-                {" "}or performance.
+                In today's digital world, first impressions happen online. A{" "}
+                <span style={{ color: C.cyan, fontWeight: 300 }}>strategically designed website</span>
+                {" "}doesn't just look great — it builds trust, drives conversions, and works for your business{" "}
+                <span style={{ color: C.cyan, fontWeight: 300 }}>24 hours a day</span>.
               </p>
-
-              <div style={{ marginTop: "48px" }}>
-                <p style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500 }}>
-                  <span style={{ color: "rgba(255,255,255,0.85)" }}>Client Connect </span>
-                  <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 400 }}>Web Design & Development, Sydney</span>
-                </p>
-              </div>
             </motion.div>
           </div>
         </section>
