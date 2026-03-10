@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
+import * as Accordion from "@radix-ui/react-accordion";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code } from "lucide-react";
+import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code, Minus, Plus, MessageSquare } from "lucide-react";
 import { webdesignServices, webdesignHeading, webdesignHighlight, webdesignSubtitle } from "@/data/services/webdesign-services";
 
 const C = {
@@ -281,6 +283,194 @@ const OurProcess = () => {
   );
 };
 
+const webDesignFaqs = [
+  {
+    id: 1,
+    question: "How long does it take to build a website?",
+    answer: "Most projects are completed within 2 to 4 weeks, depending on complexity. A simple landing page or brochure site can be ready in as little as 10 days, while larger e-commerce or multi-page sites may take up to 6 weeks. We'll give you a clear timeline during our initial consultation so there are no surprises.",
+  },
+  {
+    id: 2,
+    question: "How much does a website cost?",
+    answer: "Our websites start from $2,500 for a professional 5-page site. Pricing depends on the number of pages, custom features, and integrations required. Every project includes custom design, mobile responsiveness, SEO setup, and a content management system. We provide a detailed quote after understanding your specific needs.",
+  },
+  {
+    id: 3,
+    question: "Will my website be mobile-friendly?",
+    answer: "Absolutely. Every website we build is designed mobile-first, meaning we prioritise the mobile experience from the start. With over 60% of web traffic coming from mobile devices in Australia, this approach ensures your site looks and performs perfectly on phones, tablets, and desktops.",
+  },
+  {
+    id: 4,
+    question: "Can I update the website content myself?",
+    answer: "Yes. We build all our sites on easy-to-use content management systems so you can update text, images, and pages without any technical knowledge. We also provide a training session after launch and documentation to make sure you feel confident managing your site independently.",
+  },
+  {
+    id: 5,
+    question: "Do you offer ongoing support after launch?",
+    answer: "We do. We offer flexible maintenance plans that include security updates, performance monitoring, regular backups, and priority support. Whether you need minor content changes or want us to manage the site entirely, we have a plan that fits. Your website is an investment and we help you protect it.",
+  },
+];
+
+const BackgroundStripes = () => (
+  <div
+    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05] invert"
+    style={{
+      backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
+      backgroundRepeat: 'repeat',
+    }}
+  />
+);
+
+const WebDesignFAQ = () => {
+  const [openItem, setOpenItem] = useState(null);
+
+  return (
+    <section className="relative w-full bg-[#050505] py-24 sm:py-32 overflow-hidden">
+      <div className="w-full h-[1px] bg-white/10 absolute top-0 z-20" />
+      <BackgroundStripes />
+
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-6 max-w-3xl mx-auto text-center mb-16 md:mb-24">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500"
+          >
+            SUPPORT
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-white"
+          >
+            Frequently asked{' '}
+            <motion.span
+              initial={{ backgroundPosition: "400% 50%" }}
+              animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+              transition={{ duration: 12, ease: "linear", repeat: Infinity }}
+              style={{
+                display: "inline-block",
+                backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0), ${C.green}, ${C.cyan}, rgba(255,255,255,0))`,
+                backgroundSize: "400% 100%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              questions
+            </motion.span>
+            <span className="text-white">.</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-400 tracking-tight"
+          >
+            Everything you need to know about our web design process, pricing, and ongoing support.
+          </motion.p>
+        </div>
+
+        <div className="max-w-[800px] mx-auto">
+          <div className="flex justify-center mb-8">
+            <span className="text-[10px] uppercase tracking-widest text-zinc-500 bg-white/5 px-3 py-1 border border-white/5">
+              Updated Today
+            </span>
+          </div>
+
+          <Accordion.Root
+            type="single"
+            collapsible
+            value={openItem || ""}
+            onValueChange={(value) => setOpenItem(value)}
+            className="space-y-4"
+          >
+            {webDesignFaqs.map((item, index) => (
+              <Accordion.Item value={item.id.toString()} key={item.id} className="group">
+                <Accordion.Header>
+                  <Accordion.Trigger className="flex w-full items-start gap-x-4 focus:outline-none group">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.5 }}
+                      viewport={{ once: true }}
+                      className={cn(
+                        "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border rounded-none",
+                        openItem === item.id.toString()
+                          ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10"
+                          : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10"
+                      )}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={cn(
+                          "flex items-center justify-center w-8 h-8 rounded-none transition-colors duration-300",
+                          openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500"
+                        )}>
+                          <MessageSquare size={14} />
+                        </div>
+                        <span className={cn(
+                          "text-base md:text-lg font-semibold transition-colors duration-300",
+                          openItem === item.id.toString() ? "text-white" : "text-zinc-400"
+                        )}>
+                          {item.question}
+                        </span>
+                      </div>
+
+                      <span className={cn(
+                        "ml-4 transition-transform duration-300",
+                        openItem === item.id.toString() ? "text-emerald-500 rotate-180" : "text-zinc-600"
+                      )}>
+                        {openItem === item.id.toString() ? <Minus className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
+                      </span>
+
+                      {openItem === item.id.toString() && (
+                        <motion.div
+                          layoutId="webdesign-faq-active-line"
+                          className="absolute left-0 top-0 bottom-0 w-[3px]"
+                          style={{ backgroundColor: C.green }}
+                        />
+                      )}
+                    </motion.div>
+                  </Accordion.Trigger>
+                </Accordion.Header>
+
+                <Accordion.Content asChild forceMount>
+                  <AnimatePresence initial={false}>
+                    {openItem === item.id.toString() && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="flex justify-end mt-2 ml-8 md:ml-16">
+                          <div className={cn(
+                            "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-none shadow-sm border",
+                            "bg-zinc-900 border-white/10 text-zinc-300"
+                          )}>
+                            <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20" />
+                            {item.answer}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </Accordion.Content>
+              </Accordion.Item>
+            ))}
+          </Accordion.Root>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const features = [
   { icon: Palette, title: "Custom Design", description: "Unique designs that reflect your brand and stand out from competitors." },
   { icon: Smartphone, title: "Mobile-First", description: "Perfectly optimized for mobile devices where most traffic comes from." },
@@ -457,6 +647,8 @@ const WebDesign = () => {
 
         {/* ═══════════════ OUR PROCESS ═══════════════ */}
         <OurProcess />
+
+        <WebDesignFAQ />
 
         <CTASection />
       </main>
