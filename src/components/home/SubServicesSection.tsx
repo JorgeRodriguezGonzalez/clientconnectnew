@@ -127,13 +127,30 @@ const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: Re
         overflow: "hidden",
         cursor: "pointer",
         background: getCardBg(service.area),
-        border: hasColor ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(255,255,255,0.07)",
+        border: hasColor ? "1px solid rgba(255,255,255,0.15)" : "1px solid transparent",
         transition: "transform 0.4s ease, box-shadow 0.4s ease",
         transform: isHovered ? "translateY(-6px)" : "translateY(0)",
         boxShadow: isHovered ? "0 20px 40px rgba(0,0,0,0.5)" : "0 4px 20px rgba(0,0,0,0.2)",
         ...style,
       }}
     >
+      {/* Gradient border overlay (only on dark cards) */}
+      {!hasColor && (
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "24px",
+          padding: "1px",
+          background: "linear-gradient(135deg, #06b6d4, #34d399)",
+          WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          WebkitMaskComposite: "xor",
+          maskComposite: "exclude",
+          opacity: 0.7,
+          pointerEvents: "none",
+          zIndex: 1,
+        }} />
+      )}
+
       {/* Grid pattern BG (only on dark cards) */}
       {!hasColor && (
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
