@@ -8,6 +8,7 @@ export interface ServiceItem {
   description: string;
   badges: string[];
   link: string;
+  imageSrc?: string | null;
   area: "top-left" | "bottom-left" | "top-center" | "bottom-center" | "right" | "bottom-wide" | "bottom-right";
 }
 
@@ -26,6 +27,7 @@ const defaultServices: ServiceItem[] = [
     title: "Website Development",
     description: "Beautiful, fast websites built to convert visitors into customers.",
     badges: ["UI/UX Design", "CMS Integration", "Performance", "SEO Ready"],
+    imageSrc: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
     link: "/services/website-development",
     area: "top-left",
   },
@@ -50,6 +52,7 @@ const defaultServices: ServiceItem[] = [
     title: "SEO",
     description: "Dominate search results and drive organic traffic with technical optimization.",
     badges: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"],
+    imageSrc: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
     link: "/services/seo",
     area: "bottom-center",
   },
@@ -58,6 +61,7 @@ const defaultServices: ServiceItem[] = [
     title: "Paid Social Ads",
     description: "Reach your ideal customers on Meta, TikTok and LinkedIn with precision targeting.",
     badges: ["Meta Ads", "TikTok Ads", "LinkedIn Ads", "Retargeting"],
+    imageSrc: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80",
     link: "/services/paid-social-ads",
     area: "right",
   },
@@ -66,6 +70,7 @@ const defaultServices: ServiceItem[] = [
     title: "Google Ads",
     description: "Get instant visibility with targeted campaigns that maximize your ROI. Smart bidding, compelling ad copy, and continuous optimization to turn every dollar into measurable growth.",
     badges: ["Search Ads", "Display Network", "Shopping Ads", "Remarketing"],
+    imageSrc: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
     link: "/services/google-ads",
     area: "bottom-wide",
   },
@@ -151,8 +156,26 @@ const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: Re
         }} />
       )}
 
-      {/* Grid pattern BG (only on dark cards) */}
-      {!hasColor && (
+      {/* Image BG with dark overlay (only on dark cards with image) */}
+      {!hasColor && service.imageSrc && (
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+          <div style={{
+            position: "absolute", inset: 0, zIndex: 1,
+            background: "rgba(0,0,0,0.75)",
+          }} />
+          <img
+            src={service.imageSrc}
+            alt=""
+            style={{
+              width: "100%", height: "100%", objectFit: "cover",
+              display: "block",
+            }}
+          />
+        </div>
+      )}
+
+      {/* Grid pattern BG (only on dark cards without image) */}
+      {!hasColor && !service.imageSrc && (
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <svg width="100%" height="100%" style={{ opacity: 0.05 }}>
             <defs>
