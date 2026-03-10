@@ -81,7 +81,7 @@ const defaultServices: ServiceItem[] = [
 
 // ─── Sub-components ─────────────────────────────────────────
 
-const Badge = ({ label, dark }: { label: string; dark?: boolean }) => (
+const Badge = ({ label, onDark }: { label: string; onDark?: boolean }) => (
   <span style={{
     display: "inline-flex",
     alignItems: "center",
@@ -91,9 +91,9 @@ const Badge = ({ label, dark }: { label: string; dark?: boolean }) => (
     fontWeight: 700,
     textTransform: "uppercase",
     letterSpacing: "0.08em",
-    background: dark ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.08)",
-    border: dark ? "1px solid rgba(0,0,0,0.15)" : "1px solid rgba(255,255,255,0.12)",
-    color: dark ? "rgba(0,0,0,0.85)" : "rgba(255,255,255,0.85)",
+    background: onDark ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.08)",
+    border: onDark ? "1px solid rgba(6,182,212,0.12)" : "1px solid rgba(255,255,255,0.12)",
+    color: "rgba(255,255,255,0.85)",
     fontFamily: "'Satoshi', sans-serif",
     whiteSpace: "nowrap",
   }}>
@@ -116,9 +116,6 @@ const getCardBg = (area: string) => {
 const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: React.CSSProperties }) => {
   const [isHovered, setIsHovered] = useState(false);
   const hasColor = !!cardColors[service.area];
-  const textColor = hasColor ? "#000000" : "#ffffff";
-  const subTextColor = hasColor ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.6)";
-  const badgeColor = hasColor ? "#000000" : "rgba(255,255,255,0.85)";
 
   return (
     <div
@@ -160,13 +157,13 @@ const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: Re
         <div>
           <h3 style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
-            fontSize: "22px", lineHeight: 1.15, color: textColor, margin: "0 0 10px 0",
+            fontSize: "22px", lineHeight: 1.15, color: "#ffffff", margin: "0 0 10px 0",
           }}>
             {service.title}
           </h3>
           <p style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 400,
-            fontSize: "13px", lineHeight: 1.6, color: subTextColor,
+            fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.6)",
             margin: 0, maxWidth: "260px",
           }}>
             {service.description}
@@ -175,7 +172,7 @@ const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: Re
 
         <div style={{ marginTop: "20px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-            {service.badges.map((b, i) => <Badge key={i} label={b} dark={hasColor} />)}
+            {service.badges.map((b, i) => <Badge key={i} label={b} onDark={!hasColor} />)}
           </div>
         </div>
       </div>
