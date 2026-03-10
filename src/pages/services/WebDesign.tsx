@@ -404,7 +404,7 @@ const WebDesign = () => {
         </section>
 
         {/* ═══════════════ BEST SALESPERSON ═══════════════ */}
-        <section className="section-padding bg-background">
+        <section className="section-padding" style={{ background: "#000" }}>
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
               <motion.div
