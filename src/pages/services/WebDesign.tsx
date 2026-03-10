@@ -4,12 +4,12 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
-import * as Accordion from "@radix-ui/react-accordion";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code, Minus, Plus, MessageSquare } from "lucide-react";
 import { webdesignServices, webdesignHeading, webdesignHighlight, webdesignSubtitle } from "@/data/services/webdesign-services";
+import * as Accordion from "@radix-ui/react-accordion";
+import { cn } from "@/lib/utils";
 
 const C = {
   cyan: "#06b6d4",
@@ -221,7 +221,6 @@ const OurProcess = () => {
                   transform: isActive ? "scale(1)" : "scale(0.98)",
                 }}
               >
-                {/* Gradient border overlay for active card */}
                 {isActive && (
                   <div style={{
                     position: "absolute", inset: 0, borderRadius: "20px", padding: "1px",
@@ -235,7 +234,6 @@ const OurProcess = () => {
                   }} />
                 )}
 
-                {/* Top highlight line */}
                 <div style={{
                   position: "absolute", top: 0, left: "24px", right: "24px", height: "1px",
                   background: isActive
@@ -259,7 +257,7 @@ const OurProcess = () => {
                 </span>
 
                 <h3 style={{
-                  fontFamily: FONT, fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 600,
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700,
                   color: "#fff", lineHeight: 1.2, marginBottom: "16px", letterSpacing: "-1px",
                   transition: "color 0.5s ease",
                 }}>
@@ -267,7 +265,7 @@ const OurProcess = () => {
                 </h3>
 
                 <p style={{
-                  fontFamily: FONT, fontSize: "18px",
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
                   color: isActive ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.45)",
                   maxWidth: "600px", lineHeight: 1.65,
                   transition: "color 0.5s ease",
@@ -599,41 +597,55 @@ const WebDesign = () => {
           </div>
         </section>
 
-        {/* ═══════════════ BEST SALESPERSON ═══════════════ */}
-        <section className="section-padding" style={{ background: "#000" }}>
-          <div className="container-custom">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                style={{ textAlign: "center" }}
-              >
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Your Website is Your{" "}
-                  <span style={{ background: C.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                    Best Salesperson
-                  </span>
-                </h2>
-                <div className="space-y-4 text-lg text-text-medium">
-                  <p>
-                    In today's digital world, your website is often the first impression potential
-                    customers have of your business. A poorly designed website can cost you thousands
-                    in lost revenue.
-                  </p>
-                  <p>
-                    We build websites that not only look great but are strategically designed to convert
-                    visitors into customers. Every element – from the color scheme to the call-to-action
-                    buttons – is carefully planned based on proven conversion principles.
-                  </p>
-                  <p>
-                    Plus, all our websites are built with SEO in mind, giving you a head start in
-                    ranking on Google.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
+        {/* ═══════════════ TESTIMONIAL QUOTE ═══════════════ */}
+        <section style={{ background: "#000", position: "relative", overflow: "hidden" }}>
+          <div style={{
+            position: "absolute", top: "-96px", left: "-96px", width: "384px", height: "384px",
+            borderRadius: "50%", background: `rgba(${C.secondaryRGB},0.1)`, filter: "blur(48px)", pointerEvents: "none",
+          }} />
+          <div style={{
+            position: "absolute", bottom: "-96px", right: "-96px", width: "384px", height: "384px",
+            borderRadius: "50%", background: `rgba(${C.primaryRGB},0.1)`, filter: "blur(48px)", pointerEvents: "none",
+          }} />
+
+          <div style={{ position: "relative", zIndex: 1, padding: "120px 24px", maxWidth: "1100px", margin: "0 auto" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              style={{ textAlign: "center" }}
+            >
+              <div style={{ opacity: 0.1, color: "#fff", marginBottom: "32px", display: "flex", justifyContent: "center" }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
+                  <path d="M7 7h3v10H5V9a2 2 0 0 1 2-2Zm9 0h3v10h-5V9a2 2 0 0 1 2-2Z" />
+                </svg>
+              </div>
+
+              <p style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(28px, 5vw, 56px)",
+                fontWeight: 300,
+                lineHeight: 1.15,
+                letterSpacing: "-1.5px",
+                color: "#fff",
+                margin: "0 auto",
+                maxWidth: "1000px",
+              }}>
+                We completely{" "}
+                <span style={{ color: C.cyan, fontWeight: 300 }}>transformed their online presence</span>
+                {" "}with a website that converts. Professional, fast, and built to grow —{" "}
+                <span style={{ color: C.cyan, fontWeight: 300 }}>without compromising on design</span>
+                {" "}or performance.
+              </p>
+
+              <div style={{ marginTop: "48px" }}>
+                <p style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500 }}>
+                  <span style={{ color: "rgba(255,255,255,0.85)" }}>Client Connect </span>
+                  <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 400 }}>Web Design & Development, Sydney</span>
+                </p>
+              </div>
+            </motion.div>
           </div>
         </section>
 
@@ -648,6 +660,7 @@ const WebDesign = () => {
         {/* ═══════════════ OUR PROCESS ═══════════════ */}
         <OurProcess />
 
+        {/* ═══════════════ FAQ ═══════════════ */}
         <WebDesignFAQ />
 
         <CTASection />
