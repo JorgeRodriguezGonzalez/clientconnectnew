@@ -158,11 +158,17 @@ const OurProcess = () => {
             textTransform: "uppercase", letterSpacing: "0.15em", color: C.cyan,
           }}>How We Work</span>
           <h2 style={{
-            fontFamily: FONT, fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 600,
+            fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700,
             lineHeight: 1.1, letterSpacing: "-1.5px", color: "#fff", marginTop: "12px",
           }}>
             Our Process
           </h2>
+          <p style={{
+            fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
+            color: "rgba(255,255,255,0.5)", maxWidth: "520px", margin: "16px auto 0", lineHeight: 1.65,
+          }}>
+            From discovery to launch, we follow a proven 4-step process to deliver websites that look stunning and drive real business results.
+          </p>
         </motion.div>
       </div>
 
@@ -238,7 +244,7 @@ const OurProcess = () => {
 
                 <span style={{
                   display: "inline-flex", alignItems: "center",
-                  fontFamily: FONT, fontSize: "13px", fontWeight: 600,
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "13px", fontWeight: 600,
                   color: isActive ? C.cyan : "rgba(255,255,255,0.5)",
                   background: isActive ? C.cyanBg : "rgba(255,255,255,0.05)",
                   border: isActive ? `1px solid rgba(${C.secondaryRGB},0.3)` : "1px solid rgba(255,255,255,0.1)",
