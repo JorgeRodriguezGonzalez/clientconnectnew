@@ -101,8 +101,21 @@ const Badge = ({ label }: { label: string }) => (
   </span>
 );
 
+const cardColors: Record<string, string> = {
+  "brand-identity": "#06b6d4",
+  "content-creation": "#34d399",
+  "digital-strategy": "#06b6d4",
+};
+
+const getCardBg = (id: string) => {
+  const color = cardColors[id];
+  if (color) return `radial-gradient(50% 50% at 0% 0%, ${color} 2%, ${color}dd 100%)`;
+  return "radial-gradient(50% 50% at 0% 0%, #1e1e1e 2%, #080808 100%)";
+};
+
 const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: React.CSSProperties }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const hasColor = !!cardColors[service.id];
 
   return (
     <div
@@ -113,25 +126,27 @@ const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: Re
         borderRadius: "24px",
         overflow: "hidden",
         cursor: "pointer",
-        background: "radial-gradient(50% 50% at 0% 0%, #1e1e1e 2%, #080808 100%)",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: getCardBg(service.id),
+        border: hasColor ? `1px solid rgba(255,255,255,0.15)` : "1px solid rgba(255,255,255,0.07)",
         transition: "transform 0.4s ease, box-shadow 0.4s ease",
         transform: isHovered ? "translateY(-6px)" : "translateY(0)",
         boxShadow: isHovered ? "0 20px 40px rgba(0,0,0,0.5)" : "0 4px 20px rgba(0,0,0,0.2)",
         ...style,
       }}
     >
-      {/* Grid pattern BG */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-        <svg width="100%" height="100%" style={{ opacity: 0.05 }}>
-          <defs>
-            <pattern id={`grid-${service.id}`} width="32" height="32" patternUnits="userSpaceOnUse">
-              <path d="M 32 0 L 0 0 0 32" fill="none" stroke="white" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill={`url(#grid-${service.id})`} />
-        </svg>
-      </div>
+      {/* Grid pattern BG (only on dark cards) */}
+      {!hasColor && (
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+          <svg width="100%" height="100%" style={{ opacity: 0.05 }}>
+            <defs>
+              <pattern id={`grid-${service.id}`} width="32" height="32" patternUnits="userSpaceOnUse">
+                <path d="M 32 0 L 0 0 0 32" fill="none" stroke="white" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill={`url(#grid-${service.id})`} />
+          </svg>
+        </div>
+      )}
 
       {/* Content */}
       <div style={{
