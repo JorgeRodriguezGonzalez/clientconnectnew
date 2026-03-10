@@ -102,20 +102,20 @@ const Badge = ({ label }: { label: string }) => (
 );
 
 const cardColors: Record<string, string> = {
-  "brand-identity": "#06b6d4",
-  "content-creation": "#34d399",
-  "digital-strategy": "#06b6d4",
+  "bottom-left": "#06b6d4",
+  "bottom-right": "#34d399",
+  "top-center": "#06b6d4",
 };
 
-const getCardBg = (id: string) => {
-  const color = cardColors[id];
+const getCardBg = (area: string) => {
+  const color = cardColors[area];
   if (color) return `radial-gradient(50% 50% at 0% 0%, ${color} 2%, ${color}dd 100%)`;
   return "radial-gradient(50% 50% at 0% 0%, #1e1e1e 2%, #080808 100%)";
 };
 
 const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: React.CSSProperties }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const hasColor = !!cardColors[service.id];
+  const hasColor = !!cardColors[service.area];
 
   return (
     <div
@@ -126,8 +126,8 @@ const ServiceCard = ({ service, style = {} }: { service: ServiceItem; style?: Re
         borderRadius: "24px",
         overflow: "hidden",
         cursor: "pointer",
-        background: getCardBg(service.id),
-        border: hasColor ? `1px solid rgba(255,255,255,0.15)` : "1px solid rgba(255,255,255,0.07)",
+        background: getCardBg(service.area),
+        border: hasColor ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(255,255,255,0.07)",
         transition: "transform 0.4s ease, box-shadow 0.4s ease",
         transform: isHovered ? "translateY(-6px)" : "translateY(0)",
         boxShadow: isHovered ? "0 20px 40px rgba(0,0,0,0.5)" : "0 4px 20px rgba(0,0,0,0.2)",
