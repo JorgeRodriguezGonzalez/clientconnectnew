@@ -121,9 +121,28 @@ const processSteps = [
 
 const OurProcess = () => {
   const containerRef = useRef(null);
+  const cardRefs = useRef([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const cardCount = processSteps.length;
-  const cardHeight = 280;
   const stackOffset = 20;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const viewportCenter = window.innerHeight / 2;
+      let closest = 0;
+      let closestDist = Infinity;
+      cardRefs.current.forEach((ref, i) => {
+        if (!ref) return;
+        const rect = ref.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(cardCenter - viewportCenter);
+        if (dist < closestDist) { closestDist = dist; closest = i; }
+      });
+      setActiveIndex(closest);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section style={{ background: "#000", padding: "80px 0 0" }}>
@@ -157,67 +176,100 @@ const OurProcess = () => {
           padding: "0 24px",
         }}
       >
-        {processSteps.map((item, i) => (
-          <div
-            key={i}
-            style={{
-              position: "sticky",
-              top: `calc(112px + ${i * stackOffset}px)`,
-              marginBottom: `${100 / cardCount}vh`,
-              zIndex: 10 + i,
-            }}
-          >
+        {processSteps.map((item, i) => {
+          const isActive = i === activeIndex;
+          return (
             <div
+              key={i}
+              ref={el => cardRefs.current[i] = el}
               style={{
-                background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
-                border: "1px solid rgba(255,255,255,0.15)",
-                borderRadius: "20px",
-                padding: "48px 40px",
-                textAlign: "center",
-                position: "relative",
-                overflow: "hidden",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
-                boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
-                minHeight: `${cardHeight}px`,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
+                position: "sticky",
+                top: `calc(112px + ${i * stackOffset}px)`,
+                marginBottom: `${100 / cardCount}vh`,
+                zIndex: 10 + i,
               }}
             >
-              <div style={{
-                position: "absolute", top: 0, left: "24px", right: "24px", height: "1px",
-                background: "linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent)",
-              }} />
+              <div
+                style={{
+                  background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
+                  borderRadius: "20px",
+                  padding: "48px 40px",
+                  textAlign: "center",
+                  position: "relative",
+                  overflow: "hidden",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  minHeight: "260px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: isActive ? "1px solid transparent" : "1px solid rgba(255,255,255,0.1)",
+                  backgroundClip: isActive ? "padding-box" : undefined,
+                  boxShadow: isActive
+                    ? `0 25px 60px rgba(0,0,0,0.5), 0 0 40px rgba(${C.secondaryRGB},0.15), 0 0 80px rgba(${C.primaryRGB},0.08)`
+                    : "0 20px 40px rgba(0,0,0,0.3)",
+                  transition: "box-shadow 0.5s ease, border 0.5s ease, transform 0.5s ease",
+                  transform: isActive ? "scale(1)" : "scale(0.98)",
+                }}
+              >
+                {/* Gradient border overlay for active card */}
+                {isActive && (
+                  <div style={{
+                    position: "absolute", inset: 0, borderRadius: "20px", padding: "1px",
+                    background: C.gradient,
+                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                    pointerEvents: "none",
+                    opacity: 0.7,
+                    transition: "opacity 0.5s ease",
+                  }} />
+                )}
 
-              <h3 style={{
-                fontFamily: FONT, fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 600,
-                color: "#fff", lineHeight: 1.2, marginBottom: "16px", letterSpacing: "-1px",
-              }}>
-                {item.title}
-              </h3>
+                {/* Top highlight line */}
+                <div style={{
+                  position: "absolute", top: 0, left: "24px", right: "24px", height: "1px",
+                  background: isActive
+                    ? C.gradient
+                    : "linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent)",
+                  transition: "background 0.5s ease",
+                }} />
 
-              <p style={{
-                fontFamily: FONT, fontSize: "18px", color: "rgba(255,255,255,0.6)",
-                maxWidth: "600px", lineHeight: 1.65, marginBottom: "24px",
-              }}>
-                {item.description}
-              </p>
+                <span style={{
+                  display: "inline-flex", alignItems: "center",
+                  fontFamily: FONT, fontSize: "13px", fontWeight: 600,
+                  color: isActive ? C.cyan : "rgba(255,255,255,0.5)",
+                  background: isActive ? C.cyanBg : "rgba(255,255,255,0.05)",
+                  border: isActive ? `1px solid rgba(${C.secondaryRGB},0.3)` : "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "999px", padding: "6px 14px",
+                  marginBottom: "20px",
+                  transition: "all 0.5s ease",
+                  letterSpacing: "0.05em", textTransform: "uppercase",
+                }}>
+                  {item.step}
+                </span>
 
-              <span style={{
-                display: "inline-flex", alignItems: "center",
-                fontFamily: FONT, fontSize: "14px", color: "rgba(255,255,255,0.8)",
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.15)",
-                borderRadius: "999px", padding: "8px 16px",
-                backdropFilter: "blur(4px)",
-              }}>
-                {item.step}
-              </span>
+                <h3 style={{
+                  fontFamily: FONT, fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 600,
+                  color: "#fff", lineHeight: 1.2, marginBottom: "16px", letterSpacing: "-1px",
+                  transition: "color 0.5s ease",
+                }}>
+                  {item.title}
+                </h3>
+
+                <p style={{
+                  fontFamily: FONT, fontSize: "18px",
+                  color: isActive ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.45)",
+                  maxWidth: "600px", lineHeight: 1.65,
+                  transition: "color 0.5s ease",
+                }}>
+                  {item.description}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
