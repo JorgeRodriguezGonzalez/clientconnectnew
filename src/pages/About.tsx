@@ -64,7 +64,7 @@ export default function About() {
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: "130px" }}>
-        {/* Gradient orbs - positioned below title */}
+        {/* Gradient orbs */}
         <div style={{ position: "absolute", top: "180px", left: "50%", marginLeft: "-250px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
@@ -77,9 +77,7 @@ export default function About() {
             ...anim(0.1),
           }}>
             <span>About </span>
-            <span style={{
-              color: "#fff",
-            }}>Us.</span>
+            <span style={{ color: "#fff" }}>Us.</span>
           </h1>
           <p style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -170,7 +168,7 @@ export default function About() {
                 transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.1 : 1}) rotateZ(${hImg === i ? (img.rotate < 0 ? -2 : 2) : 0}deg)`,
                 transition: "all 0.15s ease-out",
                 boxShadow: hImg === i
-                  ? `0 20px 60px rgba(${PRIMARY_RGB},0.35), 0 0 0 1px ${PRIMARY}`
+                  ? `0 20px 60px rgba(${PRIMARY_RGB},0.35)`
                   : "0 10px 40px rgba(0,0,0,0.4)",
                 opacity: loaded ? 1 : 0,
                 transitionDelay: hImg === i ? "0s" : `${0.3 + i * 0.08}s`,
