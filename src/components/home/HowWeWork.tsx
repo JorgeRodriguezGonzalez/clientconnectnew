@@ -72,7 +72,7 @@ const workSteps = [
     title: "Prolex Bathrooms: Sydney's Premier Specialists",
     description: "Scaling visibility through localized SEO and technical optimization, ensuring Prolex remains the top choice for modern bathroom overhauls.",
     services: ["Technical SEO", "Local SEO", "Website"],
-    image: "https://images.unsplash.com/photo-1584622781564-1d9876a13300?w=800&q=80",
+    image: "/images/proleximage.png", // Imagen actualizada para Prolex
     top: 230,
   },
 ];
