@@ -3,6 +3,7 @@ import { Search, Globe, TrendingUp, Zap, Check, Edit, Droplets, Home, Wrench, Sh
 
 const CYAN = "#06b6d4";
 const GREEN = "#34d399";
+const CARD_BG = "#FAFAFA"; // El gris claro que antes era el fondo general
 
 const workSteps = [
   {
@@ -12,7 +13,7 @@ const workSteps = [
     title: "Nanotise: Mould Remediation & Sanitising works",
     description: "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
     services: ["SEO", "Content Strategy", "Google Ads"],
-    image: "/images/nanotise10.jpg", // Cambiado de video a imagen
+    image: "/images/nanotise10.jpg",
     top: 80,
   },
   {
@@ -192,17 +193,17 @@ const TaskCardBackground = () => (
 
 export const HowWeWork = () => {
   return (
-    <div className="w-full min-h-screen flex flex-col items-center px-10 py-40" style={{ background: "#FAFAFA" }}>
+    <div className="w-full min-h-screen flex flex-col items-center px-10 py-40" style={{ background: "#0A0A0A" }}>
       <style>{`@keyframes gradientMove { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }`}</style>
 
       <div className="flex flex-col items-center" style={{ gap: 16 }}>
-        <span className="px-3 py-1.5 rounded-lg border font-semibold uppercase tracking-widest" style={{ fontSize: 10, letterSpacing: 2, background: "rgb(250,250,250)", borderColor: "rgb(228,228,231)", color: "rgb(107,114,128)" }}>
+        <span className="px-3 py-1.5 rounded-lg border font-semibold uppercase tracking-widest" style={{ fontSize: 10, letterSpacing: 2, background: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.1)", color: "rgb(156,163,175)" }}>
           Proven Results
         </span>
-        <h2 className="text-center" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "clamp(32px, 5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.5px" }}>
+        <h2 className="text-center text-white" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "clamp(32px, 5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.5px" }}>
           Our <span style={{ background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)", backgroundSize: "200% auto", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "gradientMove 3s linear infinite" }}>Case Studies</span>
         </h2>
-        <p className="text-center" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 500, fontSize: 16, lineHeight: 1.6, color: "#6b7280", maxWidth: 400 }}>
+        <p className="text-center" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 500, fontSize: 16, lineHeight: 1.6, color: "#9ca3af", maxWidth: 400 }}>
           Real results from Sydney's leading businesses. See how we help brands grow with tailored digital strategies.
         </p>
       </div>
@@ -211,31 +212,31 @@ export const HowWeWork = () => {
         {workSteps.map((step, index) => {
           const Icon = step.icon;
           return (
-            <div key={step.id} className="rounded-2xl shadow-lg overflow-hidden border border-gray-100" style={{ position: "sticky", top: step.top, zIndex: index + 1, background: "#ffffff" }}>
+            <div key={step.id} className="rounded-3xl shadow-2xl overflow-hidden border border-white/5" style={{ position: "sticky", top: step.top, zIndex: index + 1, background: CARD_BG }}>
               <div className="flex" style={{ height: 420 }}>
-                <div className="flex flex-col gap-5 p-8" style={{ width: 420 }}>
+                <div className="flex flex-col gap-5 p-10" style={{ width: 440 }}>
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${CYAN}18` }}>
                       <Icon size={16} color={CYAN} />
                     </div>
-                    <h5 className="text-gray-400 text-sm">{step.label}</h5>
+                    <h5 className="text-gray-500 text-xs font-bold tracking-widest uppercase">{step.label}</h5>
                   </div>
-                  <h2 className="text-gray-800 text-2xl font-semibold leading-snug" style={{ maxWidth: 360 }}>{step.title}</h2>
-                  <p className="text-gray-400 text-base leading-6" style={{ maxWidth: 360 }}>{step.description}</p>
+                  <h2 className="text-gray-900 text-3xl font-bold leading-tight" style={{ maxWidth: 360 }}>{step.title}</h2>
+                  <p className="text-gray-600 text-base leading-relaxed" style={{ maxWidth: 340 }}>{step.description}</p>
                   
                   <div className="flex flex-wrap gap-2 mt-2">
                     {step.services?.map((service) => (
                       <span 
                         key={service} 
-                        className="px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase border"
-                        style={{ backgroundColor: `${CYAN}08`, color: CYAN, borderColor: `${CYAN}20` }}
+                        className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border"
+                        style={{ backgroundColor: `white`, color: "#374151", borderColor: `#E5E7EB` }}
                       >
                         {service}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="flex-1 relative overflow-hidden">
+                <div className="flex-1 relative overflow-hidden bg-white/50">
                   {step.showTaskCard && <TaskCardBackground />}
                   {step.showCarousel && <InfiniteCarousel />}
                   {step.video && <AnimatedMedia src={step.video} type="video" />}
