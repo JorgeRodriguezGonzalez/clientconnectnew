@@ -325,7 +325,7 @@ const SubServicesSection = ({
             <ServiceCard
               key={service.id}
               service={service}
-              style={{ height: "240px", minHeight: "240px" }}
+              style={{ height: "320px", minHeight: "320px" }}
             />
           ))}
         </div>
