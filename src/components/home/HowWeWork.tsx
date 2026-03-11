@@ -32,7 +32,7 @@ const workSteps = [
     title: "Asset Plumbing Solutions: Sydney's Trusted Experts",
     description: "200+ leads at $50 CPL. We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving 16 new keywords to the top rankings.",
     services: ["Google Ads", "Lead Gen", "SEO"],
-    image: "/images/asset.jpg", // Imagen actualizada aquí
+    image: "/images/asset.jpg",
     top: 130,
   },
   {
@@ -77,7 +77,14 @@ const workSteps = [
   },
 ];
 
-// ... (Resto de componentes: TaskCard, AddButton, InfiniteCarousel, AnimatedMedia sin cambios)
+const carouselLogos = [
+  "https://cdn.worldvectorlogo.com/logos/google-ads-1.svg",
+  "https://cdn.worldvectorlogo.com/logos/meta-1.svg",
+  "https://cdn.worldvectorlogo.com/logos/google-analytics-2.svg",
+  "https://cdn.worldvectorlogo.com/logos/semrush-1.svg",
+];
+
+// --- COMPONENTES AUXILIARES ---
 
 const TaskCard = () => (
   <div className="bg-white rounded-2xl shadow-lg p-5 w-80">
@@ -134,7 +141,7 @@ const InfiniteCarousel = () => {
 
   return (
     <div className="absolute inset-0 flex items-center justify-center overflow-hidden" style={{ background: `radial-gradient(circle at 60% 50%, ${CYAN}0F 0%, transparent 70%)` }}>
-      <div style={{ maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", width: "100%", overflow: "hidden", display: "flex", alignItems: "center", justifyCenter: "center", height: 200 }}>
+      <div style={{ maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", width: "100%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", height: 200 }}>
         <div ref={ref} className="flex items-center gap-5" style={{ width: "fit-content", willChange: "transform" }}>
           {logos.map((logo, i) => (
             <div key={i} className="flex-shrink-0 w-36 h-36 p-2">
@@ -180,6 +187,8 @@ const TaskCardBackground = () => (
     <AddButton />
   </div>
 );
+
+// --- COMPONENTE PRINCIPAL ---
 
 export const HowWeWork = () => {
   return (
