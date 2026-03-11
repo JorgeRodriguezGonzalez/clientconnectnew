@@ -297,6 +297,7 @@ const OurProcess = () => {
                   background: isActive ? C.cyanBg : "rgba(255,255,255,0.04)",
                   border: isActive ? `1px solid rgba(${C.secondaryRGB},0.25)` : "1px solid rgba(255,255,255,0.08)",
                   borderRadius: "999px", padding: "5px 14px",
+                  marginBottom: "12px",
                   transition: "all 0.5s ease",
                   letterSpacing: "0.1em", textTransform: "uppercase",
                 }}>
@@ -307,7 +308,7 @@ const OurProcess = () => {
                 <h3 style={{
                   fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700,
                   color: "#fff", lineHeight: 1.2, letterSpacing: "-1px",
-                  textAlign: "center", margin: 0,
+                  textAlign: "center", margin: "0 0 16px 0",
                   transition: "color 0.5s ease",
                 }}>
                   {item.title}
@@ -317,7 +318,7 @@ const OurProcess = () => {
                 <p style={{
                   fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
                   color: isActive ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.35)",
-                  maxWidth: "560px", lineHeight: 1.7, textAlign: "center", margin: 0,
+                  maxWidth: "560px", lineHeight: 1.7, textAlign: "center", margin: "0 0 24px 0",
                   transition: "color 0.5s ease",
                 }}>
                   {item.description}
