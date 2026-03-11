@@ -11,6 +11,11 @@ const COLORS = {
   emerald: "#34d399",
 };
 
+// --- UTILS ---
+function cn(...classes: (string | undefined | null | false)[]) {
+  return classes.filter(Boolean).join(' ');
+}
+
 // --- COMPONENTE GLOWING EFFECT ---
 const GlowingEffect = React.memo(
   ({
@@ -118,7 +123,7 @@ const GlowingEffect = React.memo(
 
     return (
       <>
-        <div className={cn("pointer-events-none absolute -inset-px hidden rounded-none border opacity-0 transition-opacity", glow && "opacity-100", disabled && "!block")} />
+        <div className={cn("pointer-events-none absolute -inset-px hidden rounded-2xl border opacity-0 transition-opacity", glow && "opacity-100", disabled && "!block")} />
         <div
           ref={containerRef}
           style={{
@@ -132,17 +137,15 @@ const GlowingEffect = React.memo(
               radial-gradient(circle at 60% 60%, ${COLORS.cyan} 10%, #06b6d400 20%), 
               repeating-conic-gradient(from 236.84deg at 50% 50%, ${COLORS.emerald} 0%, ${COLORS.cyan} 50%, ${COLORS.emerald} 100%)`
           } as React.CSSProperties}
-          className={cn("pointer-events-none absolute inset-0 rounded-none opacity-100 transition-opacity", glow && "opacity-100", blur > 0 && "blur-[var(--blur)] ", className, disabled && "!hidden")}
+          className={cn("pointer-events-none absolute inset-0 rounded-2xl opacity-100 transition-opacity", glow && "opacity-100", blur > 0 && "blur-[var(--blur)] ", className, disabled && "!hidden")}
         >
-          <div className={cn("glow", "rounded-none", 'after:content-[""] after:rounded-none after:absolute after:inset-[calc(-1*var(--glowingeffect-border-width))]', "after:[border:var(--glowingeffect-border-width)_solid_transparent]", "after:[background:var(--gradient)] after:[background-attachment:fixed]", "after:opacity-[var(--active)] after:transition-opacity after:duration-300", "after:[mask-clip:padding-box,border-box]", "after:[mask-composite:intersect]", "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]")} />
+          <div className={cn("glow", "rounded-2xl", 'after:content-[""] after:rounded-2xl after:absolute after:inset-[calc(-1*var(--glowingeffect-border-width))]', "after:[border:var(--glowingeffect-border-width)_solid_transparent]", "after:[background:var(--gradient)] after:[background-attachment:fixed]", "after:opacity-[var(--active)] after:transition-opacity after:duration-300", "after:[mask-clip:padding-box,border-box]", "after:[mask-composite:intersect]", "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]")} />
         </div>
       </>
     );
   }
 );
 GlowingEffect.displayName = "GlowingEffect";
-
-// --- Components ---
 
 const BackgroundStripes = () => (
   <div
@@ -153,8 +156,6 @@ const BackgroundStripes = () => (
     }}
   />
 );
-
-// --- Types ---
 
 export type StoryEntry = {
   icon: React.ComponentType<{ className?: string }>;
@@ -168,8 +169,6 @@ export type StoryEntry = {
     text: string;
   };
 };
-
-// --- Data: LA HISTORIA DE LOS FOUNDERS ---
 
 export const founderStoryEntries: StoryEntry[] = [
   {
@@ -236,20 +235,12 @@ export const founderStoryEntries: StoryEntry[] = [
   },
 ];
 
-// --- UTILS ---
-function cn(...classes: (string | undefined | null | false)[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
-// --- Main Component ---
-
 export default function FounderStory() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sentinelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // --- CONFIGURACIÓN DE ANIMACIÓN DE RAYOS VERTICALES ---
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -267,7 +258,6 @@ export default function FounderStory() {
   const color2 = useTransform(smoothProgress, [0, 0.5, 1], [COLORS.cyan, COLORS.emerald, COLORS.cyan]);
   const beamGradient = useMotionTemplate`linear-gradient(to bottom, transparent, ${color1}, ${color2})`;
 
-  // --- LÓGICA DE ACTIVE INDEX ---
   const setItemRef = (el: HTMLDivElement | null, i: number) => {
     itemRefs.current[i] = el;
   };
@@ -277,7 +267,6 @@ export default function FounderStory() {
 
   useEffect(() => {
     if (!sentinelRefs.current.length) return;
-
     let frame = 0;
     const updateActiveByProximity = () => {
       frame = requestAnimationFrame(updateActiveByProximity);
@@ -296,7 +285,6 @@ export default function FounderStory() {
       });
       if (bestIndex !== activeIndex) setActiveIndex(bestIndex);
     };
-
     frame = requestAnimationFrame(updateActiveByProximity);
     return () => cancelAnimationFrame(frame);
   }, [activeIndex]);
@@ -307,40 +295,16 @@ export default function FounderStory() {
 
   return (
     <section className="relative w-full bg-[#050505]" ref={containerRef}>
-      
-      {/* 1. FONDO DE RAYAS */}
       <BackgroundStripes />
-
-      {/* 2. CONTENEDOR ESTRUCTURAL */}
       <div className="relative z-10 w-full max-w-7xl mx-auto bg-[#050505] border-l border-r border-white/10">
         
-        {/* --- RAYOS ANIMADOS LATERALES --- */}
-        <motion.div 
-            style={{ 
-              top: beamTop,
-              opacity: beamOpacity,
-              background: beamGradient
-            }}
-            className="absolute -left-[1px] w-[2px] h-[150px] -translate-y-full blur-[2px] z-20"
-        />
-        <motion.div 
-            style={{ 
-              top: beamTop,
-              opacity: beamOpacity,
-              background: beamGradient
-            }}
-            className="absolute -right-[1px] w-[2px] h-[150px] -translate-y-full blur-[2px] z-20"
-        />
+        <motion.div style={{ top: beamTop, opacity: beamOpacity, background: beamGradient }} className="absolute -left-[1px] w-[2px] h-[150px] -translate-y-full blur-[2px] z-20" />
+        <motion.div style={{ top: beamTop, opacity: beamOpacity, background: beamGradient }} className="absolute -right-[1px] w-[2px] h-[150px] -translate-y-full blur-[2px] z-20" />
 
-        {/* Padding interno del contenido */}
         <div className="pt-24 pb-32 px-4 md:px-12">
           
-          {/* HEADER (NARRATIVA) */}
           <div className="mx-auto max-w-[680px] flex flex-col gap-6 text-center mb-16 md:mb-24">
-            <div className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500">
-              OUR STORY
-            </div>
-
+            <div className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500">OUR STORY</div>
             <h2 className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-white">
               We aren't just marketers.<br/> 
               We are tradies who learned{' '}
@@ -348,11 +312,7 @@ export default function FounderStory() {
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}
                   animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                  transition={{
-                    duration: 12,
-                    ease: "linear",
-                    repeat: Infinity
-                  }}
+                  transition={{ duration: 12, ease: "linear", repeat: Infinity }}
                   style={{
                     display: "inline-block",
                     backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
@@ -368,85 +328,45 @@ export default function FounderStory() {
                 <span className="text-white">.</span>
               </span>
             </h2>
-
             <p className="text-[14px] md:text-[16px] font-medium leading-relaxed text-zinc-400 tracking-tight">
               Most agencies view you as a transaction. We view you as a peer. Why? Because we spent years on the tools, got burned by the same agencies, and built the solution we wished we had.
             </p>
           </div>
 
-          {/* LISTA DE CAPITULOS (STORIES) */}
-          {/* REVERTIDO: Vuelto al espaciado original que te gustaba */}
           <div className="mx-auto w-full space-y-30 md:space-y-48">
             {founderStoryEntries.map((entry, index) => {
               const isActive = index === activeIndex;
-
               return (
-                <div
-                  key={index}
-                  className="relative flex flex-col md:flex-row gap-8 md:gap-16 lg:gap-24"
-                  ref={(el) => setItemRef(el, index)}
-                  aria-current={isActive ? "true" : "false"}
-                >
-                  {/* STICKY COLUMN (TITULOS) */}
+                <div key={index} className="relative flex flex-col md:flex-row gap-8 md:gap-16 lg:gap-24" ref={(el) => setItemRef(el, index)}>
                   <div className="top-40 flex h-min w-full md:w-[350px] shrink-0 flex-col md:sticky md:pl-12">
-                    
-                    {/* Número de fondo gigante */}
                     <div 
                         className={cn(
                             "absolute -top-10 -left-4 md:left-8 text-[120px] leading-none font-bold select-none transition-all duration-700",
                             isActive ? "text-white/10 translate-y-0" : "text-white/0 translate-y-4"
                         )}
                         style={{ fontFamily: 'Arial, sans-serif' }}
-                    >
-                        0{index + 1}
-                    </div>
-
+                    >0{index + 1}</div>
                     <div className="relative z-10 flex flex-col gap-3 pl-2">
-                        {/* Subtítulo + Icono estilizados */}
                         <div className="flex items-center gap-3">
-                            <div className={cn(
-                                "transition-colors duration-500",
-                                isActive ? "text-[#34d399]" : "text-zinc-600"
-                            )}>
+                            <div className={cn("transition-colors duration-500", isActive ? "text-[#34d399]" : "text-zinc-600")}>
                                 <entry.icon className="w-5 h-5" />
                             </div>
-                            <span className={cn(
-                                "text-xs font-bold uppercase tracking-[0.15em] transition-colors duration-500",
-                                isActive ? "text-[#34d399]" : "text-zinc-600"
-                            )}>
+                            <span className={cn("text-xs font-bold uppercase tracking-[0.15em] transition-colors duration-500", isActive ? "text-[#34d399]" : "text-zinc-600")}>
                                 {entry.subtitle.split("•")[0]} 
                             </span>
                         </div>
-
-                        {/* Título Grande */}
-                        <h3 className={cn(
-                            "text-3xl md:text-4xl font-bold leading-[1.1] transition-all duration-500",
-                            isActive ? "text-white" : "text-zinc-700"
-                        )}>
+                        <h3 className={cn("text-3xl md:text-4xl font-bold leading-[1.1] transition-all duration-500", isActive ? "text-white" : "text-zinc-700")}>
                             {entry.title}
                         </h3>
-
-                        {/* Barra decorativa animada */}
-                        <div className={cn(
-                            "h-1 mt-2 w-12 transition-all duration-700 rounded-full",
-                            isActive ? "bg-gradient-to-r from-emerald-400 to-cyan-400 w-24 opacity-100" : "bg-zinc-800 w-8 opacity-0"
-                        )} />
+                        <div className={cn("h-1 mt-2 w-12 transition-all duration-700 rounded-full", isActive ? "bg-gradient-to-r from-emerald-400 to-cyan-400 w-24 opacity-100" : "bg-zinc-800 w-8 opacity-0")} />
                     </div>
                   </div>
 
-                  {/* SENTINEL POSICIONADO EN EL CENTRO (Invisible) */}
-                  {/* Esto es lo que permite que la tarjeta tarde más en colapsarse sin cambiar el diseño */}
-                  <div
-                    ref={(el) => setSentinelRef(el, index)}
-                    aria-hidden
-                    className="absolute top-1/2 -translate-y-1/2 left-0 h-12 w-12 opacity-0 pointer-events-none"
-                  />
+                  <div ref={(el) => setSentinelRef(el, index)} aria-hidden className="absolute top-1/2 -translate-y-1/2 left-0 h-12 w-12 opacity-0 pointer-events-none" />
 
-                  {/* CONTENT COLUMN (TARJETAS) */}
+                  {/* CONTENT COLUMN (TARJETAS ROUNDED) */}
                   <div className="relative flex-1 min-w-0">
-                    
-                    {/* Glowing Effect Wrapper */}
-                    <div className="absolute -inset-[1px] rounded-none opacity-0 transition-opacity duration-500" style={{ opacity: isActive ? 1 : 0 }}>
+                    <div className="absolute -inset-[1px] rounded-2xl opacity-0 transition-opacity duration-500" style={{ opacity: isActive ? 1 : 0 }}>
                         <GlowingEffect 
                             spread={20}
                             glow={true}
@@ -458,15 +378,15 @@ export default function FounderStory() {
                     </div>
 
                     <article
-                      className={
-                        "relative flex flex-col rounded-none border p-6 md:p-8 transition-all duration-300 " +
-                        (isActive
+                      className={cn(
+                        "relative flex flex-col rounded-2xl border p-6 md:p-8 transition-all duration-300",
+                        isActive
                           ? "bg-zinc-900 z-10 border-transparent shadow-2xl shadow-black/50"
-                          : "bg-white/5 border-white/5 opacity-40 grayscale blur-[1px]")
-                      }
+                          : "bg-white/5 border-white/5 opacity-40 grayscale blur-[1px]"
+                      )}
                     >
                       {entry.image && (
-                        <div className="mb-8 w-full h-[240px] overflow-hidden bg-black border-b border-white/10 relative group">
+                        <div className="mb-8 w-full h-[240px] overflow-hidden bg-black border-b border-white/10 relative group rounded-xl">
                             <img
                                 src={entry.image}
                                 alt={`${entry.title} visual`}
@@ -479,41 +399,20 @@ export default function FounderStory() {
                       
                       <div className="space-y-6">
                         <div className="space-y-2">
-                          <p
-                            className={
-                              "text-sm leading-relaxed md:text-base transition-all duration-300 font-medium " +
-                              (isActive 
-                                ? "text-zinc-300" 
-                                : "text-zinc-500")
-                            }
-                          >
+                          <p className={cn("text-sm leading-relaxed md:text-base transition-all duration-300 font-medium", isActive ? "text-zinc-300" : "text-zinc-500")}>
                             {entry.description}
                           </p>
                         </div>
 
-                        <div
-                          aria-hidden={!isActive}
-                          className={
-                            "grid transition-all duration-500 ease-out " +
-                            (isActive 
-                              ? "grid-rows-[1fr] opacity-100" 
-                              : "grid-rows-[0fr] opacity-0")
-                          }
-                        >
+                        <div className={cn("grid transition-all duration-500 ease-out", isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}>
                           <div className="overflow-hidden">
                             <div className="space-y-6 pt-2">
                               {entry.items && entry.items.length > 0 && (
                                 <div className="rounded-none border-l-2 border-white/10 pl-6 py-2">
                                   <ul className="space-y-3">
                                     {entry.items.map((item, itemIndex) => (
-                                      <li 
-                                        key={itemIndex} 
-                                        className="flex items-start gap-3 text-sm text-zinc-400"
-                                      >
-                                        <div 
-                                          className="mt-1.5 h-1.5 w-1.5 rounded-none flex-shrink-0"
-                                          style={{ backgroundColor: COLORS.emerald }}
-                                        />
+                                      <li key={itemIndex} className="flex items-start gap-3 text-sm text-zinc-400">
+                                        <div className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: COLORS.emerald }} />
                                         <span className="leading-relaxed">{item}</span>
                                       </li>
                                     ))}
@@ -525,10 +424,8 @@ export default function FounderStory() {
                                 <div className="flex justify-start pt-4">
                                   <Button 
                                     size="lg"
-                                    className="group font-bold transition-all duration-200 text-white rounded-none border-none px-8 h-10 text-sm"
-                                    style={{
-                                      backgroundImage: `linear-gradient(135deg, ${COLORS.emerald}, ${COLORS.cyan})`,
-                                    }}
+                                    className="group font-bold transition-all duration-200 text-white rounded-xl border-none px-8 h-10 text-sm"
+                                    style={{ backgroundImage: `linear-gradient(135deg, ${COLORS.emerald}, ${COLORS.cyan})` }}
                                     asChild
                                   >
                                     <a href={entry.button.url}>
