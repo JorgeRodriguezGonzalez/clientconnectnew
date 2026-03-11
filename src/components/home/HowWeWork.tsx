@@ -12,7 +12,7 @@ const workSteps = [
     title: "Nanotise: Mould Remediation & Sanitising works",
     description: "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
     services: ["SEO", "Content Strategy", "Google Ads"],
-    video: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov",
+    image: "/images/nanotise10.jpg", // Cambiado de video a imagen
     top: 80,
   },
   {
@@ -72,7 +72,7 @@ const workSteps = [
     title: "Prolex Bathrooms: Sydney's Premier Specialists",
     description: "Scaling visibility through localized SEO and technical optimization, ensuring Prolex remains the top choice for modern bathroom overhauls.",
     services: ["Technical SEO", "Local SEO", "Website"],
-    image: "/images/proleximage.png", // Imagen actualizada para Prolex
+    image: "/images/proleximage.png",
     top: 230,
   },
 ];
