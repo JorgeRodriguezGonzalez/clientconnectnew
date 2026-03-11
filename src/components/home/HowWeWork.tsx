@@ -3,8 +3,8 @@ import { Search, Globe, TrendingUp, Zap, Check, Edit, Droplets, Home, Wrench, Sh
 
 const CYAN = "#06b6d4";
 const GREEN = "#34d399";
-const DARK_BG = "#0A0A0A"; // Fondo principal
-const CARD_BG = "#161616"; // Gris oscuro para las tarjetas
+const DARK_BG = "#0A0A0A"; // Fondo principal de la página
+const CARD_BG = "#161616"; // Color único para TODA la tarjeta
 
 const workSteps = [
   {
@@ -89,13 +89,13 @@ const carouselLogos = [
 // --- COMPONENTES AUXILIARES ---
 
 const TaskCard = () => (
-  <div className="bg-[#1A1A1A] rounded-2xl shadow-xl p-5 w-80 border border-white/5">
+  <div className="bg-[#1e1e1e] rounded-2xl shadow-xl p-5 w-80 border border-white/5">
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
         <span className="rounded-lg px-2 py-1.5 text-xs font-medium" style={{ background: `${CYAN}18`, color: CYAN }}>SEO Campaign</span>
-        <button className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center">
+        <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center">
           <svg width="16" height="20" viewBox="0 0 24 24" fill="none" stroke="#878689" strokeWidth="2"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
-        </button>
+        </div>
       </div>
       <div className="flex flex-col gap-1">
         <p className="text-white text-lg font-semibold leading-7">Keyword Research</p>
@@ -112,11 +112,11 @@ const TaskCard = () => (
 );
 
 const AddButton = () => (
-  <div className="bg-[#1A1A1A] rounded-2xl shadow-xl p-5 w-80 h-16 flex items-center justify-center border border-white/5">
+  <div className="bg-[#1e1e1e] rounded-2xl shadow-xl p-5 w-80 h-16 flex items-center justify-center border border-white/5">
     <div className="flex items-center gap-3">
-      <button className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+      <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
-      </button>
+      </div>
       <p className="text-gray-300 text-sm font-medium">Add a new campaign</p>
     </div>
   </div>
@@ -142,12 +142,12 @@ const InfiniteCarousel = () => {
   const logos = [...carouselLogos, ...carouselLogos, ...carouselLogos, ...carouselLogos];
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center overflow-hidden" style={{ background: `radial-gradient(circle at 60% 50%, ${CYAN}0F 0%, transparent 70%)` }}>
+    <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
       <div style={{ maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", width: "100%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", height: 200 }}>
         <div ref={ref} className="flex items-center gap-5" style={{ width: "fit-content", willChange: "transform" }}>
           {logos.map((logo, i) => (
             <div key={i} className="flex-shrink-0 w-36 h-36 p-2">
-              <div className="flex items-center justify-center w-full h-full bg-[#1A1A1A] rounded-2xl shadow-lg p-6 border border-white/5">
+              <div className="flex items-center justify-center w-full h-full bg-[#1e1e1e] rounded-2xl shadow-lg p-6 border border-white/5">
                 <img src={logo} alt="Tool" className="w-20 h-20 object-contain brightness-110" />
               </div>
             </div>
@@ -171,7 +171,7 @@ const AnimatedMedia = ({ src, type = "image" }) => {
   }, []);
 
   return (
-    <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden" style={{ background: `radial-gradient(circle at 80% 50%, ${CYAN}14 0%, transparent 70%)` }}>
+    <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden">
       <div className="relative overflow-hidden shadow-2xl bg-black" style={{ width: 420, height: 346, borderRadius: "16px 0 0 16px", opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(200px)", transition: "opacity 0.8s ease-out, transform 0.8s ease-out" }}>
         {type === "video" ? (
           <video src={src} autoPlay muted loop playsInline className="w-full h-full object-cover" />
@@ -184,7 +184,7 @@ const AnimatedMedia = ({ src, type = "image" }) => {
 };
 
 const TaskCardBackground = () => (
-  <div className="absolute inset-0 flex flex-col items-center justify-center gap-5" style={{ background: `radial-gradient(circle at 50% 50%, ${CYAN}0F 0%, transparent 70%)` }}>
+  <div className="absolute inset-0 flex flex-col items-center justify-center gap-5">
     <TaskCard />
     <AddButton />
   </div>
@@ -215,6 +215,7 @@ export const HowWeWork = () => {
           return (
             <div key={step.id} className="rounded-3xl shadow-2xl overflow-hidden border border-white/5" style={{ position: "sticky", top: step.top, zIndex: index + 1, background: CARD_BG }}>
               <div className="flex" style={{ height: 420 }}>
+                {/* Lado Izquierdo: Texto */}
                 <div className="flex flex-col gap-5 p-10" style={{ width: 440 }}>
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${CYAN}18` }}>
@@ -237,7 +238,9 @@ export const HowWeWork = () => {
                     ))}
                   </div>
                 </div>
-                <div className="flex-1 relative overflow-hidden bg-black/20">
+
+                {/* Lado Derecho: Medios (Ahora con el mismo fondo) */}
+                <div className="flex-1 relative overflow-hidden" style={{ background: CARD_BG }}>
                   {step.showTaskCard && <TaskCardBackground />}
                   {step.showCarousel && <InfiniteCarousel />}
                   {step.video && <AnimatedMedia src={step.video} type="video" />}
