@@ -15,7 +15,7 @@ const BG = "hsl(0,0%,100%)";
 const BG_LIGHT = "hsl(0,0%,98%)";
 const FONT = "'Satoshi', -apple-system, sans-serif";
 
-// --- DATOS DE CLIENTES ACTUALIZADOS ---
+// --- DATOS DE CLIENTES ---
 const clients = [
   { name: 'Prolex Bathroom Renovations', tags: ['SEO', 'Google Ads', 'Paid Social', 'Website'], image: '/images/prolex.jpg', logo: 'Prolex\nBathrooms' },
   { name: 'Nanotise', tags: ['Website', 'Rebrand', 'Social Media', 'Content Creation'], image: '/images/nanotise.jpg', logo: 'Nanotise' },
@@ -45,19 +45,19 @@ const ClientCard = ({ client, isMobile }) => (
     borderRadius: '24px',
     overflow: 'hidden',
     cursor: 'pointer',
-    border: '1px solid transparent',
+    border: '1px solid rgba(255,255,255,0.1)',
     transition: 'all 0.3s ease',
   }}
-  onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(0,0,0,0.2)'}
-  onMouseLeave={e => e.currentTarget.style.borderColor = 'transparent'}
+  onMouseEnter={e => { e.currentTarget.style.borderColor = PRIMARY; e.currentTarget.style.transform = "scale(1.02)"; }}
+  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.transform = "scale(1)"; }}
   >
     <img src={client.image} alt={client.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%)' }} />
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%)' }} />
     <div style={{ position: 'absolute', top: '20px', left: '20px' }}>
       <p style={{ color: '#fff', fontWeight: 700, fontSize: isMobile ? '13px' : '15px', lineHeight: 1.2, whiteSpace: 'pre-line', margin: 0, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{client.logo}</p>
     </div>
     <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px' }}>
-      <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: isMobile ? '11px' : '12px', fontWeight: 500, margin: 0 }}>{client.tags.join(' · ')}</p>
+      <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: isMobile ? '11px' : '12px', fontWeight: 500, margin: 0 }}>{client.tags.join(' · ')}</p>
     </div>
   </div>
 );
@@ -86,7 +86,7 @@ const ClientCarousel = () => {
   useEffect(() => {
     const tick = () => {
       if (!paused) {
-        xRef.current -= 0.5;
+        xRef.current -= 0.6; // Un poco más rápido sobre fondo oscuro
         if (Math.abs(xRef.current) >= trackWidth) {
           xRef.current = 0;
         }
@@ -99,25 +99,23 @@ const ClientCarousel = () => {
   }, [paused, trackWidth]);
 
   return (
-    <div style={{ width: '100%', position: 'relative', padding: '100px 0', background: '#fff', overflow: 'hidden' }}>
-      {/* Label Lateral */}
-      <div style={{
-        position: 'absolute', left: 0, top: 0, height: '100%', width: isMobile ? '60px' : '100px',
-        zIndex: 10, pointerEvents: 'none', display: 'flex', alignItems: 'center',
-        background: 'linear-gradient(to right, #fff 40%, transparent 100%)'
-      }}>
-        <p style={{
-          color: 'rgba(0,0,0,0.2)', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase',
-          letterSpacing: '4px', writingMode: 'vertical-rl', transform: 'rotate(180deg)', marginLeft: isMobile ? '15px' : '30px'
-        }}>
-          Our Local Clients
-        </p>
+    <section style={{ width: '100%', position: 'relative', padding: '100px 0', background: '#000', overflow: 'hidden' }}>
+      {/* Título del Bloque */}
+      <div style={{ textAlign: 'center', marginBottom: '50px', padding: '0 20px' }}>
+        <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.2em", color: PRIMARY }}>Our Impact</span>
+        <h2 style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 600, color: "#fff", marginTop: "12px", letterSpacing: "-0.02em" }}>
+          Some of our local clients
+        </h2>
       </div>
 
-      {/* Fade Derecho */}
+      {/* Degradados laterales para fundido en negro */}
       <div style={{
-        position: 'absolute', right: 0, top: 0, height: '100%', width: '120px',
-        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to left, #fff 0%, transparent 100%)'
+        position: 'absolute', left: 0, top: 0, height: '100%', width: '150px',
+        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to right, #000 10%, transparent 100%)'
+      }} />
+      <div style={{
+        position: 'absolute', right: 0, top: 0, height: '100%', width: '150px',
+        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to left, #000 10%, transparent 100%)'
       }} />
 
       <div 
@@ -129,7 +127,7 @@ const ClientCarousel = () => {
           <ClientCard key={i} client={client} isMobile={isMobile} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
@@ -185,7 +183,6 @@ export default function About() {
             Your dedicated <span style={{ color: "#34d399", fontWeight: 600 }}>growth partner</span>, helping Sydney businesses thrive in the <span style={{ color: "#34d399", fontWeight: 600 }}>digital age</span>.
           </p>
 
-          {/* Email CTA */}
           <div style={{ display: "flex", justifyContent: "center", marginTop: "32px", padding: "0 20px", ...anim(0.5) }}>
             <div style={{
               display: "flex", alignItems: "center", background: "rgba(255,255,255,0.05)",
@@ -200,7 +197,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Gallery */}
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "16px", marginTop: "48px", position: "relative", zIndex: 2 }}>
           {images.map((img, i) => (
             <div key={i} onMouseEnter={() => setHImg(i)} onMouseLeave={() => setHImg(null)}
@@ -219,57 +215,8 @@ export default function About() {
 
       <OurStepsVersion2 />
 
-      {/* ═══════════════ CLIENT CAROUSEL ═══════════════ */}
+      {/* ═══════════════ CLIENT CAROUSEL (BG NEGRO) ═══════════════ */}
       <ClientCarousel />
-
-      {/* ═══════════════ LOCAL EXPERTISE ═══════════════ */}
-      <section style={{ padding: "80px 20px", background: BG_LIGHT }}>
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <FadeIn>
-            <div style={{ textAlign: "center", marginBottom: "40px" }}>
-              <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: PRIMARY }}>Local Expertise</span>
-              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginTop: "12px", letterSpacing: "-0.02em", color: TEXT_DARK }}>
-                Why We Focus on<br />Sydney Businesses
-              </h2>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <div style={{
-              padding: "40px", borderRadius: "24px",
-              background: "#fff",
-              border: `1px solid rgba(${PRIMARY_RGB},0.1)`,
-            }}>
-              <p style={{ color: TEXT_MEDIUM, lineHeight: 1.8, margin: 0, fontSize: "16px" }}>
-                Sydney is one of the most competitive business environments in Australia — and that's exactly why we specialize here. We understand local market dynamics, seasonal trends, and what makes Sydney customers tick. Whether you're in Bondi, Parramatta, or anywhere in between, we speak your customers' language.
-              </p>
-            </div>
-          </FadeIn>
-
-          {/* Certifications */}
-          <FadeIn delay={0.3}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginTop: "32px" }}>
-              {[
-                { emoji: "🎖️", label: "Google Partner", c: PRIMARY_RGB },
-                { emoji: "📱", label: "Meta Business Partner", c: SECONDARY_RGB },
-                { emoji: "🏆", label: "Best Agency 2023", c: PRIMARY_RGB },
-              ].map((c, i) => (
-                <div key={i} style={{
-                  padding: "24px 16px", borderRadius: "16px", textAlign: "center",
-                  background: `rgba(${c.c},0.05)`,
-                  border: `1px solid rgba(${c.c},0.1)`,
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = `0 8px 25px rgba(${c.c},0.12)`; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
-                >
-                  <div style={{ fontSize: "28px", marginBottom: "8px" }}>{c.emoji}</div>
-                  <div style={{ fontSize: "13px", fontWeight: 600, color: TEXT_MEDIUM }}>{c.label}</div>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
-      </section>
 
       <CTASection />
       <Footer />
