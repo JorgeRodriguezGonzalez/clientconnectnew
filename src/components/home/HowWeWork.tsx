@@ -163,8 +163,7 @@ const InfiniteCarousel = () => {
   );
 };
 
-// --- MODIFICACIÓN AQUÍ ---
-// Hemos adaptado AnimatedMedia para manejar videos de forma que no se recorten.
+// --- MODIFICACIONES AQUÍ ---
 const AnimatedMedia = ({ src, type = "image" }) => {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -185,26 +184,26 @@ const AnimatedMedia = ({ src, type = "image" }) => {
   return (
     <div
       ref={ref}
-      className="absolute inset-0 flex items-center justify-end overflow-hidden"
+      // Cambiamos justify-end por justify-center para centrar el video grande
+      className="absolute inset-0 flex items-center justify-center overflow-hidden"
       style={{
-        background: `radial-gradient(circle at 80% 50%, ${CYAN}14 0%, transparent 70%)`,
+        // Gradient más sutil y centrado
+        background: `radial-gradient(circle at 50% 50%, ${CYAN}0A 0%, transparent 70%)`,
       }}
     >
       <div
-        className="relative overflow-hidden shadow-lg"
+        className="relative overflow-hidden shadow-lg bg-black"
         style={{
-          // Eliminamos el ancho y alto fijos para permitir que el contenido defina el tamaño
-          // width: 420,
-          // height: 346,
-          // Eliminamos el recorte de borde a la izquierda
-          // borderRadius: "16px 0 0 16px",
-          borderRadius: "16px", // Borde completo opcional, o ninguno
+          borderRadius: "16px",
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(200px)",
           transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
-          // Aseguramos que el contenedor no limite el video
-          maxHeight: '90%', // Limita la altura para no pisar el texto en exceso
-          maxWidth: '55%',  // Limita el ancho
+          // --- Ajustes de tamaño ---
+          maxHeight: '95%', // Casi todo el alto disponible
+          // Aumentamos el ancho máximo para hacerlo grande, cuidando que no pise el texto de la izquierda.
+          // Como la tarjeta tiene 1000px y el texto 420px, nos quedan ~580px.
+          // Usaremos un porcentaje alto para que se vea grande pero con un pequeño margen.
+          maxWidth: '58%',  // Aumentado significativamente
         }}
       >
         {type === "video" ? (
@@ -214,7 +213,7 @@ const AnimatedMedia = ({ src, type = "image" }) => {
             muted
             loop
             playsInline
-            // Usamos object-contain para que todo el video quepa sin recortes
+            // object-contain asegura que se vea completo
             className="w-full h-full object-contain"
           />
         ) : (
@@ -222,7 +221,7 @@ const AnimatedMedia = ({ src, type = "image" }) => {
             src={src}
             className="w-full h-full object-cover"
             alt="Case Study"
-            style={{ borderRadius: "16px 0 0 16px" }} // Mantenemos el estilo para imágenes
+            style={{ borderRadius: "16px" }}
           />
         )}
       </div>
@@ -350,7 +349,7 @@ export const HowWeWork = () => {
                   </p>
                 </div>
 
-                <div className="flex-1 relative overflow-hidden">
+                <div className="flex-1 relative overflow-hidden flex items-center justify-center">
                   {step.showTaskCard && <TaskCardBackground />}
                   {step.showCarousel && <InfiniteCarousel />}
                   {step.video && (
