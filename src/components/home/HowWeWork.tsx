@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-// Corregido: 'Tool' no existe, usamos 'Wrench'
-import { Search, Globe, TrendingUp, Zap, Code, Check, Edit, Droplets, Home, Wrench } from "lucide-react";
+import { Search, Globe, TrendingUp, Zap, Check, Edit, Droplets, Home, Wrench, Shield } from "lucide-react";
 
 const CYAN = "#06b6d4";
 const GREEN = "#34d399";
@@ -11,60 +10,63 @@ const workSteps = [
     icon: Search,
     label: "Mould Remediation",
     title: "Nanotise: Mould Remediation & Sanitising works",
-    description:
-      "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
+    description: "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
     video: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov",
-    top: 100,
+    top: 80,
   },
   {
     id: "s2",
     icon: Globe,
     label: "Landscaping",
     title: "LC Landscaping: Sydney’s Premier Landscape Designers",
-    description:
-      "For LC Landscaping, we built a high-converting digital presence that showcases their premium landscape designs to high-end residential clients across Sydney.",
+    description: "For LC Landscaping, we built a high-converting digital presence that showcases their premium landscape designs to high-end residential clients across Sydney.",
     showTaskCard: true,
-    top: 130,
+    top: 105,
   },
   {
     id: "s3",
-    icon: Wrench, // Usando Wrench aquí
+    icon: Wrench,
     label: "Plumbing Services",
     title: "Asset Plumbing Solutions: Sydney's Trusted Experts",
-    description:
-      "200+ leads at $50 CPL. We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving 16 new keywords to the top rankings and ensuring a steady flow of emergency plumbing jobs.",
+    description: "200+ leads at $50 CPL. We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving 16 new keywords to the top rankings and ensuring a steady flow of jobs.",
     image: "https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&q=80",
-    top: 160,
+    top: 130,
   },
   {
     id: "s4",
-    icon: Zap,
-    label: "Outdoor Living",
-    title: "Pioneer Shades: Sydney’s Best Pergolas & Patios",
-    description:
-      "Through targeted social media and search campaigns, we helped Pioneer Shade Structures dominate the Sydney market for custom pergolas and shade solutions.",
-    image: "https://images.unsplash.com/photo-1622397333309-3056849bc70b?w=800&q=80",
-    top: 190,
+    icon: Shield,
+    label: "Roofing",
+    title: "Your Local Roofers: Expert services across Australia",
+    description: "We scaled their lead generation through optimized Google Ads and local SEO, delivering consistent results for their roofing services on a national scale.",
+    showCarousel: true,
+    top: 155,
   },
   {
     id: "s5",
-    icon: Droplets,
-    label: "Bathroom Renovations",
-    title: "Premier Bathrooms: Luxury Renovations in Sydney",
-    description:
-      "We deployed high-intent search campaigns and a premium UI/UX design that captures qualified leads daily in the competitive Sydney renovation market.",
-    showCarousel: true,
-    top: 220,
+    icon: Zap,
+    label: "Outdoor Living",
+    title: "Pioneer Shades: Sydney’s Best Pergolas & Patios",
+    description: "Through targeted social media and search campaigns, we helped Pioneer Shade Structures dominate the Sydney market for custom pergolas and shade solutions.",
+    image: "https://images.unsplash.com/photo-1622397333309-3056849bc70b?w=800&q=80",
+    top: 180,
   },
   {
     id: "s6",
+    icon: Droplets,
+    label: "Bathroom Renovations",
+    title: "Premier Bathrooms: Luxury Renovations in Sydney",
+    description: "We deployed high-intent search campaigns and a premium UI/UX design that captures qualified leads daily in the competitive Sydney renovation market.",
+    image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80",
+    top: 205,
+  },
+  {
+    id: "s7",
     icon: Home,
     label: "Renovation Specialists",
     title: "Prolex Bathrooms: Sydney's Premier Specialists",
-    description:
-      "Scaling visibility through localized SEO and technical optimization, ensuring Prolex remains the top choice for modern bathroom overhauls.",
+    description: "Scaling visibility through localized SEO and technical optimization, ensuring Prolex remains the top choice for modern bathroom overhauls.",
     image: "https://images.unsplash.com/photo-1584622781564-1d9876a13300?w=800&q=80",
-    top: 250,
+    top: 230,
   },
 ];
 
@@ -79,17 +81,13 @@ const TaskCard = () => (
   <div className="bg-white rounded-2xl shadow-lg p-5 w-80">
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <span className="rounded-lg px-2 py-1.5 text-xs font-medium" style={{ background: `${CYAN}18`, color: CYAN }}>
-          SEO Campaign
-        </span>
+        <span className="rounded-lg px-2 py-1.5 text-xs font-medium" style={{ background: `${CYAN}18`, color: CYAN }}>SEO Campaign</span>
         <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-          <svg width="16" height="20" viewBox="0 0 24 24" fill="none" stroke="#878689" strokeWidth="2">
-            <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-          </svg>
+          <svg width="16" height="20" viewBox="0 0 24 24" fill="none" stroke="#878689" strokeWidth="2"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
         </button>
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-gray-800 text-lg font-semibold leading-7">Keyword Research & Optimization</p>
+        <p className="text-gray-800 text-lg font-semibold leading-7">Keyword Research</p>
         <p className="text-gray-400 text-sm leading-5">Target high-value keywords for Sydney market</p>
       </div>
       <div className="flex flex-col gap-2">
@@ -106,9 +104,7 @@ const AddButton = () => (
   <div className="bg-white rounded-2xl shadow-lg p-5 w-80 h-16 flex items-center justify-center">
     <div className="flex items-center gap-3">
       <button className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#717073">
-          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-        </svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#717073"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
       </button>
       <p className="text-gray-500 text-sm font-medium">Add a new campaign</p>
     </div>
