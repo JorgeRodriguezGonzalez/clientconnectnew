@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion"; // Asegúrate de tener framer-motion instalado
+import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import Footer from "@/components/layout/Footer";
@@ -10,10 +10,7 @@ const PRIMARY_RGB = "52,211,153";
 const SECONDARY = "#06b6d4";
 const SECONDARY_RGB = "6,182,212";
 const TEXT_DARK = "hsl(0,0%,10%)";
-const TEXT_MEDIUM = "hsl(0,0%,33%)";
-const TEXT_LIGHT = "hsl(0,0%,46%)";
 const BG = "hsl(0,0%,100%)";
-const BG_LIGHT = "hsl(0,0%,98%)";
 const FONT = "'Satoshi', -apple-system, sans-serif";
 
 // --- DATOS DE CLIENTES ---
@@ -36,7 +33,7 @@ const images = [
   { url: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop", alt: "Planning", rotate: 3 },
 ];
 
-// --- SUB-COMPONENTE: CLIENT CARD ---
+// --- COMPONENTE: CLIENT CARD ---
 const ClientCard = ({ client, isMobile }) => (
   <div style={{
     position: 'relative',
@@ -63,7 +60,7 @@ const ClientCard = ({ client, isMobile }) => (
   </div>
 );
 
-// --- COMPONENTE PRINCIPAL DEL CARRUSEL ---
+// --- COMPONENTE: CLIENT CAROUSEL ---
 const ClientCarousel = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -101,11 +98,34 @@ const ClientCarousel = () => {
 
   return (
     <section style={{ width: '100%', position: 'relative', padding: '120px 0', background: '#000', overflow: 'hidden' }}>
-      {/* TÍTULO CON EFECTO SHIMMER GRADIENT */}
-      <div style={{ textAlign: 'center', marginBottom: '64px', padding: '0 20px' }}>
-        <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.3em", color: PRIMARY, display: "block", marginBottom: "16px" }}>
+      
+      {/* CABECERA CON BADGE REDONDEADO */}
+      <div style={{ textAlign: 'center', marginBottom: '64px', padding: '0 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        
+        {/* Badge "Success Stories" CORREGIDO: Redondeado */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.3 }}
+          style={{
+            fontFamily: "'Satoshi', sans-serif",
+            fontWeight: 600,
+            fontSize: "10px",
+            textTransform: "uppercase",
+            letterSpacing: "2px",
+            padding: "6px 16px", // Ligeramente más padding horizontal para la curva
+            borderRadius: "50px", // CORRECCIÓN: Bordes redondeados (píldora)
+            width: "fit-content",
+            background: "rgba(255,255,255,0.05)",
+            border: "1px solid rgba(255,255,255,0.10)",
+            color: "#9ca3af", // gray-400
+            marginBottom: "24px"
+          }}
+        >
           Success Stories
-        </span>
+        </motion.div>
+
         <h2 style={{ 
           fontFamily: "'Satoshi', sans-serif", 
           fontWeight: 700, 
@@ -119,11 +139,7 @@ const ClientCarousel = () => {
           <motion.span
             initial={{ backgroundPosition: "400% 50%" }}
             animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
-            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
             style={{
               background: `linear-gradient(90deg, transparent, ${PRIMARY}, ${SECONDARY}, transparent)`,
               backgroundSize: "400% 100%",
@@ -138,14 +154,8 @@ const ClientCarousel = () => {
       </div>
 
       {/* Degradados laterales */}
-      <div style={{
-        position: 'absolute', left: 0, top: 0, height: '100%', width: isMobile ? '80px' : '200px',
-        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to right, #000 15%, transparent 100%)'
-      }} />
-      <div style={{
-        position: 'absolute', right: 0, top: 0, height: '100%', width: isMobile ? '80px' : '200px',
-        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to left, #000 15%, transparent 100%)'
-      }} />
+      <div style={{ position: 'absolute', left: 0, top: 0, height: '100%', width: isMobile ? '80px' : '200px', zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to right, #000 15%, transparent 100%)' }} />
+      <div style={{ position: 'absolute', right: 0, top: 0, height: '100%', width: isMobile ? '80px' : '200px', zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to left, #000 15%, transparent 100%)' }} />
 
       <div 
         style={{ display: 'flex', gap: `${gap}px`, transform: `translateX(${x}px)`, willChange: 'transform' }}
