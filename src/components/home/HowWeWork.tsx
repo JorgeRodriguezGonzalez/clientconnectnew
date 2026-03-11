@@ -11,6 +11,7 @@ const workSteps = [
     label: "Mould Remediation",
     title: "Nanotise: Mould Remediation & Sanitising works",
     description: "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
+    services: ["SEO", "Content Strategy", "Google Ads"],
     video: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov",
     top: 80,
   },
@@ -20,6 +21,7 @@ const workSteps = [
     label: "Landscaping",
     title: "LC Landscaping: Sydney’s Premier Landscape Designers",
     description: "For LC Landscaping, we built a high-converting digital presence that showcases their premium landscape designs to high-end residential clients across Sydney.",
+    services: ["Website", "UI/UX Design", "Local SEO"],
     showTaskCard: true,
     top: 105,
   },
@@ -28,7 +30,8 @@ const workSteps = [
     icon: Wrench,
     label: "Plumbing Services",
     title: "Asset Plumbing Solutions: Sydney's Trusted Experts",
-    description: "200+ leads at $50 CPL. We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving 16 new keywords to the top rankings and ensuring a steady flow of jobs.",
+    description: "200+ leads at $50 CPL. We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving 16 new keywords to the top rankings.",
+    services: ["Google Ads", "Lead Gen", "SEO"],
     image: "https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&q=80",
     top: 130,
   },
@@ -38,6 +41,7 @@ const workSteps = [
     label: "Roofing",
     title: "Your Local Roofers: Expert services across Australia",
     description: "We scaled their lead generation through optimized Google Ads and local SEO, delivering consistent results for their roofing services on a national scale.",
+    services: ["Google Ads", "National SEO", "Website"],
     showCarousel: true,
     top: 155,
   },
@@ -46,7 +50,8 @@ const workSteps = [
     icon: Zap,
     label: "Outdoor Living",
     title: "Pioneer Shades: Sydney’s Best Pergolas & Patios",
-    description: "Through targeted social media and search campaigns, we helped Pioneer Shade Structures dominate the Sydney market for custom pergolas and shade solutions.",
+    description: "Through targeted social media and search campaigns, we helped Pioneer Shade Structures dominate the Sydney market for custom pergolas.",
+    services: ["Social Media", "Google Ads", "SEO"],
     image: "https://images.unsplash.com/photo-1622397333309-3056849bc70b?w=800&q=80",
     top: 180,
   },
@@ -55,7 +60,8 @@ const workSteps = [
     icon: Droplets,
     label: "Bathroom Renovations",
     title: "Premier Bathrooms: Luxury Renovations in Sydney",
-    description: "We deployed high-intent search campaigns and a premium UI/UX design that captures qualified leads daily in the competitive Sydney renovation market.",
+    description: "We deployed high-intent search campaigns and a premium UI/UX design that captures qualified leads daily in the competitive Sydney market.",
+    services: ["Website", "Google Ads", "UI/UX"],
     image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80",
     top: 205,
   },
@@ -65,6 +71,7 @@ const workSteps = [
     label: "Renovation Specialists",
     title: "Prolex Bathrooms: Sydney's Premier Specialists",
     description: "Scaling visibility through localized SEO and technical optimization, ensuring Prolex remains the top choice for modern bathroom overhauls.",
+    services: ["Technical SEO", "Local SEO", "Website"],
     image: "https://images.unsplash.com/photo-1584622781564-1d9876a13300?w=800&q=80",
     top: 230,
   },
@@ -211,6 +218,23 @@ export const HowWeWork = () => {
                   </div>
                   <h2 className="text-gray-800 text-2xl font-semibold leading-snug" style={{ maxWidth: 360 }}>{step.title}</h2>
                   <p className="text-gray-400 text-base leading-6" style={{ maxWidth: 360 }}>{step.description}</p>
+                  
+                  {/* BADGES SECTION */}
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {step.services?.map((service) => (
+                      <span 
+                        key={service} 
+                        className="px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase border"
+                        style={{ 
+                          backgroundColor: `${CYAN}08`, 
+                          color: CYAN, 
+                          borderColor: `${CYAN}20` 
+                        }}
+                      >
+                        {service}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 <div className="flex-1 relative overflow-hidden">
                   {step.showTaskCard && <TaskCardBackground />}
