@@ -248,18 +248,17 @@ const OurProcess = () => {
               <div
                 style={{
                   background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
-                  borderRadius: "24px",
-                  padding: "52px 48px",
+                  borderRadius: "20px",
+                  padding: "48px 40px",
                   position: "relative",
                   overflow: "hidden",
                   backdropFilter: "blur(12px)",
                   WebkitBackdropFilter: "blur(12px)",
-                  minHeight: "340px",
+                  minHeight: "260px",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "24px",
                   border: isActive ? "1px solid transparent" : "1px solid rgba(255,255,255,0.1)",
                   backgroundClip: isActive ? "padding-box" : undefined,
                   boxShadow: isActive
@@ -271,7 +270,7 @@ const OurProcess = () => {
               >
                 {isActive && (
                   <div style={{
-                    position: "absolute", inset: 0, borderRadius: "24px", padding: "1px",
+                    position: "absolute", inset: 0, borderRadius: "20px", padding: "1px",
                     background: C.gradient,
                     WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                     WebkitMaskComposite: "xor",
