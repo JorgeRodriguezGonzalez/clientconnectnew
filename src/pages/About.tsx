@@ -46,18 +46,18 @@ const ClientCard = ({ client, isMobile }) => (
     overflow: 'hidden',
     cursor: 'pointer',
     border: '1px solid rgba(255,255,255,0.1)',
-    transition: 'all 0.3s ease',
+    transition: 'all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)',
   }}
-  onMouseEnter={e => { e.currentTarget.style.borderColor = PRIMARY; e.currentTarget.style.transform = "scale(1.02)"; }}
+  onMouseEnter={e => { e.currentTarget.style.borderColor = PRIMARY; e.currentTarget.style.transform = "scale(1.03)"; }}
   onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.transform = "scale(1)"; }}
   >
     <img src={client.image} alt={client.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%)' }} />
-    <div style={{ position: 'absolute', top: '20px', left: '20px' }}>
-      <p style={{ color: '#fff', fontWeight: 700, fontSize: isMobile ? '13px' : '15px', lineHeight: 1.2, whiteSpace: 'pre-line', margin: 0, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{client.logo}</p>
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 100%)' }} />
+    <div style={{ position: 'absolute', top: '24px', left: '24px' }}>
+      <p style={{ color: '#fff', fontWeight: 700, fontSize: isMobile ? '13px' : '15px', lineHeight: 1.2, whiteSpace: 'pre-line', margin: 0 }}>{client.logo}</p>
     </div>
-    <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px' }}>
-      <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: isMobile ? '11px' : '12px', fontWeight: 500, margin: 0 }}>{client.tags.join(' · ')}</p>
+    <div style={{ position: 'absolute', bottom: '24px', left: '24px', right: '24px' }}>
+      <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: isMobile ? '11px' : '12px', fontWeight: 500, margin: 0, letterSpacing: '0.02em' }}>{client.tags.join(' · ')}</p>
     </div>
   </div>
 );
@@ -78,7 +78,7 @@ const ClientCarousel = () => {
   }, []);
 
   const cardWidth = isMobile ? 220 : 260;
-  const gap = isMobile ? 16 : 20;
+  const gap = isMobile ? 16 : 24;
   const step = cardWidth + gap;
   const trackWidth = clients.length * step;
   const looped = [...clients, ...clients, ...clients];
@@ -86,7 +86,7 @@ const ClientCarousel = () => {
   useEffect(() => {
     const tick = () => {
       if (!paused) {
-        xRef.current -= 0.6; // Un poco más rápido sobre fondo oscuro
+        xRef.current -= 0.6;
         if (Math.abs(xRef.current) >= trackWidth) {
           xRef.current = 0;
         }
@@ -99,23 +99,33 @@ const ClientCarousel = () => {
   }, [paused, trackWidth]);
 
   return (
-    <section style={{ width: '100%', position: 'relative', padding: '100px 0', background: '#000', overflow: 'hidden' }}>
-      {/* Título del Bloque */}
-      <div style={{ textAlign: 'center', marginBottom: '50px', padding: '0 20px' }}>
-        <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.2em", color: PRIMARY }}>Our Impact</span>
-        <h2 style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 600, color: "#fff", marginTop: "12px", letterSpacing: "-0.02em" }}>
+    <section style={{ width: '100%', position: 'relative', padding: '120px 0', background: '#000', overflow: 'hidden' }}>
+      {/* Título del Bloque Actualizado */}
+      <div style={{ textAlign: 'center', marginBottom: '64px', padding: '0 20px' }}>
+        <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.3em", color: PRIMARY, display: "block", marginBottom: "16px" }}>
+          Success Stories
+        </span>
+        <h2 style={{ 
+          fontFamily: "'Satoshi', sans-serif", 
+          fontWeight: 700, 
+          fontSize: "clamp(32px, 5vw, 48px)", 
+          color: "#fff", 
+          margin: 0, 
+          letterSpacing: "-0.03em",
+          lineHeight: 1.1
+        }}>
           Some of our local clients
         </h2>
       </div>
 
-      {/* Degradados laterales para fundido en negro */}
+      {/* Degradados laterales */}
       <div style={{
-        position: 'absolute', left: 0, top: 0, height: '100%', width: '150px',
-        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to right, #000 10%, transparent 100%)'
+        position: 'absolute', left: 0, top: 0, height: '100%', width: isMobile ? '80px' : '200px',
+        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to right, #000 15%, transparent 100%)'
       }} />
       <div style={{
-        position: 'absolute', right: 0, top: 0, height: '100%', width: '150px',
-        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to left, #000 10%, transparent 100%)'
+        position: 'absolute', right: 0, top: 0, height: '100%', width: isMobile ? '80px' : '200px',
+        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to left, #000 15%, transparent 100%)'
       }} />
 
       <div 
@@ -128,21 +138,6 @@ const ClientCarousel = () => {
         ))}
       </div>
     </section>
-  );
-};
-
-const FadeIn = ({ children, delay = 0, className = "" }) => {
-  const [vis, setVis] = useState(false);
-  const ref = useRef();
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold: 0.15 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-  return (
-    <div ref={ref} className={className} style={{ opacity: vis ? 1 : 0, transform: vis ? "translateY(0)" : "translateY(30px)", transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s` }}>
-      {children}
-    </div>
   );
 };
 
@@ -169,18 +164,18 @@ export default function About() {
 
         <div style={{ textAlign: "center", paddingTop: "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
           <h1 style={{
-            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-            fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
+            fontFamily: "'Satoshi', sans-serif",
+            fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
             ...anim(0.1),
           }}>
             About Us.
           </h1>
           <p style={{
-            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-            fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff", maxWidth: "520px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
+            fontFamily: "'Satoshi', sans-serif",
+            fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "rgba(255,255,255,0.8)", maxWidth: "520px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
             ...anim(0.3),
           }}>
-            Your dedicated <span style={{ color: "#34d399", fontWeight: 600 }}>growth partner</span>, helping Sydney businesses thrive in the <span style={{ color: "#34d399", fontWeight: 600 }}>digital age</span>.
+            Your dedicated <span style={{ color: PRIMARY, fontWeight: 600 }}>growth partner</span>, helping Sydney businesses thrive in the <span style={{ color: PRIMARY, fontWeight: 600 }}>digital age</span>.
           </p>
 
           <div style={{ display: "flex", justifyContent: "center", marginTop: "32px", padding: "0 20px", ...anim(0.5) }}>
@@ -202,9 +197,9 @@ export default function About() {
             <div key={i} onMouseEnter={() => setHImg(i)} onMouseLeave={() => setHImg(null)}
               style={{
                 flex: "0 0 auto", width: i === 2 ? "200px" : "160px", height: i === 2 ? "260px" : "220px",
-                borderRadius: "20px", overflow: "hidden", position: "relative", transition: "all 0.15s ease-out",
+                borderRadius: "20px", overflow: "hidden", position: "relative", transition: "all 0.2s ease-out",
                 transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.1 : 1})`,
-                boxShadow: hImg === i ? `0 20px 60px rgba(${PRIMARY_RGB},0.35)` : "0 10px 40px rgba(0,0,0,0.4)",
+                boxShadow: hImg === i ? `0 20px 60px rgba(${PRIMARY_RGB},0.4)` : "0 10px 40px rgba(0,0,0,0.5)",
                 zIndex: hImg === i ? 10 : 1,
               }}>
               <img src={img.url} alt={img.alt} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -215,7 +210,7 @@ export default function About() {
 
       <OurStepsVersion2 />
 
-      {/* ═══════════════ CLIENT CAROUSEL (BG NEGRO) ═══════════════ */}
+      {/* ═══════════════ CLIENT CAROUSEL (NEGRO + SATOSHI) ═══════════════ */}
       <ClientCarousel />
 
       <CTASection />
