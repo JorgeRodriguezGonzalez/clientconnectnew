@@ -228,7 +228,7 @@ const SubServicesSection = ({
   const byArea = Object.fromEntries(items.map(s => [s.area, s]));
 
   return (
-    <section style={{ padding: "80px 80px", backgroundColor: "#ffffff", position: "relative", zIndex: 1 }} className="hidden md:block">
+    <section style={{ backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
       <style>{`
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap');
         .gradient-text {
@@ -243,14 +243,47 @@ const SubServicesSection = ({
           0% { background-position: -200% center; }
           100% { background-position: 200% center; }
         }
+
+        /* ── Desktop grid (≥768px) ── */
+        .services-desktop-grid {
+          display: none;
+        }
+        @media (min-width: 768px) {
+          .services-desktop-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            width: 100%;
+          }
+          .services-mobile-grid {
+            display: none !important;
+          }
+          .services-section-wrapper {
+            padding: 80px 80px;
+          }
+        }
+
+        /* ── Mobile grid (<768px) ── */
+        .services-mobile-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          width: 100%;
+        }
+        @media (max-width: 767px) {
+          .services-section-wrapper {
+            padding: 48px 16px;
+          }
+        }
       `}</style>
 
-      <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "60px" }}>
+      <div className="services-section-wrapper" style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "40px" }}>
 
-        <div style={{ textAlign: "center", maxWidth: "700px" }}>
+        {/* ── Heading ── */}
+        <div style={{ textAlign: "center", maxWidth: "700px", padding: "0 16px" }}>
           <h2 style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
-            fontSize: "clamp(32px, 5vw, 52px)", lineHeight: 1.1,
+            fontSize: "clamp(28px, 5vw, 52px)", lineHeight: 1.1,
             color: "#111827", marginBottom: "16px",
           }}>
             {heading}{" "}
@@ -258,14 +291,15 @@ const SubServicesSection = ({
           </h2>
           <p style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 500,
-            fontSize: "16px", lineHeight: 1.6, color: "#6b7280",
+            fontSize: "15px", lineHeight: 1.6, color: "#6b7280",
             maxWidth: "400px", margin: "0 auto",
           }}>
             {subtitle}
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px", width: "100%" }}>
+        {/* ── Desktop layout (unchanged) ── */}
+        <div className="services-desktop-grid">
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <ServiceCard service={byArea["top-left"]} style={{ height: "480px" }} />
             <ServiceCard service={byArea["bottom-left"]} style={{ height: "260px" }} />
@@ -284,6 +318,18 @@ const SubServicesSection = ({
             <ServiceCard service={byArea["bottom-right"]} style={{ height: "100%" }} />
           </div>
         </div>
+
+        {/* ── Mobile layout (single column, all cards) ── */}
+        <div className="services-mobile-grid">
+          {items.map((service) => (
+            <ServiceCard
+              key={service.id}
+              service={service}
+              style={{ height: "240px", minHeight: "240px" }}
+            />
+          ))}
+        </div>
+
       </div>
     </section>
   );
