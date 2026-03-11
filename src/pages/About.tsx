@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import Footer from "@/components/layout/Footer";
@@ -10,11 +11,19 @@ const PRIMARY_RGB = "52,211,153";
 const SECONDARY = "#06b6d4";
 const SECONDARY_RGB = "6,182,212";
 const TEXT_DARK = "hsl(0,0%,10%)";
-const TEXT_MEDIUM = "hsl(0,0%,33%)";
-const TEXT_LIGHT = "hsl(0,0%,46%)";
 const BG = "hsl(0,0%,100%)";
-const BG_LIGHT = "hsl(0,0%,98%)";
 const FONT = "'Satoshi', -apple-system, sans-serif";
+
+// --- CLIENT DATA ---
+const clients = [
+  { name: 'Prolex Bathroom Renovations', tags: ['SEO', 'Google Ads', 'Paid Social', 'Website'], image: '/images/prolex.jpg', logo: 'Prolex\nBathrooms' },
+  { name: 'Nanotise', tags: ['Website', 'Rebrand', 'Social Media', 'Content Creation'], image: '/images/nanotise.jpg', logo: 'Nanotise' },
+  { name: 'Asset Plumbing Solutions', tags: ['Google Ads', 'Website', 'SEO'], image: '/images/asset.jpg', logo: 'Asset Plumbing\nSolutions' },
+  { name: 'LC Landscaping', tags: ['Google Ads', 'Paid Social', 'Website'], image: '/images/landscaping.jpg', logo: 'LC\nLandscaping' },
+  { name: 'Pioneer Shades', tags: ['Paid Social', 'Google Ads', 'Website'], image: '/images/pioneer.jpg', logo: 'Pioneer\nShades' },
+  { name: 'Sydney Glass Pool Fencing', tags: ['Google Ads', 'Website', 'Content Creation'], image: '/images/sydneyglass.jpeg', logo: 'Sydney Glass\nPool Fencing' },
+  { name: 'LC Driveways', tags: ['Google Ads', 'Paid Social', 'Website'], image: '/images/117.jpg', logo: 'LC\nDriveways' },
+];
 
 const images = [
   { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=500&fit=crop", alt: "Team collaboration", rotate: -6 },
@@ -27,12 +36,129 @@ const images = [
 
 const mobileImages = [images[0], images[1], images[2], images[3]];
 
-const values = [
-  { icon: "🎯", title: "Results-Driven", desc: "We're obsessed with delivering measurable results that impact your bottom line." },
-  { icon: "❤️", title: "Client-First", desc: "Your success is our success. We treat your business like our own." },
-  { icon: "🤝", title: "Collaboration", desc: "We work as an extension of your team, not just another vendor." },
-  { icon: "🏆", title: "Excellence", desc: "We constantly learn and adapt to stay ahead in the ever-changing digital landscape." },
-];
+// --- CLIENT CARD ---
+const ClientCard = ({ client, isMobile }) => (
+  <div style={{
+    position: 'relative', flexShrink: 0,
+    width: isMobile ? '220px' : '260px', height: isMobile ? '290px' : '340px',
+    borderRadius: '24px', overflow: 'hidden', cursor: 'pointer',
+    border: '1px solid rgba(255,255,255,0.1)', transition: 'all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)',
+  }}
+  onMouseEnter={e => { e.currentTarget.style.borderColor = PRIMARY; e.currentTarget.style.transform = "scale(1.03)"; }}
+  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.transform = "scale(1)"; }}
+  >
+    <img src={client.image} alt={client.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 100%)' }} />
+    <div style={{ position: 'absolute', top: '24px', left: '24px' }}>
+      <p style={{ color: '#fff', fontWeight: 700, fontSize: isMobile ? '13px' : '15px', lineHeight: 1.2, whiteSpace: 'pre-line', margin: 0 }}>{client.logo}</p>
+    </div>
+    <div style={{ position: 'absolute', bottom: '24px', left: '24px', right: '24px' }}>
+      <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: isMobile ? '11px' : '12px', fontWeight: 500, margin: 0, letterSpacing: '0.02em' }}>{client.tags.join(' · ')}</p>
+    </div>
+  </div>
+);
+
+// --- CLIENT CAROUSEL ---
+const ClientCarousel = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [x, setX] = useState(0);
+  const xRef = useRef(0);
+  const rafRef = useRef();
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const cardWidth = isMobile ? 220 : 260;
+  const gap = isMobile ? 16 : 24;
+  const step = cardWidth + gap;
+  const trackWidth = clients.length * step;
+  const looped = [...clients, ...clients, ...clients];
+
+  useEffect(() => {
+    const tick = () => {
+      if (!paused) {
+        xRef.current -= 0.6;
+        if (Math.abs(xRef.current) >= trackWidth) xRef.current = 0;
+        setX(xRef.current);
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [paused, trackWidth]);
+
+  return (
+    <section style={{ width: '100%', position: 'relative', padding: '120px 0', background: '#000', overflow: 'hidden' }}>
+      <div style={{ textAlign: 'center', marginBottom: '64px', padding: '0 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.3 }}
+          style={{
+            fontFamily: "'Satoshi', sans-serif", fontWeight: 600, fontSize: "10px",
+            textTransform: "uppercase", letterSpacing: "2px", padding: "6px 16px",
+            borderRadius: "50px", width: "fit-content",
+            background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)",
+            color: "#9ca3af", marginBottom: "24px",
+          }}
+        >
+          Success Stories
+        </motion.div>
+        <h2 style={{
+          fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
+          fontSize: "clamp(32px, 5vw, 48px)", color: "#fff", margin: 0,
+          letterSpacing: "-0.03em", lineHeight: 1.1,
+        }}>
+          Some of our{" "}
+          <motion.span
+            initial={{ backgroundPosition: "400% 50%" }}
+            animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            style={{
+              background: `linear-gradient(90deg, transparent, ${PRIMARY}, ${SECONDARY}, transparent)`,
+              backgroundSize: "400% 100%",
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+              display: "inline-block",
+            }}
+          >
+            local clients
+          </motion.span>
+        </h2>
+      </div>
+
+      <div style={{ position: 'absolute', left: 0, top: 0, height: '100%', width: isMobile ? '80px' : '200px', zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to right, #000 15%, transparent 100%)' }} />
+      <div style={{ position: 'absolute', right: 0, top: 0, height: '100%', width: isMobile ? '80px' : '200px', zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to left, #000 15%, transparent 100%)' }} />
+
+      <div
+        style={{ display: 'flex', gap: `${gap}px`, transform: `translateX(${x}px)`, willChange: 'transform' }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {looped.map((client, i) => (
+          <ClientCard key={i} client={client} isMobile={isMobile} />
+        ))}
+      </div>
+    </section>
+  );
+};
+
+// --- HOOKS ---
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+};
 
 const FadeIn = ({ children, delay = 0, className = "" }) => {
   const [vis, setVis] = useState(false);
@@ -49,17 +175,7 @@ const FadeIn = ({ children, delay = 0, className = "" }) => {
   );
 };
 
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
-};
-
+// --- MAIN COMPONENT ---
 export default function About() {
   const [hImg, setHImg] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -81,11 +197,9 @@ export default function About() {
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: isMobile ? "80px" : "130px" }}>
-        {/* Gradient orbs - positioned below title */}
         <div style={{ position: "absolute", top: "180px", left: "50%", marginLeft: "-250px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
-        {/* Title */}
         <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
           <h1 style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -94,9 +208,7 @@ export default function About() {
             ...anim(0.1),
           }}>
             <span>About </span>
-            <span style={{
-              color: "#fff",
-            }}>Us.</span>
+            <span style={{ color: "#fff" }}>Us.</span>
           </h1>
           <p style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -130,23 +242,15 @@ export default function About() {
               border: "1px solid rgba(255,255,255,0.1)",
               borderRadius: "50px",
               padding: "5px 5px 5px 24px",
-              maxWidth: "520px",
-              width: "100%",
+              maxWidth: "520px", width: "100%",
               backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
             }}>
               <input
                 type="email"
                 placeholder="Enter your email for a free audit"
                 style={{
-                  flex: 1,
-                  background: "transparent",
-                  border: "none",
-                  outline: "none",
-                  fontFamily: 'Inter, -apple-system, sans-serif',
-                  fontWeight: 500,
-                  fontSize: "14px",
-                  color: "#fff",
-                  minWidth: 0,
+                  flex: 1, background: "transparent", border: "none", outline: "none",
+                  fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 500, fontSize: "14px", color: "#fff", minWidth: 0,
                 }}
               />
               <button
@@ -189,8 +293,7 @@ export default function About() {
                 onMouseLeave={() => setHImg(null)}
                 style={{
                   flex: "0 0 auto",
-                  width: w,
-                  height: h,
+                  width: w, height: h,
                   maxWidth: isMobile ? "100px" : "200px",
                   maxHeight: isMobile ? "130px" : "260px",
                   borderRadius: isMobile ? "14px" : "20px",
@@ -219,116 +322,8 @@ export default function About() {
 
       <OurStepsVersion2 />
 
-      {/* ═══════════════ OUR STORY ═══════════════ */}
-      <section style={{ padding: "80px 20px", maxWidth: "1000px", margin: "0 auto" }}>
-        <FadeIn>
-          <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: PRIMARY }}>Our Story</span>
-          <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginTop: "12px", lineHeight: 1.15, letterSpacing: "-0.02em", color: TEXT_DARK }}>
-            From two people to<br />
-            <span style={{ color: TEXT_LIGHT }}>Sydney's trusted agency</span>
-          </h2>
-        </FadeIn>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px", marginTop: "40px" }}>
-          {[
-            "Founded in 2018 with a simple mission: help Sydney businesses connect with their ideal clients through strategic digital marketing.",
-            "What started as a two-person operation has grown into a full-service digital marketing agency serving over 150 businesses across Sydney and NSW.",
-            "From local cafes to law firms, dental practices to e-commerce stores — they all wanted real results, transparent communication, and a partner who genuinely cared.",
-          ].map((t, i) => (
-            <FadeIn key={i} delay={i * 0.15}>
-              <div style={{
-                padding: "28px", borderRadius: "16px",
-                background: BG_LIGHT,
-                border: "1px solid hsl(0,0%,92%)",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 8px 30px rgba(${PRIMARY_RGB},0.1)`; e.currentTarget.style.borderColor = `rgba(${PRIMARY_RGB},0.2)`; }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "hsl(0,0%,92%)"; }}
-              >
-                <span style={{ fontSize: "32px", fontWeight: 700, color: `rgba(${PRIMARY_RGB},0.15)`, display: "block", marginBottom: "12px" }}>0{i + 1}</span>
-                <p style={{ color: TEXT_MEDIUM, lineHeight: 1.7, margin: 0, fontSize: "15px" }}>{t}</p>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </section>
-
-      {/* ═══════════════ VALUES ═══════════════ */}
-      <section style={{ padding: "80px 20px", background: BG_LIGHT }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <FadeIn>
-            <div style={{ textAlign: "center", marginBottom: "56px" }}>
-              <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: SECONDARY }}>What Drives Us</span>
-              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginTop: "12px", letterSpacing: "-0.02em", color: TEXT_DARK }}>Our Values</h2>
-            </div>
-          </FadeIn>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "24px" }}>
-            {values.map((v, i) => (
-              <FadeIn key={i} delay={i * 0.1}>
-                <div style={{
-                  padding: "32px 24px", borderRadius: "20px", background: BG, border: "1px solid hsl(0,0%,92%)",
-                  textAlign: "center", transition: "all 0.3s ease", cursor: "default",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = `0 12px 35px rgba(${PRIMARY_RGB},0.12)`; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
-                >
-                  <div style={{ fontSize: "36px", marginBottom: "16px" }}>{v.icon}</div>
-                  <h3 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "8px", color: TEXT_DARK }}>{v.title}</h3>
-                  <p style={{ color: TEXT_LIGHT, fontSize: "14px", lineHeight: 1.6, margin: 0 }}>{v.desc}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ WHY SYDNEY ═══════════════ */}
-      <section style={{ padding: "80px 20px" }}>
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <FadeIn>
-            <div style={{ textAlign: "center", marginBottom: "40px" }}>
-              <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: PRIMARY }}>Local Expertise</span>
-              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginTop: "12px", letterSpacing: "-0.02em", color: TEXT_DARK }}>
-                Why We Focus on<br />Sydney Businesses
-              </h2>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <div style={{
-              padding: "40px", borderRadius: "24px",
-              background: `linear-gradient(135deg, rgba(${PRIMARY_RGB},0.05), rgba(${SECONDARY_RGB},0.05))`,
-              border: `1px solid rgba(${PRIMARY_RGB},0.1)`,
-            }}>
-              <p style={{ color: TEXT_MEDIUM, lineHeight: 1.8, margin: 0, fontSize: "16px" }}>
-                Sydney is one of the most competitive business environments in Australia — and that's exactly why we specialize here. We understand local market dynamics, seasonal trends, and what makes Sydney customers tick. Whether you're in Bondi, Parramatta, or anywhere in between, we speak your customers' language.
-              </p>
-            </div>
-          </FadeIn>
-
-          {/* Certifications */}
-          <FadeIn delay={0.3}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginTop: "32px" }}>
-              {[
-                { emoji: "🎖️", label: "Google Partner", c: PRIMARY_RGB },
-                { emoji: "📱", label: "Meta Business Partner", c: SECONDARY_RGB },
-                { emoji: "🏆", label: "Best Agency 2023", c: PRIMARY_RGB },
-              ].map((c, i) => (
-                <div key={i} style={{
-                  padding: "24px 16px", borderRadius: "16px", textAlign: "center",
-                  background: `rgba(${c.c},0.05)`,
-                  border: `1px solid rgba(${c.c},0.1)`,
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = `0 8px 25px rgba(${c.c},0.12)`; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
-                >
-                  <div style={{ fontSize: "28px", marginBottom: "8px" }}>{c.emoji}</div>
-                  <div style={{ fontSize: "13px", fontWeight: 600, color: TEXT_MEDIUM }}>{c.label}</div>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
-      </section>
+      {/* ═══════════════ CLIENT CAROUSEL ═══════════════ */}
+      <ClientCarousel />
 
       <CTASection />
       <Footer />
