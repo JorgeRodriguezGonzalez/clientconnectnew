@@ -3,7 +3,8 @@ import { Search, Globe, TrendingUp, Zap, Check, Edit, Droplets, Home, Wrench, Sh
 
 const CYAN = "#06b6d4";
 const GREEN = "#34d399";
-const CARD_BG = "#FAFAFA"; // El gris claro que antes era el fondo general
+const DARK_BG = "#0A0A0A"; // Fondo principal
+const CARD_BG = "#161616"; // Gris oscuro para las tarjetas
 
 const workSteps = [
   {
@@ -88,35 +89,35 @@ const carouselLogos = [
 // --- COMPONENTES AUXILIARES ---
 
 const TaskCard = () => (
-  <div className="bg-white rounded-2xl shadow-lg p-5 w-80">
+  <div className="bg-[#1A1A1A] rounded-2xl shadow-xl p-5 w-80 border border-white/5">
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
         <span className="rounded-lg px-2 py-1.5 text-xs font-medium" style={{ background: `${CYAN}18`, color: CYAN }}>SEO Campaign</span>
-        <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+        <button className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center">
           <svg width="16" height="20" viewBox="0 0 24 24" fill="none" stroke="#878689" strokeWidth="2"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
         </button>
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-gray-800 text-lg font-semibold leading-7">Keyword Research</p>
+        <p className="text-white text-lg font-semibold leading-7">Keyword Research</p>
         <p className="text-gray-400 text-sm leading-5">Target high-value keywords for Sydney market</p>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div className="relative h-2 bg-white/10 rounded-full overflow-hidden">
           <div className="absolute left-0 top-0 h-full rounded-full" style={{ width: "74%", background: `linear-gradient(to right, ${CYAN}, ${GREEN})` }} />
         </div>
-        <p className="text-gray-400 text-xs font-medium">74% completed</p>
+        <p className="text-gray-500 text-xs font-medium">74% completed</p>
       </div>
     </div>
   </div>
 );
 
 const AddButton = () => (
-  <div className="bg-white rounded-2xl shadow-lg p-5 w-80 h-16 flex items-center justify-center">
+  <div className="bg-[#1A1A1A] rounded-2xl shadow-xl p-5 w-80 h-16 flex items-center justify-center border border-white/5">
     <div className="flex items-center gap-3">
-      <button className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#717073"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
+      <button className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
       </button>
-      <p className="text-gray-500 text-sm font-medium">Add a new campaign</p>
+      <p className="text-gray-300 text-sm font-medium">Add a new campaign</p>
     </div>
   </div>
 );
@@ -146,8 +147,8 @@ const InfiniteCarousel = () => {
         <div ref={ref} className="flex items-center gap-5" style={{ width: "fit-content", willChange: "transform" }}>
           {logos.map((logo, i) => (
             <div key={i} className="flex-shrink-0 w-36 h-36 p-2">
-              <div className="flex items-center justify-center w-full h-full bg-white rounded-2xl shadow-lg p-6">
-                <img src={logo} alt="Tool" className="w-20 h-20 object-contain" />
+              <div className="flex items-center justify-center w-full h-full bg-[#1A1A1A] rounded-2xl shadow-lg p-6 border border-white/5">
+                <img src={logo} alt="Tool" className="w-20 h-20 object-contain brightness-110" />
               </div>
             </div>
           ))}
@@ -171,7 +172,7 @@ const AnimatedMedia = ({ src, type = "image" }) => {
 
   return (
     <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden" style={{ background: `radial-gradient(circle at 80% 50%, ${CYAN}14 0%, transparent 70%)` }}>
-      <div className="relative overflow-hidden shadow-lg bg-black" style={{ width: 420, height: 346, borderRadius: "16px 0 0 16px", opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(200px)", transition: "opacity 0.8s ease-out, transform 0.8s ease-out" }}>
+      <div className="relative overflow-hidden shadow-2xl bg-black" style={{ width: 420, height: 346, borderRadius: "16px 0 0 16px", opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(200px)", transition: "opacity 0.8s ease-out, transform 0.8s ease-out" }}>
         {type === "video" ? (
           <video src={src} autoPlay muted loop playsInline className="w-full h-full object-cover" />
         ) : (
@@ -193,7 +194,7 @@ const TaskCardBackground = () => (
 
 export const HowWeWork = () => {
   return (
-    <div className="w-full min-h-screen flex flex-col items-center px-10 py-40" style={{ background: "#0A0A0A" }}>
+    <div className="w-full min-h-screen flex flex-col items-center px-10 py-40" style={{ background: DARK_BG }}>
       <style>{`@keyframes gradientMove { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }`}</style>
 
       <div className="flex flex-col items-center" style={{ gap: 16 }}>
@@ -219,24 +220,24 @@ export const HowWeWork = () => {
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${CYAN}18` }}>
                       <Icon size={16} color={CYAN} />
                     </div>
-                    <h5 className="text-gray-500 text-xs font-bold tracking-widest uppercase">{step.label}</h5>
+                    <h5 className="text-gray-400 text-xs font-bold tracking-widest uppercase">{step.label}</h5>
                   </div>
-                  <h2 className="text-gray-900 text-3xl font-bold leading-tight" style={{ maxWidth: 360 }}>{step.title}</h2>
-                  <p className="text-gray-600 text-base leading-relaxed" style={{ maxWidth: 340 }}>{step.description}</p>
+                  <h2 className="text-white text-3xl font-bold leading-tight" style={{ maxWidth: 360 }}>{step.title}</h2>
+                  <p className="text-gray-400 text-base leading-relaxed" style={{ maxWidth: 340 }}>{step.description}</p>
                   
                   <div className="flex flex-wrap gap-2 mt-2">
                     {step.services?.map((service) => (
                       <span 
                         key={service} 
-                        className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border"
-                        style={{ backgroundColor: `white`, color: "#374151", borderColor: `#E5E7EB` }}
+                        className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border border-white/10"
+                        style={{ backgroundColor: `rgba(255,255,255,0.05)`, color: "#D1D5DB" }}
                       >
                         {service}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="flex-1 relative overflow-hidden bg-white/50">
+                <div className="flex-1 relative overflow-hidden bg-black/20">
                   {step.showTaskCard && <TaskCardBackground />}
                   {step.showCarousel && <InfiniteCarousel />}
                   {step.video && <AnimatedMedia src={step.video} type="video" />}
