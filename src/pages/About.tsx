@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion"; // Asegúrate de tener framer-motion instalado
 import Header from "@/components/layout/Header";
 import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import Footer from "@/components/layout/Footer";
@@ -35,7 +36,7 @@ const images = [
   { url: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop", alt: "Planning", rotate: 3 },
 ];
 
-// --- COMPONENTE: CLIENT CARD ---
+// --- SUB-COMPONENTE: CLIENT CARD ---
 const ClientCard = ({ client, isMobile }) => (
   <div style={{
     position: 'relative',
@@ -62,7 +63,7 @@ const ClientCard = ({ client, isMobile }) => (
   </div>
 );
 
-// --- COMPONENTE: CLIENT CAROUSEL ---
+// --- COMPONENTE PRINCIPAL DEL CARRUSEL ---
 const ClientCarousel = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -100,7 +101,7 @@ const ClientCarousel = () => {
 
   return (
     <section style={{ width: '100%', position: 'relative', padding: '120px 0', background: '#000', overflow: 'hidden' }}>
-      {/* Título del Bloque Actualizado */}
+      {/* TÍTULO CON EFECTO SHIMMER GRADIENT */}
       <div style={{ textAlign: 'center', marginBottom: '64px', padding: '0 20px' }}>
         <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.3em", color: PRIMARY, display: "block", marginBottom: "16px" }}>
           Success Stories
@@ -114,7 +115,25 @@ const ClientCarousel = () => {
           letterSpacing: "-0.03em",
           lineHeight: 1.1
         }}>
-          Some of our local clients
+          Some of our {" "}
+          <motion.span
+            initial={{ backgroundPosition: "400% 50%" }}
+            animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            style={{
+              background: `linear-gradient(90deg, transparent, ${PRIMARY}, ${SECONDARY}, transparent)`,
+              backgroundSize: "400% 100%",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              display: "inline-block",
+            }}
+          >
+            local clients
+          </motion.span>
         </h2>
       </div>
 
@@ -210,7 +229,7 @@ export default function About() {
 
       <OurStepsVersion2 />
 
-      {/* ═══════════════ CLIENT CAROUSEL (NEGRO + SATOSHI) ═══════════════ */}
+      {/* ═══════════════ CLIENT CAROUSEL (SHIMMER EFFECT) ═══════════════ */}
       <ClientCarousel />
 
       <CTASection />
