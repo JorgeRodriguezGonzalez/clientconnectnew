@@ -669,7 +669,7 @@ const WebDesign = () => {
             borderRadius: "50%", background: `rgba(${C.primaryRGB},0.1)`, filter: "blur(48px)", pointerEvents: "none",
           }} />
 
-          <div style={{ position: "relative", zIndex: 1, padding: "120px 24px", maxWidth: "1100px", margin: "0 auto" }}>
+          <div style={{ position: "relative", zIndex: 1, padding: "80px 24px 120px", maxWidth: "1100px", margin: "0 auto" }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
