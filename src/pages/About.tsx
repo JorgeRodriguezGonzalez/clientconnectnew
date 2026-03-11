@@ -15,6 +15,17 @@ const BG = "hsl(0,0%,100%)";
 const BG_LIGHT = "hsl(0,0%,98%)";
 const FONT = "'Satoshi', -apple-system, sans-serif";
 
+// --- DATOS DE CLIENTES ---
+const clients = [
+  { name: 'Asset Plumbing Solutions', tags: ['Google Ads', 'Website', 'SEO'], image: 'https://images.unsplash.com/photo-1581578731548-c64695ce6958?w=400&h=500&fit=crop', logo: 'Asset Plumbing\nSolutions' },
+  { name: 'Nanotise', tags: ['Website', 'Rebrand', 'Social Media'], image: 'https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&h=500&fit=crop', logo: 'Nanotise' },
+  { name: 'LC Landscaping', tags: ['Google Ads', 'Paid Social', 'Website'], image: 'https://images.unsplash.com/photo-1558905619-17153c246bcb?w=400&h=500&fit=crop', logo: 'LC\nLandscaping' },
+  { name: 'Premier Bathrooms', tags: ['Website', 'SEO', 'Google Ads'], image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=500&fit=crop', logo: 'Premier\nBathrooms' },
+  { name: 'Pioneer Shades', tags: ['Paid Social', 'Google Ads', 'Website'], image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400&h=500&fit=crop', logo: 'Pioneer\nShades' },
+  { name: 'Turnbull Pools', tags: ['Google Ads', 'SEO', 'Website'], image: 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=400&h=500&fit=crop', logo: 'Turnbull\nPools' },
+  { name: 'Sydney Glass Pool Fencing', tags: ['Google Ads', 'Website'], image: 'https://images.unsplash.com/photo-1562663474-6cbb3fee4c52?w=400&h=500&fit=crop', logo: 'Sydney Glass\nPool Fencing' },
+];
+
 const images = [
   { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=500&fit=crop", alt: "Team collaboration", rotate: -6 },
   { url: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=350&h=450&fit=crop", alt: "Strategy meeting", rotate: 3 },
@@ -30,6 +41,104 @@ const values = [
   { icon: "🤝", title: "Collaboration", desc: "We work as an extension of your team, not just another vendor." },
   { icon: "🏆", title: "Excellence", desc: "We constantly learn and adapt to stay ahead in the ever-changing digital landscape." },
 ];
+
+// --- COMPONENTE: CLIENT CARD ---
+const ClientCard = ({ client, isMobile }) => (
+  <div style={{
+    position: 'relative',
+    flexShrink: 0,
+    width: isMobile ? '220px' : '260px',
+    height: isMobile ? '290px' : '340px',
+    borderRadius: '24px',
+    overflow: 'hidden',
+    cursor: 'pointer',
+    border: '1px solid transparent',
+    transition: 'all 0.3s ease',
+  }}
+  onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(0,0,0,0.2)'}
+  onMouseLeave={e => e.currentTarget.style.borderColor = 'transparent'}
+  >
+    <img src={client.image} alt={client.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%)' }} />
+    <div style={{ position: 'absolute', top: '20px', left: '20px' }}>
+      <p style={{ color: '#fff', fontWeight: 700, fontSize: isMobile ? '13px' : '15px', lineHeight: 1.2, whiteSpace: 'pre-line', margin: 0 }}>{client.logo}</p>
+    </div>
+    <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px' }}>
+      <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: isMobile ? '11px' : '12px', fontWeight: 500, margin: 0 }}>{client.tags.join(' · ')}</p>
+    </div>
+  </div>
+);
+
+// --- COMPONENTE: CLIENT CAROUSEL ---
+const ClientCarousel = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [x, setX] = useState(0);
+  const xRef = useRef(0);
+  const rafRef = useRef();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const cardWidth = isMobile ? 220 : 260;
+  const gap = isMobile ? 16 : 20;
+  const step = cardWidth + gap;
+  const trackWidth = clients.length * step;
+  const looped = [...clients, ...clients, ...clients];
+
+  useEffect(() => {
+    const tick = () => {
+      if (!paused) {
+        xRef.current -= 0.5;
+        if (Math.abs(xRef.current) >= trackWidth) {
+          xRef.current = 0;
+        }
+        setX(xRef.current);
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [paused, trackWidth]);
+
+  return (
+    <div style={{ width: '100%', position: 'relative', padding: '60px 0', background: '#fff', overflow: 'hidden' }}>
+      {/* Label Lateral */}
+      <div style={{
+        position: 'absolute', left: 0, top: 0, height: '100%', width: isMobile ? '60px' : '100px',
+        zIndex: 10, pointerEvents: 'none', display: 'flex', alignItems: 'center',
+        background: 'linear-gradient(to right, #fff 40%, transparent 100%)'
+      }}>
+        <p style={{
+          color: 'rgba(0,0,0,0.2)', fontSize: '10px', fontWeight: 700, textTransform: 'uppercase',
+          letterSpacing: '4px', writingMode: 'vertical-rl', transform: 'rotate(180deg)', marginLeft: isMobile ? '15px' : '30px'
+        }}>
+          Our Local Clients
+        </p>
+      </div>
+
+      {/* Fade Derecho */}
+      <div style={{
+        position: 'absolute', right: 0, top: 0, height: '100%', width: '120px',
+        zIndex: 10, pointerEvents: 'none', background: 'linear-gradient(to left, #fff 0%, transparent 100%)'
+      }} />
+
+      <div 
+        style={{ display: 'flex', gap: `${gap}px`, transform: `translateX(${x}px)`, willChange: 'transform' }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {looped.map((client, i) => (
+          <ClientCard key={i} client={client} isMobile={isMobile} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const FadeIn = ({ children, delay = 0, className = "" }) => {
   const [vis, setVis] = useState(false);
@@ -64,20 +173,16 @@ export default function About() {
 
       {/* ═══════════════ HERO ═══════════════ */}
       <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: "130px" }}>
-        {/* Gradient orbs */}
         <div style={{ position: "absolute", top: "180px", left: "50%", marginLeft: "-250px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
-        {/* Title */}
         <div style={{ textAlign: "center", paddingTop: "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
           <h1 style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
             fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
-            textTransform: "none",
             ...anim(0.1),
           }}>
-            <span>About </span>
-            <span style={{ color: "#fff" }}>Us.</span>
+            About Us.
           </h1>
           <p style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -87,100 +192,33 @@ export default function About() {
             Your dedicated <span style={{ color: "#34d399", fontWeight: 600 }}>growth partner</span>, helping Sydney businesses thrive in the <span style={{ color: "#34d399", fontWeight: 600 }}>digital age</span>.
           </p>
 
-          {/* Tags */}
-          <div style={{
-            display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", marginTop: "24px", flexWrap: "wrap", padding: "0 20px",
-            fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.5)",
-            ...anim(0.4),
-          }}>
-            <span>Sydney Based</span>
-            <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
-            <span>Est. 2018</span>
-            <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
-            <span>150+ Clients</span>
-          </div>
-
           {/* Email CTA */}
-          <div style={{
-            display: "flex", justifyContent: "center", marginTop: "32px", padding: "0 20px",
-            ...anim(0.5),
-          }}>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "32px", padding: "0 20px", ...anim(0.5) }}>
             <div style={{
-              display: "flex", alignItems: "center", gap: "0",
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: "50px",
-              padding: "5px 5px 5px 24px",
-              maxWidth: "520px",
-              width: "100%",
-              backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+              display: "flex", alignItems: "center", background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)", borderRadius: "50px", padding: "5px 5px 5px 24px",
+              maxWidth: "520px", width: "100%", backdropFilter: "blur(8px)",
             }}>
-              <input
-                type="email"
-                placeholder="Enter your email for a free audit"
-                style={{
-                  flex: 1,
-                  background: "transparent",
-                  border: "none",
-                  outline: "none",
-                  fontFamily: 'Inter, -apple-system, sans-serif',
-                  fontWeight: 500,
-                  fontSize: "14px",
-                  color: "#fff",
-                  minWidth: 0,
-                }}
-              />
-              <button
-                onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 20px rgba(52,211,153,0.5)"; e.currentTarget.style.background = "linear-gradient(135deg, #34d399, #06b6d4)"; }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = "#06b6d4"; }}
-                style={{
-                  height: "40px", padding: "0 20px", borderRadius: "50px",
-                  background: "#06b6d4", border: "none",
-                  fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 600, fontSize: "14px", color: "#000",
-                  cursor: "pointer", transition: "all 0.2s ease",
-                  display: "flex", alignItems: "center", gap: "8px",
-                  whiteSpace: "nowrap", flexShrink: 0,
-                }}
-              >
+              <input type="email" placeholder="Enter your email for a free audit" style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "#fff", fontSize: "14px" }} />
+              <button style={{ height: "40px", padding: "0 20px", borderRadius: "50px", background: "#06b6d4", border: "none", fontWeight: 600, fontSize: "14px", color: "#000", cursor: "pointer" }}>
                 Start Scaling
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Image Gallery */}
-        <div style={{
-          display: "flex", justifyContent: "center", alignItems: "center", gap: "16px",
-          marginTop: "48px", padding: "20px 20px", overflow: "visible",
-          position: "relative", zIndex: 2,
-        }}>
+        {/* Gallery */}
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "16px", marginTop: "48px", position: "relative", zIndex: 2 }}>
           {images.map((img, i) => (
-            <div
-              key={i}
-              onMouseEnter={() => setHImg(i)}
-              onMouseLeave={() => setHImg(null)}
+            <div key={i} onMouseEnter={() => setHImg(i)} onMouseLeave={() => setHImg(null)}
               style={{
-                flex: "0 0 auto",
-                width: i === 2 ? "200px" : "160px",
-                height: i === 2 ? "260px" : "220px",
-                borderRadius: "20px", overflow: "hidden", position: "relative", cursor: "grab",
-                transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.1 : 1}) rotateZ(${hImg === i ? (img.rotate < 0 ? -2 : 2) : 0}deg)`,
-                transition: "all 0.15s ease-out",
-                boxShadow: hImg === i
-                  ? `0 20px 60px rgba(${PRIMARY_RGB},0.35)`
-                  : "0 10px 40px rgba(0,0,0,0.4)",
-                opacity: loaded ? 1 : 0,
-                transitionDelay: hImg === i ? "0s" : `${0.3 + i * 0.08}s`,
+                flex: "0 0 auto", width: i === 2 ? "200px" : "160px", height: i === 2 ? "260px" : "220px",
+                borderRadius: "20px", overflow: "hidden", position: "relative", transition: "all 0.15s ease-out",
+                transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.1 : 1})`,
+                boxShadow: hImg === i ? `0 20px 60px rgba(${PRIMARY_RGB},0.35)` : "0 10px 40px rgba(0,0,0,0.4)",
                 zIndex: hImg === i ? 10 : 1,
-              }}
-            >
-              <img src={img.url} alt={img.alt} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-              <div style={{
-                position: "absolute", inset: 0,
-                background: hImg === i ? "transparent" : "linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%)",
-                transition: "all 0.4s ease",
-              }} />
+              }}>
+              <img src={img.url} alt={img.alt} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
           ))}
         </div>
@@ -192,110 +230,49 @@ export default function About() {
       <section style={{ padding: "80px 20px", maxWidth: "1000px", margin: "0 auto" }}>
         <FadeIn>
           <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: PRIMARY }}>Our Story</span>
-          <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginTop: "12px", lineHeight: 1.15, letterSpacing: "-0.02em", color: TEXT_DARK }}>
-            From two people to<br />
-            <span style={{ color: TEXT_LIGHT }}>Sydney's trusted agency</span>
+          <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginTop: "12px", color: TEXT_DARK }}>
+            From two people to<br /><span style={{ color: TEXT_LIGHT }}>Sydney's trusted agency</span>
           </h2>
         </FadeIn>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px", marginTop: "40px" }}>
           {[
-            "Founded in 2018 with a simple mission: help Sydney businesses connect with their ideal clients through strategic digital marketing.",
-            "What started as a two-person operation has grown into a full-service digital marketing agency serving over 150 businesses across Sydney and NSW.",
-            "From local cafes to law firms, dental practices to e-commerce stores — they all wanted real results, transparent communication, and a partner who genuinely cared.",
+            "Founded in 2018 with a simple mission: help Sydney businesses connect with their ideal clients.",
+            "What started as a two-person operation has grown into a full-service agency serving over 150 businesses.",
+            "From local cafes to law firms — they all wanted real results and a partner who genuinely cared.",
           ].map((t, i) => (
             <FadeIn key={i} delay={i * 0.15}>
-              <div style={{
-                padding: "28px", borderRadius: "16px",
-                background: BG_LIGHT,
-                border: "1px solid hsl(0,0%,92%)",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 8px 30px rgba(${PRIMARY_RGB},0.1)`; e.currentTarget.style.borderColor = `rgba(${PRIMARY_RGB},0.2)`; }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "hsl(0,0%,92%)"; }}
-              >
-                <span style={{ fontSize: "32px", fontWeight: 700, color: `rgba(${PRIMARY_RGB},0.15)`, display: "block", marginBottom: "12px" }}>0{i + 1}</span>
-                <p style={{ color: TEXT_MEDIUM, lineHeight: 1.7, margin: 0, fontSize: "15px" }}>{t}</p>
+              <div style={{ padding: "28px", borderRadius: "16px", background: BG_LIGHT, border: "1px solid hsl(0,0%,92%)" }}>
+                <span style={{ fontSize: "32px", fontWeight: 700, color: `rgba(${PRIMARY_RGB},0.15)`, display: "block" }}>0{i + 1}</span>
+                <p style={{ color: TEXT_MEDIUM, lineHeight: 1.7, margin: 0 }}>{t}</p>
               </div>
             </FadeIn>
           ))}
         </div>
       </section>
 
+      {/* ═══════════════ CLIENT CAROUSEL (NEW) ═══════════════ */}
+      <ClientCarousel />
+
       {/* ═══════════════ VALUES ═══════════════ */}
       <section style={{ padding: "80px 20px", background: BG_LIGHT }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
           <FadeIn>
             <div style={{ textAlign: "center", marginBottom: "56px" }}>
-              <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: SECONDARY }}>What Drives Us</span>
-              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginTop: "12px", letterSpacing: "-0.02em", color: TEXT_DARK }}>Our Values</h2>
+              <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", color: SECONDARY }}>What Drives Us</span>
+              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginTop: "12px", color: TEXT_DARK }}>Our Values</h2>
             </div>
           </FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "24px" }}>
             {values.map((v, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <div style={{
-                  padding: "32px 24px", borderRadius: "20px", background: BG, border: "1px solid hsl(0,0%,92%)",
-                  textAlign: "center", transition: "all 0.3s ease", cursor: "default",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = `0 12px 35px rgba(${PRIMARY_RGB},0.12)`; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
-                >
+                <div style={{ padding: "32px 24px", borderRadius: "20px", background: BG, border: "1px solid hsl(0,0%,92%)", textAlign: "center" }}>
                   <div style={{ fontSize: "36px", marginBottom: "16px" }}>{v.icon}</div>
-                  <h3 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "8px", color: TEXT_DARK }}>{v.title}</h3>
-                  <p style={{ color: TEXT_LIGHT, fontSize: "14px", lineHeight: 1.6, margin: 0 }}>{v.desc}</p>
+                  <h3 style={{ fontSize: "18px", fontWeight: 700, color: TEXT_DARK }}>{v.title}</h3>
+                  <p style={{ color: TEXT_LIGHT, fontSize: "14px", lineHeight: 1.6 }}>{v.desc}</p>
                 </div>
               </FadeIn>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ═══════════════ WHY SYDNEY ═══════════════ */}
-      <section style={{ padding: "80px 20px" }}>
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <FadeIn>
-            <div style={{ textAlign: "center", marginBottom: "40px" }}>
-              <span style={{ fontSize: "13px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: PRIMARY }}>Local Expertise</span>
-              <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginTop: "12px", letterSpacing: "-0.02em", color: TEXT_DARK }}>
-                Why We Focus on<br />Sydney Businesses
-              </h2>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <div style={{
-              padding: "40px", borderRadius: "24px",
-              background: `linear-gradient(135deg, rgba(${PRIMARY_RGB},0.05), rgba(${SECONDARY_RGB},0.05))`,
-              border: `1px solid rgba(${PRIMARY_RGB},0.1)`,
-            }}>
-              <p style={{ color: TEXT_MEDIUM, lineHeight: 1.8, margin: 0, fontSize: "16px" }}>
-                Sydney is one of the most competitive business environments in Australia — and that's exactly why we specialize here. We understand local market dynamics, seasonal trends, and what makes Sydney customers tick. Whether you're in Bondi, Parramatta, or anywhere in between, we speak your customers' language.
-              </p>
-            </div>
-          </FadeIn>
-
-          {/* Certifications */}
-          <FadeIn delay={0.3}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginTop: "32px" }}>
-              {[
-                { emoji: "🎖️", label: "Google Partner", c: PRIMARY_RGB },
-                { emoji: "📱", label: "Meta Business Partner", c: SECONDARY_RGB },
-                { emoji: "🏆", label: "Best Agency 2023", c: PRIMARY_RGB },
-              ].map((c, i) => (
-                <div key={i} style={{
-                  padding: "24px 16px", borderRadius: "16px", textAlign: "center",
-                  background: `rgba(${c.c},0.05)`,
-                  border: `1px solid rgba(${c.c},0.1)`,
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = `0 8px 25px rgba(${c.c},0.12)`; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
-                >
-                  <div style={{ fontSize: "28px", marginBottom: "8px" }}>{c.emoji}</div>
-                  <div style={{ fontSize: "13px", fontWeight: 600, color: TEXT_MEDIUM }}>{c.label}</div>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
         </div>
       </section>
 
