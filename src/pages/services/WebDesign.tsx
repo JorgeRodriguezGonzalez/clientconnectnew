@@ -660,15 +660,6 @@ const WebDesign = () => {
 
         {/* ═══════════════ TESTIMONIAL QUOTE ═══════════════ */}
         <section style={{ background: "#000", position: "relative", overflow: "hidden" }}>
-          <div style={{
-            position: "absolute", top: "-96px", left: "-96px", width: "384px", height: "384px",
-            borderRadius: "50%", background: `rgba(${C.secondaryRGB},0.1)`, filter: "blur(48px)", pointerEvents: "none",
-          }} />
-          <div style={{
-            position: "absolute", bottom: "-96px", right: "-96px", width: "384px", height: "384px",
-            borderRadius: "50%", background: `rgba(${C.primaryRGB},0.1)`, filter: "blur(48px)", pointerEvents: "none",
-          }} />
-
           <div style={{ position: "relative", zIndex: 1, padding: "80px 24px 120px", maxWidth: "1100px", margin: "0 auto" }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
