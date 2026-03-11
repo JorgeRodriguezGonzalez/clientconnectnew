@@ -76,6 +76,19 @@ const heroImages = [
   { url: "/images/premier.jpg", alt: "Premier", rotate: 3 },
 ];
 
+const mobileImages = heroImages.slice(0, 4);
+
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+};
+
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => {
   const [vis, setVis] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -96,6 +109,7 @@ export default function CaseStudies() {
   const [hImg, setHImg] = useState<number | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [activeFilter, setActiveFilter] = useState("All");
+  const isMobile = useIsMobile();
 
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
 
@@ -108,17 +122,19 @@ export default function CaseStudies() {
   const categories = ["All", ...Array.from(new Set(caseStudies.map(c => c.category)))];
   const filtered = activeFilter === "All" ? caseStudies : caseStudies.filter(c => c.category === activeFilter);
 
+  const displayImages = isMobile ? mobileImages : heroImages;
+
   return (
     <div style={{ fontFamily: FONT, background: BG, color: TEXT_DARK, minHeight: "100vh", overflowX: "hidden" }}>
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: "80px" }}>
+      <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: isMobile ? "50px" : "80px" }}>
         {/* Gradient orbs */}
         <div style={{ position: "absolute", top: "180px", left: "50%", transform: "translateX(-70%)", width: "400px", height: "400px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "160px", left: "50%", transform: "translateX(-30%)", width: "400px", height: "400px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
-        <div style={{ textAlign: "center", paddingTop: "140px", position: "relative", zIndex: 2 }}>
+        <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "140px", position: "relative", zIndex: 2 }}>
           {/* Title */}
           <h1 style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -196,20 +212,24 @@ export default function CaseStudies() {
 
         {/* Image Gallery */}
         <div style={{
-          display: "flex", justifyContent: "center", alignItems: "center", gap: "16px",
+          display: "flex", justifyContent: "center", alignItems: "center",
+          gap: isMobile ? "10px" : "16px",
           marginTop: "48px", padding: "20px 20px", overflow: "visible",
           position: "relative", zIndex: 2,
         }}>
-          {heroImages.map((img, i) => (
+          {displayImages.map((img, i) => (
             <div
               key={i}
               onMouseEnter={() => setHImg(i)}
               onMouseLeave={() => setHImg(null)}
               style={{
                 flex: "0 0 auto",
-                width: i === 2 ? "200px" : "160px",
-                height: i === 2 ? "260px" : "220px",
-                borderRadius: "20px", overflow: "hidden", position: "relative", cursor: "grab",
+                width: isMobile ? "20vw" : (i === 2 ? "200px" : "160px"),
+                height: isMobile ? "26vw" : (i === 2 ? "260px" : "220px"),
+                maxWidth: isMobile ? "100px" : undefined,
+                maxHeight: isMobile ? "130px" : undefined,
+                borderRadius: isMobile ? "14px" : "20px",
+                overflow: "hidden", position: "relative", cursor: "grab",
                 transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.1 : 1}) rotateZ(${hImg === i ? (img.rotate < 0 ? -2 : 2) : 0}deg)`,
                 transition: "all 0.15s ease-out",
                 boxShadow: hImg === i
