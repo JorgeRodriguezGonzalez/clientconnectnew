@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Search, Globe, TrendingUp, Zap, Code, Check, Edit, Droplets, Home, Tool } from "lucide-react";
+// Corregido: 'Tool' no existe, usamos 'Wrench'
+import { Search, Globe, TrendingUp, Zap, Code, Check, Edit, Droplets, Home, Wrench } from "lucide-react";
 
 const CYAN = "#06b6d4";
 const GREEN = "#34d399";
@@ -27,11 +28,11 @@ const workSteps = [
   },
   {
     id: "s3",
-    icon: Tool,
+    icon: Wrench, // Usando Wrench aquí
     label: "Plumbing Services",
     title: "Asset Plumbing Solutions: Sydney's Trusted Experts",
     description:
-      "We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving a consistent flow of high-intent emergency and maintenance plumbing leads across the Sydney metropolitan area.",
+      "200+ leads at $50 CPL. We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving 16 new keywords to the top rankings and ensuring a steady flow of emergency plumbing jobs.",
     image: "https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&q=80",
     top: 160,
   },
