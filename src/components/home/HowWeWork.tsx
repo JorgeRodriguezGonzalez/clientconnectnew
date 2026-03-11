@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Search, Globe, TrendingUp, Zap, Code, Check, Edit } from "lucide-react";
+import { Search, Globe, TrendingUp, Zap, Code, Check, Edit, Droplets, Home, Tool } from "lucide-react";
 
 const CYAN = "#06b6d4";
 const GREEN = "#34d399";
@@ -13,7 +13,7 @@ const workSteps = [
     description:
       "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
     video: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov",
-    top: 126,
+    top: 100,
   },
   {
     id: "s2",
@@ -23,17 +23,17 @@ const workSteps = [
     description:
       "For LC Landscaping, we built a high-converting digital presence that showcases their premium landscape designs to high-end residential clients across Sydney.",
     showTaskCard: true,
-    top: 156,
+    top: 130,
   },
   {
     id: "s3",
-    icon: TrendingUp,
-    label: "Roofing",
-    title: "Your Local Roofers: Expert services across Australia",
+    icon: Tool,
+    label: "Plumbing Services",
+    title: "Asset Plumbing Solutions: Sydney's Trusted Experts",
     description:
-      "We scaled their lead generation through optimized Google Ads and local SEO, delivering consistent results for their roofing services on a national scale.",
-    showCarousel: true,
-    top: 186,
+      "We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving a consistent flow of high-intent emergency and maintenance plumbing leads across the Sydney metropolitan area.",
+    image: "https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=800&q=80",
+    top: 160,
   },
   {
     id: "s4",
@@ -42,9 +42,28 @@ const workSteps = [
     title: "Pioneer Shades: Sydney’s Best Pergolas & Patios",
     description:
       "Through targeted social media and search campaigns, we helped Pioneer Shade Structures dominate the Sydney market for custom pergolas and shade solutions.",
-    image:
-      "https://images.unsplash.com/photo-1622397333309-3056849bc70b?w=800&q=80",
-    top: 216,
+    image: "https://images.unsplash.com/photo-1622397333309-3056849bc70b?w=800&q=80",
+    top: 190,
+  },
+  {
+    id: "s5",
+    icon: Droplets,
+    label: "Bathroom Renovations",
+    title: "Premier Bathrooms: Luxury Renovations in Sydney",
+    description:
+      "We deployed high-intent search campaigns and a premium UI/UX design that captures qualified leads daily in the competitive Sydney renovation market.",
+    showCarousel: true,
+    top: 220,
+  },
+  {
+    id: "s6",
+    icon: Home,
+    label: "Renovation Specialists",
+    title: "Prolex Bathrooms: Sydney's Premier Specialists",
+    description:
+      "Scaling visibility through localized SEO and technical optimization, ensuring Prolex remains the top choice for modern bathroom overhauls.",
+    image: "https://images.unsplash.com/photo-1584622781564-1d9876a13300?w=800&q=80",
+    top: 250,
   },
 ];
 
