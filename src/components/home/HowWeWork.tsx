@@ -12,15 +12,14 @@ const workSteps = [
     title: "Nanotise: Mould Remediation & Sanitising works",
     description:
       "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
-    image:
-      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
+    video: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov",
     top: 126,
   },
   {
     id: "s2",
     icon: Globe,
     label: "Landscaping",
-    title: "LC Landscaping: Sydney’s Premier Designers",
+    title: "LC Landscaping: Sydney’s Premier Landscape Designers",
     description:
       "For LC Landscaping, we built a high-converting digital presence that showcases their premium landscape designs to high-end residential clients across Sydney.",
     showTaskCard: true,
@@ -164,7 +163,7 @@ const InfiniteCarousel = () => {
   );
 };
 
-const AnimatedImage = ({ src, alt }) => {
+const AnimatedMedia = ({ src, type = "image" }) => {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -190,7 +189,7 @@ const AnimatedImage = ({ src, alt }) => {
       }}
     >
       <div
-        className="relative overflow-hidden shadow-lg"
+        className="relative overflow-hidden shadow-lg bg-black"
         style={{
           width: 420,
           height: 346,
@@ -200,7 +199,18 @@ const AnimatedImage = ({ src, alt }) => {
           transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
         }}
       >
-        <img src={src} alt={alt} className="w-full h-full object-cover" />
+        {type === "video" ? (
+          <video
+            src={src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <img src={src} className="w-full h-full object-cover" alt="Case Study" />
+        )}
       </div>
     </div>
   );
@@ -329,8 +339,11 @@ export const HowWeWork = () => {
                 <div className="flex-1 relative overflow-hidden">
                   {step.showTaskCard && <TaskCardBackground />}
                   {step.showCarousel && <InfiniteCarousel />}
+                  {step.video && (
+                    <AnimatedMedia src={step.video} type="video" />
+                  )}
                   {step.image && (
-                    <AnimatedImage src={step.image} alt={step.title} />
+                    <AnimatedMedia src={step.image} type="image" />
                   )}
                 </div>
               </div>
