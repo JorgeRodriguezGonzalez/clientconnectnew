@@ -1,80 +1,51 @@
-import React, { useState, useEffect, useRef } from "react";
-// Importación estricta de los iconos necesarios
-import { 
-  Globe, 
-  TrendingUp, 
-  Search, 
-  Megaphone, 
-  Check, 
-  Code, 
-  Zap, 
-  ArrowRight 
-} from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Search, Globe, TrendingUp, Zap, Code, Check, Edit } from "lucide-react";
 
 const CYAN = "#06b6d4";
 const GREEN = "#34d399";
 
-// --- DATOS DE LOS CLIENTES ---
-const caseStudies = [
+const workSteps = [
   {
-    id: "cs1",
+    id: "s1",
     icon: Search,
-    label: "Mould Remediation & Sanitising",
-    title: "NANOTISE: DOMINATING THE HYGIENE SECTOR",
-    highlight: "150% INCREASE IN ORGANIC INQUIRIES. TOP 3 RANKINGS.",
-    description: "Nanotise needed to stand out in a competitive health market. We implemented a technical SEO audit and a content strategy that positioned them as the authority in mould remediation across Sydney.",
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
-    top: 80,
+    label: "Mould Remediation",
+    title: "Nanotise: Mould Remediation & Sanitising works",
+    description:
+      "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
+    image:
+      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80",
+    top: 126,
   },
   {
-    id: "cs2",
+    id: "s2",
     icon: Globe,
-    label: "Landscape Architecture",
-    title: "LC LANDSCAPING: SYDNEY’S PREMIER DESIGNERS",
-    highlight: "NEW HIGH-CONVERTING WEBSITE. 40% MORE BOOKINGS.",
-    description: "We rebuilt their digital presence to match their craftsmanship. A mobile-first website combined with targeted Social Media strategy showcased their Sydney projects perfectly.",
+    label: "Landscaping",
+    title: "LC Landscaping: Sydney’s Premier Designers",
+    description:
+      "For LC Landscaping, we built a high-converting digital presence that showcases their premium landscape designs to high-end residential clients across Sydney.",
     showTaskCard: true,
-    top: 110,
+    top: 156,
   },
   {
-    id: "cs3",
+    id: "s3",
     icon: TrendingUp,
-    label: "Roofing Services",
-    title: "YOUR LOCAL ROOFERS: EXPERT ROOFING SERVICES",
-    highlight: "SCALING GOOGLE ADS NATIONWIDE. $45 COST PER LEAD.",
-    description: "For a national service provider, efficiency is key. We optimized their Google Ads and landing pages to reduce CPL by 30% while expanding to every major Australian city.",
+    label: "Roofing",
+    title: "Your Local Roofers: Expert services across Australia",
+    description:
+      "We scaled their lead generation through optimized Google Ads and local SEO, delivering consistent results for their roofing services on a national scale.",
     showCarousel: true,
-    top: 140,
+    top: 186,
   },
   {
-    id: "cs4",
-    icon: Megaphone,
-    label: "Outdoor Living",
-    title: "PIONEER SHADE: SYDNEY’S BEST PERGOLAS",
-    highlight: "DOMINATING LOCAL SEARCH & SOCIAL ENGAGEMENT.",
-    description: "Pioneer Shade Structures designs premium patios. We delivered an integrated SEO and Meta Ads strategy that put their designs in front of Sydney homeowners.",
-    image: "https://images.unsplash.com/photo-1622397333309-3056849bc70b?w=800&q=80",
-    top: 170,
-  },
-  {
-    id: "cs5",
-    icon: Code,
-    label: "Bathroom Renovations",
-    title: "PREMIER BATHROOMS: PREMIUM RENOVATIONS",
-    highlight: "300+ QUALIFIED MONTHLY LEADS VIA GOOGLE ADS.",
-    description: "Managing the renovation space required surgical precision. We deployed high-intent search campaigns that capture the Sydney renovation market daily.",
-    image: "https://images.unsplash.com/photo-1584622781564-1d9876a13300?w=800&q=80",
-    top: 200,
-  },
-  {
-    id: "cs6",
+    id: "s4",
     icon: Zap,
-    label: "Renovation Specialists",
-    title: "PROLEX BATHROOMS: SYDNEY'S PREMIER SPECIALISTS",
-    highlight: "PAGE ONE RANKINGS FOR COMPETITIVE SYDNEY KEYWORDS.",
-    description: "We boosted Prolex's organic visibility through localized SEO, ensuring they appear whenever someone in Sydney searches for a bathroom overhaul.",
-    showTaskCard: true,
-    top: 230,
+    label: "Outdoor Living",
+    title: "Pioneer Shades: Sydney’s Best Pergolas & Patios",
+    description:
+      "Through targeted social media and search campaigns, we helped Pioneer Shade Structures dominate the Sydney market for custom pergolas and shade solutions.",
+    image:
+      "https://images.unsplash.com/photo-1622397333309-3056849bc70b?w=800&q=80",
+    top: 216,
   },
 ];
 
@@ -85,177 +56,288 @@ const carouselLogos = [
   "https://cdn.worldvectorlogo.com/logos/semrush-1.svg",
 ];
 
-// --- COMPONENTES AUXILIARES ---
-
 const TaskCard = () => (
-  <div className="bg-white rounded-2xl shadow-xl p-6 w-72 border border-gray-100 transform -rotate-2">
-    <div className="flex flex-col gap-4">
+  <div className="bg-white rounded-2xl shadow-lg p-5 w-80">
+    <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <span className="rounded-lg px-2 py-1 text-[10px] font-black uppercase tracking-wider" style={{ background: `${CYAN}18`, color: CYAN }}>
-          SEO Live
+        <span
+          className="rounded-lg px-2 py-1.5 text-xs font-medium"
+          style={{ background: `${CYAN}18`, color: CYAN }}
+        >
+          SEO Campaign
         </span>
-        <div className="w-2 h-2 rounded-full bg-green-400 animate-ping" />
+        <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+          <svg width="16" height="20" viewBox="0 0 24 24" fill="none" stroke="#878689" strokeWidth="2">
+            <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+          </svg>
+        </button>
       </div>
-      <div>
-        <p className="text-gray-900 text-lg font-bold leading-tight">Growth Tracking</p>
-        <p className="text-gray-400 text-xs uppercase font-bold tracking-tighter">Sydney Region</p>
+      <div className="flex flex-col gap-1">
+        <p className="text-gray-800 text-lg font-semibold leading-7">
+          Keyword Research & Optimization
+        </p>
+        <p className="text-gray-400 text-sm leading-5">
+          Target high-value keywords for Sydney market
+        </p>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="relative h-1.5 bg-gray-100 rounded-full overflow-hidden">
-          <div className="absolute left-0 top-0 h-full rounded-full" style={{ width: "82%", background: `linear-gradient(to right, ${CYAN}, ${GREEN})` }} />
+        <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            className="absolute left-0 top-0 h-full rounded-full"
+            style={{
+              width: "74%",
+              background: `linear-gradient(to right, ${CYAN}, ${GREEN})`,
+            }}
+          />
         </div>
-        <p className="text-gray-500 text-[10px] font-bold">82% Conversion Increase</p>
+        <p className="text-gray-400 text-xs font-medium">74% completed</p>
       </div>
+    </div>
+  </div>
+);
+
+const AddButton = () => (
+  <div className="bg-white rounded-2xl shadow-lg p-5 w-80 h-16 flex items-center justify-center">
+    <div className="flex items-center gap-3">
+      <button className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#717073">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+        </svg>
+      </button>
+      <p className="text-gray-500 text-sm font-medium">Add a new campaign</p>
     </div>
   </div>
 );
 
 const InfiniteCarousel = () => {
   const ref = useRef(null);
+
   useEffect(() => {
-    let animationId;
+    const el = ref.current;
+    if (!el) return;
     let pos = 0;
+    let id;
+    const speed = 0.5;
     const animate = () => {
-      if (ref.current) {
-        pos += 0.5;
-        if (pos >= ref.current.scrollWidth / 2) pos = 0;
-        ref.current.style.transform = `translateX(-${pos}px)`;
-      }
-      animationId = requestAnimationFrame(animate);
+      pos += speed;
+      const max = el.scrollWidth / 2;
+      if (pos >= max) pos = 0;
+      el.style.transform = `translateX(-${pos}px)`;
+      id = requestAnimationFrame(animate);
     };
-    animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
+    id = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(id);
   }, []);
 
-  const logos = [...carouselLogos, ...carouselLogos, ...carouselLogos];
+  const logos = [...carouselLogos, ...carouselLogos, ...carouselLogos, ...carouselLogos];
 
   return (
-    <div className="absolute inset-0 flex items-center overflow-hidden bg-gray-50/30">
-      <div ref={ref} className="flex items-center gap-12 px-6" style={{ willChange: "transform" }}>
-        {logos.map((logo, i) => (
-          <div key={i} className="flex-shrink-0 w-28 h-28 bg-white rounded-2xl shadow-sm flex items-center justify-center p-6 border border-gray-100">
-            <img src={logo} alt="Partner" className="w-full h-full object-contain grayscale opacity-60" />
-          </div>
-        ))}
+    <div
+      className="absolute inset-0 flex items-center justify-center overflow-hidden"
+      style={{
+        background: `radial-gradient(circle at 60% 50%, ${CYAN}0F 0%, transparent 70%)`,
+      }}
+    >
+      <div
+        style={{
+          maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+          width: "100%",
+          overflow: "hidden",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: 200,
+        }}
+      >
+        <div ref={ref} className="flex items-center gap-5" style={{ width: "fit-content", willChange: "transform" }}>
+          {logos.map((logo, i) => (
+            <div key={i} className="flex-shrink-0 w-36 h-36 p-2">
+              <div className="flex items-center justify-center w-full h-full bg-white rounded-2xl shadow-lg p-6">
+                <img src={logo} alt="Tool" className="w-20 h-20 object-contain" />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 const AnimatedImage = ({ src, alt }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const imgRef = useRef(null);
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setIsVisible(true);
-    }, { threshold: 0.1 });
-    if (imgRef.current) observer.observe(imgRef.current);
-    return () => observer.disconnect();
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) { setVisible(true); obs.disconnect(); }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
   }, []);
 
   return (
-    <div ref={imgRef} className="absolute inset-0 flex items-center justify-center p-6">
-      <div className={`w-full h-full max-w-[90%] max-h-[85%] rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}>
+    <div
+      ref={ref}
+      className="absolute inset-0 flex items-center justify-end overflow-hidden"
+      style={{
+        background: `radial-gradient(circle at 80% 50%, ${CYAN}14 0%, transparent 70%)`,
+      }}
+    >
+      <div
+        className="relative overflow-hidden shadow-lg"
+        style={{
+          width: 420,
+          height: 346,
+          borderRadius: "16px 0 0 16px",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "translateX(0)" : "translateX(200px)",
+          transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
+        }}
+      >
         <img src={src} alt={alt} className="w-full h-full object-cover" />
       </div>
     </div>
   );
 };
 
-// --- COMPONENTE PRINCIPAL ---
+const TaskCardBackground = () => (
+  <div
+    className="absolute inset-0 flex flex-col items-center justify-center gap-5"
+    style={{
+      background: `radial-gradient(circle at 50% 50%, ${CYAN}0F 0%, transparent 70%)`,
+    }}
+  >
+    <TaskCard />
+    <AddButton />
+  </div>
+);
 
 export const HowWeWork = () => {
   return (
-    <div className="w-full min-h-screen flex flex-col items-center px-4 py-24" style={{ background: "#FAFAFA", fontFamily: "'Inter', sans-serif" }}>
+    <div
+      className="w-full min-h-screen flex flex-col items-center px-10 py-40"
+      style={{ background: "#FAFAFA" }}
+    >
       <style>{`
         @keyframes gradientMove {
-          0% { background-position: 0% center; }
+          0%   { background-position: 0% center; }
           100% { background-position: 200% center; }
         }
       `}</style>
 
-      {/* Header */}
-      <div className="flex flex-col items-center text-center mb-20 gap-4">
-        <span className="px-4 py-1 rounded-full border text-[10px] font-black uppercase tracking-[0.3em] bg-white border-gray-200 text-gray-400">
-          Success Stories
-        </span>
-        <h2 className="text-gray-900 font-black text-4xl md:text-7xl tracking-tighter leading-none">
-          OUR RECENT <br />
-          <span style={{
-            background: `linear-gradient(90deg, ${GREEN}, ${CYAN}, ${GREEN})`,
+      <div className="flex flex-col items-center" style={{ gap: 16 }}>
+      <span
+        className="px-3 py-1.5 rounded-lg border font-semibold uppercase tracking-widest"
+        style={{
+          fontSize: 10,
+          letterSpacing: 2,
+          background: "rgb(250,250,250)",
+          borderColor: "rgb(228,228,231)",
+          color: "rgb(107,114,128)",
+          transition: "color 0.3s, background 0.3s, border-color 0.3s",
+        }}
+      >
+        Proven Results
+      </span>
+
+      <h2
+        className="text-center"
+        style={{
+          fontFamily: "'Satoshi', sans-serif",
+          fontWeight: 700,
+          fontSize: "clamp(32px, 5vw, 48px)",
+          lineHeight: 1.1,
+          letterSpacing: "-0.5px",
+          fontStyle: "normal",
+        }}
+      >
+        <span style={{ color: "#111827" }}>Our </span>
+        <span
+          style={{
+            background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)",
             backgroundSize: "200% auto",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
             animation: "gradientMove 3s linear infinite",
-          }}>WORK</span>
-        </h2>
-        <p className="text-gray-500 font-medium text-lg max-w-lg mt-4">
-          Driving measurable growth for Sydney's most ambitious service businesses.
-        </p>
+          }}
+        >
+          Case Studies
+        </span>
+      </h2>
+
+      <p
+        className="text-center"
+        style={{
+          fontFamily: "'Satoshi', sans-serif",
+          fontWeight: 500,
+          fontSize: 16,
+          lineHeight: 1.6,
+          color: "#6b7280",
+          maxWidth: 400,
+        }}
+      >
+        Real results from Sydney's leading businesses. See how we help brands grow with tailored digital strategies.
+      </p>
       </div>
 
-      {/* Grid de Casos */}
-      <div className="flex flex-col gap-10 w-full max-w-5xl">
-        {caseStudies.map((study, index) => {
-          const Icon = study.icon;
+      <div className="flex flex-col gap-8 w-full" style={{ maxWidth: 1000, marginTop: 96 }}>
+        {workSteps.map((step, index) => {
+          const Icon = step.icon;
           return (
-            <div 
-              key={study.id} 
-              className="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 overflow-hidden sticky"
-              style={{ top: `${study.top}px`, zIndex: index + 1 }}
+            <div
+              key={step.id}
+              className="rounded-2xl shadow-lg overflow-hidden border border-gray-100"
+              style={{
+                position: "sticky",
+                top: step.top,
+                zIndex: index + 1,
+                background: "#ffffff",
+              }}
             >
-              <div className="flex flex-col md:flex-row min-h-[480px]">
-                
-                {/* Texto */}
-                <div className="p-10 md:w-[45%] flex flex-col justify-center border-r border-gray-50">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${CYAN}10` }}>
-                      <Icon size={20} color={CYAN} />
+              <div className="flex" style={{ height: 420 }}>
+                <div className="flex flex-col gap-5 p-8" style={{ width: 420 }}>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center"
+                      style={{ background: `${CYAN}18` }}
+                    >
+                      <Icon size={16} color={CYAN} />
                     </div>
-                    <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">{study.label}</span>
+                    <h5 className="text-gray-400 text-sm">{step.label}</h5>
                   </div>
-
-                  <h3 className="text-gray-900 text-3xl font-black leading-tight mb-4 uppercase italic">
-                    {study.title}
-                  </h3>
-
-                  <p className="font-bold text-xs tracking-tight mb-6" style={{ color: GREEN }}>
-                    {study.highlight}
+                  <h2
+                    className="text-gray-800 text-2xl font-semibold leading-snug"
+                    style={{ maxWidth: 360 }}
+                  >
+                    {step.title}
+                  </h2>
+                  <p
+                    className="text-gray-400 text-base leading-6"
+                    style={{ maxWidth: 360 }}
+                  >
+                    {step.description}
                   </p>
-
-                  <p className="text-gray-500 text-base leading-relaxed mb-8 font-medium">
-                    {study.description}
-                  </p>
-
-                  <div className="mt-auto">
-                    <button className="flex items-center gap-2 group font-black text-[11px] uppercase tracking-tighter py-3 px-6 rounded-full bg-gray-900 text-white hover:bg-cyan-600 transition-all">
-                      See the website
-                      <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
                 </div>
 
-                {/* Visual */}
-                <div className="flex-1 relative bg-gray-50/50 min-h-[300px]">
-                  {study.showTaskCard && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <TaskCard />
-                    </div>
-                  )}
-                  {study.showCarousel && <InfiniteCarousel />}
-                  {study.image && (
-                    <AnimatedImage src={study.image} alt={study.title} />
+                <div className="flex-1 relative overflow-hidden">
+                  {step.showTaskCard && <TaskCardBackground />}
+                  {step.showCarousel && <InfiniteCarousel />}
+                  {step.image && (
+                    <AnimatedImage src={step.image} alt={step.title} />
                   )}
                 </div>
-
               </div>
             </div>
           );
         })}
       </div>
-      
-      <div className="h-40" /> {/* Espacio final para el scroll */}
     </div>
   );
 };
