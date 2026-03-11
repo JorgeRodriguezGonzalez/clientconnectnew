@@ -111,8 +111,3 @@ const WebDesign = () => {
 };
 
 export default WebDesign;
-```
-```
-git add .
-git commit -m "test: add hero block to debug"
-git push
