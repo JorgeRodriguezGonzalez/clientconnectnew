@@ -289,19 +289,6 @@ const OurProcess = () => {
                   transition: "background 0.5s ease",
                 }} />
 
-                {/* Icon */}
-                <div style={{
-                  width: "72px", height: "72px", borderRadius: "20px",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  background: isActive ? C.cyanBg : "rgba(255,255,255,0.05)",
-                  border: isActive ? `1px solid rgba(${C.secondaryRGB},0.3)` : "1px solid rgba(255,255,255,0.08)",
-                  color: isActive ? C.cyan : "rgba(255,255,255,0.35)",
-                  transition: "all 0.5s ease",
-                  transform: isActive ? "scale(1) rotate(0deg)" : "scale(0.9) rotate(-5deg)",
-                }}>
-                  {item.icon}
-                </div>
-
                 {/* Step badge */}
                 <span style={{
                   display: "inline-flex", alignItems: "center",
