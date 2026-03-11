@@ -163,6 +163,8 @@ const InfiniteCarousel = () => {
   );
 };
 
+// --- MODIFICACIÓN AQUÍ ---
+// Hemos adaptado AnimatedMedia para manejar videos de forma que no se recorten.
 const AnimatedMedia = ({ src, type = "image" }) => {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -189,14 +191,20 @@ const AnimatedMedia = ({ src, type = "image" }) => {
       }}
     >
       <div
-        className="relative overflow-hidden shadow-lg bg-black"
+        className="relative overflow-hidden shadow-lg"
         style={{
-          width: 420,
-          height: 346,
-          borderRadius: "16px 0 0 16px",
+          // Eliminamos el ancho y alto fijos para permitir que el contenido defina el tamaño
+          // width: 420,
+          // height: 346,
+          // Eliminamos el recorte de borde a la izquierda
+          // borderRadius: "16px 0 0 16px",
+          borderRadius: "16px", // Borde completo opcional, o ninguno
           opacity: visible ? 1 : 0,
           transform: visible ? "translateX(0)" : "translateX(200px)",
           transition: "opacity 0.8s ease-out, transform 0.8s ease-out",
+          // Aseguramos que el contenedor no limite el video
+          maxHeight: '90%', // Limita la altura para no pisar el texto en exceso
+          maxWidth: '55%',  // Limita el ancho
         }}
       >
         {type === "video" ? (
@@ -206,10 +214,16 @@ const AnimatedMedia = ({ src, type = "image" }) => {
             muted
             loop
             playsInline
-            className="w-full h-full object-cover"
+            // Usamos object-contain para que todo el video quepa sin recortes
+            className="w-full h-full object-contain"
           />
         ) : (
-          <img src={src} className="w-full h-full object-cover" alt="Case Study" />
+          <img
+            src={src}
+            className="w-full h-full object-cover"
+            alt="Case Study"
+            style={{ borderRadius: "16px 0 0 16px" }} // Mantenemos el estilo para imágenes
+          />
         )}
       </div>
     </div>
