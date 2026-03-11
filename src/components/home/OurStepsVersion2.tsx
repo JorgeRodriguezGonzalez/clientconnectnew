@@ -233,14 +233,14 @@ export default function FounderStory() {
 
         <div className="pt-24 pb-32 px-4 md:px-12">
           
-          {/* HEADER CON EL NUEVO BADGE */}
+          {/* HEADER CON EL BADGE PILL-SHAPE */}
           <div className="mx-auto max-w-[680px] flex flex-col items-center gap-6 text-center mb-16 md:mb-24">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3 }}
               viewport={{ once: true }}
-              className="w-fit px-3 py-1.5 rounded border border-white/10 bg-white/[0.05] transition-colors duration-300"
+              className="w-fit px-4 py-1.5 rounded-[50px] border border-white/10 bg-white/[0.05] transition-colors duration-300"
             >
               <span className="text-[10px] font-semibold uppercase tracking-[2px] text-zinc-400 font-['Satoshi',_sans-serif]">
                 Success stories
