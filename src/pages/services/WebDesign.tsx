@@ -103,30 +103,78 @@ const processSteps = [
     step: "Step 1",
     title: "Discovery & Strategy",
     description: "We learn about your business, goals, target audience, and competitors. Together we define the sitemap, content strategy, and conversion goals.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" />
+      </svg>
+    ),
+    badges: ["Business Audit", "Competitor Analysis", "Sitemap", "Content Strategy"],
   },
   {
     step: "Step 2",
     title: "Design & Prototype",
     description: "We create high-fidelity designs tailored to your brand. You'll see interactive prototypes before any code is written, so we get it right.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5Z" /><path d="m2 17 10 5 10-5" /><path d="m2 12 10 5 10-5" />
+      </svg>
+    ),
+    badges: ["Wireframes", "UI Design", "Interactive Prototype", "Brand Alignment"],
   },
   {
     step: "Step 3",
     title: "Development & Testing",
     description: "Clean, fast code built with SEO best practices. We test across all devices and browsers to ensure a flawless experience everywhere.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="14" y1="4" x2="10" y2="20" />
+      </svg>
+    ),
+    badges: ["Responsive Code", "SEO Setup", "Speed Optimisation", "Cross-Browser QA"],
   },
   {
     step: "Step 4",
     title: "Launch & Growth",
     description: "Your new website goes live. We provide training, ongoing support, and performance monitoring to keep driving results.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+      </svg>
+    ),
+    badges: ["Go Live", "CMS Training", "Analytics Setup", "Ongoing Support"],
   },
 ];
+
+const ProcessBadge = ({ label, isActive, delay }) => (
+  <span style={{
+    display: "inline-flex", alignItems: "center", gap: "6px",
+    padding: "6px 14px", borderRadius: "999px",
+    fontSize: "11px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em",
+    fontFamily: "'Satoshi', sans-serif", whiteSpace: "nowrap",
+    background: isActive ? C.cyanBg : "rgba(255,255,255,0.05)",
+    border: isActive ? `1px solid rgba(${C.secondaryRGB},0.25)` : "1px solid rgba(255,255,255,0.08)",
+    color: isActive ? C.cyan : "rgba(255,255,255,0.45)",
+    opacity: isActive ? 1 : 0.6,
+    transform: isActive ? "translateY(0)" : "translateY(4px)",
+    transition: `all 0.5s ease ${delay}s`,
+  }}>
+    {isActive && (
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    )}
+    {label}
+  </span>
+);
 
 const OurProcess = () => {
   const containerRef = useRef(null);
   const cardRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const cardCount = processSteps.length;
-  const stackOffset = 20;
+  const stackOffset = 24;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -200,18 +248,18 @@ const OurProcess = () => {
               <div
                 style={{
                   background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
-                  borderRadius: "20px",
-                  padding: "48px 40px",
-                  textAlign: "center",
+                  borderRadius: "24px",
+                  padding: "52px 48px",
                   position: "relative",
                   overflow: "hidden",
                   backdropFilter: "blur(12px)",
                   WebkitBackdropFilter: "blur(12px)",
-                  minHeight: "260px",
+                  minHeight: "340px",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
+                  gap: "24px",
                   border: isActive ? "1px solid transparent" : "1px solid rgba(255,255,255,0.1)",
                   backgroundClip: isActive ? "padding-box" : undefined,
                   boxShadow: isActive
@@ -223,7 +271,7 @@ const OurProcess = () => {
               >
                 {isActive && (
                   <div style={{
-                    position: "absolute", inset: 0, borderRadius: "20px", padding: "1px",
+                    position: "absolute", inset: 0, borderRadius: "24px", padding: "1px",
                     background: C.gradient,
                     WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
                     WebkitMaskComposite: "xor",
@@ -242,36 +290,62 @@ const OurProcess = () => {
                   transition: "background 0.5s ease",
                 }} />
 
+                {/* Icon */}
+                <div style={{
+                  width: "72px", height: "72px", borderRadius: "20px",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  background: isActive ? C.cyanBg : "rgba(255,255,255,0.05)",
+                  border: isActive ? `1px solid rgba(${C.secondaryRGB},0.3)` : "1px solid rgba(255,255,255,0.08)",
+                  color: isActive ? C.cyan : "rgba(255,255,255,0.35)",
+                  transition: "all 0.5s ease",
+                  transform: isActive ? "scale(1) rotate(0deg)" : "scale(0.9) rotate(-5deg)",
+                }}>
+                  {item.icon}
+                </div>
+
+                {/* Step badge */}
                 <span style={{
                   display: "inline-flex", alignItems: "center",
-                  fontFamily: "'Satoshi', sans-serif", fontSize: "13px", fontWeight: 600,
-                  color: isActive ? C.cyan : "rgba(255,255,255,0.5)",
-                  background: isActive ? C.cyanBg : "rgba(255,255,255,0.05)",
-                  border: isActive ? `1px solid rgba(${C.secondaryRGB},0.3)` : "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "999px", padding: "6px 14px",
-                  marginBottom: "20px",
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "12px", fontWeight: 600,
+                  color: isActive ? C.cyan : "rgba(255,255,255,0.4)",
+                  background: isActive ? C.cyanBg : "rgba(255,255,255,0.04)",
+                  border: isActive ? `1px solid rgba(${C.secondaryRGB},0.25)` : "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "999px", padding: "5px 14px",
                   transition: "all 0.5s ease",
-                  letterSpacing: "0.05em", textTransform: "uppercase",
+                  letterSpacing: "0.1em", textTransform: "uppercase",
                 }}>
                   {item.step}
                 </span>
 
+                {/* Title */}
                 <h3 style={{
                   fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700,
-                  color: "#fff", lineHeight: 1.2, marginBottom: "16px", letterSpacing: "-1px",
+                  color: "#fff", lineHeight: 1.2, letterSpacing: "-1px",
+                  textAlign: "center", margin: 0,
                   transition: "color 0.5s ease",
                 }}>
                   {item.title}
                 </h3>
 
+                {/* Description */}
                 <p style={{
                   fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
-                  color: isActive ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.45)",
-                  maxWidth: "600px", lineHeight: 1.65,
+                  color: isActive ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.35)",
+                  maxWidth: "560px", lineHeight: 1.7, textAlign: "center", margin: 0,
                   transition: "color 0.5s ease",
                 }}>
                   {item.description}
                 </p>
+
+                {/* Badges */}
+                <div style={{
+                  display: "flex", flexWrap: "wrap", gap: "8px",
+                  justifyContent: "center", marginTop: "4px",
+                }}>
+                  {item.badges.map((badge, bi) => (
+                    <ProcessBadge key={bi} label={badge} isActive={isActive} delay={bi * 0.08} />
+                  ))}
+                </div>
               </div>
             </div>
           );
