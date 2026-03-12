@@ -621,27 +621,6 @@ const SEOService = () => {
               </div>
             </div>
 
-            <div style={{
-              display: "flex", justifyContent: "center", gap: isMobile ? "24px" : "48px", marginTop: "40px", flexWrap: "wrap", padding: "0 20px",
-              ...anim(0.6),
-            }}>
-              {stats.map((stat, i) => (
-                <div key={i} style={{ textAlign: "center" }}>
-                  <div style={{
-                    fontFamily: 'Inter, -apple-system, sans-serif', fontSize: isMobile ? "28px" : "36px", fontWeight: 700,
-                    color: stat.color, letterSpacing: "-1px", lineHeight: 1,
-                  }}>
-                    {stat.value}
-                  </div>
-                  <div style={{
-                    fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "12px", fontWeight: 400,
-                    color: "rgba(255,255,255,0.5)", marginTop: "6px", maxWidth: "140px",
-                  }}>
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div style={{
