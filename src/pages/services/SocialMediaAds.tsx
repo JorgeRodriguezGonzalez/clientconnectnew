@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { TrendingUp, Target, Users, BarChart, Zap, DollarSign } from "lucide-react";
 
-// Añadir con los imports:
 import SubServicesSection from "@/components/home/SubServicesSection";
 import { socialAdsServices, socialAdsHeading, socialAdsHighlight, socialAdsSubtitle } from "@/data/services/socialads-services";
 
@@ -25,12 +24,6 @@ const useIsMobile = () => {
   }, []);
   return isMobile;
 };
-
-const stats = [
-  { value: "4.2x", label: "Average return on ad spend (ROAS)", color: PRIMARY },
-  { value: "-52%", label: "Average cost per lead reduction", color: SECONDARY },
-  { value: "2.1M+", label: "People reached across Sydney", color: PRIMARY },
-];
 
 const images = [
   { url: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=500&fit=crop", alt: "Social Media Strategy", rotate: -6 },
@@ -181,29 +174,6 @@ const SocialMediaAds = () => {
                 </button>
               </div>
             </div>
-
-            {/* Stats row */}
-            <div style={{
-              display: "flex", justifyContent: "center", gap: isMobile ? "24px" : "48px", marginTop: "40px", flexWrap: "wrap", padding: "0 20px",
-              ...anim(0.6),
-            }}>
-              {stats.map((stat, i) => (
-                <div key={i} style={{ textAlign: "center" }}>
-                  <div style={{
-                    fontFamily: 'Inter, -apple-system, sans-serif', fontSize: isMobile ? "28px" : "36px", fontWeight: 700,
-                    color: stat.color, letterSpacing: "-1px", lineHeight: 1,
-                  }}>
-                    {stat.value}
-                  </div>
-                  <div style={{
-                    fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "12px", fontWeight: 400,
-                    color: "rgba(255,255,255,0.5)", marginTop: "6px", maxWidth: "140px",
-                  }}>
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Image Gallery */}
@@ -287,7 +257,6 @@ const SocialMediaAds = () => {
           </div>
         </section>
 
-        {/* Insertar entre "WHY SOCIAL ADS" y "FEATURES": */}
         <SubServicesSection
           heading={socialAdsHeading}
           headingHighlight={socialAdsHighlight}
