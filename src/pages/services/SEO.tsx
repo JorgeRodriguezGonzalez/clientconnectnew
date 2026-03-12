@@ -693,7 +693,7 @@ const SEOService = () => {
 
         {/* ═══════════════ TESTIMONIAL QUOTE ═══════════════ */}
         <section style={{ background: "#000", position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "relative", zIndex: 1, padding: "80px 24px 120px", maxWidth: "1100px", margin: "0 auto" }}>
+          <div style={{ position: "relative", zIndex: 1, padding: "40px 24px 160px", maxWidth: "1100px", margin: "0 auto" }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -719,6 +719,7 @@ const SEOService = () => {
               }}>
                 Why SEO Matters for{" "}
                 <span style={{ color: C.cyan, fontWeight: 300 }}>Sydney Businesses</span>
+                {" "}— And Why Most Are Getting It Wrong
               </p>
 
               <p style={{
