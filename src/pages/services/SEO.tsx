@@ -517,7 +517,7 @@ const SEOService = () => {
   const galleryImages = isMobile ? mobileImages : images;
 
   return (
-    <div style={{ fontFamily: FONT, minHeight: "100vh", overflowX: "hidden" }}>
+    <div className="min-h-screen flex flex-col" style={{ fontFamily: FONT, overflowX: "clip" }}>
       <Header />
       <main style={{ flex: 1 }}>
 
