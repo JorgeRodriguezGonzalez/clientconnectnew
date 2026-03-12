@@ -87,55 +87,64 @@ const processSteps = [
   {
     step: "Step 1",
     title: "Research & Audit",
-    description:
-      "We start with a full SEO audit, competitor analysis, and keyword research to uncover the best ranking opportunities for your business.",
-    badges: ["SEO Audit", "Keyword Research", "Competitor Review", "Opportunity Map"],
+    description: "We learn about your business, goals, target audience, and competitors. Together we identify the best keywords, technical issues, and ranking opportunities.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" />
+      </svg>
+    ),
+    badges: ["SEO Audit", "Keyword Research", "Competitor Analysis", "Opportunity Map"],
   },
   {
     step: "Step 2",
-    title: "On-Page Optimisation",
-    description:
-      "We optimise your website's content, metadata, internal linking, and page structure so search engines can better understand and rank your site.",
-    badges: ["Content Optimisation", "Meta Tags", "Internal Linking", "Site Structure"],
+    title: "Strategy & Optimisation",
+    description: "We create a clear SEO roadmap and optimise your site's content, metadata, internal linking, and structure to improve search visibility.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5Z" /><path d="m2 17 10 5 10-5" /><path d="m2 12 10 5 10-5" />
+      </svg>
+    ),
+    badges: ["On-Page SEO", "Meta Tags", "Internal Linking", "Content Strategy"],
   },
   {
     step: "Step 3",
-    title: "Authority & Technical SEO",
-    description:
-      "We strengthen your website with technical improvements and high-quality backlinks that build trust, authority, and long-term visibility.",
-    badges: ["Technical Fixes", "Link Building", "Site Health", "Authority Growth"],
+    title: "Technical SEO & Authority",
+    description: "We improve site health, speed, crawlability, and build authority with high-quality backlinks that strengthen your rankings over time.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="14" y1="4" x2="10" y2="20" />
+      </svg>
+    ),
+    badges: ["Technical Fixes", "Site Speed", "Link Building", "Authority Growth"],
   },
   {
     step: "Step 4",
     title: "Tracking & Growth",
-    description:
-      "We monitor rankings, traffic, and conversions each month, then refine the strategy to keep improving your organic performance over time.",
-    badges: ["Monthly Reporting", "Ranking Tracking", "Traffic Insights", "Continuous Improvement"],
+    description: "Your SEO campaign keeps evolving. We monitor rankings, traffic, and conversions, then refine the strategy to keep driving better results.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+      </svg>
+    ),
+    badges: ["Monthly Reporting", "Ranking Tracking", "Traffic Insights", "Ongoing Optimisation"],
   },
 ];
 
 const ProcessBadge = ({ label, isActive, delay }) => (
-  <span
-    style={{
-      display: "inline-flex",
-      alignItems: "center",
-      gap: "6px",
-      padding: "6px 14px",
-      borderRadius: "999px",
-      fontSize: "11px",
-      fontWeight: 600,
-      textTransform: "uppercase",
-      letterSpacing: "0.06em",
-      fontFamily: SATOSHI,
-      whiteSpace: "nowrap",
-      background: isActive ? C.cyanBg : "rgba(255,255,255,0.05)",
-      border: isActive ? `1px solid rgba(${C.secondaryRGB},0.25)` : "1px solid rgba(255,255,255,0.08)",
-      color: isActive ? C.secondary : "rgba(255,255,255,0.45)",
-      opacity: isActive ? 1 : 0.6,
-      transform: isActive ? "translateY(0)" : "translateY(4px)",
-      transition: `all 0.5s ease ${delay}s`,
-    }}
-  >
+  <span style={{
+    display: "inline-flex", alignItems: "center", gap: "6px",
+    padding: "6px 14px", borderRadius: "999px",
+    fontSize: "11px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em",
+    fontFamily: "'Satoshi', sans-serif", whiteSpace: "nowrap",
+    background: isActive ? C.cyanBg : "rgba(255,255,255,0.05)",
+    border: isActive ? `1px solid rgba(${C.secondaryRGB},0.25)` : "1px solid rgba(255,255,255,0.08)",
+    color: isActive ? C.secondary : "rgba(255,255,255,0.45)",
+    opacity: isActive ? 1 : 0.6,
+    transform: isActive ? "translateY(0)" : "translateY(4px)",
+    transition: `all 0.5s ease ${delay}s`,
+  }}>
     {isActive && (
       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={C.primary} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="20 6 9 17 4 12" />
@@ -220,22 +229,15 @@ const OurProcess = () => {
       const viewportCenter = window.innerHeight / 2;
       let closest = 0;
       let closestDist = Infinity;
-
       cardRefs.current.forEach((ref, i) => {
         if (!ref) return;
         const rect = ref.getBoundingClientRect();
         const cardCenter = rect.top + rect.height / 2;
         const dist = Math.abs(cardCenter - viewportCenter);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closest = i;
-        }
+        if (dist < closestDist) { closestDist = dist; closest = i; }
       });
-
       setActiveIndex(closest);
     };
-
-    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -249,57 +251,30 @@ const OurProcess = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              padding: "6px 12px",
-              borderRadius: "8px",
-              border: "1px solid rgba(255,255,255,0.1)",
-              backgroundColor: "rgba(255,255,255,0.05)",
-              width: "fit-content",
-              margin: "0 auto 16px",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "10px",
-                fontWeight: 600,
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                color: "#9ca3af",
-                fontFamily: SATOSHI,
-              }}
-            >
+          <div style={{
+            display: "inline-flex", alignItems: "center",
+            padding: "6px 12px", borderRadius: "8px",
+            border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.05)",
+            width: "fit-content", margin: "0 auto 16px",
+          }}>
+            <span style={{
+              fontSize: "10px", fontWeight: 600, letterSpacing: "2px",
+              textTransform: "uppercase", color: "#9ca3af",
+              fontFamily: "'Satoshi', sans-serif",
+            }}>
               How We Work
             </span>
           </div>
-
-          <h2
-            style={{
-              fontFamily: SATOSHI,
-              fontSize: "clamp(32px, 5vw, 48px)",
-              fontWeight: 700,
-              lineHeight: 1.1,
-              letterSpacing: "-1.5px",
-              color: "#fff",
-              marginTop: "12px",
-            }}
-          >
+          <h2 style={{
+            fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700,
+            lineHeight: 1.1, letterSpacing: "-1.5px", color: "#fff", marginTop: "12px",
+          }}>
             Our SEO Process
           </h2>
-
-          <p
-            style={{
-              fontFamily: SATOSHI,
-              fontSize: "15px",
-              fontWeight: 500,
-              color: "rgba(255,255,255,0.5)",
-              maxWidth: "520px",
-              margin: "16px auto 0",
-              lineHeight: 1.65,
-            }}
-          >
+          <p style={{
+            fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
+            color: "rgba(255,255,255,0.5)", maxWidth: "520px", margin: "16px auto 0", lineHeight: 1.65,
+          }}>
             A comprehensive, data-driven approach to sustainable search visibility.
           </p>
         </motion.div>
@@ -317,11 +292,10 @@ const OurProcess = () => {
       >
         {processSteps.map((item, i) => {
           const isActive = i === activeIndex;
-
           return (
             <div
               key={i}
-              ref={(el) => (cardRefs.current[i] = el)}
+              ref={el => cardRefs.current[i] = el}
               style={{
                 position: "sticky",
                 top: `calc(112px + ${i * stackOffset}px)`,
@@ -353,99 +327,62 @@ const OurProcess = () => {
                 }}
               >
                 {isActive && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      borderRadius: "20px",
-                      padding: "1px",
-                      background: C.gradient,
-                      WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                      WebkitMaskComposite: "xor",
-                      maskComposite: "exclude",
-                      pointerEvents: "none",
-                      opacity: 0.7,
-                      transition: "opacity 0.5s ease",
-                    }}
-                  />
+                  <div style={{
+                    position: "absolute", inset: 0, borderRadius: "20px", padding: "1px",
+                    background: C.gradient,
+                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                    pointerEvents: "none",
+                    opacity: 0.7,
+                    transition: "opacity 0.5s ease",
+                  }} />
                 )}
 
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: "24px",
-                    right: "24px",
-                    height: "1px",
-                    background: isActive
-                      ? C.gradient
-                      : "linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent)",
-                    transition: "background 0.5s ease",
-                  }}
-                />
+                <div style={{
+                  position: "absolute", top: 0, left: "24px", right: "24px", height: "1px",
+                  background: isActive
+                    ? C.gradient
+                    : "linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent)",
+                  transition: "background 0.5s ease",
+                }} />
 
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    fontFamily: SATOSHI,
-                    fontSize: "12px",
-                    fontWeight: 600,
-                    color: isActive ? C.secondary : "rgba(255,255,255,0.4)",
-                    background: isActive ? C.cyanBg : "rgba(255,255,255,0.04)",
-                    border: isActive ? `1px solid rgba(${C.secondaryRGB},0.25)` : "1px solid rgba(255,255,255,0.08)",
-                    borderRadius: "999px",
-                    padding: "5px 14px",
-                    marginBottom: "12px",
-                    transition: "all 0.5s ease",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                  }}
-                >
+                <span style={{
+                  display: "inline-flex", alignItems: "center",
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "12px", fontWeight: 600,
+                  color: isActive ? C.secondary : "rgba(255,255,255,0.4)",
+                  background: isActive ? C.cyanBg : "rgba(255,255,255,0.04)",
+                  border: isActive ? `1px solid rgba(${C.secondaryRGB},0.25)` : "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "999px", padding: "5px 14px",
+                  marginBottom: "12px",
+                  transition: "all 0.5s ease",
+                  letterSpacing: "0.1em", textTransform: "uppercase",
+                }}>
                   {item.step}
                 </span>
 
-                <h3
-                  style={{
-                    fontFamily: SATOSHI,
-                    fontSize: "clamp(28px, 4vw, 40px)",
-                    fontWeight: 700,
-                    color: "#fff",
-                    lineHeight: 1.2,
-                    letterSpacing: "-1px",
-                    textAlign: "center",
-                    margin: "0 0 16px 0",
-                    transition: "color 0.5s ease",
-                  }}
-                >
+                <h3 style={{
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700,
+                  color: "#fff", lineHeight: 1.2, letterSpacing: "-1px",
+                  textAlign: "center", margin: "0 0 16px 0",
+                  transition: "color 0.5s ease",
+                }}>
                   {item.title}
                 </h3>
 
-                <p
-                  style={{
-                    fontFamily: SATOSHI,
-                    fontSize: "15px",
-                    fontWeight: 500,
-                    color: isActive ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.35)",
-                    maxWidth: "560px",
-                    lineHeight: 1.7,
-                    textAlign: "center",
-                    margin: "0 0 24px 0",
-                    transition: "color 0.5s ease",
-                  }}
-                >
+                <p style={{
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
+                  color: isActive ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.35)",
+                  maxWidth: "560px", lineHeight: 1.7, textAlign: "center", margin: "0 0 24px 0",
+                  transition: "color 0.5s ease",
+                }}>
                   {item.description}
                 </p>
 
-                <div
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "8px",
-                    justifyContent: "center",
-                    marginTop: "4px",
-                  }}
-                >
+                <div style={{
+                  display: "flex", flexWrap: "wrap", gap: "8px",
+                  justifyContent: "center", marginTop: "4px",
+                }}>
                   {item.badges.map((badge, bi) => (
                     <ProcessBadge key={bi} label={badge} isActive={isActive} delay={bi * 0.08} />
                   ))}
