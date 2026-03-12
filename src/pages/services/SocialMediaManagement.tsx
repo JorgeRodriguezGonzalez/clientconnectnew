@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Share2, Calendar, Users, BarChart, TrendingUp, MessageSquare } from "lucide-react";
 
+// Añadir con los imports:
+import SubServicesSection from "@/components/home/SubServicesSection";
+import { socialMgmtServices, socialMgmtHeading, socialMgmtHighlight, socialMgmtSubtitle } from "@/data/services/socialmgmt-services";
+
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
 const SECONDARY = "#06b6d4";
@@ -282,6 +286,14 @@ const SocialMediaManagement = () => {
             </div>
           </div>
         </section>
+
+        {/* Insertar entre "WHY SOCIAL MEDIA" y "FEATURES": */}
+        <SubServicesSection
+          heading={socialMgmtHeading}
+          headingHighlight={socialMgmtHighlight}
+          subtitle={socialMgmtSubtitle}
+          services={socialMgmtServices}
+        />
 
         {/* ═══════════════ FEATURES ═══════════════ */}
         <section className="section-padding bg-bg-light">
