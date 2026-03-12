@@ -575,9 +575,9 @@ const SEOService = () => {
               fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.5)",
               ...anim(0.4),
             }}>
-              <span>Data-Driven</span>
+              <span>+285% Avg Traffic</span>
               <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
-              <span>Local SEO Experts</span>
+              <span>Top 3 Rankings</span>
               <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
               <span>150+ Clients Ranked</span>
             </div>
