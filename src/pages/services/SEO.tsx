@@ -693,7 +693,7 @@ const SEOService = () => {
 
         {/* ═══════════════ TESTIMONIAL QUOTE ═══════════════ */}
         <section style={{ background: "#000", position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "relative", zIndex: 1, padding: "40px 24px 160px", maxWidth: "1100px", margin: "0 auto" }}>
+          <div style={{ position: "relative", zIndex: 1, padding: "40px 24px 200px", maxWidth: "1100px", margin: "0 auto" }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -701,12 +701,6 @@ const SEOService = () => {
               transition={{ duration: 0.6 }}
               style={{ textAlign: "center" }}
             >
-              <div style={{ opacity: 0.1, color: "#fff", marginBottom: "32px", display: "flex", justifyContent: "center" }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
-                  <path d="M7 7h3v10H5V9a2 2 0 0 1 2-2Zm9 0h3v10h-5V9a2 2 0 0 1 2-2Z" />
-                </svg>
-              </div>
-
               <p style={{
                 fontFamily: "'Satoshi', sans-serif",
                 fontSize: "clamp(28px, 5vw, 56px)",
