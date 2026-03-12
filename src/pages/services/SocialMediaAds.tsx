@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { TrendingUp, Target, Users, BarChart, Zap, DollarSign } from "lucide-react";
 
+// Añadir con los imports:
+import SubServicesSection from "@/components/home/SubServicesSection";
+import { socialAdsServices, socialAdsHeading, socialAdsHighlight, socialAdsSubtitle } from "@/data/services/socialads-services";
+
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
 const SECONDARY = "#06b6d4";
@@ -282,6 +286,14 @@ const SocialMediaAds = () => {
             </div>
           </div>
         </section>
+
+        {/* Insertar entre "WHY SOCIAL ADS" y "FEATURES": */}
+        <SubServicesSection
+          heading={socialAdsHeading}
+          headingHighlight={socialAdsHighlight}
+          subtitle={socialAdsSubtitle}
+          services={socialAdsServices}
+        />
 
         {/* ═══════════════ FEATURES ═══════════════ */}
         <section className="section-padding bg-bg-light">
