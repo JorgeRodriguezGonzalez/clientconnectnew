@@ -707,19 +707,19 @@ const SEOService = () => {
                 </svg>
               </div>
 
-              <h2 style={{
+              <p style={{
                 fontFamily: "'Satoshi', sans-serif",
-                fontSize: "clamp(28px, 5vw, 48px)",
-                fontWeight: 700,
-                lineHeight: 1.1,
+                fontSize: "clamp(28px, 5vw, 56px)",
+                fontWeight: 300,
+                lineHeight: 1.15,
                 letterSpacing: "-1.5px",
                 color: "#fff",
                 margin: "0 auto 24px",
-                maxWidth: "800px",
+                maxWidth: "1000px",
               }}>
                 Why SEO Matters for{" "}
-                <span style={{ color: C.cyan, fontWeight: 700 }}>Sydney Businesses</span>
-              </h2>
+                <span style={{ color: C.cyan, fontWeight: 300 }}>Sydney Businesses</span>
+              </p>
 
               <p style={{
                 fontFamily: "'Satoshi', sans-serif",
