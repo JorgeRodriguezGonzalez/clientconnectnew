@@ -1,19 +1,35 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { MousePointerClick, Target, DollarSign, BarChart, TrendingUp, Zap } from "lucide-react";
-
-// Añadir con los imports:
+import { MousePointerClick, Target, DollarSign, BarChart, TrendingUp, Zap, Minus, Plus, MessageSquare } from "lucide-react";
 import SubServicesSection from "@/components/home/SubServicesSection";
+import CTASection from "@/components/home/CTASection";
 import { googleAdsServices, googleAdsHeading, googleAdsHighlight, googleAdsSubtitle } from "@/data/services/googleads-services";
+import * as Accordion from "@radix-ui/react-accordion";
+import { cn } from "@/lib/utils";
+
+const C = {
+  cyan: "#06b6d4",
+  green: "#34d399",
+  cyanLight: "#67e8f9",
+  greenLight: "#6ee7b7",
+  cyanBg: "rgba(6,182,212,0.15)",
+  greenBg: "rgba(52,211,153,0.15)",
+  gradient: "linear-gradient(135deg, #06b6d4 0%, #34d399 100%)",
+  text: "#a1a1aa",
+  cardBorder: "rgba(255,255,255,0.06)",
+  primaryRGB: "52,211,153",
+  secondaryRGB: "6,182,212",
+};
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
 const SECONDARY = "#06b6d4";
 const SECONDARY_RGB = "6,182,212";
+const FONT = "'Satoshi', -apple-system, sans-serif";
 
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -26,12 +42,6 @@ const useIsMobile = () => {
   return isMobile;
 };
 
-const stats = [
-  { value: "3.8x", label: "Average return on ad spend (ROAS)", color: SECONDARY },
-  { value: "-45%", label: "Average CPA reduction", color: PRIMARY },
-  { value: "24/7", label: "Campaign monitoring & optimization", color: SECONDARY },
-];
-
 const images = [
   { url: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=500&fit=crop", alt: "Google Ads Dashboard", rotate: -6 },
   { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=350&h=450&fit=crop", alt: "Campaign Analytics", rotate: 3 },
@@ -42,21 +52,445 @@ const images = [
 ];
 const mobileImages = [images[0], images[1], images[2], images[3]];
 
-const features = [
-  { icon: Target, title: "Campaign Strategy", description: "Custom campaigns targeting your ideal customers at the right time." },
-  { icon: Zap, title: "Ad Creation", description: "Compelling ad copy and extensions that maximize click-through rates." },
-  { icon: DollarSign, title: "Bid Management", description: "Smart bidding strategies that get you the best ROI." },
-  { icon: BarChart, title: "Conversion Tracking", description: "Track every lead and sale to prove real business impact." },
+// --- OUR PROCESS STEPS (Google Ads) ---
+const processSteps = [
+  {
+    step: "Step 1",
+    title: "Account Audit & Strategy",
+    description: "We audit your existing account (or start from scratch), research your market and competitors, and build a data-driven campaign strategy aligned with your business goals.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" />
+      </svg>
+    ),
+    badges: ["Account Audit", "Keyword Research", "Competitor Analysis", "Strategy Plan"],
+  },
+  {
+    step: "Step 2",
+    title: "Campaign Build & Ad Creation",
+    description: "We structure your campaigns for maximum quality score, write compelling ad copy with strong CTAs, and set up all extensions and tracking to capture every conversion.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5Z" /><path d="m2 17 10 5 10-5" /><path d="m2 12 10 5 10-5" />
+      </svg>
+    ),
+    badges: ["Ad Copywriting", "Campaign Structure", "Ad Extensions", "Conversion Tracking"],
+  },
+  {
+    step: "Step 3",
+    title: "Launch & Optimise",
+    description: "We launch your campaigns and continuously optimise bids, keywords, and ad placements based on real-time performance data. Negative keywords and A/B tests run constantly.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="14" y1="4" x2="10" y2="20" />
+      </svg>
+    ),
+    badges: ["Bid Management", "A/B Testing", "Negative Keywords", "Quality Score"],
+  },
+  {
+    step: "Step 4",
+    title: "Scale & Report",
+    description: "We scale winning campaigns, expand to new keyword opportunities, and provide detailed monthly reports showing your ROAS, cost per lead, and growth trajectory.",
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+      </svg>
+    ),
+    badges: ["Performance Reports", "Budget Scaling", "New Opportunities", "ROAS Tracking"],
+  },
 ];
 
-const benefits = [
-  "Immediate visibility on Google search results",
-  "Pay only when someone clicks your ad",
-  "Target customers ready to buy right now",
-  "Full control over your daily budget",
-  "Detailed analytics showing exactly what works",
-  "Scale up quickly when you find winning campaigns",
+const ProcessBadge = ({ label, isActive, delay }) => (
+  <span style={{
+    display: "inline-flex", alignItems: "center", gap: "6px",
+    padding: "6px 14px", borderRadius: "999px",
+    fontSize: "11px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em",
+    fontFamily: "'Satoshi', sans-serif", whiteSpace: "nowrap",
+    background: isActive ? C.cyanBg : "rgba(255,255,255,0.05)",
+    border: isActive ? `1px solid rgba(${C.secondaryRGB},0.25)` : "1px solid rgba(255,255,255,0.08)",
+    color: isActive ? C.cyan : "rgba(255,255,255,0.45)",
+    opacity: isActive ? 1 : 0.6,
+    transform: isActive ? "translateY(0)" : "translateY(4px)",
+    transition: `all 0.5s ease ${delay}s`,
+  }}>
+    {isActive && (
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={C.green} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    )}
+    {label}
+  </span>
+);
+
+const OurProcess = () => {
+  const containerRef = useRef(null);
+  const cardRefs = useRef([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const cardCount = processSteps.length;
+  const stackOffset = 24;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const viewportCenter = window.innerHeight / 2;
+      let closest = 0;
+      let closestDist = Infinity;
+      cardRefs.current.forEach((ref, i) => {
+        if (!ref) return;
+        const rect = ref.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(cardCenter - viewportCenter);
+        if (dist < closestDist) { closestDist = dist; closest = i; }
+      });
+      setActiveIndex(closest);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <section style={{ background: "#000", padding: "80px 0 0" }}>
+      <div style={{ textAlign: "center", marginBottom: "48px", padding: "0 24px" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div style={{
+            display: "inline-flex", alignItems: "center",
+            padding: "6px 12px", borderRadius: "8px",
+            border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.05)",
+            width: "fit-content", margin: "0 auto 16px",
+          }}>
+            <span style={{
+              fontSize: "10px", fontWeight: 600, letterSpacing: "2px",
+              textTransform: "uppercase", color: "#9ca3af",
+              fontFamily: "'Satoshi', sans-serif",
+            }}>
+              How We Work
+            </span>
+          </div>
+          <h2 style={{
+            fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700,
+            lineHeight: 1.1, letterSpacing: "-1.5px", color: "#fff", marginTop: "12px",
+          }}>
+            Our Google Ads Process
+          </h2>
+          <p style={{
+            fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
+            color: "rgba(255,255,255,0.5)", maxWidth: "520px", margin: "16px auto 0", lineHeight: 1.65,
+          }}>
+            From audit to scale, we follow a proven 4-step process to deliver Google Ads campaigns that maximise your return on every dollar spent.
+          </p>
+        </motion.div>
+      </div>
+
+      <div
+        ref={containerRef}
+        style={{
+          position: "relative",
+          height: `${cardCount * 60 + 40}vh`,
+          maxWidth: "900px",
+          margin: "0 auto",
+          padding: "0 24px",
+        }}
+      >
+        {processSteps.map((item, i) => {
+          const isActive = i === activeIndex;
+          return (
+            <div
+              key={i}
+              ref={el => cardRefs.current[i] = el}
+              style={{
+                position: "sticky",
+                top: `calc(112px + ${i * stackOffset}px)`,
+                marginBottom: `${60 / cardCount}vh`,
+                zIndex: 10 + i,
+              }}
+            >
+              <div
+                style={{
+                  background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
+                  borderRadius: "20px",
+                  padding: "56px 44px",
+                  position: "relative",
+                  overflow: "hidden",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  minHeight: "300px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: isActive ? "1px solid transparent" : "1px solid rgba(255,255,255,0.1)",
+                  backgroundClip: isActive ? "padding-box" : undefined,
+                  boxShadow: isActive
+                    ? `0 25px 60px rgba(0,0,0,0.5), 0 0 40px rgba(${C.secondaryRGB},0.15), 0 0 80px rgba(${C.primaryRGB},0.08)`
+                    : "0 20px 40px rgba(0,0,0,0.3)",
+                  transition: "box-shadow 0.5s ease, border 0.5s ease, transform 0.5s ease",
+                  transform: isActive ? "scale(1)" : "scale(0.98)",
+                }}
+              >
+                {isActive && (
+                  <div style={{
+                    position: "absolute", inset: 0, borderRadius: "20px", padding: "1px",
+                    background: C.gradient,
+                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                    pointerEvents: "none",
+                    opacity: 0.7,
+                    transition: "opacity 0.5s ease",
+                  }} />
+                )}
+
+                <div style={{
+                  position: "absolute", top: 0, left: "24px", right: "24px", height: "1px",
+                  background: isActive
+                    ? C.gradient
+                    : "linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent)",
+                  transition: "background 0.5s ease",
+                }} />
+
+                <span style={{
+                  display: "inline-flex", alignItems: "center",
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "12px", fontWeight: 600,
+                  color: isActive ? C.cyan : "rgba(255,255,255,0.4)",
+                  background: isActive ? C.cyanBg : "rgba(255,255,255,0.04)",
+                  border: isActive ? `1px solid rgba(${C.secondaryRGB},0.25)` : "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "999px", padding: "5px 14px",
+                  marginBottom: "12px",
+                  transition: "all 0.5s ease",
+                  letterSpacing: "0.1em", textTransform: "uppercase",
+                }}>
+                  {item.step}
+                </span>
+
+                <h3 style={{
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700,
+                  color: "#fff", lineHeight: 1.2, letterSpacing: "-1px",
+                  textAlign: "center", margin: "0 0 16px 0",
+                  transition: "color 0.5s ease",
+                }}>
+                  {item.title}
+                </h3>
+
+                <p style={{
+                  fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
+                  color: isActive ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.35)",
+                  maxWidth: "560px", lineHeight: 1.7, textAlign: "center", margin: "0 0 24px 0",
+                  transition: "color 0.5s ease",
+                }}>
+                  {item.description}
+                </p>
+
+                <div style={{
+                  display: "flex", flexWrap: "wrap", gap: "8px",
+                  justifyContent: "center", marginTop: "4px",
+                }}>
+                  {item.badges.map((badge, bi) => (
+                    <ProcessBadge key={bi} label={badge} isActive={isActive} delay={bi * 0.08} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
+
+// --- FAQ DATA (Google Ads) ---
+const googleAdsFaqs = [
+  {
+    id: 1,
+    question: "How much should I spend on Google Ads?",
+    answer: "We recommend a minimum of $1,500–$3,000 per month in ad spend to generate meaningful data and results. Your ideal budget depends on your industry, competition, and goals. We'll recommend a budget during our initial consultation and ensure every dollar is optimised for maximum return.",
+  },
+  {
+    id: 2,
+    question: "How quickly will I see results?",
+    answer: "Google Ads delivers traffic almost immediately after launch. However, the first 2 to 4 weeks are a learning and optimisation phase where we refine targeting, bids, and ad copy. Most campaigns reach peak performance by month 2 to 3 as we accumulate data and optimise aggressively.",
+  },
+  {
+    id: 3,
+    question: "Do you manage Shopping and Display campaigns too?",
+    answer: "Yes. We manage all Google Ads campaign types including Search, Shopping, Display, YouTube, and Performance Max. We'll recommend the best campaign mix based on your business type and goals. E-commerce businesses often benefit from a combination of Search and Shopping campaigns.",
+  },
+  {
+    id: 4,
+    question: "What kind of return can I expect?",
+    answer: "Our average client achieves a 3.8x return on ad spend (ROAS) with a 45% reduction in cost per acquisition. Results vary by industry and competition, but we focus relentlessly on your cost per lead and cost per sale to ensure profitability. Full transparency in monthly reports.",
+  },
+  {
+    id: 5,
+    question: "Can I pause or adjust my budget at any time?",
+    answer: "Absolutely. You have full control over your ad spend and can pause, increase, or decrease your budget at any time. We'll proactively recommend budget adjustments based on performance data — scaling up what works and cutting what doesn't.",
+  },
 ];
+
+const BackgroundStripes = () => (
+  <div
+    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05] invert"
+    style={{
+      backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
+      backgroundRepeat: 'repeat',
+    }}
+  />
+);
+
+const GoogleAdsFAQ = () => {
+  const [openItem, setOpenItem] = useState(null);
+
+  return (
+    <section className="relative w-full bg-[#050505] py-24 sm:py-32 overflow-hidden">
+      <div className="w-full h-[1px] bg-white/10 absolute top-0 z-20" />
+      <BackgroundStripes />
+
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-6 max-w-3xl mx-auto text-center mb-16 md:mb-24">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500"
+          >
+            SUPPORT
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-white"
+          >
+            Frequently asked{' '}
+            <motion.span
+              initial={{ backgroundPosition: "400% 50%" }}
+              animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+              transition={{ duration: 12, ease: "linear", repeat: Infinity }}
+              style={{
+                display: "inline-block",
+                backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0), ${C.green}, ${C.cyan}, rgba(255,255,255,0))`,
+                backgroundSize: "400% 100%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              questions
+            </motion.span>
+            <span className="text-white">.</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-400 tracking-tight"
+          >
+            Everything you need to know about our Google Ads management, budgets, and what results to expect.
+          </motion.p>
+        </div>
+
+        <div className="max-w-[800px] mx-auto">
+          <div className="flex justify-center mb-8">
+            <span className="text-[10px] uppercase tracking-widest text-zinc-500 bg-white/5 px-3 py-1 border border-white/5">
+              Updated Today
+            </span>
+          </div>
+
+          <Accordion.Root
+            type="single"
+            collapsible
+            value={openItem || ""}
+            onValueChange={(value) => setOpenItem(value)}
+            className="space-y-4"
+          >
+            {googleAdsFaqs.map((item, index) => (
+              <Accordion.Item value={item.id.toString()} key={item.id} className="group">
+                <Accordion.Header>
+                  <Accordion.Trigger className="flex w-full items-start gap-x-4 focus:outline-none group">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.5 }}
+                      viewport={{ once: true }}
+                      className={cn(
+                        "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border rounded-none",
+                        openItem === item.id.toString()
+                          ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10"
+                          : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10"
+                      )}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={cn(
+                          "flex items-center justify-center w-8 h-8 rounded-none transition-colors duration-300",
+                          openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500"
+                        )}>
+                          <MessageSquare size={14} />
+                        </div>
+                        <span className={cn(
+                          "text-base md:text-lg font-semibold transition-colors duration-300",
+                          openItem === item.id.toString() ? "text-white" : "text-zinc-400"
+                        )}>
+                          {item.question}
+                        </span>
+                      </div>
+
+                      <span className={cn(
+                        "ml-4 transition-transform duration-300",
+                        openItem === item.id.toString() ? "text-emerald-500 rotate-180" : "text-zinc-600"
+                      )}>
+                        {openItem === item.id.toString() ? <Minus className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
+                      </span>
+
+                      {openItem === item.id.toString() && (
+                        <motion.div
+                          layoutId="googleads-faq-active-line"
+                          className="absolute left-0 top-0 bottom-0 w-[3px]"
+                          style={{ backgroundColor: C.green }}
+                        />
+                      )}
+                    </motion.div>
+                  </Accordion.Trigger>
+                </Accordion.Header>
+
+                <Accordion.Content asChild forceMount>
+                  <AnimatePresence initial={false}>
+                    {openItem === item.id.toString() && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="flex justify-end mt-2 ml-8 md:ml-16">
+                          <div className={cn(
+                            "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-none shadow-sm border",
+                            "bg-zinc-900 border-white/10 text-zinc-300"
+                          )}>
+                            <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20" />
+                            {item.answer}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </Accordion.Content>
+              </Accordion.Item>
+            ))}
+          </Accordion.Root>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const GoogleAds = () => {
   const [hImg, setHImg] = useState(null);
@@ -74,7 +508,7 @@ const GoogleAds = () => {
   const galleryImages = isMobile ? mobileImages : images;
 
   return (
-    <div style={{ fontFamily: "'Satoshi', -apple-system, sans-serif", minHeight: "100vh", overflowX: "hidden" }}>
+    <div className="min-h-screen flex flex-col" style={{ fontFamily: FONT, overflowX: "clip" }}>
       <Header />
       <main style={{ flex: 1 }}>
 
@@ -84,7 +518,6 @@ const GoogleAds = () => {
           <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
           <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
-            {/* Badge */}
             <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px", ...anim(0) }}>
               <div style={{
                 display: "inline-flex", alignItems: "center", gap: "8px",
@@ -98,7 +531,6 @@ const GoogleAds = () => {
               </div>
             </div>
 
-            {/* Title */}
             <h1 style={{
               fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
               fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
@@ -121,7 +553,6 @@ const GoogleAds = () => {
               </motion.span>
             </h1>
 
-            {/* Subtitle */}
             <p style={{
               fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
               fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff", maxWidth: "560px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
@@ -130,7 +561,6 @@ const GoogleAds = () => {
               Our <span style={{ color: SECONDARY, fontWeight: 600 }}>Google Ads experts</span> create and manage high-performing campaigns that deliver measurable <span style={{ color: PRIMARY, fontWeight: 600 }}>ROI</span> for Sydney businesses.
             </p>
 
-            {/* Tags */}
             <div style={{
               display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", marginTop: "24px", flexWrap: "wrap", padding: "0 20px",
               fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.5)",
@@ -143,7 +573,6 @@ const GoogleAds = () => {
               <span>3.8x Avg. ROAS</span>
             </div>
 
-            {/* Email CTA */}
             <div style={{
               display: "flex", justifyContent: "center", marginTop: "32px", padding: "0 20px",
               ...anim(0.5),
@@ -182,32 +611,8 @@ const GoogleAds = () => {
                 </button>
               </div>
             </div>
-
-            {/* Stats row */}
-            <div style={{
-              display: "flex", justifyContent: "center", gap: isMobile ? "24px" : "48px", marginTop: "40px", flexWrap: "wrap", padding: "0 20px",
-              ...anim(0.6),
-            }}>
-              {stats.map((stat, i) => (
-                <div key={i} style={{ textAlign: "center" }}>
-                  <div style={{
-                    fontFamily: 'Inter, -apple-system, sans-serif', fontSize: isMobile ? "28px" : "36px", fontWeight: 700,
-                    color: stat.color, letterSpacing: "-1px", lineHeight: 1,
-                  }}>
-                    {stat.value}
-                  </div>
-                  <div style={{
-                    fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "12px", fontWeight: 400,
-                    color: "rgba(255,255,255,0.5)", marginTop: "6px", maxWidth: "140px",
-                  }}>
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
-          {/* Image Gallery */}
           <div style={{
             display: "flex", justifyContent: "center", alignItems: "center",
             gap: isMobile ? "10px" : "16px",
@@ -256,38 +661,47 @@ const GoogleAds = () => {
         </section>
 
         {/* ═══════════════ WHY GOOGLE ADS ═══════════════ */}
-        <section className="section-padding bg-background">
-          <div className="container-custom">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Why Google Ads for Your Sydney Business?
-                </h2>
-                <div className="space-y-4 text-lg text-text-medium">
-                  <p>
-                    Google Ads puts your business at the top of search results instantly. While SEO
-                    builds long-term visibility, Google Ads delivers immediate traffic and leads.
-                  </p>
-                  <p>
-                    The key is doing it right. Many businesses waste thousands on poorly managed campaigns.
-                    Our certified Google Ads experts ensure every dollar you spend works hard for your business.
-                  </p>
-                  <p>
-                    We specialize in Sydney market campaigns, understanding local search behavior and
-                    competition to give you maximum advantage.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
+        <section style={{ background: "#000", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "relative", zIndex: 1, padding: "40px 24px 200px", maxWidth: "1100px", margin: "0 auto" }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              style={{ textAlign: "center" }}
+            >
+              <p style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(28px, 5vw, 56px)",
+                fontWeight: 300,
+                lineHeight: 1.15,
+                letterSpacing: "-1.5px",
+                color: "#fff",
+                margin: "0 auto 24px",
+                maxWidth: "1000px",
+              }}>
+                Why Google Ads for Your{" "}
+                <span style={{ color: C.cyan, fontWeight: 300 }}>Sydney Business</span>
+                {" "}— And Why Most Campaigns Fail
+              </p>
+
+              <p style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(16px, 2vw, 20px)",
+                fontWeight: 300,
+                lineHeight: 1.6,
+                color: "rgba(255,255,255,0.6)",
+                margin: "0 auto",
+                maxWidth: "700px",
+              }}>
+                Google Ads puts your business at the top of search results instantly. The key is doing it right — many businesses waste thousands on poorly managed campaigns.{" "}
+                <span style={{ color: C.green, fontWeight: 500 }}>Our certified experts ensure every dollar works hard</span>.
+              </p>
+            </motion.div>
           </div>
         </section>
 
-        {/* Insertar entre "WHY GOOGLE ADS" y "FEATURES": */}
+        {/* ═══════════════ SERVICES GRID ═══════════════ */}
         <SubServicesSection
           heading={googleAdsHeading}
           headingHighlight={googleAdsHighlight}
@@ -295,99 +709,13 @@ const GoogleAds = () => {
           services={googleAdsServices}
         />
 
-        {/* ═══════════════ FEATURES ═══════════════ */}
-        <section className="section-padding bg-bg-light">
-          <div className="container-custom">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center max-w-3xl mx-auto mb-16"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Google Ads Management</h2>
-              <p className="text-lg text-text-medium">
-                Comprehensive campaign management that delivers results.
-              </p>
-            </motion.div>
+        {/* ═══════════════ OUR PROCESS ═══════════════ */}
+        <OurProcess />
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {features.map((feature, index) => {
-                const Icon = feature.icon;
-                return (
-                  <motion.div
-                    key={feature.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="bg-white rounded-xl p-6"
-                  >
-                    <div className="h-12 w-12 rounded-lg bg-secondary/10 flex items-center justify-center mb-4">
-                      <Icon className="h-6 w-6 text-secondary" />
-                    </div>
-                    <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                    <p className="text-text-medium">{feature.description}</p>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+        {/* ═══════════════ FAQ ═══════════════ */}
+        <GoogleAdsFAQ />
 
-        {/* ═══════════════ BENEFITS ═══════════════ */}
-        <section className="section-padding bg-background">
-          <div className="container-custom">
-            <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">What You Get</h2>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {benefits.map((benefit, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
-                      className="flex items-start gap-3"
-                    >
-                      <TrendingUp className="h-6 w-6 text-secondary flex-shrink-0 mt-1" />
-                      <span className="text-lg text-text-medium">{benefit}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════ CTA ═══════════════ */}
-        <section className="section-padding bg-gradient-to-br from-secondary to-secondary/90">
-          <div className="container-custom">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center max-w-3xl mx-auto"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-                Start Getting More Leads Today
-              </h2>
-              <p className="text-xl text-white/90 mb-8">
-                Get a free Google Ads account audit and discover how to improve your ROI.
-              </p>
-              <Button size="lg" className="bg-white text-secondary hover:bg-white/90" asChild>
-                <Link to="/contact">Get Free Ads Audit</Link>
-              </Button>
-            </motion.div>
-          </div>
-        </section>
+        <CTASection />
       </main>
       <Footer />
     </div>
