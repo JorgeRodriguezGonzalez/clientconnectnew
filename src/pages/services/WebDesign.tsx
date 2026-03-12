@@ -203,10 +203,20 @@ const OurProcess = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span style={{
-            fontFamily: FONT, fontSize: "13px", fontWeight: 700,
-            textTransform: "uppercase", letterSpacing: "0.15em", color: C.cyan,
-          }}>How We Work</span>
+          <div style={{
+            display: "inline-flex", alignItems: "center",
+            padding: "6px 12px", borderRadius: "8px",
+            border: "1px solid #e4e4e7", backgroundColor: "#fafafa",
+            width: "fit-content", margin: "0 auto 16px",
+          }}>
+            <span style={{
+              fontSize: "10px", fontWeight: 600, letterSpacing: "2px",
+              textTransform: "uppercase", color: "#6b7280",
+              fontFamily: "'Satoshi', sans-serif",
+            }}>
+              How We Work
+            </span>
+          </div>
           <h2 style={{
             fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700,
             lineHeight: 1.1, letterSpacing: "-1.5px", color: "#fff", marginTop: "12px",
