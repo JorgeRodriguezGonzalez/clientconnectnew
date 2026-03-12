@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { MousePointerClick, Target, DollarSign, BarChart, TrendingUp, Zap } from "lucide-react";
 
+// Añadir con los imports:
+import SubServicesSection from "@/components/home/SubServicesSection";
+import { googleAdsServices, googleAdsHeading, googleAdsHighlight, googleAdsSubtitle } from "@/data/services/googleads-services";
+
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
 const SECONDARY = "#06b6d4";
@@ -282,6 +286,14 @@ const GoogleAds = () => {
             </div>
           </div>
         </section>
+
+        {/* Insertar entre "WHY GOOGLE ADS" y "FEATURES": */}
+        <SubServicesSection
+          heading={googleAdsHeading}
+          headingHighlight={googleAdsHighlight}
+          subtitle={googleAdsSubtitle}
+          services={googleAdsServices}
+        />
 
         {/* ═══════════════ FEATURES ═══════════════ */}
         <section className="section-padding bg-bg-light">
