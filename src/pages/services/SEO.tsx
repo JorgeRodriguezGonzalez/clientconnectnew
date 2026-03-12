@@ -19,7 +19,7 @@ const C = {
 };
 
 const FONT = 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-const SATOSHI = "'Satoshi', -apple-system, sans-serif";
+const SATOSHI = "'Satoshi', sans-serif";
 
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -145,7 +145,71 @@ const ProcessBadge = ({ label, isActive, delay }) => (
   </span>
 );
 
+const WhySEOMatters = () => {
+  const isMobile = useIsMobile();
+
+  return (
+    <section style={{ background: "#000", position: "relative", overflow: "hidden" }}>
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          padding: isMobile ? "72px 20px 100px" : "80px 24px 120px",
+          maxWidth: "1100px",
+          margin: "0 auto",
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ textAlign: "center" }}
+        >
+          <div style={{ opacity: 0.1, color: "#fff", marginBottom: "32px", display: "flex", justifyContent: "center" }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
+              <path d="M7 7h3v10H5V9a2 2 0 0 1 2-2Zm9 0h3v10h-5V9a2 2 0 0 1 2-2Z" />
+            </svg>
+          </div>
+
+          <p
+            style={{
+              fontFamily: SATOSHI,
+              fontSize: "clamp(28px, 5vw, 56px)",
+              fontWeight: 300,
+              lineHeight: 1.15,
+              letterSpacing: "-1.5px",
+              color: "#fff",
+              margin: "0 auto",
+              maxWidth: "1000px",
+            }}
+          >
+            When your potential customers search for your products or services on Google, where does your business appear? If you're not on <span style={{ color: C.secondary, fontWeight: 300 }}>page 1</span>, you're invisible to <span style={{ color: C.secondary, fontWeight: 300 }}>75% of searchers</span>.
+          </p>
+
+          <div style={{ marginTop: "48px" }}>
+            <p style={{ fontFamily: SATOSHI, fontSize: "15px", fontWeight: 500, lineHeight: 1.8, maxWidth: "900px", margin: "0 auto" }}>
+              <span style={{ color: "rgba(255,255,255,0.85)" }}>
+                SEO (Search Engine Optimization) is the process of improving your website's visibility in search results. Unlike paid ads, SEO builds long-term, sustainable traffic that doesn't stop when you stop paying.
+              </span>
+            </p>
+          </div>
+
+          <div style={{ marginTop: "16px" }}>
+            <p style={{ fontFamily: SATOSHI, fontSize: "15px", fontWeight: 500, lineHeight: 1.8, maxWidth: "900px", margin: "0 auto" }}>
+              <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 400 }}>
+                For Sydney businesses, local SEO is especially crucial. We help you rank for searches like "best [your service] in Sydney" and appear in Google's local map pack.
+              </span>
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 const OurProcess = () => {
+  const containerRef = useRef(null);
   const cardRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const cardCount = processSteps.length;
@@ -242,6 +306,7 @@ const OurProcess = () => {
       </div>
 
       <div
+        ref={containerRef}
         style={{
           position: "relative",
           height: `${cardCount * 60 + 40}vh`,
@@ -350,6 +415,7 @@ const OurProcess = () => {
                     letterSpacing: "-1px",
                     textAlign: "center",
                     margin: "0 0 16px 0",
+                    transition: "color 0.5s ease",
                   }}
                 >
                   {item.title}
@@ -415,90 +481,21 @@ const SEOService = () => {
     <div style={{ fontFamily: SATOSHI, minHeight: "100vh", overflowX: "hidden", background: "#000" }}>
       <Header />
       <main style={{ flex: 1 }}>
-        <section
-          style={{
-            position: "relative",
-            overflow: "clip",
-            background: "#000",
-            paddingBottom: isMobile ? "80px" : "130px",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: "180px",
-              left: "50%",
-              marginLeft: "-250px",
-              width: "500px",
-              height: "500px",
-              background: `radial-gradient(circle, rgba(${C.primaryRGB},0.2) 0%, transparent 70%)`,
-              borderRadius: "50%",
-              pointerEvents: "none",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              top: "200px",
-              left: "50%",
-              marginLeft: "-50px",
-              width: "600px",
-              height: "600px",
-              background: `radial-gradient(circle, rgba(${C.secondaryRGB},0.12) 0%, transparent 70%)`,
-              borderRadius: "50%",
-              pointerEvents: "none",
-            }}
-          />
+        <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: isMobile ? "80px" : "130px" }}>
+          <div style={{ position: "absolute", top: "180px", left: "50%", marginLeft: "-250px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${C.primaryRGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${C.secondaryRGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
-          <div
-            style={{
-              textAlign: "center",
-              paddingTop: isMobile ? "100px" : "140px",
-              paddingBottom: "16px",
-              position: "relative",
-              zIndex: 2,
-            }}
-          >
+          <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
             <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px", ...anim(0) }}>
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.10)",
-                  borderRadius: "50px",
-                  padding: "6px 16px",
-                }}
-              >
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: "50px", padding: "6px 16px" }}>
                 <Search size={14} color={C.primary} />
-                <span
-                  style={{
-                    fontFamily: SATOSHI,
-                    fontWeight: 600,
-                    fontSize: "10px",
-                    textTransform: "uppercase",
-                    letterSpacing: "2px",
-                    color: "#9ca3af",
-                  }}
-                >
+                <span style={{ fontFamily: SATOSHI, fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "2px", color: "#9ca3af" }}>
                   SEO Services
                 </span>
               </div>
             </div>
 
-            <h1
-              style={{
-                fontFamily: FONT,
-                fontSize: "clamp(42px, 8vw, 68px)",
-                fontWeight: 600,
-                lineHeight: 1.1,
-                letterSpacing: "-2px",
-                margin: 0,
-                color: "#fff",
-                ...anim(0.1),
-              }}
-            >
+            <h1 style={{ fontFamily: FONT, fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff", ...anim(0.1) }}>
               <span>Rank Higher.</span>
               <br />
               <span>Get More </span>
@@ -518,38 +515,11 @@ const SEOService = () => {
               </motion.span>
             </h1>
 
-            <p
-              style={{
-                fontFamily: FONT,
-                fontSize: "clamp(14px, 1.5vw, 16px)",
-                fontWeight: 300,
-                color: "#fff",
-                maxWidth: "560px",
-                margin: "24px auto 0",
-                lineHeight: 1.65,
-                padding: "0 20px",
-                ...anim(0.3),
-              }}
-            >
+            <p style={{ fontFamily: FONT, fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff", maxWidth: "560px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px", ...anim(0.3) }}>
               Our proven <span style={{ color: C.primary, fontWeight: 600 }}>SEO strategies</span> help Sydney businesses dominate search results and drive qualified <span style={{ color: C.primary, fontWeight: 600 }}>organic traffic</span> that converts.
             </p>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "8px",
-                marginTop: "24px",
-                flexWrap: "wrap",
-                padding: "0 20px",
-                fontFamily: FONT,
-                fontSize: "13px",
-                fontWeight: 500,
-                color: "rgba(255,255,255,0.5)",
-                ...anim(0.4),
-              }}
-            >
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", marginTop: "24px", flexWrap: "wrap", padding: "0 20px", fontFamily: FONT, fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.5)", ...anim(0.4) }}>
               <span>Data-Driven</span>
               <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
               <span>Local SEO Experts</span>
@@ -557,44 +527,12 @@ const SEOService = () => {
               <span>150+ Clients Ranked</span>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "32px",
-                padding: "0 20px",
-                ...anim(0.5),
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0",
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "50px",
-                  padding: "5px 5px 5px 24px",
-                  maxWidth: "520px",
-                  width: "100%",
-                  backdropFilter: "blur(8px)",
-                  WebkitBackdropFilter: "blur(8px)",
-                }}
-              >
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "32px", padding: "0 20px", ...anim(0.5) }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "50px", padding: "5px 5px 5px 24px", maxWidth: "520px", width: "100%", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
                 <input
                   type="email"
                   placeholder="Enter your email for a free SEO audit"
-                  style={{
-                    flex: 1,
-                    background: "transparent",
-                    border: "none",
-                    outline: "none",
-                    fontFamily: FONT,
-                    fontWeight: 500,
-                    fontSize: "14px",
-                    color: "#fff",
-                    minWidth: 0,
-                  }}
+                  style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontFamily: FONT, fontWeight: 500, fontSize: "14px", color: "#fff", minWidth: 0 }}
                 />
                 <button
                   onMouseEnter={(e) => {
@@ -605,69 +543,21 @@ const SEOService = () => {
                     e.currentTarget.style.boxShadow = "none";
                     e.currentTarget.style.background = C.secondary;
                   }}
-                  style={{
-                    height: "40px",
-                    padding: "0 20px",
-                    borderRadius: "50px",
-                    background: C.secondary,
-                    border: "none",
-                    fontFamily: FONT,
-                    fontWeight: 600,
-                    fontSize: "14px",
-                    color: "#000",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
-                  }}
+                  style={{ height: "40px", padding: "0 20px", borderRadius: "50px", background: C.secondary, border: "none", fontFamily: FONT, fontWeight: 600, fontSize: "14px", color: "#000", cursor: "pointer", transition: "all 0.2s ease", display: "flex", alignItems: "center", gap: "8px", whiteSpace: "nowrap", flexShrink: 0 }}
                 >
                   Get Audit
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
                 </button>
               </div>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: isMobile ? "24px" : "48px",
-                marginTop: "40px",
-                flexWrap: "wrap",
-                padding: "0 20px",
-                ...anim(0.6),
-              }}
-            >
+            <div style={{ display: "flex", justifyContent: "center", gap: isMobile ? "24px" : "48px", marginTop: "40px", flexWrap: "wrap", padding: "0 20px", ...anim(0.6) }}>
               {stats.map((stat, i) => (
                 <div key={i} style={{ textAlign: "center" }}>
-                  <div
-                    style={{
-                      fontFamily: FONT,
-                      fontSize: isMobile ? "28px" : "36px",
-                      fontWeight: 700,
-                      color: stat.color,
-                      letterSpacing: "-1px",
-                      lineHeight: 1,
-                    }}
-                  >
+                  <div style={{ fontFamily: FONT, fontSize: isMobile ? "28px" : "36px", fontWeight: 700, color: stat.color, letterSpacing: "-1px", lineHeight: 1 }}>
                     {stat.value}
                   </div>
-                  <div
-                    style={{
-                      fontFamily: FONT,
-                      fontSize: "12px",
-                      fontWeight: 400,
-                      color: "rgba(255,255,255,0.5)",
-                      marginTop: "6px",
-                      maxWidth: "140px",
-                    }}
-                  >
+                  <div style={{ fontFamily: FONT, fontSize: "12px", fontWeight: 400, color: "rgba(255,255,255,0.5)", marginTop: "6px", maxWidth: "140px" }}>
                     {stat.label}
                   </div>
                 </div>
@@ -675,19 +565,7 @@ const SEOService = () => {
             </div>
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: isMobile ? "10px" : "16px",
-              marginTop: isMobile ? "36px" : "48px",
-              padding: isMobile ? "10px 12px" : "20px 20px",
-              overflow: "visible",
-              position: "relative",
-              zIndex: 2,
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: isMobile ? "10px" : "16px", marginTop: isMobile ? "36px" : "48px", padding: isMobile ? "10px 12px" : "20px 20px", overflow: "visible", position: "relative", zIndex: 2 }}>
             {galleryImages.map((img, i) => {
               const isCenter = isMobile ? i === 1 || i === 2 : i === 2;
               const w = isMobile ? (isCenter ? "22vw" : "20vw") : isCenter ? "200px" : "160px";
@@ -717,131 +595,14 @@ const SEOService = () => {
                   }}
                 >
                   <img src={img.url} alt={img.alt} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: hImg === i ? "transparent" : "linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%)",
-                      transition: "all 0.4s ease",
-                    }}
-                  />
+                  <div style={{ position: "absolute", inset: 0, background: hImg === i ? "transparent" : "linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%)", transition: "all 0.4s ease" }} />
                 </div>
               );
             })}
           </div>
         </section>
 
-        <section style={{ background: "#000", position: "relative", overflow: "hidden" }}>
-          <div
-            style={{
-              position: "relative",
-              zIndex: 1,
-              padding: isMobile ? "72px 20px 96px" : "80px 24px 120px",
-              maxWidth: "1100px",
-              margin: "0 auto",
-            }}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              style={{ textAlign: "center" }}
-            >
-              <div style={{ opacity: 0.1, color: "#fff", marginBottom: "32px", display: "flex", justifyContent: "center" }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
-                  <path d="M7 7h3v10H5V9a2 2 0 0 1 2-2Zm9 0h3v10h-5V9a2 2 0 0 1 2-2Z" />
-                </svg>
-              </div>
-
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  padding: "6px 12px",
-                  borderRadius: "8px",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  backgroundColor: "rgba(255,255,255,0.05)",
-                  width: "fit-content",
-                  margin: "0 auto 18px",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: 600,
-                    letterSpacing: "2px",
-                    textTransform: "uppercase",
-                    color: "#9ca3af",
-                    fontFamily: SATOSHI,
-                  }}
-                >
-                  Why SEO Matters
-                </span>
-              </div>
-
-              <h2
-                style={{
-                  fontFamily: SATOSHI,
-                  fontSize: "clamp(30px, 5vw, 52px)",
-                  fontWeight: 700,
-                  lineHeight: 1.1,
-                  letterSpacing: "-1.5px",
-                  color: "#fff",
-                  margin: "0 auto",
-                  maxWidth: "900px",
-                }}
-              >
-                Why SEO Matters for Sydney Businesses
-              </h2>
-
-              <div style={{ marginTop: "36px", display: "flex", flexDirection: "column", gap: "18px" }}>
-                <p
-                  style={{
-                    fontFamily: SATOSHI,
-                    fontSize: "clamp(24px, 4vw, 38px)",
-                    fontWeight: 300,
-                    lineHeight: 1.25,
-                    letterSpacing: "-1px",
-                    color: "#fff",
-                    margin: "0 auto",
-                    maxWidth: "980px",
-                  }}
-                >
-                  When your potential customers search for your products or services on Google, where does your business appear? If you're not on page 1, you're invisible to 75% of searchers.
-                </p>
-
-                <p
-                  style={{
-                    fontFamily: SATOSHI,
-                    fontSize: "clamp(18px, 2.4vw, 22px)",
-                    fontWeight: 400,
-                    lineHeight: 1.6,
-                    color: "rgba(255,255,255,0.72)",
-                    margin: "0 auto",
-                    maxWidth: "940px",
-                  }}
-                >
-                  SEO (Search Engine Optimization) is the process of improving your website's visibility in search results. Unlike paid ads, SEO builds long-term, sustainable traffic that doesn't stop when you stop paying.
-                </p>
-
-                <p
-                  style={{
-                    fontFamily: SATOSHI,
-                    fontSize: "15px",
-                    fontWeight: 500,
-                    lineHeight: 1.75,
-                    color: "rgba(255,255,255,0.48)",
-                    margin: "8px auto 0",
-                    maxWidth: "760px",
-                  }}
-                >
-                  For Sydney businesses, local SEO is especially crucial. We help you rank for searches like "best [your service] in Sydney" and appear in Google's local map pack.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+        <WhySEOMatters />
 
         <SubServicesSection
           heading={seoHeading}
@@ -855,12 +616,7 @@ const SEOService = () => {
         <section className="section-padding bg-background">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
                 <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">What You Can Expect</h2>
                 <div className="grid md:grid-cols-2 gap-4">
                   {benefits.map((benefit, index) => (
@@ -885,13 +641,7 @@ const SEOService = () => {
         <section className="section-padding bg-bg-light">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-12"
-              >
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
               </motion.div>
 
@@ -916,13 +666,7 @@ const SEOService = () => {
 
         <section className="section-padding bg-gradient-to-br from-primary to-primary/90">
           <div className="container-custom">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center max-w-3xl mx-auto"
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Ready to Dominate Google Search?</h2>
               <p className="text-xl text-white/90 mb-8">Get a free SEO audit and discover your opportunities for growth.</p>
               <Button size="lg" variant="secondary" asChild>
