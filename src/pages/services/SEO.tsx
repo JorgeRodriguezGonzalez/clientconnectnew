@@ -86,41 +86,41 @@ const faqs = [
 const processSteps = [
   {
     step: "Step 1",
-    title: "Research & Audit",
-    description: "We learn about your business, goals, target audience, and competitors. Together we identify the best keywords, technical issues, and ranking opportunities.",
+    title: "Discovery & Strategy",
+    description: "We learn about your business, goals, target audience, and competitors. Together we define the sitemap, content strategy, and conversion goals.",
     icon: (
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" />
       </svg>
     ),
-    badges: ["SEO Audit", "Keyword Research", "Competitor Analysis", "Opportunity Map"],
+    badges: ["Business Audit", "Competitor Analysis", "Sitemap", "Content Strategy"],
   },
   {
     step: "Step 2",
-    title: "Strategy & Optimisation",
-    description: "We create a clear SEO roadmap and optimise your site's content, metadata, internal linking, and structure to improve search visibility.",
+    title: "Design & Prototype",
+    description: "We create high-fidelity designs tailored to your brand. You'll see interactive prototypes before any code is written, so we get it right.",
     icon: (
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2L2 7l10 5 10-5-10-5Z" /><path d="m2 17 10 5 10-5" /><path d="m2 12 10 5 10-5" />
       </svg>
     ),
-    badges: ["On-Page SEO", "Meta Tags", "Internal Linking", "Content Strategy"],
+    badges: ["Wireframes", "UI Design", "Interactive Prototype", "Brand Alignment"],
   },
   {
     step: "Step 3",
-    title: "Technical SEO & Authority",
-    description: "We improve site health, speed, crawlability, and build authority with high-quality backlinks that strengthen your rankings over time.",
+    title: "Development & Testing",
+    description: "Clean, fast code built with SEO best practices. We test across all devices and browsers to ensure a flawless experience everywhere.",
     icon: (
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="14" y1="4" x2="10" y2="20" />
       </svg>
     ),
-    badges: ["Technical Fixes", "Site Speed", "Link Building", "Authority Growth"],
+    badges: ["Responsive Code", "SEO Setup", "Speed Optimisation", "Cross-Browser QA"],
   },
   {
     step: "Step 4",
-    title: "Tracking & Growth",
-    description: "Your SEO campaign keeps evolving. We monitor rankings, traffic, and conversions, then refine the strategy to keep driving better results.",
+    title: "Launch & Growth",
+    description: "Your new website goes live. We provide training, ongoing support, and performance monitoring to keep driving results.",
     icon: (
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
@@ -128,7 +128,7 @@ const processSteps = [
         <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
       </svg>
     ),
-    badges: ["Monthly Reporting", "Ranking Tracking", "Traffic Insights", "Ongoing Optimisation"],
+    badges: ["Go Live", "CMS Training", "Analytics Setup", "Ongoing Support"],
   },
 ];
 
@@ -153,69 +153,6 @@ const ProcessBadge = ({ label, isActive, delay }) => (
     {label}
   </span>
 );
-
-const WhySEOMatters = () => {
-  const isMobile = useIsMobile();
-
-  return (
-    <section style={{ background: "#000", position: "relative", overflow: "hidden" }}>
-      <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          padding: isMobile ? "72px 20px 100px" : "80px 24px 120px",
-          maxWidth: "1100px",
-          margin: "0 auto",
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{ textAlign: "center" }}
-        >
-          <div style={{ opacity: 0.1, color: "#fff", marginBottom: "32px", display: "flex", justifyContent: "center" }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
-              <path d="M7 7h3v10H5V9a2 2 0 0 1 2-2Zm9 0h3v10h-5V9a2 2 0 0 1 2-2Z" />
-            </svg>
-          </div>
-
-          <p
-            style={{
-              fontFamily: SATOSHI,
-              fontSize: "clamp(28px, 5vw, 56px)",
-              fontWeight: 300,
-              lineHeight: 1.15,
-              letterSpacing: "-1.5px",
-              color: "#fff",
-              margin: "0 auto",
-              maxWidth: "1000px",
-            }}
-          >
-            When your potential customers search for your products or services on Google, where does your business appear? If you're not on <span style={{ color: C.secondary, fontWeight: 300 }}>page 1</span>, you're invisible to <span style={{ color: C.secondary, fontWeight: 300 }}>75% of searchers</span>.
-          </p>
-
-          <div style={{ marginTop: "48px" }}>
-            <p style={{ fontFamily: SATOSHI, fontSize: "15px", fontWeight: 500, lineHeight: 1.8, maxWidth: "900px", margin: "0 auto" }}>
-              <span style={{ color: "rgba(255,255,255,0.85)" }}>
-                SEO (Search Engine Optimization) is the process of improving your website's visibility in search results. Unlike paid ads, SEO builds long-term, sustainable traffic that doesn't stop when you stop paying.
-              </span>
-            </p>
-          </div>
-
-          <div style={{ marginTop: "16px" }}>
-            <p style={{ fontFamily: SATOSHI, fontSize: "15px", fontWeight: 500, lineHeight: 1.8, maxWidth: "900px", margin: "0 auto" }}>
-              <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 400 }}>
-                For Sydney businesses, local SEO is especially crucial. We help you rank for searches like "best [your service] in Sydney" and appear in Google's local map pack.
-              </span>
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
 
 const OurProcess = () => {
   const containerRef = useRef(null);
@@ -269,13 +206,13 @@ const OurProcess = () => {
             fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700,
             lineHeight: 1.1, letterSpacing: "-1.5px", color: "#fff", marginTop: "12px",
           }}>
-            Our SEO Process
+            Our Process
           </h2>
           <p style={{
             fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
             color: "rgba(255,255,255,0.5)", maxWidth: "520px", margin: "16px auto 0", lineHeight: 1.65,
           }}>
-            A comprehensive, data-driven approach to sustainable search visibility.
+            From discovery to launch, we follow a proven 4-step process to deliver websites that look stunning and drive real business results.
           </p>
         </motion.div>
       </div>
@@ -347,6 +284,7 @@ const OurProcess = () => {
                   transition: "background 0.5s ease",
                 }} />
 
+                {/* Step badge */}
                 <span style={{
                   display: "inline-flex", alignItems: "center",
                   fontFamily: "'Satoshi', sans-serif", fontSize: "12px", fontWeight: 600,
@@ -361,6 +299,7 @@ const OurProcess = () => {
                   {item.step}
                 </span>
 
+                {/* Title */}
                 <h3 style={{
                   fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700,
                   color: "#fff", lineHeight: 1.2, letterSpacing: "-1px",
@@ -370,6 +309,7 @@ const OurProcess = () => {
                   {item.title}
                 </h3>
 
+                {/* Description */}
                 <p style={{
                   fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
                   color: isActive ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.35)",
@@ -379,6 +319,7 @@ const OurProcess = () => {
                   {item.description}
                 </p>
 
+                {/* Badges */}
                 <div style={{
                   display: "flex", flexWrap: "wrap", gap: "8px",
                   justifyContent: "center", marginTop: "4px",
