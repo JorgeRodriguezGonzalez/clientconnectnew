@@ -280,7 +280,28 @@ const SubServicesSection = ({
       <div className="services-section-wrapper" style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "40px" }}>
 
         {/* ── Heading ── */}
-        <div style={{ textAlign: "center", maxWidth: "700px", padding: "0 16px" }}>
+        <div style={{ textAlign: "center", maxWidth: "700px", padding: "0 16px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            padding: "6px 12px",
+            borderRadius: "8px",
+            border: "1px solid #e4e4e7",
+            backgroundColor: "#fafafa",
+            width: "fit-content",
+            marginBottom: "16px",
+          }}>
+            <span style={{
+              fontSize: "10px",
+              fontWeight: 600,
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: "#6b7280",
+              fontFamily: "'Satoshi', sans-serif",
+            }}>
+              What We Do
+            </span>
+          </div>
           <h2 style={{
             fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
             fontSize: "clamp(28px, 5vw, 52px)", lineHeight: 1.1,
