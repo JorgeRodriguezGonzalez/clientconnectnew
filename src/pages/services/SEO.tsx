@@ -707,28 +707,32 @@ const SEOService = () => {
                 </svg>
               </div>
 
-              <p style={{
+              <h2 style={{
                 fontFamily: "'Satoshi', sans-serif",
-                fontSize: "clamp(28px, 5vw, 56px)",
-                fontWeight: 300,
-                lineHeight: 1.15,
+                fontSize: "clamp(28px, 5vw, 48px)",
+                fontWeight: 700,
+                lineHeight: 1.1,
                 letterSpacing: "-1.5px",
                 color: "#fff",
-                margin: "0 auto",
-                maxWidth: "1000px",
+                margin: "0 auto 24px",
+                maxWidth: "800px",
               }}>
-                The best place to hide a dead body is{" "}
-                <span style={{ color: C.cyan, fontWeight: 300 }}>page 2 of Google</span>
-                . If your business isn't ranking on page one, your competitors are{" "}
-                <span style={{ color: C.cyan, fontWeight: 300 }}>winning your customers</span>.
-              </p>
+                Why SEO Matters for{" "}
+                <span style={{ color: C.cyan, fontWeight: 700 }}>Sydney Businesses</span>
+              </h2>
 
-              <div style={{ marginTop: "48px" }}>
-                <p style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500 }}>
-                  <span style={{ color: "rgba(255,255,255,0.85)" }}>Data-driven SEO </span>
-                  <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 400 }}>for Sydney businesses that want to dominate search</span>
-                </p>
-              </div>
+              <p style={{
+                fontFamily: "'Satoshi', sans-serif",
+                fontSize: "clamp(16px, 2vw, 20px)",
+                fontWeight: 300,
+                lineHeight: 1.6,
+                color: "rgba(255,255,255,0.6)",
+                margin: "0 auto",
+                maxWidth: "700px",
+              }}>
+                When your potential customers search for your products or services on Google, where does your business appear? If you're not on page 1, you're{" "}
+                <span style={{ color: C.green, fontWeight: 500 }}>invisible to 75% of searchers</span>.
+              </p>
             </motion.div>
           </div>
         </section>
