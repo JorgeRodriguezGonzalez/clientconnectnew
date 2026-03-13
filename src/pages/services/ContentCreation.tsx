@@ -64,13 +64,13 @@ const contentServices: ContentServiceItem[] = [
     title: "Video Content",
     description: "Scripts, storyboards, and video production support for social, ads, and website content that engages.",
     badges: ["Scripts", "Storyboards", "Short-Form", "Tutorials"],
-    videoSrc: null,
+    videoSrc: "/videos/contentcreation.mp4",
   },
   {
-    id: "blog-writing",
-    title: "Blog & Article Writing",
-    description: "SEO-optimised blog posts and long-form articles that establish thought leadership and drive organic traffic.",
-    badges: ["Research", "SEO Copy", "Editing", "Publishing"],
+    id: "website-copywriting",
+    title: "Website Copywriting",
+    description: "Compelling, conversion-focused copy for landing pages, homepages, service pages, and location pages that turns visitors into customers.",
+    badges: ["Landing Pages", "Location Pages", "Service Pages", "CTAs"],
     videoSrc: null,
   },
   {
@@ -92,20 +92,6 @@ const contentServices: ContentServiceItem[] = [
     title: "Infographics & Visual Content",
     description: "Data-driven infographics and visual assets that simplify complex ideas and boost shareability.",
     badges: ["Data Viz", "Branded", "Downloadable", "Social"],
-    videoSrc: null,
-  },
-  {
-    id: "email-newsletters",
-    title: "Email Newsletters",
-    description: "Newsletter strategy, copy, and design that keep your audience engaged and drive repeat visits.",
-    badges: ["Strategy", "Copy", "Design", "Automation"],
-    videoSrc: null,
-  },
-  {
-    id: "website-copywriting",
-    title: "Website Copywriting",
-    description: "Compelling, conversion-focused copy for landing pages, homepages, service pages, and location pages that turns visitors into customers.",
-    badges: ["Landing Pages", "Location Pages", "Service Pages", "CTAs"],
     videoSrc: null,
   },
 ];
@@ -283,12 +269,6 @@ const ContentServicesGrid = () => {
           </div>
           <div style={{ height: "756px" }}>
             <InlineServiceCard service={s[4]} style={{ height: "100%" }} />
-          </div>
-          <div style={{ gridColumn: "1 / 3", height: "280px" }}>
-            <InlineServiceCard service={s[5]} style={{ height: "100%" }} />
-          </div>
-          <div style={{ gridColumn: "3", height: "280px" }}>
-            <InlineServiceCard service={s[6]} style={{ height: "100%" }} />
           </div>
         </div>
 
