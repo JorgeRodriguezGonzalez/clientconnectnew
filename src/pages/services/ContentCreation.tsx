@@ -39,12 +39,12 @@ const useIsMobile = () => {
 };
 
 const images = [
-  { url: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&h=500&fit=crop", alt: "Content Writing", rotate: -6 },
-  { url: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=350&h=450&fit=crop", alt: "Creative Content", rotate: 3 },
-  { url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop", alt: "Content Strategy", rotate: -2 },
-  { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=380&h=480&fit=crop", alt: "Team Content", rotate: 5 },
-  { url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=350&h=450&fit=crop", alt: "Marketing Content", rotate: -4 },
-  { url: "https://images.unsplash.com/photo-1432888622747-4eb9a8f2b644?w=400&h=500&fit=crop", alt: "Blog & Articles", rotate: 3 },
+  { url: "/images/driveways.jpg", alt: "Content Creation", rotate: -6 },
+  { url: "/images/driveways.jpg", alt: "Creative Content", rotate: 3 },
+  { url: "/images/nanotise-vertical.jpg", alt: "Content Strategy", rotate: -2 },
+  { url: "/images/assetplumbing-vertical.jpg", alt: "Brand Content", rotate: 5 },
+  { url: "/images/premier.jpg", alt: "Marketing Content", rotate: -4 },
+  { url: "/images/YLRimage.jpg", alt: "Visual Content", rotate: 3 },
 ];
 const mobileImages = [images[0], images[1], images[2], images[3]];
 
