@@ -85,7 +85,7 @@ const contentServices: ContentServiceItem[] = [
     title: "Social Media Content",
     description: "Scroll-stopping captions, carousels, and stories designed for engagement and brand consistency.",
     badges: ["Captions", "Carousels", "Stories", "Reels"],
-    videoSrc: null,
+    videoSrc: "/videos/contentcreation2.mp4",
   },
   {
     id: "infographics",
