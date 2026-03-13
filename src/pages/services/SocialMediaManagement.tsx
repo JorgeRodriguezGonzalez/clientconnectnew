@@ -279,6 +279,208 @@ const OurProcess = () => {
   );
 };
 
+// --- OUR WORK ---
+const workItems: { src: string; type: "image" | "video" }[] = [
+  { src: "/images/driveways.jpg", type: "image" },
+  { src: "/videos/contentcreation.mp4", type: "video" },
+  { src: "/images/nanotise-vertical.jpg", type: "image" },
+  { src: "/videos/contentcreation2.mp4", type: "video" },
+  { src: "/images/YLRimage.jpg", type: "image" },
+  { src: "/images/assetplumbing-vertical.png", type: "image" },
+  { src: "/images/driveways11.jpg", type: "image" },
+  { src: "/images/premier.jpg", type: "image" },
+];
+
+const WorkCard = ({ item }: { item: { src: string; type: "image" | "video" } }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleClick = () => {
+    if (item.type !== "video" || !videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={handleClick}
+      style={{
+        position: "relative",
+        borderRadius: "20px",
+        overflow: "hidden",
+        cursor: item.type === "video" ? "pointer" : "default",
+        aspectRatio: "4 / 5",
+        background: "#111",
+        transition: "transform 0.4s ease, box-shadow 0.4s ease",
+        transform: isHovered ? "translateY(-4px)" : "translateY(0)",
+        boxShadow: isHovered ? "0 20px 40px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.1)",
+      }}
+    >
+      {item.type === "image" && (
+        <img
+          src={item.src}
+          alt=""
+          style={{
+            width: "100%", height: "100%", objectFit: "cover", display: "block",
+            transition: "transform 0.7s ease",
+            transform: isHovered ? "scale(1.04)" : "scale(1)",
+          }}
+        />
+      )}
+      {item.type === "video" && (
+        <>
+          <video
+            ref={videoRef}
+            src={item.src}
+            muted loop playsInline preload="metadata"
+            onLoadedMetadata={() => { if (videoRef.current) videoRef.current.currentTime = 0.5; }}
+            style={{
+              width: "100%", height: "100%", objectFit: "cover", display: "block",
+              transition: "transform 0.7s ease",
+              transform: isHovered ? "scale(1.04)" : "scale(1)",
+            }}
+          />
+          <div style={{
+            position: "absolute", inset: 0, zIndex: 2,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            background: isPlaying ? "transparent" : "rgba(0,0,0,0.25)",
+            transition: "all 0.3s ease",
+            pointerEvents: "none",
+          }}>
+            {!isPlaying && (
+              <div style={{
+                width: "56px", height: "56px", borderRadius: "50%",
+                background: "rgba(255,255,255,0.9)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+                transition: "transform 0.3s ease",
+                transform: isHovered ? "scale(1.1)" : "scale(1)",
+              }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#111" stroke="none">
+                  <polygon points="6 3 20 12 6 21 6 3" />
+                </svg>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const OurWork = () => {
+  const [page, setPage] = useState(0);
+  const isMobile = useIsMobile();
+  const perPage = isMobile ? 2 : 4;
+  const totalPages = Math.ceil(workItems.length / perPage);
+  const currentItems = workItems.slice(page * perPage, page * perPage + perPage);
+  const goNext = () => setPage((p) => (p + 1) % totalPages);
+  const goPrev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
+
+  return (
+    <section style={{ backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
+      <style>{`
+        @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap');
+        .smm-gradient-text {
+          background: linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: smm-shimmer 3s linear infinite;
+        }
+        @keyframes smm-shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        .smm-work-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%; }
+        @media (max-width: 767px) {
+          .smm-work-grid { grid-template-columns: repeat(2, 1fr); }
+          .smm-work-wrapper { padding: 48px 16px; }
+        }
+        @media (min-width: 768px) {
+          .smm-work-wrapper { padding: 80px 80px; }
+        }
+      `}</style>
+
+      <div className="smm-work-wrapper" style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "40px" }}>
+        <div style={{ textAlign: "center", maxWidth: "700px", padding: "0 16px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", padding: "6px 12px", borderRadius: "8px",
+            border: "1px solid #e4e4e7", backgroundColor: "#fafafa", width: "fit-content", marginBottom: "16px",
+          }}>
+            <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#6b7280", fontFamily: "'Satoshi', sans-serif" }}>Portfolio</span>
+          </div>
+          <h2 style={{
+            fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
+            fontSize: "clamp(28px, 5vw, 52px)", lineHeight: 1.1,
+            color: "#111827", marginBottom: "16px",
+          }}>
+            Our{" "}<span className="smm-gradient-text">Work</span>
+          </h2>
+          <p style={{
+            fontFamily: "'Satoshi', sans-serif", fontWeight: 500,
+            fontSize: "15px", lineHeight: 1.6, color: "#6b7280",
+            maxWidth: "400px", margin: "0 auto",
+          }}>
+            A selection of projects we've delivered for Sydney businesses.
+          </p>
+        </div>
+
+        <div style={{ position: "relative", width: "100%" }}>
+          <button onClick={goPrev} style={{
+            position: "absolute", left: "-20px", top: "50%", transform: "translateY(-50%)", zIndex: 10,
+            width: "44px", height: "44px", borderRadius: "50%",
+            background: "#111", border: "1px solid rgba(255,255,255,0.1)",
+            color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+            transition: "all 0.2s ease", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background = C.green; e.currentTarget.style.color = "#000"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.color = "#fff"; }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button onClick={goNext} style={{
+            position: "absolute", right: "-20px", top: "50%", transform: "translateY(-50%)", zIndex: 10,
+            width: "44px", height: "44px", borderRadius: "50%",
+            background: "#111", border: "1px solid rgba(255,255,255,0.1)",
+            color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+            transition: "all 0.2s ease", boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background = C.green; e.currentTarget.style.color = "#000"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.color = "#fff"; }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <div className="smm-work-grid">
+            {currentItems.map((item, i) => (
+              <WorkCard key={`${page}-${i}`} item={item} />
+            ))}
+          </div>
+        </div>
+
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button key={i} onClick={() => setPage(i)} style={{
+              width: page === i ? "24px" : "8px", height: "8px", borderRadius: "999px",
+              background: page === i ? C.green : "#d1d5db",
+              border: "none", cursor: "pointer", transition: "all 0.3s ease",
+            }} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // --- FAQ DATA (Social Media Management) ---
 const socialMgmtFaqs = [
   {
@@ -397,15 +599,15 @@ const SocialMgmtFAQ = () => {
                       transition={{ delay: index * 0.1, duration: 0.5 }}
                       viewport={{ once: true }}
                       className={cn(
-                        "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border rounded-none",
+                        "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border",
                         openItem === item.id.toString()
-                          ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10"
-                          : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10"
+                          ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10 rounded-xl"
+                          : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10 rounded-xl"
                       )}
                     >
                       <div className="flex items-center gap-4">
                         <div className={cn(
-                          "flex items-center justify-center w-8 h-8 rounded-none transition-colors duration-300",
+                          "flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-300",
                           openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500"
                         )}>
                           <MessageSquare size={14} />
@@ -428,7 +630,7 @@ const SocialMgmtFAQ = () => {
                       {openItem === item.id.toString() && (
                         <motion.div
                           layoutId="socialmgmt-faq-active-line"
-                          className="absolute left-0 top-0 bottom-0 w-[3px]"
+                          className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-xl"
                           style={{ backgroundColor: C.green }}
                         />
                       )}
@@ -448,10 +650,10 @@ const SocialMgmtFAQ = () => {
                       >
                         <div className="flex justify-end mt-2 ml-8 md:ml-16">
                           <div className={cn(
-                            "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-none shadow-sm border",
+                            "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-xl shadow-sm border",
                             "bg-zinc-900 border-white/10 text-zinc-300"
                           )}>
-                            <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20" />
+                            <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20 rounded-bl-lg" />
                             {item.answer}
                           </div>
                         </div>
@@ -494,18 +696,8 @@ const SocialMediaManagement = () => {
           <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
           <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px", ...anim(0) }}>
-              <div style={{
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)",
-                borderRadius: "50px", padding: "6px 16px",
-              }}>
-                <Share2 size={14} color={SECONDARY} />
-                <span style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "2px", color: "#9ca3af" }}>
-                  Social Media Management
-                </span>
-              </div>
-            </div>
+
+            <div style={{ height: isMobile ? "38px" : "48px" }} />
 
             <h1 style={{
               fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -686,6 +878,9 @@ const SocialMediaManagement = () => {
 
         {/* ═══════════════ OUR PROCESS ═══════════════ */}
         <OurProcess />
+
+        {/* ═══════════════ OUR WORK ═══════════════ */}
+        <OurWork />
 
         {/* ═══════════════ FAQ ═══════════════ */}
         <SocialMgmtFAQ />
