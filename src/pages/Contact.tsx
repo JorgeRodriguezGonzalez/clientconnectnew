@@ -75,7 +75,7 @@ const Contact = () => {
         </section>
 
         {/* Contact Form & Info */}
-        <section className="section-padding bg-background">
+        <section className="section-padding bg-black">
           <div className="container-custom">
             <div className="grid lg:grid-cols-3 gap-12">
               {/* Contact Form */}
