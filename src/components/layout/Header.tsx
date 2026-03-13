@@ -15,6 +15,8 @@ const serviceLinks = [
   { name: "Social Media Ads", href: "/services/social-media-ads" },
   { name: "SEO", href: "/services/seo" },
   { name: "Google Ads", href: "/services/google-ads" },
+  { name: "Content Creation", href: "/services/content-creation" },
+  { name: "Brand Identity", href: "/services/brand-identity" },
 ];
 
 const navLinks = [

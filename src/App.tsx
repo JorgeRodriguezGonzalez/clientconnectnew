@@ -12,6 +12,8 @@ import GoogleAds from "./pages/services/GoogleAds";
 import WebDesign from "./pages/services/WebDesign";
 import SocialMediaManagement from "./pages/services/SocialMediaManagement";
 import SocialMediaAds from "./pages/services/SocialMediaAds";
+import ContentCreation from "./pages/services/ContentCreation";
+import BrandIdentity from "./pages/services/BrandIdentity";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +34,8 @@ const App = () => (
           <Route path="/services/web-design" element={<WebDesign />} />
           <Route path="/services/social-media-management" element={<SocialMediaManagement />} />
           <Route path="/services/social-media-ads" element={<SocialMediaAds />} />
+          <Route path="/services/content-creation" element={<ContentCreation />} />
+          <Route path="/services/brand-identity" element={<BrandIdentity />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
