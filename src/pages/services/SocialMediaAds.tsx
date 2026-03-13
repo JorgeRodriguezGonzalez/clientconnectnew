@@ -52,7 +52,6 @@ const images = [
 ];
 const mobileImages = [images[0], images[1], images[2], images[3]];
 
-// --- OUR PROCESS STEPS (Social Ads) ---
 const processSteps = [
   {
     step: "Step 1",
@@ -303,7 +302,6 @@ const OurProcess = () => {
   );
 };
 
-// --- FAQ DATA (Social Ads) ---
 const socialAdsFaqs = [
   {
     id: 1,
@@ -421,15 +419,15 @@ const SocialAdsFAQ = () => {
                       transition={{ delay: index * 0.1, duration: 0.5 }}
                       viewport={{ once: true }}
                       className={cn(
-                        "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border rounded-none",
+                        "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border",
                         openItem === item.id.toString()
-                          ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10"
-                          : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10"
+                          ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10 rounded-xl"
+                          : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10 rounded-xl"
                       )}
                     >
                       <div className="flex items-center gap-4">
                         <div className={cn(
-                          "flex items-center justify-center w-8 h-8 rounded-none transition-colors duration-300",
+                          "flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-300",
                           openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500"
                         )}>
                           <MessageSquare size={14} />
@@ -452,7 +450,7 @@ const SocialAdsFAQ = () => {
                       {openItem === item.id.toString() && (
                         <motion.div
                           layoutId="socialads-faq-active-line"
-                          className="absolute left-0 top-0 bottom-0 w-[3px]"
+                          className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-xl"
                           style={{ backgroundColor: C.green }}
                         />
                       )}
@@ -472,10 +470,10 @@ const SocialAdsFAQ = () => {
                       >
                         <div className="flex justify-end mt-2 ml-8 md:ml-16">
                           <div className={cn(
-                            "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-none shadow-sm border",
+                            "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-xl shadow-sm border",
                             "bg-zinc-900 border-white/10 text-zinc-300"
                           )}>
-                            <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20" />
+                            <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20 rounded-bl-lg" />
                             {item.answer}
                           </div>
                         </div>
@@ -518,18 +516,8 @@ const SocialMediaAds = () => {
           <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
           <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px", ...anim(0) }}>
-              <div style={{
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)",
-                borderRadius: "50px", padding: "6px 16px",
-              }}>
-                <TrendingUp size={14} color={PRIMARY} />
-                <span style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "2px", color: "#9ca3af" }}>
-                  Social Media Advertising
-                </span>
-              </div>
-            </div>
+
+            <div style={{ height: isMobile ? "38px" : "48px" }} />
 
             <h1 style={{
               fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
