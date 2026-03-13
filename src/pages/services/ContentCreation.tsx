@@ -40,9 +40,9 @@ const useIsMobile = () => {
 
 const images = [
   { url: "/images/driveways.jpg", alt: "Content Creation", rotate: -6 },
-  { url: "/images/driveways.jpg", alt: "Creative Content", rotate: 3 },
+  { url: "/images/driveways11.jpg", alt: "Creative Content", rotate: 3 },
   { url: "/images/nanotise-vertical.jpg", alt: "Content Strategy", rotate: -2 },
-  { url: "/images/assetplumbing-vertical.jpg", alt: "Brand Content", rotate: 5 },
+  { url: "/images/assetplumbing-vertical.png", alt: "Brand Content", rotate: 5 },
   { url: "/images/premier.jpg", alt: "Marketing Content", rotate: -4 },
   { url: "/images/YLRimage.jpg", alt: "Visual Content", rotate: 3 },
 ];
