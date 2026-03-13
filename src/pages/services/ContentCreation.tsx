@@ -56,6 +56,7 @@ interface ContentServiceItem {
   description: string;
   badges: string[];
   videoSrc: string | null;
+  imageSrc?: string | null;
 }
 
 const contentServices: ContentServiceItem[] = [
@@ -93,6 +94,7 @@ const contentServices: ContentServiceItem[] = [
     description: "Professional photography and curated visuals that bring your brand story to life across all channels.",
     badges: ["Product Shots", "Lifestyle", "Stock Curation", "Editing"],
     videoSrc: null,
+    imageSrc: "/images/driveways3.jpg",
   },
 ];
 
@@ -112,6 +114,8 @@ const InlineServiceCard = ({ service, style = {} }: { service: ContentServiceIte
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const hasVideo = !!service.videoSrc;
+  const hasImage = !!service.imageSrc;
+  const hasMedia = hasVideo || hasImage;
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -137,8 +141,8 @@ const InlineServiceCard = ({ service, style = {} }: { service: ContentServiceIte
         background: "radial-gradient(50% 50% at 0% 0%, #1e1e1e 2%, #080808 100%)",
         border: "1px solid rgba(255,255,255,0.07)",
         transition: "transform 0.4s ease, box-shadow 0.4s ease",
-        transform: !hasVideo && isHovered ? "translateY(-6px)" : "translateY(0)",
-        boxShadow: !hasVideo && isHovered ? "0 20px 40px rgba(0,0,0,0.5)" : "0 4px 20px rgba(0,0,0,0.2)",
+        transform: !hasMedia && isHovered ? "translateY(-6px)" : "translateY(0)",
+        boxShadow: !hasMedia && isHovered ? "0 20px 40px rgba(0,0,0,0.5)" : "0 4px 20px rgba(0,0,0,0.2)",
         ...style,
       }}
     >
@@ -161,7 +165,25 @@ const InlineServiceCard = ({ service, style = {} }: { service: ContentServiceIte
           />
         </div>
       )}
-      {!hasVideo && (
+      {hasImage && !hasVideo && (
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+          <div style={{
+            position: "absolute", inset: 0, zIndex: 1,
+            background: "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0.8) 100%)",
+          }} />
+          <img
+            src={service.imageSrc!}
+            alt={service.title}
+            style={{
+              width: "100%", height: "100%", objectFit: "cover",
+              transition: "transform 0.7s ease, filter 0.7s ease",
+              transform: isHovered ? "scale(1.06)" : "scale(1)",
+              filter: isHovered ? "grayscale(0) brightness(0.85)" : "grayscale(0.25) brightness(0.65)",
+            }}
+          />
+        </div>
+      )}
+      {!hasMedia && (
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <svg width="100%" height="100%" style={{ opacity: 0.05 }}>
             <defs>
