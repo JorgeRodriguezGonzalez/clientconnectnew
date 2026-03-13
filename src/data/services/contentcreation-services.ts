@@ -59,4 +59,13 @@ export const contentCreationServices: ServiceItem[] = [
     link: "/services/content-creation",
     area: "bottom-wide",
   },
+  {
+    id: "content-repurposing",
+    title: "Content Repurposing",
+    description: "Turn one piece of content into many — blog to social, video to quotes, podcasts to articles. Maximise reach without starting from scratch.",
+    badges: ["Adaptation", "Multi-Format", "Reach", "Efficiency"],
+    videoSrc: null,
+    link: "/services/content-creation",
+    area: "bottom-right",
+  },
 ];

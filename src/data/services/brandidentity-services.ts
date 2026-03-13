@@ -59,4 +59,13 @@ export const brandIdentityServices: ServiceItem[] = [
     link: "/services/brand-identity",
     area: "bottom-wide",
   },
+  {
+    id: "brand-collateral",
+    title: "Brand Collateral",
+    description: "Business cards, letterheads, presentations, and merchandise — all designed to reflect your brand consistently in every touchpoint.",
+    badges: ["Stationery", "Decks", "Merchandise", "Print"],
+    videoSrc: null,
+    link: "/services/brand-identity",
+    area: "bottom-right",
+  },
 ];
