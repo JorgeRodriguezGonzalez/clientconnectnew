@@ -305,6 +305,187 @@ const ContentServicesGrid = () => {
   );
 };
 
+// ─── Our Work ───────────────────────────────────────────────
+
+const workItems = [
+  { image: "/images/driveways.jpg", title: "Driveway Solutions" },
+  { image: "/images/premier.jpg", title: "Premier Electrical" },
+  { image: "/images/nanotise-vertical.jpg", title: "Nanotise" },
+  { image: "/images/assetplumbing-vertical.png", title: "Asset Plumbing" },
+  { image: "/images/YLRimage.jpg", title: "YLR Fitness" },
+  { image: "/images/driveways11.jpg", title: "Driveway Resurfacing" },
+  { image: "/images/driveways3.jpg", title: "Concrete Works" },
+  { image: "/images/premier.jpg", title: "Premier Group" },
+];
+
+const OurWork = () => {
+  const [page, setPage] = useState(0);
+  const isMobile = useIsMobile();
+  const perPage = isMobile ? 2 : 4;
+  const totalPages = Math.ceil(workItems.length / perPage);
+
+  const currentItems = workItems.slice(page * perPage, page * perPage + perPage);
+
+  const goNext = () => setPage((p) => (p + 1) % totalPages);
+  const goPrev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
+
+  return (
+    <section style={{ backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
+      <style>{`
+        .work-grid { display: grid; grid-template-columns: repeat(${perPage}, 1fr); gap: 16px; width: 100%; }
+        @media (max-width: 767px) {
+          .work-grid { grid-template-columns: repeat(2, 1fr); }
+          .work-section-wrapper { padding: 48px 16px; }
+        }
+        @media (min-width: 768px) {
+          .work-section-wrapper { padding: 80px 80px; }
+        }
+      `}</style>
+
+      <div className="work-section-wrapper" style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center", gap: "40px" }}>
+
+        {/* Heading */}
+        <div style={{ textAlign: "center", maxWidth: "700px", padding: "0 16px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", padding: "6px 12px", borderRadius: "8px",
+            border: "1px solid #e4e4e7", backgroundColor: "#fafafa", width: "fit-content", marginBottom: "16px",
+          }}>
+            <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#6b7280", fontFamily: "'Satoshi', sans-serif" }}>
+              Portfolio
+            </span>
+          </div>
+          <h2 style={{
+            fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
+            fontSize: "clamp(28px, 5vw, 52px)", lineHeight: 1.1,
+            color: "#111827", marginBottom: "16px",
+          }}>
+            Our{" "}
+            <span className="cc-gradient-text">Work</span>
+          </h2>
+          <p style={{
+            fontFamily: "'Satoshi', sans-serif", fontWeight: 500,
+            fontSize: "15px", lineHeight: 1.6, color: "#6b7280",
+            maxWidth: "400px", margin: "0 auto",
+          }}>
+            A selection of content projects we've delivered for Sydney businesses.
+          </p>
+        </div>
+
+        {/* Cards grid */}
+        <div style={{ position: "relative", width: "100%" }}>
+
+          {/* Navigation arrows */}
+          <button
+            onClick={goPrev}
+            style={{
+              position: "absolute", left: "-20px", top: "50%", transform: "translateY(-50%)", zIndex: 10,
+              width: "44px", height: "44px", borderRadius: "50%",
+              background: "#111", border: "1px solid rgba(255,255,255,0.1)",
+              color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+              transition: "all 0.2s ease",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = C.green; e.currentTarget.style.color = "#000"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.color = "#fff"; }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+
+          <button
+            onClick={goNext}
+            style={{
+              position: "absolute", right: "-20px", top: "50%", transform: "translateY(-50%)", zIndex: 10,
+              width: "44px", height: "44px", borderRadius: "50%",
+              background: "#111", border: "1px solid rgba(255,255,255,0.1)",
+              color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+              transition: "all 0.2s ease",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = C.green; e.currentTarget.style.color = "#000"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.color = "#fff"; }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+
+          <div className="work-grid">
+            {currentItems.map((item, i) => (
+              <WorkCard key={`${page}-${i}`} item={item} index={i} />
+            ))}
+          </div>
+        </div>
+
+        {/* Pagination dots */}
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i)}
+              style={{
+                width: page === i ? "24px" : "8px",
+                height: "8px",
+                borderRadius: "999px",
+                background: page === i ? C.green : "#d1d5db",
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const WorkCard = ({ item, index }: { item: { image: string; title: string }; index: number }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        position: "relative",
+        borderRadius: "20px",
+        overflow: "hidden",
+        cursor: "pointer",
+        aspectRatio: "4 / 5",
+        background: "#111",
+        border: "1px solid rgba(255,255,255,0.07)",
+        transition: "transform 0.4s ease, box-shadow 0.4s ease",
+        transform: isHovered ? "translateY(-6px)" : "translateY(0)",
+        boxShadow: isHovered ? "0 20px 40px rgba(0,0,0,0.4)" : "0 4px 20px rgba(0,0,0,0.15)",
+      }}
+    >
+      <img
+        src={item.image}
+        alt={item.title}
+        style={{
+          width: "100%", height: "100%", objectFit: "cover", display: "block",
+          transition: "transform 0.7s ease, filter 0.7s ease",
+          transform: isHovered ? "scale(1.06)" : "scale(1)",
+          filter: isHovered ? "brightness(0.9)" : "brightness(0.7)",
+        }}
+      />
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 1,
+        background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.85) 100%)",
+      }} />
+      <div style={{
+        position: "absolute", bottom: "20px", left: "20px", right: "20px", zIndex: 2,
+      }}>
+        <h3 style={{
+          fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
+          fontSize: "16px", color: "#fff", textTransform: "uppercase",
+          letterSpacing: "0.05em", lineHeight: 1.2,
+        }}>
+          {item.title}
+        </h3>
+      </div>
+    </div>
+  );
+};
+
 // ─── Process ────────────────────────────────────────────────
 
 const processSteps = [
@@ -641,6 +822,9 @@ const ContentCreationService = () => {
 
         {/* ═══════════════ OUR PROCESS ═══════════════ */}
         <OurProcess />
+
+        {/* ═══════════════ OUR WORK ═══════════════ */}
+        <OurWork />
 
         {/* ═══════════════ FAQ ═══════════════ */}
         <ContentCreationFAQ />
