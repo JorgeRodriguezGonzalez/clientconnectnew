@@ -175,13 +175,6 @@ const CTASection = () => {
           >
             {/* Header */}
             <div className="text-center mb-8">
-              <div className="flex justify-center mb-4">
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest text-gray-400">
-                  <Sparkles className="w-3 h-3" style={{ color: COLORS.primary }} />
-                  Start Your Journey
-                </span>
-              </div>
-
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 text-white tracking-tight leading-[1.1]">
                 Ready to grow your{" "}
                 <motion.span
