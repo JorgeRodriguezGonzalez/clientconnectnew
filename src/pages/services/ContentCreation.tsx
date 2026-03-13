@@ -625,7 +625,9 @@ const ContentCreationService = () => {
           <div style={{ position: "relative", zIndex: 1, padding: "40px 24px 200px", maxWidth: "1100px", margin: "0 auto" }}>
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ textAlign: "center" }}>
               <p style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 5vw, 56px)", fontWeight: 300, lineHeight: 1.15, letterSpacing: "-1.5px", color: "#fff", margin: "0 auto 24px", maxWidth: "1000px" }}>
-                Why Great Content Is the Foundation of Digital Growth — And Why Most Businesses Get It Wrong
+                Why Great Content Is the{" "}
+                <span style={{ color: C.cyan, fontWeight: 300 }}>Foundation of Digital Growth</span>
+                {" "}— And Why Most Businesses Get It Wrong
               </p>
               <p style={{ fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(16px, 2vw, 20px)", fontWeight: 300, lineHeight: 1.6, color: "rgba(255,255,255,0.6)", margin: "0 auto", maxWidth: "700px" }}>
                 Quality content drives <span style={{ color: C.green, fontWeight: 500 }}>SEO</span>, builds trust, and keeps your audience engaged. Most businesses publish random posts without a strategy — we create content that supports your goals and <span style={{ color: C.green, fontWeight: 500 }}>converts</span>.
