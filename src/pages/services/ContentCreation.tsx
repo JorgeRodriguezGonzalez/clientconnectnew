@@ -708,10 +708,10 @@ const ContentCreationFAQ = () => {
                   <Accordion.Trigger className="flex w-full items-start gap-x-4 focus:outline-none group">
                     <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.1, duration: 0.5 }} viewport={{ once: true }}
                       className={cn("relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border rounded-none",
-                        openItem === item.id.toString() ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10" : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10"
+                        openItem === item.id.toString() ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10 rounded-xl" : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10 rounded-xl"
                       )}>
                       <div className="flex items-center gap-4">
-                        <div className={cn("flex items-center justify-center w-8 h-8 rounded-none transition-colors duration-300", openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500")}>
+                        <div className={cn(                          "flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-300", openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500")}>
                           <MessageSquare size={14} />
                         </div>
                         <span className={cn("text-base md:text-lg font-semibold transition-colors duration-300", openItem === item.id.toString() ? "text-white" : "text-zinc-400")}>{item.question}</span>
@@ -730,7 +730,7 @@ const ContentCreationFAQ = () => {
                     {openItem === item.id.toString() && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }} className="overflow-hidden">
                         <div className="flex justify-end mt-2 ml-8 md:ml-16">
-                          <div className={cn("relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-none shadow-sm border", "bg-zinc-900 border-white/10 text-zinc-300")}>
+                          <div className={cn("relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-xl shadow-sm border", "bg-zinc-900 border-white/10 text-zinc-300")}>
                             <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20" />
                             {item.answer}
                           </div>
