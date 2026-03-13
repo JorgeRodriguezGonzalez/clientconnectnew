@@ -9,8 +9,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
+const PRIMARY = "#34d399";
+const SECONDARY = "#06b6d4";
+const PRIMARY_RGB = "52,211,153";
+const SECONDARY_RGB = "6,182,212";
+
 const Contact = () => {
   const { toast } = useToast();
+  const [loaded, setLoaded] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -34,21 +40,37 @@ const Contact = () => {
       <Header />
       <main className="flex-1">
         {/* Hero */}
-        <section className="section-padding bg-black">
-          <div className="container-custom">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl mx-auto text-center"
-            >
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Let's Grow Your Business Together
-              </h1>
-              <p className="text-xl text-text-medium">
-                Ready to take your digital marketing to the next level? Get in touch for a free consultation.
-              </p>
-            </motion.div>
+        <section style={{ position: "relative", overflow: "clip", background: "#000", paddingBottom: "80px" }}>
+          <div style={{ position: "absolute", top: "180px", left: "50%", marginLeft: "-250px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
+
+          <div style={{ textAlign: "center", paddingTop: "180px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
+            <h1 style={{
+              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+              fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
+            }}>
+              <span>Let's Grow Your</span><br />
+              <motion.span
+                initial={{ backgroundPosition: "400% 50%" }}
+                animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${PRIMARY}, ${SECONDARY}, transparent)`,
+                  backgroundSize: "400% 100%",
+                  WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                  display: "inline-block",
+                }}
+              >
+                Business.
+              </motion.span>
+            </h1>
+
+            <p style={{
+              fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+              fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff", maxWidth: "560px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
+            }}>
+              Ready to take your digital marketing to the next level? Get in touch for a <span style={{ color: PRIMARY, fontWeight: 600 }}>free consultation</span>.
+            </p>
           </div>
         </section>
 
@@ -69,70 +91,30 @@ const Contact = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium mb-2">
-                          Name *
-                        </label>
-                        <Input
-                          id="name"
-                          required
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          placeholder="John Smith"
-                        />
+                        <label htmlFor="name" className="block text-sm font-medium mb-2">Name *</label>
+                        <Input id="name" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="John Smith" />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium mb-2">
-                          Email *
-                        </label>
-                        <Input
-                          id="email"
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          placeholder="john@company.com"
-                        />
+                        <label htmlFor="email" className="block text-sm font-medium mb-2">Email *</label>
+                        <Input id="email" type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="john@company.com" />
                       </div>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                          Phone
-                        </label>
-                        <Input
-                          id="phone"
-                          type="tel"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder="+61 4XX XXX XXX"
-                        />
+                        <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone</label>
+                        <Input id="phone" type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+61 4XX XXX XXX" />
                       </div>
                       <div>
-                        <label htmlFor="company" className="block text-sm font-medium mb-2">
-                          Company
-                        </label>
-                        <Input
-                          id="company"
-                          value={formData.company}
-                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                          placeholder="Your Company"
-                        />
+                        <label htmlFor="company" className="block text-sm font-medium mb-2">Company</label>
+                        <Input id="company" value={formData.company} onChange={(e) => setFormData({ ...formData, company: e.target.value })} placeholder="Your Company" />
                       </div>
                     </div>
 
                     <div>
-                      <label htmlFor="service" className="block text-sm font-medium mb-2">
-                        Service of Interest *
-                      </label>
-                      <Select
-                        required
-                        value={formData.service}
-                        onValueChange={(value) => setFormData({ ...formData, service: value })}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a service" />
-                        </SelectTrigger>
+                      <label htmlFor="service" className="block text-sm font-medium mb-2">Service of Interest *</label>
+                      <Select required value={formData.service} onValueChange={(value) => setFormData({ ...formData, service: value })}>
+                        <SelectTrigger><SelectValue placeholder="Select a service" /></SelectTrigger>
                         <SelectContent>
                           <SelectItem value="seo">SEO</SelectItem>
                           <SelectItem value="google-ads">Google Ads</SelectItem>
@@ -145,26 +127,13 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium mb-2">
-                        Message *
-                      </label>
-                      <Textarea
-                        id="message"
-                        required
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        placeholder="Tell us about your business and goals..."
-                        rows={6}
-                      />
+                      <label htmlFor="message" className="block text-sm font-medium mb-2">Message *</label>
+                      <Textarea id="message" required value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder="Tell us about your business and goals..." rows={6} />
                     </div>
 
-                    <Button type="submit" size="lg" className="w-full">
-                      Send Message
-                    </Button>
+                    <Button type="submit" size="lg" className="w-full">Send Message</Button>
 
-                    <p className="text-sm text-text-light text-center">
-                      We respond within 24 hours • First consultation is free
-                    </p>
+                    <p className="text-sm text-text-light text-center">We respond within 24 hours • First consultation is free</p>
                   </form>
                 </div>
               </motion.div>
@@ -186,9 +155,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="font-medium mb-1">Email</div>
-                        <a href="mailto:hello@clientconnect.com.au" className="text-text-medium hover:text-primary">
-                          hello@clientconnect.com.au
-                        </a>
+                        <a href="mailto:hello@clientconnect.com.au" className="text-text-medium hover:text-primary">hello@clientconnect.com.au</a>
                       </div>
                     </div>
 
@@ -198,9 +165,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="font-medium mb-1">Phone</div>
-                        <a href="tel:+61-2-xxxx-xxxx" className="text-text-medium hover:text-primary">
-                          +61 2 xxxx xxxx
-                        </a>
+                        <a href="tel:+61-2-xxxx-xxxx" className="text-text-medium hover:text-primary">+61 2 xxxx xxxx</a>
                       </div>
                     </div>
 
