@@ -12,7 +12,7 @@ export const contentCreationServices: ServiceItem[] = [
     badges: ["Research", "SEO Copy", "Editing", "Publishing"],
     videoSrc: null,
     link: "/services/content-creation",
-    area: "top-left",
+    area: "bottom-left",
   },
   {
     id: "video-content",
@@ -21,7 +21,7 @@ export const contentCreationServices: ServiceItem[] = [
     badges: ["Scripts", "Storyboards", "Short-Form", "Tutorials"],
     videoSrc: null,
     link: "/services/content-creation",
-    area: "bottom-left",
+    area: "top-left",
   },
   {
     id: "photography",
@@ -48,7 +48,7 @@ export const contentCreationServices: ServiceItem[] = [
     badges: ["Strategy", "Copy", "Design", "Automation"],
     videoSrc: null,
     link: "/services/content-creation",
-    area: "right",
+    area: "bottom-wide",
   },
   {
     id: "infographics",
@@ -57,7 +57,7 @@ export const contentCreationServices: ServiceItem[] = [
     badges: ["Data Viz", "Branded", "Downloadable", "Social"],
     videoSrc: null,
     link: "/services/content-creation",
-    area: "bottom-wide",
+    area: "right",
   },
   {
     id: "content-repurposing",
