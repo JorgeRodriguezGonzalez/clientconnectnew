@@ -74,10 +74,10 @@ const contentServices: ContentServiceItem[] = [
     videoSrc: null,
   },
   {
-    id: "photography",
-    title: "Photography & Visuals",
-    description: "Professional photography and curated visuals that bring your brand story to life across all channels.",
-    badges: ["Product Shots", "Lifestyle", "Stock Curation", "Editing"],
+    id: "infographics",
+    title: "Infographics & Visual Content",
+    description: "Data-driven infographics and visual assets that simplify complex ideas and boost shareability.",
+    badges: ["Data Viz", "Branded", "Downloadable", "Social"],
     videoSrc: null,
   },
   {
@@ -88,10 +88,10 @@ const contentServices: ContentServiceItem[] = [
     videoSrc: "/videos/contentcreation2.mp4",
   },
   {
-    id: "infographics",
-    title: "Infographics & Visual Content",
-    description: "Data-driven infographics and visual assets that simplify complex ideas and boost shareability.",
-    badges: ["Data Viz", "Branded", "Downloadable", "Social"],
+    id: "photography",
+    title: "Photography & Visuals",
+    description: "Professional photography and curated visuals that bring your brand story to life across all channels.",
+    badges: ["Product Shots", "Lifestyle", "Stock Curation", "Editing"],
     videoSrc: null,
   },
 ];
