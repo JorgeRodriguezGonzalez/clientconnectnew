@@ -49,7 +49,7 @@ const Contact = () => {
               fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
               fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
             }}>
-              <span>Contact</span><br />
+              <span>Let's Grow Your</span><br />
               <motion.span
                 initial={{ backgroundPosition: "400% 50%" }}
                 animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -61,7 +61,7 @@ const Contact = () => {
                   display: "inline-block",
                 }}
               >
-                Us.
+                Business.
               </motion.span>
             </h1>
 
