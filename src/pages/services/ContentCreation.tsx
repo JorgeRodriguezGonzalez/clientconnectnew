@@ -307,15 +307,15 @@ const ContentServicesGrid = () => {
 
 // ─── Our Work ───────────────────────────────────────────────
 
-const workItems = [
-  { image: "/images/driveways.jpg", title: "Driveway Solutions" },
-  { image: "/images/premier.jpg", title: "Premier Electrical" },
-  { image: "/images/nanotise-vertical.jpg", title: "Nanotise" },
-  { image: "/images/assetplumbing-vertical.png", title: "Asset Plumbing" },
-  { image: "/images/YLRimage.jpg", title: "YLR Fitness" },
-  { image: "/images/driveways11.jpg", title: "Driveway Resurfacing" },
-  { image: "/images/driveways3.jpg", title: "Concrete Works" },
-  { image: "/images/premier.jpg", title: "Premier Group" },
+const workItems: { src: string; type: "image" | "video" }[] = [
+  { src: "/images/driveways.jpg", type: "image" },
+  { src: "/videos/contentcreation.mp4", type: "video" },
+  { src: "/images/nanotise-vertical.jpg", type: "image" },
+  { src: "/videos/contentcreation2.mp4", type: "video" },
+  { src: "/images/YLRimage.jpg", type: "image" },
+  { src: "/images/assetplumbing-vertical.png", type: "image" },
+  { src: "/images/driveways11.jpg", type: "image" },
+  { src: "/images/premier.jpg", type: "image" },
 ];
 
 const OurWork = () => {
@@ -409,7 +409,7 @@ const OurWork = () => {
 
           <div className="work-grid">
             {currentItems.map((item, i) => (
-              <WorkCard key={`${page}-${i}`} item={item} index={i} />
+              <WorkCard key={`${page}-${i}`} item={item} />
             ))}
           </div>
         </div>
@@ -437,51 +437,88 @@ const OurWork = () => {
   );
 };
 
-const WorkCard = ({ item, index }: { item: { image: string; title: string }; index: number }) => {
+const WorkCard = ({ item }: { item: { src: string; type: "image" | "video" } }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleClick = () => {
+    if (item.type !== "video" || !videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
 
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleClick}
       style={{
         position: "relative",
         borderRadius: "20px",
         overflow: "hidden",
-        cursor: "pointer",
+        cursor: item.type === "video" ? "pointer" : "default",
         aspectRatio: "4 / 5",
         background: "#111",
-        border: "1px solid rgba(255,255,255,0.07)",
         transition: "transform 0.4s ease, box-shadow 0.4s ease",
-        transform: isHovered ? "translateY(-6px)" : "translateY(0)",
-        boxShadow: isHovered ? "0 20px 40px rgba(0,0,0,0.4)" : "0 4px 20px rgba(0,0,0,0.15)",
+        transform: isHovered ? "translateY(-4px)" : "translateY(0)",
+        boxShadow: isHovered ? "0 20px 40px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.1)",
       }}
     >
-      <img
-        src={item.image}
-        alt={item.title}
-        style={{
-          width: "100%", height: "100%", objectFit: "cover", display: "block",
-          transition: "transform 0.7s ease, filter 0.7s ease",
-          transform: isHovered ? "scale(1.06)" : "scale(1)",
-          filter: isHovered ? "brightness(0.9)" : "brightness(0.7)",
-        }}
-      />
-      <div style={{
-        position: "absolute", inset: 0, zIndex: 1,
-        background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.85) 100%)",
-      }} />
-      <div style={{
-        position: "absolute", bottom: "20px", left: "20px", right: "20px", zIndex: 2,
-      }}>
-        <h3 style={{
-          fontFamily: "'Satoshi', sans-serif", fontWeight: 700,
-          fontSize: "16px", color: "#fff", textTransform: "uppercase",
-          letterSpacing: "0.05em", lineHeight: 1.2,
-        }}>
-          {item.title}
-        </h3>
-      </div>
+      {item.type === "image" && (
+        <img
+          src={item.src}
+          alt=""
+          style={{
+            width: "100%", height: "100%", objectFit: "cover", display: "block",
+            transition: "transform 0.7s ease",
+            transform: isHovered ? "scale(1.04)" : "scale(1)",
+          }}
+        />
+      )}
+      {item.type === "video" && (
+        <>
+          <video
+            ref={videoRef}
+            src={item.src}
+            muted loop playsInline preload="metadata"
+            onLoadedMetadata={() => { if (videoRef.current) videoRef.current.currentTime = 0.5; }}
+            style={{
+              width: "100%", height: "100%", objectFit: "cover", display: "block",
+              transition: "transform 0.7s ease",
+              transform: isHovered ? "scale(1.04)" : "scale(1)",
+            }}
+          />
+          {/* Play icon overlay */}
+          <div style={{
+            position: "absolute", inset: 0, zIndex: 2,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            background: isPlaying ? "transparent" : "rgba(0,0,0,0.25)",
+            transition: "all 0.3s ease",
+            pointerEvents: "none",
+          }}>
+            {!isPlaying && (
+              <div style={{
+                width: "56px", height: "56px", borderRadius: "50%",
+                background: "rgba(255,255,255,0.9)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+                transition: "transform 0.3s ease",
+                transform: isHovered ? "scale(1.1)" : "scale(1)",
+              }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#111" stroke="none">
+                  <polygon points="6 3 20 12 6 21 6 3" />
+                </svg>
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
