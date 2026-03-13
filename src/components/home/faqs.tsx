@@ -14,7 +14,6 @@ const COLORS = {
 
 const BackgroundStripes = () => (
   <div
-    // Agregamos 'invert' para que el patrón se vea blanco sobre fondo negro
     className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05] invert"
     style={{
       backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
@@ -58,10 +57,9 @@ export default function FAQSection() {
   const [openItem, setOpenItem] = useState<string | null>(null);
 
   return (
-    // CAMBIO: Fondo negro (#050505)
     <section className="relative w-full bg-[#050505] py-24 sm:py-32 overflow-hidden">
       
-      {/* Top Border (ajustado a white/10) */}
+      {/* Top Border */}
       <div className="w-full h-[1px] bg-white/10 absolute top-0 z-20" />
 
       {/* Background Pattern */}
@@ -97,7 +95,6 @@ export default function FAQSection() {
               }}
               style={{
                 display: "inline-block",
-                // Gradiente Emerald & Cyan
                 backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                 backgroundSize: "400% 100%",
                 WebkitBackgroundClip: "text",
@@ -125,7 +122,7 @@ export default function FAQSection() {
         <div className="max-w-[800px] mx-auto">
            {/* Timestamp "Chat" style decoration */}
            <div className="flex justify-center mb-8">
-              <span className="text-[10px] uppercase tracking-widest text-zinc-500 bg-white/5 px-3 py-1 border border-white/5">
+              <span className="text-[10px] uppercase tracking-widest text-zinc-500 bg-white/5 px-3 py-1 rounded-full border border-white/5">
                 Updated Today
               </span>
            </div>
@@ -152,8 +149,7 @@ export default function FAQSection() {
                       transition={{ delay: index * 0.1, duration: 0.5 }}
                       viewport={{ once: true }}
                       className={cn(
-                        "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border rounded-none",
-                        // Estados activos vs inactivos (Modo Oscuro)
+                        "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border rounded-2xl",
                         openItem === item.id.toString() 
                           ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10" 
                           : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10"
@@ -161,7 +157,7 @@ export default function FAQSection() {
                     >
                       <div className="flex items-center gap-4">
                         <div className={cn(
-                          "flex items-center justify-center w-8 h-8 rounded-none transition-colors duration-300",
+                          "flex items-center justify-center w-8 h-8 rounded-xl transition-colors duration-300",
                           openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500"
                         )}>
                             <MessageSquare size={14} />
@@ -191,7 +187,7 @@ export default function FAQSection() {
                       {openItem === item.id.toString() && (
                         <motion.div 
                             layoutId="active-line"
-                            className="absolute left-0 top-0 bottom-0 w-[3px]"
+                            className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-2xl"
                             style={{ backgroundColor: COLORS.emerald }}
                         />
                       )}
@@ -213,13 +209,12 @@ export default function FAQSection() {
                         <div className="flex justify-end mt-2 ml-8 md:ml-16">
                             <div
                                 className={cn(
-                                "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-none shadow-sm border",
-                                // Fondo ligeramente más claro que el negro absoluto para destacar, pero oscuro.
+                                "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-2xl shadow-sm border",
                                 "bg-zinc-900 border-white/10 text-zinc-300"
                                 )}
                             >
                                 {/* Decorative corner */}
-                                <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20" />
+                                <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20 rounded-bl-lg rounded-tr-2xl" />
                                 
                                 {item.answer}
                             </div>
