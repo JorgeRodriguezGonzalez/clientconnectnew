@@ -776,12 +776,8 @@ const ContentCreationService = () => {
           <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
           <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px", ...anim(0) }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: "50px", padding: "6px 16px" }}>
-                <FileText size={14} color={PRIMARY} />
-                <span style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 600, fontSize: "10px", textTransform: "uppercase", letterSpacing: "2px", color: "#9ca3af" }}>Content Creation</span>
-              </div>
-            </div>
+
+            <div style={{ height: isMobile ? "38px" : "48px" }} />
 
             <h1 style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff", ...anim(0.1) }}>
               <span>Content That</span><br />
