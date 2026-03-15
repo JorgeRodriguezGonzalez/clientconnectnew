@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/home/CTASection";
 import * as Accordion from "@radix-ui/react-accordion";
 import { cn } from "@/lib/utils";
-import { FileText, Minus, Plus, MessageSquare } from "lucide-react";
+import { FileText, Minus, Plus, MessageSquare, ArrowRight } from "lucide-react";
 
 const C = {
   cyan: "#06b6d4",
@@ -307,23 +307,29 @@ const ContentServicesGrid = () => {
 
 // ─── Our Work ───────────────────────────────────────────────
 
-const workItems: { src: string; type: "image" | "video" }[] = [
-  { src: "/images/driveways.jpg", type: "image" },
-  { src: "/videos/contentcreation.mp4", type: "video" },
-  { src: "/images/nanotise-vertical.jpg", type: "image" },
-  { src: "/videos/contentcreation2.mp4", type: "video" },
-  { src: "/images/YLRimage.jpg", type: "image" },
-  { src: "/images/assetplumbing-vertical.png", type: "image" },
-  { src: "/images/driveways11.jpg", type: "image" },
-  { src: "/images/premier.jpg", type: "image" },
+interface WorkItem {
+  src: string;
+  type: "image" | "video";
+  category: string;
+  title: string;
+}
+
+const workItems: WorkItem[] = [
+  { src: "/images/driveways.jpg", type: "image", category: "Trades · Residential", title: "Driveways Co" },
+  { src: "/videos/contentcreation.mp4", type: "video", category: "Video · Social", title: "Brand Spotlight" },
+  { src: "/images/nanotise-vertical.jpg", type: "image", category: "SaaS · Tech", title: "Nanotise" },
+  { src: "/videos/contentcreation2.mp4", type: "video", category: "Content · Strategy", title: "Social Campaign" },
+  { src: "/images/YLRimage.jpg", type: "image", category: "Real Estate · Lifestyle", title: "YLR Group" },
+  { src: "/images/assetplumbing-vertical.png", type: "image", category: "Trades · Service", title: "Asset Plumbing" },
+  { src: "/images/driveways11.jpg", type: "image", category: "Trades · Portfolio", title: "Driveways Gallery" },
+  { src: "/images/premier.jpg", type: "image", category: "Business · Corporate", title: "Premier Services" },
 ];
 
 const OurWork = () => {
   const [page, setPage] = useState(0);
   const isMobile = useIsMobile();
-  const perPage = isMobile ? 2 : 4;
+  const perPage = isMobile ? 2 : 3;
   const totalPages = Math.ceil(workItems.length / perPage);
-
   const currentItems = workItems.slice(page * perPage, page * perPage + perPage);
 
   const goNext = () => setPage((p) => (p + 1) % totalPages);
@@ -332,9 +338,17 @@ const OurWork = () => {
   return (
     <section style={{ backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
       <style>{`
-        .work-grid { display: grid; grid-template-columns: repeat(${perPage}, 1fr); gap: 16px; width: 100%; }
+        .work-grid-new {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+          width: 100%;
+        }
         @media (max-width: 767px) {
-          .work-grid { grid-template-columns: repeat(2, 1fr); }
+          .work-grid-new {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+          }
           .work-section-wrapper { padding: 48px 16px; }
         }
         @media (min-width: 768px) {
@@ -407,7 +421,7 @@ const OurWork = () => {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
 
-          <div className="work-grid">
+          <div className="work-grid-new">
             {currentItems.map((item, i) => (
               <WorkCard key={`${page}-${i}`} item={item} />
             ))}
@@ -437,7 +451,7 @@ const OurWork = () => {
   );
 };
 
-const WorkCard = ({ item }: { item: { src: string; type: "image" | "video" } }) => {
+const WorkCard = ({ item }: { item: WorkItem }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -462,62 +476,120 @@ const WorkCard = ({ item }: { item: { src: string; type: "image" | "video" } }) 
         position: "relative",
         borderRadius: "20px",
         overflow: "hidden",
-        cursor: item.type === "video" ? "pointer" : "default",
-        aspectRatio: "4 / 5",
-        background: "#111",
-        transition: "transform 0.4s ease, box-shadow 0.4s ease",
-        transform: isHovered ? "translateY(-4px)" : "translateY(0)",
-        boxShadow: isHovered ? "0 20px 40px rgba(0,0,0,0.3)" : "0 4px 20px rgba(0,0,0,0.1)",
+        cursor: "pointer",
+        aspectRatio: "4 / 3.2",
+        background: "#f3f4f6",
+        transition: "transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.45s ease",
+        transform: isHovered ? "translateY(-6px)" : "translateY(0)",
+        boxShadow: isHovered
+          ? "0 24px 48px rgba(0,0,0,0.15), 0 8px 24px rgba(0,0,0,0.1)"
+          : "0 2px 12px rgba(0,0,0,0.06)",
       }}
     >
+      {/* Media */}
       {item.type === "image" && (
         <img
           src={item.src}
-          alt=""
+          alt={item.title}
           style={{
             width: "100%", height: "100%", objectFit: "cover", display: "block",
-            transition: "transform 0.7s ease",
-            transform: isHovered ? "scale(1.04)" : "scale(1)",
+            transition: "transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            transform: isHovered ? "scale(1.05)" : "scale(1)",
           }}
         />
       )}
       {item.type === "video" && (
-        <>
-          <video
-            ref={videoRef}
-            src={item.src}
-            muted loop playsInline preload="metadata"
-            onLoadedMetadata={() => { if (videoRef.current) videoRef.current.currentTime = 0.5; }}
-            style={{
-              width: "100%", height: "100%", objectFit: "cover", display: "block",
-              transition: "transform 0.7s ease",
-              transform: isHovered ? "scale(1.04)" : "scale(1)",
-            }}
-          />
-          {/* Play icon overlay */}
-          <div style={{
-            position: "absolute", inset: 0, zIndex: 2,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            background: isPlaying ? "transparent" : "rgba(0,0,0,0.25)",
-            transition: "all 0.3s ease",
-            pointerEvents: "none",
+        <video
+          ref={videoRef}
+          src={item.src}
+          muted loop playsInline preload="metadata"
+          onLoadedMetadata={() => { if (videoRef.current) videoRef.current.currentTime = 0.5; }}
+          style={{
+            width: "100%", height: "100%", objectFit: "cover", display: "block",
+            transition: "transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            transform: isHovered ? "scale(1.05)" : "scale(1)",
+          }}
+        />
+      )}
+
+      {/* Bottom gradient overlay */}
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0,
+        height: "55%",
+        background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)",
+        pointerEvents: "none",
+        transition: "opacity 0.4s ease",
+        opacity: 1,
+      }} />
+
+      {/* Content overlay at bottom */}
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0,
+        padding: "24px 24px",
+        display: "flex", alignItems: "flex-end", justifyContent: "space-between",
+        zIndex: 2,
+      }}>
+        <div>
+          <p style={{
+            fontFamily: "'Satoshi', sans-serif",
+            fontSize: "12px",
+            fontWeight: 500,
+            color: "rgba(255,255,255,0.6)",
+            margin: "0 0 6px 0",
+            letterSpacing: "0.02em",
           }}>
-            {!isPlaying && (
-              <div style={{
-                width: "56px", height: "56px", borderRadius: "50%",
-                background: "rgba(255,255,255,0.9)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
-                transition: "transform 0.3s ease",
-                transform: isHovered ? "scale(1.1)" : "scale(1)",
-              }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="#111" stroke="none">
-                  <polygon points="6 3 20 12 6 21 6 3" />
-                </svg>
-              </div>
-            )}
+            {item.category}
+          </p>
+          <h3 style={{
+            fontFamily: "'Satoshi', sans-serif",
+            fontSize: "clamp(18px, 2vw, 24px)",
+            fontWeight: 700,
+            color: "#ffffff",
+            margin: 0,
+            lineHeight: 1.2,
+            letterSpacing: "-0.5px",
+          }}>
+            {item.title}
+          </h3>
+        </div>
+
+        {/* Arrow button */}
+        <div style={{
+          width: "40px", height: "40px",
+          borderRadius: "50%",
+          background: "rgba(255,255,255,0.9)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          flexShrink: 0,
+          transition: "all 0.3s ease",
+          transform: isHovered ? "scale(1.1)" : "scale(1)",
+          boxShadow: isHovered ? "0 4px 16px rgba(0,0,0,0.2)" : "0 2px 8px rgba(0,0,0,0.1)",
+        }}>
+          <ArrowRight size={16} color="#111" strokeWidth={2.5} />
+        </div>
+      </div>
+
+      {/* Play icon for video */}
+      {item.type === "video" && !isPlaying && (
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 1,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          background: "rgba(0,0,0,0.15)",
+          pointerEvents: "none",
+          transition: "opacity 0.3s ease",
+        }}>
+          <div style={{
+            width: "56px", height: "56px", borderRadius: "50%",
+            background: "rgba(255,255,255,0.9)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+            transition: "transform 0.3s ease",
+            transform: isHovered ? "scale(1.1)" : "scale(1)",
+          }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#111" stroke="none">
+              <polygon points="6 3 20 12 6 21 6 3" />
+            </svg>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
@@ -711,7 +783,7 @@ const ContentCreationFAQ = () => {
                         openItem === item.id.toString() ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10 rounded-xl" : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10 rounded-xl"
                       )}>
                       <div className="flex items-center gap-4">
-                        <div className={cn(                          "flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-300", openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500")}>
+                        <div className={cn("flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-300", openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500")}>
                           <MessageSquare size={14} />
                         </div>
                         <span className={cn("text-base md:text-lg font-semibold transition-colors duration-300", openItem === item.id.toString() ? "text-white" : "text-zinc-400")}>{item.question}</span>
