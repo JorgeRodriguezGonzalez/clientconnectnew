@@ -477,7 +477,7 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
         borderRadius: "20px",
         overflow: "hidden",
         cursor: "pointer",
-        aspectRatio: "4 / 3.2",
+        aspectRatio: "4 / 3.8",
         background: "#f3f4f6",
         transition: "transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.45s ease",
         transform: isHovered ? "translateY(-6px)" : "translateY(0)",
