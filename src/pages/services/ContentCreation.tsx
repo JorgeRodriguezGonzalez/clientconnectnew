@@ -328,7 +328,7 @@ const workItems: WorkItem[] = [
 const OurWork = () => {
   const [page, setPage] = useState(0);
   const isMobile = useIsMobile();
-  const perPage = isMobile ? 2 : 3;
+  const perPage = isMobile ? 2 : 4;
   const totalPages = Math.ceil(workItems.length / perPage);
   const currentItems = workItems.slice(page * perPage, page * perPage + perPage);
 
@@ -340,7 +340,7 @@ const OurWork = () => {
       <style>{`
         .work-grid-new {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 20px;
           width: 100%;
         }
