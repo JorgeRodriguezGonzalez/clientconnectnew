@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/home/CTASection";
+import FAQSection from "@/components/home/FAQSection";
 import { HowWeWork } from "@/components/home/HowWeWork";
 
 const PRIMARY = "#34d399";
@@ -324,6 +325,8 @@ export default function About() {
 
       {/* ═══════════════ CLIENT CAROUSEL ═══════════════ */}
       <ClientCarousel />
+
+      <FAQSection />
 
       <CTASection />
       <Footer />
