@@ -553,19 +553,7 @@ const WorkCard = ({ item }: { item: WorkItem }) => {
           </h3>
         </div>
 
-        {/* Arrow button */}
-        <div style={{
-          width: "40px", height: "40px",
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.9)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          flexShrink: 0,
-          transition: "all 0.3s ease",
-          transform: isHovered ? "scale(1.1)" : "scale(1)",
-          boxShadow: isHovered ? "0 4px 16px rgba(0,0,0,0.2)" : "0 2px 8px rgba(0,0,0,0.1)",
-        }}>
-          <ArrowRight size={16} color="#111" strokeWidth={2.5} />
-        </div>
+
       </div>
 
       {/* Play icon for video */}
