@@ -5,6 +5,7 @@ import OurStepsVersion2 from "@/components/home/OurStepsVersion2";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/home/CTASection";
 import FAQSection from "@/components/home/FAQSection";
+import InteractivePath from "@/components/home/InteractivePath";
 import { HowWeWork } from "@/components/home/HowWeWork";
 
 const PRIMARY = "#34d399";
@@ -328,6 +329,7 @@ export default function About() {
 
       <FAQSection />
 
+      <InteractivePath />
       <CTASection />
       <Footer />
     </div>
