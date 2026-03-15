@@ -883,7 +883,7 @@ const ContentCreationService = () => {
                   borderRadius: isMobile ? "14px" : "20px", overflow: "hidden", position: "relative", cursor: "grab",
                   transform: `rotate(${img.rotate}deg) scale(${hImg === i ? 1.1 : 1}) rotateZ(${hImg === i ? (img.rotate < 0 ? -2 : 2) : 0}deg)`,
                   transition: "all 0.15s ease-out",
-                  boxShadow: hImg === i ? `0 20px 60px rgba(${PRIMARY_RGB},0.35)` : "0 10px 40px rgba(0,0,0,0.4)",
+                  boxShadow: hImg === i ? "0 20px 60px rgba(0,0,0,0.5)" : "0 10px 40px rgba(0,0,0,0.4)",
                   opacity: loaded ? 1 : 0, transitionDelay: hImg === i ? "0s" : `${0.3 + i * 0.08}s`, zIndex: hImg === i ? 10 : 1,
                 }}>
                   <img src={img.url} alt={img.alt} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
