@@ -1,6 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { X, ArrowRight, Menu, ChevronDown } from "lucide-react";
+import {
+  X,
+  ArrowRight,
+  Menu,
+  ChevronDown,
+  Globe,
+  Share2,
+  Target,
+  Search,
+  MousePointerClick,
+  Camera,
+  Palette,
+  Phone,
+  Mail,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // --- UTILS ---
@@ -10,13 +24,48 @@ function cn(...classes: (string | undefined | null | false)[]) {
 
 // --- DATA ---
 const serviceLinks = [
-  { name: "Web Design", href: "/services/web-design" },
-  { name: "Social Media Management", href: "/services/social-media-management" },
-  { name: "Social Media Ads", href: "/services/social-media-ads" },
-  { name: "SEO", href: "/services/seo" },
-  { name: "Google Ads", href: "/services/google-ads" },
-  { name: "Content Creation", href: "/services/content-creation" },
-  { name: "Brand Identity", href: "/services/brand-identity" },
+  {
+    name: "Web Design",
+    href: "/services/web-design",
+    icon: Globe,
+    description: "Websites that convert visitors into customers",
+  },
+  {
+    name: "Social Media Management",
+    href: "/services/social-media-management",
+    icon: Share2,
+    description: "Grow your brand presence organically",
+  },
+  {
+    name: "Social Media Ads",
+    href: "/services/social-media-ads",
+    icon: Target,
+    description: "Targeted campaigns on Meta, TikTok & more",
+  },
+  {
+    name: "SEO",
+    href: "/services/seo",
+    icon: Search,
+    description: "Rank higher and get found online",
+  },
+  {
+    name: "Google Ads",
+    href: "/services/google-ads",
+    icon: MousePointerClick,
+    description: "Pay-per-click campaigns that deliver ROI",
+  },
+  {
+    name: "Content Creation",
+    href: "/services/content-creation",
+    icon: Camera,
+    description: "Scroll-stopping content for every platform",
+  },
+  {
+    name: "Brand Identity",
+    href: "/services/brand-identity",
+    icon: Palette,
+    description: "Logos, guidelines & visual strategy",
+  },
 ];
 
 const navLinks = [
@@ -32,7 +81,6 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
-  const servicesRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
 
@@ -44,7 +92,9 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
-    return () => { document.body.style.overflow = "unset"; };
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
@@ -61,7 +111,7 @@ export default function Header() {
   };
 
   const handleServicesLeave = () => {
-    timeoutRef.current = setTimeout(() => setIsServicesOpen(false), 150);
+    timeoutRef.current = setTimeout(() => setIsServicesOpen(false), 200);
   };
 
   return (
@@ -69,9 +119,12 @@ export default function Header() {
       {/* ── HEADER ── */}
       <motion.div
         initial={{ opacity: 1, y: 0 }}
-        animate={{ opacity: scrollY > 80 ? 0 : 1, y: scrollY > 80 ? -16 : 0 }}
+        animate={{
+          opacity: scrollY > 80 ? 0 : 1,
+          y: scrollY > 80 ? -16 : 0,
+        }}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className="fixed top-0 left-0 right-0 z-[999] font-sans pointer-events-auto"
+        className="fixed top-0 left-0 right-0 z-[999] font-sans"
         style={{ pointerEvents: scrollY > 80 ? "none" : "auto" }}
       >
         <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
@@ -82,7 +135,9 @@ export default function Header() {
               className="w-14 h-14 shrink-0 object-contain"
             />
             <span className="text-xl font-medium tracking-tight text-white">
-              Client Connect <span className="text-[#34d399]">Australia</span><span className="text-[#ffa93b]">.</span>
+              Client Connect{" "}
+              <span className="text-[#34d399]">Australia</span>
+              <span className="text-[#ffa93b]">.</span>
             </span>
           </Link>
 
@@ -100,15 +155,18 @@ export default function Header() {
               link.children ? (
                 <div
                   key={link.name}
-                  ref={servicesRef}
                   className="relative"
                   onMouseEnter={handleServicesEnter}
                   onMouseLeave={handleServicesLeave}
                 >
                   <button
+                    aria-expanded={isServicesOpen}
+                    aria-haspopup="true"
                     className={cn(
                       "flex items-center gap-1 text-sm font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer",
-                      location.pathname.startsWith("/services") ? "text-white" : "text-slate-300 hover:text-white"
+                      location.pathname.startsWith("/services")
+                        ? "text-white"
+                        : "text-slate-300 hover:text-white"
                     )}
                   >
                     {link.name}
@@ -121,29 +179,109 @@ export default function Header() {
                     />
                   </button>
 
+                  {/* ── MEGA DROPDOWN ── */}
                   <AnimatePresence>
                     {isServicesOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 8 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 rounded-xl border border-white/10 bg-[#0a0a0a]/95 backdrop-blur-xl p-2 shadow-2xl"
+                        initial={{ opacity: 0, y: 12, scale: 0.97 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 12, scale: 0.97 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="absolute top-full -left-48 mt-4 w-[680px] rounded-2xl border border-white/[0.08] bg-[#0a0a0a]/95 backdrop-blur-2xl shadow-[0_25px_60px_-12px_rgba(0,0,0,0.7)] overflow-hidden"
                       >
-                        {link.children.map((child) => (
-                          <Link
-                            key={child.name}
-                            to={child.href}
-                            className={cn(
-                              "block rounded-lg px-3 py-2.5 text-sm font-medium no-underline transition-colors duration-150",
-                              location.pathname === child.href
-                                ? "text-white bg-white/10"
-                                : "text-slate-300 hover:text-white hover:bg-white/5"
-                            )}
-                          >
-                            {child.name}
-                          </Link>
-                        ))}
+                        <div className="flex">
+                          {/* ── LEFT: SERVICES LIST ── */}
+                          <div className="flex-1 p-4">
+                            <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-widest text-slate-500">
+                              Our Services
+                            </p>
+                            <div className="space-y-0.5">
+                              {link.children.map((child) => {
+                                const Icon = child.icon;
+                                return (
+                                  <Link
+                                    key={child.name}
+                                    to={child.href}
+                                    className={cn(
+                                      "group flex items-start gap-3 rounded-xl px-3 py-2.5 no-underline transition-all duration-150",
+                                      location.pathname === child.href
+                                        ? "bg-white/[0.08] text-white"
+                                        : "text-slate-300 hover:bg-white/[0.05] hover:text-white"
+                                    )}
+                                  >
+                                    <span
+                                      className={cn(
+                                        "mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-colors duration-150",
+                                        location.pathname === child.href
+                                          ? "border-[#34d399]/30 bg-[#34d399]/10 text-[#34d399]"
+                                          : "border-white/[0.08] bg-white/[0.03] text-slate-400 group-hover:border-white/[0.15] group-hover:text-slate-200"
+                                      )}
+                                    >
+                                      <Icon size={15} />
+                                    </span>
+                                    <div className="min-w-0">
+                                      <p className="text-sm font-medium leading-tight">
+                                        {child.name}
+                                      </p>
+                                      <p className="mt-0.5 text-xs leading-snug text-slate-500 group-hover:text-slate-400 transition-colors">
+                                        {child.description}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* ── RIGHT: CTA PANEL ── */}
+                          <div className="w-[250px] border-l border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-transparent p-5 flex flex-col justify-between">
+                            <div>
+                              <h3 className="text-base font-semibold text-white leading-snug">
+                                Not sure where
+                                <br />
+                                to start?
+                              </h3>
+                              <p className="mt-2 text-[13px] leading-relaxed text-slate-400">
+                                Tell us what you're trying to solve and we'll
+                                build a tailored strategy for your business.
+                              </p>
+                            </div>
+
+                            <div className="mt-5 space-y-3">
+                              <div className="space-y-2">
+                                <a
+                                  href="tel:1300662718"
+                                  className="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors no-underline"
+                                >
+                                  <Phone size={13} className="text-[#34d399]" />
+                                  <span className="font-medium">
+                                    1300 662 718
+                                  </span>
+                                </a>
+                                <a
+                                  href="mailto:info@clientconnectaustralia.com"
+                                  className="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors no-underline"
+                                >
+                                  <Mail size={13} className="text-[#34d399]" />
+                                  <span className="font-medium truncate">
+                                    info@clientconnectaustralia.com
+                                  </span>
+                                </a>
+                              </div>
+
+                              <Link
+                                to="/contact"
+                                className="group/cta flex w-full items-center justify-center gap-2 rounded-xl bg-[#34d399] px-4 py-2.5 text-sm font-semibold text-[#0a0a0a] no-underline transition-all duration-300 hover:bg-[#2cc48a] hover:shadow-[0_0_20px_rgba(52,211,153,0.25)]"
+                              >
+                                Get in Touch
+                                <ArrowRight
+                                  size={14}
+                                  className="transition-transform duration-300 group-hover/cta:translate-x-0.5"
+                                />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -154,7 +292,9 @@ export default function Header() {
                   to={link.href}
                   className={cn(
                     "text-sm font-medium no-underline transition-colors duration-200",
-                    location.pathname === link.href ? "text-white" : "text-slate-300 hover:text-white"
+                    location.pathname === link.href
+                      ? "text-white"
+                      : "text-slate-300 hover:text-white"
                   )}
                 >
                   {link.name}
@@ -167,14 +307,18 @@ export default function Header() {
               className="group relative inline-flex cursor-pointer items-center justify-center rounded-full px-4 py-2 text-sm font-normal text-white/70 hover:text-white transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] hover:scale-[1.05] no-underline"
               style={{
                 boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.1)",
-                background: "radial-gradient(ellipse at bottom, rgba(71,81,92,1) 0%, rgba(0,0,0,1) 100%)",
+                background:
+                  "radial-gradient(ellipse at bottom, rgba(71,81,92,1) 0%, rgba(0,0,0,1) 100%)",
               }}
             >
               <span className="relative z-10">Start Scaling</span>
               <span
                 aria-hidden="true"
                 className="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 opacity-20 transition-all duration-[1000ms] group-hover:opacity-80"
-                style={{ background: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%)" }}
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%)",
+                }}
               />
             </Link>
           </div>
@@ -226,16 +370,38 @@ export default function Header() {
                           className="overflow-hidden"
                         >
                           <div className="pl-4 space-y-1 py-1">
-                            {link.children.map((child) => (
-                              <Link
-                                key={child.name}
-                                to={child.href}
-                                onClick={toggleMenu}
-                                className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-white/5 no-underline"
-                              >
-                                {child.name}
-                              </Link>
-                            ))}
+                            {link.children.map((child) => {
+                              const Icon = child.icon;
+                              return (
+                                <Link
+                                  key={child.name}
+                                  to={child.href}
+                                  onClick={toggleMenu}
+                                  className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-white/5 no-underline"
+                                >
+                                  <Icon size={14} className="text-slate-500" />
+                                  {child.name}
+                                </Link>
+                              );
+                            })}
+                          </div>
+
+                          {/* Mobile CTA inside services */}
+                          <div className="mx-3 mt-2 mb-1 rounded-lg border border-white/[0.08] bg-white/[0.03] p-3">
+                            <p className="text-xs font-medium text-slate-300">
+                              Not sure where to start?
+                            </p>
+                            <p className="mt-1 text-[11px] text-slate-500 leading-relaxed">
+                              Let's chat about your goals.
+                            </p>
+                            <Link
+                              to="/contact"
+                              onClick={toggleMenu}
+                              className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-[#34d399] no-underline"
+                            >
+                              Get in Touch
+                              <ArrowRight size={12} />
+                            </Link>
                           </div>
                         </motion.div>
                       )}
