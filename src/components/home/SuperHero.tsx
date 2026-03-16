@@ -248,7 +248,7 @@ interface SuperHeroProps {
 }
 
 export const SuperHero = ({
-  primaryButtonText = 'Start Scaling',
+  primaryButtonText = 'Book a Call',
   secondaryButtonText = 'View Case Studies',
 }: SuperHeroProps) => {
   const lampColor = '#06b6d4';
