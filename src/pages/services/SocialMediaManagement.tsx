@@ -38,12 +38,12 @@ const useIsMobile = () => {
 };
 
 const images = [
-  { url: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400&h=500&fit=crop", alt: "Social Media Content", rotate: -6 },
-  { url: "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=350&h=450&fit=crop", alt: "Community Engagement", rotate: 3 },
-  { url: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=400&h=500&fit=crop", alt: "Content Creation", rotate: -2 },
-  { url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=380&h=480&fit=crop", alt: "Brand Strategy", rotate: 5 },
-  { url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=350&h=450&fit=crop", alt: "Analytics Dashboard", rotate: -4 },
-  { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=500&fit=crop", alt: "Growth Metrics", rotate: 3 },
+  { url: "/images/socialmedia.jpg", alt: "Social Media Content", rotate: -6 },
+  { url: "/images/socialmedia2.jpg", alt: "Community Engagement", rotate: 3 },
+  { url: "/images/socialmedia3.jpg", alt: "Content Creation", rotate: -2 },
+  { url: "/images/socialmedia4.jpg", alt: "Brand Strategy", rotate: 5 },
+  { url: "/images/socialmedia5.jpg", alt: "Analytics Dashboard", rotate: -4 },
+  { url: "/images/socialmedia6.jpg", alt: "Growth Metrics", rotate: 3 },
 ];
 const mobileImages = [images[0], images[1], images[2], images[3]];
 
