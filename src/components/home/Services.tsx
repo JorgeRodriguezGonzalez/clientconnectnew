@@ -25,14 +25,9 @@ const CARD_COLORS = [
   "linear-gradient(135deg, #06b6d4, #22d3ee)",
   "linear-gradient(135deg, #10b981, #06b6d4)",
   "linear-gradient(135deg, #52525b, #3f3f46)",
-  "linear-gradient(135deg, #34d399, #06b6d4)",
-  "linear-gradient(135deg, #06b6d4, #0e7490)",
-  "linear-gradient(135deg, #3f3f46, #27272a)",
-  "linear-gradient(135deg, #10b981, #34d399)",
 ];
 
 const SERVICES = [
-  { id: "digital-strategy", title: "Digital Strategy", description: "Build a roadmap for growth with data-driven market analysis and competitive positioning.", capabilityCount: 4, tags: ["Market Analysis", "Competitor Research", "KPI Definition", "Growth Roadmap"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "0% 50%", videoUrl: "/videos/digital.mp4" },
   { id: "brand-identity", title: "Brand Identity", description: "Define your visual language and voice to create a lasting impression in the market.", capabilityCount: 4, tags: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "100% 50%", videoUrl: "/videos/brand.mp4" },
   { id: "website-development", title: "Website Development", description: "Build fast, responsive, and conversion-focused websites that elevate your digital presence.", capabilityCount: 4, tags: ["Custom Design", "Responsive Dev", "CMS Integration", "Performance"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "cover", bgPosition: "center", videoUrl: "/videos/websitedevelopment.mp4" },
   { id: "seo", title: "SEO", description: "Dominate search results and drive organic traffic with technical and on-page optimization.", capabilityCount: 4, tags: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "0% 50%", videoUrl: "/videos/SEOclient.mp4" },
@@ -40,7 +35,6 @@ const SERVICES = [
   { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], imageUrl: "/images/image2.jpg", bgSize: "cover", bgPosition: "center", videoUrl: "/videos/googleads.mp4" },
   { id: "social-media", title: "Social Media", description: "Build community and engagement with strategic content calendars and management.", capabilityCount: 4, tags: ["Content Strategy", "Community Mgmt", "Influencer Marketing", "Trend Analysis"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "100% 50%", videoUrl: "/videos/socialmedia.mp4" },
   { id: "content-creation", title: "Content Creation", description: "Bring your brand to life with compelling visuals, video, and copy that captivate your audience.", capabilityCount: 4, tags: ["Video Production", "Photography", "Copywriting", "Graphic Design"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "200% 100%", bgPosition: "0% 50%" },
-    { id: "cro", title: "CRO", description: "Maximize the value of every visitor by optimizing your conversion funnels.", capabilityCount: 4, tags: ["User Testing", "Heatmaps", "Funnel Analysis", "UX Optimization"], imageUrl: PANORAMIC_IMAGES.data, bgSize: "300% 100%", bgPosition: "50% 50%" },
 ];
 
 const GradientText = ({ children, style = {} }) => (
@@ -378,7 +372,7 @@ const Services = () => {
       </div>
 
       {/* CTA */}
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="flex justify-center mt-4 md:mt-8 border-t border-white/10 pt-8">
           <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 text-white rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-white/20" onClick={e => e.preventDefault()}>
             <span className="text-xs font-semibold uppercase tracking-wide">Explore services</span>
