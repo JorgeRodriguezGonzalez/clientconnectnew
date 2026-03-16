@@ -388,7 +388,7 @@ const RecentWebsites = () => {
   };
 
   return (
-    <section style={{ background: "#000", padding: "80px 0 100px", position: "relative", overflow: "hidden" }}>
+    <section style={{ background: "#FAFAFA", padding: "80px 0 100px", position: "relative", overflow: "hidden" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -413,13 +413,14 @@ const RecentWebsites = () => {
           </div>
           <h2 style={{
             fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700,
-            lineHeight: 1.1, letterSpacing: "-1.5px", color: "#fff", marginTop: "12px",
+            lineHeight: 1.1, letterSpacing: "-1.5px", color: "#111", marginTop: "12px",
           }}>
-            Recent Projects
+            Recent{" "}
+            <span style={{ background: C.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Projects</span>
           </h2>
           <p style={{
             fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
-            color: "rgba(255,255,255,0.5)", maxWidth: "480px", margin: "16px auto 0", lineHeight: 1.65,
+            color: "rgba(0,0,0,0.5)", maxWidth: "480px", margin: "16px auto 0", lineHeight: 1.65,
           }}>
             Real websites we've built for real businesses. Take a look at what we can do for yours.
           </p>
@@ -434,12 +435,12 @@ const RecentWebsites = () => {
               style={{
                 position: "absolute", left: "-16px", top: "50%", transform: "translateY(-50%)",
                 zIndex: 10, width: "48px", height: "48px", borderRadius: "50%",
-                background: "rgba(0,0,0,0.8)", border: "1px solid rgba(255,255,255,0.15)",
-                color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                background: "rgba(255,255,255,0.9)", border: "1px solid rgba(0,0,0,0.1)",
+                color: "#111", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
                 backdropFilter: "blur(8px)", transition: "all 0.2s ease",
               }}
               onMouseEnter={e => e.currentTarget.style.borderColor = C.cyan}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
             </button>
@@ -452,12 +453,12 @@ const RecentWebsites = () => {
               style={{
                 position: "absolute", right: "-16px", top: "50%", transform: "translateY(-50%)",
                 zIndex: 10, width: "48px", height: "48px", borderRadius: "50%",
-                background: "rgba(0,0,0,0.8)", border: "1px solid rgba(255,255,255,0.15)",
-                color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                background: "rgba(255,255,255,0.9)", border: "1px solid rgba(0,0,0,0.1)",
+                color: "#111", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
                 backdropFilter: "blur(8px)", transition: "all 0.2s ease",
               }}
               onMouseEnter={e => e.currentTarget.style.borderColor = C.cyan}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
             </button>
@@ -470,8 +471,6 @@ const RecentWebsites = () => {
               display: "flex", gap: "24px", overflowX: "auto", scrollSnapType: "x mandatory",
               scrollbarWidth: "none", msOverflowStyle: "none",
               padding: "8px 0",
-              maskImage: "linear-gradient(to right, transparent, black 3%, black 97%, transparent)",
-              WebkitMaskImage: "linear-gradient(to right, transparent, black 3%, black 97%, transparent)",
             }}
           >
             <style>{`.recent-scroll::-webkit-scrollbar { display: none; }`}</style>
@@ -489,22 +488,22 @@ const RecentWebsites = () => {
               >
                 <div style={{
                   width: "400px", borderRadius: "16px", overflow: "hidden",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  background: "#111",
+                  border: "1px solid rgba(0,0,0,0.08)",
+                  background: "#f5f5f5",
                   transition: "border-color 0.3s ease, box-shadow 0.3s ease",
                 }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = `rgba(${C.secondaryRGB},0.3)`; e.currentTarget.style.boxShadow = `0 8px 32px rgba(${C.secondaryRGB},0.1)`; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.boxShadow = "none"; }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = `rgba(${C.secondaryRGB},0.3)`; e.currentTarget.style.boxShadow = `0 8px 32px rgba(0,0,0,0.1)`; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.08)"; e.currentTarget.style.boxShadow = "none"; }}
                 >
                   <img
                     src={site.src}
                     alt={site.name}
-                    style={{ width: "100%", height: "auto", display: "block" }}
+                    style={{ width: "100%", height: "250px", objectFit: "cover", display: "block" }}
                   />
                 </div>
                 <span style={{
                   fontFamily: "'Satoshi', sans-serif", fontSize: "14px", fontWeight: 700,
-                  textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.7)",
+                  textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(0,0,0,0.6)",
                 }}>
                   {site.name}
                 </span>
