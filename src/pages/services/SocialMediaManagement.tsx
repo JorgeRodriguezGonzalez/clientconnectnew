@@ -43,7 +43,7 @@ const images = [
   { url: "/images/socialmedia3.jpg", alt: "Content Creation", rotate: -2 },
   { url: "/images/socialmedia4.jpg", alt: "Brand Strategy", rotate: 5 },
   { url: "/images/socialmedia5.jpg", alt: "Analytics Dashboard", rotate: -4 },
-  { url: "/images/socialmedia6.jpg", alt: "Growth Metrics", rotate: 3 },
+  { url: "/images/socialmedia6.png", alt: "Growth Metrics", rotate: 3 },
 ];
 const mobileImages = [images[0], images[1], images[2], images[3]];
 
