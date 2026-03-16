@@ -504,8 +504,8 @@ export default function About() {
 
       <OurStepsVersion2 />
       <ClientCarousel />
-      <FAQSection />
       <InteractivePath />
+      <FAQSection />
       <CTASection />
       <Footer />
     </div>
