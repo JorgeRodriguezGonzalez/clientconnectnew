@@ -534,9 +534,21 @@ const SocialMgmtFAQ = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500"
           >
-            SUPPORT
+            <div style={{
+              display: "inline-flex", alignItems: "center",
+              padding: "6px 12px", borderRadius: "8px",
+              border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.05)",
+              width: "fit-content",
+            }}>
+              <span style={{
+                fontSize: "10px", fontWeight: 600, letterSpacing: "2px",
+                textTransform: "uppercase", color: "#9ca3af",
+                fontFamily: "'Satoshi', sans-serif",
+              }}>
+                Support
+              </span>
+            </div>
           </motion.div>
 
           <motion.h2
