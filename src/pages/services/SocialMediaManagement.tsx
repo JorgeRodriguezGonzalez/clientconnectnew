@@ -51,31 +51,31 @@ const mobileImages = [images[0], images[1], images[2], images[3]];
 const processSteps = [
   {
     step: "Step 1",
-    title: "Brand Audit & Strategy",
-    description: "We analyse your current social presence, audience, and competitors to build a tailored content strategy aligned with your brand voice and business goals.",
+    title: "We Learn Your Brand",
+    description: "Before anything goes live, we dig into your business — your voice, your audience, what your competitors are doing. We build a strategy around where you actually want to go, not a cookie-cutter template.",
     icon: null,
-    badges: ["Brand Audit", "Audience Analysis", "Competitor Research", "Content Strategy"],
+    badges: ["Brand Deep-Dive", "Audience Research", "Competitor Audit", "Custom Strategy"],
   },
   {
     step: "Step 2",
-    title: "Content Creation & Planning",
-    description: "We craft engaging posts, graphics, reels, and stories for each platform. A monthly content calendar is shared for your approval before anything goes live.",
+    title: "We Create the Content",
+    description: "Captions, graphics, Reels, Stories — we handle the lot. You get a monthly content calendar to review before anything goes out. Don't like something? We change it. Simple.",
     icon: null,
-    badges: ["Copywriting", "Graphic Design", "Reels & Stories", "Content Calendar"],
+    badges: ["Copywriting", "Design", "Reels & Stories", "Your Approval"],
   },
   {
     step: "Step 3",
-    title: "Publishing & Engagement",
-    description: "We publish content at optimal times, respond to comments and messages, and actively engage with your community to build authentic relationships daily.",
+    title: "We Post & Engage",
+    description: "Content goes live at the right times, on the right platforms. We reply to comments, answer DMs and keep your community active — so your audience feels looked after, every day.",
     icon: null,
-    badges: ["Scheduled Posting", "Community Management", "DM Responses", "Hashtag Strategy"],
+    badges: ["Scheduled Posts", "DM Responses", "Community Chat", "Daily Activity"],
   },
   {
     step: "Step 4",
-    title: "Report & Optimise",
-    description: "We track engagement, follower growth, and content performance with detailed monthly reports. Insights drive continuous refinement of your strategy.",
+    title: "We Report Back",
+    description: "Every month you get a clear breakdown of what worked, what didn't, and what we're changing. No jargon, no fluff — just the numbers that matter and our plan to improve them.",
     icon: null,
-    badges: ["Monthly Reports", "Growth Tracking", "Content Insights", "Strategy Refinement"],
+    badges: ["Monthly Report", "Real Metrics", "Clear Insights", "Next Steps"],
   },
 ];
 
@@ -485,28 +485,28 @@ const OurWork = () => {
 const socialMgmtFaqs = [
   {
     id: 1,
-    question: "Which social media platforms do you manage?",
-    answer: "We manage Facebook, Instagram, LinkedIn, and TikTok. We'll recommend the best platform mix based on where your target audience is most active. Most Sydney businesses see the best results focusing on 2 to 3 platforms rather than spreading thin across all of them.",
+    question: "Which platforms do you actually manage?",
+    answer: "Instagram, Facebook, LinkedIn and TikTok. We'll tell you which ones make sense for your business — most of our Sydney clients get the best results focusing on 2 or 3 platforms instead of trying to be everywhere at once.",
   },
   {
     id: 2,
-    question: "How many posts will you publish per month?",
-    answer: "Our standard plans include 20 to 30 posts per month across your chosen platforms. This includes a mix of feed posts, stories, reels, and carousels. We create a monthly content calendar for your approval so you always know what's going out and when.",
+    question: "How many posts are we talking?",
+    answer: "Typically 8–12 posts per month across your platforms, plus Stories and Reels. We build a content calendar each month and send it to you for sign-off before anything goes out. You'll always know what's coming.",
   },
   {
     id: 3,
-    question: "Do I need to provide content or photos?",
-    answer: "Not necessarily. We handle content creation including copywriting, graphic design, and video editing. However, we love incorporating your own photos and behind-the-scenes content as it adds authenticity. We'll guide you on what to capture for maximum impact.",
+    question: "Do I need to give you photos and content?",
+    answer: "Nope. We handle copywriting, design and video editing. That said, if you've got behind-the-scenes shots or team photos, send them through — real content always performs better than stock. We'll tell you exactly what to capture.",
   },
   {
     id: 4,
-    question: "How do you measure success?",
-    answer: "We track engagement rate, follower growth, reach, impressions, website clicks, and leads generated from social media. You'll receive a detailed monthly report with insights and recommendations. We focus on metrics that actually matter for your business, not just vanity numbers.",
+    question: "How do I know it's actually working?",
+    answer: "You get a monthly report with the numbers that matter — engagement, reach, follower growth, website clicks. No vanity metrics. We break down what performed, what didn't, and what we're tweaking next month.",
   },
   {
     id: 5,
-    question: "Can I approve content before it goes live?",
-    answer: "Absolutely. We share a monthly content calendar with all posts, captions, and visuals for your review and approval. You can request changes or additions at any time. We use a simple approval workflow that makes the process quick and painless.",
+    question: "Can I see everything before it goes live?",
+    answer: "Always. We share the full content calendar with captions, visuals and scheduling for your review. Want something changed? Done. Nothing gets posted without your green light.",
   },
 ];
 
@@ -704,7 +704,7 @@ const SocialMediaManagement = () => {
               fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",
               ...anim(0.1),
             }}>
-              <span>Meaningful</span><br />
+              <span>Your Socials,</span><br />
               <motion.span
                 initial={{ backgroundPosition: "400% 50%" }}
                 animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -716,7 +716,7 @@ const SocialMediaManagement = () => {
                   display: "inline-block",
                 }}
               >
-                Connections.
+                Sorted.
               </motion.span>
             </h1>
 
@@ -725,7 +725,7 @@ const SocialMediaManagement = () => {
               fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff", maxWidth: "560px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
               ...anim(0.3),
             }}>
-              We manage your <span style={{ color: SECONDARY, fontWeight: 600 }}>social media presence</span> so you can focus on running your business. Engage your audience, build your <span style={{ color: PRIMARY, fontWeight: 600 }}>brand</span>, and drive real results.
+              We take <span style={{ color: SECONDARY, fontWeight: 600 }}>social media</span> off your plate — strategy, content, posting, engagement — so you can get back to actually running your <span style={{ color: PRIMARY, fontWeight: 600 }}>business</span>.
             </p>
 
             <div style={{
@@ -733,11 +733,11 @@ const SocialMediaManagement = () => {
               fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.5)",
               ...anim(0.4),
             }}>
-              <span>Content & Strategy</span>
+              <span>Strategy & Content</span>
               <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
-              <span>Community Management</span>
+              <span>Posted & Managed</span>
               <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
-              <span>+250% Engagement</span>
+              <span>Sydney Based</span>
             </div>
 
             <div style={{
@@ -755,7 +755,7 @@ const SocialMediaManagement = () => {
               }}>
                 <input
                   type="email"
-                  placeholder="Enter your email for a free social strategy"
+                  placeholder="Drop your email — we'll send a free strategy"
                   style={{
                     flex: 1, background: "transparent", border: "none", outline: "none",
                     fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 500, fontSize: "14px", color: "#fff", minWidth: 0,
@@ -773,7 +773,7 @@ const SocialMediaManagement = () => {
                     whiteSpace: "nowrap", flexShrink: 0,
                   }}
                 >
-                  Get Started
+                  Let's Talk
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </button>
               </div>
@@ -847,9 +847,9 @@ const SocialMediaManagement = () => {
                 margin: "0 auto 24px",
                 maxWidth: "1000px",
               }}>
-                Why Social Media{" "}
-                <span style={{ color: C.cyan, fontWeight: 300 }}>Matters</span>
-                {" "}— And Why Consistency Is Everything
+                You Know You Need{" "}
+                <span style={{ color: C.cyan, fontWeight: 300 }}>Social Media</span>
+                {" "}— You Just Don't Have the Time
               </p>
 
               <p style={{
@@ -861,8 +861,8 @@ const SocialMediaManagement = () => {
                 margin: "0 auto",
                 maxWidth: "700px",
               }}>
-                Your customers are on social media every day, making purchasing decisions based on what they see. Managing it effectively takes time, strategy, and consistency —{" "}
-                <span style={{ color: C.green, fontWeight: 500 }}>that's where we come in</span>.
+                Your customers are scrolling every day, deciding who to trust with their money. A dead feed says "we don't care." A consistent one says{" "}
+                <span style={{ color: C.green, fontWeight: 500 }}>we're here and we're serious</span>.
               </p>
             </motion.div>
           </div>
