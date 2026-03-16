@@ -4,24 +4,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 
-// --- CONSTANTES & ESTILOS ---
 const COLORS = {
   cyan: "#06b6d4",
   emerald: "#34d399",
-  gold: "rgb(237, 191, 134)", 
+  gold: "rgb(237, 191, 134)",
 };
 
-const BackgroundStripes = () => (
-  <div
-    className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-[0.05]"
-    style={{
-      backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
-      backgroundRepeat: 'repeat',
-    }}
-  />
-);
-
-// --- DATOS (Agencia de Marketing) ---
 const testimonials = [
   {
     text: "Client Connect completely overhauled our paid acquisition strategy. We went from a 2.1x ROAS to a stable 5.4x in just three months. Their data-driven approach is unmatched.",
@@ -79,11 +67,9 @@ const testimonials = [
   },
 ];
 
-const firstColumn = testimonials.slice(0, 3);
-const secondColumn = testimonials.slice(3, 6);
-const thirdColumn = testimonials.slice(6, 9);
+const firstColumn = testimonials.slice(0, 5);
+const secondColumn = testimonials.slice(5, 9);
 
-// --- SUB-COMPONENTE: COLUMNA DE TESTIMONIOS ---
 const TestimonialsColumn = (props: {
   className?: string;
   testimonials: typeof testimonials;
@@ -107,26 +93,26 @@ const TestimonialsColumn = (props: {
           ...new Array(2).fill(0).map((_, index) => (
             <React.Fragment key={index}>
               {props.testimonials.map(({ text, image, name, role }, i) => (
-                <div 
+                <div
                   key={i}
                   className="group relative p-8 rounded-none border border-white/10 bg-zinc-900 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 w-full"
                 >
                   <Quote className="absolute top-6 right-6 w-5 h-5 text-zinc-700 group-hover:text-emerald-500/40 transition-colors" />
-                  
+
                   <p className="text-sm leading-relaxed text-zinc-300 mb-6 font-medium">
                     "{text}"
                   </p>
-                  
+
                   <div className="flex items-center gap-3">
                     <div className="relative">
-                        <img
+                      <img
                         src={image}
                         alt={name}
                         className="h-10 w-10 rounded-none object-cover grayscale group-hover:grayscale-0 transition-all duration-300 border border-white/10"
-                        />
-                        <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-none" />
+                      />
+                      <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-none" />
                     </div>
-                    
+
                     <div className="flex flex-col">
                       <span className="text-sm font-bold text-white tracking-tight leading-tight">
                         {name}
@@ -146,20 +132,12 @@ const TestimonialsColumn = (props: {
   );
 };
 
-// --- COMPONENTE PRINCIPAL ---
 const TestimonialsSection = () => {
   return (
-    <section className="relative w-full bg-white py-24 sm:py-32 overflow-hidden">
-      
-      {/* Top Border */}
+    <section className="relative w-full bg-[#FAFAFA] py-24 sm:py-32 overflow-hidden">
       <div className="w-full h-[1px] bg-black/10 absolute top-0 z-20" />
 
-      {/* Background Pattern */}
-      <BackgroundStripes />
-
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -172,14 +150,14 @@ const TestimonialsSection = () => {
           </div>
 
           <h2 className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-zinc-900 mb-6">
-            Trusted by founders and{' '}
+            Trusted by founders and{" "}
             <motion.span
               initial={{ backgroundPosition: "400% 50%" }}
               animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
               transition={{
                 duration: 12,
                 ease: "linear",
-                repeat: Infinity
+                repeat: Infinity,
               }}
               style={{
                 display: "inline-block",
@@ -188,40 +166,30 @@ const TestimonialsSection = () => {
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                color: "transparent"
+                color: "transparent",
               }}
             >
               marketing leaders
             </motion.span>
           </h2>
-          
+
           <p className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-500 tracking-tight">
-            See what happens when data-driven strategy meets creative excellence. Real results from real partners.
+            See what happens when data-driven strategy meets creative excellence.
+            Real results from real partners.
           </p>
         </motion.div>
 
-        {/* Columnas de Testimonios */}
-        <div className="relative flex justify-center gap-6 max-h-[740px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_3%,black_97%,transparent)]">
-          
-          {/* Columna 1 */}
-          <TestimonialsColumn 
-            testimonials={firstColumn} 
-            duration={45} 
-            className="w-full md:w-1/2 lg:w-1/3"
+        <div className="relative flex justify-center gap-6 max-w-4xl mx-auto max-h-[740px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_3%,black_97%,transparent)]">
+          <TestimonialsColumn
+            testimonials={firstColumn}
+            duration={45}
+            className="w-full md:w-1/2"
           />
-          
-          {/* Columna 2 (Oculta en movil) */}
-          <TestimonialsColumn 
-            testimonials={secondColumn} 
-            className="hidden md:block w-1/2 lg:w-1/3" 
-            duration={55} 
-          />
-          
-          {/* Columna 3 (Oculta en tablet/movil) */}
-          <TestimonialsColumn 
-            testimonials={thirdColumn} 
-            className="hidden lg:block w-1/3" 
-            duration={50} 
+
+          <TestimonialsColumn
+            testimonials={secondColumn}
+            className="hidden md:block w-1/2"
+            duration={55}
           />
         </div>
       </div>
