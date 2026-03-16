@@ -470,7 +470,7 @@ const RecentWebsites = () => {
             style={{
               display: "flex", gap: "24px", overflowX: "auto", scrollSnapType: "x mandatory",
               scrollbarWidth: "none", msOverflowStyle: "none",
-              padding: "8px 0",
+              padding: "8px 24px",
             }}
           >
             <style>{`.recent-scroll::-webkit-scrollbar { display: none; }`}</style>
@@ -498,7 +498,7 @@ const RecentWebsites = () => {
                   <img
                     src={site.src}
                     alt={site.name}
-                    style={{ width: "100%", height: "250px", objectFit: "cover", display: "block" }}
+                    style={{ width: "100%", height: "auto", display: "block" }}
                   />
                 </div>
                 <span style={{
