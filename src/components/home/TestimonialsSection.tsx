@@ -67,8 +67,9 @@ const testimonials = [
   },
 ];
 
-const firstColumn = testimonials.slice(0, 5);
-const secondColumn = testimonials.slice(5, 9);
+const firstColumn = testimonials.slice(0, 3);
+const secondColumn = testimonials.slice(3, 6);
+const thirdColumn = testimonials.slice(6, 9);
 
 const TestimonialsColumn = (props: {
   className?: string;
@@ -87,7 +88,7 @@ const TestimonialsColumn = (props: {
           ease: "linear",
           repeatType: "loop",
         }}
-        className="flex flex-col gap-6 pb-6"
+        className="flex flex-col gap-5 pb-5"
       >
         {[
           ...new Array(2).fill(0).map((_, index) => (
@@ -95,33 +96,42 @@ const TestimonialsColumn = (props: {
               {props.testimonials.map(({ text, image, name, role }, i) => (
                 <div
                   key={i}
-                  className="group relative p-8 rounded-none border border-white/10 bg-zinc-900 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 w-full"
+                  className="group relative p-6 rounded-2xl bg-white shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 w-full"
                 >
-                  <Quote className="absolute top-6 right-6 w-5 h-5 text-zinc-700 group-hover:text-emerald-500/40 transition-colors" />
+                  <Quote className="absolute top-5 right-5 w-4 h-4 text-zinc-200 group-hover:text-emerald-400/50 transition-colors" />
 
-                  <p className="text-sm leading-relaxed text-zinc-300 mb-6 font-medium">
-                    "{text}"
-                  </p>
-
-                  <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <img
-                        src={image}
-                        alt={name}
-                        className="h-10 w-10 rounded-none object-cover grayscale group-hover:grayscale-0 transition-all duration-300 border border-white/10"
-                      />
-                      <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-none" />
-                    </div>
-
+                  <div className="flex items-center gap-3 mb-4">
+                    <img
+                      src={image}
+                      alt={name}
+                      className="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-sm"
+                    />
                     <div className="flex flex-col">
-                      <span className="text-sm font-bold text-white tracking-tight leading-tight">
+                      <span className="text-sm font-semibold text-zinc-900 leading-tight">
                         {name}
                       </span>
-                      <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
+                      <span className="text-xs text-zinc-400 font-medium">
                         {role}
                       </span>
                     </div>
                   </div>
+
+                  <div className="flex items-center gap-0.5 mb-3">
+                    {[...Array(5)].map((_, idx) => (
+                      <svg
+                        key={idx}
+                        className="w-4 h-4 text-emerald-400"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+
+                  <p className="text-[13px] leading-relaxed text-zinc-600">
+                    {text}
+                  </p>
                 </div>
               ))}
             </React.Fragment>
@@ -179,17 +189,23 @@ const TestimonialsSection = () => {
           </p>
         </motion.div>
 
-        <div className="relative flex justify-center gap-6 max-w-4xl mx-auto max-h-[740px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_3%,black_97%,transparent)]">
+        <div className="relative flex justify-center gap-5 max-w-5xl mx-auto max-h-[740px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_3%,black_97%,transparent)]">
           <TestimonialsColumn
             testimonials={firstColumn}
             duration={45}
-            className="w-full md:w-1/2"
+            className="w-full md:w-1/2 lg:w-1/3"
           />
 
           <TestimonialsColumn
             testimonials={secondColumn}
-            className="hidden md:block w-1/2"
+            className="hidden md:block w-1/2 lg:w-1/3"
             duration={55}
+          />
+
+          <TestimonialsColumn
+            testimonials={thirdColumn}
+            className="hidden lg:block w-1/3"
+            duration={50}
           />
         </div>
       </div>
