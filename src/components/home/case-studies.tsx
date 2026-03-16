@@ -256,9 +256,13 @@ export default function CaseStudies() {
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500"
+            className="inline-flex items-center px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 w-fit mx-auto"
           >
-            PROVEN RESULTS
+            <span className="text-[10px] font-semibold tracking-[2px] uppercase text-gray-400"
+              style={{ fontFamily: "'Satoshi', sans-serif" }}
+            >
+              PROVEN RESULTS
+            </span>
           </motion.div>
 
           <motion.h2 
