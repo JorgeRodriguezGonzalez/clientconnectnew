@@ -146,8 +146,28 @@ const TestimonialsSection = () => {
           viewport={{ once: true }}
           className="flex flex-col items-center justify-center max-w-[640px] mx-auto text-center mb-16"
         >
-          <div className="inline-flex items-center px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 w-fit mb-4">
-            <span className="text-[10px] font-semibold tracking-[2px] uppercase text-gray-400">
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              padding: "6px 12px",
+              borderRadius: "8px",
+              border: "1px solid #e4e4e7",
+              backgroundColor: "#fafafa",
+              width: "fit-content",
+            }}
+            className="mb-4"
+          >
+            <span
+              style={{
+                fontSize: "10px",
+                fontWeight: 600,
+                letterSpacing: "2px",
+                textTransform: "uppercase",
+                color: "#6b7280",
+                fontFamily: "'Satoshi', sans-serif",
+              }}
+            >
               SOCIAL PROOF
             </span>
           </div>
