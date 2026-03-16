@@ -8,7 +8,7 @@ export const socialMgmtServices: ServiceItem[] = [
   {
     id: "consistent-content",
     title: "Your Feed, Always Fresh",
-    description: "Two polished posts per week across your chosen platforms — planned around your business goals and published like clockwork. No gaps, no guesswork, no last-minute scrambles.",
+    description: "Two polished posts per week across your chosen platforms. Planned around your business goals and published like clockwork. No gaps, no guesswork, no last-minute scrambles.",
     badges: ["Instagram", "Facebook", "TikTok", "LinkedIn"],
     videoSrc: "/videos/websitedevelopment.mp4",
     link: "/services/social-media-management",
@@ -17,7 +17,7 @@ export const socialMgmtServices: ServiceItem[] = [
   {
     id: "captions-design",
     title: "Words & Visuals That Land",
-    description: "We write copy in your voice and pair it with bold, on-brand design. Every post is crafted for the platform it lives on — not recycled across all of them.",
+    description: "We write copy in your voice and pair it with bold, on-brand design. Every post is crafted for the platform it lives on, not recycled across all of them.",
     badges: ["Copywriting", "Graphic Design", "Brand Voice", "Platform-Native"],
     videoSrc: null,
     link: "/services/social-media-management",
@@ -35,7 +35,7 @@ export const socialMgmtServices: ServiceItem[] = [
   {
     id: "content-shoots",
     title: "Real Content, Shot by Us",
-    description: "Ditch the stock library. We offer professional photo and video shoots tailored to your brand — Reels, product shots, behind-the-scenes — all filmed, edited and ready to post.",
+    description: "Ditch the stock library. We offer professional photo and video shoots tailored to your brand. Reels, product shots, behind-the-scenes, all filmed, edited and ready to post.",
     badges: ["Photography", "Video", "Reels", "Editing"],
     videoSrc: "/videos/seo.mp4",
     link: "/services/social-media-management",
@@ -44,7 +44,7 @@ export const socialMgmtServices: ServiceItem[] = [
   {
     id: "reporting",
     title: "Numbers Without the Nonsense",
-    description: "Once a month we send you a straight-up breakdown — what grew, what flopped, and exactly what we're adjusting. Clear charts, zero jargon, always actionable.",
+    description: "Once a month we send you a straight-up breakdown. What grew, what flopped, and exactly what we're adjusting. Clear charts, zero jargon, always actionable.",
     badges: ["Monthly Reports", "Performance", "Growth", "Actionable"],
     videoSrc: "/videos/SPweb4.mp4",
     link: "/services/social-media-management",

@@ -52,28 +52,28 @@ const processSteps = [
   {
     step: "Step 1",
     title: "We Learn Your Brand",
-    description: "Before anything goes live, we dig into your business — your voice, your audience, what your competitors are doing. We build a strategy around where you actually want to go, not a cookie-cutter template.",
+    description: "Before anything goes live, we dig into your business. Your voice, your audience, what your competitors are doing. We build a strategy around where you actually want to go, not a cookie-cutter template.",
     icon: null,
     badges: ["Brand Deep-Dive", "Audience Research", "Competitor Audit", "Custom Strategy"],
   },
   {
     step: "Step 2",
     title: "We Create the Content",
-    description: "Captions, graphics, Reels, Stories — we handle the lot. You get a monthly content calendar to review before anything goes out. Don't like something? We change it. Simple.",
+    description: "Captions, graphics, Reels, Stories. We handle the lot. You get a monthly content calendar to review before anything goes out. Don't like something? We change it. Simple.",
     icon: null,
     badges: ["Copywriting", "Design", "Reels & Stories", "Your Approval"],
   },
   {
     step: "Step 3",
     title: "We Post & Engage",
-    description: "Content goes live at the right times, on the right platforms. We reply to comments, answer DMs and keep your community active — so your audience feels looked after, every day.",
+    description: "Content goes live at the right times, on the right platforms. We reply to comments, answer DMs and keep your community active so your audience feels looked after, every day.",
     icon: null,
     badges: ["Scheduled Posts", "DM Responses", "Community Chat", "Daily Activity"],
   },
   {
     step: "Step 4",
     title: "We Report Back",
-    description: "Every month you get a clear breakdown of what worked, what didn't, and what we're changing. No jargon, no fluff — just the numbers that matter and our plan to improve them.",
+    description: "Every month you get a clear breakdown of what worked, what didn't, and what we're changing. No jargon, no fluff. Just the numbers that matter and our plan to improve them.",
     icon: null,
     badges: ["Monthly Report", "Real Metrics", "Clear Insights", "Next Steps"],
   },
@@ -486,22 +486,22 @@ const socialMgmtFaqs = [
   {
     id: 1,
     question: "Which platforms do you actually manage?",
-    answer: "Instagram, Facebook, LinkedIn and TikTok. We'll tell you which ones make sense for your business — most of our Sydney clients get the best results focusing on 2 or 3 platforms instead of trying to be everywhere at once.",
+    answer: "Instagram, Facebook, LinkedIn and TikTok. We'll tell you which ones make sense for your business. Most of our Sydney clients get the best results focusing on 2 or 3 platforms instead of trying to be everywhere at once.",
   },
   {
     id: 2,
     question: "How many posts are we talking?",
-    answer: "Typically 8–12 posts per month across your platforms, plus Stories and Reels. We build a content calendar each month and send it to you for sign-off before anything goes out. You'll always know what's coming.",
+    answer: "Typically 8 to 12 posts per month across your platforms, plus Stories and Reels. We build a content calendar each month and send it to you for sign-off before anything goes out. You'll always know what's coming.",
   },
   {
     id: 3,
     question: "Do I need to give you photos and content?",
-    answer: "Nope. We handle copywriting, design and video editing. That said, if you've got behind-the-scenes shots or team photos, send them through — real content always performs better than stock. We'll tell you exactly what to capture.",
+    answer: "Nope. We handle copywriting, design and video editing. That said, if you've got behind-the-scenes shots or team photos, send them through. Real content always performs better than stock. We'll tell you exactly what to capture.",
   },
   {
     id: 4,
     question: "How do I know it's actually working?",
-    answer: "You get a monthly report with the numbers that matter — engagement, reach, follower growth, website clicks. No vanity metrics. We break down what performed, what didn't, and what we're tweaking next month.",
+    answer: "You get a monthly report with the numbers that matter. Engagement, reach, follower growth, website clicks. No vanity metrics. We break down what performed, what didn't, and what we're tweaking next month.",
   },
   {
     id: 5,
@@ -737,7 +737,7 @@ const SocialMediaManagement = () => {
               fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff", maxWidth: "560px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
               ...anim(0.3),
             }}>
-              We take <span style={{ color: SECONDARY, fontWeight: 600 }}>social media</span> off your plate — strategy, content, posting, engagement — so you can get back to actually running your <span style={{ color: PRIMARY, fontWeight: 600 }}>business</span>.
+              We take <span style={{ color: SECONDARY, fontWeight: 600 }}>social media</span> off your plate. Strategy, content, posting, engagement. So you can get back to actually running your <span style={{ color: PRIMARY, fontWeight: 600 }}>business</span>.
             </p>
 
             <div style={{
@@ -861,7 +861,7 @@ const SocialMediaManagement = () => {
               }}>
                 You Know You Need{" "}
                 <span style={{ color: C.cyan, fontWeight: 300 }}>Social Media</span>
-                {" "}— You Just Don't Have the Time
+                {" "} You Just Don't Have the Time
               </p>
 
               <p style={{
