@@ -307,23 +307,23 @@ export default function Header() {
               className="group relative inline-flex cursor-pointer items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-white no-underline transition-all duration-500 hover:-translate-y-[2px] hover:scale-[1.03] animate-[glowPulse_3s_ease-in-out_infinite]"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(52,211,153,0.15) 0%, rgba(52,211,153,0.05) 100%)",
+                  "linear-gradient(135deg, rgba(6,182,212,0.15) 0%, rgba(6,182,212,0.05) 100%)",
                 boxShadow:
-                  "0 0 15px rgba(52,211,153,0.15), 0 0 30px rgba(52,211,153,0.05), inset 0 0 0 1px rgba(52,211,153,0.25)",
+                  "0 0 15px rgba(6,182,212,0.15), 0 0 30px rgba(6,182,212,0.05), inset 0 0 0 1px rgba(6,182,212,0.25)",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow =
-                  "0 0 20px rgba(52,211,153,0.3), 0 0 40px rgba(52,211,153,0.15), inset 0 0 0 1px rgba(52,211,153,0.4)";
+                  "0 0 20px rgba(6,182,212,0.3), 0 0 40px rgba(6,182,212,0.15), inset 0 0 0 1px rgba(6,182,212,0.4)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.boxShadow =
-                  "0 0 15px rgba(52,211,153,0.15), 0 0 30px rgba(52,211,153,0.05), inset 0 0 0 1px rgba(52,211,153,0.25)";
+                  "0 0 15px rgba(6,182,212,0.15), 0 0 30px rgba(6,182,212,0.05), inset 0 0 0 1px rgba(6,182,212,0.25)";
               }}
             >
               <style>{`
                 @keyframes glowPulse {
-                  0%, 100% { box-shadow: 0 0 15px rgba(52,211,153,0.15), 0 0 30px rgba(52,211,153,0.05), inset 0 0 0 1px rgba(52,211,153,0.25); }
-                  50% { box-shadow: 0 0 20px rgba(52,211,153,0.25), 0 0 40px rgba(52,211,153,0.1), inset 0 0 0 1px rgba(52,211,153,0.35); }
+                  0%, 100% { box-shadow: 0 0 15px rgba(6,182,212,0.15), 0 0 30px rgba(6,182,212,0.05), inset 0 0 0 1px rgba(6,182,212,0.25); }
+                  50% { box-shadow: 0 0 20px rgba(6,182,212,0.25), 0 0 40px rgba(6,182,212,0.1), inset 0 0 0 1px rgba(6,182,212,0.35); }
                 }
               `}</style>
               <span className="relative z-10 flex items-center gap-2">
