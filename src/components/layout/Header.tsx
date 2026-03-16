@@ -304,22 +304,35 @@ export default function Header() {
             <div className="h-6 w-px bg-white/10" />
             <Link
               to="/contact"
-              className="group relative inline-flex cursor-pointer items-center justify-center rounded-full px-4 py-2 text-sm font-normal text-white/70 hover:text-white transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] hover:scale-[1.05] no-underline"
+              className="group relative inline-flex cursor-pointer items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-white no-underline transition-all duration-500 hover:-translate-y-[2px] hover:scale-[1.03] animate-[glowPulse_3s_ease-in-out_infinite]"
               style={{
-                boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.1)",
                 background:
-                  "radial-gradient(ellipse at bottom, rgba(71,81,92,1) 0%, rgba(0,0,0,1) 100%)",
+                  "linear-gradient(135deg, rgba(52,211,153,0.15) 0%, rgba(52,211,153,0.05) 100%)",
+                boxShadow:
+                  "0 0 15px rgba(52,211,153,0.15), 0 0 30px rgba(52,211,153,0.05), inset 0 0 0 1px rgba(52,211,153,0.25)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow =
+                  "0 0 20px rgba(52,211,153,0.3), 0 0 40px rgba(52,211,153,0.15), inset 0 0 0 1px rgba(52,211,153,0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow =
+                  "0 0 15px rgba(52,211,153,0.15), 0 0 30px rgba(52,211,153,0.05), inset 0 0 0 1px rgba(52,211,153,0.25)";
               }}
             >
-              <span className="relative z-10">Start Scaling</span>
-              <span
-                aria-hidden="true"
-                className="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 opacity-20 transition-all duration-[1000ms] group-hover:opacity-80"
-                style={{
-                  background:
-                    "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%)",
-                }}
-              />
+              <style>{`
+                @keyframes glowPulse {
+                  0%, 100% { box-shadow: 0 0 15px rgba(52,211,153,0.15), 0 0 30px rgba(52,211,153,0.05), inset 0 0 0 1px rgba(52,211,153,0.25); }
+                  50% { box-shadow: 0 0 20px rgba(52,211,153,0.25), 0 0 40px rgba(52,211,153,0.1), inset 0 0 0 1px rgba(52,211,153,0.35); }
+                }
+              `}</style>
+              <span className="relative z-10 flex items-center gap-2">
+                Start Scaling
+                <ArrowRight
+                  size={14}
+                  className="transition-transform duration-300 group-hover:translate-x-0.5"
+                />
+              </span>
             </Link>
           </div>
         </nav>
