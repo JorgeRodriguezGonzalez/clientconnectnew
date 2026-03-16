@@ -859,9 +859,9 @@ const SocialMediaManagement = () => {
                 margin: "0 auto 24px",
                 maxWidth: "1000px",
               }}>
-                You Know You Need{" "}
-                <span style={{ color: C.cyan, fontWeight: 300 }}>Social Media</span>
-                {" "} You Just Don't Have the Time
+                Why Social Media{" "}
+                <span style={{ color: C.cyan, fontWeight: 300 }}>Matters</span>
+                {" "} And Why Consistency Is Everything
               </p>
 
               <p style={{
@@ -873,8 +873,8 @@ const SocialMediaManagement = () => {
                 margin: "0 auto",
                 maxWidth: "700px",
               }}>
-                Your customers are scrolling every day, deciding who to trust with their money. A dead feed says "we don't care." A consistent one says{" "}
-                <span style={{ color: C.green, fontWeight: 500 }}>we're here and we're serious</span>.
+                Your customers are on social media every day, making purchasing decisions based on what they see. Managing it effectively takes time, strategy, and consistency.{" "}
+                <span style={{ color: C.green, fontWeight: 500 }}>That's where we come in</span>.
               </p>
             </motion.div>
           </div>
