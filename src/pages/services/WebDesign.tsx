@@ -487,7 +487,7 @@ const RecentWebsites = () => {
                 }}
               >
                 <div style={{
-                  width: "400px", borderRadius: "16px", overflow: "hidden",
+                  width: "calc((100vw - 96px) / 3)", maxWidth: "380px", borderRadius: "16px", overflow: "hidden",
                   border: "1px solid rgba(0,0,0,0.08)",
                   background: "#f5f5f5",
                   transition: "border-color 0.3s ease, box-shadow 0.3s ease",
