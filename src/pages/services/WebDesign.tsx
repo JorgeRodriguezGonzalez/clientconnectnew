@@ -433,7 +433,7 @@ const RecentWebsites = () => {
             <button
               onClick={() => scroll(-1)}
               style={{
-                position: "absolute", left: "-16px", top: "50%", transform: "translateY(-50%)",
+                position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)",
                 zIndex: 10, width: "48px", height: "48px", borderRadius: "50%",
                 background: "rgba(255,255,255,0.9)", border: "1px solid rgba(0,0,0,0.1)",
                 color: "#111", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
@@ -451,7 +451,7 @@ const RecentWebsites = () => {
             <button
               onClick={() => scroll(1)}
               style={{
-                position: "absolute", right: "-16px", top: "50%", transform: "translateY(-50%)",
+                position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)",
                 zIndex: 10, width: "48px", height: "48px", borderRadius: "50%",
                 background: "rgba(255,255,255,0.9)", border: "1px solid rgba(0,0,0,0.1)",
                 color: "#111", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
@@ -468,9 +468,10 @@ const RecentWebsites = () => {
           <div
             ref={scrollRef}
             style={{
-              display: "flex", gap: "24px", overflowX: "auto", scrollSnapType: "x mandatory",
+              display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px",
+              overflowX: "auto", scrollSnapType: "x mandatory",
               scrollbarWidth: "none", msOverflowStyle: "none",
-              padding: "8px 24px",
+              padding: "8px 0",
             }}
           >
             <style>{`.recent-scroll::-webkit-scrollbar { display: none; }`}</style>
@@ -484,10 +485,11 @@ const RecentWebsites = () => {
                 style={{
                   flexShrink: 0, scrollSnapAlign: "start",
                   display: "flex", flexDirection: "column", gap: "16px",
+                  minWidth: 0,
                 }}
               >
                 <div style={{
-                  width: "calc((100vw - 96px) / 3)", maxWidth: "380px", borderRadius: "16px", overflow: "hidden",
+                  width: "100%", borderRadius: "16px", overflow: "hidden",
                   border: "1px solid rgba(0,0,0,0.08)",
                   background: "#f5f5f5",
                   transition: "border-color 0.3s ease, box-shadow 0.3s ease",
