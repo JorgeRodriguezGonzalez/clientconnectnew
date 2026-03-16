@@ -207,7 +207,7 @@ const VideoModal = ({ isOpen, onClose, videoUrl, color }: { isOpen: boolean; onC
                         initial={{ scale: 0.9, opacity: 0, y: 20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                        className="relative w-full max-w-4xl aspect-video bg-black rounded-none overflow-hidden shadow-2xl border border-white/10"
+                        className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10"
                     >
                         <button 
                             onClick={onClose}
@@ -295,7 +295,7 @@ export default function CaseStudies() {
                         key={c.id}
                         onClick={() => { setActiveTab(idx); setIsVideoOpen(false); }}
                         className={cn(
-                            "relative px-6 py-3 rounded-none text-sm font-semibold transition-all duration-300 overflow-hidden group border",
+                            "relative px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden group border",
                             activeTab === idx 
                                 ? "text-white border-white/20 bg-zinc-900 shadow-xl" 
                                 : "text-zinc-500 border-transparent hover:bg-white/5 hover:text-white"
@@ -324,7 +324,7 @@ export default function CaseStudies() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -20, scale: 0.98 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="relative w-full bg-zinc-900/50 border border-white/10 rounded-none overflow-hidden shadow-2xl"
+                    className="relative w-full bg-zinc-900/50 border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
                 >
                     <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
                         
@@ -351,7 +351,7 @@ export default function CaseStudies() {
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => setIsVideoOpen(true)}
-                                    className="group relative w-full h-48 rounded-none overflow-hidden cursor-pointer shadow-lg mb-6 border border-white/10"
+                                    className="group relative w-full h-48 rounded-xl overflow-hidden cursor-pointer shadow-lg mb-6 border border-white/10"
                                 >
                                     <div className="absolute inset-0">
                                         <img 
@@ -369,7 +369,7 @@ export default function CaseStudies() {
                                         >
                                             <Play size={20} fill="currentColor" />
                                         </div>
-                                        <div className="px-3 py-1 bg-black/60 backdrop-blur-md rounded-none border border-white/10">
+                                        <div className="px-3 py-1 bg-black/60 backdrop-blur-md rounded-lg border border-white/10">
                                             <span className="text-white text-xs font-semibold tracking-wide">
                                                 Watch Testimonial
                                             </span>
@@ -398,7 +398,7 @@ export default function CaseStudies() {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.1 + (i * 0.1) }}
-                                        className="bg-zinc-900/50 border border-white/10 rounded-none p-5 shadow-sm hover:border-white/20 transition-all"
+                                        className="bg-zinc-900/50 border border-white/10 rounded-xl p-5 shadow-sm hover:border-white/20 transition-all"
                                     >
                                         <div className="flex items-center justify-between mb-3">
                                             <stat.icon size={18} className="text-zinc-600" />
@@ -420,9 +420,9 @@ export default function CaseStudies() {
                             </div>
 
                             {/* Graph Area */}
-                            <div className="flex-1 bg-zinc-950 rounded-none border border-white/10 shadow-inner relative overflow-hidden group">
+                            <div className="flex-1 bg-zinc-950 rounded-xl border border-white/10 shadow-inner relative overflow-hidden group">
                                 <div className="absolute top-4 left-4 z-20 flex gap-2">
-                                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-none bg-black/50 border border-white/10 backdrop-blur-sm">
+                                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-black/50 border border-white/10 backdrop-blur-sm">
                                         <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: activeCase.color }} />
                                         <span className="text-[10px] text-zinc-400 font-bold tracking-wide">LIVE PERFORMANCE</span>
                                     </div>
