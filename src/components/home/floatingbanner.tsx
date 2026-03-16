@@ -142,7 +142,7 @@ export function FloatingBanner() {
                 
                 <a 
                   href="tel:0290734731"
-                  className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all"
+                  className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all"
                 >
                   <Phone className="w-3.5 h-3.5" />
                   <span className="font-sans font-semibold text-xs whitespace-nowrap">Call us</span>
@@ -155,9 +155,9 @@ export function FloatingBanner() {
                       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                   }}
-                  className="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-zinc-200 text-black shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all"
+                  className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-cyan-500 bg-white/10 backdrop-blur-sm text-cyan-500 hover:border-emerald-400 hover:text-emerald-400 hover:shadow-[0_0_20px_rgba(52,211,153,0.5)] transition-all"
                 >
-                  <span className="font-sans font-bold text-xs whitespace-nowrap">Get Free Quote</span>
+                  <span className="font-sans font-semibold text-xs whitespace-nowrap">Get Free Quote</span>
                   <ArrowRight className="w-3.5 h-3.5" strokeWidth={3} />
                 </button>
 
