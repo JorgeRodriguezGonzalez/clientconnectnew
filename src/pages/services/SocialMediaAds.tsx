@@ -306,12 +306,12 @@ const socialAdsFaqs = [
   {
     id: 1,
     question: "How much should I spend on social media ads?",
-    answer: "We recommend starting with a minimum of $1,500–$3,000 per month in ad spend to gather enough data for meaningful optimisation. As we identify winning audiences and creatives, we can scale your budget to maximise returns. We'll always recommend a budget that aligns with your goals.",
+    answer: "We'll recommend a starting budget based on your goals and industry to ensure we gather enough data for meaningful optimisation. As we identify winning audiences and creatives, we scale your budget to maximise returns. Every recommendation is tailored to your business.",
   },
   {
     id: 2,
     question: "Which platforms do you advertise on?",
-    answer: "We specialise in Meta (Facebook & Instagram), LinkedIn, and TikTok advertising. We'll recommend the best platform mix based on your target audience and business goals. Most B2C businesses see great results on Meta, while B2B companies often perform well on LinkedIn.",
+    answer: "We specialise in Meta (Facebook & Instagram), LinkedIn, and TikTok advertising. We'll recommend the best platform mix based on your target audience and business goals. Most B2C businesses see great results on Meta and TikTok, while B2B companies often perform well on LinkedIn.",
   },
   {
     id: 3,
@@ -321,7 +321,7 @@ const socialAdsFaqs = [
   {
     id: 4,
     question: "What kind of return can I expect?",
-    answer: "Our average client achieves a 4.2x return on ad spend (ROAS). Results vary by industry and offer, but we focus relentlessly on your cost per lead and cost per acquisition to ensure every dollar works hard. You'll see full transparency in our monthly reports.",
+    answer: "Our clients consistently achieve strong returns on ad spend. Results vary by industry and offer, but we focus relentlessly on your cost per lead and cost per acquisition to ensure every dollar works hard. You'll see full transparency in our monthly reports.",
   },
   {
     id: 5,
@@ -356,7 +356,7 @@ const SocialAdsFAQ = () => {
             transition={{ duration: 0.5 }}
             className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500"
           >
-            SUPPORT
+            FAQ
           </motion.div>
 
           <motion.h2
@@ -391,17 +391,11 @@ const SocialAdsFAQ = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-400 tracking-tight"
           >
-            Everything you need to know about our social media advertising services, budgets, and what results to expect.
+            Everything you need to know about our social media advertising services and what results to expect.
           </motion.p>
         </div>
 
         <div className="max-w-[800px] mx-auto">
-          <div className="flex justify-center mb-8">
-            <span className="text-[10px] uppercase tracking-widest text-zinc-500 bg-white/5 px-3 py-1 border border-white/5">
-              Updated Today
-            </span>
-          </div>
-
           <Accordion.Root
             type="single"
             collapsible
@@ -545,7 +539,7 @@ const SocialMediaAds = () => {
               fontSize: "clamp(14px, 1.5vw, 16px)", fontWeight: 300, color: "#fff", maxWidth: "560px", margin: "24px auto 0", lineHeight: 1.65, padding: "0 20px",
               ...anim(0.3),
             }}>
-              Reach your ideal customers on <span style={{ color: PRIMARY, fontWeight: 600 }}>Facebook, Instagram & LinkedIn</span> with precision-targeted campaigns that deliver real <span style={{ color: SECONDARY, fontWeight: 600 }}>ROI</span>.
+              Reach your ideal customers on <span style={{ color: PRIMARY, fontWeight: 600 }}>Facebook, Instagram, TikTok & LinkedIn</span> with precision-targeted campaigns that deliver real <span style={{ color: SECONDARY, fontWeight: 600 }}>ROI</span>.
             </p>
 
             <div style={{
@@ -553,11 +547,11 @@ const SocialMediaAds = () => {
               fontFamily: 'Inter, -apple-system, sans-serif', fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.5)",
               ...anim(0.4),
             }}>
-              <span>Meta & LinkedIn Ads</span>
+              <span>Meta, TikTok & LinkedIn Ads</span>
               <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
               <span>Sydney Focused</span>
               <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>·</span>
-              <span>4.2x Avg. ROAS</span>
+              <span>Results-Driven</span>
             </div>
 
             <div style={{
