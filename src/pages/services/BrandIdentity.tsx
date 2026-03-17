@@ -41,12 +41,11 @@ const useIsMobile = () => {
 };
 
 const images = [
-  { url: "https://images.unsplash.com/photo-1561070791-2526d31fe5b6?w=400&h=500&fit=crop", alt: "Brand Design", rotate: -6 },
-  { url: "https://images.unsplash.com/photo-1634942537034-2531766767d1?w=350&h=450&fit=crop", alt: "Logo & Identity", rotate: 3 },
-  { url: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&h=500&fit=crop", alt: "Visual Identity", rotate: -2 },
-  { url: "https://images.unsplash.com/photo-1626785774626-2b35f19a3c72?w=380&h=480&fit=crop", alt: "Brand Guidelines", rotate: 5 },
-  { url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=350&h=450&fit=crop", alt: "Creative Branding", rotate: -4 },
-  { url: "https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=400&h=500&fit=crop", alt: "Brand Strategy", rotate: 3 },
+  { url: "/images/brandidentity.jpg", alt: "Brand Identity", rotate: -6 },
+  { url: "/images/brandidentity1.jpg", alt: "Logo & Identity", rotate: 3 },
+  { url: "/images/brandidentity2.jpg", alt: "Visual Identity", rotate: -2 },
+  { url: "/images/brandidentity3.jpg", alt: "Brand Guidelines", rotate: 5 },
+  { url: "/images/brandidentity4.jpg", alt: "Creative Branding", rotate: -4 },
 ];
 const mobileImages = [images[0], images[1], images[2], images[3]];
 
