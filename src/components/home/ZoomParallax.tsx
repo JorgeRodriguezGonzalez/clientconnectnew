@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useScroll, useTransform, motion } from 'framer-motion';
 import Lenis from 'lenis';
 import { ArrowDown } from 'lucide-react';
+import { useIsTablet } from "@/hooks/useIsTablet";
 
 // --- FONT STYLES ---
 const fontStyles = `
@@ -26,6 +27,7 @@ function useIsMobile(breakpoint = 768) {
 // --- SUB-COMPONENT: PARALLAX VIDEO ---
 const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, objectPosition?: string }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const isTablet = useIsTablet();
 
     const handlePlay = () => {
         const video = videoRef.current;
@@ -44,6 +46,30 @@ const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, object
     };
 
     useEffect(() => { handlePlay(); }, []);
+
+    useEffect(() => {
+        if (!isTablet) return;
+        const video = videoRef.current;
+        if (!video || typeof IntersectionObserver === "undefined") return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => null);
+                    } else {
+                        video.pause();
+                    }
+                });
+            },
+            { threshold: 0.3 }
+        );
+
+        observer.observe(video);
+        return () => {
+            observer.disconnect();
+        };
+    }, [isTablet]);
 
     return (
         <video
@@ -65,6 +91,7 @@ const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, object
 // --- SUB-COMPONENT: PARALLAX LOGIC ---
 function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMobile: boolean }) {
     const container = useRef<HTMLDivElement>(null);
+    const isTablet = useIsTablet();
     const { scrollYProgress } = useScroll({
         target: container,
         offset: ['start start', 'end end'],
@@ -121,7 +148,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                     <>
                                         <motion.div
                                             style={{ opacity: overlayOpacity }}
-                                            className="absolute inset-0 z-20 bg-black/75 backdrop-blur-[2px]"
+                                            className={isTablet ? "absolute inset-0 z-20 bg-black/75" : "absolute inset-0 z-20 bg-black/75 backdrop-blur-[2px]"}
                                         />
                                         <motion.div
                                             style={{ opacity: contentOpacity, scale: inverseScale }}
@@ -157,19 +184,28 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                             <div className="flex gap-3 mt-2">
                                                 <motion.a
                                                     href="#contact"
-                                                    whileHover={{
-                                                        backgroundColor: 'rgba(255,255,255,0.2)',
-                                                        boxShadow: '0 0 20px rgba(255,255,255,0.3)',
-                                                        borderColor: 'rgba(255,255,255,1)',
-                                                    }}
+                                                    whileHover={
+                                                        isTablet
+                                                            ? {
+                                                                scale: 1.02,
+                                                                borderColor: 'rgba(255,255,255,1)',
+                                                              }
+                                                            : {
+                                                                backgroundColor: 'rgba(255,255,255,0.2)',
+                                                                boxShadow: '0 0 20px rgba(255,255,255,0.3)',
+                                                                borderColor: 'rgba(255,255,255,1)',
+                                                              }
+                                                    }
                                                     className="font-satoshi font-semibold whitespace-nowrap flex items-center"
                                                     style={{
                                                         fontSize: '15px',
                                                         height: '48px',
                                                         padding: '12px 24px',
                                                         borderRadius: '50px',
-                                                        background: 'rgba(255,255,255,0.1)',
-                                                        backdropFilter: 'blur(8px)',
+                                                        background: isTablet ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.1)',
+                                                        ...(isTablet
+                                                            ? {}
+                                                            : { backdropFilter: 'blur(8px)' as any }),
                                                         border: '1px solid rgba(255,255,255,0.2)',
                                                         color: '#ffffff',
                                                         transition: 'all 0.3s ease',
@@ -179,20 +215,29 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                 </motion.a>
                                                 <motion.a
                                                     href="#book"
-                                                    whileHover={{
-                                                        backgroundColor: 'rgba(255,255,255,0.2)',
-                                                        boxShadow: '0 0 20px rgba(52,211,153,0.5)',
-                                                        borderColor: '#34d399',
-                                                        color: '#34d399',
-                                                    }}
+                                                    whileHover={
+                                                        isTablet
+                                                            ? {
+                                                                scale: 1.02,
+                                                                borderColor: '#34d399',
+                                                              }
+                                                            : {
+                                                                backgroundColor: 'rgba(255,255,255,0.2)',
+                                                                boxShadow: '0 0 20px rgba(52,211,153,0.5)',
+                                                                borderColor: '#34d399',
+                                                                color: '#34d399',
+                                                              }
+                                                    }
                                                     className="font-satoshi font-semibold whitespace-nowrap flex items-center gap-2"
                                                     style={{
                                                         fontSize: '15px',
                                                         height: '48px',
                                                         padding: '12px 24px',
                                                         borderRadius: '50px',
-                                                        background: 'rgba(255,255,255,0.1)',
-                                                        backdropFilter: 'blur(8px)',
+                                                        background: isTablet ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.1)',
+                                                        ...(isTablet
+                                                            ? {}
+                                                            : { backdropFilter: 'blur(8px)' as any }),
                                                         border: '1px solid #06b6d4',
                                                         color: '#06b6d4',
                                                         transition: 'all 0.3s ease',
@@ -226,12 +271,25 @@ export default function ZoomParallax() {
     const isMobile = useIsMobile();
 
     useEffect(() => {
+        if (typeof window !== "undefined") {
+            const width = window.innerWidth;
+            if (width >= 768 && width <= 1024) {
+                // Tablet: desactivamos Lenis
+                return;
+            }
+        }
+
         const lenis = new Lenis();
         function raf(time: number) {
             lenis.raf(time);
             requestAnimationFrame(raf);
         }
         requestAnimationFrame(raf);
+
+        return () => {
+            // @ts-ignore Lenis puede no tener destroy tipado
+            lenis.destroy?.();
+        };
     }, []);
 
     const videos = [
