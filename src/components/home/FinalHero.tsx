@@ -3,11 +3,13 @@ import { useScroll, useTransform } from "framer-motion";
 import { Send, Calendar } from 'lucide-react';
 import { motion } from "framer-motion";
 import { Sparkles } from "@/components/ui/sparkles";
+import { useIsTablet } from "@/hooks/useIsTablet";
 
 export function FinalHero() {
   const ref = React.useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [titleNumber, setTitleNumber] = useState(0);
+  const isTablet = useIsTablet();
 
   const words = useMemo(
     () => ["Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales", "Light", "Leads", "Clients", "Sales"],
@@ -42,15 +44,27 @@ export function FinalHero() {
   );
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
+    let ticking = false;
+
+    const update = () => {
+      const y = window.scrollY;
+      if (y > 50) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
+      ticking = false;
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -91,18 +105,24 @@ export function FinalHero() {
             {/* Lamp Effect */}
             <div className="w-full h-[80px] relative flex items-center justify-center pt-80 overflow-visible">
               <motion.div
-                initial={{ opacity: 0, width: "15rem" }}
-                animate={{ 
-                  opacity: 1, 
-                  width: "30rem",
-                  "--gradient-color": colorSequence
-                }}
-                transition={{ 
+                initial={
+                  isTablet
+                    ? { opacity: 0, scaleX: 0.5 }
+                    : { opacity: 0, width: "15rem" }
+                }
+                animate={
+                  isTablet
+                    ? { opacity: 1, scaleX: 1, "--gradient-color": colorSequence }
+                    : { opacity: 1, width: "30rem", "--gradient-color": colorSequence }
+                }
+                transition={{
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  ...(isTablet
+                    ? { scaleX: { delay: 0.8, duration: 1.0, ease: "easeInOut" } }
+                    : { width: { delay: 0.8, duration: 1.0, ease: "easeInOut" } }),
                   "--gradient-color": { duration: colorDuration, ease: "linear", repeat: Infinity }
                 }}
-                style={{ 
+                style={{
                   backgroundImage: `conic-gradient(var(--conic-position), var(--gradient-color) 0%, transparent 50%, transparent 100%)`,
                   "--gradient-color": "#de8363"
                 } as any}
@@ -119,18 +139,24 @@ export function FinalHero() {
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, width: "15rem" }}
-                animate={{ 
-                  opacity: 1, 
-                  width: "30rem",
-                  "--gradient-color": colorSequence
-                }}
-                transition={{ 
+                initial={
+                  isTablet
+                    ? { opacity: 0, scaleX: 0.5 }
+                    : { opacity: 0, width: "15rem" }
+                }
+                animate={
+                  isTablet
+                    ? { opacity: 1, scaleX: 1, "--gradient-color": colorSequence }
+                    : { opacity: 1, width: "30rem", "--gradient-color": colorSequence }
+                }
+                transition={{
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  ...(isTablet
+                    ? { scaleX: { delay: 0.8, duration: 1.0, ease: "easeInOut" } }
+                    : { width: { delay: 0.8, duration: 1.0, ease: "easeInOut" } }),
                   "--gradient-color": { duration: colorDuration, ease: "linear", repeat: Infinity }
                 }}
-                style={{ 
+                style={{
                   backgroundImage: `conic-gradient(var(--conic-position), transparent 0%, transparent 50%, var(--gradient-color) 100%)`,
                   "--gradient-color": "#de8363"
                 } as any}
@@ -154,7 +180,11 @@ export function FinalHero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.1 }}
                 transition={{ delay: 0.8, duration: 1.0, ease: "easeInOut" }}
-                className="absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md"
+                className={
+                  isTablet
+                    ? "absolute top-1/2 z-50 h-48 w-full bg-black/60"
+                    : "absolute top-1/2 z-50 h-48 w-full bg-transparent backdrop-blur-md"
+                }
               />
               <motion.div
                 initial={{ opacity: 0 }}
@@ -170,30 +200,42 @@ export function FinalHero() {
               />
 
               <motion.div
-                initial={{ opacity: 0, width: "8rem" }}
-                animate={{ 
-                  opacity: 1, 
-                  width: "16rem",
-                  backgroundColor: colorSequence
-                }}
-                transition={{ 
+                initial={
+                  isTablet
+                    ? { opacity: 0, scaleX: 0.5 }
+                    : { opacity: 0, width: "8rem" }
+                }
+                animate={
+                  isTablet
+                    ? { opacity: 1, scaleX: 1, backgroundColor: colorSequence }
+                    : { opacity: 1, width: "16rem", backgroundColor: colorSequence }
+                }
+                transition={{
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  ...(isTablet
+                    ? { scaleX: { delay: 0.8, duration: 1.0, ease: "easeInOut" } }
+                    : { width: { delay: 0.8, duration: 1.0, ease: "easeInOut" } }),
                   backgroundColor: { duration: colorDuration, ease: "linear", repeat: Infinity }
                 }}
                 className="absolute inset-auto z-30 h-36 w-64 -translate-y-[6rem] rounded-full blur-2xl"
               ></motion.div>
 
               <motion.div
-                initial={{ opacity: 0, width: "15rem" }}
-                animate={{ 
-                  opacity: 1, 
-                  width: "30rem",
-                  backgroundColor: colorSequence
-                }}
-                transition={{ 
+                initial={
+                  isTablet
+                    ? { opacity: 0, scaleX: 0.5 }
+                    : { opacity: 0, width: "15rem" }
+                }
+                animate={
+                  isTablet
+                    ? { opacity: 1, scaleX: 1, backgroundColor: colorSequence }
+                    : { opacity: 1, width: "30rem", backgroundColor: colorSequence }
+                }
+                transition={{
                   opacity: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
-                  width: { delay: 0.8, duration: 1.0, ease: "easeInOut" },
+                  ...(isTablet
+                    ? { scaleX: { delay: 0.8, duration: 1.0, ease: "easeInOut" } }
+                    : { width: { delay: 0.8, duration: 1.0, ease: "easeInOut" } }),
                   backgroundColor: { duration: colorDuration, ease: "linear", repeat: Infinity }
                 }}
                 className="absolute inset-auto z-50 h-0.5 w-[30rem] -translate-y-[7rem]"
@@ -207,8 +249,16 @@ export function FinalHero() {
 
             {/* Título principal */}
             <motion.h1
-              initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={
+                isTablet
+                  ? { opacity: 0, y: 20 }
+                  : { opacity: 0, y: 80, filter: "blur(10px)" }
+              }
+              animate={
+                isTablet
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 1, y: 0, filter: "blur(0px)" }
+              }
               transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
               // CAMBIO: font-light -> font-normal (un poco más grueso)
               className="text-[34px] md:text-[40px] lg:text-[50px] font-normal leading-[1.1] tracking-tight text-center text-white relative z-50"
@@ -244,8 +294,16 @@ export function FinalHero() {
 
           {/* Subtítulo */}
           <motion.p
-            initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={
+              isTablet
+                ? { opacity: 0, y: 20 }
+                : { opacity: 0, y: 80, filter: "blur(10px)" }
+            }
+            animate={
+              isTablet
+                ? { opacity: 1, y: 0 }
+                : { opacity: 1, y: 0, filter: "blur(0px)" }
+            }
             transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
             className="text-base md:text-[18px] font-normal leading-relaxed md:leading-[26px] text-center text-white/80 max-w-[683px] relative z-50 mt-5 mb-5"
             style={{ fontFamily: '"Satoshi", sans-serif', letterSpacing: '0.2px' }}
@@ -255,8 +313,16 @@ export function FinalHero() {
 
           {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 80, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={
+              isTablet
+                ? { opacity: 0, y: 20 }
+                : { opacity: 0, y: 80, filter: "blur(10px)" }
+            }
+            animate={
+              isTablet
+                ? { opacity: 1, y: 0 }
+                : { opacity: 1, y: 0, filter: "blur(0px)" }
+            }
             transition={{ delay: 2.2, duration: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto relative z-[100]"
           >
@@ -309,15 +375,31 @@ export function FinalHero() {
 
           {/* Trusted Brands */}
           <motion.div
-            initial={{ opacity: 0, filter: "blur(10px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
+            initial={
+              isTablet
+                ? { opacity: 0, y: 20 }
+                : { opacity: 0, filter: "blur(10px)" }
+            }
+            animate={
+              isTablet
+                ? { opacity: 1, y: 0 }
+                : { opacity: 1, filter: "blur(0px)" }
+            }
             transition={{ delay: 2.8, duration: 0.8, ease: "easeOut" }}
             className="w-full mt-12 relative z-50"
           >
             <div className="mx-auto w-full max-w-2xl">
               <motion.div 
-                initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={
+                  isTablet
+                    ? { opacity: 0, y: 20 }
+                    : { opacity: 0, y: 60, filter: "blur(10px)" }
+                }
+                animate={
+                  isTablet
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 1, y: 0, filter: "blur(0px)" }
+                }
                 transition={{ delay: 3.4, duration: 0.8, ease: "easeOut" }}
                 className="text-center text-2xl md:text-[16px] leading-tight"
               >
@@ -337,8 +419,16 @@ export function FinalHero() {
                 <span className="text-white">Used by the leaders.</span>
               </motion.div>
               <motion.div 
-                initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={
+                  isTablet
+                    ? { opacity: 0, y: 20 }
+                    : { opacity: 0, y: 60, filter: "blur(10px)" }
+                }
+                animate={
+                  isTablet
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 1, y: 0, filter: "blur(0px)" }
+                }
                 transition={{ delay: 4.2, duration: 0.8, ease: "easeOut" }}
                 className="mt-6 grid grid-cols-5 text-white"
               >
