@@ -46,7 +46,7 @@ const images = [
   { url: "/images/paidads.png", alt: "Paid Ads Strategy", rotate: -6 },
   { url: "/images/paidads2.png", alt: "Paid Ads Campaign", rotate: 3 },
   { url: "/images/paidads3.png", alt: "Paid Ads Results", rotate: -2 },
-  { url: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=380&h=480&fit=crop", alt: "Ad Creatives", rotate: 5 },
+  { url: "/images/paidads4.png", alt: "Paid Ads Creatives", rotate: 5 },
   { url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=350&h=450&fit=crop", alt: "Campaign Analytics", rotate: -4 },
   { url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=500&fit=crop", alt: "Performance Data", rotate: 3 },
 ];
