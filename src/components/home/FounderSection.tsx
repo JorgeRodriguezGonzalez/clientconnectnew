@@ -848,9 +848,9 @@ export const FounderSection = () => {
                 </div>
               </TiltCard>
 
-              {/* CARDS 2 & 3 */}
+              {/* CARDS 2 & 3 — desktop: animate in with isLight | mobile: always visible, dark style */}
               <AnimatePresence mode="popLayout">
-                {isLight && (
+                {(isLight || isMobile) && (
                   <>
                     {/* ALWAYS CLOSE */}
                     <TiltCard 
@@ -860,24 +860,40 @@ export const FounderSection = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
                       className="h-[280px] group safari-gpu"
-                      innerClassName="bg-white border border-zinc-200 flex flex-row items-stretch"
+                      innerClassName={cn(
+                        "border flex flex-row items-stretch",
+                        isMobile ? "bg-zinc-900 border-white/10" : "bg-white border-zinc-200"
+                      )}
                     >
                       <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
-                        <div className="p-2.5 rounded-xl mb-3 bg-zinc-50 border border-zinc-100">
-                          <Users className="w-5 h-5 text-zinc-900" />
+                        <div className={cn(
+                          "p-2.5 rounded-xl mb-3 border",
+                          isMobile ? "bg-white/10 border-white/10" : "bg-zinc-50 border-zinc-100"
+                        )}>
+                          <Users className={cn("w-5 h-5", isMobile ? "text-white" : "text-zinc-900")} />
                         </div>
-                        <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-zinc-900 leading-tight">
+                        <div className={cn(
+                          "text-[20px] font-sans font-semibold tracking-tight mb-2 leading-tight",
+                          isMobile ? "text-white" : "text-zinc-900"
+                        )}>
                           Always<br/>
-                          <span className="text-zinc-400">Close</span>
+                          <span className={isMobile ? "text-white/50" : "text-zinc-400"}>Close</span>
                         </div>
-                        <p className="text-[12px] font-sans font-medium leading-[1.4] text-zinc-500">
+                        <p className={cn(
+                          "text-[12px] font-sans font-medium leading-[1.4]",
+                          isMobile ? "text-white/60" : "text-zinc-500"
+                        )}>
                           Support that feels local, anywhere in Australia.
                         </p>
                       </div>
                       <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden rounded-r-2xl">
                         <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
-                          <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
-                          {/* FIX #8: Smaller Unsplash image */}
+                          <div className={cn(
+                            "absolute inset-0 z-10 w-full h-full",
+                            isMobile 
+                              ? "bg-gradient-to-r from-zinc-900 via-zinc-900/40 to-transparent" 
+                              : "bg-gradient-to-r from-white via-white/40 to-transparent"
+                          )} />
                           <img 
                             src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
                             alt="Australian National Support"
@@ -896,31 +912,48 @@ export const FounderSection = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
                       className="h-[300px] group safari-gpu cursor-default"
-                      innerClassName="bg-white border border-zinc-200 overflow-hidden"
+                      innerClassName={cn(
+                        "border overflow-hidden",
+                        isMobile ? "bg-zinc-900 border-white/10" : "bg-white border-zinc-200"
+                      )}
                       onMouseEnter={() => setChartKey(prev => prev + 1)}
                     >
-                      <div className="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 blur-[60px] opacity-40 group-hover:opacity-60 transition-opacity" />
+                      <div className={cn(
+                        "absolute -right-10 -top-10 w-32 h-32 blur-[60px] opacity-40 group-hover:opacity-60 transition-opacity",
+                        isMobile ? "bg-cyan-500/20" : "bg-cyan-500/10"
+                      )} />
                       <div className="relative z-10 p-6 flex flex-col items-start">
                         <div className="flex justify-between items-center w-full mb-2">
-                          <div className="p-2 bg-zinc-50 border border-zinc-100 rounded-xl text-emerald-500">
+                          <div className={cn(
+                            "p-2 border rounded-xl text-emerald-500",
+                            isMobile ? "bg-white/10 border-white/10" : "bg-zinc-50 border-zinc-100"
+                          )}>
                             <HeartHandshake size={20} style={{ color: COLORS.emerald }} />
                           </div>
-                          <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                          <span className={cn(
+                            "font-sans text-[10px] font-bold uppercase tracking-wider",
+                            isMobile ? "text-white/40" : "text-zinc-400"
+                          )}>
                             Partnership
                           </span>
                         </div>
                         <div>
-                          <h3 className="text-3xl font-sans font-bold text-zinc-900 leading-tight">
-                            Shared <span className="text-zinc-400">Victories</span>
+                          <h3 className={cn(
+                            "text-3xl font-sans font-bold leading-tight",
+                            isMobile ? "text-white" : "text-zinc-900"
+                          )}>
+                            Shared <span className={isMobile ? "text-white/40" : "text-zinc-400"}>Victories</span>
                           </h3>
-                          <p className="font-sans text-xs text-zinc-500 font-medium mt-1">
+                          <p className={cn(
+                            "font-sans text-xs font-medium mt-1",
+                            isMobile ? "text-white/60" : "text-zinc-500"
+                          )}>
                             We celebrate every win with you.
                           </p>
                         </div>
                       </div>
-                      {/* FIX #5: No animated chart on mobile */}
                       <div className="absolute bottom-0 left-0 right-0 h-[140px] w-full z-0">
-                        <ProfitChart key={chartKey} />
+                        {!isMobile && <ProfitChart key={chartKey} />}
                       </div>
                     </TiltCard>
                   </>
