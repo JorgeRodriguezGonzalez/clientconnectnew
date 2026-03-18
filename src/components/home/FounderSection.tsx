@@ -793,7 +793,7 @@ export const FounderSection = () => {
           </div>
 
           {/* --- RIGHT: CARDS --- */}
-          <div className="lg:w-[60%] relative pt-0 lg:pt-0">
+          <div className="w-full lg:w-[60%] relative pt-0 lg:pt-0">
             
             <motion.div 
               layout 
