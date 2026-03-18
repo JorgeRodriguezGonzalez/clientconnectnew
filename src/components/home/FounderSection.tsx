@@ -984,7 +984,7 @@ export const FounderSection = () => {
                     <h3 className={cn("font-sans font-bold text-xl mb-2", isLight ? "text-gray-900" : "text-white")}>
                       Expert Hands
                     </h3>
-                    <p className={cn("font-sans font-medium text-xs leading-relaxed", isLight ? "text-gray-500" : "text-white/70")}>
+                    <p className={cn("font-sans font-medium text-xs leading-relaxed pb-4 md:pb-0", isLight ? "text-gray-500" : "text-white/70")}>
                       We master the complex ecosystem of digital tools so you can focus on your business. Human strategy, powerful tech.
                     </p>
                   </div>
