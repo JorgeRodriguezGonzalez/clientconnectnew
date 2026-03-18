@@ -1,14 +1,7 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Play, Pause } from "lucide-react";
 
-interface WorkItem {
-  id: string;
-  videoSrc: string;
-  handle: string;
-  testimonial: string;
-}
-
-const RECENT_WORKS: WorkItem[] = [
+const RECENT_WORKS = [
   { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", handle: "Alex Ross", testimonial: "Nanotise" },
   { id: "2", videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", handle: "Kieren", testimonial: "Lc Landscaping" },
   { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
@@ -27,18 +20,11 @@ const Stars = () => (
   </div>
 );
 
-const VideoCard = ({
-  item, position, onClick, isActive
-}: {
-  item: WorkItem;
-  position: number;
-  onClick: () => void;
-  isActive: boolean;
-}) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+const VideoCard = ({ item, position, onClick, isActive }) => {
+  const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const togglePlay = (e: React.MouseEvent) => {
+  const togglePlay = (e) => {
     e.stopPropagation();
     if (!isActive) { onClick(); return; }
     if (!videoRef.current) return;
@@ -51,7 +37,6 @@ const VideoCard = ({
     }
   };
 
-  // position: -2, -1, 0 (center), 1, 2
   const abs = Math.abs(position);
   const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
   const rotate = position * 7;
@@ -76,7 +61,7 @@ const VideoCard = ({
         zIndex,
         filter: `blur(${blur}px)`,
         transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-        boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.4)" : "0 8px 24px rgba(0,0,0,0.2)",
+        boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
       <video
@@ -87,14 +72,12 @@ const VideoCard = ({
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
       />
 
-      {/* Gradient overlay */}
       <div style={{
         position: "absolute", inset: 0,
         background: "linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.95) 100%)",
         pointerEvents: "none",
       }} />
 
-      {/* Play/Pause button */}
       {isActive && (
         <div
           onClick={togglePlay}
@@ -119,7 +102,6 @@ const VideoCard = ({
         </div>
       )}
 
-      {/* Bottom content */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
         padding: "20px",
@@ -149,7 +131,7 @@ export default function TestimonialsSection() {
     <section style={{
       width: "100%",
       minHeight: "100vh",
-      backgroundColor: "#FAFAFA",
+      backgroundColor: "#09090b",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -159,20 +141,18 @@ export default function TestimonialsSection() {
       overflow: "hidden",
       position: "relative",
     }}>
-
-      {/* Header */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", padding: "0 24px", textAlign: "center", maxWidth: "900px" }}>
         <div style={{
           display: "inline-flex", alignItems: "center", padding: "6px 12px",
-          borderRadius: "8px", border: "1px solid #e4e4e7",
-          backgroundColor: "#fafafa", width: "fit-content",
+          borderRadius: "8px", border: "1px solid #27272a",
+          backgroundColor: "#18181b", width: "fit-content",
         }}>
-          <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#6b7280", fontFamily: "'Satoshi', sans-serif" }}>
+          <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#a1a1aa", fontFamily: "'Satoshi', sans-serif" }}>
             Client Testimonials
           </span>
         </div>
 
-        <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700, letterSpacing: "-0.5px", lineHeight: 1.1, color: "#111827", margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+        <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700, letterSpacing: "-0.5px", lineHeight: 1.1, color: "#f4f4f5", margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
           Real Results,{" "}
           <span style={{
             background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)",
@@ -185,12 +165,11 @@ export default function TestimonialsSection() {
           </span>
         </h2>
 
-        <p style={{ fontSize: "15px", fontWeight: 500, color: "#6b7280", maxWidth: "384px", lineHeight: 1.6, fontFamily: "'Satoshi', sans-serif", margin: 0 }}>
-          Don't take our word for it. Here's what <strong style={{ color: "#111827" }}>brands worldwide</strong> have to say about working with us.
+        <p style={{ fontSize: "15px", fontWeight: 500, color: "#71717a", maxWidth: "384px", lineHeight: 1.6, fontFamily: "'Satoshi', sans-serif", margin: 0 }}>
+          Don't take our word for it. Here's what <strong style={{ color: "#e4e4e7" }}>brands worldwide</strong> have to say about working with us.
         </p>
       </div>
 
-      {/* Fan Carousel */}
       <div style={{ position: "relative", width: "100%", height: "520px", display: "flex", alignItems: "center", justifyContent: "center" }}>
         {RECENT_WORKS.map((item, i) => {
           const position = i - active;
@@ -211,9 +190,8 @@ export default function TestimonialsSection() {
         })}
       </div>
 
-      {/* Dots + Arrows */}
       <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-        <button onClick={prev} style={{ background: "none", border: "1px solid #e4e4e7", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#6b7280", fontSize: "16px" }}>‹</button>
+        <button onClick={prev} style={{ background: "none", border: "1px solid #27272a", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#a1a1aa", fontSize: "16px" }}>‹</button>
 
         <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
           {RECENT_WORKS.map((_, i) => (
@@ -224,7 +202,7 @@ export default function TestimonialsSection() {
                 width: i === active ? 24 : 8,
                 height: 8,
                 borderRadius: "9999px",
-                backgroundColor: i === active ? "#06b6d4" : "#e4e4e7",
+                backgroundColor: i === active ? "#06b6d4" : "#27272a",
                 border: "none",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
@@ -234,7 +212,7 @@ export default function TestimonialsSection() {
           ))}
         </div>
 
-        <button onClick={next} style={{ background: "none", border: "1px solid #e4e4e7", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#6b7280", fontSize: "16px" }}>›</button>
+        <button onClick={next} style={{ background: "none", border: "1px solid #27272a", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#a1a1aa", fontSize: "16px" }}>›</button>
       </div>
 
       <style>{`
