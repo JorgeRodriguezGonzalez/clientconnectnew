@@ -77,7 +77,7 @@ export default function FAQSection() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-white"
+            className="section-title text-white"
           >
             Frequently asked{' '}
             <motion.span

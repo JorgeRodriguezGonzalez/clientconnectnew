@@ -166,7 +166,7 @@ const TestimonialsSection = () => {
             </span>
           </div>
 
-          <h2 className="text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight text-zinc-900 mb-6">
+          <h2 className="section-title text-zinc-900 mb-6">
             Trusted by founders and{" "}
             <motion.span
               initial={{ backgroundPosition: "400% 50%" }}

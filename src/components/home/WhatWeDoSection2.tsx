@@ -571,7 +571,7 @@ export const WhatWeDoSection2 = () => {
                 Proven Results
               </motion.div>
 
-              <h3 className="font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tighter text-white">
+              <h3 className="section-title text-white">
                 Numbers that{' '}
                 <motion.span
                   initial={{ backgroundPosition: "400% 50%" }}

@@ -153,7 +153,7 @@ export default function TestimonialsSection() {
           </span>
         </div>
 
-        <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700, letterSpacing: "-0.5px", lineHeight: 1.1, color: "#f4f4f5", margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+        <h2 className="section-title text-zinc-100">
           Real Results,{" "}
           <span style={{
             background: `linear-gradient(90deg, transparent, ${COLORS.emerald}, ${COLORS.cyan}, transparent)`,
