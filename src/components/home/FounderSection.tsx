@@ -823,12 +823,46 @@ export const FounderSection = () => {
               <AnimatePresence mode="popLayout">
                 {isLightMode && (
                   <>
+                    {/* ALWAYS CLOSE (was card 5, now in position 2) */}
                     <TiltCard 
                       layout="position"
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                      className="h-[280px] group safari-gpu cursor-default"
+                      className="h-[280px] group safari-gpu"
+                      innerClassName="bg-white border border-zinc-200 flex flex-row items-stretch"
+                    >
+                      <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
+                        <div className="p-2.5 rounded-xl mb-3 bg-zinc-50 border border-zinc-100">
+                          <Users className="w-5 h-5 text-zinc-900" />
+                        </div>
+                        <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-zinc-900 leading-tight">
+                          Always<br/>
+                          <span className="text-zinc-400">Close</span>
+                        </div>
+                        <p className="text-[12px] font-sans font-medium leading-[1.4] text-zinc-500">
+                          Support that feels local, anywhere in Australia.
+                        </p>
+                      </div>
+                      <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden rounded-r-2xl">
+                        <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
+                          <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
+                          <img 
+                            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
+                            alt="Australian National Support"
+                            className="w-full h-full object-cover opacity-90 transition-all duration-500 group-hover:grayscale"
+                          />
+                        </div>
+                      </div>
+                    </TiltCard>
+
+                    {/* SHARED VICTORIES (was card 2, now in position 3) */}
+                    <TiltCard 
+                      layout="position"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+                      className="h-[300px] group safari-gpu cursor-default"
                       innerClassName="bg-white border border-zinc-200 overflow-hidden"
                       onMouseEnter={() => setChartKey(prev => prev + 1)}
                     >
@@ -854,45 +888,6 @@ export const FounderSection = () => {
                       <div className="absolute bottom-0 left-0 right-0 h-[140px] w-full z-0">
                         <ProfitChart key={chartKey} />
                       </div>
-                    </TiltCard>
-
-                    <TiltCard 
-                      layout="position"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                      className="h-[300px] group cursor-pointer safari-gpu"
-                      innerClassName="bg-black border border-zinc-200"
-                      onClick={() => setIsCaseStudyActive(true)}
-                    >
-                      <div className="absolute inset-0 w-full h-full">
-                        <video 
-                          autoPlay loop muted playsInline 
-                          className={cn(
-                            "w-full h-full object-cover transition-all duration-700 ease-out",
-                            isCaseStudyActive ? "opacity-100" : "opacity-80 group-hover:opacity-100"
-                          )}
-                        >
-                          <source src="/videos/contentcreation.mp4" type="video/mp4" />
-                        </video>
-                      </div>
-                      <motion.div
-                        className="absolute inset-0 z-20 pointer-events-none"
-                        animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <div className="absolute inset-0 bg-black/40" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
-                            <Play fill="white" className="ml-1 text-white" />
-                          </div>
-                        </div>
-                        <div className="absolute bottom-5 left-5">
-                          <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-[11px] font-sans font-medium">
-                            Content That Converts
-                          </span>
-                        </div>
-                      </motion.div>
                     </TiltCard>
                   </>
                 )}
@@ -940,38 +935,45 @@ export const FounderSection = () => {
                 </div>
               </TiltCard>
 
-              {/* CARD 5: ALWAYS CLOSE */}
+              {/* CARD 5: CONTENT THAT CONVERTS (was card 3) */}
               <TiltCard 
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                className="h-[280px] group safari-gpu"
-                innerClassName="bg-white border border-zinc-200 flex flex-row items-stretch"
+                className="h-[280px] group cursor-pointer safari-gpu"
+                innerClassName="bg-black border border-zinc-200"
+                onClick={() => setIsCaseStudyActive(true)}
               >
-                <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
-                  <div className="p-2.5 rounded-xl mb-3 bg-zinc-50 border border-zinc-100">
-                    <Users className="w-5 h-5 text-zinc-900" />
-                  </div>
-                  <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-zinc-900 leading-tight">
-                    Always<br/>
-                    <span className="text-zinc-400">Close</span>
-                  </div>
-                  <p className="text-[12px] font-sans font-medium leading-[1.4] text-zinc-500">
-                    Support that feels local, anywhere in Australia.
-                  </p>
+                <div className="absolute inset-0 w-full h-full">
+                  <video 
+                    autoPlay loop muted playsInline 
+                    className={cn(
+                      "w-full h-full object-cover transition-all duration-700 ease-out",
+                      isCaseStudyActive ? "opacity-100" : "opacity-80 group-hover:opacity-100"
+                    )}
+                  >
+                    <source src="/videos/contentcreation.mp4" type="video/mp4" />
+                  </video>
                 </div>
-                <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden rounded-r-2xl">
-                  <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
-                    <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
-                    <img 
-                      src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
-                      alt="Australian National Support"
-                      className="w-full h-full object-cover opacity-90 transition-all duration-500 group-hover:grayscale"
-                    />
+                <motion.div
+                  className="absolute inset-0 z-20 pointer-events-none"
+                  animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="absolute inset-0 bg-black/40" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
+                      <Play fill="white" className="ml-1 text-white" />
+                    </div>
                   </div>
-                </div>
+                  <div className="absolute bottom-5 left-5">
+                    <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-[11px] font-sans font-medium">
+                      Content That Converts
+                    </span>
+                  </div>
+                </motion.div>
               </TiltCard>
 
               {/* CARD 6: TRUST */}
