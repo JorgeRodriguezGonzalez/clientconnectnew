@@ -388,7 +388,6 @@ const TiltCard = ({
       )}
       {...props} 
     >
-      {/* FIX #2: Disable GlowingEffect on mobile — no global listeners */}
       <GlowingEffect 
         spread={40} 
         glow={true} 
@@ -445,7 +444,6 @@ const LogoContainer = React.forwardRef<
 ));
 LogoContainer.displayName = "LogoContainer";
 
-// FIX #4: AnimatedLogos — skip infinite loop on mobile
 function AnimatedLogos({ isLightMode, isMobile }: { isLightMode: boolean; isMobile: boolean }) {
   const icons = [
     { icon: <InstagramLogo className="h-4 w-4" />, size: "sm" as const },
@@ -465,7 +463,7 @@ function AnimatedLogos({ isLightMode, isMobile }: { isLightMode: boolean; isMobi
   ]);
 
   useEffect(() => {
-    if (isMobile) return; // No animation loop on mobile
+    if (isMobile) return;
 
     let cancelled = false;
     const runAnimation = async () => {
@@ -492,7 +490,6 @@ function AnimatedLogos({ isLightMode, isMobile }: { isLightMode: boolean; isMobi
           </LogoContainer>
         ))}
       </div>
-      {/* FIX #3: No sparkles on mobile */}
       {!isMobile && <AnimatedSparklesLine />}
     </div>
   );
@@ -652,7 +649,6 @@ export const FounderSection = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // On mobile, never switch to light mode
   const isLight = isLightMode && !isMobile;
 
   const { scrollYProgress } = useScroll({
@@ -660,7 +656,6 @@ export const FounderSection = () => {
     offset: ["start end", "end start"]
   });
 
-  // FIX #6: Skip scroll calculations on mobile
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (isMobile) return;
 
@@ -671,7 +666,6 @@ export const FounderSection = () => {
     else if (latest < 0.50 && isLateScroll) setIsLateScroll(false);
   });
 
-  // FIX #6: No parallax transform on mobile
   const yStatsDesktop = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const yStats = isMobile ? undefined : yStatsDesktop;
 
@@ -828,7 +822,6 @@ export const FounderSection = () => {
                 />
 
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-2xl">
-                  {/* FIX #7: lazy loading for non-hero image */}
                   <motion.img 
                     layout
                     src="/images/foundersection3.jpg" 
@@ -848,7 +841,7 @@ export const FounderSection = () => {
                 </div>
               </TiltCard>
 
-              {/* CARDS 2 & 3 — desktop: animate in with isLight | mobile: always visible, dark style */}
+              {/* CARDS 2 & 3 */}
               <AnimatePresence mode="popLayout">
                 {(isLight || isMobile) && (
                   <>
@@ -960,65 +953,65 @@ export const FounderSection = () => {
                 )}
               </AnimatePresence>
 
-              {/* CARD 4: ECOSYSTEM */}
-              <TiltCard 
-                layout
-                isMobile={isMobile}
-                initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} 
-                animate={(isLight || isMobile)
-                  ? { opacity: 1, y: 0, filter: "blur(0px)" } 
-                  : { opacity: 0, y: 20, filter: "blur(10px)" }
-                }
-                transition={{
-                  duration: (isLight || isMobile) ? 0.5 : 0, 
-                  delay: (isLight || isMobile) ? 0.5 : 0, 
-                  ease: "easeOut"
-                }}
-                className="md:col-span-2 group safari-gpu h-[240px]"
-                innerClassName={cn(
-                  "p-8 transition-colors duration-0 border relative",
-                  isLight ? "bg-white border-zinc-200" : "bg-zinc-900 border-zinc-800"
-                )}
-              >
-                <div className={cn(
-                  "absolute top-6 right-6 rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium z-20",
-                  isLight ? "border-zinc-200 text-gray-500" : "border-white/20 text-white/60"
-                )}>
-                  Expertise
-                </div>
-                <div className="grid grid-cols-12 gap-4 h-full items-center">
-                  <div className="col-span-5 flex flex-col justify-center h-full">
-                    <h3 className={cn("font-sans font-bold text-xl mb-2", isLight ? "text-gray-900" : "text-white")}>
-                      Expert Hands
-                    </h3>
-                    <p className={cn("font-sans font-medium text-xs leading-relaxed", isLight ? "text-gray-500" : "text-white/70")}>
-                      We master the complex ecosystem of digital tools so you can focus on your business. Human strategy, powerful tech.
-                    </p>
+              {/* CARD 4: ECOSYSTEM — hidden on mobile */}
+              {!isMobile && (
+                <TiltCard 
+                  layout
+                  isMobile={isMobile}
+                  initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} 
+                  animate={isLight
+                    ? { opacity: 1, y: 0, filter: "blur(0px)" } 
+                    : { opacity: 0, y: 20, filter: "blur(10px)" }
+                  }
+                  transition={{
+                    duration: isLight ? 0.5 : 0, 
+                    delay: isLight ? 0.5 : 0, 
+                    ease: "easeOut"
+                  }}
+                  className="md:col-span-2 group safari-gpu h-[240px]"
+                  innerClassName={cn(
+                    "p-8 transition-colors duration-0 border relative",
+                    isLight ? "bg-white border-zinc-200" : "bg-zinc-900 border-zinc-800"
+                  )}
+                >
+                  <div className={cn(
+                    "absolute top-6 right-6 rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium z-20",
+                    isLight ? "border-zinc-200 text-gray-500" : "border-white/20 text-white/60"
+                  )}>
+                    Expertise
                   </div>
-                  <div className="col-span-7 h-full flex items-center justify-center">
-                    <div className="relative w-full max-w-[300px] h-[120px]">
-                      {/* FIX #3 & #4: pass isMobile to disable animations */}
-                      <AnimatedLogos isLightMode={isLight} isMobile={isMobile} />
+                  <div className="grid grid-cols-12 gap-4 h-full items-center">
+                    <div className="col-span-5 flex flex-col justify-center h-full">
+                      <h3 className={cn("font-sans font-bold text-xl mb-2", isLight ? "text-gray-900" : "text-white")}>
+                        Expert Hands
+                      </h3>
+                      <p className={cn("font-sans font-medium text-xs leading-relaxed", isLight ? "text-gray-500" : "text-white/70")}>
+                        We master the complex ecosystem of digital tools so you can focus on your business. Human strategy, powerful tech.
+                      </p>
+                    </div>
+                    <div className="col-span-7 h-full flex items-center justify-center">
+                      <div className="relative w-full max-w-[300px] h-[120px]">
+                        <AnimatedLogos isLightMode={isLight} isMobile={isMobile} />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </TiltCard>
+                </TiltCard>
+              )}
 
-              {/* CARD 5: CONTENT THAT CONVERTS */}
-              <TiltCard 
-                layout
-                isMobile={isMobile}
-                initial={{ opacity: 0, y: 20 }}
-                animate={(isLateScroll || isMobile) ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                style={{ pointerEvents: (isLateScroll || isMobile) ? 'auto' : 'none' }}
-                className="h-[280px] group cursor-pointer safari-gpu"
-                innerClassName="bg-black border border-zinc-200"
-                onClick={() => setIsCaseStudyActive(true)}
-              >
-                <div className="absolute inset-0 w-full h-full">
-                  {/* FIX #1: Conditionally render video — no download on mobile */}
-                  {!isMobile && (
+              {/* CARD 5: CONTENT THAT CONVERTS — hidden on mobile */}
+              {!isMobile && (
+                <TiltCard 
+                  layout
+                  isMobile={isMobile}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
+                  className="h-[280px] group cursor-pointer safari-gpu"
+                  innerClassName="bg-black border border-zinc-200"
+                  onClick={() => setIsCaseStudyActive(true)}
+                >
+                  <div className="absolute inset-0 w-full h-full">
                     <video 
                       autoPlay loop muted playsInline
                       preload="metadata"
@@ -1029,67 +1022,61 @@ export const FounderSection = () => {
                     >
                       <source src="/videos/contentcreation.mp4" type="video/mp4" />
                     </video>
-                  )}
-                  {isMobile && (
-                    <img 
-                      src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop"
-                      alt="Content Creation"
-                      loading="lazy"
-                      className="w-full h-full object-cover opacity-80"
-                    />
-                  )}
-                </div>
-                <motion.div
-                  className="absolute inset-0 z-20 pointer-events-none"
-                  animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="absolute inset-0 bg-black/40" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
-                      <Play fill="white" className="ml-1 text-white" />
+                  </div>
+                  <motion.div
+                    className="absolute inset-0 z-20 pointer-events-none"
+                    animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className="absolute inset-0 bg-black/40" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
+                        <Play fill="white" className="ml-1 text-white" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute bottom-5 left-5">
-                    <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-[11px] font-sans font-medium">
-                      Content That Converts
-                    </span>
-                  </div>
-                </motion.div>
-              </TiltCard>
+                    <div className="absolute bottom-5 left-5">
+                      <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-[11px] font-sans font-medium">
+                        Content That Converts
+                      </span>
+                    </div>
+                  </motion.div>
+                </TiltCard>
+              )}
 
-              {/* CARD 6: TRUST - hidden on mobile */}
-              <TiltCard 
-                layout
-                isMobile={isMobile}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-                style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                className="h-[280px] group safari-gpu hidden md:block"
-                innerClassName="bg-zinc-900 border border-zinc-800"
-              >
-                <div className="relative h-full w-full">
-                  <div className="absolute inset-0 w-full h-full opacity-60">
-                    <img
-                      src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop"
-                      alt="Trust and Partnership Handshake"
-                      loading="lazy"
-                      className="w-full h-full object-cover grayscale scale-105 group-hover:scale-100 group-hover:grayscale-0 transition-all duration-700 ease-out"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                  <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
-                    <div className="flex items-baseline gap-2 mb-1">
-                      <span className="text-5xl font-sans font-semibold leading-none tracking-tighter">95%</span>
-                      <ShieldCheck className="w-6 h-6 mb-2 text-white/80" />
+              {/* CARD 6: TRUST — hidden on mobile */}
+              {!isMobile && (
+                <TiltCard 
+                  layout
+                  isMobile={isMobile}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+                  style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
+                  className="h-[280px] group safari-gpu"
+                  innerClassName="bg-zinc-900 border border-zinc-800"
+                >
+                  <div className="relative h-full w-full">
+                    <div className="absolute inset-0 w-full h-full opacity-60">
+                      <img
+                        src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop"
+                        alt="Trust and Partnership Handshake"
+                        loading="lazy"
+                        className="w-full h-full object-cover grayscale scale-105 group-hover:scale-100 group-hover:grayscale-0 transition-all duration-700 ease-out"
+                      />
                     </div>
-                    <span className="text-[12px] font-sans font-medium leading-[1.4] text-white/60">
-                      Clients stay because they trust us.
-                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                    <div className="relative z-10 text-white p-6 h-full flex flex-col justify-end">
+                      <div className="flex items-baseline gap-2 mb-1">
+                        <span className="text-5xl font-sans font-semibold leading-none tracking-tighter">95%</span>
+                        <ShieldCheck className="w-6 h-6 mb-2 text-white/80" />
+                      </div>
+                      <span className="text-[12px] font-sans font-medium leading-[1.4] text-white/60">
+                        Clients stay because they trust us.
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </TiltCard>
+                </TiltCard>
+              )}
 
             </motion.div>
 
