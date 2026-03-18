@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
 import { ArrowUpRight, TrendingUp, Play, Check, PlusIcon, HeartHandshake, Users, MessageCircleHeart, ShieldCheck, ArrowRight } from 'lucide-react';
+import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 // --- STYLES ---
 const fontStyles = `
@@ -28,13 +29,6 @@ const ANIMATION_CONFIG = {
 
 // --- UTILS ---
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
-
-// --- COLORS ---
-const COLORS = {
-  cyan: "#06b6d4", 
-  emerald: "#34d399", 
-  gold: "#edbf86",
-};
 
 // --- LOGO CLOUD COMPONENTS ---
 type Logo = {
@@ -659,7 +653,7 @@ export const FounderSection = () => {
       ref={containerRef} 
       className={cn(
         "relative w-full pt-24 pb-32 lg:pb-40 transition-colors duration-0 z-10 font-sans", 
-        isLightMode ? "bg-[#FAFAFA]" : "bg-[#050505]"
+        isLightMode ? "bg-[#FAFAFA]" : `bg-[${BACKGROUNDS.dark}]`
       )}
     >
       <style>{fontStyles}</style>
@@ -689,8 +683,8 @@ export const FounderSection = () => {
                 className={cn(
                   "w-fit px-3 py-1.5 rounded-lg border text-[10px] font-sans font-semibold uppercase tracking-[2px] transition-colors duration-300",
                   isLightMode 
-                    ? "bg-zinc-50 border-zinc-200 text-gray-500" 
-                    : "bg-white/5 border-white/10 text-gray-400"
+                    ? "bg-zinc-50 border-zinc-200 text-zinc-500" 
+                    : "bg-white/5 border-white/10 text-zinc-400"
                 )}
               >
                 GROWTH PARTNERS
@@ -698,7 +692,7 @@ export const FounderSection = () => {
 
               <h2 className={cn(
                 "section-title transition-colors duration-0",
-                isLightMode ? "text-gray-900" : "text-white"
+                isLightMode ? "text-zinc-900" : "text-white"
               )}>
                 Australia's unfair advantage for{' '}
                 <motion.span
@@ -724,7 +718,7 @@ export const FounderSection = () => {
                 isLightMode ? "section-text-light" : "section-text-dark",
                 "transition-colors duration-0 max-w-sm"
               )}>
-                More than an agency, we are the <strong className={isLightMode ? "text-gray-900" : "text-white"}>team in your corner</strong>. 
+                More than an agency, we are the <strong className={isLightMode ? "text-zinc-900" : "text-white"}>team in your corner</strong>. 
                 We combine powerful data with deep empathy, ensuring you never face your growth journey alone. Your challenges are our challenges.
               </p>
 
@@ -743,7 +737,7 @@ export const FounderSection = () => {
                     </div>
                     <span className={cn(
                       "font-sans font-medium text-[14px] transition-colors duration-0",
-                      isLightMode ? "text-gray-700" : "text-gray-300"
+                      isLightMode ? "text-zinc-700" : "text-zinc-300"
                     )}>{item}</span>
                   </div>
                 ))}
@@ -844,15 +838,15 @@ export const FounderSection = () => {
                           <div className="p-2 bg-zinc-50 border border-zinc-100 rounded-xl text-emerald-500">
                             <HeartHandshake size={20} style={{ color: COLORS.emerald }} />
                           </div>
-                          <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                          <span className="font-sans text-[10px] font-bold uppercase tracking-wider text-zinc-400">
                             Partnership
                           </span>
                         </div>
                         <div>
-                          <h3 className="text-3xl font-sans font-bold text-gray-900 leading-tight">
-                            Shared <span className="text-gray-400">Victories</span>
+                          <h3 className="text-3xl font-sans font-bold text-zinc-900 leading-tight">
+                            Shared <span className="text-zinc-400">Victories</span>
                           </h3>
-                          <p className="font-sans text-xs text-gray-500 font-medium mt-1">
+                          <p className="font-sans text-xs text-zinc-500 font-medium mt-1">
                             We celebrate every win with you.
                           </p>
                         </div>
@@ -958,13 +952,13 @@ export const FounderSection = () => {
               >
                 <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
                   <div className="p-2.5 rounded-xl mb-3 bg-zinc-50 border border-zinc-100">
-                    <Users className="w-5 h-5 text-gray-900" />
+                    <Users className="w-5 h-5 text-zinc-900" />
                   </div>
-                  <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-gray-900 leading-tight">
+                  <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 text-zinc-900 leading-tight">
                     Always<br/>
-                    <span className="text-gray-400">Close</span>
+                    <span className="text-zinc-400">Close</span>
                   </div>
-                  <p className="text-[12px] font-sans font-medium leading-[1.4] text-gray-500">
+                  <p className="text-[12px] font-sans font-medium leading-[1.4] text-zinc-500">
                     Support that feels local, anywhere in Australia.
                   </p>
                 </div>

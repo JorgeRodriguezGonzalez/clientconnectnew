@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useSpring, useTransform, animate } from 'framer-motion';
+import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 import {
   Zap, Target, ArrowUpRight, Home, Shield, Hammer, Leaf,
   DollarSign, TrendingUp, Users, BarChart3, Percent,
@@ -16,12 +17,6 @@ const fontStyles = `
 `;
 
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
-
-const COLORS = {
-  cyan: "#06b6d4",
-  emerald: "#34d399",
-  zinc: "#71717a"
-};
 
 const buttonColorSequence = [COLORS.emerald, COLORS.emerald, COLORS.cyan, COLORS.cyan, COLORS.emerald];
 const buttonColorDuration = 10;
@@ -372,7 +367,7 @@ export const WhatWeDoSection2 = () => {
     <section
       ref={containerRef}
       className="relative w-full py-24 lg:py-32 font-sans"
-      style={{ background: "#0a0a0a" }}
+      style={{ background: BACKGROUNDS.dark }}
     >
       <style>{fontStyles}</style>
 
