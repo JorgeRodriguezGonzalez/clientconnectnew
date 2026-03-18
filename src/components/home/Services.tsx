@@ -234,14 +234,14 @@ const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-black relative z-10 min-h-screen py-20 font-sans text-white overflow-x-hidden pl-[3vw]">
+    <div className="w-full bg-black relative z-10 min-h-screen py-8 md:py-20 font-sans text-white overflow-x-hidden pl-[3vw]">
       <style>{`
         .hide-scroll::-webkit-scrollbar { display: none !important; }
         .hide-scroll { -ms-overflow-style: none !important; scrollbar-width: none !important; }
       `}</style>
 
       <div ref={headerRef} className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="flex flex-col items-center text-center gap-4 mb-16 pb-6 border-b border-white/10 md:pt-12">
+        <div className="flex flex-col items-center text-center gap-4 mb-8 md:mb-16 pb-6 border-b border-white/10 pt-4 md:pt-12">
           <span className="w-fit px-3 py-1.5 rounded-lg border bg-white/5 border-white/10 text-zinc-400 font-semibold text-[10px] uppercase tracking-[2px]">Digital Ecosystem</span>
           <h2 className="section-title text-white">
             Services built to{" "}
