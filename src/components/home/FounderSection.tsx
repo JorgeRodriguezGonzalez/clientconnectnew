@@ -327,6 +327,7 @@ const TiltCard = ({
   initial,
   transition,
   style,
+  isMobile = false,
   ...props 
 }: { 
   children: React.ReactNode, 
@@ -337,12 +338,14 @@ const TiltCard = ({
   initial?: any,
   transition?: any,
   style?: any,
+  isMobile?: boolean,
   [key: string]: any
 }) => {
   const x = useSpring(0, { stiffness: 150, damping: 20 });
   const y = useSpring(0, { stiffness: 150, damping: 20 });
 
   function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+    if (isMobile) return;
     const rect = event.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -355,6 +358,7 @@ const TiltCard = ({
   }
 
   function handleMouseLeave() {
+    if (isMobile) return;
     x.set(0);
     y.set(0);
   }
@@ -372,10 +376,10 @@ const TiltCard = ({
         opacity: { duration: 0.5 }
       }} 
       style={{
-        rotateY: x,
-        rotateX: y,
-        transformStyle: "preserve-3d",
-        perspective: 1000,
+        rotateY: isMobile ? 0 : x,
+        rotateX: isMobile ? 0 : y,
+        transformStyle: isMobile ? undefined : "preserve-3d",
+        perspective: isMobile ? undefined : 1000,
         ...style 
       }}
       className={cn(
@@ -384,10 +388,11 @@ const TiltCard = ({
       )}
       {...props} 
     >
+      {/* FIX #2: Disable GlowingEffect on mobile — no global listeners */}
       <GlowingEffect 
         spread={40} 
         glow={true} 
-        disabled={false} 
+        disabled={isMobile}
         proximity={64} 
         inactiveZone={0.01} 
         borderWidth={2} 
@@ -440,7 +445,8 @@ const LogoContainer = React.forwardRef<
 ));
 LogoContainer.displayName = "LogoContainer";
 
-function AnimatedLogos({ isLightMode }: { isLightMode: boolean }) {
+// FIX #4: AnimatedLogos — skip infinite loop on mobile
+function AnimatedLogos({ isLightMode, isMobile }: { isLightMode: boolean; isMobile: boolean }) {
   const icons = [
     { icon: <InstagramLogo className="h-4 w-4" />, size: "sm" as const },
     { icon: <GoogleLogo className="h-5 w-5" />, size: "md" as const },
@@ -459,14 +465,18 @@ function AnimatedLogos({ isLightMode }: { isLightMode: boolean }) {
   ]);
 
   useEffect(() => {
+    if (isMobile) return; // No animation loop on mobile
+
+    let cancelled = false;
     const runAnimation = async () => {
-      while (true) {
+      while (!cancelled) {
         await animate(sequence as any);
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
     };
     runAnimation();
-  }, []);
+    return () => { cancelled = true; };
+  }, [isMobile]);
 
   return (
     <div className="overflow-hidden h-full relative flex items-center justify-center w-full">
@@ -482,7 +492,8 @@ function AnimatedLogos({ isLightMode }: { isLightMode: boolean }) {
           </LogoContainer>
         ))}
       </div>
-      <AnimatedSparklesLine />
+      {/* FIX #3: No sparkles on mobile */}
+      {!isMobile && <AnimatedSparklesLine />}
     </div>
   );
 }
@@ -649,7 +660,10 @@ export const FounderSection = () => {
     offset: ["start end", "end start"]
   });
 
+  // FIX #6: Skip scroll calculations on mobile
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (isMobile) return;
+
     if (latest > 0.30 && !isLightMode) setIsLightMode(true);
     else if (latest <= 0.30 && isLightMode) setIsLightMode(false);
 
@@ -657,14 +671,16 @@ export const FounderSection = () => {
     else if (latest < 0.50 && isLateScroll) setIsLateScroll(false);
   });
 
-  const yStats = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  // FIX #6: No parallax transform on mobile
+  const yStatsDesktop = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const yStats = isMobile ? undefined : yStatsDesktop;
 
   return (
     <section 
       ref={containerRef} 
       className={cn(
         "relative w-full pt-24 pb-32 lg:pb-40 transition-colors duration-0 z-10 font-sans", 
-        isLightMode ? `bg-[${BACKGROUNDS.dark}] md:bg-[#FAFAFA]` : `bg-[${BACKGROUNDS.dark}]`
+        isLight ? "bg-[#FAFAFA]" : `bg-[${BACKGROUNDS.dark}]`
       )}
     >
       <style>{fontStyles}</style>
@@ -675,7 +691,7 @@ export const FounderSection = () => {
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           className={cn(
             "absolute right-[-10%] top-[20%] w-[600px] h-[600px] blur-[150px] rounded-none transition-opacity duration-500",
-            isLightMode ? "opacity-10" : "opacity-20"
+            isLight ? "opacity-10" : "opacity-20"
           )} 
         />
       </div>
@@ -693,7 +709,7 @@ export const FounderSection = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 className={cn(
                   "w-fit px-3 py-1.5 rounded-lg border text-[10px] font-sans font-semibold uppercase tracking-[2px] transition-colors duration-300",
-                  isLightMode 
+                  isLight 
                     ? "bg-zinc-50 border-zinc-200 text-zinc-500" 
                     : "bg-white/5 border-white/10 text-zinc-400"
                 )}
@@ -703,7 +719,7 @@ export const FounderSection = () => {
 
               <h2 className={cn(
                 "section-title transition-colors duration-0",
-                isLightMode ? "text-zinc-900" : "text-white"
+                isLight ? "text-zinc-900" : "text-white"
               )}>
                 Australia's unfair advantage for{' '}
                 <motion.span
@@ -726,10 +742,10 @@ export const FounderSection = () => {
               </h2>
 
               <p className={cn(
-                isLightMode ? "section-text-light" : "section-text-dark",
+                isLight ? "section-text-light" : "section-text-dark",
                 "transition-colors duration-0 max-w-sm"
               )}>
-                More than an agency, we are the <strong className={isLightMode ? "text-zinc-900" : "text-white"}>team in your corner</strong>. 
+                More than an agency, we are the <strong className={isLight ? "text-zinc-900" : "text-white"}>team in your corner</strong>. 
                 We combine powerful data with deep empathy, ensuring you never face your growth journey alone. Your challenges are our challenges.
               </p>
 
@@ -742,13 +758,13 @@ export const FounderSection = () => {
                   <div key={i} className="flex items-center gap-3 group cursor-default">
                     <div className={cn(
                       "w-5 h-5 rounded-md flex items-center justify-center transition-all duration-300",
-                      isLightMode ? "bg-zinc-900 text-white" : "bg-white text-black"
+                      isLight ? "bg-zinc-900 text-white" : "bg-white text-black"
                     )}>
                       <Check size={10} strokeWidth={3} />
                     </div>
                     <span className={cn(
                       "font-sans font-medium text-[14px] transition-colors duration-0",
-                      isLightMode ? "text-zinc-700" : "text-zinc-300"
+                      isLight ? "text-zinc-700" : "text-zinc-300"
                     )}>{item}</span>
                   </div>
                 ))}
@@ -791,16 +807,17 @@ export const FounderSection = () => {
               <TiltCard 
                 layoutId="miguel-card"
                 layout
+                isMobile={isMobile}
                 transition={{ layout: ANIMATION_CONFIG, opacity: { duration: 0.5 } }}
                 onLayoutAnimationStart={() => setIsResizing(true)}
                 onLayoutAnimationComplete={() => setIsResizing(false)}
                 className={cn(
                   "md:row-span-2 h-[350px] md:h-[600px] group relative z-10 safari-gpu",
-                  isLightMode ? "md:col-span-1" : "md:col-span-2"
+                  isLight ? "md:col-span-1" : "md:col-span-2"
                 )}
                 innerClassName={cn(
                   "border",
-                  isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-white/10"
+                  isLight ? "bg-white border-zinc-200" : "bg-zinc-900 border-white/10"
                 )}
               >
                 <motion.div 
@@ -811,12 +828,13 @@ export const FounderSection = () => {
                 />
 
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-2xl">
+                  {/* FIX #7: lazy loading for non-hero image */}
                   <motion.img 
                     layout
                     src="/images/foundersection3.jpg" 
                     alt="Client Connect Australia Team" 
-                    loading="eager"
-                    animate={{ scale: isLightMode ? 1.25 : 1 }}
+                    loading="lazy"
+                    animate={{ scale: isLight ? 1.25 : 1 }}
                     transition={{ layout: ANIMATION_CONFIG, scale: ANIMATION_CONFIG }}
                     className="w-full h-full object-cover object-center grayscale-[30%] group-hover:grayscale-0 safari-gpu"
                   />
@@ -832,11 +850,12 @@ export const FounderSection = () => {
 
               {/* CARDS 2 & 3 */}
               <AnimatePresence mode="popLayout">
-                {isLightMode && (
+                {isLight && (
                   <>
-                    {/* ALWAYS CLOSE (was card 5, now in position 2) */}
+                    {/* ALWAYS CLOSE */}
                     <TiltCard 
                       layout="position"
+                      isMobile={isMobile}
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
@@ -858,18 +877,21 @@ export const FounderSection = () => {
                       <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden rounded-r-2xl">
                         <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
                           <div className="absolute inset-0 z-10 bg-gradient-to-r from-white via-white/40 to-transparent w-full h-full" />
+                          {/* FIX #8: Smaller Unsplash image */}
                           <img 
                             src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
                             alt="Australian National Support"
+                            loading="lazy"
                             className="w-full h-full object-cover opacity-90 transition-all duration-500 group-hover:grayscale"
                           />
                         </div>
                       </div>
                     </TiltCard>
 
-                    {/* SHARED VICTORIES (was card 2, now in position 3) */}
+                    {/* SHARED VICTORIES */}
                     <TiltCard 
                       layout="position"
+                      isMobile={isMobile}
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
@@ -896,6 +918,7 @@ export const FounderSection = () => {
                           </p>
                         </div>
                       </div>
+                      {/* FIX #5: No animated chart on mobile */}
                       <div className="absolute bottom-0 left-0 right-0 h-[140px] w-full z-0">
                         <ProfitChart key={chartKey} />
                       </div>
@@ -907,48 +930,51 @@ export const FounderSection = () => {
               {/* CARD 4: ECOSYSTEM */}
               <TiltCard 
                 layout
+                isMobile={isMobile}
                 initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} 
-                animate={isLightMode 
+                animate={isLight 
                   ? { opacity: 1, y: 0, filter: "blur(0px)" } 
                   : { opacity: 0, y: 20, filter: "blur(10px)" }
                 }
                 transition={{
-                  duration: isLightMode ? 0.5 : 0, 
-                  delay: isLightMode ? 0.5 : 0, 
+                  duration: isLight ? 0.5 : 0, 
+                  delay: isLight ? 0.5 : 0, 
                   ease: "easeOut"
                 }}
                 className="md:col-span-2 group safari-gpu h-[240px]"
                 innerClassName={cn(
                   "p-8 transition-colors duration-0 border relative",
-                  isLightMode ? "bg-white border-zinc-200" : "bg-zinc-900 border-zinc-800"
+                  isLight ? "bg-white border-zinc-200" : "bg-zinc-900 border-zinc-800"
                 )}
               >
                 <div className={cn(
                   "absolute top-6 right-6 rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium z-20",
-                  isLightMode ? "border-zinc-200 text-gray-500" : "border-white/20 text-white/60"
+                  isLight ? "border-zinc-200 text-gray-500" : "border-white/20 text-white/60"
                 )}>
                   Expertise
                 </div>
                 <div className="grid grid-cols-12 gap-4 h-full items-center">
                   <div className="col-span-5 flex flex-col justify-center h-full">
-                    <h3 className={cn("font-sans font-bold text-xl mb-2", isLightMode ? "text-gray-900" : "text-white")}>
+                    <h3 className={cn("font-sans font-bold text-xl mb-2", isLight ? "text-gray-900" : "text-white")}>
                       Expert Hands
                     </h3>
-                    <p className={cn("font-sans font-medium text-xs leading-relaxed", isLightMode ? "text-gray-500" : "text-white/70")}>
+                    <p className={cn("font-sans font-medium text-xs leading-relaxed", isLight ? "text-gray-500" : "text-white/70")}>
                       We master the complex ecosystem of digital tools so you can focus on your business. Human strategy, powerful tech.
                     </p>
                   </div>
                   <div className="col-span-7 h-full flex items-center justify-center">
                     <div className="relative w-full max-w-[300px] h-[120px]">
-                      <AnimatedLogos isLightMode={isLightMode} />
+                      {/* FIX #3 & #4: pass isMobile to disable animations */}
+                      <AnimatedLogos isLightMode={isLight} isMobile={isMobile} />
                     </div>
                   </div>
                 </div>
               </TiltCard>
 
-              {/* CARD 5: CONTENT THAT CONVERTS (was card 3) */}
+              {/* CARD 5: CONTENT THAT CONVERTS */}
               <TiltCard 
                 layout
+                isMobile={isMobile}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
@@ -958,15 +984,27 @@ export const FounderSection = () => {
                 onClick={() => setIsCaseStudyActive(true)}
               >
                 <div className="absolute inset-0 w-full h-full">
-                  <video 
-                    autoPlay loop muted playsInline 
-                    className={cn(
-                      "w-full h-full object-cover transition-all duration-700 ease-out",
-                      isCaseStudyActive ? "opacity-100" : "opacity-80 group-hover:opacity-100"
-                    )}
-                  >
-                    <source src="/videos/contentcreation.mp4" type="video/mp4" />
-                  </video>
+                  {/* FIX #1: Conditionally render video — no download on mobile */}
+                  {!isMobile && (
+                    <video 
+                      autoPlay loop muted playsInline
+                      preload="metadata"
+                      className={cn(
+                        "w-full h-full object-cover transition-all duration-700 ease-out",
+                        isCaseStudyActive ? "opacity-100" : "opacity-80 group-hover:opacity-100"
+                      )}
+                    >
+                      <source src="/videos/contentcreation.mp4" type="video/mp4" />
+                    </video>
+                  )}
+                  {isMobile && (
+                    <img 
+                      src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop"
+                      alt="Content Creation"
+                      loading="lazy"
+                      className="w-full h-full object-cover opacity-80"
+                    />
+                  )}
                 </div>
                 <motion.div
                   className="absolute inset-0 z-20 pointer-events-none"
@@ -987,14 +1025,15 @@ export const FounderSection = () => {
                 </motion.div>
               </TiltCard>
 
-              {/* CARD 6: TRUST */}
+              {/* CARD 6: TRUST - hidden on mobile */}
               <TiltCard 
                 layout
+                isMobile={isMobile}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
                 style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
-                className="h-[280px] group safari-gpu"
+                className="h-[280px] group safari-gpu hidden md:block"
                 innerClassName="bg-zinc-900 border border-zinc-800"
               >
                 <div className="relative h-full w-full">
@@ -1002,6 +1041,7 @@ export const FounderSection = () => {
                     <img
                       src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop"
                       alt="Trust and Partnership Handshake"
+                      loading="lazy"
                       className="w-full h-full object-cover grayscale scale-105 group-hover:scale-100 group-hover:grayscale-0 transition-all duration-700 ease-out"
                     />
                   </div>
@@ -1020,19 +1060,21 @@ export const FounderSection = () => {
 
             </motion.div>
 
-            {/* FLOATING STATS */}
-            <motion.div 
-              style={{ y: yStats }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ 
-                opacity: isLightMode ? 1 : 0,
-                scale: isLightMode ? 1 : 0.8,
-                transition: { duration: 0.3, delay: isLightMode ? 0.8 : 0 }
-              }}
-              className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
-            >
-              <StatBadge icon={MessageCircleHeart} label="Client Satisfaction" value="100%" isLight={isLightMode} />
-            </motion.div>
+            {/* FLOATING STATS - desktop only */}
+            {!isMobile && (
+              <motion.div 
+                style={{ y: yStats }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ 
+                  opacity: isLight ? 1 : 0,
+                  scale: isLight ? 1 : 0.8,
+                  transition: { duration: 0.3, delay: isLight ? 0.8 : 0 }
+                }}
+                className="absolute -right-4 top-[20%] z-20 hidden lg:block pointer-events-none"
+              >
+                <StatBadge icon={MessageCircleHeart} label="Client Satisfaction" value="100%" isLight={isLight} />
+              </motion.div>
+            )}
 
           </div>
         </div>
