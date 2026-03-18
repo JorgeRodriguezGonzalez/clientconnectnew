@@ -679,7 +679,7 @@ export const FounderSection = () => {
     <section 
       ref={containerRef} 
       className={cn(
-        "relative w-full pt-24 pb-32 md:pb-32 lg:pb-40 transition-colors duration-0 z-10 font-sans", 
+        "relative w-full pt-24 pb-12 md:pb-32 lg:pb-40 transition-colors duration-0 z-10 font-sans", 
         isLight ? "bg-[#FAFAFA]" : `bg-[${BACKGROUNDS.dark}]`
       )}
     >
@@ -965,13 +965,13 @@ export const FounderSection = () => {
                 layout
                 isMobile={isMobile}
                 initial={{ opacity: 0, y: 20, filter: "blur(10px)" }} 
-                animate={isLight 
+                animate={(isLight || isMobile)
                   ? { opacity: 1, y: 0, filter: "blur(0px)" } 
                   : { opacity: 0, y: 20, filter: "blur(10px)" }
                 }
                 transition={{
-                  duration: isLight ? 0.5 : 0, 
-                  delay: isLight ? 0.5 : 0, 
+                  duration: (isLight || isMobile) ? 0.5 : 0, 
+                  delay: (isLight || isMobile) ? 0.5 : 0, 
                   ease: "easeOut"
                 }}
                 className="md:col-span-2 group safari-gpu h-[240px]"
@@ -1009,9 +1009,9 @@ export const FounderSection = () => {
                 layout
                 isMobile={isMobile}
                 initial={{ opacity: 0, y: 20 }}
-                animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={(isLateScroll || isMobile) ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
+                style={{ pointerEvents: (isLateScroll || isMobile) ? 'auto' : 'none' }}
                 className="h-[280px] group cursor-pointer safari-gpu"
                 innerClassName="bg-black border border-zinc-200"
                 onClick={() => setIsCaseStudyActive(true)}
