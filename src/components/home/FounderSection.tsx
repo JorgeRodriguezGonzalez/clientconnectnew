@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, useSpring, useTransform, AnimatePresence, animate } from 'framer-motion';
-import { ArrowUpRight, TrendingUp, Play, Check, PlusIcon, HeartHandshake, Users, MessageCircleHeart, ShieldCheck, Smile } from 'lucide-react';
+import { ArrowUpRight, TrendingUp, Play, Check, PlusIcon, HeartHandshake, Users, MessageCircleHeart, ShieldCheck, ArrowRight } from 'lucide-react';
 
 // --- STYLES ---
 const fontStyles = `
@@ -331,9 +331,9 @@ const TiltCard = ({
   className, 
   innerClassName,
   layoutId,
-  animate,       
-  initial,       
-  transition,    
+  animate: animateProp,
+  initial,
+  transition,
   style,
   ...props 
 }: { 
@@ -374,7 +374,7 @@ const TiltCard = ({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       initial={initial || { opacity: 0, scale: 0.9 }}
-      animate={animate || { opacity: 1, scale: 1 }}
+      animate={animateProp || { opacity: 1, scale: 1 }}
       transition={transition || { 
         layout: ANIMATION_CONFIG, 
         opacity: { duration: 0.5 }
@@ -666,11 +666,6 @@ export const FounderSection = () => {
     >
       <style>{fontStyles}</style>
 
-      {/* ✅ CAMBIO CLAVE: de absolute top-0 → flujo normal */}
-      {/* <div className="w-full">
-        <LogoCloud isLightMode={isLightMode} />
-      </div> */}
-
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div 
           animate={{ backgroundColor: [COLORS.emerald, COLORS.cyan, COLORS.emerald] }}
@@ -757,24 +752,25 @@ export const FounderSection = () => {
               </div>
 
               <div className="mt-4">
-                <motion.button
+                <motion.a
+                  href="/about"
                   animate={{ borderColor: buttonColorSequence }}
                   transition={{ duration: buttonColorDuration, ease: "linear", repeat: Infinity }}
                   className={cn(
-                    "group relative h-[52px] px-8 py-3 flex items-center justify-center gap-2 rounded-xl font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)]",
+                    "group relative h-[52px] px-8 py-3 inline-flex items-center justify-center gap-2 rounded-xl font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)] no-underline",
                     "bg-black text-white hover:bg-zinc-900"
                   )}
                 >
                   <span className="flex items-center gap-2">
-                    Meet Your Team
+                    More About Us
                     <motion.span
                       animate={{ color: buttonColorSequence }}
                       transition={{ duration: buttonColorDuration, ease: "linear", repeat: Infinity }}
                     >
-                      <Smile className="w-4 h-4 transition-transform group-hover:scale-110" />
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </motion.span>
                   </span>
-                </motion.button>
+                </motion.a>
               </div>
 
             </div>
