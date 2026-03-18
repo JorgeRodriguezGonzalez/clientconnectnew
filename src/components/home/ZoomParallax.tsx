@@ -11,6 +11,15 @@ const fontStyles = `
   @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
   
   .font-satoshi { font-family: 'Satoshi', sans-serif; }
+
+  @keyframes scrollUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+  @keyframes scrollDown {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0); }
+  }
 `;
 
 // --- HOOK: useIsMobile ---
@@ -89,7 +98,47 @@ const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, object
     );
 };
 
-// --- SUB-COMPONENT: PARALLAX LOGIC ---
+// --- SUB-COMPONENT: MOBILE CAROUSEL (two columns, auto-scroll) ---
+function MobileCarousel({ videos }: { videos: { src: string }[] }) {
+    const col1 = videos.filter((_, i) => i % 2 === 0);
+    const col2 = videos.filter((_, i) => i % 2 !== 0);
+
+    return (
+        <div className="relative h-[500px] overflow-hidden mx-4">
+            <div className="flex gap-3 h-full">
+                {/* Column 1 - Scroll Up */}
+                <div className="flex-1 overflow-hidden">
+                    <div style={{ animation: 'scrollUp 20s linear infinite' }}>
+                        <div className="flex flex-col gap-3">
+                            {[...col1, ...col1].map(({ src }, index) => (
+                                <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
+                                    <ParallaxVideo src={src} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                {/* Column 2 - Scroll Down */}
+                <div className="flex-1 overflow-hidden">
+                    <div style={{ animation: 'scrollDown 22s linear infinite' }}>
+                        <div className="flex flex-col gap-3">
+                            {[...col2, ...col2].map(({ src }, index) => (
+                                <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
+                                    <ParallaxVideo src={src} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Gradient overlays */}
+            <div className="absolute top-0 left-0 right-0 h-[50px] bg-gradient-to-b from-[#050505] to-transparent pointer-events-none z-10" />
+            <div className="absolute bottom-0 left-0 right-0 h-[50px] bg-gradient-to-t from-[#050505] to-transparent pointer-events-none z-10" />
+        </div>
+    );
+}
+
+// --- SUB-COMPONENT: PARALLAX LOGIC (desktop only) ---
 function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMobile: boolean }) {
     const container = useRef<HTMLDivElement>(null);
     const isTablet = useIsTablet();
@@ -106,13 +155,11 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
 
     const scales = [scale4, scale5, scale6, scale5, scale6, scale8, scale9];
 
-    // Inverse scale to keep CTA text fixed size
     const inverseScale = useTransform(scale4, v => 1 / v);
     const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.6], [0, 1]);
     const contentOpacity = useTransform(scrollYProgress, [0.4, 0.65], [0, 1]);
     const contentY = useTransform(scrollYProgress, [0.4, 0.65], [20, 0]);
 
-    // Mobile overrides per card index (only applied on mobile)
     const mobileOverrides: Record<number, React.CSSProperties> = {
         2: { top: '-3vh', left: '-30vw', height: '30vh', width: '25vw' },
     };
@@ -144,7 +191,6 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                 <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none mix-blend-overlay" />
                                 <ParallaxVideo src={src} objectPosition={index === 5 || index === 1 || index === 2 ? 'center top' : 'center'} />
 
-                                {/* Overlay + CTA only on center card (index 0) */}
                                 {index === 0 && (
                                     <>
                                         <motion.div
@@ -156,41 +202,38 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                             className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 px-6 text-center"
                                         >
                                             <h3
-                                                    className="font-satoshi font-bold text-white"
+                                                className="font-satoshi font-bold text-white"
+                                                style={{
+                                                    fontSize: isMobile ? '28px' : '56px',
+                                                    lineHeight: 1.1,
+                                                    whiteSpace: 'nowrap',
+                                                }}
+                                            >
+                                                Your{' '}
+                                                <motion.span
+                                                    initial={{ backgroundPosition: "400% 50%" }}
+                                                    animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
+                                                    transition={{ duration: 8, ease: "linear", repeat: Infinity }}
                                                     style={{
-                                                        fontSize: isMobile ? '28px' : '56px',
-                                                        lineHeight: 1.1,
-                                                        whiteSpace: 'nowrap',
+                                                        display: "inline-block",
+                                                        backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255,255,255,0))`,
+                                                        backgroundSize: "400% 100%",
+                                                        WebkitBackgroundClip: "text",
+                                                        WebkitTextFillColor: "transparent",
+                                                        backgroundClip: "text",
+                                                        color: "transparent",
                                                     }}
                                                 >
-                                                    Your{' '}
-                                                    <motion.span
-                                                        initial={{ backgroundPosition: "400% 50%" }}
-                                                        animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-                                                        transition={{ duration: 8, ease: "linear", repeat: Infinity }}
-                                                        style={{
-                                                            display: "inline-block",
-                                                            backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255,255,255,0))`,
-                                                            backgroundSize: "400% 100%",
-                                                            WebkitBackgroundClip: "text",
-                                                            WebkitTextFillColor: "transparent",
-                                                            backgroundClip: "text",
-                                                            color: "transparent",
-                                                        }}
-                                                    >
-                                                        brand
-                                                    </motion.span>{' '}
-                                                    could be next.
-                                                </h3>
+                                                    brand
+                                                </motion.span>{' '}
+                                                could be next.
+                                            </h3>
                                             <div className="flex gap-3 mt-2">
                                                 <motion.a
                                                     href="#contact"
                                                     whileHover={
                                                         isTablet
-                                                            ? {
-                                                                scale: 1.02,
-                                                                borderColor: 'rgba(255,255,255,1)',
-                                                              }
+                                                            ? { scale: 1.02, borderColor: 'rgba(255,255,255,1)' }
                                                             : {
                                                                 backgroundColor: 'rgba(255,255,255,0.2)',
                                                                 boxShadow: '0 0 20px rgba(255,255,255,0.3)',
@@ -204,9 +247,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                         padding: '12px 24px',
                                                         borderRadius: '50px',
                                                         background: isTablet ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.1)',
-                                                        ...(isTablet
-                                                            ? {}
-                                                            : { backdropFilter: 'blur(8px)' as any }),
+                                                        ...(isTablet ? {} : { backdropFilter: 'blur(8px)' as any }),
                                                         border: '1px solid rgba(255,255,255,0.2)',
                                                         color: '#ffffff',
                                                         transition: 'all 0.3s ease',
@@ -218,10 +259,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                     href="#book"
                                                     whileHover={
                                                         isTablet
-                                                            ? {
-                                                                scale: 1.02,
-                                                                borderColor: `${COLORS.emerald}`,
-                                                              }
+                                                            ? { scale: 1.02, borderColor: `${COLORS.emerald}` }
                                                             : {
                                                                 backgroundColor: 'rgba(255,255,255,0.2)',
                                                                 boxShadow: `0 0 20px ${COLORS.emerald}80`,
@@ -236,9 +274,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                         padding: '12px 24px',
                                                         borderRadius: '50px',
                                                         background: isTablet ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.1)',
-                                                        ...(isTablet
-                                                            ? {}
-                                                            : { backdropFilter: 'blur(8px)' as any }),
+                                                        ...(isTablet ? {} : { backdropFilter: 'blur(8px)' as any }),
                                                         border: `1px solid ${COLORS.cyan}`,
                                                         color: `${COLORS.cyan}`,
                                                         transition: 'all 0.3s ease',
@@ -385,8 +421,12 @@ export default function ZoomParallax() {
                 </motion.div>
             </div>
 
-            {/* PARALLAX COMPONENT */}
-            <ParallaxContent videos={videos} isMobile={isMobile} />
+            {/* MOBILE: Two-column carousel / DESKTOP: Parallax zoom */}
+            {isMobile ? (
+                <MobileCarousel videos={videos} />
+            ) : (
+                <ParallaxContent videos={videos} isMobile={isMobile} />
+            )}
 
             {/* FOOTER SPACER */}
             <div className="h-[25vh] bg-[#050505] relative z-10" />
