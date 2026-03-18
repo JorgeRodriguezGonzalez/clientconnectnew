@@ -3,19 +3,10 @@ import { motion, animate } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Sparkles, Send, User, Mail, Phone, Building2, Globe, MessageSquare } from "lucide-react";
+import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 const cn = (...classes: (string | undefined | null | false)[]) => {
   return classes.filter(Boolean).join(' ');
-};
-
-const COLORS = {
-  primary: "hsl(187, 94%, 43%)",
-  primaryLight: "hsl(187, 94%, 53%)",
-  secondary: "hsl(160, 64%, 52%)",
-  secondaryLight: "hsl(160, 64%, 62%)",
-  textDark: "hsl(0, 0%, 10%)",
-  textMedium: "hsl(0, 0%, 33%)",
-  textLight: "hsl(0, 0%, 46%)",
 };
 
 const GlowingEffect = React.memo(
@@ -104,11 +95,11 @@ const GlowingEffect = React.memo(
           style={{
             "--blur": `${blur}px`, "--spread": spread, "--start": "0", "--active": "0",
             "--glowingeffect-border-width": `${borderWidth}px`, "--repeating-conic-gradient-times": "5",
-            "--gradient": `radial-gradient(circle, hsl(187 94% 43%) 10%, hsl(187 94% 43% / 0) 20%),
-              radial-gradient(circle at 40% 40%, hsl(187 94% 53%) 5%, hsl(187 94% 53% / 0) 15%),
-              radial-gradient(circle at 60% 60%, hsl(160 64% 52%) 10%, hsl(160 64% 52% / 0) 20%),
-              radial-gradient(circle at 40% 60%, hsl(160 64% 62%) 10%, hsl(160 64% 62% / 0) 20%),
-              repeating-conic-gradient(from 236.84deg at 50% 50%, hsl(187 94% 43%) 0%, hsl(187 94% 53%) calc(25% / var(--repeating-conic-gradient-times)), hsl(160 64% 52%) calc(50% / var(--repeating-conic-gradient-times)), hsl(160 64% 62%) calc(75% / var(--repeating-conic-gradient-times)), hsl(187 94% 43%) calc(100% / var(--repeating-conic-gradient-times)))`,
+            "--gradient": `radial-gradient(circle, ${COLORS.cyan} 10%, ${COLORS.cyan}00 20%),
+              radial-gradient(circle at 40% 40%, ${COLORS.cyan} 5%, ${COLORS.cyan}00 15%),
+              radial-gradient(circle at 60% 60%, ${COLORS.emerald} 10%, ${COLORS.emerald}00 20%),
+              radial-gradient(circle at 40% 60%, ${COLORS.emerald} 10%, ${COLORS.emerald}00 20%),
+              repeating-conic-gradient(from 236.84deg at 50% 50%, ${COLORS.cyan} 0%, ${COLORS.cyan} calc(25% / var(--repeating-conic-gradient-times)), ${COLORS.emerald} calc(50% / var(--repeating-conic-gradient-times)), ${COLORS.emerald} calc(75% / var(--repeating-conic-gradient-times)), ${COLORS.cyan} calc(100% / var(--repeating-conic-gradient-times)))`,
           } as React.CSSProperties}
           className={cn("pointer-events-none absolute inset-0 rounded-[inherit] opacity-100 transition-opacity", glow && "opacity-100", blur > 0 && "blur-[var(--blur)]", className, disabled && "!hidden")}
         >
@@ -124,16 +115,16 @@ const FormInput = ({ icon: Icon, label, name, type = "text", placeholder, requir
   icon: React.ElementType; label: string; name: string; type?: string; placeholder: string; required?: boolean; value: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
   <div>
-    <label htmlFor={name} className="block text-xs font-semibold text-gray-300 mb-1 text-left">
-      {label} {required && <span style={{ color: COLORS.primary }}>*</span>}
+    <label htmlFor={name} className="block text-xs font-semibold text-zinc-300 mb-1 text-left">
+      {label} {required && <span style={{ color: COLORS.cyan }}>*</span>}
     </label>
     <div className="relative">
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-        <Icon className="h-4 w-4 text-gray-500" />
+        <Icon className="h-4 w-4 text-zinc-500" />
       </div>
       <input
         id={name} name={name} type={type} required={required} placeholder={placeholder} value={value} onChange={onChange}
-        className="w-full rounded-lg border border-white/10 bg-white/5 py-2.5 pl-9 pr-3 text-sm text-white placeholder:text-gray-500 transition-all duration-200 outline-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
+        className="w-full rounded-lg border border-white/10 bg-white/5 py-2.5 pl-9 pr-3 text-sm text-white placeholder:text-zinc-500 transition-all duration-200 outline-none focus:border-[#06b6d4] focus:ring-1 focus:ring-[#06b6d4]"
       />
     </div>
   </div>
@@ -171,7 +162,7 @@ const CTASection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative bg-[#0F1117] border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl shadow-black/20"
+            className="relative bg-[#050505] border border-white/10 rounded-2xl p-8 md:p-12 shadow-2xl shadow-black/20"
           >
             {/* Header */}
             <div className="text-center mb-8">
@@ -183,7 +174,7 @@ const CTASection = () => {
                   transition={{ duration: 12, ease: "linear", repeat: Infinity }}
                   className="inline-block"
                   style={{
-                    backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0), ${COLORS.primary}, ${COLORS.primaryLight}, ${COLORS.secondary}, ${COLORS.secondaryLight}, rgba(255,255,255,0))`,
+                    backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0), ${COLORS.cyan}, ${COLORS.cyan}, ${COLORS.emerald}, ${COLORS.emerald}, rgba(255,255,255,0))`,
                     backgroundSize: "400% 100%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -203,11 +194,11 @@ const CTASection = () => {
             {/* Success State */}
             {isSubmitted ? (
               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center gap-3 py-10">
-                <div className="rounded-full p-3" style={{ backgroundColor: "hsl(160 64% 52% / 0.1)" }}>
-                  <Check className="h-8 w-8" style={{ color: COLORS.secondary }} strokeWidth={2.5} />
+                <div className="rounded-full p-3" style={{ backgroundColor: "rgba(52, 211, 153, 0.1)" }}>
+                  <Check className="h-8 w-8" style={{ color: COLORS.emerald }} strokeWidth={2.5} />
                 </div>
                 <h3 className="text-2xl font-bold text-white">Message Sent!</h3>
-                <p className="text-gray-400 max-w-md text-center">Thanks for reaching out. One of our strategists will review your details and contact you shortly.</p>
+                <p className="text-zinc-400 max-w-md text-center">Thanks for reaching out. One of our strategists will review your details and contact you shortly.</p>
               </motion.div>
             ) : (
               /* Form */
@@ -227,18 +218,18 @@ const CTASection = () => {
 
                 {/* Row 3: Message */}
                 <div>
-                  <label htmlFor="message" className="block text-xs font-semibold text-gray-300 mb-1 text-left">
-                    How can we help? <span style={{ color: COLORS.primary }}>*</span>
+                  <label htmlFor="message" className="block text-xs font-semibold text-zinc-300 mb-1 text-left">
+                    How can we help? <span style={{ color: COLORS.cyan }}>*</span>
                   </label>
                   <div className="relative">
                     <div className="pointer-events-none absolute top-3 left-0 flex items-start pl-3">
-                      <MessageSquare className="h-4 w-4 text-gray-500" />
+                      <MessageSquare className="h-4 w-4 text-zinc-500" />
                     </div>
                     <textarea
                       id="message" name="message" required rows={3}
                       placeholder="Tell us about your goals — more traffic, better conversions, brand awareness…"
                       value={formData.message} onChange={handleChange}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 py-2.5 pl-9 pr-3 text-sm text-white placeholder:text-gray-500 transition-all duration-200 outline-none resize-none focus:border-[hsl(187,94%,43%)] focus:ring-1 focus:ring-[hsl(187,94%,43%)]"
+                      className="w-full rounded-lg border border-white/10 bg-white/5 py-2.5 pl-9 pr-3 text-sm text-white placeholder:text-zinc-500 transition-all duration-200 outline-none resize-none focus:border-[#06b6d4] focus:ring-1 focus:ring-[#06b6d4]"
                     />
                   </div>
                 </div>
@@ -248,7 +239,7 @@ const CTASection = () => {
                   <Button
                     size="lg" onClick={handleSubmit} disabled={isSubmitting}
                     className="w-full lg:w-auto h-12 px-10 text-base font-semibold text-white shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-300 rounded-lg border-0 disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap"
-                    style={{ backgroundImage: `linear-gradient(135deg, ${COLORS.primary}, ${COLORS.secondary})` }}
+                    style={{ backgroundImage: `linear-gradient(135deg, ${COLORS.cyan}, ${COLORS.emerald})` }}
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">
@@ -269,10 +260,10 @@ const CTASection = () => {
                   <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
                     {["No long-term contracts", "Free strategy session", "Response within 24h"].map((text) => (
                       <div key={text} className="flex items-center gap-1.5">
-                        <div className="rounded-full p-0.5" style={{ backgroundColor: "hsl(160 64% 52% / 0.15)" }}>
-                          <Check className="h-3 w-3" style={{ color: COLORS.secondary }} strokeWidth={3} />
+                        <div className="rounded-full p-0.5" style={{ backgroundColor: "rgba(52, 211, 153, 0.15)" }}>
+                          <Check className="h-3 w-3" style={{ color: COLORS.emerald }} strokeWidth={3} />
                         </div>
-                        <span className="text-xs font-medium text-gray-400">{text}</span>
+                        <span className="text-xs font-medium text-zinc-400">{text}</span>
                       </div>
                     ))}
                   </div>

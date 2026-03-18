@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Play, Pause } from "lucide-react";
+import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 const RECENT_WORKS = [
   { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", handle: "Alex Ross", testimonial: "Nanotise" },
@@ -131,7 +132,7 @@ export default function TestimonialsSection() {
     <section style={{
       width: "100%",
       minHeight: "100vh",
-      backgroundColor: "#09090b",
+      backgroundColor: BACKGROUNDS.dark,
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -155,7 +156,7 @@ export default function TestimonialsSection() {
         <h2 style={{ fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 700, letterSpacing: "-0.5px", lineHeight: 1.1, color: "#f4f4f5", margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
           Real Results,{" "}
           <span style={{
-            background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)",
+            background: `linear-gradient(90deg, transparent, ${COLORS.emerald}, ${COLORS.cyan}, transparent)`,
             backgroundSize: "200% auto",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
             fontWeight: 700,
@@ -166,7 +167,7 @@ export default function TestimonialsSection() {
         </h2>
 
         <p className="section-text-dark max-w-[384px]">
-          Don't take our word for it. Here's what <strong style={{ color: "#e4e4e7" }}>brands worldwide</strong> have to say about working with us.
+          Don't take our word for it. Here's what <strong className="text-zinc-200">brands worldwide</strong> have to say about working with us.
         </p>
       </div>
 

@@ -5,12 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import * as Accordion from "@radix-ui/react-accordion";
 import { Minus, Plus, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-// --- CONSTANTES & ESTILOS ---
-const COLORS = {
-  cyan: "#06b6d4",
-  emerald: "#34d399",
-};
+import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 const BackgroundStripes = () => (
   <div

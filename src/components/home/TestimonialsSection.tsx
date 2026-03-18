@@ -3,12 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
-
-const COLORS = {
-  cyan: "#06b6d4",
-  emerald: "#34d399",
-  gold: "rgb(237, 191, 134)",
-};
+import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 const testimonials = [
   {
@@ -152,11 +147,10 @@ const TestimonialsSection = () => {
               alignItems: "center",
               padding: "6px 12px",
               borderRadius: "8px",
-              border: "1px solid #e4e4e7",
               backgroundColor: "#fafafa",
               width: "fit-content",
             }}
-            className="mb-4"
+            className="mb-4 border border-zinc-200"
           >
             <span
               style={{
@@ -164,9 +158,9 @@ const TestimonialsSection = () => {
                 fontWeight: 600,
                 letterSpacing: "2px",
                 textTransform: "uppercase",
-                color: "#6b7280",
                 fontFamily: "'Satoshi', sans-serif",
               }}
+              className="text-zinc-500"
             >
               SOCIAL PROOF
             </span>

@@ -4,6 +4,7 @@ import { useScroll, useTransform, motion } from 'framer-motion';
 import Lenis from 'lenis';
 import { ArrowDown } from 'lucide-react';
 import { useIsTablet } from "@/hooks/useIsTablet";
+import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 // --- FONT STYLES ---
 const fontStyles = `
@@ -169,7 +170,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                         transition={{ duration: 8, ease: "linear", repeat: Infinity }}
                                                         style={{
                                                             display: "inline-block",
-                                                            backgroundImage: "linear-gradient(45deg, rgba(255,255,255,0), #34d399, #06b6d4, rgba(255,255,255,0))",
+                                                            backgroundImage: `linear-gradient(45deg, rgba(255,255,255,0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255,255,255,0))`,
                                                             backgroundSize: "400% 100%",
                                                             WebkitBackgroundClip: "text",
                                                             WebkitTextFillColor: "transparent",
@@ -219,13 +220,13 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                         isTablet
                                                             ? {
                                                                 scale: 1.02,
-                                                                borderColor: '#34d399',
+                                                                borderColor: `${COLORS.emerald}`,
                                                               }
                                                             : {
                                                                 backgroundColor: 'rgba(255,255,255,0.2)',
-                                                                boxShadow: '0 0 20px rgba(52,211,153,0.5)',
-                                                                borderColor: '#34d399',
-                                                                color: '#34d399',
+                                                                boxShadow: `0 0 20px ${COLORS.emerald}80`,
+                                                                borderColor: `${COLORS.emerald}`,
+                                                                color: `${COLORS.emerald}`,
                                                               }
                                                     }
                                                     className="font-satoshi font-semibold whitespace-nowrap flex items-center gap-2"
@@ -238,8 +239,8 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                         ...(isTablet
                                                             ? {}
                                                             : { backdropFilter: 'blur(8px)' as any }),
-                                                        border: '1px solid #06b6d4',
-                                                        color: '#06b6d4',
+                                                        border: `1px solid ${COLORS.cyan}`,
+                                                        color: `${COLORS.cyan}`,
                                                         transition: 'all 0.3s ease',
                                                     }}
                                                 >
@@ -327,7 +328,7 @@ export default function ZoomParallax() {
                         transition={{ duration: 0.5 }}
                         className="w-fit px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 mb-6"
                     >
-                        <span className="text-[10px] font-sans font-semibold uppercase tracking-[2px] text-gray-400">
+                        <span className="text-[10px] font-sans font-semibold uppercase tracking-[2px] text-zinc-400">
                             Our Work
                         </span>
                     </motion.div>
@@ -374,8 +375,7 @@ export default function ZoomParallax() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1, duration: 1 }}
-                    className="absolute bottom-12 flex flex-col items-center gap-2"
-                    style={{ color: '#6b7280' }}
+                    className="absolute bottom-12 flex flex-col items-center gap-2 text-zinc-500"
                 >
                     <span
                         className="font-satoshi uppercase"

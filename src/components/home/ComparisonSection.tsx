@@ -1,14 +1,7 @@
 import React from "react";
 import { X, Check } from "lucide-react";
 import { motion } from "framer-motion";
-
-// --- Assets & Styles ---
-
-// COLORES CORPORATIVOS (Solo Emerald y Cyan)
-const COLORS = {
-  cyan: "#06b6d4", 
-  emerald: "#34d399",
-};
+import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 // --- Content Data ---
 
