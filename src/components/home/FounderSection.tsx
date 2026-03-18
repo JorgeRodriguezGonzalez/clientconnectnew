@@ -868,7 +868,7 @@ export const FounderSection = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
                       className="h-[300px] group cursor-pointer safari-gpu"
-                      innerClassName="bg-black border border-zinc-800"
+                      innerClassName="bg-black border border-zinc-200"
                       onClick={() => setIsCaseStudyActive(true)}
                     >
                       <div className="absolute inset-0 w-full h-full">
