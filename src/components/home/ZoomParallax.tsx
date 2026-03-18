@@ -362,7 +362,7 @@ export default function ZoomParallax() {
             <style>{fontStyles}</style>
 
             {/* HEADER SECTION */}
-            <div className="relative flex h-[70vh] flex-col items-center justify-center gap-8 px-4 overflow-hidden">
+            <div className="relative flex h-[45vh] md:h-[70vh] flex-col items-center justify-center gap-8 px-4 overflow-hidden">
 
                 {/* Glow */}
                 <div
