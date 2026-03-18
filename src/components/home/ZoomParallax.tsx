@@ -360,12 +360,7 @@ export default function ZoomParallax() {
 
                     {/* Description */}
                     <p
-                        className="font-satoshi font-medium max-w-sm mt-6"
-                        style={{
-                            fontSize: '15px',
-                            lineHeight: 1.6,
-                            color: '#6b7280',
-                        }}
+                        className="section-text-dark max-w-sm mt-6"
                     >
                         A selection of websites we've built for{' '}
                         <strong style={{ color: '#ffffff', fontWeight: 500 }}>Australian businesses</strong>.

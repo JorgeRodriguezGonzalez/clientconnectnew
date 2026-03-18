@@ -195,7 +195,7 @@ const CTASection = () => {
                 </motion.span>
               </h2>
 
-              <p className="text-sm text-gray-400 max-w-lg mx-auto">
+              <p className="section-text-dark max-w-lg mx-auto">
                 Tell us about your project and we'll get back to you within 24 hours with a free tailored strategy.
               </p>
             </div>

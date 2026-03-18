@@ -597,7 +597,7 @@ export const WhatWeDoSection2 = () => {
                 <span className="text-zinc-600">.</span>
               </h3>
 
-              <p className="font-sans text-[15px] leading-[1.6] font-medium text-zinc-500 max-w-sm">
+              <p className="section-text-dark max-w-sm">
                 We don't talk about "impressions" or "reach." Here are real results from real trade businesses across Australia — tracked, verified, and still growing.
               </p>
 

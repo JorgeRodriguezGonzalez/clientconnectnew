@@ -165,7 +165,7 @@ export default function TestimonialsSection() {
           </span>
         </h2>
 
-        <p style={{ fontSize: "15px", fontWeight: 500, color: "#71717a", maxWidth: "384px", lineHeight: 1.6, fontFamily: "'Satoshi', sans-serif", margin: 0 }}>
+        <p className="section-text-dark max-w-[384px]">
           Don't take our word for it. Here's what <strong style={{ color: "#e4e4e7" }}>brands worldwide</strong> have to say about working with us.
         </p>
       </div>

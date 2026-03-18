@@ -112,7 +112,7 @@ export default function FAQSection() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-400 tracking-tight"
+            className="section-text-dark"
           >
             Everything you need to know about how we work, our methodology, and how we help businesses scale.
           </motion.p>

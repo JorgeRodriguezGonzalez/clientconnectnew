@@ -196,7 +196,7 @@ const TestimonialsSection = () => {
             </motion.span>
           </h2>
 
-          <p className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-500 tracking-tight">
+          <p className="section-text-light">
             See what happens when data-driven strategy meets creative excellence.
             Real results from real partners.
           </p>

@@ -106,7 +106,7 @@ const ComparisonSection = () => {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[16px] md:text-[18px] font-medium leading-relaxed text-zinc-400 tracking-tight"
+            className="section-text-dark"
           >
             Stop wasting budget on strategies that don't convert. Compare the difference between the industry standard and our results-obsessed approach.
           </motion.p>

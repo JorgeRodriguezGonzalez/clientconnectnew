@@ -268,7 +268,7 @@ const Services = () => {
             </motion.span>
           </h2>
           <div className="max-w-lg">
-            <p className="text-sm leading-relaxed text-white/60 md:text-base">
+            <p className="section-text-dark">
               From initial strategy to final conversion, we cover every aspect of the digital landscape to ensure sustainable growth and measurable results.
             </p>
           </div>
