@@ -119,7 +119,7 @@ const GoogleLogo = ({ className }: { className?: string }) => (
 );
 
 const SemrushLogo = ({ className }: { className?: string }) => (
-  <img src="/images/semrush.jpg" alt="Semrush" className={`${className} rounded-full object-cover`} />
+  <img src="/images/semrush.png" alt="Semrush" className={`${className} rounded-full object-cover`} />
 );
 
 const GeminiLogo = ({ className }: { className?: string }) => (
