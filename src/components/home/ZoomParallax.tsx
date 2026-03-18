@@ -334,11 +334,7 @@ export default function ZoomParallax() {
 
                     {/* Title */}
                     <h2
-                        className="font-satoshi font-bold tracking-tight max-w-4xl text-white"
-                        style={{
-                            fontSize: 'clamp(32px, 5vw, 48px)',
-                            lineHeight: 1.1,
-                        }}
+                        className="section-title text-white max-w-4xl"
                     >
                         <span style={{ color: '#ffffff' }}>Websites built to</span>{' '}
                         <br className="hidden md:block" />

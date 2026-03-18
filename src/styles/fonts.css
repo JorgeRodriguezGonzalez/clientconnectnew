@@ -22,3 +22,17 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* ─── Utilidades tipográficas globales ─── */
+
+.section-title {
+  @apply text-[26px] md:text-[32px] lg:text-[48px] font-bold leading-[1.1] tracking-tight;
+}
+
+.section-text-dark {
+  @apply text-[15px] md:text-[16px] font-medium leading-relaxed text-zinc-400;
+}
+
+.section-text-light {
+  @apply text-[15px] md:text-[16px] font-medium leading-relaxed text-zinc-600;
+}

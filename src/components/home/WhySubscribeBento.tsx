@@ -49,7 +49,7 @@ export const WhySubscribeBento = (_props: WhySubscribeBentoProps) => {
     }} transition={{
       duration: 0.6
     }} className="max-w-[600px] w-full text-center">
-        <h3 className="text-[32px] leading-[35.2px] font-medium text-[#717073] -tracking-[0.2px]">
+        <h3 className="section-title text-zinc-500">
           <span className="text-[#131314]">Why subscribe? </span>
           By the end you'll have a full working product ready to launch to the world.
         </h3>

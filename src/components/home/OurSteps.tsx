@@ -278,7 +278,7 @@ const OurSteps = () => {
         }} transition={{
           duration: 0.5,
           delay: 0.1
-        }} className="text-5xl md:text-7xl font-bold text-slate-900 tracking-tight max-w-4xl leading-[1.1] mb-6">
+        }} className="section-title text-gray-900 max-w-4xl mb-6">
           Fast, Compliant, and Affordable <span className="text-[rgb(30,97,134)]">SMS Campaigns</span>
         </motion.h2>
 
@@ -291,7 +291,7 @@ const OurSteps = () => {
         }} transition={{
           duration: 0.5,
           delay: 0.2
-        }} className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto font-light">
+        }} className="section-text-light max-w-2xl mx-auto">
           The fastest way to close deals with SMS. Everything you need to scale your outreach engine.
         </motion.p>
 

@@ -697,7 +697,7 @@ export const FounderSection = () => {
               </motion.div>
 
               <h2 className={cn(
-                "font-sans font-bold text-[32px] md:text-[40px] lg:text-[48px] leading-[1.1] tracking-tight transition-colors duration-0",
+                "section-title transition-colors duration-0",
                 isLightMode ? "text-gray-900" : "text-white"
               )}>
                 Australia's unfair advantage for{' '}
@@ -721,8 +721,8 @@ export const FounderSection = () => {
               </h2>
 
               <p className={cn(
-                "font-sans text-[15px] leading-[1.6] font-medium transition-colors duration-0 max-w-sm",
-                isLightMode ? "text-gray-500" : "text-gray-400"
+                isLightMode ? "section-text-light" : "section-text-dark",
+                "transition-colors duration-0 max-w-sm"
               )}>
                 More than an agency, we are the <strong className={isLightMode ? "text-gray-900" : "text-white"}>team in your corner</strong>. 
                 We combine powerful data with deep empathy, ensuring you never face your growth journey alone. Your challenges are our challenges.
