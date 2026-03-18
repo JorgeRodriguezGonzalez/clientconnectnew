@@ -10,6 +10,7 @@ import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code, Minus, Plus, Mess
 import { webdesignServices, webdesignHeading, webdesignHighlight, webdesignSubtitle } from "@/data/services/webdesign-services";
 import * as Accordion from "@radix-ui/react-accordion";
 import { cn } from "@/lib/utils";
+import { useIsTablet } from "@/hooks/useIsTablet";
 
 const C = {
   cyan: "#06b6d4",
@@ -173,6 +174,7 @@ const OurProcess = () => {
   const containerRef = useRef(null);
   const cardRefs = useRef([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const isTablet = useIsTablet();
   const cardCount = processSteps.length;
   const stackOffset = 24;
 
@@ -257,13 +259,19 @@ const OurProcess = () => {
             >
               <div
                 style={{
-                  background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
+                  ...(isTablet
+                    ? {
+                        background: `linear-gradient(135deg, rgba(255,255,255,${0.16 - i * 0.025}) 0%, rgba(255,255,255,${0.07 - i * 0.005}) 100%)`,
+                      }
+                    : {
+                        background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
+                        backdropFilter: "blur(12px)",
+                        WebkitBackdropFilter: "blur(12px)",
+                      }),
                   borderRadius: "20px",
                   padding: "56px 44px",
                   position: "relative",
                   overflow: "hidden",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
                   minHeight: "300px",
                   display: "flex",
                   flexDirection: "column",
@@ -365,6 +373,7 @@ const RecentWebsites = () => {
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const isTablet = useIsTablet();
 
   const checkScroll = () => {
     if (!scrollRef.current) return;
@@ -437,7 +446,8 @@ const RecentWebsites = () => {
                 zIndex: 10, width: "48px", height: "48px", borderRadius: "50%",
                 background: "rgba(255,255,255,0.9)", border: "1px solid rgba(0,0,0,0.1)",
                 color: "#111", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-                backdropFilter: "blur(8px)", transition: "all 0.2s ease",
+                ...(isTablet ? {} : { backdropFilter: "blur(8px)" }),
+                transition: "all 0.2s ease",
               }}
               onMouseEnter={e => e.currentTarget.style.borderColor = C.cyan}
               onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"}
@@ -455,7 +465,8 @@ const RecentWebsites = () => {
                 zIndex: 10, width: "48px", height: "48px", borderRadius: "50%",
                 background: "rgba(255,255,255,0.9)", border: "1px solid rgba(0,0,0,0.1)",
                 color: "#111", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
-                backdropFilter: "blur(8px)", transition: "all 0.2s ease",
+                ...(isTablet ? {} : { backdropFilter: "blur(8px)" }),
+                transition: "all 0.2s ease",
               }}
               onMouseEnter={e => e.currentTarget.style.borderColor = C.cyan}
               onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"}
@@ -724,6 +735,7 @@ const benefits = [
 
 const WebDesign = () => {
   const [loaded, setLoaded] = useState(false);
+  const isTablet = useIsTablet();
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
 
   const anim = (d = 0) => ({
@@ -787,12 +799,16 @@ const WebDesign = () => {
             }}>
               <div style={{
                 display: "flex", alignItems: "center", gap: "0",
-                background: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: "50px",
                 padding: "5px 5px 5px 24px",
                 maxWidth: "520px", width: "100%",
-                backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+                ...(isTablet
+                  ? { background: "rgba(255,255,255,0.08)" }
+                  : {
+                      background: "rgba(255,255,255,0.05)",
+                      backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+                    }),
               }}>
                 <input
                   type="email"

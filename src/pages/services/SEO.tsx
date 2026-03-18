@@ -10,6 +10,7 @@ import { Search, TrendingUp, FileText, BarChart, Link2, Minus, Plus, MessageSqua
 import { seoServices, seoHeading, seoHighlight, seoSubtitle } from "@/data/services/seo-services";
 import * as Accordion from "@radix-ui/react-accordion";
 import { cn } from "@/lib/utils";
+import { useIsTablet } from "@/hooks/useIsTablet";
 
 const C = {
   cyan: "#06b6d4",
@@ -87,6 +88,7 @@ const OurProcess = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const cardCount = processSteps.length;
   const stackOffset = 24;
+  const isTablet = useIsTablet();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,9 +125,14 @@ const OurProcess = () => {
           return (
             <div key={i} ref={el => cardRefs.current[i] = el} style={{ position: "sticky", top: `calc(112px + ${i * stackOffset}px)`, marginBottom: `${60 / cardCount}vh`, zIndex: 10 + i }}>
               <div style={{
-                background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
+                ...(isTablet
+                  ? { background: `linear-gradient(135deg, rgba(255,255,255,${0.16 - i * 0.025}) 0%, rgba(255,255,255,${0.07 - i * 0.005}) 100%)` }
+                  : {
+                      background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
+                      backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+                    }),
                 borderRadius: "20px", padding: "56px 44px", position: "relative", overflow: "hidden",
-                backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", minHeight: "300px",
+                minHeight: "300px",
                 display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
                 border: isActive ? "1px solid transparent" : "1px solid rgba(255,255,255,0.1)",
                 backgroundClip: isActive ? "padding-box" : undefined,
@@ -240,6 +247,7 @@ const SEOService = () => {
   const [hImg, setHImg] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
 
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
 
@@ -309,10 +317,12 @@ const SEOService = () => {
             <div style={{ display: "flex", justifyContent: "center", marginTop: "32px", padding: "0 20px", ...anim(0.5) }}>
               <div style={{
                 display: "flex", alignItems: "center", gap: "0",
-                background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: "50px", padding: "5px 5px 5px 24px",
                 maxWidth: "520px", width: "100%",
-                backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+                ...(isTablet
+                  ? { background: "rgba(255,255,255,0.08)" }
+                  : { background: "rgba(255,255,255,0.05)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }),
               }}>
                 <input type="email" placeholder="Enter your email for a free SEO audit" style={{
                   flex: 1, background: "transparent", border: "none", outline: "none",

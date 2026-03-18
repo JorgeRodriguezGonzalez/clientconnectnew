@@ -10,6 +10,7 @@ import CTASection from "@/components/home/CTASection";
 import { socialAdsServices, socialAdsHeading, socialAdsHighlight, socialAdsSubtitle } from "@/data/services/socialads-services";
 import * as Accordion from "@radix-ui/react-accordion";
 import { cn } from "@/lib/utils";
+import { useIsTablet } from "@/hooks/useIsTablet";
 
 const C = {
   cyan: "#06b6d4",
@@ -129,6 +130,7 @@ const OurProcess = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const cardCount = processSteps.length;
   const stackOffset = 24;
+  const isTablet = useIsTablet();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -211,13 +213,17 @@ const OurProcess = () => {
             >
               <div
                 style={{
-                  background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
+                  ...(isTablet
+                    ? { background: `linear-gradient(135deg, rgba(255,255,255,${0.16 - i * 0.025}) 0%, rgba(255,255,255,${0.07 - i * 0.005}) 100%)` }
+                    : {
+                        background: `linear-gradient(135deg, rgba(255,255,255,${0.12 - i * 0.025}) 0%, rgba(255,255,255,${0.03 - i * 0.005}) 100%)`,
+                        backdropFilter: "blur(12px)",
+                        WebkitBackdropFilter: "blur(12px)",
+                      }),
                   borderRadius: "20px",
                   padding: "56px 44px",
                   position: "relative",
                   overflow: "hidden",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
                   minHeight: "300px",
                   display: "flex",
                   flexDirection: "column",
@@ -488,6 +494,7 @@ const SocialMediaAds = () => {
   const [hImg, setHImg] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
 
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
 
@@ -560,12 +567,13 @@ const SocialMediaAds = () => {
             }}>
               <div style={{
                 display: "flex", alignItems: "center", gap: "0",
-                background: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(255,255,255,0.1)",
                 borderRadius: "50px",
                 padding: "5px 5px 5px 24px",
                 maxWidth: "520px", width: "100%",
-                backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+                ...(isTablet
+                  ? { background: "rgba(255,255,255,0.08)" }
+                  : { background: "rgba(255,255,255,0.05)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }),
               }}>
                 <input
                   type="email"
