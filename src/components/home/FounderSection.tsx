@@ -876,7 +876,7 @@ export const FounderSection = () => {
                           autoPlay loop muted playsInline 
                           className={cn(
                             "w-full h-full object-cover transition-all duration-700 ease-out",
-                            isCaseStudyActive ? "grayscale-0" : "grayscale opacity-60 group-hover:opacity-80"
+                            isCaseStudyActive ? "opacity-100" : "opacity-80 group-hover:opacity-100"
                           )}
                         >
                           <source src="/videos/contentcreation.mp4" type="video/mp4" />
