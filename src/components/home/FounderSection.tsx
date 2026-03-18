@@ -953,7 +953,8 @@ export const FounderSection = () => {
                 )}
               </AnimatePresence>
 
-              {/* CARD 4: ECOSYSTEM */}
+              {/* CARD 4: ECOSYSTEM — hidden on mobile */}
+              {!isMobile && (
               <TiltCard 
                 layout
                 isMobile={isMobile}
@@ -995,6 +996,7 @@ export const FounderSection = () => {
                   </div>
                 </div>
               </TiltCard>
+              )}
 
               {/* CARD 5: CONTENT THAT CONVERTS */}
               <TiltCard 
