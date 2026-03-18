@@ -1014,7 +1014,6 @@ export const FounderSection = () => {
                 onClick={() => setIsCaseStudyActive(true)}
               >
                 <div className="absolute inset-0 w-full h-full">
-                  {/* FIX #1: Conditionally render video — no download on mobile */}
                   {!isMobile && (
                     <video 
                       autoPlay loop muted playsInline
@@ -1028,18 +1027,32 @@ export const FounderSection = () => {
                     </video>
                   )}
                   {isMobile && (
-                    <img 
-                      src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop"
-                      alt="Content Creation"
-                      loading="lazy"
-                      className="w-full h-full object-cover opacity-80"
-                    />
+                    <video 
+                      ref={(el) => { if (el) el.dataset.mobileVideo = "true"; }}
+                      muted playsInline
+                      preload="metadata"
+                      loop
+                      className={cn(
+                        "w-full h-full object-cover transition-all duration-700 ease-out",
+                        isCaseStudyActive ? "opacity-100" : "opacity-80"
+                      )}
+                    >
+                      <source src="/videos/contentcreation.mp4" type="video/mp4" />
+                    </video>
                   )}
                 </div>
                 <motion.div
-                  className="absolute inset-0 z-20 pointer-events-none"
+                  className={cn("absolute inset-0 z-20", isMobile ? "pointer-events-auto cursor-pointer" : "pointer-events-none")}
                   animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
                   transition={{ duration: 0.5 }}
+                  onClick={(e) => {
+                    if (!isMobile) return;
+                    e.stopPropagation();
+                    setIsCaseStudyActive(true);
+                    const video = e.currentTarget.parentElement?.querySelector('video');
+                    if (video) video.play();
+                  }}
+                  style={{ pointerEvents: isMobile && isCaseStudyActive ? 'none' : undefined }}
                 >
                   <div className="absolute inset-0 bg-black/40" />
                   <div className="absolute inset-0 flex items-center justify-center">
