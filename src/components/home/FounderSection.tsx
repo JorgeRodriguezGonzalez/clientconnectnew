@@ -625,7 +625,6 @@ const ProfitChart = () => {
 export const FounderSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLightMode, setIsLightMode] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [isLateScroll, setIsLateScroll] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [chartKey, setChartKey] = useState(0); 
@@ -633,16 +632,6 @@ export const FounderSection = () => {
 
   const buttonColorSequence = [COLORS.emerald, COLORS.emerald, COLORS.cyan, COLORS.cyan, COLORS.emerald];
   const buttonColorDuration = 10;
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // On mobile, never switch to light mode
-  const isLight = isLightMode && !isMobile;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -664,7 +653,7 @@ export const FounderSection = () => {
       ref={containerRef} 
       className={cn(
         "relative w-full pt-24 pb-32 lg:pb-40 transition-colors duration-0 z-10 font-sans", 
-        isLightMode ? `bg-[${BACKGROUNDS.dark}] md:bg-[#FAFAFA]` : `bg-[${BACKGROUNDS.dark}]`
+        isLightMode ? "bg-[#FAFAFA]" : `bg-[${BACKGROUNDS.dark}]`
       )}
     >
       <style>{fontStyles}</style>
