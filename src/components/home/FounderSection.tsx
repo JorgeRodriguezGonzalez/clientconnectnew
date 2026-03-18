@@ -879,7 +879,7 @@ export const FounderSection = () => {
                             isCaseStudyActive ? "grayscale-0" : "grayscale opacity-60 group-hover:opacity-80"
                           )}
                         >
-                          <source src="https://videos.pexels.com/video-files/3196071/3196071-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                          <source src="/videos/contentcreation.mp4" type="video/mp4" />
                         </video>
                       </div>
                       <motion.div
@@ -895,7 +895,7 @@ export const FounderSection = () => {
                         </div>
                         <div className="absolute bottom-5 left-5">
                           <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-[11px] font-sans font-medium">
-                            Hear our Stories
+                            Content That Converts
                           </span>
                         </div>
                       </motion.div>
