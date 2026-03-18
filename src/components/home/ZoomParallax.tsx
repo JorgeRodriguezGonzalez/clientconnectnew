@@ -275,7 +275,6 @@ export default function ZoomParallax() {
         if (typeof window !== "undefined") {
             const width = window.innerWidth;
             if (width >= 768 && width <= 1024) {
-                // Tablet: desactivamos Lenis
                 return;
             }
         }
@@ -288,7 +287,7 @@ export default function ZoomParallax() {
         requestAnimationFrame(raf);
 
         return () => {
-            // @ts-ignore Lenis puede no tener destroy tipado
+            // @ts-ignore
             lenis.destroy?.();
         };
     }, []);
@@ -333,13 +332,9 @@ export default function ZoomParallax() {
                         </span>
                     </motion.div>
 
-                    {/* Title */}
-                    <h2
-                        className="section-title text-white max-w-4xl"
-                    >
+                    {/* Title - single line on desktop */}
+                    <h2 className="section-title text-white max-w-4xl md:whitespace-nowrap">
                         <span style={{ color: '#ffffff' }}>Websites built to</span>{' '}
-                        <br className="hidden md:block" />
-
                         <motion.span
                             initial={{ backgroundPosition: "400% 50%" }}
                             animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
@@ -359,10 +354,8 @@ export default function ZoomParallax() {
                         </motion.span>
                     </h2>
 
-                    {/* Description */}
-                    <p
-                        className="section-text-dark max-w-sm mt-6"
-                    >
+                    {/* Description - single line on desktop */}
+                    <p className="section-text-dark max-w-sm md:max-w-3xl mt-6 md:whitespace-nowrap">
                         A selection of websites we've built for{' '}
                         <strong style={{ color: '#ffffff', fontWeight: 500 }}>Australian businesses</strong>.
                         {' '}From local service brands to{' '}
