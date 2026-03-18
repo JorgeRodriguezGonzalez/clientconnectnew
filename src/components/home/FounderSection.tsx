@@ -802,7 +802,7 @@ export const FounderSection = () => {
                 <div className="absolute inset-0 bg-gray-900 overflow-hidden rounded-2xl">
                   <motion.img 
                     layout
-                    src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1632&auto=format&fit=crop" 
+                    src="/images/foundersection2.jpg" 
                     alt="Client Connect Australia Team" 
                     loading="eager"
                     animate={{ scale: isLightMode ? 1.25 : 1 }}
