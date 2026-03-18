@@ -98,21 +98,41 @@ const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, object
     );
 };
 
-// --- SUB-COMPONENT: MOBILE CAROUSEL (two columns, auto-scroll) ---
-function MobileCarousel({ videos }: { videos: { src: string }[] }) {
-    const col1 = videos.filter((_, i) => i % 2 === 0);
-    const col2 = videos.filter((_, i) => i % 2 !== 0);
+// --- MOBILE CAROUSEL MEDIA ITEMS ---
+// Column 1: video, image, video, image, video (5 items)
+// Column 2: video, image, video, video, video (5 items)
+const mobileCol1: { type: 'video' | 'image'; src: string }[] = [
+    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1772058232/prolexbathrooms_f8cpx0.mov" },
+    { type: 'image', src: "/images/driveways3.jpg" },
+    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773808379/YLRmobile_wh2rmc.mov" },
+    { type: 'image', src: "/images/nanotise.jpg" },
+    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978181/driveways_sdxoqa.mov" },
+];
 
+const mobileCol2: { type: 'video' | 'image'; src: string }[] = [
+    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773808760/landscapingmobile_rokp6c.mov" },
+    { type: 'image', src: "/images/YLRimage.jpg" },
+    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov" },
+    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771992243/assetplumbing_a73cav.mov" },
+    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771989643/0225_1_jymeqw.mov" },
+];
+
+// --- SUB-COMPONENT: MOBILE CAROUSEL (two columns, auto-scroll) ---
+function MobileCarousel() {
     return (
-        <div className="relative h-[500px] overflow-hidden mx-4">
+        <div className="relative h-[500px] overflow-hidden px-6">
             <div className="flex gap-3 h-full">
                 {/* Column 1 - Scroll Up */}
                 <div className="flex-1 overflow-hidden">
                     <div style={{ animation: 'scrollUp 20s linear infinite' }}>
                         <div className="flex flex-col gap-3">
-                            {[...col1, ...col1].map(({ src }, index) => (
+                            {[...mobileCol1, ...mobileCol1].map((item, index) => (
                                 <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
-                                    <ParallaxVideo src={src} />
+                                    {item.type === 'video' ? (
+                                        <ParallaxVideo src={item.src} />
+                                    ) : (
+                                        <img src={item.src} alt="" className="h-full w-full object-cover" />
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -122,9 +142,13 @@ function MobileCarousel({ videos }: { videos: { src: string }[] }) {
                 <div className="flex-1 overflow-hidden">
                     <div style={{ animation: 'scrollDown 22s linear infinite' }}>
                         <div className="flex flex-col gap-3">
-                            {[...col2, ...col2].map(({ src }, index) => (
+                            {[...mobileCol2, ...mobileCol2].map((item, index) => (
                                 <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
-                                    <ParallaxVideo src={src} />
+                                    {item.type === 'video' ? (
+                                        <ParallaxVideo src={item.src} />
+                                    ) : (
+                                        <img src={item.src} alt="" className="h-full w-full object-cover" />
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -423,7 +447,7 @@ export default function ZoomParallax() {
 
             {/* MOBILE: Two-column carousel / DESKTOP: Parallax zoom */}
             {isMobile ? (
-                <MobileCarousel videos={videos} />
+                <MobileCarousel />
             ) : (
                 <ParallaxContent videos={videos} isMobile={isMobile} />
             )}
