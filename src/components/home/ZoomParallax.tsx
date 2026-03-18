@@ -294,10 +294,12 @@ export default function ZoomParallax() {
 
     const ylrDesktop = "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771987258/0225_spcg8h.mov";
     const ylrMobile = "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773808379/YLRmobile_wh2rmc.mov";
+    const landscapingDesktop = "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978172/landscaping_lierf1.mov";
+    const landscapingMobile = "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773808760/landscapingmobile_rokp6c.mov";
 
     const videos = [
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1772058232/prolexbathrooms_f8cpx0.mov" },
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978172/landscaping_lierf1.mov" },
+        { src: isMobile ? landscapingMobile : landscapingDesktop },
         { src: isMobile ? ylrMobile : ylrDesktop },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov" },
         { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978181/driveways_sdxoqa.mov" },
