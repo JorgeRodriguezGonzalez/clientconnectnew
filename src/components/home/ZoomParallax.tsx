@@ -98,26 +98,24 @@ const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, object
     );
 };
 
-// --- MOBILE CAROUSEL MEDIA ITEMS ---
-// Column 1: video, image, video, image, video (5 items)
-// Column 2: video, image, video, video, video (5 items)
-const mobileCol1: { type: 'video' | 'image'; src: string }[] = [
-    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1772058232/prolexbathrooms_f8cpx0.mov" },
-    { type: 'image', src: "/images/driveways3.jpg" },
-    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773808379/YLRmobile_wh2rmc.mov" },
-    { type: 'image', src: "/images/nanotise.jpg" },
-    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978181/driveways_sdxoqa.mov" },
+// --- MOBILE CAROUSEL IMAGES (no videos for performance) ---
+const mobileCol1Images = [
+    "/images/driveways3.jpg",
+    "/images/nanotise.jpg",
+    "/images/YLRimage.jpg",
+    "/images/driveways3.jpg",
+    "/images/nanotise.jpg",
 ];
 
-const mobileCol2: { type: 'video' | 'image'; src: string }[] = [
-    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773808760/landscapingmobile_rokp6c.mov" },
-    { type: 'image', src: "/images/YLRimage.jpg" },
-    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov" },
-    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771992243/assetplumbing_a73cav.mov" },
-    { type: 'video', src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771989643/0225_1_jymeqw.mov" },
+const mobileCol2Images = [
+    "/images/YLRimage.jpg",
+    "/images/driveways3.jpg",
+    "/images/nanotise.jpg",
+    "/images/YLRimage.jpg",
+    "/images/driveways3.jpg",
 ];
 
-// --- SUB-COMPONENT: MOBILE CAROUSEL (two columns, auto-scroll) ---
+// --- SUB-COMPONENT: MOBILE CAROUSEL (two columns, images only) ---
 function MobileCarousel() {
     return (
         <div className="relative h-[500px] overflow-hidden px-6">
@@ -126,13 +124,9 @@ function MobileCarousel() {
                 <div className="flex-1 overflow-hidden">
                     <div style={{ animation: 'scrollUp 20s linear infinite' }}>
                         <div className="flex flex-col gap-3">
-                            {[...mobileCol1, ...mobileCol1].map((item, index) => (
+                            {[...mobileCol1Images, ...mobileCol1Images].map((src, index) => (
                                 <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
-                                    {item.type === 'video' ? (
-                                        <ParallaxVideo src={item.src} />
-                                    ) : (
-                                        <img src={item.src} alt="" className="h-full w-full object-cover" />
-                                    )}
+                                    <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
                                 </div>
                             ))}
                         </div>
@@ -142,13 +136,9 @@ function MobileCarousel() {
                 <div className="flex-1 overflow-hidden">
                     <div style={{ animation: 'scrollDown 22s linear infinite' }}>
                         <div className="flex flex-col gap-3">
-                            {[...mobileCol2, ...mobileCol2].map((item, index) => (
+                            {[...mobileCol2Images, ...mobileCol2Images].map((src, index) => (
                                 <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
-                                    {item.type === 'video' ? (
-                                        <ParallaxVideo src={item.src} />
-                                    ) : (
-                                        <img src={item.src} alt="" className="h-full w-full object-cover" />
-                                    )}
+                                    <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
                                 </div>
                             ))}
                         </div>
