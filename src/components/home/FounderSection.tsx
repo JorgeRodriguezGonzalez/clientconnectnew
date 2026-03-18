@@ -812,7 +812,7 @@ export const FounderSection = () => {
                 onLayoutAnimationStart={() => setIsResizing(true)}
                 onLayoutAnimationComplete={() => setIsResizing(false)}
                 className={cn(
-                  "md:row-span-2 h-[350px] md:h-[600px] group relative z-10 safari-gpu",
+                  "md:row-span-2 h-[300px] md:h-[600px] group relative z-10 safari-gpu",
                   isLight ? "md:col-span-1" : "md:col-span-2"
                 )}
                 innerClassName={cn(
@@ -859,7 +859,7 @@ export const FounderSection = () => {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                      className="h-[280px] group safari-gpu"
+                      className="h-[220px] md:h-[280px] group safari-gpu"
                       innerClassName={cn(
                         "border flex flex-row items-stretch",
                         isMobile ? "bg-zinc-900 border-white/10" : "bg-white border-zinc-200"
@@ -911,7 +911,7 @@ export const FounderSection = () => {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                      className="h-[300px] group safari-gpu cursor-default"
+                      className="h-[220px] md:h-[300px] group safari-gpu cursor-default"
                       innerClassName={cn(
                         "border overflow-hidden",
                         isMobile ? "bg-zinc-900 border-white/10" : "bg-white border-zinc-200"
