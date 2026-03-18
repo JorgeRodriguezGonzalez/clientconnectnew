@@ -679,7 +679,7 @@ export const FounderSection = () => {
     <section 
       ref={containerRef} 
       className={cn(
-        "relative w-full pt-24 pb-32 lg:pb-40 transition-colors duration-0 z-10 font-sans", 
+        "relative w-full pt-24 pb-32 md:pb-32 lg:pb-40 transition-colors duration-0 z-10 font-sans", 
         isLight ? "bg-[#FAFAFA]" : `bg-[${BACKGROUNDS.dark}]`
       )}
     >
@@ -698,7 +698,7 @@ export const FounderSection = () => {
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start mt-8 lg:mt-16">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start mt-4 md:mt-8 lg:mt-16">
           
           {/* --- LEFT: TEXT --- */}
           <div className="lg:w-[40%] lg:sticky lg:top-32">
@@ -800,7 +800,7 @@ export const FounderSection = () => {
             
             <motion.div 
               layout 
-              className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 auto-rows-[minmax(200px,auto)]"
+              className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5 auto-rows-[minmax(200px,auto)]"
             >
 
               {/* CARD 1: TEAM PHOTO */}
@@ -953,7 +953,7 @@ export const FounderSection = () => {
                         </div>
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 h-[140px] w-full z-0">
-                        {!isMobile && <ProfitChart key={chartKey} />}
+                        <ProfitChart key={chartKey} />
                       </div>
                     </TiltCard>
                   </>
