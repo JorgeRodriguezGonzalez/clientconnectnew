@@ -156,7 +156,7 @@ const CTASection = () => {
   };
 
   return (
-    <section className="relative bg-[#FAFAFA] py-16 sm:py-20 overflow-hidden">
+    <section id="contact-form" className="relative bg-[#FAFAFA] py-16 sm:py-20 overflow-hidden">
       <div className="w-full h-[1px] bg-zinc-200 absolute top-0 z-20" />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">

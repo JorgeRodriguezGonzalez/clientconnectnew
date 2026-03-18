@@ -562,7 +562,7 @@ export const SuperHero = ({
               ) : (
                 <div className="flex flex-wrap items-center justify-center gap-3">
                   <motion.a
-                    href="#contact"
+                    href="/case-studies"
                     className="flex items-center justify-center gap-1.5 cursor-pointer w-full sm:w-auto relative z-[100]"
                     style={{ height: 48, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 50, padding: '12px 24px', backdropFilter: 'blur(8px)' }}
                     whileHover={{ boxShadow: '0 0 20px rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.2)' }}
@@ -571,7 +571,7 @@ export const SuperHero = ({
                   </motion.a>
 
                   <motion.a
-                    href="#contact"
+                    href="#contact-form"
                     onHoverStart={() => setIsHovered(true)}
                     onHoverEnd={() => setIsHovered(false)}
                     className="flex items-center justify-center gap-1.5 cursor-pointer w-full sm:w-auto relative z-[100]"
