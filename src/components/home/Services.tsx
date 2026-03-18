@@ -1,14 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, ArrowLeft, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { COLORS } from "@/lib/design-tokens";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
-
-const COLORS = {
-  cyan: "#06b6d4",
-  emerald: "#34d399",
-  gold: "rgb(237, 191, 134)",
-};
 
 const PANORAMIC_IMAGES = {
   strategy: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2600&auto=format&fit=crop",
@@ -91,7 +86,6 @@ const ServiceCard = ({ service, colorIndex }) => {
       onMouseLeave={() => setIsHovered(false)}
       style={isMobile ? { background: CARD_COLORS[colorIndex % CARD_COLORS.length] } : undefined}
     >
-      {/* Desktop: video as background, plays on hover */}
       {!isMobile && service.videoUrl && (
         <video
           ref={videoRef}
@@ -103,7 +97,6 @@ const ServiceCard = ({ service, colorIndex }) => {
         />
       )}
 
-      {/* Desktop: fallback image if no video */}
       {!isMobile && !service.videoUrl && (
         <div
           className="absolute inset-0 w-full h-full"
@@ -116,7 +109,6 @@ const ServiceCard = ({ service, colorIndex }) => {
         />
       )}
 
-      {/* Mobile: video on hover */}
       {isMobile && service.videoUrl && (
         <video
           ref={videoRef}
@@ -129,7 +121,6 @@ const ServiceCard = ({ service, colorIndex }) => {
         />
       )}
 
-      {/* Overlay */}
       {!isMobile && (
         <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-500" />
       )}
@@ -137,7 +128,6 @@ const ServiceCard = ({ service, colorIndex }) => {
         <div className="absolute inset-0 bg-black/50 transition-opacity duration-500" />
       )}
 
-      {/* Content */}
       <div className="relative h-full flex flex-col justify-between p-5 z-10">
         <div className="space-y-2 pt-1">
           <h3 className="text-2xl font-black tracking-tight leading-none text-white drop-shadow-md">
@@ -244,17 +234,15 @@ const Services = () => {
   }, [activeTab]);
 
   return (
-    <div className="w-full bg-black relative z-10 min-h-screen py-8 md:py-20 font-sans text-white overflow-x-hidden pl-[3vw]">
+    <div className="w-full bg-black relative z-10 min-h-screen py-20 font-sans text-white overflow-x-hidden pl-[3vw]">
       <style>{`
         .hide-scroll::-webkit-scrollbar { display: none !important; }
         .hide-scroll { -ms-overflow-style: none !important; scrollbar-width: none !important; }
       `}</style>
 
-      {/* Header - Centrado */}
       <div ref={headerRef} className="max-w-7xl mx-auto px-4 md:px-8">
-
         <div className="flex flex-col items-center text-center gap-4 mb-16 pb-6 border-b border-white/10 md:pt-12">
-          <span className="w-fit px-3 py-1.5 rounded-lg border bg-white/5 border-white/10 text-gray-400 font-semibold text-[10px] uppercase tracking-[2px]" style={{ fontFamily: "'Satoshi', sans-serif" }}>Digital Ecosystem</span>
+          <span className="w-fit px-3 py-1.5 rounded-lg border bg-white/5 border-white/10 text-zinc-400 font-semibold text-[10px] uppercase tracking-[2px]" style={{ fontFamily: "'Satoshi', sans-serif" }}>Digital Ecosystem</span>
           <h2 style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "clamp(32px, 5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.5px" }} className="text-white">
             Services built to{" "}
             <motion.span
@@ -275,13 +263,12 @@ const Services = () => {
             </motion.span>
           </h2>
           <div className="max-w-lg">
-            <p className="text-sm leading-relaxed text-white/60 md:text-base">
+            <p className="section-text-dark">
               From initial strategy to final conversion, we cover every aspect of the digital landscape to ensure sustainable growth and measurable results.
             </p>
           </div>
         </div>
 
-        {/* Tabs */}
         <div className="relative mb-12">
           <div ref={tabsContainerRef} className="flex flex-wrap justify-center gap-2 pb-4 md:flex-nowrap md:overflow-x-auto md:justify-center md:gap-2 md:-mx-0 md:px-0 hide-scroll">
             {SERVICES.map(service => {
@@ -318,9 +305,7 @@ const Services = () => {
         </div>
       </div>
 
-      {/* Carousel with pagination */}
       <div className="relative">
-        {/* Left arrow */}
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: canScrollLeft ? 1 : 0 }}
@@ -337,7 +322,6 @@ const Services = () => {
           <ChevronLeft className="w-5 h-5 text-white" strokeWidth={2} />
         </motion.button>
 
-        {/* Right arrow */}
         <motion.button
           initial={{ opacity: 1 }}
           animate={{ opacity: canScrollRight ? 1 : 0 }}
@@ -369,18 +353,6 @@ const Services = () => {
             </div>
           ))}
         </motion.div>
-      </div>
-
-      {/* CTA */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="flex justify-center mt-4 md:mt-8 border-t border-white/10 pt-8">
-          <a href="#" className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 text-white rounded-full shadow-sm hover:shadow-md transition-all duration-300 border border-white/20" onClick={e => e.preventDefault()}>
-            <span className="text-xs font-semibold uppercase tracking-wide">Explore services</span>
-            <div className="w-6 h-6 bg-neutral-900 rounded-full flex items-center justify-center text-white transition-transform duration-300 group-hover:translate-x-1">
-              <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
-            </div>
-          </a>
-        </div>
       </div>
     </div>
   );
