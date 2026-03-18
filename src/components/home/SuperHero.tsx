@@ -139,7 +139,7 @@ const clients = [
 ];
 
 const ClientCard = ({ client, isMobile }: { client: typeof clients[0]; isMobile?: boolean }) => (
-  <div className={`relative flex-shrink-0 ${isMobile ? 'w-[220px] h-[290px]' : 'w-[260px] h-[340px]'} rounded-3xl overflow-hidden cursor-pointer group border border-transparent hover:border-gray-500 transition-all duration-300`}>
+  <a href="/case-studies" className={`relative flex-shrink-0 ${isMobile ? 'w-[220px] h-[290px]' : 'w-[260px] h-[340px]'} rounded-3xl overflow-hidden cursor-pointer group border border-transparent hover:border-gray-500 transition-all duration-300 block`}>
     <img src={client.image} alt={client.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/40" />
     <div className="absolute top-4 left-4">
@@ -148,7 +148,7 @@ const ClientCard = ({ client, isMobile }: { client: typeof clients[0]; isMobile?
     <div className="absolute bottom-5 left-4 right-4">
       <p className={`text-white/90 ${isMobile ? 'text-[11px]' : 'text-[12px]'} font-medium leading-relaxed`}>{client.tags.join(' · ')}</p>
     </div>
-  </div>
+  </a>
 );
 
 const ClientCarousel = ({ isMobile }: { isMobile?: boolean }) => {
