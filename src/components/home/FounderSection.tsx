@@ -1001,20 +1001,20 @@ export const FounderSection = () => {
                 </TiltCard>
               )}
 
-              {/* CARD 5: CONTENT THAT CONVERTS */}
-              <TiltCard 
-                layout
-                isMobile={isMobile}
-                initial={{ opacity: 0, y: 20 }}
-                animate={(isLateScroll || isMobile) ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                style={{ pointerEvents: (isLateScroll || isMobile) ? 'auto' : 'none' }}
-                className="h-[280px] group cursor-pointer safari-gpu"
-                innerClassName="bg-black border border-zinc-200"
-                onClick={() => setIsCaseStudyActive(true)}
-              >
-                <div className="absolute inset-0 w-full h-full">
-                  {!isMobile && (
+              {/* CARD 5: CONTENT THAT CONVERTS — hidden on mobile */}
+              {!isMobile && (
+                <TiltCard 
+                  layout
+                  isMobile={isMobile}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isLateScroll ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  style={{ pointerEvents: isLateScroll ? 'auto' : 'none' }}
+                  className="h-[280px] group cursor-pointer safari-gpu"
+                  innerClassName="bg-black border border-zinc-200"
+                  onClick={() => setIsCaseStudyActive(true)}
+                >
+                  <div className="absolute inset-0 w-full h-full">
                     <video 
                       autoPlay loop muted playsInline
                       preload="metadata"
@@ -1025,48 +1025,26 @@ export const FounderSection = () => {
                     >
                       <source src="/videos/contentcreation.mp4" type="video/mp4" />
                     </video>
-                  )}
-                  {isMobile && (
-                    <video 
-                      ref={(el) => { if (el) el.dataset.mobileVideo = "true"; }}
-                      muted playsInline
-                      preload="metadata"
-                      loop
-                      className={cn(
-                        "w-full h-full object-cover transition-all duration-700 ease-out",
-                        isCaseStudyActive ? "opacity-100" : "opacity-80"
-                      )}
-                    >
-                      <source src="/videos/contentcreation.mp4" type="video/mp4" />
-                    </video>
-                  )}
-                </div>
-                <motion.div
-                  className={cn("absolute inset-0 z-20", isMobile ? "pointer-events-auto cursor-pointer" : "pointer-events-none")}
-                  animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
-                  transition={{ duration: 0.5 }}
-                  onClick={(e) => {
-                    if (!isMobile) return;
-                    e.stopPropagation();
-                    setIsCaseStudyActive(true);
-                    const video = e.currentTarget.parentElement?.querySelector('video');
-                    if (video) video.play();
-                  }}
-                  style={{ pointerEvents: isMobile && isCaseStudyActive ? 'none' : undefined }}
-                >
-                  <div className="absolute inset-0 bg-black/40" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
-                      <Play fill="white" className="ml-1 text-white" />
+                  </div>
+                  <motion.div
+                    className="absolute inset-0 z-20 pointer-events-none"
+                    animate={{ opacity: isCaseStudyActive ? 0 : 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className="absolute inset-0 bg-black/40" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/20">
+                        <Play fill="white" className="ml-1 text-white" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute bottom-5 left-5">
-                    <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-[11px] font-sans font-medium">
-                      Content That Converts
-                    </span>
-                  </div>
-                </motion.div>
-              </TiltCard>
+                    <div className="absolute bottom-5 left-5">
+                      <span className="px-3 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-lg text-white text-[11px] font-sans font-medium">
+                        Content That Converts
+                      </span>
+                    </div>
+                  </motion.div>
+                </TiltCard>
+              )}
 
               {/* CARD 6: TRUST - hidden on mobile */}
               <TiltCard 
