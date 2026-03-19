@@ -767,7 +767,7 @@ export const FounderSection = () => {
               <div className="mt-4">
                 <a
                   href="/about"
-                  className="group relative h-[52px] px-8 py-3 inline-flex items-center justify-center gap-2 rounded-xl font-sans font-semibold text-[14px] backdrop-blur-sm no-underline bg-black border border-[#06b6d4] text-[#06b6d4] transition-all duration-500 hover:border-[#34d399] hover:text-[#34d399] hover:shadow-[0_0_20px_rgba(52,211,153,0.5)]"
+                  className="group relative h-[52px] px-8 py-3 inline-flex items-center justify-center gap-2 rounded-full font-sans font-semibold text-[14px] backdrop-blur-sm no-underline bg-black border border-[#06b6d4] text-[#06b6d4] transition-all duration-500 hover:border-[#34d399] hover:text-[#34d399] hover:shadow-[0_0_20px_rgba(52,211,153,0.5)]"
                 >
                   <span className="flex items-center gap-2">
                     More About Us
