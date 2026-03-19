@@ -13,16 +13,16 @@ const testimonials = [
     role: "Business Owner",
   },
   {
-    text: "Great guys. Understand my business. Good results.",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    name: "Steve Haddy",
-    role: "Local Guide",
-  },
-  {
     text: "Effective digital campaigns brought consistent high-intent enquiries and noticeable business growth. Transparent support and impressive outcomes.",
     image: "https://randomuser.me/api/portraits/men/45.jpg",
     name: "Marceau Guillot",
     role: "Business Owner",
+  },
+  {
+    text: "Great guys. Understand my business. Good results.",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    name: "Steve Haddy",
+    role: "Local Guide",
   },
   {
     text: "They manage all our socials — Instagram, Facebook, LinkedIn. The content actually looks and sounds like us, not some generic agency template. Our engagement has gone through the roof.",
