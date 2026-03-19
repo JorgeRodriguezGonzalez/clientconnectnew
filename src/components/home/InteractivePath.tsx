@@ -99,7 +99,7 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
         <img
           src={item.posterSrc}
           alt={item.handle}
-          loading="lazy"
+          loading="eager"
           style={{
             position: "absolute",
             inset: 0,
