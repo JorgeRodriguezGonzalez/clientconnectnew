@@ -7,22 +7,22 @@ const COLORS = {
 
 const testimonials = [
   {
-    text: "We needed a complete website rebuild for our physio clinic in Bondi. They nailed the design, it loads fast, looks professional and we started getting online bookings within the first week of launch.",
-    image: "https://randomuser.me/api/portraits/women/1.jpg",
-    name: "Rachel Thompson",
+    text: "Client Connect Australia has helped my business grow from just me in my van to 6 employees in the space of 9 months. Their expert team helped train myself and develop my structure to handle the influx of work. Highly recommend!!!",
+    image: "https://randomuser.me/api/portraits/men/10.jpg",
+    name: "Adam Stefanel",
     role: "Business Owner",
   },
   {
-    text: "Our Google Ads were burning cash before we found these guys. They restructured our campaigns, cut our cost per lead in half and now we're consistently booked out two weeks in advance.",
-    image: "https://randomuser.me/api/portraits/men/2.jpg",
-    name: "James Nguyen",
-    role: "Managing Director",
+    text: "Great guys. Understand my business. Good results.",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    name: "Steve Haddy",
+    role: "Local Guide",
   },
   {
-    text: "The SEO work has been a game changer for us. We went from page 4 to the top 3 for 'accountant Sydney CBD' in about five months. The organic leads just keep coming in now.",
-    image: "https://randomuser.me/api/portraits/women/3.jpg",
-    name: "Sophie Mitchell",
-    role: "Business Partner",
+    text: "Effective digital campaigns brought consistent high-intent enquiries and noticeable business growth. Transparent support and impressive outcomes.",
+    image: "https://randomuser.me/api/portraits/men/45.jpg",
+    name: "Marceau Guillot",
+    role: "Business Owner",
   },
   {
     text: "They manage all our socials — Instagram, Facebook, LinkedIn. The content actually looks and sounds like us, not some generic agency template. Our engagement has gone through the roof.",
