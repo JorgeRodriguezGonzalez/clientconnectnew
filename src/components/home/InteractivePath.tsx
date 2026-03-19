@@ -13,7 +13,7 @@ const RECENT_WORKS = [
   { 
     id: "2", 
     videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", 
-    posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg",
+    posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg", 
     handle: "Kieren", 
     testimonial: "Lc Landscaping" 
   },
@@ -60,8 +60,16 @@ const Stars = () => (
 const VideoCard = ({ item, position, onClick, isActive }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Efecto para pausar el video si el usuario cambia de slide
+  // Detectar si estamos en mobile para ajustar tamaños dinámicamente
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   useEffect(() => {
     if (!isActive && videoRef.current) {
       videoRef.current.pause();
@@ -71,39 +79,39 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
 
   const togglePlay = (e) => {
     e.stopPropagation();
-    if (!isActive) {
-      onClick();
-      return;
-    }
-    
+    if (!isActive) { onClick(); return; }
     if (!videoRef.current) return;
-
     if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch((err) => console.log("Video play error:", err));
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
     }
   };
 
   const abs = Math.abs(position);
-  // AJUSTES PROPORCIONALES PARA MOBILE:
-  const scale = abs === 0 ? 1 : abs === 1 ? 0.80 : 0.65;
-  const rotate = position * 6;
-  const translateX = position * 190; // Reducido de 220 para acercar las cartas laterales
-  const opacity = abs === 0 ? 1 : abs === 1 ? 0.70 : 0.30;
+  
+  // LÓGICA DIFERENCIADA: Si es mobile usamos valores menores, si es escritorio los originales.
+  const scale = isMobile 
+    ? (abs === 0 ? 1 : abs === 1 ? 0.80 : 0.65)
+    : (abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68);
+
+  const translateX = isMobile 
+    ? (position * 190) 
+    : (position * 220);
+
+  const rotate = position * 7;
+  const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
   const zIndex = 10 - abs * 3;
-  const blur = abs === 0 ? 0 : abs === 1 ? 0.5 : 2;
+  const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
 
   return (
     <div
       onClick={onClick}
       style={{
         position: "absolute",
-        width: "240px", // Reducido de 280px para ver más las de los lados
-        height: "400px", // Reducido proporcionalmente de 460px
+        width: isMobile ? "240px" : "280px", // Cambio solo en mobile
+        height: isMobile ? "400px" : "460px", // Cambio solo en mobile
         borderRadius: "20px",
         overflow: "hidden",
         backgroundColor: "#18181b",
@@ -116,43 +124,20 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
-      {/* FRAME ESTÁTICO: Se muestra mientras no esté reproduciendo */}
-      {!isPlaying && item.posterSrc && (
-        <img 
-          src={item.posterSrc} 
-          alt=""
-          style={{ 
-            position: "absolute", 
-            inset: 0, 
-            width: "100%", 
-            height: "100%", 
-            objectFit: "cover", 
-            zIndex: 1 
-          }}
-        />
-      )}
-
       <video
         ref={videoRef}
         src={item.videoSrc}
+        poster={item.posterSrc} // Muestra el inicio del video por defecto
         loop
         playsInline
         preload="metadata"
-        style={{ 
-          position: "absolute", 
-          inset: 0, 
-          width: "100%", 
-          height: "100%", 
-          objectFit: "cover",
-          zIndex: 0
-        }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
       />
 
       <div style={{
         position: "absolute", inset: 0,
         background: "linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.95) 100%)",
         pointerEvents: "none",
-        zIndex: 2
       }} />
 
       {isActive && (
@@ -164,17 +149,16 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
             opacity: isPlaying ? 0 : 1,
             transition: "opacity 0.3s",
             cursor: "pointer",
-            zIndex: 3
           }}
         >
           <div style={{
-            width: 50, height: 50, borderRadius: "50%",
+            width: 56, height: 56, borderRadius: "50%",
             backgroundColor: "rgba(0,0,0,0.55)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
             {isPlaying
-              ? <Pause fill="white" color="white" size={18} />
-              : <Play fill="white" color="white" size={18} style={{ marginLeft: 3 }} />
+              ? <Pause fill="white" color="white" size={20} />
+              : <Play fill="white" color="white" size={20} style={{ marginLeft: 3 }} />
             }
           </div>
         </div>
@@ -182,16 +166,15 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
 
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
-        padding: "16px",
-        display: "flex", flexDirection: "column", gap: "8px",
-        zIndex: 4
+        padding: "20px",
+        display: "flex", flexDirection: "column", gap: "10px",
       }}>
         <Stars />
         <div>
-          <p style={{ color: "#fff", fontSize: "15px", fontWeight: 600, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+          <p style={{ color: "#fff", fontSize: "17px", fontWeight: 600, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.handle}
           </p>
-          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "12px", fontWeight: 400, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px", fontWeight: 400, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.testimonial}
           </p>
         </div>
@@ -249,7 +232,7 @@ export default function TestimonialsSection() {
         </p>
       </div>
 
-      <div style={{ position: "relative", width: "100%", height: "450px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ position: "relative", width: "100%", height: "520px", display: "flex", alignItems: "center", justifyContent: "center" }}>
         {RECENT_WORKS.map((item, i) => {
           const position = i - active;
           const wrapped =
