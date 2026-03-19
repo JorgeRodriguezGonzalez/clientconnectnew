@@ -649,7 +649,6 @@ export const FounderSection = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // On mobile, never switch to light mode
   const isLight = isLightMode && !isMobile;
 
   const { scrollYProgress } = useScroll({
@@ -657,7 +656,6 @@ export const FounderSection = () => {
     offset: ["start end", "end start"]
   });
 
-  // FIX #6: Skip scroll calculations on mobile
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (isMobile) return;
 
@@ -668,7 +666,6 @@ export const FounderSection = () => {
     else if (latest < 0.50 && isLateScroll) setIsLateScroll(false);
   });
 
-  // FIX #6: No parallax transform on mobile
   const yStatsDesktop = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const yStats = isMobile ? undefined : yStatsDesktop;
 
@@ -768,25 +765,15 @@ export const FounderSection = () => {
               </div>
 
               <div className="mt-4">
-                <motion.a
+                <a
                   href="/about"
-                  animate={{ borderColor: buttonColorSequence }}
-                  transition={{ duration: buttonColorDuration, ease: "linear", repeat: Infinity }}
-                  className={cn(
-                    "group relative h-[52px] px-8 py-3 inline-flex items-center justify-center gap-2 rounded-xl font-sans font-semibold text-[14px] border backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)] no-underline",
-                    "bg-black text-white hover:bg-zinc-900"
-                  )}
+                  className="group relative h-[52px] px-8 py-3 inline-flex items-center justify-center gap-2 rounded-xl font-sans font-semibold text-[14px] backdrop-blur-sm no-underline bg-black border border-[#06b6d4] text-[#06b6d4] transition-all duration-500 hover:border-[#34d399] hover:text-[#34d399] hover:shadow-[0_0_20px_rgba(52,211,153,0.5)]"
                 >
                   <span className="flex items-center gap-2">
                     More About Us
-                    <motion.span
-                      animate={{ color: buttonColorSequence }}
-                      transition={{ duration: buttonColorDuration, ease: "linear", repeat: Infinity }}
-                    >
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </motion.span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </span>
-                </motion.a>
+                </a>
               </div>
 
             </div>
@@ -844,61 +831,46 @@ export const FounderSection = () => {
                 </div>
               </TiltCard>
 
-              {/* CARDS 2 & 3 — desktop: animate in with isLight | mobile: always visible, dark style */}
+              {/* CARDS 2 & 3 — desktop: animate in with isLight | mobile: only Shared Victories */}
               <AnimatePresence mode="popLayout">
                 {(isLight || isMobile) && (
                   <>
-                    {/* ALWAYS CLOSE */}
-                    <TiltCard 
-                      layout="position"
-                      isMobile={isMobile}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                      className="h-[280px] group safari-gpu"
-                      innerClassName={cn(
-                        "border flex flex-row items-stretch",
-                        isMobile ? "bg-zinc-900 border-white/10" : "bg-white border-zinc-200"
-                      )}
-                    >
-                      <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
-                        <div className={cn(
-                          "p-2.5 rounded-xl mb-3 border",
-                          isMobile ? "bg-white/10 border-white/10" : "bg-zinc-50 border-zinc-100"
-                        )}>
-                          <Users className={cn("w-5 h-5", isMobile ? "text-white" : "text-zinc-900")} />
+                    {/* ALWAYS CLOSE — hidden on mobile */}
+                    {!isMobile && (
+                      <TiltCard 
+                        layout="position"
+                        isMobile={isMobile}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+                        className="h-[280px] group safari-gpu"
+                        innerClassName="bg-white border border-zinc-200 flex flex-row items-stretch"
+                      >
+                        <div className="relative z-20 w-1/2 p-5 flex flex-col justify-center items-start shrink-0">
+                          <div className="p-2.5 rounded-xl mb-3 border bg-zinc-50 border-zinc-100">
+                            <Users className="w-5 h-5 text-zinc-900" />
+                          </div>
+                          <div className="text-[20px] font-sans font-semibold tracking-tight mb-2 leading-tight text-zinc-900">
+                            Always<br/>
+                            <span className="text-zinc-400">Close</span>
+                          </div>
+                          <p className="text-[12px] font-sans font-medium leading-[1.4] text-zinc-500">
+                            Support that feels local, anywhere in Australia.
+                          </p>
                         </div>
-                        <div className={cn(
-                          "text-[20px] font-sans font-semibold tracking-tight mb-2 leading-tight",
-                          isMobile ? "text-white" : "text-zinc-900"
-                        )}>
-                          Always<br/>
-                          <span className={isMobile ? "text-white/50" : "text-zinc-400"}>Close</span>
+                        <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden rounded-r-2xl">
+                          <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
+                            <div className="absolute inset-0 z-10 w-full h-full bg-gradient-to-r from-white via-white/40 to-transparent" />
+                            <img 
+                              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
+                              alt="Australian National Support"
+                              loading="lazy"
+                              className="w-full h-full object-cover opacity-90 transition-all duration-500 group-hover:grayscale"
+                            />
+                          </div>
                         </div>
-                        <p className={cn(
-                          "text-[12px] font-sans font-medium leading-[1.4]",
-                          isMobile ? "text-white/60" : "text-zinc-500"
-                        )}>
-                          Support that feels local, anywhere in Australia.
-                        </p>
-                      </div>
-                      <div className="absolute right-0 top-0 w-[55%] h-full overflow-hidden rounded-r-2xl">
-                        <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105 origin-center">
-                          <div className={cn(
-                            "absolute inset-0 z-10 w-full h-full",
-                            isMobile 
-                              ? "bg-gradient-to-r from-zinc-900 via-zinc-900/40 to-transparent" 
-                              : "bg-gradient-to-r from-white via-white/40 to-transparent"
-                          )} />
-                          <img 
-                            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" 
-                            alt="Australian National Support"
-                            loading="lazy"
-                            className="w-full h-full object-cover opacity-90 transition-all duration-500 group-hover:grayscale"
-                          />
-                        </div>
-                      </div>
-                    </TiltCard>
+                      </TiltCard>
+                    )}
 
                     {/* SHARED VICTORIES */}
                     <TiltCard 
@@ -956,7 +928,7 @@ export const FounderSection = () => {
                 )}
               </AnimatePresence>
 
-              {/* CARD 4: ECOSYSTEM — desktop only (on mobile isLight is always false, so it was invisible but taking space) */}
+              {/* CARD 4: ECOSYSTEM — hidden on mobile */}
               {!isMobile && (
                 <TiltCard 
                   layout
