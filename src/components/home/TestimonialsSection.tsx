@@ -124,7 +124,7 @@ export default function TestimonialsSection() {
           flexDirection: isMobile ? "column" : "row",
         }}>
           <h2 style={{
-            fontSize: isMobile ? 40 : "clamp(44px, 7vw, 88px)",
+            fontSize: isMobile ? 40 : "clamp(36px, 5vw, 48px)",
             fontWeight: 600,
             lineHeight: 0.9,
             letterSpacing: "-0.04em",
@@ -333,11 +333,11 @@ export default function TestimonialsSection() {
                   }}
                 >
                   <p style={{
-                    fontSize: "clamp(18px, 2.2vw, 22px)",
-                    lineHeight: 1.35,
+                    fontSize: 14,
+                    lineHeight: 1.7,
                     color: "#18181b",
                     margin: 0,
-                    letterSpacing: "-0.03em",
+                    letterSpacing: "-0.01em",
                     fontWeight: 500,
                     fontFamily: ff,
                   }}>
