@@ -177,7 +177,7 @@ const ComparisonSection = () => {
             <p className="text-sm text-zinc-500 mb-6 font-medium">
               Join 40+ local brands growing with us
             </p>
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
           </motion.div>
 
         </div>
