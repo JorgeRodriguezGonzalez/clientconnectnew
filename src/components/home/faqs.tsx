@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { motion, AnimatePresence, animate } from "framer-motion";
 import * as Accordion from "@radix-ui/react-accordion";
 import { Minus, Plus, MessageSquare } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
+
+const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
 
 const BackgroundStripes = () => (
   <div
@@ -17,7 +18,138 @@ const BackgroundStripes = () => (
   />
 );
 
-// --- DATA (Marketing Digital) ---
+// --- GLOWING EFFECT (from WhatWeDoSection2) ---
+const GlowingEffect = React.memo(
+  ({
+    blur = 0,
+    proximity = 80,
+    spread = 60,
+    glow = true,
+    className,
+    movementDuration = 1.5,
+    borderWidth = 2,
+    disabled = false,
+  }: {
+    blur?: number;
+    proximity?: number;
+    spread?: number;
+    glow?: boolean;
+    className?: string;
+    disabled?: boolean;
+    movementDuration?: number;
+    borderWidth?: number;
+  }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const lastPosition = useRef({ x: 0, y: 0 });
+    const animationFrameRef = useRef<number>(0);
+
+    const handleMove = useCallback(
+      (e?: MouseEvent | { x: number; y: number }) => {
+        if (!containerRef.current) return;
+        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = requestAnimationFrame(() => {
+          const element = containerRef.current;
+          if (!element) return;
+          const { left, top, width, height } = element.getBoundingClientRect();
+          const mouseX = e?.x ?? lastPosition.current.x;
+          const mouseY = e?.y ?? lastPosition.current.y;
+          if (e) lastPosition.current = { x: mouseX, y: mouseY };
+          const center = [left + width * 0.5, top + height * 0.5];
+          const isActive =
+            mouseX > left - proximity &&
+            mouseX < left + width + proximity &&
+            mouseY > top - proximity &&
+            mouseY < top + height + proximity;
+          element.style.setProperty("--active", isActive ? "1" : "0");
+          if (!isActive) return;
+          const currentAngle = parseFloat(element.style.getPropertyValue("--start")) || 0;
+          let targetAngle = (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) / Math.PI + 90;
+          const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
+          const newAngle = currentAngle + angleDiff;
+          animate(currentAngle, newAngle, {
+            duration: movementDuration,
+            ease: [0.16, 1, 0.3, 1],
+            onUpdate: (value) => {
+              element.style.setProperty("--start", String(value));
+            },
+          });
+        });
+      },
+      [proximity, movementDuration]
+    );
+
+    useEffect(() => {
+      if (disabled) return;
+      const handlePointerMove = (e: PointerEvent) => handleMove({ x: e.clientX, y: e.clientY });
+      window.addEventListener("pointermove", handlePointerMove);
+      return () => {
+        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+        window.removeEventListener("pointermove", handlePointerMove);
+      };
+    }, [handleMove, disabled]);
+
+    return (
+      <div
+        ref={containerRef}
+        style={{
+          "--blur": `${blur}px`,
+          "--spread": spread,
+          "--start": "0",
+          "--active": "0",
+          "--glowingeffect-border-width": `${borderWidth}px`,
+          "--repeating-conic-gradient-times": "5",
+          "--gradient": `radial-gradient(circle, ${COLORS.emerald} 20%, transparent 80%),
+            repeating-conic-gradient(from 236.84deg at 50% 50%, ${COLORS.emerald} 0%, ${COLORS.cyan} calc(25% / var(--repeating-conic-gradient-times)), ${COLORS.emerald} calc(50% / var(--repeating-conic-gradient-times)), ${COLORS.cyan} calc(75% / var(--repeating-conic-gradient-times)), ${COLORS.emerald} calc(100% / var(--repeating-conic-gradient-times)))`,
+        } as React.CSSProperties}
+        className={cn(
+          "pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300",
+          glow ? "opacity-100" : "opacity-0",
+          className
+        )}
+      >
+        <div
+          className={cn(
+            "rounded-[inherit] absolute inset-0",
+            'after:content-[""] after:rounded-[inherit] after:absolute after:inset-0',
+            "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
+            "after:[background:var(--gradient)] after:[background-attachment:fixed]",
+            "after:opacity-[var(--active)] after:transition-opacity after:duration-500",
+            "after:[mask-clip:padding-box,border-box]",
+            "after:[mask-composite:intersect]",
+            "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
+          )}
+        />
+      </div>
+    );
+  }
+);
+GlowingEffect.displayName = "GlowingEffect";
+
+// --- CARD WRAPPER (from WhatWeDoSection2) ---
+const CardWrapper = ({ children, className, innerClassName, delay = 0 }: {
+  children: React.ReactNode;
+  className?: string;
+  innerClassName?: string;
+  delay?: number;
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay }}
+      className={cn("relative rounded-2xl p-[2px] h-full", className)}
+      style={{ WebkitBackfaceVisibility: "hidden", WebkitTransform: "translate3d(0,0,0)" }}
+    >
+      <GlowingEffect spread={60} glow={true} proximity={100} borderWidth={2} />
+      <div className={cn("relative h-full w-full overflow-hidden rounded-2xl", innerClassName)}>
+        {children}
+      </div>
+    </motion.div>
+  );
+};
+
+// --- DATA ---
 const faqData = [
   {
     id: 1,
@@ -46,7 +178,7 @@ const faqData = [
   },
 ];
 
-// --- COMPONENTE PRINCIPAL ---
+// --- MAIN COMPONENT ---
 
 export default function FAQSection() {
   const [openItem, setOpenItem] = useState<string | null>(null);
@@ -115,11 +247,14 @@ export default function FAQSection() {
 
         {/* Accordion Container */}
         <div className="max-w-[800px] mx-auto">
-           {/* Timestamp "Chat" style decoration */}
+           {/* Badge decoration */}
            <div className="flex justify-center mb-8">
-              <span className="text-[10px] uppercase tracking-widest text-zinc-500 bg-white/5 px-3 py-1 rounded-full border border-white/5">
-                Updated Today
-              </span>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-800 bg-zinc-900/80">
+                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-[10px] font-bold uppercase tracking-[3px] text-emerald-400">
+                  Got Questions?
+                </span>
+              </div>
            </div>
 
           <Accordion.Root
@@ -137,56 +272,56 @@ export default function FAQSection() {
               >
                 <Accordion.Header>
                   <Accordion.Trigger className="flex w-full items-start gap-x-4 focus:outline-none group">
-                    {/* Chat Bubble: Question (User side) */}
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1, duration: 0.5 }}
-                      viewport={{ once: true }}
-                      className={cn(
-                        "relative flex items-center justify-between w-full p-5 text-left transition-all duration-300 border rounded-2xl",
-                        openItem === item.id.toString() 
-                          ? "bg-[#0a0a0a] border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10" 
-                          : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/10"
+                    {/* Card wrapped with GlowingEffect */}
+                    <CardWrapper
+                      delay={index * 0.08}
+                      className="w-full"
+                      innerClassName={cn(
+                        "transition-all duration-300",
+                        openItem === item.id.toString()
+                          ? "bg-[#0a0a0a] border border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+                          : "bg-zinc-900 border border-zinc-800 hover:bg-zinc-800/60"
                       )}
                     >
-                      <div className="flex items-center gap-4">
-                        <div className={cn(
-                          "flex items-center justify-center w-8 h-8 rounded-xl transition-colors duration-300",
-                          openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500"
-                        )}>
+                      <div className="relative flex items-center justify-between w-full p-5 text-left">
+                        <div className="flex items-center gap-4">
+                          <div className={cn(
+                            "flex items-center justify-center w-8 h-8 rounded-xl transition-colors duration-300",
+                            openItem === item.id.toString() ? "bg-emerald-500 text-black" : "bg-white/10 text-zinc-500"
+                          )}>
                             <MessageSquare size={14} />
+                          </div>
+                          <span className={cn(
+                            "text-base md:text-lg font-semibold transition-colors duration-300",
+                            openItem === item.id.toString() ? "text-white" : "text-zinc-400"
+                          )}>
+                            {item.question}
+                          </span>
                         </div>
-                        <span className={cn(
-                          "text-base md:text-lg font-semibold transition-colors duration-300",
-                          openItem === item.id.toString() ? "text-white" : "text-zinc-400"
-                        )}>
-                          {item.question}
+
+                        <span 
+                          className={cn(
+                            "ml-4 transition-transform duration-300 flex-shrink-0",
+                            openItem === item.id.toString() ? "text-emerald-500 rotate-180" : "text-zinc-600"
+                          )}
+                        >
+                          {openItem === item.id.toString() ? (
+                            <Minus className="h-5 w-5" />
+                          ) : (
+                            <Plus className="h-5 w-5" />
+                          )}
                         </span>
-                      </div>
 
-                      <span 
-                        className={cn(
-                          "ml-4 transition-transform duration-300",
-                          openItem === item.id.toString() ? "text-emerald-500 rotate-180" : "text-zinc-600"
-                        )}
-                      >
-                        {openItem === item.id.toString() ? (
-                          <Minus className="h-5 w-5" />
-                        ) : (
-                          <Plus className="h-5 w-5" />
-                        )}
-                      </span>
-
-                      {/* Accent Line on active */}
-                      {openItem === item.id.toString() && (
-                        <motion.div 
+                        {/* Accent Line on active */}
+                        {openItem === item.id.toString() && (
+                          <motion.div 
                             layoutId="active-line"
                             className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-2xl"
                             style={{ backgroundColor: COLORS.emerald }}
-                        />
-                      )}
-                    </motion.div>
+                          />
+                        )}
+                      </div>
+                    </CardWrapper>
                   </Accordion.Trigger>
                 </Accordion.Header>
 
@@ -202,17 +337,16 @@ export default function FAQSection() {
                       >
                         {/* Chat Bubble: Answer (Agency side) */}
                         <div className="flex justify-end mt-2 ml-8 md:ml-16">
-                            <div
-                                className={cn(
-                                "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-2xl shadow-sm border",
-                                "bg-zinc-900 border-white/10 text-zinc-300"
-                                )}
-                            >
-                                {/* Decorative corner */}
-                                <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20 rounded-bl-lg rounded-tr-2xl" />
-                                
-                                {item.answer}
-                            </div>
+                          <div
+                            className={cn(
+                              "relative max-w-2xl p-6 text-sm md:text-base leading-relaxed rounded-2xl shadow-sm border",
+                              "bg-zinc-900 border-white/10 text-zinc-300"
+                            )}
+                          >
+                            {/* Decorative corner */}
+                            <div className="absolute top-0 right-0 w-3 h-3 bg-emerald-500/20 rounded-bl-lg rounded-tr-2xl" />
+                            {item.answer}
+                          </div>
                         </div>
                       </motion.div>
                     )}
