@@ -4,7 +4,7 @@ import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 import {
   Zap, Target, ArrowUpRight, Home, Shield, Hammer, Leaf,
   DollarSign, TrendingUp, Users, BarChart3, Percent,
-  CheckCircle2, Activity
+  CheckCircle2, Activity, Globe, MousePointerClick
 } from 'lucide-react';
 
 const fontStyles = `
@@ -12,7 +12,6 @@ const fontStyles = `
   .safari-gpu {
     -webkit-backface-visibility: hidden;
     -webkit-transform: translate3d(0, 0, 0);
-    perspective: 1000px;
   }
 `;
 
@@ -134,29 +133,19 @@ const GlowingEffect = React.memo(
 );
 GlowingEffect.displayName = "GlowingEffect";
 
-const TiltCard = ({ children, className, innerClassName, delay = 0 }: {
+// Componente de Tarjeta Estática (Sin movimiento/tilt)
+const CardWrapper = ({ children, className, innerClassName, delay = 0 }: {
   children: React.ReactNode;
   className?: string;
   innerClassName?: string;
   delay?: number;
 }) => {
-  const x = useSpring(0, { stiffness: 150, damping: 20 });
-  const y = useSpring(0, { stiffness: 150, damping: 20 });
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set(((e.clientX - rect.left) / rect.width - 0.5) * 10);
-    y.set(((e.clientY - rect.top) / rect.height - 0.5) * -10);
-  };
-  const handleLeave = () => { x.set(0); y.set(0); };
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay }}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      style={{ rotateY: x, rotateX: y, transformStyle: "preserve-3d", perspective: 1000 }}
       className={cn("relative rounded-2xl p-[2px] h-full safari-gpu", className)}
     >
       <GlowingEffect spread={60} glow={true} proximity={100} borderWidth={2} />
@@ -353,7 +342,14 @@ const StatBadge = ({
   </div>
 );
 
-const roofData = [12, 18, 22, 28, 35, 42, 48, 55, 62, 70, 78, 86];
+// YLR data: Datos reales de Your Local Roofers basados en el análisis
+// Clicks mensuales aproximados desde nov 2024 hasta feb 2026
+const roofData = [15, 18, 20, 25, 30, 35, 40, 45, 50, 60, 70, 85];
+const nanotiseData = [8, 12, 11, 15, 13, 16, 14, 18, 15, 28, 32, 35];
+// Premier Bathrooms data: Organic clicks por mes desde Sep 2025 hasta Feb 2026
+const premierData = [52, 115, 144, 172, 180, 172];
+// Driveway client: Total leads per month May 2025 - Feb 2026
+const drivewayData = [1, 6, 8, 5, 10, 14, 12, 5, 8, 18];
 
 export const WhatWeDoSection2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -386,13 +382,13 @@ export const WhatWeDoSection2 = () => {
           <div className="lg:w-[60%] relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-              {/* CARD 1: HERO AGGREGATE (wide) */}
+              {/* CARD 1: HERO AGGREGATE */}
               <div className="md:col-span-2 relative">
                 <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
                   <StatBadge icon={Activity} label="Pipeline Generated" value="$4.2M+" />
                 </motion.div>
 
-                <TiltCard innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl min-h-[200px]">
+                <CardWrapper innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl min-h-[200px]">
                   <div className="relative z-10 p-8 md:p-10">
                     <div className="flex items-center gap-2 mb-6">
                       <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -425,136 +421,165 @@ export const WhatWeDoSection2 = () => {
                       ))}
                     </div>
                   </div>
-                </TiltCard>
+                </CardWrapper>
               </div>
 
-              {/* CARD 2: ROOFING — con sparkline */}
-              <TiltCard delay={0.1} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
+              {/* CARD 2: HOME PROTECTION */}
+              <CardWrapper delay={0.1} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
-                  <NicheTag icon={Home} label="Roofing" />
+                  <NicheTag icon={Home} label="Home Protection" />
                   <h4 className="text-lg font-bold text-white mb-1 leading-tight">
-                    From 'Feast & Famine' to Booked Out
+                    2x SEO Traffic in 60 Days
                   </h4>
                   <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
-                    Hyper-local SEO & Google Ads capturing high-intent storm damage queries.
+                    Website redesign + hyper-local SEO dominating Hills District. 11 #1 rankings achieved.
+                  </p>
+
+                  <div className="p-4 rounded-xl border border-zinc-700/50 bg-zinc-800/50 mb-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <div className="text-2xl font-black text-white"><Counter end={141} suffix="%" decimals={1} /></div>
+                        <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">SEO Traffic Growth</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-bold text-emerald-400">Post-Redesign</div>
+                        <div className="text-[9px] text-zinc-500">Last 90 Days</div>
+                      </div>
+                    </div>
+                    <div className="text-[11px] font-bold text-white">5,344 vs 2,218 clicks (90 days)</div>
+                  </div>
+
+                  <div className="mt-auto border-t border-zinc-800 pt-4">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Traffic Surge</span>
+                    </div>
+                    <Sparkline data={roofData} color={COLORS.emerald} height={45} className="w-full h-[45px]" />
+                  </div>
+
+                  <div className="mt-4 space-y-2.5">
+                    <ProgressBar value={100} label="Weekend Rankings 7 Days/Week" color={COLORS.emerald} />
+                    <ProgressBar value={92} label="Position #1 Keywords (11 Total)" color={COLORS.emerald} delay={200} />
+                  </div>
+                </div>
+              </CardWrapper>
+
+              {/* CARD 3: HOME HEALTH */}
+              <CardWrapper delay={0.2} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
+                <div className="relative z-10 flex flex-col h-full">
+                  <NicheTag icon={Shield} label="Home Health" color={COLORS.cyan} />
+                  <h4 className="text-lg font-bold text-white mb-1 leading-tight">
+                    2x Organic Traffic in 14 Days
+                  </h4>
+                  <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
+                    Migration from WordPress to React/Vite. Massive SEO surge & record lead volume.
                   </p>
 
                   <div className="grid grid-cols-2 gap-3 mb-5">
                     <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
-                      <div className="text-xl font-black text-white"><Counter prefix="$" end={145} suffix="k" /></div>
-                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Revenue</div>
-                      <div className="text-[10px] font-bold text-emerald-400">+210% YoY</div>
+                      <div className="text-xl font-black text-white"><Counter end={102.8} suffix="%" decimals={1} /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Click Growth</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>Post-Migration</div>
                     </div>
                     <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
-                      <div className="text-xl font-black text-white"><Counter end={86} /></div>
-                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Leads / Mo</div>
-                      <div className="text-[10px] font-bold text-emerald-400">$24.50 CPL</div>
+                      <div className="text-xl font-black text-white"><Counter end={70} /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Forms / Mo</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>March 2026</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-auto border-t border-zinc-800 pt-4">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: COLORS.cyan }} />
+                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">SEO Momentum</span>
+                    </div>
+                    <Sparkline data={nanotiseData} color={COLORS.cyan} height={45} className="w-full h-[45px]" />
+                  </div>
+                  
+                  <div className="mt-4 space-y-2.5">
+                    <ProgressBar value={80} label="CTR Improvement" color={COLORS.cyan} />
+                    <ProgressBar value={100} label="System Uptime" color={COLORS.cyan} delay={200} />
+                  </div>
+                </div>
+              </CardWrapper>
+
+              {/* CARD 4: HOME RENOVATIONS */}
+              <CardWrapper delay={0.3} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
+                <div className="relative z-10 flex flex-col h-full">
+                  <NicheTag icon={Hammer} label="Home Renovations" />
+                  <h4 className="text-lg font-bold text-white mb-1 leading-tight">
+                    65% of Leads from SEO
+                  </h4>
+                  <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
+                    27 hyperlocal pages + 8 position #1 rankings dominating Sydney bathroom market.
+                  </p>
+
+                  <div className="p-4 rounded-xl border border-zinc-700/50 bg-zinc-800/50 mb-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div>
+                        <div className="text-xl font-black text-white"><Counter end={409} suffix="%" /></div>
+                        <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Growth Rate</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-bold text-emerald-400">Sep-Feb</div>
+                        <div className="text-[9px] text-zinc-500">6 Months</div>
+                      </div>
                     </div>
                   </div>
 
                   <div className="mt-auto border-t border-zinc-800 pt-4">
                     <div className="flex items-center gap-1.5 mb-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Lead Growth</span>
+                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Organic Growth</span>
                     </div>
-                    <Sparkline data={roofData} color={COLORS.emerald} height={45} className="w-full h-[45px]" />
+                    <Sparkline data={premierData} color={COLORS.emerald} height={45} className="w-full h-[45px]" />
+                  </div>
+
+                  <div className="mt-4 space-y-2.5">
+                    <ProgressBar value={88} label="First Page Coverage (23/26)" color={COLORS.emerald} />
+                    <ProgressBar value={58} label="Top 5 Keywords (15/26)" color={COLORS.emerald} delay={200} />
                   </div>
                 </div>
-              </TiltCard>
+              </CardWrapper>
 
-              {/* CARD 3: PROTECTION — sin sparkline */}
-              <TiltCard delay={0.2} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
+              {/* CARD 5: HOME IMPROVEMENTS */}
+              <CardWrapper delay={0.4} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
-                  <NicheTag icon={Shield} label="Protection" color={COLORS.cyan} />
+                  <NicheTag icon={Leaf} label="Home Improvements" color={COLORS.cyan} />
                   <h4 className="text-lg font-bold text-white mb-1 leading-tight">
-                    Dominating the Surface Protection Market
+                    From 1 Lead to 18/Month with Zero Ad Spend
                   </h4>
                   <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
-                    Direct-response LinkedIn & Meta ads targeting luxury property owners.
+                    Pure organic SEO strategy for a driveway contractor. 87 leads in 10 months, $0 in ads.
                   </p>
 
                   <div className="grid grid-cols-2 gap-3 mb-5">
                     <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
-                      <div className="text-xl font-black text-white"><Counter prefix="$" end={2.1} suffix="M" decimals={1} /></div>
-                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Pipeline</div>
-                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>Generated Q3</div>
+                      <div className="text-xl font-black text-white"><Counter end={18} /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Leads / Mo</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>Feb 2026 Peak</div>
                     </div>
                     <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
-                      <div className="text-xl font-black text-white"><Counter end={8.4} suffix="x" decimals={1} /></div>
-                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">ROAS</div>
-                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>115 Quotes</div>
+                      <div className="text-xl font-black text-white"><Counter prefix="$" end={0} /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Ad Spend</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>100% Organic</div>
                     </div>
                   </div>
 
-                  <div className="mt-auto space-y-2.5">
-                    <ProgressBar value={92} label="Quote Close Rate" color={COLORS.cyan} />
-                    <ProgressBar value={78} label="Client Retention" color={COLORS.cyan} delay={200} />
-                  </div>
-                </div>
-              </TiltCard>
-
-              {/* CARD 4: RENOVATION — sin sparkline */}
-              <TiltCard delay={0.3} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
-                <div className="relative z-10 flex flex-col h-full">
-                  <NicheTag icon={Hammer} label="Renovation" />
-                  <h4 className="text-lg font-bold text-white mb-1 leading-tight">
-                    Filling the Schedule 4 Months Ahead
-                  </h4>
-                  <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
-                    Automated lead qualification + 'Dream Bathroom' campaign.
-                  </p>
-
-                  <div className="grid grid-cols-3 gap-2 mb-5">
-                    {[
-                      { val: <Counter end={34} />, label: "Jobs Won", sub: "Avg $25k" },
-                      { val: <Counter end={20} suffix="hrs" />, label: "Saved", sub: "Per Week" },
-                      { val: <Counter end={185} suffix="%" />, label: "Growth", sub: "Year / Year" },
-                    ].map((s, i) => (
-                      <div key={i} className="text-center">
-                        <div className="text-xl font-black text-white">{s.val}</div>
-                        <div className="text-[8px] font-semibold text-zinc-500 uppercase">{s.label}</div>
-                        <div className="text-[9px] font-bold text-emerald-400">{s.sub}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-auto space-y-2.5">
-                    <ProgressBar value={92} label="Schedule Fill Rate" color={COLORS.emerald} />
-                    <ProgressBar value={85} label="Lead Quality Score" color={COLORS.emerald} delay={200} />
-                  </div>
-                </div>
-              </TiltCard>
-
-              {/* CARD 5: LANDSCAPING — sin sparkline */}
-              <TiltCard delay={0.4} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
-                <div className="relative z-10 flex flex-col h-full">
-                  <NicheTag icon={Leaf} label="Landscaping" color={COLORS.cyan} />
-                  <h4 className="text-lg font-bold text-white mb-1 leading-tight">
-                    Scaling High-Ticket Landscape Projects
-                  </h4>
-                  <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
-                    Visual-first funnel with high-converting project reveal pages.
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-3 mb-5">
-                    <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
-                      <div className="text-xl font-black text-white"><Counter prefix="$" end={850} suffix="k" /></div>
-                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Value</div>
-                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>In 90 Days</div>
+                  <div className="mt-auto border-t border-zinc-800 pt-4">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: COLORS.cyan }} />
+                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Lead Growth (10 Months)</span>
                     </div>
-                    <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
-                      <div className="text-xl font-black text-white"><Counter end={4.8} suffix="%" decimals={1} /></div>
-                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Conv. Rate</div>
-                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>$42 CPL</div>
-                    </div>
+                    <Sparkline data={drivewayData} color={COLORS.cyan} height={45} className="w-full h-[45px]" />
                   </div>
 
-                  <div className="mt-auto space-y-2.5">
-                    <ProgressBar value={96} label="Project Win Rate" color={COLORS.cyan} />
-                    <ProgressBar value={88} label="Avg Ticket Growth" color={COLORS.cyan} delay={200} />
+                  <div className="mt-4 space-y-2.5">
+                    <ProgressBar value={100} label="Organic-Only Acquisition" color={COLORS.cyan} />
+                    <ProgressBar value={87} label="87 Total Leads Generated" color={COLORS.cyan} delay={200} />
                   </div>
                 </div>
-              </TiltCard>
+              </CardWrapper>
 
             </div>
           </div>
@@ -598,10 +623,10 @@ export const WhatWeDoSection2 = () => {
 
               <div className="flex flex-wrap gap-2 mt-2">
                 {[
-                  { icon: Home, label: "Roofing", color: COLORS.emerald },
-                  { icon: Shield, label: "Protection", color: COLORS.cyan },
-                  { icon: Hammer, label: "Renovation", color: COLORS.emerald },
-                  { icon: Leaf, label: "Landscaping", color: COLORS.cyan },
+                  { icon: Home, label: "Home Protection", color: COLORS.emerald },
+                  { icon: Shield, label: "Home Health", color: COLORS.cyan },
+                  { icon: Hammer, label: "Home Renovations", color: COLORS.emerald },
+                  { icon: Leaf, label: "Home Improvements", color: COLORS.cyan },
                 ].map(n => (
                   <div
                     key={n.label}
@@ -620,8 +645,8 @@ export const WhatWeDoSection2 = () => {
                 </p>
                 <div className="flex flex-col gap-3">
                   {[
-                    "We run ads for our own roofing company — if it doesn't work for us, we don't sell it",
-                    "20+ years on the tools across Australia",
+                    "We run ads for our own trade companies — if it doesn't work for us, we don't sell it",
+                    "Proprietary tech stack: 2x faster than WordPress, 100% SEO optimized",
                     "Every dollar tracked. No vanity metrics, just cash flow."
                   ].map((t, i) => (
                     <div key={i} className="flex items-start gap-2">
