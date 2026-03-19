@@ -6,7 +6,7 @@ const RECENT_WORKS = [
   { 
     id: "1", 
     videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", 
-    // Cloudinary genera automáticamente el primer frame cambiando .mp4 por .jpg
+    // Cloudinary permite obtener el primer frame simplemente cambiando la extensión a .jpg
     posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.jpg",
     handle: "Alex Ross", 
     testimonial: "Nanotise" 
@@ -14,7 +14,6 @@ const RECENT_WORKS = [
   { 
     id: "2", 
     videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", 
-    // Placeholder: Necesitas generar esta imagen
     posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg", 
     handle: "Kieren", 
     testimonial: "Lc Landscaping" 
@@ -22,7 +21,6 @@ const RECENT_WORKS = [
   { 
     id: "3", 
     videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", 
-    // Placeholder: Necesitas generar esta imagen
     posterSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.jpg",
     handle: "Pioneer", 
     testimonial: "150 Qualified Leads in one month" 
@@ -30,7 +28,6 @@ const RECENT_WORKS = [
   { 
     id: "4", 
     videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", 
-    // Placeholder: Necesitas generar esta imagen
     posterSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.jpg",
     handle: "Premier Bathrooms", 
     testimonial: "From cold traffic to loyal users" 
@@ -38,7 +35,6 @@ const RECENT_WORKS = [
   { 
     id: "5", 
     videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", 
-    // Placeholder: Necesitas generar esta imagen
     posterSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.jpg",
     handle: "Shaun", 
     testimonial: "Asset Plumbing Solutions" 
@@ -46,7 +42,6 @@ const RECENT_WORKS = [
   { 
     id: "6", 
     videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", 
-    // Placeholder: Necesitas generar esta imagen
     posterSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.jpg",
     handle: "@beauty_brand", 
     testimonial: "Our best-performing campaign ever" 
@@ -67,7 +62,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Efecto para pausar el video si el usuario cambia de slide
+  // Pausar video si el usuario desliza a otra slide
   useEffect(() => {
     if (!isActive && videoRef.current) {
       videoRef.current.pause();
@@ -95,10 +90,10 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
   };
 
   const abs = Math.abs(position);
-  // AJUSTES PROPORCIONALES PARA MOBILE:
+  // AJUSTES PROPORCIONALES PARA MOBILE (Más pequeñas para ver laterales)
   const scale = abs === 0 ? 1 : abs === 1 ? 0.80 : 0.65;
   const rotate = position * 6;
-  const translateX = position * 190; 
+  const translateX = position * 190; // Distancia reducida para que las cartas se asomen más
   const opacity = abs === 0 ? 1 : abs === 1 ? 0.70 : 0.30;
   const zIndex = 10 - abs * 3;
   const blur = abs === 0 ? 0 : abs === 1 ? 0.5 : 2;
@@ -108,8 +103,8 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
       onClick={onClick}
       style={{
         position: "absolute",
-        width: "240px", 
-        height: "400px", 
+        width: "240px", // Ancho reducido para mobile
+        height: "400px", // Alto proporcional
         borderRadius: "20px",
         overflow: "hidden",
         backgroundColor: "#18181b",
@@ -125,7 +120,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
       <video
         ref={videoRef}
         src={item.videoSrc}
-        poster={item.posterSrc} // ATRIBUTO NATIVO: Muestra la imagen del inicio por defecto
+        poster={item.posterSrc} // ESTA ES LA IMAGEN POR DEFECTO DEL INICIO
         loop
         playsInline
         preload="metadata"
