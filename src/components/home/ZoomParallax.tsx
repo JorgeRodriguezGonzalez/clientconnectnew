@@ -118,7 +118,7 @@ function MobileCarousel() {
             <div className="flex gap-3 h-full">
                 {/* Column 1 - Scroll Up */}
                 <div className="flex-1 overflow-hidden">
-                    <div style={{ animation: 'scrollUp 20s linear infinite' }}>
+                    <div style={{ animation: 'scrollUp 35s linear infinite' }}>
                         <div className="flex flex-col gap-3">
                             {[...mobileCol1Images, ...mobileCol1Images].map((src, index) => (
                                 <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
@@ -130,7 +130,7 @@ function MobileCarousel() {
                 </div>
                 {/* Column 2 - Scroll Down */}
                 <div className="flex-1 overflow-hidden">
-                    <div style={{ animation: 'scrollDown 22s linear infinite' }}>
+                    <div style={{ animation: 'scrollDown 38s linear infinite' }}>
                         <div className="flex flex-col gap-3">
                             {[...mobileCol2Images, ...mobileCol2Images].map((src, index) => (
                                 <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
