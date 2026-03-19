@@ -438,8 +438,8 @@ export default function ZoomParallax() {
                 <ParallaxContent videos={videos} isMobile={isMobile} />
             )}
 
-            {/* FOOTER SPACER */}
-            <div className="h-[25vh] bg-[#050505] relative z-10" />
+            {/* FOOTER SPACER - Reduced for mobile only */}
+            <div className={`${isMobile ? 'h-[10vh]' : 'h-[25vh]'} bg-[#050505] relative z-10`} />
         </section>
     );
 }
