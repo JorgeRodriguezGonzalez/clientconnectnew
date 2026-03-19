@@ -3,48 +3,12 @@ import { Play, Pause } from "lucide-react";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 const RECENT_WORKS = [
-  { 
-    id: "1", 
-    videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", 
-    posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.jpg",
-    handle: "Alex Ross", 
-    testimonial: "Nanotise" 
-  },
-  { 
-    id: "2", 
-    videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", 
-    posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg", 
-    handle: "Kieren", 
-    testimonial: "Lc Landscaping" 
-  },
-  { 
-    id: "3", 
-    videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", 
-    posterSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.jpg",
-    handle: "Pioneer", 
-    testimonial: "150 Qualified Leads in one month" 
-  },
-  { 
-    id: "4", 
-    videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", 
-    posterSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.jpg",
-    handle: "Premier Bathrooms", 
-    testimonial: "From cold traffic to loyal users" 
-  },
-  { 
-    id: "5", 
-    videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", 
-    posterSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.jpg",
-    handle: "Shaun", 
-    testimonial: "Asset Plumbing Solutions" 
-  },
-  { 
-    id: "6", 
-    videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", 
-    posterSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.jpg",
-    handle: "@beauty_brand", 
-    testimonial: "Our best-performing campaign ever" 
-  },
+  { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", handle: "Alex Ross", testimonial: "Nanotise" },
+  { id: "2", videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", handle: "Kieren", testimonial: "Lc Landscaping" },
+  { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
+  { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
+  { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
+  { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" },
 ];
 
 const Stars = () => (
@@ -57,7 +21,8 @@ const Stars = () => (
   </div>
 );
 
-const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
+// RESTAURADO COMPLETAMENTE AL ORIGINAL PARA ESCRITORIO
+const VideoCard = ({ item, position, onClick, isActive }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -81,17 +46,10 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   };
 
   const abs = Math.abs(position);
-  
-  // Valores condicionales según dispositivo
-  const scale = isMobile 
-    ? (abs === 0 ? 1 : abs === 1 ? 0.80 : 0.65)
-    : (abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68);
-
-  const translateX = isMobile 
-    ? (position * 190) 
-    : (position * 220);
-
+  // Valores originales de escritorio
+  const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
   const rotate = position * 7;
+  const translateX = position * 220; // Valor original
   const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
   const zIndex = 10 - abs * 3;
   const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
@@ -99,10 +57,11 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   return (
     <div
       onClick={onClick}
+      className={`video-card pos-${position}`} // Clase para control CSS
       style={{
         position: "absolute",
-        width: isMobile ? "240px" : "280px",
-        height: isMobile ? "400px" : "460px",
+        width: "280px", // Tamaño original
+        height: "460px", // Tamaño original
         borderRadius: "20px",
         overflow: "hidden",
         backgroundColor: "#18181b",
@@ -118,7 +77,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
       <video
         ref={videoRef}
         src={item.videoSrc}
-        poster={item.posterSrc}
         loop
         playsInline
         preload="metadata"
@@ -179,14 +137,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
 
 export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const prev = () => setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
   const next = () => setActive(i => (i + 1) % RECENT_WORKS.length);
@@ -242,11 +192,7 @@ export default function TestimonialsSection() {
             position < -RECENT_WORKS.length / 2 ? position + RECENT_WORKS.length :
             position;
           
-          // LÓGICA DE VISIBILIDAD CORREGIDA:
-          // En mobile mostramos la activa + 1 a cada lado (abs <= 1)
-          // En escritorio mostramos la activa + 2 a cada lado (abs <= 2)
-          const threshold = isMobile ? 1 : 2;
-          if (Math.abs(wrapped) > threshold) return null;
+          if (Math.abs(wrapped) > 2) return null; // Muestra 5 cards en escritorio
 
           return (
             <VideoCard
@@ -255,7 +201,6 @@ export default function TestimonialsSection() {
               position={wrapped}
               isActive={wrapped === 0}
               onClick={() => setActive(i)}
-              isMobile={isMobile}
             />
           );
         })}
@@ -292,6 +237,21 @@ export default function TestimonialsSection() {
           100% { background-position: 200% center; }
         }
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
+
+        /* AJUSTES EXCLUSIVOS PARA MOBILE POR CSS (SOLO SE APLICAN < 768px) */
+        @media (max-w: 767px) {
+          .video-card {
+            width: 240px !important; /* Tamaño reducido en mobile */
+            height: 400px !important; /* Alto proporcional */
+          }
+          
+          /* Ajuste de translateX para acercar las cartas laterales */
+          .video-card.pos-0 { transform: translateX(0px) rotate(0deg) scale(1) !important; }
+          .video-card.pos-1 { transform: translateX(190px) rotate(7deg) scale(0.80) !important; }
+          .video-card.pos--1 { transform: translateX(-190px) rotate(-7deg) scale(0.80) !important; }
+          .video-card.pos-2 { transform: translateX(380px) rotate(14deg) scale(0.65) !important; }
+          .video-card.pos--2 { transform: translateX(-380px) rotate(-14deg) scale(0.65) !important; }
+        }
       `}</style>
     </section>
   );
