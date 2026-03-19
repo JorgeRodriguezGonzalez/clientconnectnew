@@ -6,17 +6,45 @@ const RECENT_WORKS = [
   { 
     id: "1", 
     videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", 
-    // He añadido una imagen de placeholder. AQUÍ DEBERÍAS PONER LA URL DEL PRIMER FRAME.
-    // Cloudinary suele permitirlo cambiando la extensión .mp4 por .jpg
     posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.jpg",
     handle: "Alex Ross", 
     testimonial: "Nanotise" 
   },
-  { id: "2", videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg", handle: "Kieren", testimonial: "Lc Landscaping" },
-  { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", posterSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.jpg", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
-  { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", posterSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.jpg", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
-  { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", posterSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.jpg", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
-  { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", posterSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.jpg", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" },
+  { 
+    id: "2", 
+    videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", 
+    posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg",
+    handle: "Kieren", 
+    testimonial: "Lc Landscaping" 
+  },
+  { 
+    id: "3", 
+    videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", 
+    posterSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.jpg",
+    handle: "Pioneer", 
+    testimonial: "150 Qualified Leads in one month" 
+  },
+  { 
+    id: "4", 
+    videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", 
+    posterSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.jpg",
+    handle: "Premier Bathrooms", 
+    testimonial: "From cold traffic to loyal users" 
+  },
+  { 
+    id: "5", 
+    videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", 
+    posterSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.jpg",
+    handle: "Shaun", 
+    testimonial: "Asset Plumbing Solutions" 
+  },
+  { 
+    id: "6", 
+    videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", 
+    posterSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.jpg",
+    handle: "@beauty_brand", 
+    testimonial: "Our best-performing campaign ever" 
+  },
 ];
 
 const Stars = () => (
@@ -32,9 +60,8 @@ const Stars = () => (
 const VideoCard = ({ item, position, onClick, isActive }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
-  // Detener el video si la card deja de estar activa
+  // Efecto para pausar el video si el usuario cambia de slide
   useEffect(() => {
     if (!isActive && videoRef.current) {
       videoRef.current.pause();
@@ -55,60 +82,51 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
       videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      // Intentamos reproducir
-      const playPromise = videoRef.current.play();
-      
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setIsPlaying(true);
-        }).catch(error => {
-          console.error("Error intentando reproducir:", error);
-          setIsPlaying(false);
-        });
-      }
+      videoRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch((err) => console.log("Video play error:", err));
     }
   };
 
   const abs = Math.abs(position);
-  const scale = abs === 0 ? 1 : abs === 1 ? 0.85 : 0.7;
-  const rotate = position * 5;
-  const translateX = position * 240; 
-  const opacity = abs === 0 ? 1 : abs === 1 ? 0.6 : 0.2;
-  const zIndex = 10 - abs;
+  const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
+  const rotate = position * 7;
+  const translateX = position * 220;
+  const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
+  const zIndex = 10 - abs * 3;
+  const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
 
   return (
     <div
-      onClick={togglePlay}
+      onClick={onClick}
       style={{
         position: "absolute",
         width: "280px",
-        height: "480px",
-        borderRadius: "24px",
+        height: "460px",
+        borderRadius: "20px",
         overflow: "hidden",
-        backgroundColor: "#111",
+        backgroundColor: "#18181b",
+        cursor: isActive ? "default" : "pointer",
         transform: `translateX(${translateX}px) rotate(${rotate}deg) scale(${scale})`,
         opacity,
         zIndex,
-        transition: "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
-        boxShadow: isActive ? "0 20px 40px rgba(0,0,0,0.4)" : "none",
-        cursor: 'pointer'
+        filter: `blur(${blur}px)`,
+        transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+        boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
-      {/* SOLUCIÓN PARA EL CUADRO NEGRO:
-        Mostramos una imagen estática (poster) que se oculta SOLO cuando 
-        el video empieza a reproducirse.
-      */}
-      {item.posterSrc && !isPlaying && (
+      {/* FRAME ESTÁTICO: Se muestra mientras no esté reproduciendo */}
+      {!isPlaying && item.posterSrc && (
         <img 
           src={item.posterSrc} 
-          alt={`Poster for ${item.handle}`}
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: 1, // Por encima del video, por debajo de los controles y texto
+          alt=""
+          style={{ 
+            position: "absolute", 
+            inset: 0, 
+            width: "100%", 
+            height: "100%", 
+            objectFit: "cover", 
+            zIndex: 1 
           }}
         />
       )}
@@ -118,73 +136,61 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         src={item.videoSrc}
         loop
         playsInline
-        preload="metadata" // Intenta cargar metadatos, aunque el poster es más fiable
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
+        preload="metadata"
         style={{ 
           position: "absolute", 
           inset: 0, 
           width: "100%", 
           height: "100%", 
           objectFit: "cover",
-          display: "block",
-          zIndex: 0 // Capa base
+          zIndex: 0
         }}
       />
 
-      {/* Overlay Gradiente - Z-Index 2 para estar sobre la imagen/video */}
       <div style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%)",
+        background: "linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.95) 100%)",
         pointerEvents: "none",
-        zIndex: 2,
+        zIndex: 2
       }} />
 
-      {/* Botón Play - Z-Index 3 */}
-      {isActive && !isPlaying && (
-        <div style={{
-          position: "absolute", inset: 0,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          backgroundColor: "rgba(0,0,0,0.2)",
-          zIndex: 3,
-        }}>
-          <div style={{
-            width: 64, height: 64, borderRadius: "50%",
-            backgroundColor: "rgba(6, 182, 212, 0.9)",
+      {isActive && (
+        <div
+          onClick={togglePlay}
+          style={{
+            position: "absolute", inset: 0,
             display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 0 20px rgba(6, 182, 212, 0.4)"
+            opacity: isPlaying ? 0 : 1,
+            transition: "opacity 0.3s",
+            cursor: "pointer",
+            zIndex: 3
+          }}
+        >
+          <div style={{
+            width: 56, height: 56, borderRadius: "50%",
+            backgroundColor: "rgba(0,0,0,0.55)",
+            display: "flex", alignItems: "center", justifyContent: "center",
           }}>
-            <Play fill="white" color="white" size={24} style={{ marginLeft: 4 }} />
+            {isPlaying
+              ? <Pause fill="white" color="white" size={20} />
+              : <Play fill="white" color="white" size={20} style={{ marginLeft: 3 }} />
+            }
           </div>
         </div>
       )}
 
-      {/* Botón Pause - Z-Index 3 */}
-      {isActive && isPlaying && (
-        <div style={{
-          position: "absolute", top: 20, right: 20,
-          width: 32, height: 32, borderRadius: "50%",
-          backgroundColor: "rgba(0,0,0,0.4)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          zIndex: 3,
-        }}>
-          <Pause color="white" size={16} />
-        </div>
-      )}
-
-      {/* Text Info - Z-Index 2 */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
-        padding: "24px",
-        display: "flex", flexDirection: "column", gap: "8px",
-        zIndex: 2,
+        padding: "20px",
+        display: "flex", flexDirection: "column", gap: "10px",
+        zIndex: 4
       }}>
         <Stars />
         <div>
-          <p style={{ color: "#fff", fontSize: "18px", fontWeight: 600, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+          <p style={{ color: "#fff", fontSize: "17px", fontWeight: 600, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.handle}
           </p>
-          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px", fontWeight: 400, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.testimonial}
           </p>
         </div>
@@ -207,38 +213,49 @@ export default function TestimonialsSection() {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "center",
-      padding: "40px 0",
+      paddingTop: "96px",
+      paddingBottom: "96px",
+      gap: "56px",
       overflow: "hidden",
       position: "relative",
     }}>
-      {/* Header */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", padding: "0 32px", textAlign: "center", marginBottom: "40px" }}>
-        <h2 style={{ color: "#fff", fontSize: "32px", fontWeight: 700, margin: 0, lineHeight: 1.2 }}>
-          Real Results, <br/>
-          <span style={{ color: COLORS.cyan }}>Real Clients</span>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", padding: "0 24px", textAlign: "center", maxWidth: "900px" }}>
+        <div style={{
+          display: "inline-flex", alignItems: "center", padding: "6px 12px",
+          borderRadius: "8px", border: "1px solid #27272a",
+          backgroundColor: "#18181b", width: "fit-content",
+        }}>
+          <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#a1a1aa", fontFamily: "'Satoshi', sans-serif" }}>
+            Client Testimonials
+          </span>
+        </div>
+
+        <h2 className="section-title text-zinc-100">
+          Real Results,{" "}
+          <span style={{
+            background: `linear-gradient(90deg, transparent, ${COLORS.emerald}, ${COLORS.cyan}, transparent)`,
+            backgroundSize: "200% auto",
+            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+            fontWeight: 700,
+            animation: "gradientMove 3s linear infinite",
+          }}>
+            Real Clients
+          </span>
         </h2>
+
+        <p className="section-text-dark max-w-[384px]">
+          Don't take our word for it. Here's what <strong className="text-zinc-200">brands worldwide</strong> have to say about working with us.
+        </p>
       </div>
 
-      {/* Carousel Container */}
-      <div style={{ 
-        position: "relative", 
-        width: "100%", 
-        height: "500px", 
-        display: "flex", 
-        alignItems: "center", 
-        justifyContent: "center",
-        touchAction: "pan-y"
-      }}>
+      <div style={{ position: "relative", width: "100%", height: "520px", display: "flex", alignItems: "center", justifyContent: "center" }}>
         {RECENT_WORKS.map((item, i) => {
           const position = i - active;
           const wrapped =
             position > RECENT_WORKS.length / 2 ? position - RECENT_WORKS.length :
             position < -RECENT_WORKS.length / 2 ? position + RECENT_WORKS.length :
             position;
-          
           if (Math.abs(wrapped) > 2) return null;
-          
           return (
             <VideoCard
               key={item.id}
@@ -251,31 +268,36 @@ export default function TestimonialsSection() {
         })}
       </div>
 
-      {/* Controls */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "24px", marginTop: "40px" }}>
-        <div style={{ display: "flex", gap: "8px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <button onClick={prev} style={{ background: "none", border: "1px solid #27272a", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#a1a1aa", fontSize: "16px" }}>‹</button>
+
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
           {RECENT_WORKS.map((_, i) => (
-            <div
+            <button
               key={i}
               onClick={() => setActive(i)}
               style={{
                 width: i === active ? 24 : 8,
                 height: 8,
-                borderRadius: "4px",
-                backgroundColor: i === active ? COLORS.cyan : "#27272a",
+                borderRadius: "9999px",
+                backgroundColor: i === active ? "#06b6d4" : "#27272a",
+                border: "none",
+                cursor: "pointer",
                 transition: "all 0.3s ease",
+                padding: 0,
               }}
             />
           ))}
         </div>
-        
-        <div style={{ display: "flex", gap: "16px" }}>
-          <button onClick={prev} style={{ background: "#18181b", border: "1px solid #27272a", borderRadius: "50%", width: 48, height: 48, color: "#fff", fontSize: "20px" }}>‹</button>
-          <button onClick={next} style={{ background: "#18181b", border: "1px solid #27272a", borderRadius: "50%", width: 48, height: 48, color: "#fff", fontSize: "20px" }}>›</button>
-        </div>
+
+        <button onClick={next} style={{ background: "none", border: "1px solid #27272a", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#a1a1aa", fontSize: "16px" }}>›</button>
       </div>
 
       <style>{`
+        @keyframes gradientMove {
+          0% { background-position: 0% center; }
+          100% { background-position: 200% center; }
+        }
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
       `}</style>
     </section>
