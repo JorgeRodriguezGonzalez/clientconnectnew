@@ -9,14 +9,11 @@ const RECENT_WORKS = [
   { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/so_0/v1771820402/Testimonial_Vertical_1_agbhiv.jpg", handle: "Alex Ross", testimonial: "Nanotise" },
   { id: "2", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773885639/alphafencing_rr2qge.mp4", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
   // TODO: Reemplazar con URLs de Cloudinary cuando estén subidos
-  { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
-  { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
-  { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
+  { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", posterSrc: "/images/117.png", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
+  { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", posterSrc: "/images/image2.jpg", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
+  { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", posterSrc: "/images/assetplumbing-vertical.png", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
   { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" },
-].map(item => ({
-  ...item,
-  posterSrc: item.videoSrc.includes("cloudinary") ? getPoster(item.videoSrc) : null,
-}));
+];
 
 const Stars = () => (
   <div style={{ display: "flex", gap: "4px" }}>
