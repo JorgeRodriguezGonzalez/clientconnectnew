@@ -129,10 +129,14 @@ export default function TestimonialsSection() {
           gap: isMobile ? 0 : 24,
           flexDirection: isMobile ? "column" : "row",
         }}>
-          <h2 className="section-title" style={{
+          <h2 style={{
+            fontFamily: "'Satoshi', sans-serif",
+            fontWeight: 700,
+            fontSize: isMobile ? 32 : 48,
+            lineHeight: 1.1,
+            letterSpacing: "-0.025em",
             margin: 0,
             flexShrink: 0,
-            fontFamily: ff,
             backgroundImage: `linear-gradient(45deg, rgba(0,0,0,0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(0,0,0,0))`,
             backgroundSize: "400% 100%",
             WebkitBackgroundClip: "text",
