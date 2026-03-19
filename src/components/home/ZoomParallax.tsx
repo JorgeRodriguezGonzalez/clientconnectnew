@@ -100,15 +100,15 @@ const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, object
 
 // --- MOBILE CAROUSEL IMAGES (no videos for performance) ---
 const mobileCol1Images = [
-    "/images/zoomparallax1.png",
-    "/images/zoomparallax2.png",
-    "/images/zoomparallax3.png",
+    { src: "/images/zoomparallax1.png", href: "https://brisbaneroofpaintingsolutions.com.au/" },
+    { src: "/images/zoomparallax2.png", href: "https://lcdriveways.com.au/" },
+    { src: "/images/zoomparallax3.png", href: "https://nanotise.com.au/" },
 ];
 
 const mobileCol2Images = [
-    "/images/zoomparallax4.png",
-    "/images/zoomparallax5.png",
-    "/images/zoomparallax6.png",
+    { src: "/images/zoomparallax4.png", href: "https://prolexbathroomrenovations.com.au/" },
+    { src: "/images/zoomparallax5.png", href: "https://yourlocalroofers.com.au/" },
+    { src: "/images/zoomparallax6.png", href: "https://lclandscaping.com.au/" },
 ];
 
 // --- SUB-COMPONENT: MOBILE CAROUSEL (two columns, images only) ---
@@ -120,10 +120,10 @@ function MobileCarousel() {
                 <div className="flex-1 overflow-hidden">
                     <div style={{ animation: 'scrollUp 35s linear infinite' }}>
                         <div className="flex flex-col gap-3">
-                            {[...mobileCol1Images, ...mobileCol1Images].map((src, index) => (
-                                <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
-                                    <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
-                                </div>
+                            {[...mobileCol1Images, ...mobileCol1Images].map((item, index) => (
+                                <a key={index} href={item.href} target="_blank" rel="noopener noreferrer" className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a] block">
+                                    <img src={item.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                                </a>
                             ))}
                         </div>
                     </div>
@@ -132,10 +132,10 @@ function MobileCarousel() {
                 <div className="flex-1 overflow-hidden">
                     <div style={{ animation: 'scrollDown 38s linear infinite' }}>
                         <div className="flex flex-col gap-3">
-                            {[...mobileCol2Images, ...mobileCol2Images].map((src, index) => (
-                                <div key={index} className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a]">
-                                    <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
-                                </div>
+                            {[...mobileCol2Images, ...mobileCol2Images].map((item, index) => (
+                                <a key={index} href={item.href} target="_blank" rel="noopener noreferrer" className="aspect-[4/5] overflow-hidden rounded-[16px] border border-white/10 bg-[#1a1a1a] block">
+                                    <img src={item.src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                                </a>
                             ))}
                         </div>
                     </div>
