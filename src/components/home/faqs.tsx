@@ -85,6 +85,9 @@ export default function FAQSection() {
       {/* Top Border */}
       <div className="w-full h-[1px] bg-white/10 absolute top-0 z-20" />
 
+      {/* Bottom Border */}
+      <div className="w-full h-[1px] bg-white/10 absolute bottom-0 z-20" />
+
       {/* Background Pattern */}
       <BackgroundStripes />
 
