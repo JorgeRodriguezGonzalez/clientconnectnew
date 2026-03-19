@@ -33,6 +33,12 @@ const testimonials = [
 ];
 
 const rotations = [-2, 1, -1, 2];
+const cardSizes = [
+  { minW: 420, maxW: 560, pad: 32 },
+  { minW: 340, maxW: 440, pad: 26 },
+  { minW: 340, maxW: 440, pad: 26 },
+  { minW: 420, maxW: 560, pad: 32 },
+];
 
 const styles = `
 @keyframes gradientShift {
@@ -311,12 +317,12 @@ export default function TestimonialsSection() {
                 <article
                   key={i}
                   style={{
-                    minWidth: 420,
-                    maxWidth: 560,
+                    minWidth: cardSizes[i].minW,
+                    maxWidth: cardSizes[i].maxW,
                     background: "#fff",
                     border: "1px solid rgba(229,229,229,0.7)",
                     borderRadius: 24,
-                    padding: 32,
+                    padding: cardSizes[i].pad,
                     flexShrink: 0,
                     transform: `rotate(${rotations[i]}deg)`,
                     boxShadow: "0 20px 50px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04)",
