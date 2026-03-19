@@ -89,20 +89,21 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
   };
 
   const abs = Math.abs(position);
-  const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
-  const rotate = position * 7;
-  const translateX = position * 220;
-  const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
+  // AJUSTES PROPORCIONALES PARA MOBILE:
+  const scale = abs === 0 ? 1 : abs === 1 ? 0.80 : 0.65;
+  const rotate = position * 6;
+  const translateX = position * 190; // Reducido de 220 para acercar las cartas laterales
+  const opacity = abs === 0 ? 1 : abs === 1 ? 0.70 : 0.30;
   const zIndex = 10 - abs * 3;
-  const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
+  const blur = abs === 0 ? 0 : abs === 1 ? 0.5 : 2;
 
   return (
     <div
       onClick={onClick}
       style={{
         position: "absolute",
-        width: "280px",
-        height: "460px",
+        width: "240px", // Reducido de 280px para ver más las de los lados
+        height: "400px", // Reducido proporcionalmente de 460px
         borderRadius: "20px",
         overflow: "hidden",
         backgroundColor: "#18181b",
@@ -167,13 +168,13 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
           }}
         >
           <div style={{
-            width: 56, height: 56, borderRadius: "50%",
+            width: 50, height: 50, borderRadius: "50%",
             backgroundColor: "rgba(0,0,0,0.55)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
             {isPlaying
-              ? <Pause fill="white" color="white" size={20} />
-              : <Play fill="white" color="white" size={20} style={{ marginLeft: 3 }} />
+              ? <Pause fill="white" color="white" size={18} />
+              : <Play fill="white" color="white" size={18} style={{ marginLeft: 3 }} />
             }
           </div>
         </div>
@@ -181,16 +182,16 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
 
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
-        padding: "20px",
-        display: "flex", flexDirection: "column", gap: "10px",
+        padding: "16px",
+        display: "flex", flexDirection: "column", gap: "8px",
         zIndex: 4
       }}>
         <Stars />
         <div>
-          <p style={{ color: "#fff", fontSize: "17px", fontWeight: 600, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+          <p style={{ color: "#fff", fontSize: "15px", fontWeight: 600, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.handle}
           </p>
-          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px", fontWeight: 400, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "12px", fontWeight: 400, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.testimonial}
           </p>
         </div>
@@ -248,7 +249,7 @@ export default function TestimonialsSection() {
         </p>
       </div>
 
-      <div style={{ position: "relative", width: "100%", height: "520px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ position: "relative", width: "100%", height: "450px", display: "flex", alignItems: "center", justifyContent: "center" }}>
         {RECENT_WORKS.map((item, i) => {
           const position = i - active;
           const wrapped =
