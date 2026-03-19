@@ -42,13 +42,15 @@ const comparisonData = [
 
 const ComparisonSection = () => {
   return (
-    // CAMBIO: Fondo negro (#050505) en lugar de blanco
     <section className="relative w-full overflow-hidden bg-[#050505] py-24 sm:py-32">
       
       {/* --- TOP BORDER LINE --- */}
       <div className="w-full h-[1px] bg-white/10 absolute top-0 z-20" />
 
-      {/* Gradient Blurs (Sutiles manchones de luz para dar profundidad en modo oscuro) */}
+      {/* --- BOTTOM BORDER LINE --- */}
+      <div className="w-full h-[1px] bg-white/10 absolute bottom-0 z-20" />
+
+      {/* Gradient Blurs */}
       <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-gradient-to-b from-emerald-900/10 via-[#050505] to-transparent z-0" />
       
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,7 +83,6 @@ const ComparisonSection = () => {
               }}
               style={{
                 display: "inline-block",
-                // CAMBIO: Gradiente Emerald y Cyan
                 backgroundImage: `linear-gradient(45deg, rgba(255, 255, 255, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(255, 255, 255, 0))`,
                 backgroundSize: "400% 100%",
                 WebkitBackgroundClip: "text",
@@ -117,7 +118,6 @@ const ComparisonSection = () => {
               <span className="text-sm font-bold text-zinc-400">Other Agencies</span>
             </div>
             <div className="col-span-4 text-center pb-4 relative">
-              {/* Highlight Badge - Actualizado con colores corporativos */}
               <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-cyan-500 text-black text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-[0_0_15px_rgba(52,211,153,0.3)]">
                 Recommended
               </div>
@@ -153,13 +153,11 @@ const ComparisonSection = () => {
                 {/* 3. Client Connect (Highlighted) */}
                 <div className="col-span-4 relative bg-zinc-900 border border-white/10 p-5 md:p-4 rounded-b-xl md:rounded-lg flex items-center md:justify-center gap-3 shadow-none md:shadow-[0_4px_20px_rgba(0,0,0,0.2)] md:group-hover:-translate-y-1 transition-all duration-300 z-10 md:scale-[1.02]">
                   
-                  {/* Borde sutil iluminado al hover */}
                   <div 
                     className="absolute inset-0 rounded-b-xl md:rounded-lg border border-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                     style={{ borderColor: COLORS.emerald }}
                   />
                   
-                  {/* Icono Check con fondo Emerald muy transparente */}
                   <div className="shrink-0 rounded-full p-1" style={{ backgroundColor: "rgba(52, 211, 153, 0.15)" }}>
                     <Check className="w-4 h-4" style={{ color: COLORS.emerald }} strokeWidth={3} />
                   </div>
@@ -178,7 +176,7 @@ const ComparisonSection = () => {
             className="mt-12 text-center"
           >
             <p className="text-sm text-zinc-500 mb-6 font-medium">
-              Join 95+ local brands growing with us
+              Join 40+ local brands growing with us
             </p>
             <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </motion.div>
