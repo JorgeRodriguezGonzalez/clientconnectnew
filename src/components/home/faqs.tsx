@@ -29,6 +29,7 @@ const GlowingEffect = React.memo(
     movementDuration = 1.5,
     borderWidth = 2,
     disabled = false,
+    alwaysVisible = false,
   }: {
     blur?: number;
     proximity?: number;
@@ -38,6 +39,7 @@ const GlowingEffect = React.memo(
     disabled?: boolean;
     movementDuration?: number;
     borderWidth?: number;
+    alwaysVisible?: boolean;
   }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const lastPosition = useRef({ x: 0, y: 0 });
@@ -55,13 +57,17 @@ const GlowingEffect = React.memo(
           const mouseY = e?.y ?? lastPosition.current.y;
           if (e) lastPosition.current = { x: mouseX, y: mouseY };
           const center = [left + width * 0.5, top + height * 0.5];
-          const isActive =
+          const isNear =
             mouseX > left - proximity &&
             mouseX < left + width + proximity &&
             mouseY > top - proximity &&
             mouseY < top + height + proximity;
-          element.style.setProperty("--active", isActive ? "1" : "0");
-          if (!isActive) return;
+          // If alwaysVisible, keep --active at 1 always; only update angle on hover
+          if (!alwaysVisible) {
+            element.style.setProperty("--active", isNear ? "1" : "0");
+            if (!isNear) return;
+          }
+          if (!isNear) return;
           const currentAngle = parseFloat(element.style.getPropertyValue("--start")) || 0;
           let targetAngle = (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) / Math.PI + 90;
           const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
@@ -75,7 +81,7 @@ const GlowingEffect = React.memo(
           });
         });
       },
-      [proximity, movementDuration]
+      [proximity, movementDuration, alwaysVisible]
     );
 
     useEffect(() => {
@@ -95,7 +101,7 @@ const GlowingEffect = React.memo(
           "--blur": `${blur}px`,
           "--spread": spread,
           "--start": "0",
-          "--active": "0",
+          "--active": alwaysVisible ? "1" : "0",
           "--glowingeffect-border-width": `${borderWidth}px`,
           "--repeating-conic-gradient-times": "5",
           "--gradient": `radial-gradient(circle, ${COLORS.emerald} 20%, transparent 80%),
@@ -113,7 +119,9 @@ const GlowingEffect = React.memo(
             'after:content-[""] after:rounded-[inherit] after:absolute after:inset-0',
             "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
             "after:[background:var(--gradient)] after:[background-attachment:fixed]",
-            "after:opacity-[var(--active)] after:transition-opacity after:duration-500",
+            alwaysVisible
+              ? "after:opacity-100"
+              : "after:opacity-[var(--active)] after:transition-opacity after:duration-500",
             "after:[mask-clip:padding-box,border-box]",
             "after:[mask-composite:intersect]",
             "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
@@ -141,7 +149,7 @@ const CardWrapper = ({ children, className, innerClassName, delay = 0 }: {
       className={cn("relative rounded-2xl p-[2px] h-full", className)}
       style={{ WebkitBackfaceVisibility: "hidden", WebkitTransform: "translate3d(0,0,0)" }}
     >
-      <GlowingEffect spread={60} glow={true} proximity={100} borderWidth={2} />
+      <GlowingEffect spread={60} glow={true} proximity={100} borderWidth={2} alwaysVisible={true} />
       <div className={cn("relative h-full w-full overflow-hidden rounded-2xl", innerClassName)}>
         {children}
       </div>
@@ -196,13 +204,12 @@ export default function FAQSection() {
         
         {/* Header Section */}
         <div className="flex flex-col gap-6 max-w-3xl mx-auto text-center mb-16 md:mb-24">
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500"
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="w-fit mx-auto px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-900 text-zinc-400 text-[10px] font-semibold uppercase tracking-[2px]"
           >
-            SUPPORT
+            Support
           </motion.div>
 
           <motion.h2 
@@ -249,7 +256,7 @@ export default function FAQSection() {
         <div className="max-w-[800px] mx-auto">
            {/* Badge decoration */}
            <div className="flex justify-center mb-8">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-800 bg-zinc-900/80">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/80">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-[10px] font-bold uppercase tracking-[3px] text-emerald-400">
                   Got Questions?
