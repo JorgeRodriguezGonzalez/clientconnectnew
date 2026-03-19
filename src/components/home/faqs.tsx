@@ -165,7 +165,7 @@ export default function FAQSection() {
                         "transition-all duration-300",
                         openItem === item.id.toString()
                           ? "bg-[#0a0a0a] border border-white/20 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
-                          : "bg-zinc-900 border border-zinc-800 hover:bg-zinc-800/60"
+                          : "bg-zinc-900 border border-zinc-800"
                       )}
                     >
                       <div className="relative flex items-center justify-between w-full p-5 text-left">
