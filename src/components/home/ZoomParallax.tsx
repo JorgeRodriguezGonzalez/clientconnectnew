@@ -100,19 +100,15 @@ const ParallaxVideo = ({ src, objectPosition = 'center' }: { src: string, object
 
 // --- MOBILE CAROUSEL IMAGES (no videos for performance) ---
 const mobileCol1Images = [
-    "/images/driveways3.jpg",
-    "/images/nanotise.jpg",
-    "/images/YLRimage.jpg",
-    "/images/driveways3.jpg",
-    "/images/nanotise.jpg",
+    "/images/zoomparallax1.png",
+    "/images/zoomparallax2.png",
+    "/images/zoomparallax3.png",
 ];
 
 const mobileCol2Images = [
-    "/images/YLRimage.jpg",
-    "/images/driveways3.jpg",
-    "/images/nanotise.jpg",
-    "/images/YLRimage.jpg",
-    "/images/driveways3.jpg",
+    "/images/zoomparallax4.png",
+    "/images/zoomparallax5.png",
+    "/images/zoomparallax6.png",
 ];
 
 // --- SUB-COMPONENT: MOBILE CAROUSEL (two columns, images only) ---
