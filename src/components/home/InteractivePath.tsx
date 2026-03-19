@@ -6,7 +6,6 @@ const RECENT_WORKS = [
   { 
     id: "1", 
     videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", 
-    // Cloudinary permite obtener el primer frame simplemente cambiando la extensión a .jpg
     posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.jpg",
     handle: "Alex Ross", 
     testimonial: "Nanotise" 
@@ -14,7 +13,7 @@ const RECENT_WORKS = [
   { 
     id: "2", 
     videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", 
-    posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg", 
+    posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg",
     handle: "Kieren", 
     testimonial: "Lc Landscaping" 
   },
@@ -62,7 +61,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Pausar video si el usuario desliza a otra slide
+  // Efecto para pausar el video si el usuario cambia de slide
   useEffect(() => {
     if (!isActive && videoRef.current) {
       videoRef.current.pause();
@@ -90,10 +89,10 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
   };
 
   const abs = Math.abs(position);
-  // AJUSTES PROPORCIONALES PARA MOBILE (Más pequeñas para ver laterales)
+  // AJUSTES PROPORCIONALES PARA MOBILE:
   const scale = abs === 0 ? 1 : abs === 1 ? 0.80 : 0.65;
   const rotate = position * 6;
-  const translateX = position * 190; // Distancia reducida para que las cartas se asomen más
+  const translateX = position * 190; // Reducido de 220 para acercar las cartas laterales
   const opacity = abs === 0 ? 1 : abs === 1 ? 0.70 : 0.30;
   const zIndex = 10 - abs * 3;
   const blur = abs === 0 ? 0 : abs === 1 ? 0.5 : 2;
@@ -103,8 +102,8 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
       onClick={onClick}
       style={{
         position: "absolute",
-        width: "240px", // Ancho reducido para mobile
-        height: "400px", // Alto proporcional
+        width: "240px", // Reducido de 280px para ver más las de los lados
+        height: "400px", // Reducido proporcionalmente de 460px
         borderRadius: "20px",
         overflow: "hidden",
         backgroundColor: "#18181b",
@@ -117,10 +116,25 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
+      {/* FRAME ESTÁTICO: Se muestra mientras no esté reproduciendo */}
+      {!isPlaying && item.posterSrc && (
+        <img 
+          src={item.posterSrc} 
+          alt=""
+          style={{ 
+            position: "absolute", 
+            inset: 0, 
+            width: "100%", 
+            height: "100%", 
+            objectFit: "cover", 
+            zIndex: 1 
+          }}
+        />
+      )}
+
       <video
         ref={videoRef}
         src={item.videoSrc}
-        poster={item.posterSrc} // ESTA ES LA IMAGEN POR DEFECTO DEL INICIO
         loop
         playsInline
         preload="metadata"
