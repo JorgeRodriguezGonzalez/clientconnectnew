@@ -105,7 +105,7 @@ export default function FAQSection() {
             whileInView={{ opacity: 1, x: 0 }}
             className="w-fit mx-auto px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-900 text-zinc-400 text-[10px] font-semibold uppercase tracking-[2px]"
           >
-            Support
+            Got Questions?
           </motion.div>
 
           <motion.h2 
@@ -150,16 +150,6 @@ export default function FAQSection() {
 
         {/* Accordion Container */}
         <div className="max-w-[800px] mx-auto">
-           {/* Badge decoration */}
-           <div className="flex justify-center mb-8">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/80">
-                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[10px] font-bold uppercase tracking-[3px] text-emerald-400">
-                  Got Questions?
-                </span>
-              </div>
-           </div>
-
           <Accordion.Root
             type="single"
             collapsible
