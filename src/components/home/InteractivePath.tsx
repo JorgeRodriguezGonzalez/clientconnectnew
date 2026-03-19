@@ -15,7 +15,6 @@ const RECENT_WORKS = [
   { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" },
 ].map(item => ({
   ...item,
-  // Solo genera poster automático para URLs de Cloudinary
   posterSrc: item.videoSrc.includes("cloudinary") ? getPoster(item.videoSrc) : null,
 }));
 
@@ -29,13 +28,27 @@ const Stars = () => (
   </div>
 );
 
-const VideoCard = ({ item, position, onClick, isActive }) => {
+// Hook para detectar mobile
+const useIsMobile = (breakpoint = 768) => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    setIsMobile(mql.matches);
+    const handler = (e) => setIsMobile(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, [breakpoint]);
+  return isMobile;
+};
+
+const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const abs = Math.abs(position);
-  // Solo carga el video si está cerca (activa o adyacente)
-  const shouldLoadVideo = abs <= 1;
+
+  // MOBILE: solo carga video si está activa o adyacente
+  const shouldLoadVideo = isMobile ? abs <= 1 : true;
 
   useEffect(() => {
     if (!isActive && videoRef.current) {
@@ -56,7 +69,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
     }
   };
 
-  // Valores originales de escritorio
+  // Valores originales de escritorio (no se tocan)
   const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
   const rotate = position * 7;
   const translateX = position * 220;
@@ -84,8 +97,8 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
-      {/* Poster image: siempre visible como fallback */}
-      {item.posterSrc && (
+      {/* MOBILE ONLY: poster image como fallback para no mostrar negro */}
+      {isMobile && item.posterSrc && (
         <img
           src={item.posterSrc}
           alt={item.handle}
@@ -101,15 +114,15 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         />
       )}
 
-      {/* Video: solo se monta si está cerca */}
+      {/* DESKTOP: siempre carga video / MOBILE: solo si está cerca */}
       {shouldLoadVideo && (
         <video
           ref={videoRef}
           src={item.videoSrc}
-          poster={item.posterSrc || undefined}
+          poster={isMobile && item.posterSrc ? item.posterSrc : undefined}
           loop
           playsInline
-          preload={isActive ? "auto" : "metadata"}
+          preload={isMobile ? (isActive ? "auto" : "metadata") : "metadata"}
           style={{
             position: "absolute",
             inset: 0,
@@ -175,6 +188,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
 
 export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
+  const isMobile = useIsMobile();
 
   const prev = () => setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
   const next = () => setActive(i => (i + 1) % RECENT_WORKS.length);
@@ -238,6 +252,7 @@ export default function TestimonialsSection() {
               item={item}
               position={wrapped}
               isActive={wrapped === 0}
+              isMobile={isMobile}
               onClick={() => setActive(i)}
             />
           );
