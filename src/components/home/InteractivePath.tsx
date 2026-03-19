@@ -4,7 +4,7 @@ import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 const RECENT_WORKS = [
   { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", handle: "Alex Ross", testimonial: "Nanotise" },
-  { id: "2", videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", handle: "Kieren", testimonial: "Lc Landscaping" },
+  { id: "2", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773885639/alphafencing_rr2qge.mp4", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
   { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
   { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
   { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
@@ -239,13 +239,12 @@ export default function TestimonialsSection() {
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
 
         /* AJUSTES EXCLUSIVOS PARA MOBILE POR CSS (SOLO SE APLICAN < 768px) */
-        @media (max-w: 767px) {
+        @media (max-width: 767px) {
           .video-card {
-            width: 240px !important; /* Tamaño reducido en mobile */
-            height: 400px !important; /* Alto proporcional */
+            width: 240px !important;
+            height: 400px !important;
           }
           
-          /* Ajuste de translateX para acercar las cartas laterales */
           .video-card.pos-0 { transform: translateX(0px) rotate(0deg) scale(1) !important; }
           .video-card.pos-1 { transform: translateX(190px) rotate(7deg) scale(0.80) !important; }
           .video-card.pos--1 { transform: translateX(-190px) rotate(-7deg) scale(0.80) !important; }
