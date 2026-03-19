@@ -48,6 +48,78 @@ const styles = `
 div::-webkit-scrollbar { display: none; }
 `;
 
+const ff = "'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+
+function Card({ t, i, isMobile }) {
+  const ref = useRef(null);
+  const rot = rotations[i % rotations.length];
+  const size = cardSizes[i % cardSizes.length];
+
+  return (
+    <article
+      ref={ref}
+      style={{
+        minWidth: isMobile ? "100%" : size.minW,
+        maxWidth: isMobile ? "100%" : size.maxW,
+        background: "#18181b",
+        border: "1px solid rgba(255,255,255,0.1)",
+        borderRadius: isMobile ? 20 : 24,
+        padding: isMobile ? 24 : size.pad,
+        flexShrink: 0,
+        transform: `rotate(${rot}deg)`,
+        boxShadow: "0 20px 50px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)",
+        transition: "transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease",
+        cursor: "default",
+      }}
+      onMouseEnter={e => {
+        if (isMobile) return;
+        e.currentTarget.style.transform = `rotate(${rot * 0.3}deg) translateY(-4px)`;
+        e.currentTarget.style.boxShadow = "0 28px 60px rgba(0,0,0,0.3), 0 0 20px rgba(0,0,0,0.5)";
+        e.currentTarget.style.borderColor = "rgba(16,185,129,0.5)";
+      }}
+      onMouseLeave={e => {
+        if (isMobile) return;
+        e.currentTarget.style.transform = `rotate(${rot}deg)`;
+        e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)";
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+      }}
+    >
+      <p style={{
+        fontSize: isMobile ? 15 : 14,
+        lineHeight: 1.7,
+        color: "#d4d4d8",
+        margin: 0,
+        letterSpacing: "-0.01em",
+        fontWeight: 500,
+        fontFamily: ff,
+      }}>
+        "{t.text}"
+      </p>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: isMobile ? 24 : 28 }}>
+        <img
+          src={t.image}
+          alt={t.name}
+          style={{
+            width: isMobile ? 36 : 40,
+            height: isMobile ? 36 : 40,
+            borderRadius: isMobile ? 10 : 12,
+            objectFit: "cover",
+            border: "1px solid rgba(255,255,255,0.1)",
+          }}
+        />
+        <div>
+          <div style={{ fontSize: isMobile ? 13 : 14, fontWeight: 700, color: "#ffffff", letterSpacing: "-0.02em", fontFamily: ff }}>
+            {t.name}
+          </div>
+          <div style={{ fontSize: isMobile ? 10 : 11, color: "#71717a", letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600, fontFamily: ff }}>
+            {t.role}
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function TestimonialsSection() {
   const railRef = useRef(null);
   const [canPrev, setCanPrev] = useState(false);
@@ -93,10 +165,6 @@ export default function TestimonialsSection() {
       return next;
     });
   };
-
-  const ff = "'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-
-  const t = isMobile ? testimonials[activeIndex] : null;
 
   return (
     <div style={{
@@ -173,55 +241,14 @@ export default function TestimonialsSection() {
         {/* === MOBILE === */}
         {isMobile ? (
           <div style={{ marginTop: 24, position: "relative" }}>
-            {/* Single card */}
-            <div
-              key={activeIndex}
-              style={{
-                background: "#fff",
-                border: "1px solid rgba(229,229,229,0.7)",
-                borderRadius: 20,
-                padding: 24,
-                transform: `rotate(${rotations[activeIndex]}deg)`,
-                boxShadow: "0 20px 50px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04)",
-                transition: "transform 0.4s ease, opacity 0.4s ease",
-              }}
-            >
-              <p style={{
-                fontSize: 17,
-                lineHeight: 1.4,
-                color: "#18181b",
-                margin: 0,
-                letterSpacing: "-0.02em",
-                fontWeight: 500,
-                fontFamily: ff,
-              }}>
-                "{t.text}"
-              </p>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 24 }}>
-                <img
-                  src={t.image}
-                  alt={t.name}
-                  style={{ width: 36, height: 36, borderRadius: 10, objectFit: "cover" }}
-                />
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: "#18181b", letterSpacing: "-0.02em", fontFamily: ff }}>
-                    {t.name}
-                  </div>
-                  <div style={{ fontSize: 10, color: "#71717a", letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600, fontFamily: ff }}>
-                    {t.role}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Card t={testimonials[activeIndex]} i={activeIndex} isMobile={true} />
 
-            {/* Mobile nav */}
             <div style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
               marginTop: 20,
             }}>
-              {/* Dots */}
               <div style={{ display: "flex", gap: 6 }}>
                 {testimonials.map((_, i) => (
                   <div
@@ -239,20 +266,13 @@ export default function TestimonialsSection() {
                 ))}
               </div>
 
-              {/* Arrows */}
               <div style={{ display: "flex", gap: 10 }}>
                 <button
                   onClick={() => mobileNav(-1)}
                   style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: "50%",
-                    border: "1px solid #e5e5e5",
-                    background: "#f5f5f5",
-                    color: "#18181b",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    width: 36, height: 36, borderRadius: "50%",
+                    border: "1px solid #e5e5e5", background: "#f5f5f5", color: "#18181b",
+                    display: "inline-flex", alignItems: "center", justifyContent: "center",
                     cursor: activeIndex > 0 ? "pointer" : "default",
                     opacity: activeIndex > 0 ? 1 : 0.35,
                     transition: "all 0.2s ease",
@@ -266,15 +286,9 @@ export default function TestimonialsSection() {
                 <button
                   onClick={() => mobileNav(1)}
                   style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: "50%",
-                    border: "none",
-                    background: "#18181b",
-                    color: "#fff",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    width: 36, height: 36, borderRadius: "50%",
+                    border: "none", background: "#18181b", color: "#fff",
+                    display: "inline-flex", alignItems: "center", justifyContent: "center",
                     cursor: activeIndex < testimonials.length - 1 ? "pointer" : "default",
                     opacity: activeIndex < testimonials.length - 1 ? 1 : 0.35,
                     transition: "all 0.2s ease",
@@ -314,57 +328,7 @@ export default function TestimonialsSection() {
               }}
             >
               {testimonials.map((item, i) => (
-                <article
-                  key={i}
-                  style={{
-                    minWidth: cardSizes[i].minW,
-                    maxWidth: cardSizes[i].maxW,
-                    background: "#fff",
-                    border: "1px solid rgba(229,229,229,0.7)",
-                    borderRadius: 24,
-                    padding: cardSizes[i].pad,
-                    flexShrink: 0,
-                    transform: `rotate(${rotations[i]}deg)`,
-                    boxShadow: "0 20px 50px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04)",
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    cursor: "default",
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.transform = `rotate(${rotations[i] * 0.3}deg) translateY(-4px)`;
-                    e.currentTarget.style.boxShadow = "0 28px 60px rgba(0,0,0,0.12), 0 8px 20px rgba(0,0,0,0.06)";
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.transform = `rotate(${rotations[i]}deg)`;
-                    e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04)";
-                  }}
-                >
-                  <p style={{
-                    fontSize: 14,
-                    lineHeight: 1.7,
-                    color: "#18181b",
-                    margin: 0,
-                    letterSpacing: "-0.01em",
-                    fontWeight: 500,
-                    fontFamily: ff,
-                  }}>
-                    "{item.text}"
-                  </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 28 }}>
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      style={{ width: 40, height: 40, borderRadius: 12, objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)" }}
-                    />
-                    <div>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: "#18181b", letterSpacing: "-0.02em", fontFamily: ff }}>
-                        {item.name}
-                      </div>
-                      <div style={{ fontSize: 11, color: "#71717a", letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600, fontFamily: ff }}>
-                        {item.role}
-                      </div>
-                    </div>
-                  </div>
-                </article>
+                <Card key={i} t={item} i={i} isMobile={false} />
               ))}
             </div>
 
