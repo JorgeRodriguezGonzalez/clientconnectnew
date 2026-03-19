@@ -129,11 +129,7 @@ export default function TestimonialsSection() {
           gap: isMobile ? 0 : 24,
           flexDirection: isMobile ? "column" : "row",
         }}>
-          <h2 style={{
-            fontSize: isMobile ? 30 : "clamp(30px, 4vw, 48px)",
-            fontWeight: 700,
-            lineHeight: 1.1,
-            letterSpacing: "-0.04em",
+          <h2 className="section-title" style={{
             margin: 0,
             flexShrink: 0,
             fontFamily: ff,
