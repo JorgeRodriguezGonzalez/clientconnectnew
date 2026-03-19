@@ -6,6 +6,7 @@ const RECENT_WORKS = [
   { 
     id: "1", 
     videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", 
+    // Cloudinary genera automáticamente el primer frame cambiando .mp4 por .jpg
     posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.jpg",
     handle: "Alex Ross", 
     testimonial: "Nanotise" 
@@ -13,13 +14,15 @@ const RECENT_WORKS = [
   { 
     id: "2", 
     videoSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.mp4", 
-    posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg",
+    // Placeholder: Necesitas generar esta imagen
+    posterSrc: "https://framerusercontent.com/assets/k1qSt6h5RhCO3Zs5SwsO37iqjo.jpg", 
     handle: "Kieren", 
     testimonial: "Lc Landscaping" 
   },
   { 
     id: "3", 
     videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", 
+    // Placeholder: Necesitas generar esta imagen
     posterSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.jpg",
     handle: "Pioneer", 
     testimonial: "150 Qualified Leads in one month" 
@@ -27,6 +30,7 @@ const RECENT_WORKS = [
   { 
     id: "4", 
     videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", 
+    // Placeholder: Necesitas generar esta imagen
     posterSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.jpg",
     handle: "Premier Bathrooms", 
     testimonial: "From cold traffic to loyal users" 
@@ -34,6 +38,7 @@ const RECENT_WORKS = [
   { 
     id: "5", 
     videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", 
+    // Placeholder: Necesitas generar esta imagen
     posterSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.jpg",
     handle: "Shaun", 
     testimonial: "Asset Plumbing Solutions" 
@@ -41,6 +46,7 @@ const RECENT_WORKS = [
   { 
     id: "6", 
     videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", 
+    // Placeholder: Necesitas generar esta imagen
     posterSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.jpg",
     handle: "@beauty_brand", 
     testimonial: "Our best-performing campaign ever" 
@@ -92,7 +98,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
   // AJUSTES PROPORCIONALES PARA MOBILE:
   const scale = abs === 0 ? 1 : abs === 1 ? 0.80 : 0.65;
   const rotate = position * 6;
-  const translateX = position * 190; // Reducido de 220 para acercar las cartas laterales
+  const translateX = position * 190; 
   const opacity = abs === 0 ? 1 : abs === 1 ? 0.70 : 0.30;
   const zIndex = 10 - abs * 3;
   const blur = abs === 0 ? 0 : abs === 1 ? 0.5 : 2;
@@ -102,8 +108,8 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
       onClick={onClick}
       style={{
         position: "absolute",
-        width: "240px", // Reducido de 280px para ver más las de los lados
-        height: "400px", // Reducido proporcionalmente de 460px
+        width: "240px", 
+        height: "400px", 
         borderRadius: "20px",
         overflow: "hidden",
         backgroundColor: "#18181b",
@@ -116,25 +122,10 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
-      {/* FRAME ESTÁTICO: Se muestra mientras no esté reproduciendo */}
-      {!isPlaying && item.posterSrc && (
-        <img 
-          src={item.posterSrc} 
-          alt=""
-          style={{ 
-            position: "absolute", 
-            inset: 0, 
-            width: "100%", 
-            height: "100%", 
-            objectFit: "cover", 
-            zIndex: 1 
-          }}
-        />
-      )}
-
       <video
         ref={videoRef}
         src={item.videoSrc}
+        poster={item.posterSrc} // ATRIBUTO NATIVO: Muestra la imagen del inicio por defecto
         loop
         playsInline
         preload="metadata"
