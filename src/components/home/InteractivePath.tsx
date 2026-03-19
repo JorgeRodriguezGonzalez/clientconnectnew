@@ -2,14 +2,22 @@ import { useRef, useState, useEffect } from "react";
 import { Play, Pause } from "lucide-react";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
+// Helper: genera poster .jpg automático desde URL de Cloudinary
+const getPoster = (cloudinaryUrl) => cloudinaryUrl.replace(/\.mp4$/, ".jpg");
+
 const RECENT_WORKS = [
   { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", handle: "Alex Ross", testimonial: "Nanotise" },
   { id: "2", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773885639/alphafencing_rr2qge.mp4", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
+  // TODO: Reemplazar con URLs de Cloudinary cuando estén subidos
   { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
   { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
   { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
   { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" },
-];
+].map(item => ({
+  ...item,
+  // Solo genera poster automático para URLs de Cloudinary
+  posterSrc: item.videoSrc.includes("cloudinary") ? getPoster(item.videoSrc) : null,
+}));
 
 const Stars = () => (
   <div style={{ display: "flex", gap: "4px" }}>
@@ -21,10 +29,13 @@ const Stars = () => (
   </div>
 );
 
-// RESTAURADO COMPLETAMENTE AL ORIGINAL PARA ESCRITORIO
 const VideoCard = ({ item, position, onClick, isActive }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const abs = Math.abs(position);
+  // Solo carga el video si está cerca (activa o adyacente)
+  const shouldLoadVideo = abs <= 1;
 
   useEffect(() => {
     if (!isActive && videoRef.current) {
@@ -45,11 +56,10 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
     }
   };
 
-  const abs = Math.abs(position);
   // Valores originales de escritorio
   const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
   const rotate = position * 7;
-  const translateX = position * 220; // Valor original
+  const translateX = position * 220;
   const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
   const zIndex = 10 - abs * 3;
   const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
@@ -57,11 +67,11 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
   return (
     <div
       onClick={onClick}
-      className={`video-card pos-${position}`} // Clase para control CSS
+      className={`video-card pos-${position}`}
       style={{
         position: "absolute",
-        width: "280px", // Tamaño original
-        height: "460px", // Tamaño original
+        width: "280px",
+        height: "460px",
         borderRadius: "20px",
         overflow: "hidden",
         backgroundColor: "#18181b",
@@ -74,14 +84,42 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
-      <video
-        ref={videoRef}
-        src={item.videoSrc}
-        loop
-        playsInline
-        preload="metadata"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-      />
+      {/* Poster image: siempre visible como fallback */}
+      {item.posterSrc && (
+        <img
+          src={item.posterSrc}
+          alt={item.handle}
+          loading="lazy"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 0,
+          }}
+        />
+      )}
+
+      {/* Video: solo se monta si está cerca */}
+      {shouldLoadVideo && (
+        <video
+          ref={videoRef}
+          src={item.videoSrc}
+          poster={item.posterSrc || undefined}
+          loop
+          playsInline
+          preload={isActive ? "auto" : "metadata"}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 1,
+          }}
+        />
+      )}
 
       <div style={{
         position: "absolute", inset: 0,
@@ -192,7 +230,7 @@ export default function TestimonialsSection() {
             position < -RECENT_WORKS.length / 2 ? position + RECENT_WORKS.length :
             position;
           
-          if (Math.abs(wrapped) > 2) return null; // Muestra 5 cards en escritorio
+          if (Math.abs(wrapped) > 2) return null;
 
           return (
             <VideoCard
@@ -238,7 +276,6 @@ export default function TestimonialsSection() {
         }
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
 
-        /* AJUSTES EXCLUSIVOS PARA MOBILE POR CSS (SOLO SE APLICAN < 768px) */
         @media (max-width: 767px) {
           .video-card {
             width: 240px !important;
