@@ -114,7 +114,7 @@ const mobileCol2Images = [
 // --- SUB-COMPONENT: MOBILE CAROUSEL (two columns, images only) ---
 function MobileCarousel() {
     return (
-        <div className="relative h-[850px] overflow-hidden px-6">
+        <div className="relative h-[700px] overflow-hidden px-6">
             <div className="flex gap-3 h-full">
                 {/* Column 1 - Scroll Up */}
                 <div className="flex-1 overflow-hidden">
@@ -141,9 +141,9 @@ function MobileCarousel() {
                     </div>
                 </div>
             </div>
-            {/* Gradient overlays adjusted for more height visibility */}
-            <div className="absolute top-0 left-0 right-0 h-[100px] bg-gradient-to-b from-[#050505] via-[#050505]/60 to-transparent pointer-events-none z-10" />
-            <div className="absolute bottom-0 left-0 right-0 h-[150px] bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent pointer-events-none z-10" />
+            {/* Gradient overlays */}
+            <div className="absolute top-0 left-0 right-0 h-[80px] bg-gradient-to-b from-[#050505] via-[#050505]/40 to-transparent pointer-events-none z-10" />
+            <div className="absolute bottom-0 left-0 right-0 h-[100px] bg-gradient-to-t from-[#050505] via-[#050505]/70 to-transparent pointer-events-none z-10" />
         </div>
     );
 }
