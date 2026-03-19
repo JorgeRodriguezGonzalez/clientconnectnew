@@ -38,14 +38,6 @@ const CardWrapper = ({ children, className, innerClassName, delay = 0 }: {
         WebkitTransform: "translate3d(0,0,0)",
       }}
     >
-      {/* Hover glow overlay */}
-      <div
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{
-          background: `linear-gradient(135deg, ${COLORS.cyan}, ${COLORS.emerald})`,
-          filter: "blur(4px)",
-        }}
-      />
       <div className={cn("relative h-full w-full overflow-hidden rounded-[14px]", innerClassName)}>
         {children}
       </div>
