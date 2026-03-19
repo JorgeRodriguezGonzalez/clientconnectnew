@@ -1,9 +1,9 @@
-"use client";
+import { useState, useRef, useEffect } from "react";
 
-import React from "react";
-import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
-import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
+const COLORS = {
+  emerald: "#10b981",
+  cyan: "#06b6d4",
+};
 
 const testimonials = [
   {
@@ -30,194 +30,278 @@ const testimonials = [
     name: "Daniel Park",
     role: "Founder",
   },
-  {
-    text: "Honestly didn't think paid social would work for a law firm. They proved me wrong. The Meta campaigns they built are generating quality enquiries we never would have reached through Google alone.",
-    image: "https://randomuser.me/api/portraits/women/5.jpg",
-    name: "Priya Sharma",
-    role: "Managing Partner",
-  },
-  {
-    text: "We run a café in Surry Hills and they handle our content creation — photos, reels, stories, the lot. Our followers doubled in three months and we've noticed way more foot traffic from Instagram.",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
-    name: "Laura Chen",
-    role: "Business Owner",
-  },
-  {
-    text: "Switched to them after a bad experience with another Sydney agency. Night and day difference. They actually explain what they're doing and the monthly reports make sense for once.",
-    image: "https://randomuser.me/api/portraits/men/7.jpg",
-    name: "Mark O'Brien",
-    role: "CEO",
-  },
-  {
-    text: "They redesigned our e-commerce site and set up Google Shopping campaigns at the same time. Our online revenue went up 60% in the first quarter. Really know their stuff.",
-    image: "https://randomuser.me/api/portraits/women/8.jpg",
-    name: "Anika Patel",
-    role: "Founder",
-  },
-  {
-    text: "Great team to work with. They handle our Google Ads, SEO and website updates all under one roof. Having everything in one place makes life so much easier as a small business owner.",
-    image: "https://randomuser.me/api/portraits/men/9.jpg",
-    name: "Tom Bradley",
-    role: "Business Owner",
-  },
 ];
 
-const firstColumn = testimonials.slice(0, 3);
-const secondColumn = testimonials.slice(3, 6);
-const thirdColumn = testimonials.slice(6, 9);
+const rotations = [-2, 1, -1, 2];
 
-const TestimonialsColumn = (props: {
-  className?: string;
-  testimonials: typeof testimonials;
-  duration?: number;
-}) => {
+const gradientKeyframes = `
+@keyframes gradientShift {
+  0% { background-position: 400% 50%; }
+  100% { background-position: 0% 50%; }
+}
+`;
+
+export default function TestimonialsSection() {
+  const railRef = useRef(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const updateButtons = () => {
+    const el = railRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 10);
+    setCanNext(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  };
+
+  useEffect(() => {
+    const el = railRef.current;
+    if (!el) return;
+    updateButtons();
+    el.addEventListener("scroll", updateButtons);
+    window.addEventListener("resize", updateButtons);
+    return () => {
+      el.removeEventListener("scroll", updateButtons);
+      window.removeEventListener("resize", updateButtons);
+    };
+  }, []);
+
+  const scroll = (dir) => {
+    railRef.current?.scrollBy({ left: dir * 540, behavior: "smooth" });
+  };
+
+  const fontFamily = "'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+
   return (
-    <div className={props.className}>
-      <motion.div
-        animate={{
-          translateY: "-50%",
-        }}
-        transition={{
-          duration: props.duration || 10,
-          repeat: Infinity,
-          ease: "linear",
-          repeatType: "loop",
-        }}
-        className="flex flex-col gap-5 pb-5"
-      >
-        {[
-          ...new Array(2).fill(0).map((_, index) => (
-            <React.Fragment key={index}>
-              {props.testimonials.map(({ text, image, name, role }, i) => (
-                <div
-                  key={i}
-                  className="group relative p-6 rounded-xl border border-white/10 bg-zinc-900 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 w-full"
-                >
-                  <Quote className="absolute top-5 right-5 w-5 h-5 text-zinc-700 group-hover:text-emerald-500/40 transition-colors" />
+    <div style={{
+      background: "#000",
+      padding: "48px 0",
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily,
+    }}>
+      <style>{gradientKeyframes}</style>
+      <style>{`div::-webkit-scrollbar { display: none; }`}</style>
 
-                  <p className="text-sm leading-relaxed text-zinc-300 mb-5 font-medium">
-                    "{text}"
-                  </p>
+      <div style={{
+        background: "#ffffff",
+        borderRadius: 24,
+        width: "100%",
+        maxWidth: 1280,
+        margin: "0 24px",
+        padding: 32,
+        position: "relative",
+        boxShadow: "0 25px 60px rgba(0,0,0,0.3)",
+        overflow: "hidden",
+      }}>
 
-                  <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <img
-                        src={image}
-                        alt={name}
-                        className="h-9 w-9 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300 border border-white/10"
-                      />
-                      <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full" />
+        {/* Header row */}
+        <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
+          {/* Gradient Title */}
+          <h2 style={{
+            fontSize: "clamp(44px, 7vw, 88px)",
+            fontWeight: 600,
+            lineHeight: 0.9,
+            letterSpacing: "-0.04em",
+            margin: 0,
+            flexShrink: 0,
+            fontFamily,
+            backgroundImage: `linear-gradient(45deg, rgba(0,0,0,0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(0,0,0,0))`,
+            backgroundSize: "400% 100%",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            animation: "gradientShift 12s linear infinite",
+          }}>
+            Testimonials.
+          </h2>
+
+          {/* Vertical separator */}
+          <div style={{ width: 1, height: 40, background: "#e5e5e5", flexShrink: 0 }} />
+
+          {/* Description */}
+          <p style={{
+            fontSize: 14,
+            lineHeight: 1.6,
+            color: "#71717a",
+            margin: 0,
+            maxWidth: 480,
+            letterSpacing: "-0.01em",
+            flex: 1,
+            minWidth: 200,
+            fontFamily,
+            fontWeight: 500,
+          }}>
+            Real stories, real success. Our customers have experienced firsthand the impact of our data-driven digital strategies.
+          </p>
+        </div>
+
+        {/* Divider */}
+        <div style={{ height: 1, background: "#e5e5e5", margin: "20px 0 0 0" }} />
+
+        {/* Carousel area */}
+        <div style={{ position: "relative", marginTop: 32 }}>
+          {/* Edge fades */}
+          <div style={{
+            position: "absolute", inset: "0 auto 0 0", width: 60, zIndex: 10, pointerEvents: "none",
+            background: "linear-gradient(to right, #fff, transparent)",
+          }} />
+          <div style={{
+            position: "absolute", inset: "0 0 0 auto", width: 60, zIndex: 10, pointerEvents: "none",
+            background: "linear-gradient(to left, #fff, transparent)",
+          }} />
+
+          {/* Rail */}
+          <div
+            ref={railRef}
+            style={{
+              display: "flex",
+              gap: 24,
+              overflowX: "auto",
+              padding: "24px 24px 80px 24px",
+              scrollBehavior: "smooth",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              alignItems: "center",
+            }}
+          >
+            {testimonials.map((t, i) => (
+              <article
+                key={i}
+                style={{
+                  minWidth: 420,
+                  maxWidth: 560,
+                  background: "#fff",
+                  border: "1px solid rgba(229,229,229,0.7)",
+                  borderRadius: 24,
+                  padding: 32,
+                  flexShrink: 0,
+                  transform: `rotate(${rotations[i]}deg)`,
+                  boxShadow: "0 20px 50px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04)",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  cursor: "default",
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.transform = `rotate(${rotations[i] * 0.3}deg) translateY(-4px)`;
+                  e.currentTarget.style.boxShadow = "0 28px 60px rgba(0,0,0,0.12), 0 8px 20px rgba(0,0,0,0.06)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.transform = `rotate(${rotations[i]}deg)`;
+                  e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04)";
+                }}
+              >
+                <p style={{
+                  fontSize: "clamp(18px, 2.2vw, 22px)",
+                  lineHeight: 1.35,
+                  color: "#18181b",
+                  margin: 0,
+                  letterSpacing: "-0.03em",
+                  fontWeight: 500,
+                  fontFamily,
+                }}>
+                  "{t.text}"
+                </p>
+
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 28 }}>
+                  <img
+                    src={t.image}
+                    alt={t.name}
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 12,
+                      objectFit: "cover",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                    }}
+                  />
+                  <div>
+                    <div style={{
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: "#18181b",
+                      letterSpacing: "-0.02em",
+                      fontFamily,
+                    }}>
+                      {t.name}
                     </div>
-
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold text-white tracking-tight leading-tight">
-                        {name}
-                      </span>
-                      <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">
-                        {role}
-                      </span>
+                    <div style={{
+                      fontSize: 11,
+                      color: "#71717a",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      fontWeight: 600,
+                      fontFamily,
+                    }}>
+                      {t.role}
                     </div>
                   </div>
                 </div>
-              ))}
-            </React.Fragment>
-          )),
-        ]}
-      </motion.div>
-    </div>
-  );
-};
-
-const TestimonialsSection = () => {
-  return (
-    <section className="relative w-full bg-[#FAFAFA] py-24 sm:py-32 overflow-hidden">
-      <div className="w-full h-[1px] bg-black/10 absolute top-0 z-20" />
-
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          viewport={{ once: true }}
-          className="flex flex-col items-center justify-center max-w-[640px] mx-auto text-center mb-16"
-        >
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              padding: "6px 12px",
-              borderRadius: "8px",
-              backgroundColor: "#fafafa",
-              width: "fit-content",
-            }}
-            className="mb-4 border border-zinc-200"
-          >
-            <span
-              style={{
-                fontSize: "10px",
-                fontWeight: 600,
-                letterSpacing: "2px",
-                textTransform: "uppercase",
-                fontFamily: "'Satoshi', sans-serif",
-              }}
-              className="text-zinc-500"
-            >
-              SOCIAL PROOF
-            </span>
+              </article>
+            ))}
           </div>
 
-          <h2 className="section-title text-zinc-900 mb-6">
-            Trusted by founders and{" "}
-            <motion.span
-              initial={{ backgroundPosition: "400% 50%" }}
-              animate={{ backgroundPosition: ["400% 50%", "0% 50%"] }}
-              transition={{
-                duration: 12,
-                ease: "linear",
-                repeat: Infinity,
-              }}
+          {/* Navigation controls */}
+          <div style={{
+            position: "absolute",
+            bottom: 20,
+            right: 32,
+            zIndex: 20,
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+          }}>
+            <button
+              onClick={() => scroll(-1)}
               style={{
-                display: "inline-block",
-                backgroundImage: `linear-gradient(45deg, rgba(0, 0, 0, 0), ${COLORS.emerald}, ${COLORS.cyan}, rgba(0, 0, 0, 0))`,
-                backgroundSize: "400% 100%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                color: "transparent",
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                border: "1px solid #e5e5e5",
+                background: "#f5f5f5",
+                color: "#18181b",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: canPrev ? "pointer" : "default",
+                opacity: canPrev ? 1 : 0.4,
+                pointerEvents: canPrev ? "auto" : "none",
+                transition: "all 0.2s ease",
+                fontFamily,
               }}
+              aria-label="Previous"
             >
-              marketing leaders
-            </motion.span>
-          </h2>
-
-          <p className="section-text-light">
-            See what happens when data-driven strategy meets creative excellence.
-            Real results from real partners.
-          </p>
-        </motion.div>
-
-        <div className="relative flex justify-center gap-5 max-w-5xl mx-auto max-h-[740px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_3%,black_97%,transparent)]">
-          <TestimonialsColumn
-            testimonials={firstColumn}
-            duration={45}
-            className="w-full md:w-1/2 lg:w-1/3"
-          />
-
-          <TestimonialsColumn
-            testimonials={secondColumn}
-            className="hidden md:block w-1/2 lg:w-1/3"
-            duration={55}
-          />
-
-          <TestimonialsColumn
-            testimonials={thirdColumn}
-            className="hidden lg:block w-1/3"
-            duration={50}
-          />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m12 19-7-7 7-7" /><path d="M19 12H5" />
+              </svg>
+            </button>
+            <button
+              onClick={() => scroll(1)}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                border: "none",
+                background: "#18181b",
+                color: "#fff",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: canNext ? "pointer" : "default",
+                opacity: canNext ? 1 : 0.4,
+                pointerEvents: canNext ? "auto" : "none",
+                transition: "all 0.2s ease",
+                fontFamily,
+              }}
+              aria-label="Next"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-export default TestimonialsSection;
+}
