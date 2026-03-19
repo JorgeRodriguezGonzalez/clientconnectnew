@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Play, Pause } from "lucide-react";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
@@ -25,10 +25,24 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // Detener el video si la card deja de estar activa (al deslizar)
+  useEffect(() => {
+    if (!isActive && videoRef.current) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  }, [isActive]);
+
   const togglePlay = (e) => {
     e.stopPropagation();
-    if (!isActive) { onClick(); return; }
+    // Si no es la activa, primero la centramos
+    if (!isActive) {
+      onClick();
+      return;
+    }
+    
     if (!videoRef.current) return;
+
     if (isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
@@ -39,30 +53,27 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
   };
 
   const abs = Math.abs(position);
-  const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
-  const rotate = position * 7;
-  const translateX = position * 220;
-  const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
-  const zIndex = 10 - abs * 3;
-  const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
+  const scale = abs === 0 ? 1 : abs === 1 ? 0.85 : 0.7;
+  const rotate = position * 5;
+  const translateX = position * 240; // Ajustado para mobile
+  const opacity = abs === 0 ? 1 : abs === 1 ? 0.6 : 0.2;
+  const zIndex = 10 - abs;
 
   return (
     <div
-      onClick={onClick}
+      onClick={togglePlay}
       style={{
         position: "absolute",
         width: "280px",
-        height: "460px",
-        borderRadius: "20px",
+        height: "480px",
+        borderRadius: "24px",
         overflow: "hidden",
-        backgroundColor: "#18181b",
-        cursor: isActive ? "default" : "pointer",
+        backgroundColor: "#111",
         transform: `translateX(${translateX}px) rotate(${rotate}deg) scale(${scale})`,
         opacity,
         zIndex,
-        filter: `blur(${blur}px)`,
-        transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-        boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
+        transition: "all 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
+        boxShadow: isActive ? "0 20px 40px rgba(0,0,0,0.4)" : "none",
       }}
     >
       <video
@@ -70,50 +81,66 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         src={item.videoSrc}
         loop
         playsInline
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+        preload="metadata" // Carga el primer frame como imagen estática
+        style={{ 
+          position: "absolute", 
+          inset: 0, 
+          width: "100%", 
+          height: "100%", 
+          objectFit: "cover",
+          display: "block" 
+        }}
       />
 
+      {/* Overlay Gradiente */}
       <div style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.95) 100%)",
+        background: "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%)",
         pointerEvents: "none",
       }} />
 
-      {isActive && (
-        <div
-          onClick={togglePlay}
-          style={{
-            position: "absolute", inset: 0,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            opacity: isPlaying ? 0 : 1,
-            transition: "opacity 0.3s",
-            cursor: "pointer",
-          }}
-        >
+      {/* Botón Play - Solo visible si es la activa y no está reproduciendo */}
+      {isActive && !isPlaying && (
+        <div style={{
+          position: "absolute", inset: 0,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          backgroundColor: "rgba(0,0,0,0.2)",
+        }}>
           <div style={{
-            width: 56, height: 56, borderRadius: "50%",
-            backgroundColor: "rgba(0,0,0,0.55)",
+            width: 64, height: 64, borderRadius: "50%",
+            backgroundColor: "rgba(6, 182, 212, 0.9)", // Color cyan temático
             display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 0 20px rgba(6, 182, 212, 0.4)"
           }}>
-            {isPlaying
-              ? <Pause fill="white" color="white" size={20} />
-              : <Play fill="white" color="white" size={20} style={{ marginLeft: 3 }} />
-            }
+            <Play fill="white" color="white" size={24} style={{ marginLeft: 4 }} />
           </div>
         </div>
       )}
 
+      {/* Botón Pause - Solo visible brevemente al tocar mientras reproduce */}
+      {isActive && isPlaying && (
+        <div style={{
+          position: "absolute", top: 20, right: 20,
+          width: 32, height: 32, borderRadius: "50%",
+          backgroundColor: "rgba(0,0,0,0.4)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>
+          <Pause color="white" size={16} />
+        </div>
+      )}
+
+      {/* Text Info */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
-        padding: "20px",
-        display: "flex", flexDirection: "column", gap: "10px",
+        padding: "24px",
+        display: "flex", flexDirection: "column", gap: "8px",
       }}>
         <Stars />
         <div>
-          <p style={{ color: "#fff", fontSize: "17px", fontWeight: 600, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+          <p style={{ color: "#fff", fontSize: "18px", fontWeight: 600, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.handle}
           </p>
-          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px", fontWeight: 400, margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
+          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", margin: 0, fontFamily: "'Satoshi', sans-serif" }}>
             {item.testimonial}
           </p>
         </div>
@@ -136,49 +163,38 @@ export default function TestimonialsSection() {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      paddingTop: "96px",
-      paddingBottom: "96px",
-      gap: "56px",
+      justifyContent: "center",
+      padding: "40px 0",
       overflow: "hidden",
       position: "relative",
     }}>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", padding: "0 24px", textAlign: "center", maxWidth: "900px" }}>
-        <div style={{
-          display: "inline-flex", alignItems: "center", padding: "6px 12px",
-          borderRadius: "8px", border: "1px solid #27272a",
-          backgroundColor: "#18181b", width: "fit-content",
-        }}>
-          <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#a1a1aa", fontFamily: "'Satoshi', sans-serif" }}>
-            Client Testimonials
-          </span>
-        </div>
-
-        <h2 className="section-title text-zinc-100">
-          Real Results,{" "}
-          <span style={{
-            background: `linear-gradient(90deg, transparent, ${COLORS.emerald}, ${COLORS.cyan}, transparent)`,
-            backgroundSize: "200% auto",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-            fontWeight: 700,
-            animation: "gradientMove 3s linear infinite",
-          }}>
-            Real Clients
-          </span>
+      {/* Header */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", padding: "0 32px", textAlign: "center", marginBottom: "40px" }}>
+        <h2 style={{ color: "#fff", fontSize: "32px", fontWeight: 700, margin: 0, lineHeight: 1.2 }}>
+          Real Results, <br/>
+          <span style={{ color: COLORS.cyan }}>Real Clients</span>
         </h2>
-
-        <p className="section-text-dark max-w-[384px]">
-          Don't take our word for it. Here's what <strong className="text-zinc-200">brands worldwide</strong> have to say about working with us.
-        </p>
       </div>
 
-      <div style={{ position: "relative", width: "100%", height: "520px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      {/* Carousel Container */}
+      <div style={{ 
+        position: "relative", 
+        width: "100%", 
+        height: "500px", 
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "center",
+        touchAction: "pan-y" // Permite scroll vertical pero previene comportamientos raros en touch
+      }}>
         {RECENT_WORKS.map((item, i) => {
           const position = i - active;
           const wrapped =
             position > RECENT_WORKS.length / 2 ? position - RECENT_WORKS.length :
             position < -RECENT_WORKS.length / 2 ? position + RECENT_WORKS.length :
             position;
+          
           if (Math.abs(wrapped) > 2) return null;
+          
           return (
             <VideoCard
               key={item.id}
@@ -191,36 +207,31 @@ export default function TestimonialsSection() {
         })}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-        <button onClick={prev} style={{ background: "none", border: "1px solid #27272a", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#a1a1aa", fontSize: "16px" }}>‹</button>
-
-        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+      {/* Controls */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "24px", marginTop: "40px" }}>
+        <div style={{ display: "flex", gap: "8px" }}>
           {RECENT_WORKS.map((_, i) => (
-            <button
+            <div
               key={i}
               onClick={() => setActive(i)}
               style={{
                 width: i === active ? 24 : 8,
                 height: 8,
-                borderRadius: "9999px",
-                backgroundColor: i === active ? "#06b6d4" : "#27272a",
-                border: "none",
-                cursor: "pointer",
+                borderRadius: "4px",
+                backgroundColor: i === active ? COLORS.cyan : "#27272a",
                 transition: "all 0.3s ease",
-                padding: 0,
               }}
             />
           ))}
         </div>
-
-        <button onClick={next} style={{ background: "none", border: "1px solid #27272a", borderRadius: "50%", width: 36, height: 36, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#a1a1aa", fontSize: "16px" }}>›</button>
+        
+        <div style={{ display: "flex", gap: "16px" }}>
+          <button onClick={prev} style={{ background: "#18181b", border: "1px solid #27272a", borderRadius: "50%", width: 48, height: 48, color: "#fff", fontSize: "20px" }}>‹</button>
+          <button onClick={next} style={{ background: "#18181b", border: "1px solid #27272a", borderRadius: "50%", width: 48, height: 48, color: "#fff", fontSize: "20px" }}>›</button>
+        </div>
       </div>
 
       <style>{`
-        @keyframes gradientMove {
-          0% { background-position: 0% center; }
-          100% { background-position: 200% center; }
-        }
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
       `}</style>
     </section>
