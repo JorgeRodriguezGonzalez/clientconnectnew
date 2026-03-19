@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence, animate } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import * as Accordion from "@radix-ui/react-accordion";
 import { Minus, Plus, MessageSquare } from "lucide-react";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
@@ -18,122 +18,7 @@ const BackgroundStripes = () => (
   />
 );
 
-// --- GLOWING EFFECT (from WhatWeDoSection2) ---
-const GlowingEffect = React.memo(
-  ({
-    blur = 0,
-    proximity = 80,
-    spread = 60,
-    glow = true,
-    className,
-    movementDuration = 1.5,
-    borderWidth = 2,
-    disabled = false,
-    alwaysVisible = false,
-  }: {
-    blur?: number;
-    proximity?: number;
-    spread?: number;
-    glow?: boolean;
-    className?: string;
-    disabled?: boolean;
-    movementDuration?: number;
-    borderWidth?: number;
-    alwaysVisible?: boolean;
-  }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const lastPosition = useRef({ x: 0, y: 0 });
-    const animationFrameRef = useRef<number>(0);
-
-    const handleMove = useCallback(
-      (e?: MouseEvent | { x: number; y: number }) => {
-        if (!containerRef.current) return;
-        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
-        animationFrameRef.current = requestAnimationFrame(() => {
-          const element = containerRef.current;
-          if (!element) return;
-          const { left, top, width, height } = element.getBoundingClientRect();
-          const mouseX = e?.x ?? lastPosition.current.x;
-          const mouseY = e?.y ?? lastPosition.current.y;
-          if (e) lastPosition.current = { x: mouseX, y: mouseY };
-          const center = [left + width * 0.5, top + height * 0.5];
-          const isNear =
-            mouseX > left - proximity &&
-            mouseX < left + width + proximity &&
-            mouseY > top - proximity &&
-            mouseY < top + height + proximity;
-          // If alwaysVisible, keep --active at 1 always; only update angle on hover
-          if (!alwaysVisible) {
-            element.style.setProperty("--active", isNear ? "1" : "0");
-            if (!isNear) return;
-          }
-          if (!isNear) return;
-          const currentAngle = parseFloat(element.style.getPropertyValue("--start")) || 0;
-          let targetAngle = (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) / Math.PI + 90;
-          const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
-          const newAngle = currentAngle + angleDiff;
-          animate(currentAngle, newAngle, {
-            duration: movementDuration,
-            ease: [0.16, 1, 0.3, 1],
-            onUpdate: (value) => {
-              element.style.setProperty("--start", String(value));
-            },
-          });
-        });
-      },
-      [proximity, movementDuration, alwaysVisible]
-    );
-
-    useEffect(() => {
-      if (disabled) return;
-      const handlePointerMove = (e: PointerEvent) => handleMove({ x: e.clientX, y: e.clientY });
-      window.addEventListener("pointermove", handlePointerMove);
-      return () => {
-        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
-        window.removeEventListener("pointermove", handlePointerMove);
-      };
-    }, [handleMove, disabled]);
-
-    return (
-      <div
-        ref={containerRef}
-        style={{
-          "--blur": `${blur}px`,
-          "--spread": spread,
-          "--start": "0",
-          "--active": alwaysVisible ? "1" : "0",
-          "--glowingeffect-border-width": `${borderWidth}px`,
-          "--repeating-conic-gradient-times": "5",
-          "--gradient": `radial-gradient(circle, ${COLORS.emerald} 20%, transparent 80%),
-            repeating-conic-gradient(from 236.84deg at 50% 50%, ${COLORS.emerald} 0%, ${COLORS.cyan} calc(25% / var(--repeating-conic-gradient-times)), ${COLORS.emerald} calc(50% / var(--repeating-conic-gradient-times)), ${COLORS.cyan} calc(75% / var(--repeating-conic-gradient-times)), ${COLORS.emerald} calc(100% / var(--repeating-conic-gradient-times)))`,
-        } as React.CSSProperties}
-        className={cn(
-          "pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300",
-          glow ? "opacity-100" : "opacity-0",
-          className
-        )}
-      >
-        <div
-          className={cn(
-            "rounded-[inherit] absolute inset-0",
-            'after:content-[""] after:rounded-[inherit] after:absolute after:inset-0',
-            "after:[border:var(--glowingeffect-border-width)_solid_transparent]",
-            "after:[background:var(--gradient)] after:[background-attachment:fixed]",
-            alwaysVisible
-              ? "after:opacity-100"
-              : "after:opacity-[var(--active)] after:transition-opacity after:duration-500",
-            "after:[mask-clip:padding-box,border-box]",
-            "after:[mask-composite:intersect]",
-            "after:[mask-image:linear-gradient(#0000,#0000),conic-gradient(from_calc((var(--start)-var(--spread))*1deg),#00000000_0deg,#fff,#00000000_calc(var(--spread)*2deg))]"
-          )}
-        />
-      </div>
-    );
-  }
-);
-GlowingEffect.displayName = "GlowingEffect";
-
-// --- CARD WRAPPER (from WhatWeDoSection2) ---
+// --- GRADIENT BORDER CARD WRAPPER ---
 const CardWrapper = ({ children, className, innerClassName, delay = 0 }: {
   children: React.ReactNode;
   className?: string;
@@ -146,11 +31,22 @@ const CardWrapper = ({ children, className, innerClassName, delay = 0 }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay }}
-      className={cn("relative rounded-2xl p-[2px] h-full", className)}
-      style={{ WebkitBackfaceVisibility: "hidden", WebkitTransform: "translate3d(0,0,0)" }}
+      className={cn("relative rounded-2xl p-[1.5px] h-full group/card", className)}
+      style={{
+        background: `linear-gradient(135deg, ${COLORS.emerald}, ${COLORS.cyan})`,
+        WebkitBackfaceVisibility: "hidden",
+        WebkitTransform: "translate3d(0,0,0)",
+      }}
     >
-      <GlowingEffect spread={60} glow={true} proximity={100} borderWidth={2} alwaysVisible={true} />
-      <div className={cn("relative h-full w-full overflow-hidden rounded-2xl", innerClassName)}>
+      {/* Hover glow overlay */}
+      <div
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: `linear-gradient(135deg, ${COLORS.cyan}, ${COLORS.emerald})`,
+          filter: "blur(4px)",
+        }}
+      />
+      <div className={cn("relative h-full w-full overflow-hidden rounded-[14px]", innerClassName)}>
         {children}
       </div>
     </motion.div>
