@@ -2,17 +2,13 @@ import { useRef, useState, useEffect } from "react";
 import { Play, Pause } from "lucide-react";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
-// Helper: genera poster .jpg automático desde URL de Cloudinary
-const getPoster = (cloudinaryUrl) => cloudinaryUrl.replace(/\.mp4$/, ".jpg");
-
 const RECENT_WORKS = [
   { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/so_0/v1771820402/Testimonial_Vertical_1_agbhiv.jpg", handle: "Alex Ross", testimonial: "Nanotise" },
-  { id: "2", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773885639/alphafencing_rr2qge.mp4", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
-  // TODO: Reemplazar con URLs de Cloudinary cuando estén subidos
+  { id: "2", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773885639/alphafencing_rr2qge.mp4", posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/so_0/v1773885639/alphafencing_rr2qge.jpg", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
   { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", posterSrc: "/images/117.png", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
   { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", posterSrc: "/images/image2.jpg", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
   { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", posterSrc: "/images/assetplumbing-vertical.png", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
-  { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" },
+  { id: "6", videoSrc: "https://framerusercontent.com/assets/CDUMuSViiwfgUWtLCKDQ2HUa80.mp4", posterSrc: "/images/assetplumbing-vertical.png", handle: "@beauty_brand", testimonial: "Our best-performing campaign ever" },
 ];
 
 const Stars = () => (
@@ -25,7 +21,6 @@ const Stars = () => (
   </div>
 );
 
-// Hook para detectar mobile
 const useIsMobile = (breakpoint = 768) => {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -41,22 +36,52 @@ const useIsMobile = (breakpoint = 768) => {
 const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  // MOBILE: el video solo se monta cuando el usuario da play
+  const [hasRequestedPlay, setHasRequestedPlay] = useState(false);
 
   const abs = Math.abs(position);
 
-  // MOBILE: solo carga video si está activa o adyacente
-  const shouldLoadVideo = isMobile ? abs <= 1 : true;
-
+  // Cuando deja de ser activa, pausar y desmontar video en mobile
   useEffect(() => {
-    if (!isActive && videoRef.current) {
-      videoRef.current.pause();
+    if (!isActive) {
+      if (videoRef.current) {
+        videoRef.current.pause();
+      }
       setIsPlaying(false);
+      if (isMobile) {
+        setHasRequestedPlay(false);
+      }
     }
-  }, [isActive]);
+  }, [isActive, isMobile]);
+
+  // MOBILE: cuando se monta el video después de pedir play, reproducirlo
+  useEffect(() => {
+    if (isMobile && hasRequestedPlay && videoRef.current) {
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
+    }
+  }, [hasRequestedPlay, isMobile]);
 
   const togglePlay = (e) => {
     e.stopPropagation();
     if (!isActive) { onClick(); return; }
+
+    if (isMobile) {
+      if (!hasRequestedPlay) {
+        // Primer tap: montar el video y reproducir
+        setHasRequestedPlay(true);
+      } else if (videoRef.current) {
+        // Ya está montado: toggle play/pause
+        if (isPlaying) {
+          videoRef.current.pause();
+          setIsPlaying(false);
+        } else {
+          videoRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
+        }
+      }
+      return;
+    }
+
+    // DESKTOP: comportamiento original
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
@@ -73,6 +98,9 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
   const zIndex = 10 - abs * 3;
   const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
+
+  // MOBILE: mostrar video solo si el usuario pidió play en la card activa
+  const showVideo = isMobile ? (isActive && hasRequestedPlay) : true;
 
   return (
     <div
@@ -94,7 +122,7 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
         boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
-      {/* MOBILE ONLY: poster image como fallback para no mostrar negro */}
+      {/* MOBILE: poster siempre visible como base */}
       {isMobile && item.posterSrc && (
         <img
           src={item.posterSrc}
@@ -111,15 +139,14 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
         />
       )}
 
-      {/* DESKTOP: siempre carga video / MOBILE: solo si está cerca */}
-      {shouldLoadVideo && (
+      {/* DESKTOP: video siempre montado / MOBILE: solo tras dar play */}
+      {showVideo && (
         <video
           ref={videoRef}
           src={item.videoSrc}
-          poster={isMobile && item.posterSrc ? item.posterSrc : undefined}
           loop
           playsInline
-          preload={isMobile ? (isActive ? "auto" : "metadata") : "metadata"}
+          preload={isMobile ? "auto" : "metadata"}
           style={{
             position: "absolute",
             inset: 0,
