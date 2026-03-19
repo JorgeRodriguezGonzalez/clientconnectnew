@@ -6,7 +6,7 @@ import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 const getPoster = (cloudinaryUrl) => cloudinaryUrl.replace(/\.mp4$/, ".jpg");
 
 const RECENT_WORKS = [
-  { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", handle: "Alex Ross", testimonial: "Nanotise" },
+  { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/so_0/v1771820402/Testimonial_Vertical_1_agbhiv.jpg", handle: "Alex Ross", testimonial: "Nanotise" },
   { id: "2", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773885639/alphafencing_rr2qge.mp4", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
   // TODO: Reemplazar con URLs de Cloudinary cuando estén subidos
   { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
