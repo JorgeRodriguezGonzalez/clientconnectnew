@@ -348,8 +348,8 @@ const roofData = [15, 18, 20, 25, 30, 35, 40, 45, 50, 60, 70, 85];
 const nanotiseData = [8, 12, 11, 15, 13, 16, 14, 18, 15, 28, 32, 35];
 // Premier Bathrooms data: Organic clicks por mes desde Sep 2025 hasta Feb 2026
 const premierData = [52, 115, 144, 172, 180, 172];
-// Driveway client: Total leads per month May 2025 - Feb 2026
-const drivewayData = [1, 6, 8, 5, 10, 14, 12, 5, 8, 18];
+// Fencing client: Lead ramp-up over ~60 days
+const fencingData = [0, 5, 18, 45, 90, 140, 195, 250, 300];
 
 export const WhatWeDoSection2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -385,7 +385,7 @@ export const WhatWeDoSection2 = () => {
               {/* CARD 1: HERO AGGREGATE */}
               <div className="md:col-span-2 relative">
                 <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
-                  <StatBadge icon={Activity} label="Pipeline Generated" value="$4.2M+" />
+                  <StatBadge icon={Activity} label="Increased Turnover" value="$40M+" />
                 </motion.div>
 
                 <CardWrapper innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl min-h-[200px]">
@@ -399,19 +399,19 @@ export const WhatWeDoSection2 = () => {
 
                     <div className="mb-8">
                       <h4 className="text-3xl md:text-4xl font-black text-white leading-[0.95] tracking-tight">
-                        <Counter prefix="$" end={4.2} suffix="M+" decimals={1} />
+                        <Counter prefix="$" end={40} suffix="M+" />
                       </h4>
                       <span className="block text-sm font-semibold text-zinc-500 mt-2 tracking-normal">
-                        Pipeline generated across 4 trade niches
+                        Increased turnover across all of our clients
                       </span>
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {[
-                        { icon: Users, val: <Counter end={265} suffix="+" />, label: "Leads / Month" },
-                        { icon: Target, val: <Counter end={4.8} suffix="%" decimals={1} />, label: "Conv. Rate" },
-                        { icon: TrendingUp, val: <Counter end={8.4} suffix="x" decimals={1} />, label: "Avg. ROAS" },
-                        { icon: Percent, val: <Counter prefix="-" end={45} suffix="%" />, label: "Cost / Lead" },
+                        { icon: Users, val: <Counter end={2000} suffix="+" />, label: "Leads / Month" },
+                        { icon: TrendingUp, val: "Multi-State", label: "Expansion" },
+                        { icon: BarChart3, val: <Counter end={8.4} suffix="x" decimals={1} />, label: "Avg. ROAS" },
+                        { icon: Percent, val: <Counter prefix="-" end={60} suffix="%" />, label: "Cost / Lead" },
                       ].map((s, i) => (
                         <div key={i} className="p-3 rounded-xl border border-zinc-700/30 bg-zinc-800/30">
                           <s.icon size={12} className="text-zinc-600 mb-1" />
@@ -547,36 +547,36 @@ export const WhatWeDoSection2 = () => {
                 <div className="relative z-10 flex flex-col h-full">
                   <NicheTag icon={Leaf} label="Home Improvements" color={COLORS.cyan} />
                   <h4 className="text-lg font-bold text-white mb-1 leading-tight">
-                    From 1 Lead to 18/Month with Zero Ad Spend
+                    From 0 to 300 Leads/Month in 60 Days
                   </h4>
                   <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
-                    Pure organic SEO strategy for a driveway contractor. 87 leads in 10 months, $0 in ads.
+                    Fencing lead generation scaled from a cold start to 300 monthly leads in just two months.
                   </p>
 
                   <div className="grid grid-cols-2 gap-3 mb-5">
                     <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
-                      <div className="text-xl font-black text-white"><Counter end={18} /></div>
+                      <div className="text-xl font-black text-white"><Counter end={300} /></div>
                       <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Leads / Mo</div>
-                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>Feb 2026 Peak</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>In 60 Days</div>
                     </div>
                     <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
-                      <div className="text-xl font-black text-white"><Counter prefix="$" end={0} /></div>
-                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Ad Spend</div>
-                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>100% Organic</div>
+                      <div className="text-xl font-black text-white"><Counter end={60} /></div>
+                      <div className="text-[9px] font-semibold text-zinc-500 uppercase tracking-wider">Days</div>
+                      <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>To Full Scale</div>
                     </div>
                   </div>
 
                   <div className="mt-auto border-t border-zinc-800 pt-4">
                     <div className="flex items-center gap-1.5 mb-2">
                       <span className="w-1.5 h-1.5 rounded-full" style={{ background: COLORS.cyan }} />
-                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Lead Growth (10 Months)</span>
+                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Lead Ramp-Up</span>
                     </div>
-                    <Sparkline data={drivewayData} color={COLORS.cyan} height={45} className="w-full h-[45px]" />
+                    <Sparkline data={fencingData} color={COLORS.cyan} height={45} className="w-full h-[45px]" />
                   </div>
 
                   <div className="mt-4 space-y-2.5">
-                    <ProgressBar value={100} label="Organic-Only Acquisition" color={COLORS.cyan} />
-                    <ProgressBar value={87} label="87 Total Leads Generated" color={COLORS.cyan} delay={200} />
+                    <ProgressBar value={100} label="Target Volume Reached" color={COLORS.cyan} />
+                    <ProgressBar value={100} label="Ramp-Up Speed (60 Days)" color={COLORS.cyan} delay={200} />
                   </div>
                 </div>
               </CardWrapper>
