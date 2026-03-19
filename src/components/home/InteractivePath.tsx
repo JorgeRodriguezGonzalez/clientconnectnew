@@ -57,18 +57,9 @@ const Stars = () => (
   </div>
 );
 
-const VideoCard = ({ item, position, onClick, isActive }) => {
+const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Detectar si estamos en mobile para ajustar tamaños dinámicamente
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   useEffect(() => {
     if (!isActive && videoRef.current) {
@@ -91,7 +82,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
 
   const abs = Math.abs(position);
   
-  // LÓGICA DIFERENCIADA: Si es mobile usamos valores menores, si es escritorio los originales.
+  // Valores condicionales según dispositivo
   const scale = isMobile 
     ? (abs === 0 ? 1 : abs === 1 ? 0.80 : 0.65)
     : (abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68);
@@ -110,8 +101,8 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
       onClick={onClick}
       style={{
         position: "absolute",
-        width: isMobile ? "240px" : "280px", // Cambio solo en mobile
-        height: isMobile ? "400px" : "460px", // Cambio solo en mobile
+        width: isMobile ? "240px" : "280px",
+        height: isMobile ? "400px" : "460px",
         borderRadius: "20px",
         overflow: "hidden",
         backgroundColor: "#18181b",
@@ -127,7 +118,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
       <video
         ref={videoRef}
         src={item.videoSrc}
-        poster={item.posterSrc} // Muestra el inicio del video por defecto
+        poster={item.posterSrc}
         loop
         playsInline
         preload="metadata"
@@ -138,6 +129,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         position: "absolute", inset: 0,
         background: "linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.95) 100%)",
         pointerEvents: "none",
+        zIndex: 2
       }} />
 
       {isActive && (
@@ -149,6 +141,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
             opacity: isPlaying ? 0 : 1,
             transition: "opacity 0.3s",
             cursor: "pointer",
+            zIndex: 3
           }}
         >
           <div style={{
@@ -168,6 +161,7 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
         position: "absolute", bottom: 0, left: 0, right: 0,
         padding: "20px",
         display: "flex", flexDirection: "column", gap: "10px",
+        zIndex: 4
       }}>
         <Stars />
         <div>
@@ -185,6 +179,14 @@ const VideoCard = ({ item, position, onClick, isActive }) => {
 
 export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const prev = () => setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
   const next = () => setActive(i => (i + 1) % RECENT_WORKS.length);
@@ -239,7 +241,13 @@ export default function TestimonialsSection() {
             position > RECENT_WORKS.length / 2 ? position - RECENT_WORKS.length :
             position < -RECENT_WORKS.length / 2 ? position + RECENT_WORKS.length :
             position;
-          if (Math.abs(wrapped) > 2) return null;
+          
+          // LÓGICA DE VISIBILIDAD CORREGIDA:
+          // En mobile mostramos la activa + 1 a cada lado (abs <= 1)
+          // En escritorio mostramos la activa + 2 a cada lado (abs <= 2)
+          const threshold = isMobile ? 1 : 2;
+          if (Math.abs(wrapped) > threshold) return null;
+
           return (
             <VideoCard
               key={item.id}
@@ -247,6 +255,7 @@ export default function TestimonialsSection() {
               position={wrapped}
               isActive={wrapped === 0}
               onClick={() => setActive(i)}
+              isMobile={isMobile}
             />
           );
         })}
