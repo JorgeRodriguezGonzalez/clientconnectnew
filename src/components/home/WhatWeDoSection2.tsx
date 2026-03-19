@@ -6,7 +6,6 @@ import {
   DollarSign, TrendingUp, Users, BarChart3, Percent,
   CheckCircle2, Activity, Globe, MousePointerClick
 } from 'lucide-react';
-
 const fontStyles = `
   .font-sans { font-family: 'Satoshi', sans-serif; }
   .safari-gpu {
@@ -14,12 +13,9 @@ const fontStyles = `
     -webkit-transform: translate3d(0, 0, 0);
   }
 `;
-
 const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
-
 const buttonColorSequence = [COLORS.emerald, COLORS.emerald, COLORS.cyan, COLORS.cyan, COLORS.emerald];
 const buttonColorDuration = 10;
-
 const GlowingEffect = React.memo(
   ({
     blur = 0,
@@ -43,37 +39,29 @@ const GlowingEffect = React.memo(
     const containerRef = useRef<HTMLDivElement>(null);
     const lastPosition = useRef({ x: 0, y: 0 });
     const animationFrameRef = useRef<number>(0);
-
     const handleMove = useCallback(
       (e?: MouseEvent | { x: number; y: number }) => {
         if (!containerRef.current) return;
         if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
-
         animationFrameRef.current = requestAnimationFrame(() => {
           const element = containerRef.current;
           if (!element) return;
-
           const { left, top, width, height } = element.getBoundingClientRect();
           const mouseX = e?.x ?? lastPosition.current.x;
           const mouseY = e?.y ?? lastPosition.current.y;
-
           if (e) lastPosition.current = { x: mouseX, y: mouseY };
-
           const center = [left + width * 0.5, top + height * 0.5];
           const isActive =
             mouseX > left - proximity &&
             mouseX < left + width + proximity &&
             mouseY > top - proximity &&
             mouseY < top + height + proximity;
-
           element.style.setProperty("--active", isActive ? "1" : "0");
           if (!isActive) return;
-
           const currentAngle = parseFloat(element.style.getPropertyValue("--start")) || 0;
           let targetAngle = (180 * Math.atan2(mouseY - center[1], mouseX - center[0])) / Math.PI + 90;
           const angleDiff = ((targetAngle - currentAngle + 180) % 360) - 180;
           const newAngle = currentAngle + angleDiff;
-
           animate(currentAngle, newAngle, {
             duration: movementDuration,
             ease: [0.16, 1, 0.3, 1],
@@ -85,7 +73,6 @@ const GlowingEffect = React.memo(
       },
       [proximity, movementDuration]
     );
-
     useEffect(() => {
       if (disabled) return;
       const handlePointerMove = (e: PointerEvent) => handleMove({ x: e.clientX, y: e.clientY });
@@ -95,7 +82,6 @@ const GlowingEffect = React.memo(
         window.removeEventListener("pointermove", handlePointerMove);
       };
     }, [handleMove, disabled]);
-
     return (
       <div
         ref={containerRef}
@@ -132,7 +118,6 @@ const GlowingEffect = React.memo(
   }
 );
 GlowingEffect.displayName = "GlowingEffect";
-
 // Componente de Tarjeta Estática (Sin movimiento/tilt)
 const CardWrapper = ({ children, className, innerClassName, delay = 0 }: {
   children: React.ReactNode;
@@ -155,7 +140,6 @@ const CardWrapper = ({ children, className, innerClassName, delay = 0 }: {
     </motion.div>
   );
 };
-
 const Sparkline = ({
   data,
   color = COLORS.emerald,
@@ -171,7 +155,6 @@ const Sparkline = ({
 }) => {
   const [drawn, setDrawn] = useState(false);
   const ref = useRef<SVGSVGElement>(null);
-
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) { setDrawn(true); obs.disconnect(); }
@@ -179,7 +162,6 @@ const Sparkline = ({
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
-
   const max = Math.max(...data);
   const min = Math.min(...data);
   const pts = data.map((v, i) => {
@@ -191,7 +173,6 @@ const Sparkline = ({
   const area = `${line} L${width},${height} L0,${height} Z`;
   const lastPt = pts[pts.length - 1].split(",");
   const gradId = `grad-${color.replace("#", "")}`;
-
   return (
     <svg ref={ref} viewBox={`0 0 ${width} ${height}`} className={cn("overflow-visible", className)} preserveAspectRatio="none">
       <path d={area} fill={`url(#${gradId})`} opacity={drawn ? 0.3 : 0} style={{ transition: "opacity 1s ease" }} />
@@ -214,7 +195,6 @@ const Sparkline = ({
     </svg>
   );
 };
-
 const Counter = ({
   end,
   prefix = "",
@@ -231,7 +211,6 @@ const Counter = ({
   const [val, setVal] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
-
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => {
       if (e.isIntersecting && !started.current) {
@@ -249,14 +228,12 @@ const Counter = ({
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, [end, duration]);
-
   return (
     <span ref={ref}>
       {prefix}{decimals > 0 ? val.toFixed(decimals) : Math.round(val)}{suffix}
     </span>
   );
 };
-
 const ProgressBar = ({
   value,
   max = 100,
@@ -272,7 +249,6 @@ const ProgressBar = ({
 }) => {
   const [w, setW] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) {
@@ -283,7 +259,6 @@ const ProgressBar = ({
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, [value, max, delay]);
-
   return (
     <div ref={ref} className="w-full">
       {label && (
@@ -301,7 +276,6 @@ const ProgressBar = ({
     </div>
   );
 };
-
 const NicheTag = ({
   icon: Icon,
   label,
@@ -318,7 +292,6 @@ const NicheTag = ({
     <span className="text-[10px] font-bold uppercase tracking-[2px]" style={{ color }}>{label}</span>
   </div>
 );
-
 const StatBadge = ({
   icon: Icon,
   label,
@@ -341,7 +314,6 @@ const StatBadge = ({
     </div>
   </div>
 );
-
 // YLR data: Datos reales de Your Local Roofers basados en el análisis
 // Clicks mensuales aproximados desde nov 2024 hasta feb 2026
 const roofData = [15, 18, 20, 25, 30, 35, 40, 45, 50, 60, 70, 85];
@@ -350,7 +322,6 @@ const nanotiseData = [8, 12, 11, 15, 13, 16, 14, 18, 15, 28, 32, 35];
 const premierData = [52, 115, 144, 172, 180, 172];
 // Fencing client: Lead ramp-up over ~60 days
 const fencingData = [0, 5, 18, 45, 90, 140, 195, 250, 300];
-
 export const WhatWeDoSection2 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -358,7 +329,6 @@ export const WhatWeDoSection2 = () => {
     offset: ["start end", "end start"]
   });
   const yBadge = useTransform(scrollYProgress, [0, 1], [0, -50]);
-
   return (
     <section
       ref={containerRef}
@@ -366,7 +336,6 @@ export const WhatWeDoSection2 = () => {
       style={{ background: BACKGROUNDS.dark }}
     >
       <style>{fontStyles}</style>
-
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -375,19 +344,16 @@ export const WhatWeDoSection2 = () => {
           backgroundSize: "60px 60px"
         }}
       />
-
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
-
-          <div className="lg:w-[60%] relative">
+          {/* CARDS — order-2 en mobile, orden natural en desktop */}
+          <div className="lg:w-[60%] relative order-2 lg:order-none">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
               {/* CARD 1: HERO AGGREGATE */}
               <div className="md:col-span-2 relative">
                 <motion.div style={{ y: yBadge }} className="absolute -top-6 right-8 z-40 hidden md:block">
                   <StatBadge icon={Activity} label="Increased Turnover" value="$40M+" />
                 </motion.div>
-
                 <CardWrapper innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl min-h-[200px]">
                   <div className="relative z-10 p-8 md:p-10">
                     <div className="flex items-center gap-2 mb-6">
@@ -396,7 +362,6 @@ export const WhatWeDoSection2 = () => {
                         Verified Client Results
                       </span>
                     </div>
-
                     <div className="mb-8">
                       <h4 className="text-3xl md:text-4xl font-black text-white leading-[0.95] tracking-tight">
                         <Counter prefix="$" end={40} suffix="M+" />
@@ -405,7 +370,6 @@ export const WhatWeDoSection2 = () => {
                         Increased turnover across all of our clients
                       </span>
                     </div>
-
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {[
                         { icon: Users, val: <Counter end={2000} suffix="+" />, label: "Leads / Month" },
@@ -423,7 +387,6 @@ export const WhatWeDoSection2 = () => {
                   </div>
                 </CardWrapper>
               </div>
-
               {/* CARD 2: HOME PROTECTION */}
               <CardWrapper delay={0.1} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
@@ -434,7 +397,6 @@ export const WhatWeDoSection2 = () => {
                   <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
                     Website redesign + hyper-local SEO dominating Hills District. 11 #1 rankings achieved.
                   </p>
-
                   <div className="p-4 rounded-xl border border-zinc-700/50 bg-zinc-800/50 mb-5">
                     <div className="flex items-center justify-between mb-3">
                       <div>
@@ -448,7 +410,6 @@ export const WhatWeDoSection2 = () => {
                     </div>
                     <div className="text-[11px] font-bold text-white">5,344 vs 2,218 clicks (90 days)</div>
                   </div>
-
                   <div className="mt-auto border-t border-zinc-800 pt-4">
                     <div className="flex items-center gap-1.5 mb-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -456,14 +417,12 @@ export const WhatWeDoSection2 = () => {
                     </div>
                     <Sparkline data={roofData} color={COLORS.emerald} height={45} className="w-full h-[45px]" />
                   </div>
-
                   <div className="mt-4 space-y-2.5">
                     <ProgressBar value={100} label="Weekend Rankings 7 Days/Week" color={COLORS.emerald} />
                     <ProgressBar value={92} label="Position #1 Keywords (11 Total)" color={COLORS.emerald} delay={200} />
                   </div>
                 </div>
               </CardWrapper>
-
               {/* CARD 3: HOME HEALTH */}
               <CardWrapper delay={0.2} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
@@ -474,7 +433,6 @@ export const WhatWeDoSection2 = () => {
                   <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
                     Migration from WordPress to React/Vite. Massive SEO surge & record lead volume.
                   </p>
-
                   <div className="grid grid-cols-2 gap-3 mb-5">
                     <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
                       <div className="text-xl font-black text-white"><Counter end={102.8} suffix="%" decimals={1} /></div>
@@ -487,7 +445,6 @@ export const WhatWeDoSection2 = () => {
                       <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>March 2026</div>
                     </div>
                   </div>
-
                   <div className="mt-auto border-t border-zinc-800 pt-4">
                     <div className="flex items-center gap-1.5 mb-2">
                       <span className="w-1.5 h-1.5 rounded-full" style={{ background: COLORS.cyan }} />
@@ -502,7 +459,6 @@ export const WhatWeDoSection2 = () => {
                   </div>
                 </div>
               </CardWrapper>
-
               {/* CARD 4: HOME RENOVATIONS */}
               <CardWrapper delay={0.3} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
@@ -513,7 +469,6 @@ export const WhatWeDoSection2 = () => {
                   <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
                     27 hyperlocal pages + 8 position #1 rankings dominating Sydney bathroom market.
                   </p>
-
                   <div className="p-4 rounded-xl border border-zinc-700/50 bg-zinc-800/50 mb-4">
                     <div className="flex items-center justify-between mb-2">
                       <div>
@@ -526,7 +481,6 @@ export const WhatWeDoSection2 = () => {
                       </div>
                     </div>
                   </div>
-
                   <div className="mt-auto border-t border-zinc-800 pt-4">
                     <div className="flex items-center gap-1.5 mb-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -534,14 +488,12 @@ export const WhatWeDoSection2 = () => {
                     </div>
                     <Sparkline data={premierData} color={COLORS.emerald} height={45} className="w-full h-[45px]" />
                   </div>
-
                   <div className="mt-4 space-y-2.5">
                     <ProgressBar value={88} label="First Page Coverage (23/26)" color={COLORS.emerald} />
                     <ProgressBar value={58} label="Top 5 Keywords (15/26)" color={COLORS.emerald} delay={200} />
                   </div>
                 </div>
               </CardWrapper>
-
               {/* CARD 5: HOME IMPROVEMENTS */}
               <CardWrapper delay={0.4} innerClassName="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="relative z-10 flex flex-col h-full">
@@ -552,7 +504,6 @@ export const WhatWeDoSection2 = () => {
                   <p className="text-[11px] text-zinc-500 mb-5 leading-relaxed">
                     Fencing lead generation scaled from a cold start to 300 monthly leads in just two months.
                   </p>
-
                   <div className="grid grid-cols-2 gap-3 mb-5">
                     <div className="p-3 rounded-xl border border-zinc-700/50 bg-zinc-800/50">
                       <div className="text-xl font-black text-white"><Counter end={300} /></div>
@@ -565,7 +516,6 @@ export const WhatWeDoSection2 = () => {
                       <div className="text-[10px] font-bold" style={{ color: COLORS.cyan }}>To Full Scale</div>
                     </div>
                   </div>
-
                   <div className="mt-auto border-t border-zinc-800 pt-4">
                     <div className="flex items-center gap-1.5 mb-2">
                       <span className="w-1.5 h-1.5 rounded-full" style={{ background: COLORS.cyan }} />
@@ -573,21 +523,17 @@ export const WhatWeDoSection2 = () => {
                     </div>
                     <Sparkline data={fencingData} color={COLORS.cyan} height={45} className="w-full h-[45px]" />
                   </div>
-
                   <div className="mt-4 space-y-2.5">
                     <ProgressBar value={100} label="Target Volume Reached" color={COLORS.cyan} />
                     <ProgressBar value={100} label="Ramp-Up Speed (60 Days)" color={COLORS.cyan} delay={200} />
                   </div>
                 </div>
               </CardWrapper>
-
             </div>
           </div>
-
-          {/* RIGHT: STICKY TEXT */}
-          <div className="lg:w-[40%] sticky top-32 self-start">
+          {/* RIGHT: STICKY TEXT — order-1 en mobile (aparece primero), sticky solo en desktop */}
+          <div className="lg:w-[40%] lg:sticky lg:top-32 self-start order-1 lg:order-none">
             <div className="flex flex-col gap-6">
-
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -595,7 +541,6 @@ export const WhatWeDoSection2 = () => {
               >
                 Proven Results
               </motion.div>
-
               <h3 className="section-title text-white">
                 Numbers that{' '}
                 <motion.span
@@ -616,11 +561,9 @@ export const WhatWeDoSection2 = () => {
                 </motion.span>
                 <span className="text-zinc-600">.</span>
               </h3>
-
               <p className="section-text-dark max-w-sm">
                 We don't talk about "impressions" or "reach." Here are real results from real trade businesses across Australia — tracked, verified, and still growing.
               </p>
-
               <div className="flex flex-wrap gap-2 mt-2">
                 {[
                   { icon: Home, label: "Home Protection", color: COLORS.emerald },
@@ -638,7 +581,6 @@ export const WhatWeDoSection2 = () => {
                   </div>
                 ))}
               </div>
-
               <div className="mt-4 p-5 rounded-2xl border border-zinc-800 bg-zinc-900/50">
                 <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                   Why Tradies Trust Us <span className="h-px flex-1 bg-zinc-800" />
@@ -656,7 +598,6 @@ export const WhatWeDoSection2 = () => {
                   ))}
                 </div>
               </div>
-
               <div className="mt-4">
                 <motion.button
                   animate={{ borderColor: buttonColorSequence }}
@@ -678,14 +619,11 @@ export const WhatWeDoSection2 = () => {
                   </span>
                 </motion.button>
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
     </section>
   );
 };
-
 export default WhatWeDoSection2;
