@@ -831,9 +831,6 @@ export const FounderSection = () => {
                 </div>
               </TiltCard>
 
-              {/* MOBILE SPACER — extra gap between People First and Shared Victories */}
-              {isMobile && <div className="h-3" />}
-
               {/* CARDS 2 & 3 — desktop: animate in with isLight | mobile: only Shared Victories */}
               <AnimatePresence mode="popLayout">
                 {(isLight || isMobile) && (
@@ -882,7 +879,7 @@ export const FounderSection = () => {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
-                      className={cn("h-[300px] group safari-gpu cursor-default", isMobile && "!mb-0")}
+                      className={cn("h-[300px] group safari-gpu cursor-default", isMobile && "mt-2 -mb-8")}
                       innerClassName={cn(
                         "border overflow-hidden",
                         isMobile ? "bg-zinc-900 border-white/10" : "bg-white border-zinc-200"
