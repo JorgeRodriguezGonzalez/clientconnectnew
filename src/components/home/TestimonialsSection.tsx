@@ -240,18 +240,18 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Divider */}
-        <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "20px 0 0 0" }} />
+        <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: isMobile ? "12px 0 0 0" : "20px 0 0 0" }} />
 
         {/* === MOBILE === */}
         {isMobile ? (
-          <div style={{ marginTop: 16, position: "relative" }}>
+          <div style={{ marginTop: 12, position: "relative" }}>
             <Card t={testimonials[activeIndex]} i={activeIndex} isMobile={true} />
 
             <div style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              marginTop: 20,
+              marginTop: 12,
             }}>
               <div style={{ display: "flex", gap: 6 }}>
                 {testimonials.map((_, i) => (
