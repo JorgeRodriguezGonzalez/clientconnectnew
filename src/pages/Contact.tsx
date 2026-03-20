@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Mail, Phone, MapPin, Clock, User, Building2, MessageSquare, Send, Check } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, User, Building2, Globe, MessageSquare, Send, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { COLORS } from "@/lib/design-tokens";
 
@@ -61,6 +61,7 @@ const Contact = () => {
     email: "",
     phone: "",
     company: "",
+    url: "",
     service: "",
     message: "",
   });
@@ -237,6 +238,17 @@ const Contact = () => {
                           onChange={handleChange}
                         />
                       </div>
+
+                      {/* Row 3: Website URL */}
+                      <FormInput
+                        icon={Globe}
+                        label="Website URL"
+                        name="url"
+                        type="url"
+                        placeholder="https://yourwebsite.com.au"
+                        value={formData.url}
+                        onChange={handleChange}
+                      />
 
                       {/* Service Select */}
                       <div>
