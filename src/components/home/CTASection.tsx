@@ -134,6 +134,7 @@ const CTASection = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", url: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -141,9 +142,28 @@ const CTASection = () => {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setSubmitError(false);
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          "form-name": "contact",
+          ...formData,
+        }).toString(),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      } else {
+        setSubmitError(true);
+      }
+    } catch (error) {
+      setSubmitError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -233,6 +253,13 @@ const CTASection = () => {
                     />
                   </div>
                 </div>
+
+                {/* Error message */}
+                {submitError && (
+                  <p className="text-sm text-red-400 text-center">
+                    Something went wrong. Please try again or email us directly at info@clientconnectaustralia.com
+                  </p>
+                )}
 
                 {/* Submit + Trust in a row */}
                 <div className="flex flex-col lg:flex-row items-center gap-5 pt-2">

@@ -67,6 +67,7 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -74,13 +75,32 @@ const Contact = () => {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
+    setSubmitError(false);
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          "form-name": "contact-page",
+          ...formData,
+        }).toString(),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        toast({
+          title: "Message Sent!",
+          description: "We'll get back to you within 24 hours.",
+        });
+      } else {
+        setSubmitError(true);
+      }
+    } catch (error) {
+      setSubmitError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -282,6 +302,13 @@ const Contact = () => {
                           />
                         </div>
                       </div>
+
+                      {/* Error message */}
+                      {submitError && (
+                        <p className="text-sm text-red-400 text-center">
+                          Something went wrong. Please try again or email us directly at info@clientconnectaustralia.com.au
+                        </p>
+                      )}
 
                       {/* Submit + Trust */}
                       <div className="flex flex-col sm:flex-row items-center gap-5 pt-2">
