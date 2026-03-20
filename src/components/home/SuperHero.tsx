@@ -160,23 +160,25 @@ const ClientCarousel = ({ isMobile }: { isMobile?: boolean }) => {
   const trackWidth = total * step;
 
   const xRef = useRef(0);
-  const [x, setX] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>();
-  const [paused, setPaused] = useState(false);
-  const speed = 0.5;
+  const pausedRef = useRef(false);
+  const speed = isMobile ? 0.7 : 0.5;
 
   useEffect(() => {
     const tick = () => {
-      if (!paused) {
+      if (!pausedRef.current) {
         xRef.current -= speed;
         if (Math.abs(xRef.current) >= trackWidth) xRef.current = 0;
-        setX(xRef.current);
+        if (trackRef.current) {
+          trackRef.current.style.transform = `translateX(${xRef.current}px)`;
+        }
       }
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current!);
-  }, [paused, trackWidth]);
+  }, [trackWidth, speed]);
 
   return (
     <div className="w-full relative">
@@ -195,10 +197,11 @@ const ClientCarousel = ({ isMobile }: { isMobile?: boolean }) => {
         style={{ background: 'linear-gradient(to left, #050505 0%, transparent 100%)' }} />
       <div className="overflow-hidden w-full">
         <div
+          ref={trackRef}
           className="flex"
-          style={{ gap: `${gap}px`, transform: `translateX(${x}px)`, willChange: 'transform' }}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+          style={{ gap: `${gap}px`, willChange: 'transform' }}
+          onMouseEnter={() => { pausedRef.current = true; }}
+          onMouseLeave={() => { pausedRef.current = false; }}
         >
           {looped.map((client, i) => (
             <ClientCard key={`${client.name}-${i}`} client={client} isMobile={isMobile} />
@@ -546,7 +549,7 @@ export const SuperHero = ({
                     <input
                       type="email"
                       placeholder="Enter your email for a free audit"
-                      className="relative w-full h-full bg-transparent rounded-[50px] px-6 pr-14 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none z-10"
+                      className="relative w-full h-full bg-transparent rounded-[50px] px-6 pr-14 text-white text-[16px] font-inter font-medium placeholder-white/40 outline-none z-10"
                     />
                     <button
                       className="absolute right-[5px] top-1/2 -translate-y-1/2 w-[48px] h-[36px] rounded-[50px] flex items-center justify-center transition-all duration-300 z-10"
