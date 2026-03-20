@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   X,
@@ -75,20 +75,55 @@ const navLinks = [
   { name: "Contact", href: "/contact" },
 ];
 
+// --- SCROLL HIDE HOOK ---
+function useScrollHide(idleDelay = 300) {
+  const [visible, setVisible] = useState(true);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastScrollY = useRef(0);
+
+  const handleScroll = useCallback(() => {
+    const currentY = window.scrollY;
+
+    // Always show at the very top
+    if (currentY < 20) {
+      setVisible(true);
+      lastScrollY.current = currentY;
+      return;
+    }
+
+    // Hide while actively scrolling
+    setVisible(false);
+
+    // Clear previous idle timer
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+
+    // Show again after user stops scrolling
+    scrollTimeoutRef.current = setTimeout(() => {
+      setVisible(true);
+    }, idleDelay);
+
+    lastScrollY.current = currentY;
+  }, [idleDelay]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, [handleScroll]);
+
+  return visible;
+}
+
 // --- MAIN COMPONENT ---
 export default function Header() {
-  const [scrollY, setScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const headerVisible = useScrollHide(300);
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
@@ -118,14 +153,12 @@ export default function Header() {
     <>
       {/* ── HEADER ── */}
       <motion.div
-        initial={{ opacity: 1, y: 0 }}
+        initial={{ y: 0 }}
         animate={{
-          opacity: scrollY > 80 ? 0 : 1,
-          y: scrollY > 80 ? -16 : 0,
+          y: headerVisible ? 0 : -100,
         }}
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className="fixed top-0 left-0 right-0 z-[999] font-sans"
-        style={{ pointerEvents: scrollY > 80 ? "none" : "auto" }}
       >
         <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 no-underline">
