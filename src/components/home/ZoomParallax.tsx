@@ -240,7 +240,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                             </h3>
                                             <div className="flex gap-3 mt-2">
                                                 <motion.a
-                                                    href="#contact"
+                                                    href="tel:0272071038"
                                                     whileHover={
                                                         isTablet
                                                             ? { scale: 1.02, borderColor: 'rgba(255,255,255,1)' }
@@ -266,7 +266,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                     Let's chat
                                                 </motion.a>
                                                 <motion.a
-                                                    href="#book"
+                                                    href="/contact"
                                                     whileHover={
                                                         isTablet
                                                             ? { scale: 1.02, borderColor: `${COLORS.emerald}` }

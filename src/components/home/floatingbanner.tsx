@@ -145,7 +145,7 @@ export function FloatingBanner() {
                   className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all"
                 >
                   <Phone className="w-3.5 h-3.5" />
-                  <span className="font-sans font-semibold text-xs whitespace-nowrap">Call us today</span>
+                  <span className="font-sans font-semibold text-xs whitespace-nowrap">Let's chat</span>
                 </a>
 
                 <button
