@@ -118,7 +118,6 @@ const cases: CaseStudy[] = [
     highlights: [
       "Migration from WordPress to React + Vite + Netlify with zero downtime",
       "Website traffic doubled within 14 days of launch",
-      "4 strategic GMB listings covering every Sydney region",
       "Multi-channel lead generation combining search + paid advertising",
       "Average search position improved from 21 to 17.1",
       "March 2026 on pace for ~70 form submissions",
