@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; 
+import { useLocation, useNavigate } from "react-router-dom"; 
 import { X, Phone, ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -12,6 +12,7 @@ export function FloatingBanner() {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Ocultar en página de contacto
   const isContactPage = location.pathname === "/contact";
@@ -149,12 +150,7 @@ export function FloatingBanner() {
                 </a>
 
                 <button
-                  onClick={() => {
-                    const element = document.getElementById('contact-form');
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
+                  onClick={() => navigate("/contact")}
                   className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-cyan-500 bg-white/10 backdrop-blur-sm text-cyan-500 hover:border-emerald-400 hover:text-emerald-400 hover:shadow-[0_0_20px_rgba(52,211,153,0.5)] transition-all"
                 >
                   <span className="font-sans font-semibold text-xs whitespace-nowrap">Book a Call</span>
