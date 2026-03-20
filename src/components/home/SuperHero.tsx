@@ -298,7 +298,7 @@ export const SuperHero = ({
       <style>{fontStyles}</style>
 
       {/* BACKGROUND */}
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#050505]">
+      <div className={`${isMobile ? 'absolute' : 'fixed'} inset-0 w-full h-full z-0 pointer-events-none bg-[#050505]`}>
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(5,5,5,0.1) 5%, rgba(5,5,5,0.75) 50%, #050505 100%)' }} />
         <motion.div
           initial={{ opacity: 1 }}
