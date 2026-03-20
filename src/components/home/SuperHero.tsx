@@ -129,7 +129,7 @@ const fontStyles = `
 const clients = [
   { name: 'Asset Plumbing Solutions', tags: ['Google Ads', 'Website', 'SEO'], image: '/images/asset.jpg', logo: 'Asset Plumbing\nSolutions' },
   { name: 'Nanotise', tags: ['Website', 'Rebrand', 'Social Media', 'Content Creation'], image: '/images/nanotise.jpg', logo: 'Nanotise' },
-  { name: 'LC Landscaping', tags: ['Google Ads', 'Paid Social', 'Website'], image: '/images/landscaping.jpg', logo: 'LC\nLandscaping' },
+  { name: 'Lifestyle Concepts', tags: ['Google Ads', 'Paid Social', 'Website'], image: '/images/landscaping.jpg', logo: 'LC\nLandscaping' },
   { name: 'Premier Bathrooms', tags: ['Website', 'SEO', 'Google Ads', 'Content Creation'], image: '/images/premier.jpg', logo: 'Premier\nBathrooms' },
   { name: 'Pioneer Shades', tags: ['Paid Social', 'Google Ads', 'Website'], image: '/images/pioneer.jpg', logo: 'Pioneer\nShades' },
   { name: 'Turnbull Pools', tags: ['Google Ads', 'SEO', 'Social Media', 'Website'], image: 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=600&q=80', logo: 'Turnbull\nPools' },
