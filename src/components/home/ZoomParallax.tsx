@@ -176,6 +176,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                 {/* LET'S CHAT → tel:0272071038 */}
                                                 <motion.a
                                                     href="tel:0272071038"
+                                                    style={{ pointerEvents: 'auto', position: 'relative', zIndex: 50 }}
                                                     whileHover={
                                                         isTablet
                                                             ? { scale: 1.02, borderColor: 'rgba(255,255,255,1)' }
@@ -199,6 +200,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                 {/* BOOK A CALL → /contact */}
                                                 <motion.a
                                                     href="/contact"
+                                                    style={{ pointerEvents: 'auto', position: 'relative', zIndex: 50 }}
                                                     whileHover={
                                                         isTablet
                                                             ? { scale: 1.02, borderColor: `${COLORS.emerald}` }
