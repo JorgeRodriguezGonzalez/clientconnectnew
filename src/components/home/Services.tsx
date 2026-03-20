@@ -95,8 +95,6 @@ const ServiceCard = ({ service, colorIndex }) => {
           muted
           loop
           playsInline
-          preload="metadata"
-          poster={service.imageUrl}
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
