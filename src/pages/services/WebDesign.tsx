@@ -307,7 +307,6 @@ const OurProcess = () => {
                   transition: "background 0.5s ease",
                 }} />
 
-                {/* Step badge */}
                 <span style={{
                   display: "inline-flex", alignItems: "center",
                   fontFamily: "'Satoshi', sans-serif", fontSize: "12px", fontWeight: 600,
@@ -322,7 +321,6 @@ const OurProcess = () => {
                   {item.step}
                 </span>
 
-                {/* Title */}
                 <h3 style={{
                   fontFamily: "'Satoshi', sans-serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700,
                   color: "#fff", lineHeight: 1.2, letterSpacing: "-1px",
@@ -332,7 +330,6 @@ const OurProcess = () => {
                   {item.title}
                 </h3>
 
-                {/* Description */}
                 <p style={{
                   fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
                   color: isActive ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.35)",
@@ -342,7 +339,6 @@ const OurProcess = () => {
                   {item.description}
                 </p>
 
-                {/* Badges */}
                 <div style={{
                   display: "flex", flexWrap: "wrap", gap: "8px",
                   justifyContent: "center", marginTop: "4px",
@@ -373,13 +369,21 @@ const RecentWebsites = () => {
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
   const isTablet = useIsTablet();
+
+  const visibleCount = 3;
+  const totalSlides = Math.ceil(recentWebsites.length / visibleCount);
 
   const checkScroll = () => {
     if (!scrollRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
     setCanScrollLeft(scrollLeft > 10);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+
+    const slideWidth = scrollRef.current.clientWidth;
+    const newIndex = Math.round(scrollLeft / slideWidth);
+    setActiveIndex(Math.min(newIndex, totalSlides - 1));
   };
 
   useEffect(() => {
@@ -391,10 +395,22 @@ const RecentWebsites = () => {
     }
   }, []);
 
-  const scroll = (dir) => {
+  const scrollToSlide = (index) => {
     if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: dir * 420, behavior: "smooth" });
+    const slideWidth = scrollRef.current.clientWidth;
+    scrollRef.current.scrollTo({ left: index * slideWidth, behavior: "smooth" });
+    setActiveIndex(index);
   };
+
+  const scroll = (dir) => {
+    const newIndex = Math.max(0, Math.min(activeIndex + dir, totalSlides - 1));
+    scrollToSlide(newIndex);
+  };
+
+  const slides = [];
+  for (let i = 0; i < recentWebsites.length; i += visibleCount) {
+    slides.push(recentWebsites.slice(i, i + visibleCount));
+  }
 
   return (
     <section style={{ background: "#FAFAFA", padding: "80px 0 100px", position: "relative", overflow: "hidden" }}>
@@ -425,7 +441,7 @@ const RecentWebsites = () => {
             lineHeight: 1.1, letterSpacing: "-1.5px", color: "#111", marginTop: "12px",
           }}>
             Recent{" "}
-            <span style={{ background: C.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Projects</span>
+            <span style={{ background: C.gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Websites</span>
           </h2>
           <p style={{
             fontFamily: "'Satoshi', sans-serif", fontSize: "15px", fontWeight: 500,
@@ -437,92 +453,131 @@ const RecentWebsites = () => {
 
         {/* Carousel */}
         <div style={{ position: "relative" }}>
-          {/* Left arrow */}
           {canScrollLeft && (
             <button
               onClick={() => scroll(-1)}
               style={{
-                position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)",
+                position: "absolute", left: "-24px", top: "50%", transform: "translateY(-70%)",
                 zIndex: 10, width: "48px", height: "48px", borderRadius: "50%",
-                background: "rgba(255,255,255,0.9)", border: "1px solid rgba(0,0,0,0.1)",
+                background: "rgba(255,255,255,0.95)", border: "1px solid rgba(0,0,0,0.1)",
                 color: "#111", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                 ...(isTablet ? {} : { backdropFilter: "blur(8px)" }),
                 transition: "all 0.2s ease",
               }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = C.cyan}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = C.cyan; e.currentTarget.style.boxShadow = `0 4px 20px rgba(${C.secondaryRGB},0.2)`; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"; }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
             </button>
           )}
 
-          {/* Right arrow */}
           {canScrollRight && (
             <button
               onClick={() => scroll(1)}
               style={{
-                position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)",
+                position: "absolute", right: "-24px", top: "50%", transform: "translateY(-70%)",
                 zIndex: 10, width: "48px", height: "48px", borderRadius: "50%",
-                background: "rgba(255,255,255,0.9)", border: "1px solid rgba(0,0,0,0.1)",
+                background: "rgba(255,255,255,0.95)", border: "1px solid rgba(0,0,0,0.1)",
                 color: "#111", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                 ...(isTablet ? {} : { backdropFilter: "blur(8px)" }),
                 transition: "all 0.2s ease",
               }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = C.cyan}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = C.cyan; e.currentTarget.style.boxShadow = `0 4px 20px rgba(${C.secondaryRGB},0.2)`; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.1)"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"; }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
             </button>
           )}
 
-          {/* Scroll container */}
           <div
             ref={scrollRef}
             style={{
-              display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px",
-              overflowX: "auto", scrollSnapType: "x mandatory",
-              scrollbarWidth: "none", msOverflowStyle: "none",
-              padding: "8px 0",
+              display: "flex",
+              overflowX: "auto",
+              scrollSnapType: "x mandatory",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              gap: 0,
             }}
           >
-            <style>{`.recent-scroll::-webkit-scrollbar { display: none; }`}</style>
-            {recentWebsites.map((site) => (
-              <motion.div
-                key={site.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+            <style>{`.recent-carousel::-webkit-scrollbar { display: none; }`}</style>
+            {slides.map((slide, slideIndex) => (
+              <div
+                key={slideIndex}
+                className="recent-carousel"
                 style={{
-                  flexShrink: 0, scrollSnapAlign: "start",
-                  display: "flex", flexDirection: "column", gap: "16px",
-                  minWidth: 0,
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${visibleCount}, 1fr)`,
+                  gap: "24px",
+                  flexShrink: 0,
+                  width: "100%",
+                  scrollSnapAlign: "start",
+                  padding: "8px 0",
                 }}
               >
-                <div style={{
-                  width: "100%", borderRadius: "16px", overflow: "hidden",
-                  border: "1px solid rgba(0,0,0,0.08)",
-                  background: "#f5f5f5",
-                  transition: "border-color 0.3s ease, box-shadow 0.3s ease",
-                }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = `rgba(${C.secondaryRGB},0.3)`; e.currentTarget.style.boxShadow = `0 8px 32px rgba(0,0,0,0.1)`; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.08)"; e.currentTarget.style.boxShadow = "none"; }}
-                >
-                  <img
-                    src={site.src}
-                    alt={site.name}
-                    style={{ width: "100%", height: "auto", display: "block" }}
-                  />
-                </div>
-                <span style={{
-                  fontFamily: "'Satoshi', sans-serif", fontSize: "14px", fontWeight: 700,
-                  textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(0,0,0,0.6)",
-                }}>
-                  {site.name}
-                </span>
-              </motion.div>
+                {slide.map((site) => (
+                  <motion.div
+                    key={site.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    style={{
+                      display: "flex", flexDirection: "column", gap: "16px",
+                      minWidth: 0,
+                    }}
+                  >
+                    <div style={{
+                      width: "100%", borderRadius: "16px", overflow: "hidden",
+                      border: "1px solid rgba(0,0,0,0.08)",
+                      background: "#f5f5f5",
+                      transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+                    }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = `rgba(${C.secondaryRGB},0.3)`; e.currentTarget.style.boxShadow = `0 8px 32px rgba(0,0,0,0.1)`; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(0,0,0,0.08)"; e.currentTarget.style.boxShadow = "none"; }}
+                    >
+                      <img
+                        src={site.src}
+                        alt={site.name}
+                        style={{ width: "100%", height: "auto", display: "block" }}
+                      />
+                    </div>
+                    <span style={{
+                      fontFamily: "'Satoshi', sans-serif", fontSize: "14px", fontWeight: 700,
+                      textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(0,0,0,0.6)",
+                    }}>
+                      {site.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
             ))}
           </div>
+
+          {totalSlides > 1 && (
+            <div style={{
+              display: "flex", justifyContent: "center", gap: "8px",
+              marginTop: "32px",
+            }}>
+              {Array.from({ length: totalSlides }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => scrollToSlide(i)}
+                  style={{
+                    width: activeIndex === i ? "32px" : "10px",
+                    height: "10px",
+                    borderRadius: "999px",
+                    border: "none",
+                    cursor: "pointer",
+                    background: activeIndex === i ? C.gradient : "rgba(0,0,0,0.15)",
+                    transition: "all 0.3s ease",
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
