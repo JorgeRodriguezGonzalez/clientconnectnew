@@ -372,16 +372,14 @@ export default function ZoomParallax() {
                 <div className="relative z-10 text-center flex flex-col items-center">
 
                     {/* Badge */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
+                    <motion.span
+                        initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="w-fit px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 mb-6"
+                        className="w-fit mx-auto px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-900 text-zinc-400 text-[10px] font-semibold uppercase tracking-[2px] mb-6"
                     >
-                        <span className="text-[10px] font-sans font-semibold uppercase tracking-[2px] text-zinc-400">
-                            Our Work
-                        </span>
-                    </motion.div>
+                        Our Work
+                    </motion.span>
 
                     {/* Title - single line on desktop */}
                     <h2 className="section-title text-white max-w-4xl md:whitespace-nowrap">
