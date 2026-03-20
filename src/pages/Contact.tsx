@@ -353,8 +353,8 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="font-medium mb-1 text-white">Email</div>
-                        <a href="mailto:hello@clientconnect.com.au" className="text-zinc-400 hover:text-[#06b6d4] transition-colors">
-                          hello@clientconnect.com.au
+                        <a href="mailto:info@clientconnectaustralia.com.au" className="text-zinc-400 hover:text-[#06b6d4] transition-colors">
+                          info@clientconnectaustralia.com.au
                         </a>
                       </div>
                     </div>
@@ -368,8 +368,8 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="font-medium mb-1 text-white">Phone</div>
-                        <a href="tel:+61-2-xxxx-xxxx" className="text-zinc-400 hover:text-[#06b6d4] transition-colors">
-                          +61 2 xxxx xxxx
+                        <a href="tel:0272071038" className="text-zinc-400 hover:text-[#06b6d4] transition-colors">
+                          02 7207 1038
                         </a>
                       </div>
                     </div>
@@ -396,8 +396,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="font-medium mb-1 text-white">Business Hours</div>
-                        <p className="text-zinc-400">Mon - Fri: 9:00 AM - 5:00 PM</p>
-                        <p className="text-zinc-400">Sat - Sun: Closed</p>
+                        <p className="text-zinc-400">Mon - Fri: 8:00 AM - 5:00 PM</p>
                       </div>
                     </div>
                   </div>
