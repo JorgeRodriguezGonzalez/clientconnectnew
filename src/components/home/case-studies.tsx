@@ -104,7 +104,7 @@ const cases: CaseStudy[] = [
     icon: Shield,
     title: "2x Website Traffic in 14 Days",
     subtitle: "WordPress to React Migration — Immediate Impact",
-    description: "Nanotise's WordPress site had become unreliable — plugin conflicts were breaking forms and costing leads. We migrated the entire site to a modern React + Vite + Netlify architecture with zero downtime. Within 14 days, website traffic had doubled, click-through rates improved by 80%, and average search position climbed nearly 4 spots. A multi-listing GMB strategy with 4 profiles covers Sydney's mould removal market across every region.",
+    description: "Nanotise's WordPress site had become unreliable — plugin conflicts were breaking forms and costing leads. We migrated the entire site to a modern React + Vite + Netlify architecture with zero downtime. Within 14 days, website traffic had doubled, click-through rates improved by 80%, and average search position climbed nearly 4 spots.",
     thumbnail: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2670&auto=format&fit=crop",
     videoUrl: "https://videos.pexels.com/video-files/3252755/3252755-uhd_2560_1440_25fps.mp4", 
     color: COLORS.cyan,
@@ -113,7 +113,6 @@ const cases: CaseStudy[] = [
       { label: "CTR Improvement", value: "+80%", subtext: "0.5% → 0.9%", icon: TrendingUp },
       { label: "Avg. Position", value: "17.1", subtext: "Improved from 21", icon: Search },
       { label: "Form Submissions", value: "~70/mo", subtext: "March 2026 Pace", icon: FileText },
-      { label: "GMB Listings", value: "4", subtext: "Covering All Sydney", icon: MapPin },
       { label: "Peak Leads", value: "90", subtext: "Aug 2025 Record", icon: Users },
     ],
     highlights: [
