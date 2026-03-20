@@ -546,7 +546,7 @@ export const SuperHero = ({
                     <input
                       type="email"
                       placeholder="Enter your email for a free audit"
-                      className="relative w-full h-full bg-transparent rounded-[50px] px-6 pr-14 text-white text-[14px] font-inter font-medium placeholder-white/40 outline-none z-10"
+                      className="relative w-full h-full bg-transparent rounded-[50px] px-6 pr-14 text-white text-[16px] font-inter font-medium placeholder-white/40 outline-none z-10"
                     />
                     <button
                       className="absolute right-[5px] top-1/2 -translate-y-1/2 w-[48px] h-[36px] rounded-[50px] flex items-center justify-center transition-all duration-300 z-10"
