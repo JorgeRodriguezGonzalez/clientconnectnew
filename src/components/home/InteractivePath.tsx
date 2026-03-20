@@ -216,7 +216,7 @@ export default function TestimonialsSection() {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      paddingTop: "96px",
+      paddingTop: "66px",
       paddingBottom: "96px",
       gap: "56px",
       overflow: "hidden",
