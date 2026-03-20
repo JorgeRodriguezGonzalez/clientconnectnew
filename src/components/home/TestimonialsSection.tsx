@@ -170,8 +170,8 @@ export default function TestimonialsSection() {
   return (
     <div style={{
       background: bg,
-      padding: isMobile ? "0" : "48px 0",
-      minHeight: "100vh",
+      padding: isMobile ? "10px 0" : "48px 0",
+      minHeight: isMobile ? "auto" : "100vh",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
