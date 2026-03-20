@@ -574,7 +574,7 @@ export const SuperHero = ({
                   </motion.a>
 
                   <motion.a
-                    href="#contact-form"
+                    href="/contact"
                     onHoverStart={() => setIsHovered(true)}
                     onHoverEnd={() => setIsHovered(false)}
                     className="flex items-center justify-center gap-1.5 cursor-pointer w-full sm:w-auto relative z-[100]"
