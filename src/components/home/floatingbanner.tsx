@@ -141,7 +141,7 @@ export function FloatingBanner() {
               <div className="flex flex-row gap-3 w-full md:w-auto items-stretch md:items-center">
                 
                 <a 
-                  href="tel:0290734731"
+                  href="tel:0272071038"
                   className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all"
                 >
                   <Phone className="w-3.5 h-3.5" />
@@ -150,7 +150,7 @@ export function FloatingBanner() {
 
                 <button
                   onClick={() => {
-                    const element = document.getElementById('get-in-touch');
+                    const element = document.getElementById('contact-form');
                     if (element) {
                       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
