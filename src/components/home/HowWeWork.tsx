@@ -15,7 +15,7 @@ const workSteps = [
     description: "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
     services: ["SEO", "Content Strategy", "Google Ads"],
     image: "/images/nanotise10.jpg",
-    websiteUrl: "#",
+    websiteUrl: "https://nanotise.com.au/",
     top: 80,
   },
   {
@@ -26,7 +26,7 @@ const workSteps = [
     description: "For LC Landscaping, we built a high-converting digital presence that showcases their premium landscape designs to high-end residential clients across Sydney.",
     services: ["Website", "UI/UX Design", "Local SEO"],
     showTaskCard: true,
-    websiteUrl: "#",
+    websiteUrl: "https://lclandscaping.com.au/",
     top: 105,
   },
   {
@@ -37,7 +37,7 @@ const workSteps = [
     description: "200+ leads at $50 CPL. We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving 16 new keywords to the top rankings.",
     services: ["Google Ads", "Lead Gen", "SEO"],
     image: "/images/asset.jpg",
-    websiteUrl: "#",
+    websiteUrl: "https://assetplumbingsolutions.com.au/",
     top: 130,
   },
   {
@@ -48,7 +48,7 @@ const workSteps = [
     description: "We scaled their lead generation through optimized Google Ads, local SEO, and social media advertising, delivering consistent results for their roofing services on a national scale.",
     services: ["Google Ads", "National SEO", "Website", "Social Media Ads"],
     showCarousel: true,
-    websiteUrl: "#",
+    websiteUrl: "https://yourlocalroofers.com.au/",
     top: 155,
   },
   {
@@ -58,8 +58,8 @@ const workSteps = [
     title: "Pioneer Shades: Sydney's Best Pergolas & Patios",
     description: "Through targeted social media and search campaigns, we helped Pioneer Shade Structures dominate the Sydney market for custom pergolas.",
     services: ["Social Media", "Google Ads", "SEO"],
-    image: "https://images.unsplash.com/photo-1622397333309-3056849bc70b?w=800&q=80",
-    websiteUrl: "#",
+    image: "/images/piooner.jpg",
+    websiteUrl: "https://pioneershade.com.au/",
     top: 180,
   },
   {
@@ -70,7 +70,7 @@ const workSteps = [
     description: "We deployed high-intent search campaigns, hyperlocal landing pages and a premium UI/UX design that captures qualified leads daily in the competitive Sydney market.",
     services: ["Website", "Google Ads", "SEO", "UI/UX"],
     showPremierStats: true,
-    websiteUrl: "#",
+    websiteUrl: "https://premierbathrooms.com.au/",
     top: 205,
   },
   {
@@ -80,8 +80,8 @@ const workSteps = [
     title: "Prolex Bathrooms: Sydney's Premier Specialists",
     description: "Scaling visibility through localized SEO and technical optimization, ensuring Prolex remains the top choice for modern bathroom overhauls.",
     services: ["Technical SEO", "Local SEO", "Website"],
-    image: "/images/proleximage.png",
-    websiteUrl: "#",
+    image: "/images/proleximage.jpg",
+    websiteUrl: "https://prolexbathroomrenovations.com.au/",
     top: 230,
   },
 ];
