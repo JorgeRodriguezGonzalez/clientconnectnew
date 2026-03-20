@@ -92,19 +92,6 @@ const Contact = () => {
           <div
             style={{
               position: "absolute",
-              top: "180px",
-              left: "50%",
-              marginLeft: "-250px",
-              width: "500px",
-              height: "500px",
-              background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`,
-              borderRadius: "50%",
-              pointerEvents: "none",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
               top: "200px",
               left: "50%",
               marginLeft: "-50px",
