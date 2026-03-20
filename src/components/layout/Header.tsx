@@ -117,7 +117,7 @@ function useScrollHide(idleDelay = 300) {
 }
 
 // --- MAIN COMPONENT ---
-export default function Header() {
+function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
@@ -157,8 +157,8 @@ export default function Header() {
         animate={{
           y: headerVisible ? 0 : -100,
         }}
-        transition={{ duration: 0.35, ease: "easeInOut" }}
-        className="fixed top-0 left-0 right-0 z-[999] font-sans"
+        transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+        className="fixed top-0 left-0 right-0 z-[999] font-sans bg-black"
       >
         <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 no-underline">
@@ -480,3 +480,6 @@ export default function Header() {
     </>
   );
 }
+
+export { Header };
+export default Header;
