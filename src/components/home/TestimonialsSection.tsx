@@ -202,7 +202,7 @@ export default function TestimonialsSection() {
           <h2 style={{
             fontFamily: "'Satoshi', sans-serif",
             fontWeight: 700,
-            fontSize: isMobile ? 32 : 48,
+            fontSize: isMobile ? 36 : 56,
             lineHeight: 1.1,
             letterSpacing: "-0.025em",
             margin: 0,
@@ -229,6 +229,7 @@ export default function TestimonialsSection() {
             marginTop: isMobile ? 10 : 0,
             maxWidth: 480,
             letterSpacing: "-0.01em",
+            textAlign: "right",
             flex: 1,
             fontFamily: ff,
             fontWeight: 500,
