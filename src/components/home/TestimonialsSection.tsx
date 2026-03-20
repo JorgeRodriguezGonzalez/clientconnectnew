@@ -309,11 +309,11 @@ export default function TestimonialsSection() {
           <div style={{ position: "relative", marginTop: 32 }}>
             <div style={{
               position: "absolute", inset: "0 auto 0 0", width: 60, zIndex: 10, pointerEvents: "none",
-              background: `linear-gradient(to right, ${bg}, transparent)`,
+              background: "linear-gradient(to right, rgba(18,18,20,0.9), transparent)",
             }} />
             <div style={{
               position: "absolute", inset: "0 0 0 auto", width: 60, zIndex: 10, pointerEvents: "none",
-              background: `linear-gradient(to left, ${bg}, transparent)`,
+              background: "linear-gradient(to left, rgba(18,18,20,0.9), transparent)",
             }} />
 
             <div
