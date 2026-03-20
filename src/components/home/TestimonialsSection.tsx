@@ -50,8 +50,8 @@ div::-webkit-scrollbar { display: none; }
 
 const ff = "'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
 const bg = "#050505";
-const containerBg = "rgba(255,255,255,0.05)";
-const containerBorder = "rgba(255,255,255,0.05)";
+const containerBg = "rgba(255,255,255,0.08)";
+const containerBorder = "rgba(255,255,255,0.08)";
 
 function Card({ t, i, isMobile }) {
   const rot = rotations[i % rotations.length];
