@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, ArrowLeft, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { COLORS } from "@/lib/design-tokens";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
@@ -23,13 +24,13 @@ const CARD_COLORS = [
 ];
 
 const SERVICES = [
-  { id: "brand-identity", title: "Brand Identity", description: "Define your visual language and voice to create a lasting impression in the market.", capabilityCount: 4, tags: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "100% 50%", videoUrl: "/videos/brand.mp4" },
-  { id: "website-development", title: "Website Development", description: "Build fast, responsive, and conversion-focused websites that elevate your digital presence.", capabilityCount: 4, tags: ["Custom Design", "Responsive Dev", "CMS Integration", "Performance"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "cover", bgPosition: "center", videoUrl: "/videos/websitedevelopment.mp4" },
-  { id: "seo", title: "SEO", description: "Dominate search results and drive organic traffic with technical and on-page optimization.", capabilityCount: 4, tags: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "0% 50%", videoUrl: "/videos/SEOclient.mp4" },
-  { id: "google-ads", title: "Google Ads", description: "Drive high-intent traffic and maximize ROI with strategic search, display, and shopping campaigns.", capabilityCount: 4, tags: ["Search Campaigns", "Display Ads", "Shopping Ads", "Performance Max"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "50% 50%", videoUrl: "/videos/googleads.mp4" },
-  { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], imageUrl: "/images/image2.jpg", bgSize: "cover", bgPosition: "center", videoUrl: "/videos/googleads.mp4" },
-  { id: "social-media", title: "Social Media", description: "Build community and engagement with strategic content calendars and management.", capabilityCount: 4, tags: ["Content Strategy", "Community Mgmt", "Influencer Marketing", "Trend Analysis"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "100% 50%", videoUrl: "/videos/socialmedia.mp4" },
-  { id: "content-creation", title: "Content Creation", description: "Bring your brand to life with compelling visuals, video, and copy that captivate your audience.", capabilityCount: 4, tags: ["Video Production", "Photography", "Copywriting", "Graphic Design"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "200% 100%", bgPosition: "0% 50%" },
+  { id: "brand-identity", title: "Brand Identity", description: "Define your visual language and voice to create a lasting impression in the market.", capabilityCount: 4, tags: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "100% 50%", videoUrl: "/videos/brand.mp4", link: "/services/brand-identity" },
+  { id: "website-development", title: "Website Development", description: "Build fast, responsive, and conversion-focused websites that elevate your digital presence.", capabilityCount: 4, tags: ["Custom Design", "Responsive Dev", "CMS Integration", "Performance"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "cover", bgPosition: "center", videoUrl: "/videos/websitedevelopment.mp4", link: "/services/web-design" },
+  { id: "seo", title: "SEO", description: "Dominate search results and drive organic traffic with technical and on-page optimization.", capabilityCount: 4, tags: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "0% 50%", videoUrl: "/videos/SEOclient.mp4", link: "/services/seo" },
+  { id: "google-ads", title: "Google Ads", description: "Drive high-intent traffic and maximize ROI with strategic search, display, and shopping campaigns.", capabilityCount: 4, tags: ["Search Campaigns", "Display Ads", "Shopping Ads", "Performance Max"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "50% 50%", videoUrl: "/videos/googleads.mp4", link: "/services/google-ads" },
+  { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], imageUrl: "/images/image2.jpg", bgSize: "cover", bgPosition: "center", videoUrl: "/videos/googleads.mp4", link: "/services/social-media-ads" },
+  { id: "social-media", title: "Social Media", description: "Build community and engagement with strategic content calendars and management.", capabilityCount: 4, tags: ["Content Strategy", "Community Mgmt", "Influencer Marketing", "Trend Analysis"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "100% 50%", videoUrl: "/videos/socialmedia.mp4", link: "/services/social-media-management" },
+  { id: "content-creation", title: "Content Creation", description: "Bring your brand to life with compelling visuals, video, and copy that captivate your audience.", capabilityCount: 4, tags: ["Video Production", "Photography", "Copywriting", "Graphic Design"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "200% 100%", bgPosition: "0% 50%", link: "/services/content-creation" },
 ];
 
 const GradientText = ({ children, style = {} }) => (
@@ -80,8 +81,9 @@ const ServiceCard = ({ service, colorIndex }) => {
   }, [isHovered, service.videoUrl]);
 
   return (
-    <div
-      className="group relative h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500"
+    <Link
+      to={service.link}
+      className="group relative block h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500 no-underline"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={isMobile ? { background: CARD_COLORS[colorIndex % CARD_COLORS.length] } : undefined}
@@ -153,7 +155,7 @@ const ServiceCard = ({ service, colorIndex }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -358,4 +360,5 @@ const Services = () => {
   );
 };
 
+export { Services };
 export default Services;
