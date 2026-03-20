@@ -135,7 +135,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                     const scale = scales[index % scales.length];
                     const hasMobileOverride = isMobile && mobileOverrides[index];
                     return (
-                        <motion.div key={index} style={{ scale }}
+                        <motion.div key={index} style={{ scale, pointerEvents: 'none' }}
                             className={`absolute top-0 flex h-full w-full items-center justify-center 
                                 ${index === 1 ? '[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]' : ''} 
                                 ${index === 2 && !isMobile ? '[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]' : ''} 
@@ -152,7 +152,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                     <>
                                         <motion.div style={{ opacity: overlayOpacity }}
                                             className={isTablet ? "absolute inset-0 z-20 bg-black/75" : "absolute inset-0 z-20 bg-black/75 backdrop-blur-[2px]"} />
-                                        <motion.div style={{ opacity: contentOpacity, scale: inverseScale }}
+                                        <motion.div style={{ opacity: contentOpacity, scale: inverseScale, pointerEvents: 'auto' as any }}
                                             className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-4 px-6 text-center">
                                             <h3 className="font-satoshi font-bold text-white"
                                                 style={{ fontSize: isMobile ? '28px' : '56px', lineHeight: 1.1, whiteSpace: 'nowrap' }}>
