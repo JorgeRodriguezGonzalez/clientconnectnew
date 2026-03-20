@@ -84,8 +84,8 @@ const ServiceCard = ({ service, colorIndex }) => {
     <Link
       to={service.link}
       className="group relative block h-[420px] w-full overflow-hidden rounded-2xl bg-neutral-900 text-white transition-transform duration-500 no-underline"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => { if (!isMobile) setIsHovered(true); }}
+      onMouseLeave={() => { if (!isMobile) setIsHovered(false); }}
       style={isMobile ? { background: CARD_COLORS[colorIndex % CARD_COLORS.length] } : undefined}
     >
       {!isMobile && service.videoUrl && (
@@ -111,23 +111,8 @@ const ServiceCard = ({ service, colorIndex }) => {
         />
       )}
 
-      {isMobile && service.videoUrl && (
-        <video
-          ref={videoRef}
-          src={service.videoUrl}
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-          style={{ opacity: isHovered ? 1 : 0 }}
-        />
-      )}
-
       {!isMobile && (
         <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-500" />
-      )}
-      {isMobile && isHovered && service.videoUrl && (
-        <div className="absolute inset-0 bg-black/50 transition-opacity duration-500" />
       )}
 
       <div className="relative h-full flex flex-col justify-between p-5 z-10">
