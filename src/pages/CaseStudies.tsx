@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "@/components/layout/Header";
-import CaseStudiesSection from "@/components/home/case-studies";
+import CaseStudiesHome from "@/components/home/case-studies";
 import Footer from "@/components/layout/Footer";
 import { HowWeWork } from "@/components/home/HowWeWork";
 import CTASection from "@/components/home/CTASection";
@@ -104,7 +104,7 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
   );
 };
 
-export default function CaseStudies() {
+export default function CaseStudiesPage() {
   const [hCard, setHCard] = useState<number | null>(null);
   const [hImg, setHImg] = useState<number | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -249,7 +249,7 @@ export default function CaseStudies() {
         </div>
       </section>
 
-      <CaseStudiesSection />
+      <CaseStudiesHome />
 
       <HowWeWork />
       <CTASection />
