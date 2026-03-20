@@ -3,6 +3,7 @@ import { SuperHero } from "@/components/home/SuperHero";
 import { FloatingBanner } from "@/components/home/floatingbanner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import CTASection from "@/components/home/CTASection";
 
 // --- Lazy imports: these chunks (and their videos) only load when needed ---
 const FounderSection = lazy(() => import("@/components/home/FounderSection"));
@@ -13,7 +14,6 @@ const WhatWeDoSection2 = lazy(() => import("@/components/home/WhatWeDoSection2")
 const ComparisonSection = lazy(() => import("@/components/home/ComparisonSection"));
 const TestimonialsSection = lazy(() => import("@/components/home/TestimonialsSection"));
 const FAQSection = lazy(() => import("@/components/home/faqs"));
-const CTASection = lazy(() => import("@/components/home/CTASection"));
 
 // --- LazySection: only mounts the component when near the viewport ---
 function LazySection({ 
@@ -97,9 +97,7 @@ const Index = () => {
           <FAQSection />
         </LazySection>
 
-        <LazySection rootMargin="300px" minHeight="300px">
-          <CTASection />
-        </LazySection>
+        <CTASection />
 
         <FloatingBanner />
         <Footer />
