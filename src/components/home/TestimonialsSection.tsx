@@ -49,15 +49,16 @@ div::-webkit-scrollbar { display: none; }
 `;
 
 const ff = "'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+const bg = "#050505";
+const containerBg = "rgba(255,255,255,0.05)";
+const containerBorder = "rgba(255,255,255,0.05)";
 
 function Card({ t, i, isMobile }) {
-  const ref = useRef(null);
   const rot = rotations[i % rotations.length];
   const size = cardSizes[i % cardSizes.length];
 
   return (
     <article
-      ref={ref}
       style={{
         minWidth: isMobile ? "100%" : size.minW,
         maxWidth: isMobile ? "100%" : size.maxW,
@@ -67,20 +68,20 @@ function Card({ t, i, isMobile }) {
         padding: isMobile ? 24 : size.pad,
         flexShrink: 0,
         transform: `rotate(${rot}deg)`,
-        boxShadow: "0 20px 50px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)",
+        boxShadow: "0 20px 50px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2)",
         transition: "transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease",
         cursor: "default",
       }}
       onMouseEnter={e => {
         if (isMobile) return;
         e.currentTarget.style.transform = `rotate(${rot * 0.3}deg) translateY(-4px)`;
-        e.currentTarget.style.boxShadow = "0 28px 60px rgba(0,0,0,0.3), 0 0 20px rgba(0,0,0,0.5)";
+        e.currentTarget.style.boxShadow = "0 28px 60px rgba(0,0,0,0.4), 0 0 20px rgba(0,0,0,0.5)";
         e.currentTarget.style.borderColor = "rgba(16,185,129,0.5)";
       }}
       onMouseLeave={e => {
         if (isMobile) return;
         e.currentTarget.style.transform = `rotate(${rot}deg)`;
-        e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)";
+        e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2)";
         e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
       }}
     >
@@ -168,7 +169,7 @@ export default function TestimonialsSection() {
 
   return (
     <div style={{
-      background: "#000",
+      background: bg,
       padding: isMobile ? "24px 0" : "48px 0",
       minHeight: "100vh",
       display: "flex",
@@ -179,7 +180,8 @@ export default function TestimonialsSection() {
       <style>{styles}</style>
 
       <div style={{
-        background: "#ffffff",
+        background: containerBg,
+        border: `1px solid ${containerBorder}`,
         borderRadius: isMobile ? 20 : 24,
         width: "100%",
         maxWidth: 1280,
@@ -216,7 +218,7 @@ export default function TestimonialsSection() {
           </h2>
 
           {!isMobile && (
-            <div style={{ width: 1, height: 40, background: "#e5e5e5", flexShrink: 0 }} />
+            <div style={{ width: 1, height: 40, background: "rgba(255,255,255,0.1)", flexShrink: 0 }} />
           )}
 
           <p style={{
@@ -236,7 +238,7 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Divider */}
-        <div style={{ height: 1, background: "#e5e5e5", margin: "20px 0 0 0" }} />
+        <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "20px 0 0 0" }} />
 
         {/* === MOBILE === */}
         {isMobile ? (
@@ -258,7 +260,7 @@ export default function TestimonialsSection() {
                       width: activeIndex === i ? 20 : 6,
                       height: 6,
                       borderRadius: 3,
-                      background: activeIndex === i ? COLORS.emerald : "#e5e5e5",
+                      background: activeIndex === i ? COLORS.emerald : "rgba(255,255,255,0.15)",
                       transition: "all 0.3s ease",
                       cursor: "pointer",
                     }}
@@ -271,7 +273,7 @@ export default function TestimonialsSection() {
                   onClick={() => mobileNav(-1)}
                   style={{
                     width: 36, height: 36, borderRadius: "50%",
-                    border: "1px solid #e5e5e5", background: "#f5f5f5", color: "#18181b",
+                    border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "#a1a1aa",
                     display: "inline-flex", alignItems: "center", justifyContent: "center",
                     cursor: activeIndex > 0 ? "pointer" : "default",
                     opacity: activeIndex > 0 ? 1 : 0.35,
@@ -287,7 +289,7 @@ export default function TestimonialsSection() {
                   onClick={() => mobileNav(1)}
                   style={{
                     width: 36, height: 36, borderRadius: "50%",
-                    border: "none", background: "#18181b", color: "#fff",
+                    border: "none", background: "#fff", color: "#050505",
                     display: "inline-flex", alignItems: "center", justifyContent: "center",
                     cursor: activeIndex < testimonials.length - 1 ? "pointer" : "default",
                     opacity: activeIndex < testimonials.length - 1 ? 1 : 0.35,
@@ -307,11 +309,11 @@ export default function TestimonialsSection() {
           <div style={{ position: "relative", marginTop: 32 }}>
             <div style={{
               position: "absolute", inset: "0 auto 0 0", width: 60, zIndex: 10, pointerEvents: "none",
-              background: "linear-gradient(to right, #fff, transparent)",
+              background: `linear-gradient(to right, ${bg}, transparent)`,
             }} />
             <div style={{
               position: "absolute", inset: "0 0 0 auto", width: 60, zIndex: 10, pointerEvents: "none",
-              background: "linear-gradient(to left, #fff, transparent)",
+              background: `linear-gradient(to left, ${bg}, transparent)`,
             }} />
 
             <div
@@ -346,7 +348,7 @@ export default function TestimonialsSection() {
                 onClick={() => scroll(-1)}
                 style={{
                   width: 40, height: 40, borderRadius: "50%",
-                  border: "1px solid #e5e5e5", background: "#f5f5f5", color: "#18181b",
+                  border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "#a1a1aa",
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   cursor: canPrev ? "pointer" : "default",
                   opacity: canPrev ? 1 : 0.4,
@@ -363,7 +365,7 @@ export default function TestimonialsSection() {
                 onClick={() => scroll(1)}
                 style={{
                   width: 40, height: 40, borderRadius: "50%",
-                  border: "none", background: "#18181b", color: "#fff",
+                  border: "none", background: "#fff", color: "#050505",
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   cursor: canNext ? "pointer" : "default",
                   opacity: canNext ? 1 : 0.4,
