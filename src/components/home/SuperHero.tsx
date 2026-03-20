@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const fontStyles = `
   .font-inter {
@@ -138,8 +139,8 @@ const clients = [
   { name: 'LC Driveways', tags: ['Google Ads', 'Paid Social', 'Website'], image: '/images/117.jpg', logo: 'LC\nDriveways' },
 ];
 
-const ClientCard = ({ client, isMobile }: { client: typeof clients[0]; isMobile?: boolean }) => (
-  <a href="/case-studies" className={`relative flex-shrink-0 ${isMobile ? 'w-[220px] h-[290px]' : 'w-[260px] h-[340px]'} rounded-3xl overflow-hidden cursor-pointer group border border-transparent hover:border-gray-500 transition-all duration-300 block`}>
+const ClientCard = ({ client, isMobile, onClick }: { client: typeof clients[0]; isMobile?: boolean; onClick: () => void }) => (
+  <div onClick={onClick} className={`relative flex-shrink-0 ${isMobile ? 'w-[220px] h-[290px]' : 'w-[260px] h-[340px]'} rounded-3xl overflow-hidden cursor-pointer group border border-transparent hover:border-gray-500 transition-all duration-300 block`}>
     <img src={client.image} alt={client.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/40" />
     <div className="absolute top-4 left-4">
@@ -148,10 +149,10 @@ const ClientCard = ({ client, isMobile }: { client: typeof clients[0]; isMobile?
     <div className="absolute bottom-5 left-4 right-4">
       <p className={`text-white/90 ${isMobile ? 'text-[11px]' : 'text-[12px]'} font-medium leading-relaxed`}>{client.tags.join(' · ')}</p>
     </div>
-  </a>
+  </div>
 );
 
-const ClientCarousel = ({ isMobile }: { isMobile?: boolean }) => {
+const ClientCarousel = ({ isMobile, onCardClick }: { isMobile?: boolean; onCardClick: () => void }) => {
   const cardWidth = isMobile ? 220 : 260;
   const gap = isMobile ? 16 : 20;
   const step = cardWidth + gap;
@@ -204,7 +205,7 @@ const ClientCarousel = ({ isMobile }: { isMobile?: boolean }) => {
           onMouseLeave={() => { pausedRef.current = false; }}
         >
           {looped.map((client, i) => (
-            <ClientCard key={`${client.name}-${i}`} client={client} isMobile={isMobile} />
+            <ClientCard key={`${client.name}-${i}`} client={client} isMobile={isMobile} onClick={onCardClick} />
           ))}
         </div>
       </div>
@@ -258,6 +259,7 @@ export const SuperHero = ({
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   // Wait until isMobile is determined to prevent layout shift
   if (isMobile === null) {
@@ -564,17 +566,17 @@ export const SuperHero = ({
                 </div>
               ) : (
                 <div className="flex flex-wrap items-center justify-center gap-3">
-                  <motion.a
-                    href="/case-studies"
+                  <motion.div
+                    onClick={() => navigate("/case-studies")}
                     className="flex items-center justify-center gap-1.5 cursor-pointer w-full sm:w-auto relative z-[100]"
                     style={{ height: 48, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 50, padding: '12px 24px', backdropFilter: 'blur(8px)' }}
                     whileHover={{ boxShadow: '0 0 20px rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.2)' }}
                   >
                     <p className="font-inter font-semibold text-white whitespace-nowrap" style={{ fontSize: 15 }}>{secondaryButtonText}</p>
-                  </motion.a>
+                  </motion.div>
 
-                  <motion.a
-                    href="/contact"
+                  <motion.div
+                    onClick={() => navigate("/contact")}
                     onHoverStart={() => setIsHovered(true)}
                     onHoverEnd={() => setIsHovered(false)}
                     className="flex items-center justify-center gap-1.5 cursor-pointer w-full sm:w-auto relative z-[100]"
@@ -585,7 +587,7 @@ export const SuperHero = ({
                     <p className="font-inter font-semibold whitespace-nowrap" style={{ fontSize: 15, color: isHovered ? emeraldColor : lampColor }}>
                       {primaryButtonText}
                     </p>
-                  </motion.a>
+                  </motion.div>
                 </div>
               )}
             </motion.div>
@@ -596,7 +598,7 @@ export const SuperHero = ({
 
       {/* CLIENT CAROUSEL */}
       <div className={`relative z-10 w-full carousel-mb`}>
-        <ClientCarousel isMobile={isMobile} />
+        <ClientCarousel isMobile={isMobile} onCardClick={() => navigate("/case-studies")} />
       </div>
 
     </div>
