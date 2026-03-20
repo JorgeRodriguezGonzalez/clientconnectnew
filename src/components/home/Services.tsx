@@ -25,7 +25,7 @@ const CARD_COLORS = [
 
 const SERVICES = [
   { id: "brand-identity", title: "Brand Identity", description: "Define your visual language and voice to create a lasting impression in the market.", capabilityCount: 4, tags: ["Logo Design", "Visual Guidelines", "Tone of Voice", "Brand Assets"], imageUrl: PANORAMIC_IMAGES.strategy, bgSize: "200% 100%", bgPosition: "100% 50%", videoUrl: "/videos/brandCCA.mp4", link: "/services/brand-identity" },
-  { id: "website-development", title: "Website Development", description: "Build fast, responsive, and conversion-focused websites that elevate your digital presence.", capabilityCount: 4, tags: ["Custom Design", "Responsive Dev", "CMS Integration", "Performance"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "cover", bgPosition: "center", videoUrl: "/videos/websitedevelopment.mp4", link: "/services/web-design" },
+  { id: "website-development", title: "Website Development", description: "Build fast, responsive, and conversion-focused websites that elevate your digital presence.", capabilityCount: 4, tags: ["Custom Design", "Responsive Dev", "CMS Integration", "Performance"], imageUrl: PANORAMIC_IMAGES.creative, bgSize: "cover", bgPosition: "center", videoUrl: "/videos/websiteNEW.mp4", link: "/services/web-design" },
   { id: "seo", title: "SEO", description: "Dominate search results and drive organic traffic with technical and on-page optimization.", capabilityCount: 4, tags: ["Technical Audit", "Keyword Strategy", "Link Building", "Local SEO"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "0% 50%", videoUrl: "/videos/SEOclient.mp4", link: "/services/seo" },
   { id: "google-ads", title: "Google Ads", description: "Drive high-intent traffic and maximize ROI with strategic search, display, and shopping campaigns.", capabilityCount: 4, tags: ["Search Campaigns", "Display Ads", "Shopping Ads", "Performance Max"], imageUrl: PANORAMIC_IMAGES.traffic, bgSize: "300% 100%", bgPosition: "50% 50%", videoUrl: "/videos/googleads.mp4", link: "/services/google-ads" },
   { id: "paid-media", title: "Paid Media", description: "Accelerate acquisition through targeted campaigns across Google, Meta, and LinkedIn.", capabilityCount: 4, tags: ["Google Ads", "Social Ads", "Retargeting", "Display Network"], imageUrl: "/images/image2.jpg", bgSize: "cover", bgPosition: "center", videoUrl: "/videos/paidmedia.mp4", link: "/services/social-media-ads" },
@@ -95,6 +95,8 @@ const ServiceCard = ({ service, colorIndex }) => {
           muted
           loop
           playsInline
+          preload="metadata"
+          poster={service.imageUrl}
           className="absolute inset-0 w-full h-full object-cover"
         />
       )}
