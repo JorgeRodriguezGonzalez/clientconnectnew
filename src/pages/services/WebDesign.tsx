@@ -357,13 +357,24 @@ const OurProcess = () => {
 };
 
 const recentWebsites = [
-  { id: 1, src: "/images/LCDwebsite.png", name: "LCD Electrical" },
+  { id: 1, src: "/images/LCDwebsite.png", name: "LC Driveways" },
   { id: 2, src: "/images/nanotisewebsite.png", name: "Nanotise" },
-  { id: 3, src: "/images/prolexwebsite.png", name: "Prolex Consulting" },
-  { id: 4, src: "/images/LCLwebsite.png", name: "LCL Surgery" },
-  { id: 5, src: "/images/assetwebsite.png", name: "Asset Building" },
-  { id: 6, src: "/images/brisbane.png", name: "Brisbane Services" },
+  { id: 3, src: "/images/prolexwebsite.png", name: "Prolex Bathrooms" },
+  { id: 4, src: "/images/LCLwebsite.png", name: "Lc Landscaping" },
+  { id: 5, src: "/images/assetwebsite.png", name: "Asset Plumbing" },
+  { id: 6, src: "/images/brisbane.png", name: "Brisbane Roof Painting" },
 ];
+
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+};
 
 const RecentWebsites = () => {
   const scrollRef = useRef(null);
@@ -371,8 +382,9 @@ const RecentWebsites = () => {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const isTablet = useIsTablet();
+  const isMobile = useIsMobile();
 
-  const visibleCount = 3;
+  const visibleCount = isMobile ? 1 : 3;
   const totalSlides = Math.ceil(recentWebsites.length / visibleCount);
 
   const checkScroll = () => {
@@ -509,8 +521,8 @@ const RecentWebsites = () => {
                 className="recent-carousel"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: `repeat(${visibleCount}, 1fr)`,
-                  gap: "24px",
+                  gridTemplateColumns: isMobile ? "1fr" : `repeat(${visibleCount}, 1fr)`,
+                  gap: isMobile ? "16px" : "24px",
                   flexShrink: 0,
                   width: "100%",
                   scrollSnapAlign: "start",
