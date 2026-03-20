@@ -12,11 +12,10 @@ const COLORS = {
 // --- DATA ---
 const navigation = {
   main: [
-    { name: "Approach", href: "#" },
-    { name: "Services", href: "#" },
-    { name: "Case Studies", href: "#" },
-    { name: "About", href: "#" },
-    { name: "Audit", href: "#" },
+    { name: "About Us", href: "/about" },
+    { name: "Case Studies", href: "/case-studies" },
+    { name: "Contact", href: "/contact" },
+    { name: "Services", href: "/services" },
   ],
   social: [
     { name: "LinkedIn", icon: Linkedin, href: "#" },
