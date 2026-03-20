@@ -17,6 +17,7 @@ const workSteps = [
     image: "/images/nanotise10.jpg",
     websiteUrl: "https://nanotise.com.au/",
     top: 80,
+    mobileTop: 20,
   },
   {
     id: "s2",
@@ -28,6 +29,7 @@ const workSteps = [
     showTaskCard: true,
     websiteUrl: "https://lclandscaping.com.au/",
     top: 105,
+    mobileTop: 25,
   },
   {
     id: "s3",
@@ -39,6 +41,7 @@ const workSteps = [
     image: "/images/asset.jpg",
     websiteUrl: "https://assetplumbingsolutions.com.au/",
     top: 130,
+    mobileTop: 30,
   },
   {
     id: "s4",
@@ -50,6 +53,7 @@ const workSteps = [
     showCarousel: true,
     websiteUrl: "https://yourlocalroofers.com.au/",
     top: 155,
+    mobileTop: 35,
   },
   {
     id: "s5",
@@ -61,6 +65,7 @@ const workSteps = [
     image: "/images/piooner.jpg",
     websiteUrl: "https://pioneershade.com.au/",
     top: 180,
+    mobileTop: 40,
   },
   {
     id: "s6",
@@ -72,6 +77,7 @@ const workSteps = [
     showPremierStats: true,
     websiteUrl: "https://premierbathrooms.com.au/",
     top: 205,
+    mobileTop: 45,
   },
   {
     id: "s7",
@@ -83,6 +89,7 @@ const workSteps = [
     image: "/images/proleximage.jpg",
     websiteUrl: "https://prolexbathroomrenovations.com.au/",
     top: 230,
+    mobileTop: 50,
   },
 ];
 
@@ -128,11 +135,23 @@ const carouselLogos = [
   { id: "tiktok", alt: "TikTok", Component: TikTokLogo, color: CYAN },
 ];
 
+// --- Hook para detectar mobile ---
+const useIsMobile = (breakpoint = 768) => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < breakpoint);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [breakpoint]);
+  return isMobile;
+};
+
 // --- COMPONENTES AUXILIARES ---
 
-const TaskCard = () => (
-  <div className="bg-[#1e1e1e] rounded-2xl shadow-xl p-5 w-80 border border-white/5">
-    <div className="flex flex-col gap-5">
+const TaskCard = ({ isMobile = false }) => (
+  <div className={`bg-[#1e1e1e] rounded-2xl shadow-xl border border-white/5 ${isMobile ? "p-4 w-full" : "p-5 w-80"}`}>
+    <div className={`flex flex-col ${isMobile ? "gap-3" : "gap-5"}`}>
       <div className="flex items-center justify-between">
         <span className="rounded-lg px-2 py-1.5 text-xs font-medium" style={{ background: `${CYAN}18`, color: CYAN }}>SEO Campaign</span>
         <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center">
@@ -140,8 +159,8 @@ const TaskCard = () => (
         </div>
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-white text-lg font-semibold leading-7">Keyword Research</p>
-        <p className="text-gray-400 text-sm leading-5">Target high-value keywords for Sydney market</p>
+        <p className={`text-white font-semibold leading-7 ${isMobile ? "text-base" : "text-lg"}`}>Keyword Research</p>
+        <p className={`text-gray-400 leading-5 ${isMobile ? "text-xs" : "text-sm"}`}>Target high-value keywords for Sydney market</p>
       </div>
       <div className="flex flex-col gap-2">
         <div className="relative h-2 bg-white/10 rounded-full overflow-hidden">
@@ -153,8 +172,8 @@ const TaskCard = () => (
   </div>
 );
 
-const AddButton = () => (
-  <div className="bg-[#1e1e1e] rounded-2xl shadow-xl p-5 w-80 h-16 flex items-center justify-center border border-white/5">
+const AddButton = ({ isMobile = false }) => (
+  <div className={`bg-[#1e1e1e] rounded-2xl shadow-xl flex items-center justify-center border border-white/5 ${isMobile ? "p-3 w-full h-12" : "p-5 w-80 h-16"}`}>
     <div className="flex items-center gap-3">
       <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
@@ -164,7 +183,7 @@ const AddButton = () => (
   </div>
 );
 
-const InfiniteCarousel = () => {
+const InfiniteCarousel = ({ isMobile = false }) => {
   const ref = useRef(null);
   useEffect(() => {
     const el = ref.current;
@@ -182,14 +201,15 @@ const InfiniteCarousel = () => {
   }, []);
 
   const logos = [...carouselLogos, ...carouselLogos, ...carouselLogos, ...carouselLogos];
+  const logoSize = isMobile ? "w-20 h-20" : "w-36 h-36";
 
   return (
     <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-      <div style={{ maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", width: "100%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", height: 200 }}>
-        <div ref={ref} className="flex items-center gap-5" style={{ width: "fit-content", willChange: "transform" }}>
+      <div style={{ maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", width: "100%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", height: isMobile ? 120 : 200 }}>
+        <div ref={ref} className="flex items-center gap-3" style={{ width: "fit-content", willChange: "transform" }}>
           {logos.map((logo, i) => (
-            <div key={i} className="flex-shrink-0 w-36 h-36 p-2">
-              <div className="flex items-center justify-center w-full h-full bg-[#1e1e1e] rounded-2xl shadow-lg p-6 border border-white/5">
+            <div key={i} className={`flex-shrink-0 ${logoSize} p-1.5`}>
+              <div className="flex items-center justify-center w-full h-full bg-[#1e1e1e] rounded-xl shadow-lg p-3 border border-white/5">
                 {logo.Component && <logo.Component color={logo.color} />}
               </div>
             </div>
@@ -200,7 +220,7 @@ const InfiniteCarousel = () => {
   );
 };
 
-const PremierStatsCard = () => {
+const PremierStatsCard = ({ isMobile = false }) => {
   const [visible, setVisible] = useState(false);
   const ref = useRef(null);
 
@@ -219,10 +239,66 @@ const PremierStatsCard = () => {
     { label: "First Page", value: "88%", color: CYAN },
   ];
 
+  if (isMobile) {
+    return (
+      <div ref={ref} className="w-full flex flex-col gap-3 px-1">
+        <div
+          className="bg-[#1e1e1e] rounded-2xl shadow-xl p-4 w-full border border-white/5"
+          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease-out" }}
+        >
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center justify-between">
+              <span className="rounded-lg px-2 py-1 text-[10px] font-medium" style={{ background: `${GREEN}18`, color: GREEN }}>Performance</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: GREEN }} />
+                <span className="text-[9px] text-gray-500 font-bold tracking-wide">LIVE</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {stats.map((s, i) => (
+                <div
+                  key={s.label}
+                  className="bg-white/5 rounded-xl p-2.5 border border-white/5"
+                  style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(15px)", transition: `all 0.5s ease-out ${0.2 + i * 0.1}s` }}
+                >
+                  <div className="text-lg font-bold text-white">{s.value}</div>
+                  <div className="text-[8px] font-semibold uppercase tracking-wider text-gray-500">{s.label}</div>
+                  <div className="mt-1.5 h-1 bg-white/5 rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        width: visible ? "100%" : "0%",
+                        background: `linear-gradient(90deg, ${s.color}, ${s.color}88)`,
+                        transition: `width 1.2s ease-out ${0.4 + i * 0.15}s`,
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="bg-[#1e1e1e] rounded-2xl shadow-xl p-3 w-full border border-white/5 flex items-center gap-3"
+          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease-out 0.5s" }}
+        >
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${CYAN}18` }}>
+            <TrendingUp size={16} color={CYAN} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-white text-xs font-semibold">6-Month Growth</p>
+            <p className="text-gray-500 text-[10px]">SEO + Google Ads combined</p>
+          </div>
+          <div className="text-base font-bold flex-shrink-0" style={{ color: GREEN }}>+409%</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden">
       <div className="flex flex-col items-center justify-center gap-5 py-8" style={{ width: 420 }}>
-      {/* Top stat card */}
       <div
         className="bg-[#1e1e1e] rounded-2xl shadow-xl p-5 w-80 border border-white/5"
         style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease-out" }}
@@ -235,7 +311,6 @@ const PremierStatsCard = () => {
               <span className="text-[10px] text-gray-500 font-bold tracking-wide">LIVE</span>
             </div>
           </div>
-
           <div className="grid grid-cols-2 gap-3">
             {stats.map((s, i) => (
               <div
@@ -261,7 +336,6 @@ const PremierStatsCard = () => {
         </div>
       </div>
 
-      {/* Bottom mini card */}
       <div
         className="bg-[#1e1e1e] rounded-2xl shadow-xl p-4 w-80 border border-white/5 flex items-center gap-4"
         style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease-out 0.5s" }}
@@ -280,7 +354,7 @@ const PremierStatsCard = () => {
   );
 };
 
-const AnimatedMedia = ({ src, type = "image" }) => {
+const AnimatedMedia = ({ src, type = "image", isMobile = false }) => {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -291,6 +365,20 @@ const AnimatedMedia = ({ src, type = "image" }) => {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  if (isMobile) {
+    return (
+      <div ref={ref} className="w-full overflow-hidden" style={{ opacity: visible ? 1 : 0, transition: "opacity 0.8s ease-out" }}>
+        <div className="relative overflow-hidden rounded-2xl bg-black" style={{ width: "100%", height: 200 }}>
+          {type === "video" ? (
+            <video src={src} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+          ) : (
+            <img src={src} className="w-full h-full object-cover" alt="Case Study" />
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden">
@@ -305,14 +393,24 @@ const AnimatedMedia = ({ src, type = "image" }) => {
   );
 };
 
-const TaskCardBackground = () => (
-  <div className="absolute inset-0 flex items-center justify-end overflow-hidden">
-    <div className="flex flex-col items-center justify-center gap-5" style={{ width: 420 }}>
-      <TaskCard />
-      <AddButton />
+const TaskCardBackground = ({ isMobile = false }) => {
+  if (isMobile) {
+    return (
+      <div className="w-full flex flex-col gap-3 px-1">
+        <TaskCard isMobile />
+        <AddButton isMobile />
+      </div>
+    );
+  }
+  return (
+    <div className="absolute inset-0 flex items-center justify-end overflow-hidden">
+      <div className="flex flex-col items-center justify-center gap-5" style={{ width: 420 }}>
+        <TaskCard />
+        <AddButton />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const ViewWebsiteButton = ({ href }) => (
   <a
@@ -330,29 +428,82 @@ const ViewWebsiteButton = ({ href }) => (
 // --- COMPONENTE PRINCIPAL ---
 
 export const HowWeWork = () => {
+  const isMobile = useIsMobile();
+
   return (
-    <div className="w-full min-h-screen flex flex-col items-center px-10 py-40" style={{ background: DARK_BG }}>
+    <div className="w-full min-h-screen flex flex-col items-center py-40" style={{ background: DARK_BG, padding: isMobile ? "80px 16px" : "160px 40px" }}>
       <style>{`@keyframes gradientMove { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }`}</style>
 
       <div className="flex flex-col items-center" style={{ gap: 16 }}>
         <span className="px-3 py-1.5 rounded-lg border font-semibold uppercase tracking-widest" style={{ fontSize: 10, letterSpacing: 2, background: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.1)", color: "rgb(156,163,175)" }}>
           Proven Results
         </span>
-        <h2 className="text-center text-white" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "clamp(32px, 5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.5px" }}>
+        <h2 className="text-center text-white" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: isMobile ? "clamp(26px, 7vw, 36px)" : "clamp(32px, 5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.5px" }}>
           Our <span style={{ background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)", backgroundSize: "200% auto", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "gradientMove 3s linear infinite" }}>Case Studies</span>
         </h2>
-        <p className="text-center" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 500, fontSize: 16, lineHeight: 1.6, color: "#9ca3af", maxWidth: 400 }}>
+        <p className="text-center" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 500, fontSize: isMobile ? 14 : 16, lineHeight: 1.6, color: "#9ca3af", maxWidth: 400, padding: isMobile ? "0 8px" : 0 }}>
           Real results from Sydney's leading businesses. See how we help brands grow with tailored digital strategies.
         </p>
       </div>
 
-      <div className="flex flex-col gap-8 w-full" style={{ maxWidth: 1000, marginTop: 96 }}>
+      <div className="flex flex-col w-full" style={{ maxWidth: 1000, marginTop: isMobile ? 48 : 96, gap: isMobile ? 20 : 32 }}>
         {workSteps.map((step, index) => {
           const Icon = step.icon;
+
+          if (isMobile) {
+            return (
+              <div
+                key={step.id}
+                className="rounded-2xl shadow-2xl overflow-hidden border border-white/5"
+                style={{ position: "sticky", top: step.mobileTop, zIndex: index + 1, background: CARD_BG }}
+              >
+                <div className="flex flex-col">
+                  {/* Texto */}
+                  <div className="flex flex-col gap-3 p-5">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: `${CYAN}18` }}>
+                        <Icon size={14} color={CYAN} />
+                      </div>
+                      <h5 className="text-gray-400 text-[10px] font-bold tracking-widest uppercase">{step.label}</h5>
+                    </div>
+                    <h2 className="text-white text-xl font-bold leading-tight">{step.title}</h2>
+                    <p className="text-gray-400 text-xs leading-relaxed">{step.description}</p>
+
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {step.services?.map((service) => (
+                        <span
+                          key={service}
+                          className="px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase border border-white/10"
+                          style={{ backgroundColor: "rgba(255,255,255,0.05)", color: "#D1D5DB" }}
+                        >
+                          {service}
+                        </span>
+                      ))}
+                    </div>
+
+                    <ViewWebsiteButton href={step.websiteUrl} />
+                  </div>
+
+                  {/* Media mobile */}
+                  <div className="w-full px-4 pb-4">
+                    {step.showTaskCard && <TaskCardBackground isMobile />}
+                    {step.showCarousel && (
+                      <div className="relative w-full overflow-hidden rounded-2xl" style={{ height: 120, background: CARD_BG }}>
+                        <InfiniteCarousel isMobile />
+                      </div>
+                    )}
+                    {step.showPremierStats && <PremierStatsCard isMobile />}
+                    {step.image && <AnimatedMedia src={step.image} type="image" isMobile />}
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          // Desktop (sin cambios)
           return (
             <div key={step.id} className="rounded-3xl shadow-2xl overflow-hidden border border-white/5" style={{ position: "sticky", top: step.top, zIndex: index + 1, background: CARD_BG }}>
               <div className="flex" style={{ height: 420 }}>
-                {/* Lado Izquierdo: Texto */}
                 <div className="flex flex-col gap-4 p-10" style={{ width: 520 }}>
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${CYAN}18` }}>
@@ -362,13 +513,13 @@ export const HowWeWork = () => {
                   </div>
                   <h2 className="text-white text-3xl font-bold leading-tight">{step.title}</h2>
                   <p className="text-gray-400 text-sm leading-relaxed">{step.description}</p>
-                  
+
                   <div className="flex flex-wrap gap-2 mt-2">
                     {step.services?.map((service) => (
-                      <span 
-                        key={service} 
+                      <span
+                        key={service}
                         className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border border-white/10"
-                        style={{ backgroundColor: `rgba(255,255,255,0.05)`, color: "#D1D5DB" }}
+                        style={{ backgroundColor: "rgba(255,255,255,0.05)", color: "#D1D5DB" }}
                       >
                         {service}
                       </span>
@@ -378,7 +529,6 @@ export const HowWeWork = () => {
                   <ViewWebsiteButton href={step.websiteUrl} />
                 </div>
 
-                {/* Lado Derecho: Medios */}
                 <div className="flex-1 relative overflow-hidden" style={{ background: CARD_BG }}>
                   {step.showTaskCard && <TaskCardBackground />}
                   {step.showCarousel && <InfiniteCarousel />}
