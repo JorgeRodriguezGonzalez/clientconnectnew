@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Play, Pause } from "lucide-react";
+import { motion } from "framer-motion";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 const RECENT_WORKS = [
@@ -36,12 +37,10 @@ const useIsMobile = (breakpoint = 768) => {
 const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  // MOBILE: el video solo se monta cuando el usuario da play
   const [hasRequestedPlay, setHasRequestedPlay] = useState(false);
 
   const abs = Math.abs(position);
 
-  // Cuando deja de ser activa, pausar y desmontar video en mobile
   useEffect(() => {
     if (!isActive) {
       if (videoRef.current) {
@@ -54,7 +53,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
     }
   }, [isActive, isMobile]);
 
-  // MOBILE: cuando se monta el video después de pedir play, reproducirlo
   useEffect(() => {
     if (isMobile && hasRequestedPlay && videoRef.current) {
       videoRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
@@ -67,10 +65,8 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
 
     if (isMobile) {
       if (!hasRequestedPlay) {
-        // Primer tap: montar el video y reproducir
         setHasRequestedPlay(true);
       } else if (videoRef.current) {
-        // Ya está montado: toggle play/pause
         if (isPlaying) {
           videoRef.current.pause();
           setIsPlaying(false);
@@ -81,7 +77,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
       return;
     }
 
-    // DESKTOP: comportamiento original
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
@@ -91,7 +86,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
     }
   };
 
-  // Valores originales de escritorio (no se tocan)
   const scale = abs === 0 ? 1 : abs === 1 ? 0.82 : 0.68;
   const rotate = position * 7;
   const translateX = position * 220;
@@ -99,7 +93,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const zIndex = 10 - abs * 3;
   const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
 
-  // MOBILE: mostrar video solo si el usuario pidió play en la card activa
   const showVideo = isMobile ? (isActive && hasRequestedPlay) : true;
 
   return (
@@ -122,7 +115,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
         boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
-      {/* MOBILE: poster siempre visible como base */}
       {isMobile && item.posterSrc && (
         <img
           src={item.posterSrc}
@@ -139,7 +131,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
         />
       )}
 
-      {/* DESKTOP: video siempre montado / MOBILE: solo tras dar play */}
       {showVideo && (
         <video
           ref={videoRef}
@@ -218,7 +209,7 @@ export default function TestimonialsSection() {
   const next = () => setActive(i => (i + 1) % RECENT_WORKS.length);
 
   return (
-    <section style={{
+    <section className="testimonials-section" style={{
       width: "100%",
       minHeight: "100vh",
       backgroundColor: BACKGROUNDS.dark,
@@ -232,15 +223,15 @@ export default function TestimonialsSection() {
       position: "relative",
     }}>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", padding: "0 24px", textAlign: "center", maxWidth: "900px" }}>
-        <div style={{
-          display: "inline-flex", alignItems: "center", padding: "6px 12px",
-          borderRadius: "8px", border: "1px solid #27272a",
-          backgroundColor: "#18181b", width: "fit-content",
-        }}>
-          <span style={{ fontSize: "10px", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", color: "#a1a1aa", fontFamily: "'Satoshi', sans-serif" }}>
-            Client Testimonials
-          </span>
-        </div>
+        <motion.span
+          className="w-fit mx-auto px-3 py-1.5 rounded-full border border-zinc-700 bg-zinc-900 text-zinc-400 text-[10px] font-semibold uppercase tracking-[2px]"
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          Client Testimonials
+        </motion.span>
 
         <h2 className="section-title text-zinc-100">
           Real Results,{" "}
@@ -316,6 +307,10 @@ export default function TestimonialsSection() {
         @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
 
         @media (max-width: 767px) {
+          .testimonials-section {
+            padding-bottom: 48px !important;
+          }
+
           .video-card {
             width: 240px !important;
             height: 400px !important;
