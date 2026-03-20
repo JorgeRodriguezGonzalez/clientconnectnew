@@ -1,544 +1,395 @@
-"use client";
+import { useState, useEffect, useRef } from "react";
+import { Search, Globe, TrendingUp, Zap, Check, Edit, Droplets, Home, Wrench, Shield, ExternalLink } from "lucide-react";
 
-import React, { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  ArrowUpRight, 
-  TrendingUp, 
-  Users, 
-  DollarSign, 
-  MousePointerClick, 
-  Briefcase, 
-  Zap,
-  Activity,
-  BarChart3,
-  Play,
-  X,
-  Home,
-  Shield,
-  Leaf,
-  Hammer,
-  Globe,
-  Search,
-  MapPin,
-  Clock,
-  Target,
-  FileText
-} from "lucide-react";
+const CYAN = "#06b6d4";
+const GREEN = "#34d399";
+const DARK_BG = "#0A0A0A";
+const CARD_BG = "#161616";
 
-// --- CONSTANTES DE COLOR ---
-const COLORS = {
-  cyan: "#06b6d4",
-  emerald: "#34d399", 
-};
-
-// --- UTILS ---
-const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(' ');
-
-// --- BACKGROUND STRIPES (Versión Dark) ---
-const BackgroundStripes = () => (
-  <div
-    className="pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden opacity-[0.05] invert"
-    style={{
-      backgroundImage: `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZSURBVHgBxcghAQAAAIMw+pf+C+CZHLilebfsBfsvTewEAAAAAElFTkSuQmCC")`,
-      backgroundRepeat: 'repeat',
-    }}
-  />
-);
-
-// --- DATA: CASOS DE ÉXITO ---
-type CaseStudy = {
-  id: string;
-  client: string;
-  category: string;
-  icon: React.ElementType;
-  title: string;
-  subtitle: string;
-  description: string;
-  thumbnail: string;
-  videoUrl: string;
-  stats: {
-    label: string;
-    value: string;
-    subtext: string;
-    icon: React.ElementType;
-  }[];
-  highlights: string[];
-  graphData: number[];
-  graphLabel: string;
-  color: string;
-};
-
-const cases: CaseStudy[] = [
+const workSteps = [
   {
-    id: "roofers",
-    client: "Your Local Roofers",
-    category: "Home Protection",
-    icon: Home,
-    title: "2x Website Traffic in 60 Days",
-    subtitle: "11 Position #1 Rankings Achieved",
-    description: "Your Local Roofers was stuck in a cycle of feast and famine, relying entirely on word-of-mouth. We redesigned their website on our proprietary tech stack and implemented a full digital strategy combining local search dominance with targeted advertising. Within 60 days, website traffic had more than doubled and 11 keywords reached the #1 position on Google.",
-    thumbnail: "https://images.unsplash.com/photo-1632759145351-1d592919f522?q=80&w=2670&auto=format&fit=crop",
-    videoUrl: "https://videos.pexels.com/video-files/5532766/5532766-uhd_2560_1440_25fps.mp4", 
-    color: COLORS.emerald,
-    stats: [
-      { label: "Traffic Growth", value: "+141%", subtext: "Post-Redesign (90 Days)", icon: TrendingUp },
-      { label: "Website Clicks", value: "5,344", subtext: "vs 2,218 Prior Period", icon: MousePointerClick },
-      { label: "#1 Rankings", value: "11", subtext: "Keywords on Page 1", icon: Search },
-      { label: "Ranking Coverage", value: "7/7", subtext: "Days Per Week", icon: Target },
-    ],
-    highlights: [
-      "Website rebuilt on React + Vite — 2-3x faster than WordPress",
-      "Full digital strategy combining local search + paid advertising",
-      "11 keywords ranking in position #1 on Google",
-      "Rankings sustained 7 days a week including weekends",
-      "From feast-and-famine to consistently booked out",
-    ],
-    graphData: [15, 18, 20, 25, 30, 35, 40, 45, 50, 60, 70, 85],
-    graphLabel: "Monthly Website Traffic",
+    id: "s1",
+    icon: Search,
+    label: "Mould Remediation",
+    title: "Nanotise: Mould Remediation & Sanitising works",
+    description: "We implemented a strategic SEO and content roadmap for Nanotise, establishing them as Sydney's leading authority in mould remediation and hygiene services.",
+    services: ["SEO", "Content Strategy", "Google Ads"],
+    image: "/images/nanotise10.jpg",
+    websiteUrl: "#",
+    top: 80,
   },
   {
-    id: "nanotise",
-    client: "Nanotise",
-    category: "Home Health",
+    id: "s2",
+    icon: Globe,
+    label: "Landscaping",
+    title: "LC Landscaping: Sydney's Premier Landscape Designers",
+    description: "For LC Landscaping, we built a high-converting digital presence that showcases their premium landscape designs to high-end residential clients across Sydney.",
+    services: ["Website", "UI/UX Design", "Local SEO"],
+    showTaskCard: true,
+    websiteUrl: "#",
+    top: 105,
+  },
+  {
+    id: "s3",
+    icon: Wrench,
+    label: "Plumbing Services",
+    title: "Asset Plumbing Solutions: Sydney's Trusted Experts",
+    description: "200+ leads at $50 CPL. We optimized Asset Plumbing's local SEO and Google Ads campaigns, driving 16 new keywords to the top rankings.",
+    services: ["Google Ads", "Lead Gen", "SEO"],
+    image: "/images/asset.jpg",
+    websiteUrl: "#",
+    top: 130,
+  },
+  {
+    id: "s4",
     icon: Shield,
-    title: "2x Website Traffic in 14 Days",
-    subtitle: "WordPress to React Migration — Immediate Impact",
-    description: "Nanotise's WordPress site had become unreliable — plugin conflicts were breaking forms and costing leads. We migrated the entire site to a modern React + Vite + Netlify architecture with zero downtime. Within 14 days, website traffic had doubled, click-through rates improved by 80%, and average search position climbed nearly 4 spots. A multi-listing GMB strategy with 4 profiles covers Sydney's mould removal market across every region.",
-    thumbnail: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2670&auto=format&fit=crop",
-    videoUrl: "https://videos.pexels.com/video-files/3252755/3252755-uhd_2560_1440_25fps.mp4", 
-    color: COLORS.cyan,
-    stats: [
-      { label: "Click Growth", value: "+102.8%", subtext: "Doubled Post-Migration", icon: MousePointerClick },
-      { label: "CTR Improvement", value: "+80%", subtext: "0.5% → 0.9%", icon: TrendingUp },
-      { label: "Avg. Position", value: "17.1", subtext: "Improved from 21", icon: Search },
-      { label: "Form Submissions", value: "~70/mo", subtext: "March 2026 Pace", icon: FileText },
-      { label: "GMB Listings", value: "4", subtext: "Covering All Sydney", icon: MapPin },
-      { label: "Peak Leads", value: "90", subtext: "Aug 2025 Record", icon: Users },
-    ],
-    highlights: [
-      "Migration from WordPress to React + Vite + Netlify with zero downtime",
-      "Website traffic doubled within 14 days of launch",
-      "4 strategic GMB listings covering every Sydney region",
-      "Multi-channel lead generation combining search + paid advertising",
-      "Average search position improved from 21 to 17.1",
-      "March 2026 on pace for ~70 form submissions",
-    ],
-    graphData: [8, 12, 11, 15, 13, 16, 14, 18, 15, 28, 32, 35],
-    graphLabel: "Daily Website Clicks",
+    label: "Roofing",
+    title: "Your Local Roofers: Expert services across Australia",
+    description: "We scaled their lead generation through optimized Google Ads, local SEO, and social media advertising, delivering consistent results for their roofing services on a national scale.",
+    services: ["Google Ads", "National SEO", "Website", "Social Media Ads"],
+    showCarousel: true,
+    websiteUrl: "#",
+    top: 155,
   },
   {
-    id: "premier",
-    client: "Premier Bathrooms",
-    category: "Home Renovations",
-    icon: Hammer,
-    title: "409% Traffic Growth in 6 Months",
-    subtitle: "27 Hyperlocal Pages Dominating Sydney",
-    description: "Premier Bathrooms needed to dominate Sydney's competitive bathroom renovation market. We built 27 hyperlocal landing pages targeting specific suburbs and services, achieving 8 position #1 rankings. Combined with strategic Google Ads campaigns, total lead volume surged — with traffic growing 409% in just 6 months across all channels.",
-    thumbnail: "https://images.unsplash.com/photo-1552321159-5d974a29b8cc?q=80&w=2670&auto=format&fit=crop",
-    videoUrl: "https://videos.pexels.com/video-files/5532766/5532766-uhd_2560_1440_25fps.mp4", 
-    color: COLORS.emerald,
-    stats: [
-      { label: "Traffic Growth", value: "+409%", subtext: "Sep 2025 – Feb 2026", icon: TrendingUp },
-      { label: "Lead Channels", value: "SEO + Ads", subtext: "Full Funnel Strategy", icon: Search },
-      { label: "#1 Rankings", value: "8", subtext: "Position 1 Keywords", icon: Target },
-      { label: "Hyperlocal Pages", value: "27", subtext: "Suburb-Specific Pages", icon: MapPin },
-      { label: "First Page Coverage", value: "88%", subtext: "23 of 26 Keywords", icon: BarChart3 },
-      { label: "Top 5 Keywords", value: "15", subtext: "Out of 26 Tracked", icon: Activity },
-    ],
-    highlights: [
-      "27 hyperlocal pages targeting specific Sydney suburbs",
-      "8 keywords ranking in position #1 on Google",
-      "409% traffic growth in just 6 months across all channels",
-      "Combined SEO + Google Ads strategy for maximum lead volume",
-      "88% of tracked keywords on Google's first page",
-      "Dominating the Sydney bathroom renovation market",
-    ],
-    graphData: [10, 22, 28, 33, 35, 33],
-    graphLabel: "Monthly Traffic Growth (Scaled)",
+    id: "s5",
+    icon: Zap,
+    label: "Outdoor Living",
+    title: "Pioneer Shades: Sydney's Best Pergolas & Patios",
+    description: "Through targeted social media and search campaigns, we helped Pioneer Shade Structures dominate the Sydney market for custom pergolas.",
+    services: ["Social Media", "Google Ads", "SEO"],
+    image: "https://images.unsplash.com/photo-1622397333309-3056849bc70b?w=800&q=80",
+    websiteUrl: "#",
+    top: 180,
   },
   {
-    id: "fencing",
-    client: "J Bryant Fencing",
-    category: "Home Improvements",
-    icon: Leaf,
-    title: "From 0 to 300 Leads/Month in 60 Days",
-    subtitle: "Cold Start to Full Scale in Record Time",
-    description: "Starting from zero, we built a complete lead generation engine for a fencing contractor that scaled to 300 leads per month in just 60 days. The ramp-up was aggressive and sustained — reaching full target volume within two months and maintaining that pace consistently.",
-    thumbnail: "https://images.unsplash.com/photo-1558904541-efa843a96f01?q=80&w=2600&auto=format&fit=crop",
-    videoUrl: "https://videos.pexels.com/video-files/3191576/3191576-uhd_2560_1440_25fps.mp4", 
-    color: COLORS.cyan,
-    stats: [
-      { label: "Monthly Leads", value: "300", subtext: "At Full Scale", icon: Users },
-      { label: "Time to Scale", value: "60 Days", subtext: "From Zero", icon: Clock },
-      { label: "Ramp-Up Speed", value: "5x/mo", subtext: "Week-over-Week Growth", icon: TrendingUp },
-      { label: "Target Reached", value: "100%", subtext: "Volume Delivered", icon: Target },
-    ],
-    highlights: [
-      "From absolute zero to 300 leads per month",
-      "Full target volume reached in just 60 days",
-      "Aggressive week-over-week scaling sustained throughout",
-      "Consistent lead flow maintained after ramp-up",
-    ],
-    graphData: [0, 5, 18, 45, 90, 140, 195, 250, 300],
-    graphLabel: "Lead Ramp-Up (60 Days)",
+    id: "s6",
+    icon: Droplets,
+    label: "Bathroom Renovations",
+    title: "Premier Bathrooms: Luxury Renovations in Sydney",
+    description: "We deployed high-intent search campaigns, hyperlocal landing pages and a premium UI/UX design that captures qualified leads daily in the competitive Sydney market.",
+    services: ["Website", "Google Ads", "SEO", "UI/UX"],
+    showPremierStats: true,
+    websiteUrl: "#",
+    top: 205,
+  },
+  {
+    id: "s7",
+    icon: Home,
+    label: "Renovation Specialists",
+    title: "Prolex Bathrooms: Sydney's Premier Specialists",
+    description: "Scaling visibility through localized SEO and technical optimization, ensuring Prolex remains the top choice for modern bathroom overhauls.",
+    services: ["Technical SEO", "Local SEO", "Website"],
+    image: "/images/proleximage.png",
+    websiteUrl: "#",
+    top: 230,
   },
 ];
 
-// --- COMPONENTES INTERNOS ---
+// Colored logo SVG components for carousel (alternating cyan/emerald)
+const GoogleLogo = ({ color }: { color: string }) => (
+  <svg viewBox="0 0 24 24" width="48" height="48" fill={color}>
+    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
+    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+  </svg>
+);
 
-const LiveGraph = ({ data, color }: { data: number[], color: string }) => {
-    const max = Math.max(...data);
-    const width = 100;
-    const height = 50;
-    const points = data.map((d, i) => {
-        const x = (i / (data.length - 1)) * width;
-        const y = height - (d / max) * height * 0.9 - height * 0.05;
-        return `${x},${y}`;
-    }).join(" ");
-    const pathD = `M ${points}`;
+const FacebookLogo = ({ color }: { color: string }) => (
+  <svg viewBox="0 0 24 24" width="48" height="48" fill={color}>
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+  </svg>
+);
 
-    return (
-        <div className="w-full h-full relative">
-            <svg viewBox="0 0 100 50" className="w-full h-full overflow-visible" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id={`gradient-dark-${color.replace('#','')}`} x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="0%" stopColor={color} stopOpacity="0.3" />
-                        <stop offset="100%" stopColor={color} stopOpacity="0" />
-                    </linearGradient>
-                </defs>
-                <motion.path
-                    d={`${pathD} L 100,50 L 0,50 Z`}
-                    fill={`url(#gradient-dark-${color.replace('#','')})`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                />
-                <motion.path 
-                    d={pathD}
-                    fill="none"
-                    stroke={color}
-                    strokeWidth="0.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 1.5, ease: "easeInOut" }}
-                />
-                
-                {data.map((d, i) => (
-                    (i === data.length - 1) && ( 
-                        <motion.circle
-                            key={i}
-                            cx={(i / (data.length - 1)) * width}
-                            cy={height - (d / max) * height * 0.9 - height * 0.05}
-                            r="1.2"
-                            fill={color}
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 1.5 }}
-                        />
-                    )
-                ))}
-            </svg>
+const InstagramLogo = ({ color }: { color: string }) => (
+  <svg viewBox="0 0 24 24" width="48" height="48" fill={color}>
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+  </svg>
+);
+
+const YouTubeLogo = ({ color }: { color: string }) => (
+  <svg viewBox="0 0 24 24" width="48" height="48" fill={color}>
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+  </svg>
+);
+
+const TikTokLogo = ({ color }: { color: string }) => (
+  <svg viewBox="0 0 24 24" width="48" height="48" fill={color}>
+    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
+  </svg>
+);
+
+const carouselLogos = [
+  { id: "google", alt: "Google", Component: GoogleLogo, color: CYAN },
+  { id: "facebook", alt: "Facebook", Component: FacebookLogo, color: GREEN },
+  { id: "instagram", alt: "Instagram", Component: InstagramLogo, color: CYAN },
+  { id: "youtube", alt: "YouTube", Component: YouTubeLogo, color: GREEN },
+  { id: "tiktok", alt: "TikTok", Component: TikTokLogo, color: CYAN },
+];
+
+// --- COMPONENTES AUXILIARES ---
+
+const TaskCard = () => (
+  <div className="bg-[#1e1e1e] rounded-2xl shadow-xl p-5 w-80 border border-white/5">
+    <div className="flex flex-col gap-5">
+      <div className="flex items-center justify-between">
+        <span className="rounded-lg px-2 py-1.5 text-xs font-medium" style={{ background: `${CYAN}18`, color: CYAN }}>SEO Campaign</span>
+        <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center">
+          <svg width="16" height="20" viewBox="0 0 24 24" fill="none" stroke="#878689" strokeWidth="2"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>
         </div>
-    );
+      </div>
+      <div className="flex flex-col gap-1">
+        <p className="text-white text-lg font-semibold leading-7">Keyword Research</p>
+        <p className="text-gray-400 text-sm leading-5">Target high-value keywords for Sydney market</p>
+      </div>
+      <div className="flex flex-col gap-2">
+        <div className="relative h-2 bg-white/10 rounded-full overflow-hidden">
+          <div className="absolute left-0 top-0 h-full rounded-full" style={{ width: "74%", background: `linear-gradient(to right, ${CYAN}, ${GREEN})` }} />
+        </div>
+        <p className="text-gray-500 text-xs font-medium">74% completed</p>
+      </div>
+    </div>
+  </div>
+);
+
+const AddButton = () => (
+  <div className="bg-[#1e1e1e] rounded-2xl shadow-xl p-5 w-80 h-16 flex items-center justify-center border border-white/5">
+    <div className="flex items-center gap-3">
+      <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
+      </div>
+      <p className="text-gray-300 text-sm font-medium">Add a new campaign</p>
+    </div>
+  </div>
+);
+
+const InfiniteCarousel = () => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let pos = 0;
+    let id;
+    const animate = () => {
+      pos += 0.5;
+      if (pos >= el.scrollWidth / 2) pos = 0;
+      el.style.transform = `translateX(-${pos}px)`;
+      id = requestAnimationFrame(animate);
+    };
+    id = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  const logos = [...carouselLogos, ...carouselLogos, ...carouselLogos, ...carouselLogos];
+
+  return (
+    <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+      <div style={{ maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)", width: "100%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", height: 200 }}>
+        <div ref={ref} className="flex items-center gap-5" style={{ width: "fit-content", willChange: "transform" }}>
+          {logos.map((logo, i) => (
+            <div key={i} className="flex-shrink-0 w-36 h-36 p-2">
+              <div className="flex items-center justify-center w-full h-full bg-[#1e1e1e] rounded-2xl shadow-lg p-6 border border-white/5">
+                {logo.Component && <logo.Component color={logo.color} />}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
-const VideoModal = ({ isOpen, onClose, videoUrl, color }: { isOpen: boolean; onClose: () => void; videoUrl: string; color: string }) => {
-    return (
-        <AnimatePresence>
-            {isOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
-                    <motion.div 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="absolute inset-0 bg-black/80 backdrop-blur-md"
-                    />
-                    
-                    <motion.div 
-                        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                        animate={{ scale: 1, opacity: 1, y: 0 }}
-                        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                        className="relative w-full max-w-4xl aspect-video bg-black rounded-none overflow-hidden shadow-2xl border border-white/10"
-                    >
-                        <button 
-                            onClick={onClose}
-                            className="absolute top-4 right-4 z-20 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white backdrop-blur-md transition-colors"
-                        >
-                            <X size={20} />
-                        </button>
-                        
-                        <video src={videoUrl} controls autoPlay className="w-full h-full object-cover" />
-                    </motion.div>
+const PremierStatsCard = () => {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.3 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const stats = [
+    { label: "Traffic Growth", value: "+409%", color: GREEN },
+    { label: "#1 Rankings", value: "8", color: CYAN },
+    { label: "Local Pages", value: "27", color: GREEN },
+    { label: "First Page", value: "88%", color: CYAN },
+  ];
+
+  return (
+    <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden">
+      <div className="flex flex-col items-center justify-center gap-5 py-8" style={{ width: 420 }}>
+      {/* Top stat card */}
+      <div
+        className="bg-[#1e1e1e] rounded-2xl shadow-xl p-5 w-80 border border-white/5"
+        style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease-out" }}
+      >
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <span className="rounded-lg px-2 py-1.5 text-xs font-medium" style={{ background: `${GREEN}18`, color: GREEN }}>Performance</span>
+            <div className="flex items-center gap-1.5">
+              <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: GREEN }} />
+              <span className="text-[10px] text-gray-500 font-bold tracking-wide">LIVE</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                className="bg-white/5 rounded-xl p-3 border border-white/5"
+                style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(15px)", transition: `all 0.5s ease-out ${0.2 + i * 0.1}s` }}
+              >
+                <div className="text-xl font-bold text-white">{s.value}</div>
+                <div className="text-[9px] font-semibold uppercase tracking-wider text-gray-500">{s.label}</div>
+                <div className="mt-2 h-1 bg-white/5 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: visible ? "100%" : "0%",
+                      background: `linear-gradient(90deg, ${s.color}, ${s.color}88)`,
+                      transition: `width 1.2s ease-out ${0.4 + i * 0.15}s`,
+                    }}
+                  />
                 </div>
-            )}
-        </AnimatePresence>
-    );
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom mini card */}
+      <div
+        className="bg-[#1e1e1e] rounded-2xl shadow-xl p-4 w-80 border border-white/5 flex items-center gap-4"
+        style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease-out 0.5s" }}
+      >
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${CYAN}18` }}>
+          <TrendingUp size={18} color={CYAN} />
+        </div>
+        <div className="flex-1">
+          <p className="text-white text-sm font-semibold">6-Month Growth</p>
+          <p className="text-gray-500 text-xs">SEO + Google Ads combined strategy</p>
+        </div>
+        <div className="text-lg font-bold" style={{ color: GREEN }}>+409%</div>
+      </div>
+      </div>
+    </div>
+  );
 };
+
+const AnimatedMedia = ({ src, type = "image" }) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.3 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="absolute inset-0 flex items-center justify-end overflow-hidden">
+      <div className="relative overflow-hidden shadow-2xl bg-black" style={{ width: 420, height: 346, borderRadius: "16px 0 0 16px", opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(200px)", transition: "opacity 0.8s ease-out, transform 0.8s ease-out" }}>
+        {type === "video" ? (
+          <video src={src} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+        ) : (
+          <img src={src} className="w-full h-full object-cover" alt="Case Study" />
+        )}
+      </div>
+    </div>
+  );
+};
+
+const TaskCardBackground = () => (
+  <div className="absolute inset-0 flex items-center justify-end overflow-hidden">
+    <div className="flex flex-col items-center justify-center gap-5" style={{ width: 420 }}>
+      <TaskCard />
+      <AddButton />
+    </div>
+  </div>
+);
+
+const ViewWebsiteButton = ({ href }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center gap-1.5 px-3 py-1.5 mt-3 rounded-full text-[10px] font-bold uppercase tracking-wider border border-white/10 text-gray-400 hover:text-white hover:border-white/30 transition-all duration-300 w-fit"
+    style={{ background: "rgba(255,255,255,0.05)" }}
+  >
+    <ExternalLink size={10} />
+    View Website
+  </a>
+);
 
 // --- COMPONENTE PRINCIPAL ---
 
-export default function CaseStudies() {
-  const [activeTab, setActiveTab] = useState(0);
-  const [isVideoOpen, setIsVideoOpen] = useState(false); 
-  const activeCase = cases[activeTab];
-  const containerRef = useRef(null);
-
+export const HowWeWork = () => {
   return (
-    <section 
-        ref={containerRef}
-        className="relative w-full py-24 lg:py-32 bg-[#050505] overflow-hidden"
-    >
-      <BackgroundStripes />
-      
-      {/* Línea superior decorativa */}
-      <div className="w-full h-[1px] bg-white/5 absolute top-0 z-20" />
+    <div className="w-full min-h-screen flex flex-col items-center px-10 py-40" style={{ background: DARK_BG }}>
+      <style>{`@keyframes gradientMove { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }`}</style>
 
-      <VideoModal 
-         isOpen={isVideoOpen} 
-         onClose={() => setIsVideoOpen(false)} 
-         videoUrl={activeCase.videoUrl}
-         color={activeCase.color}
-      />
-
-      <div className="container relative z-10 mx-auto px-6 lg:px-8 max-w-[1280px]">
-        
-        {/* HEADER */}
-        <div className="flex flex-col gap-6 max-w-3xl mx-auto text-center mb-16">
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-sm font-medium tracking-[2.2px] uppercase text-zinc-500"
-          >
-            PROVEN RESULTS
-          </motion.div>
-
-          <motion.h2 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-[26px] md:text-[32px] lg:text-[42px] font-bold leading-[1.1] tracking-tight text-white"
-          >
-            Don't just take our word for it. <br className="hidden md:block"/>
-            Look at the <motion.span
-              animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              style={{
-                backgroundImage: `linear-gradient(45deg, ${COLORS.emerald}, ${COLORS.cyan}, ${COLORS.emerald})`,
-                backgroundSize: "200% auto",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                color: "transparent"
-              }}
-            >
-              data
-            </motion.span>.
-          </motion.h2>
-        </div>
-
-        {/* --- DASHBOARD UI --- */}
-        <div className="max-w-6xl mx-auto">
-            
-            {/* TABS */}
-            <div className="flex flex-wrap justify-center gap-2 mb-10">
-                {cases.map((c, idx) => (
-                    <button
-                        key={c.id}
-                        onClick={() => { setActiveTab(idx); setIsVideoOpen(false); }}
-                        className={cn(
-                            "relative px-6 py-3 rounded-none text-sm font-semibold transition-all duration-300 overflow-hidden group border",
-                            activeTab === idx 
-                                ? "text-white border-white/20 bg-zinc-900 shadow-xl" 
-                                : "text-zinc-500 border-transparent hover:bg-white/5 hover:text-white"
-                        )}
-                    >
-                        {activeTab === idx && (
-                            <motion.span 
-                                layoutId="activeDot"
-                                className="absolute left-4 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full"
-                                style={{ backgroundColor: c.color }}
-                            />
-                        )}
-                        <span className={cn("relative z-10 flex items-center gap-2", activeTab === idx ? "pl-3" : "")}>
-                            {activeTab !== idx && <c.icon size={14} />}
-                            {c.client}
-                        </span>
-                    </button>
-                ))}
-            </div>
-
-            {/* --- MAIN CARD --- */}
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={activeCase.id}
-                    initial={{ opacity: 0, y: 20, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -20, scale: 0.98 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="relative w-full bg-zinc-900/50 border border-white/10 rounded-none overflow-hidden shadow-2xl"
-                >
-                    <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[560px]">
-                        
-                        {/* LEFT: Context & Video Trigger */}
-                        <div className="lg:col-span-5 p-8 md:p-12 flex flex-col relative z-10 border-b lg:border-b-0 lg:border-r border-white/5">
-                            <div className="flex-grow">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                                        <activeCase.icon size={18} style={{ color: activeCase.color }} />
-                                    </div>
-                                    <div>
-                                        <span className="text-zinc-500 font-medium text-sm uppercase tracking-wider block">{activeCase.category}</span>
-                                    </div>
-                                </div>
-                                
-                                <h3 className="text-3xl md:text-3xl font-bold text-white mb-2 leading-tight">
-                                    {activeCase.title}
-                                </h3>
-
-                                <p className="text-sm font-semibold mb-5" style={{ color: activeCase.color }}>
-                                    {activeCase.subtitle}
-                                </p>
-                                
-                                <p className="text-zinc-400 leading-relaxed text-[15px] mb-8">
-                                    {activeCase.description}
-                                </p>
-
-                                {/* HIGHLIGHTS */}
-                                <div className="mb-8">
-                                    <p className="text-[10px] font-bold uppercase tracking-[2px] text-zinc-500 mb-4">Key Results</p>
-                                    <div className="flex flex-col gap-2.5">
-                                        {activeCase.highlights.map((h, i) => (
-                                            <motion.div
-                                                key={i}
-                                                initial={{ opacity: 0, x: -10 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: 0.2 + (i * 0.06) }}
-                                                className="flex items-start gap-2.5"
-                                            >
-                                                <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ backgroundColor: activeCase.color }} />
-                                                <span className="text-[13px] text-zinc-300 leading-relaxed">{h}</span>
-                                            </motion.div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* VIDEO THUMBNAIL */}
-                                <motion.div 
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={() => setIsVideoOpen(true)}
-                                    className="group relative w-full h-40 rounded-none overflow-hidden cursor-pointer shadow-lg mb-6 border border-white/10"
-                                >
-                                    <div className="absolute inset-0">
-                                        <img 
-                                            src={activeCase.thumbnail} 
-                                            alt="Client Video" 
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-80"
-                                        />
-                                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300" />
-                                    </div>
-
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                                        <div 
-                                            className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center pl-1 shadow-2xl transition-transform duration-300 group-hover:scale-110"
-                                            style={{ color: activeCase.color }}
-                                        >
-                                            <Play size={20} fill="currentColor" />
-                                        </div>
-                                        <div className="px-3 py-1 bg-black/60 backdrop-blur-md rounded-none border border-white/10">
-                                            <span className="text-white text-xs font-semibold tracking-wide">
-                                                Watch Testimonial
-                                            </span>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            </div>
-
-                            {/* CTA Link */}
-                            <div>
-                                <a href="#contact" className="group inline-flex items-center gap-2 text-white font-bold border-b-2 border-white/5 pb-1 hover:border-emerald-400/50 transition-colors text-sm">
-                                    READ FULL CASE STUDY
-                                    <ArrowUpRight size={14} className="text-emerald-500 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* RIGHT: Stats & Graph */}
-                        <div className="lg:col-span-7 p-8 md:p-12 relative overflow-hidden flex flex-col bg-black/20">
-                            
-                            {/* Stats Grid — adapts to number of stats */}
-                            <div className={cn(
-                                "grid gap-4 mb-8",
-                                activeCase.stats.length <= 4 
-                                    ? "grid-cols-1 sm:grid-cols-2" 
-                                    : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                            )}>
-                                {activeCase.stats.map((stat, i) => (
-                                    <motion.div
-                                        key={stat.label}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.1 + (i * 0.08) }}
-                                        className="bg-zinc-900/50 border border-white/10 rounded-none p-5 shadow-sm hover:border-white/20 transition-all"
-                                    >
-                                        <div className="flex items-center justify-between mb-3">
-                                            <stat.icon size={18} className="text-zinc-600" />
-                                        </div>
-                                        <div className="text-2xl font-bold text-white mb-1">
-                                            {stat.value}
-                                        </div>
-                                        <div className="text-[11px] text-zinc-500 uppercase tracking-wider font-bold">
-                                            {stat.label}
-                                        </div>
-                                        <div 
-                                          className="text-xs font-semibold mt-1"
-                                          style={{ color: activeCase.color }}
-                                        >
-                                            {stat.subtext}
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-
-                            {/* Graph Area */}
-                            <div className="flex-1 bg-zinc-950 rounded-none border border-white/10 shadow-inner relative overflow-hidden group min-h-[200px]">
-                                <div className="absolute top-4 left-4 z-20 flex gap-2">
-                                    <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-none bg-black/50 border border-white/10 backdrop-blur-sm">
-                                        <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: activeCase.color }} />
-                                        <span className="text-[10px] text-zinc-400 font-bold tracking-wide">{activeCase.graphLabel.toUpperCase()}</span>
-                                    </div>
-                                </div>
-
-                                <div className="absolute inset-0 p-6 pt-16">
-                                    {/* Grid Lines */}
-                                    <div className="absolute inset-0 flex flex-col justify-between p-6 opacity-[0.1] pointer-events-none">
-                                        {[...Array(5)].map((_, i) => (
-                                            <div key={i} className="w-full h-px bg-white" />
-                                        ))}
-                                    </div>
-                                    <LiveGraph data={activeCase.graphData} color={activeCase.color} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
-            </AnimatePresence>
-            
-            {/* FOOTER */}
-            <div className="mt-12 text-center">
-                 <p className="text-zinc-500 text-sm font-medium">
-                    Results shown are verified from client Google Search Console, CRM & Ad accounts. <span className="text-white underline cursor-pointer hover:text-emerald-400 transition-colors">See Methodology</span>.
-                 </p>
-            </div>
-        </div>
+      <div className="flex flex-col items-center" style={{ gap: 16 }}>
+        <span className="px-3 py-1.5 rounded-lg border font-semibold uppercase tracking-widest" style={{ fontSize: 10, letterSpacing: 2, background: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.1)", color: "rgb(156,163,175)" }}>
+          Proven Results
+        </span>
+        <h2 className="text-center text-white" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 700, fontSize: "clamp(32px, 5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.5px" }}>
+          Our <span style={{ background: "linear-gradient(90deg, transparent, #34d399, #06b6d4, transparent)", backgroundSize: "200% auto", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "gradientMove 3s linear infinite" }}>Case Studies</span>
+        </h2>
+        <p className="text-center" style={{ fontFamily: "'Satoshi', sans-serif", fontWeight: 500, fontSize: 16, lineHeight: 1.6, color: "#9ca3af", maxWidth: 400 }}>
+          Real results from Sydney's leading businesses. See how we help brands grow with tailored digital strategies.
+        </p>
       </div>
-      
-      {/* Línea inferior decorativa */}
-      <div className="w-full h-[1px] bg-white/5 absolute bottom-0 z-10" />
-    </section>
+
+      <div className="flex flex-col gap-8 w-full" style={{ maxWidth: 1000, marginTop: 96 }}>
+        {workSteps.map((step, index) => {
+          const Icon = step.icon;
+          return (
+            <div key={step.id} className="rounded-3xl shadow-2xl overflow-hidden border border-white/5" style={{ position: "sticky", top: step.top, zIndex: index + 1, background: CARD_BG }}>
+              <div className="flex" style={{ height: 420 }}>
+                {/* Lado Izquierdo: Texto */}
+                <div className="flex flex-col gap-4 p-10" style={{ width: 520 }}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${CYAN}18` }}>
+                      <Icon size={16} color={CYAN} />
+                    </div>
+                    <h5 className="text-gray-400 text-xs font-bold tracking-widest uppercase">{step.label}</h5>
+                  </div>
+                  <h2 className="text-white text-3xl font-bold leading-tight">{step.title}</h2>
+                  <p className="text-gray-400 text-sm leading-relaxed">{step.description}</p>
+                  
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {step.services?.map((service) => (
+                      <span 
+                        key={service} 
+                        className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border border-white/10"
+                        style={{ backgroundColor: `rgba(255,255,255,0.05)`, color: "#D1D5DB" }}
+                      >
+                        {service}
+                      </span>
+                    ))}
+                  </div>
+
+                  <ViewWebsiteButton href={step.websiteUrl} />
+                </div>
+
+                {/* Lado Derecho: Medios */}
+                <div className="flex-1 relative overflow-hidden" style={{ background: CARD_BG }}>
+                  {step.showTaskCard && <TaskCardBackground />}
+                  {step.showCarousel && <InfiniteCarousel />}
+                  {step.showPremierStats && <PremierStatsCard />}
+                  {step.image && <AnimatedMedia src={step.image} type="image" />}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
-}
+};
