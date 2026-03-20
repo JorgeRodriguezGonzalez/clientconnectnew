@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Instagram, Linkedin, Twitter, Youtube, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, Instagram, Linkedin, Twitter, Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
 // --- COLORS ---
@@ -85,14 +85,42 @@ function Footer(): JSX.Element {
             </p>
           </div>
 
+          {/* UPDATED BUTTON: Book Strategy Call */}
           <Link 
             to="/contact"
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white hover:bg-zinc-200 text-black overflow-hidden transition-all duration-300 flex-shrink-0 rounded-none"
+            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-transparent overflow-hidden transition-all duration-300 flex-shrink-0 rounded-none"
+            style={{
+              border: `1px solid ${COLORS.cyan}`,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.border = `1px solid ${COLORS.emerald}`;
+              e.currentTarget.style.boxShadow = `0 0 20px rgba(52,211,153,0.5)`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.border = `1px solid ${COLORS.cyan}`;
+              e.currentTarget.style.boxShadow = "none";
+            }}
           >
-             <span className="relative font-sans font-bold text-lg z-10">
+             <span 
+               className="relative font-sans font-bold text-lg z-10 transition-colors duration-300 footer-cta-text"
+               style={{ color: COLORS.cyan }}
+             >
                 Book Strategy Call
              </span>
-             <ArrowRight size={20} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={2.5} />
+             <ArrowRight 
+               size={20} 
+               className="relative z-10 transition-all duration-300 group-hover:translate-x-1 footer-cta-icon"
+               style={{ color: COLORS.cyan }}
+               strokeWidth={2.5}
+             />
+
+             {/* Hover color swap via group-hover workaround with CSS */}
+             <style>{`
+               .group:hover .footer-cta-icon,
+               .group:hover .footer-cta-text {
+                 color: ${COLORS.emerald} !important;
+               }
+             `}</style>
           </Link>
         </div>
 
