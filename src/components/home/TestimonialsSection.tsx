@@ -186,7 +186,7 @@ export default function TestimonialsSection() {
         width: "100%",
         maxWidth: 1280,
         margin: isMobile ? "0 12px" : "0 24px",
-        padding: isMobile ? 20 : 32,
+        padding: isMobile ? "16px 20px" : 32,
         position: "relative",
         boxShadow: "0 25px 60px rgba(0,0,0,0.3)",
         overflow: "hidden",
@@ -244,7 +244,7 @@ export default function TestimonialsSection() {
 
         {/* === MOBILE === */}
         {isMobile ? (
-          <div style={{ marginTop: 24, position: "relative" }}>
+          <div style={{ marginTop: 16, position: "relative" }}>
             <Card t={testimonials[activeIndex]} i={activeIndex} isMobile={true} />
 
             <div style={{
