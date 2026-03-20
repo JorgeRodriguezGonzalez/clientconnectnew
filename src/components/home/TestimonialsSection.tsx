@@ -170,7 +170,7 @@ export default function TestimonialsSection() {
   return (
     <div style={{
       background: bg,
-      padding: isMobile ? "12px 0" : "48px 0",
+      padding: isMobile ? "24px 0" : "48px 0",
       minHeight: "100vh",
       display: "flex",
       alignItems: "center",
@@ -186,7 +186,7 @@ export default function TestimonialsSection() {
         width: "100%",
         maxWidth: 1280,
         margin: isMobile ? "0 12px" : "0 24px",
-        padding: isMobile ? "16px 20px" : 32,
+        padding: isMobile ? 20 : 32,
         position: "relative",
         boxShadow: "0 25px 60px rgba(0,0,0,0.3)",
         overflow: "hidden",
@@ -240,18 +240,18 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Divider */}
-        <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: isMobile ? "12px 0 0 0" : "20px 0 0 0" }} />
+        <div style={{ height: 1, background: "rgba(255,255,255,0.07)", margin: "20px 0 0 0" }} />
 
         {/* === MOBILE === */}
         {isMobile ? (
-          <div style={{ marginTop: 12, position: "relative" }}>
+          <div style={{ marginTop: 24, position: "relative" }}>
             <Card t={testimonials[activeIndex]} i={activeIndex} isMobile={true} />
 
             <div style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              marginTop: 12,
+              marginTop: 20,
             }}>
               <div style={{ display: "flex", gap: 6 }}>
                 {testimonials.map((_, i) => (
