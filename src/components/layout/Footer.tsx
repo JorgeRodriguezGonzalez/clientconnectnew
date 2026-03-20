@@ -88,7 +88,7 @@ function Footer(): JSX.Element {
           {/* UPDATED BUTTON: Book Strategy Call */}
           <Link 
             to="/contact"
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-transparent overflow-hidden transition-all duration-300 flex-shrink-0 rounded-none"
+            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-transparent overflow-hidden transition-all duration-300 flex-shrink-0 rounded-full"
             style={{
               border: `1px solid ${COLORS.cyan}`,
             }}
