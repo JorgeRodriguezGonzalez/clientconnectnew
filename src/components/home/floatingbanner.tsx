@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom"; 
 import { X, Phone, ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTracking } from "@/context/TrackingContext";
 
 // --- UTILS ---
 function cn(...classes: (string | undefined | null | false)[]) {
@@ -9,6 +10,7 @@ function cn(...classes: (string | undefined | null | false)[]) {
 }
 
 export function FloatingBanner() {
+  const { phoneDisplay, phoneTel } = useTracking();
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const location = useLocation();
@@ -142,7 +144,7 @@ export function FloatingBanner() {
               <div className="flex flex-row gap-3 w-full md:w-auto items-stretch md:items-center">
                 
                 <a 
-                  href="tel:0272071038"
+                  href={`tel:${phoneTel}`}
                   className="group flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all"
                 >
                   <Phone className="w-3.5 h-3.5" />

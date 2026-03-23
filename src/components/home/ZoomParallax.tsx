@@ -5,6 +5,7 @@ import Lenis from 'lenis';
 import { ArrowDown } from 'lucide-react';
 import { useIsTablet } from "@/hooks/useIsTablet";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
+import { useTracking } from "@/context/TrackingContext";
 
 const fontStyles = `
   @import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
@@ -112,6 +113,7 @@ function MobileCarousel() {
 }
 
 function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMobile: boolean }) {
+    const { phoneDisplay, phoneTel } = useTracking();
     const container = useRef<HTMLDivElement>(null);
     const isTablet = useIsTablet();
     const { scrollYProgress } = useScroll({ target: container, offset: ['start start', 'end end'] });
@@ -173,9 +175,9 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                 could be next.
                                             </h3>
                                             <div className="flex gap-3 mt-2">
-                                                {/* LET'S CHAT → tel:0272071038 */}
+                                                {/* LET'S CHAT → tel (tracking) */}
                                                 <motion.a
-                                                    href="tel:0272071038"
+                                                    href={`tel:${phoneTel}`}
                                                     style={{ pointerEvents: 'auto', position: 'relative', zIndex: 50 }}
                                                     whileHover={
                                                         isTablet
@@ -195,7 +197,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                         border: '1px solid rgba(255,255,255,0.2)',
                                                         color: '#ffffff', transition: 'all 0.3s ease',
                                                     }}>
-                                                    Let's chat
+                                                    {phoneDisplay}
                                                 </motion.a>
                                                 {/* BOOK A CALL → /contact */}
                                                 <motion.a
