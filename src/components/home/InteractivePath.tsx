@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { Play, Pause } from "lucide-react";
 import { motion } from "framer-motion";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
@@ -205,6 +205,45 @@ export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
   const isMobile = useIsMobile();
 
+  // --- Swipe táctil (solo mobile) ---
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const isSwiping = useRef(false);
+
+  const SWIPE_THRESHOLD = 50;
+
+  const handleTouchStart = useCallback((e) => {
+    if (!isMobile) return;
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    isSwiping.current = false;
+  }, [isMobile]);
+
+  const handleTouchMove = useCallback((e) => {
+    if (!isMobile) return;
+    const dx = Math.abs(e.touches[0].clientX - touchStartX.current);
+    const dy = Math.abs(e.touches[0].clientY - touchStartY.current);
+    // Si el movimiento es más horizontal que vertical, marcamos como swipe
+    if (dx > dy && dx > 10) {
+      isSwiping.current = true;
+    }
+  }, [isMobile]);
+
+  const handleTouchEnd = useCallback((e) => {
+    if (!isMobile || !isSwiping.current) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(deltaX) >= SWIPE_THRESHOLD) {
+      if (deltaX < 0) {
+        // Swipe izquierda → siguiente
+        setActive(i => (i + 1) % RECENT_WORKS.length);
+      } else {
+        // Swipe derecha → anterior
+        setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
+      }
+    }
+  }, [isMobile]);
+  // --- Fin swipe táctil ---
+
   const prev = () => setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
   const next = () => setActive(i => (i + 1) % RECENT_WORKS.length);
 
@@ -251,7 +290,21 @@ export default function TestimonialsSection() {
         </p>
       </div>
 
-      <div style={{ position: "relative", width: "100%", height: "520px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      {/* Zona del carrusel con eventos touch solo en mobile */}
+      <div
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "520px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          touchAction: isMobile ? "pan-y" : "auto",
+        }}
+      >
         {RECENT_WORKS.map((item, i) => {
           const position = i - active;
           const wrapped =
