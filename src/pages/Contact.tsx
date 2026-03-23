@@ -59,7 +59,7 @@ const FormInput = ({
 
 const Contact = () => {
   const { toast } = useToast();
-  const { phoneDisplay, phoneTel } = useTracking();
+  const { phoneDisplay, phoneTel, trackingData } = useTracking();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -88,6 +88,13 @@ const Contact = () => {
         body: new URLSearchParams({
           "form-name": "contact-page",
           ...formData,
+          utm_source: trackingData.utm_source,
+          utm_medium: trackingData.utm_medium,
+          utm_campaign: trackingData.utm_campaign,
+          utm_term: trackingData.utm_term,
+          utm_content: trackingData.utm_content,
+          landing_page: trackingData.landing_page,
+          referrer: trackingData.referrer,
         }).toString(),
       });
 
