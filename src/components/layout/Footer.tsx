@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Instagram, Linkedin, Twitter, Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTracking } from "@/context/TrackingContext";
 
 // --- COLORS ---
 const COLORS = {
@@ -29,6 +30,7 @@ const navigation = {
 };
 
 function Footer(): JSX.Element {
+  const { phoneDisplay, phoneTel } = useTracking();
   return (
     <footer className="relative bg-black text-white pt-24 pb-12 overflow-hidden font-sans border-t border-zinc-800">
       
@@ -186,12 +188,12 @@ function Footer(): JSX.Element {
                    </a>
                 </li>
                 <li>
-                   <a href="tel:+61272071038" className="flex items-center gap-3 group">
+                  <a href={`tel:${phoneTel}`} className="flex items-center gap-3 group">
                       <div className="p-2 border border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:text-emerald-400 group-hover:border-emerald-500/30 transition-colors rounded-none">
                         <Phone size={16} />
                       </div>
                       <span className="font-sans text-sm text-zinc-400 group-hover:text-white transition-colors">
-                        (02) 7207 1038
+                      {phoneDisplay}
                       </span>
                    </a>
                 </li>

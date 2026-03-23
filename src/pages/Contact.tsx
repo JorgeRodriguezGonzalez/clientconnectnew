@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { COLORS } from "@/lib/design-tokens";
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { useTracking } from "@/context/TrackingContext";
 
 const PRIMARY = "#34d399";
 const SECONDARY = "#06b6d4";
@@ -58,6 +59,7 @@ const FormInput = ({
 
 const Contact = () => {
   const { toast } = useToast();
+  const { phoneDisplay, phoneTel } = useTracking();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -109,7 +111,7 @@ const Contact = () => {
     <div className="min-h-screen flex flex-col">
       <SEOHead
         title="Contact Us | Client Connect Australia - Get a Free Consultation"
-        description="Get in touch with Client Connect Australia. Call (02) 7207 1038 or fill out our form for a free digital marketing consultation in Sydney."
+        description={`Get in touch with Client Connect Australia. Call ${phoneDisplay} or fill out our form for a free digital marketing consultation in Sydney.`}
         path="/contact"
       />
       <SchemaMarkup schema={{
@@ -410,8 +412,8 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="font-medium mb-1 text-white">Phone</div>
-                        <a href="tel:0272071038" className="text-zinc-400 hover:text-[#06b6d4] transition-colors">
-                          02 7207 1038
+                        <a href={`tel:${phoneTel}`} className="text-zinc-400 hover:text-[#06b6d4] transition-colors">
+                          {phoneDisplay}
                         </a>
                       </div>
                     </div>

@@ -16,6 +16,7 @@ import {
   Mail,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTracking } from "@/context/TrackingContext";
 
 // --- UTILS ---
 function cn(...classes: (string | undefined | null | false)[]) {
@@ -118,6 +119,7 @@ function useScrollHide(idleDelay = 300) {
 
 // --- MAIN COMPONENT ---
 function Header() {
+  const { phoneDisplay, phoneTel } = useTracking();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
@@ -283,12 +285,12 @@ function Header() {
                             <div className="mt-5 space-y-3">
                               <div className="space-y-2">
                                 <a
-                                  href="tel:0272071038"
+                                  href={`tel:${phoneTel}`}
                                   className="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors no-underline"
                                 >
                                   <Phone size={13} className="text-[#34d399]" />
                                   <span className="font-medium">
-                                    (02) 7207 1038
+                                    {phoneDisplay}
                                   </span>
                                 </a>
                                 <a
