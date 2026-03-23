@@ -15,7 +15,7 @@ const navigation = {
     { name: "About Us", href: "/about" },
     { name: "Case Studies", href: "/case-studies" },
     { name: "Contact", href: "/contact" },
-    { name: "Services", href: "/services" },
+    { name: "Services", href: "/services/seo" },
   ],
   social: [
     { name: "LinkedIn", icon: Linkedin, href: "#" },
@@ -211,9 +211,9 @@ function Footer(): JSX.Element {
 
         {/* 3. BIG TYPE BOTTOM */}
         <div className="w-full border-t border-zinc-800 pt-16 pb-4 flex flex-col items-center select-none pointer-events-none">
-           <h1 className="font-sans font-black text-[12vw] leading-[0.8] tracking-tighter text-zinc-900 text-center whitespace-nowrap opacity-80">
+           <p className="font-sans font-black text-[12vw] leading-[0.8] tracking-tighter text-zinc-900 text-center whitespace-nowrap opacity-80">
               CLIENT CONNECT
-           </h1>
+           </p>
         </div>
 
         {/* 4. COPYRIGHT & LEGAL */}

@@ -292,12 +292,12 @@ function Header() {
                                   </span>
                                 </a>
                                 <a
-                                  href="mailto:info@clientconnectaustralia.com"
+                                  href="mailto:info@clientconnectaustralia.com.au"
                                   className="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors no-underline"
                                 >
                                   <Mail size={13} className="text-[#34d399]" />
                                   <span className="font-medium truncate">
-                                    info@clientconnectaustralia.com
+                                    info@clientconnectaustralia.com.au
                                   </span>
                                 </a>
                               </div>
