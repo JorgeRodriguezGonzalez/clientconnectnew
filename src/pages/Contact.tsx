@@ -8,6 +8,7 @@ import { Mail, Phone, MapPin, Clock, User, Building2, Globe, MessageSquare, Send
 import { useToast } from "@/hooks/use-toast";
 import { COLORS } from "@/lib/design-tokens";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 
 const PRIMARY = "#34d399";
 const SECONDARY = "#06b6d4";
@@ -111,6 +112,14 @@ const Contact = () => {
         description="Get in touch with Client Connect Australia. Call (02) 7207 1038 or fill out our form for a free digital marketing consultation in Sydney."
         path="/contact"
       />
+      <SchemaMarkup schema={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+          { "@type": "ListItem", "position": 2, "name": "Contact Us", "item": "https://clientconnectaustralia.com.au/contact" }
+        ]
+      }} />
       <Header />
       <main className="flex-1">
         {/* Hero */}

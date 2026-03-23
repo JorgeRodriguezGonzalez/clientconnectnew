@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { HowWeWork } from "@/components/home/HowWeWork";
 import CTASection from "@/components/home/CTASection";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -132,6 +133,14 @@ export default function CaseStudiesPage() {
         description="See how Client Connect Australia helps Sydney tradies and service businesses grow. Real case studies with measurable SEO, Google Ads and web design results."
         path="/case-studies"
       />
+      <SchemaMarkup schema={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+          { "@type": "ListItem", "position": 2, "name": "Case Studies", "item": "https://clientconnectaustralia.com.au/case-studies" }
+        ]
+      }} />
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}

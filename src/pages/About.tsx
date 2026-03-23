@@ -9,6 +9,7 @@ import { HowWeWork } from "@/components/home/HowWeWork";
 import { Minus, Plus, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -381,6 +382,14 @@ export default function About() {
         description="Meet the team behind Client Connect Australia. We're tradies who became digital marketers, helping Sydney service businesses get more leads and customers."
         path="/about"
       />
+      <SchemaMarkup schema={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+          { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://clientconnectaustralia.com.au/about" }
+        ]
+      }} />
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}
