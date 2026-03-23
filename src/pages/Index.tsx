@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/home/CTASection";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 
 // --- Lazy imports: these chunks (and their videos) only load when needed ---
 const FounderSection = lazy(() => import("@/components/home/FounderSection"));
@@ -66,6 +67,50 @@ const Index = () => {
         description="Sydney digital marketing agency helping local businesses grow with SEO, Google Ads, web design & social media. Results-driven strategies for tradies & service businesses."
         path="/"
       />
+      <SchemaMarkup schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": "Client Connect Australia",
+          "url": "https://clientconnectaustralia.com.au",
+          "telephone": "+61272071038",
+          "email": "info@clientconnectaustralia.com.au",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Sydney",
+            "addressRegion": "NSW",
+            "addressCountry": "AU"
+          },
+          "areaServed": {
+            "@type": "City",
+            "name": "Sydney"
+          },
+          "description": "Sydney digital marketing agency specialising in SEO, Google Ads, web design and social media for tradies and local service businesses.",
+          "priceRange": "$$",
+          "image": "https://clientconnectaustralia.com.au/images/logoCCA2.png",
+          "sameAs": []
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Client Connect Australia",
+          "url": "https://clientconnectaustralia.com.au",
+          "logo": "https://clientconnectaustralia.com.au/images/logoCCA2.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+61272071038",
+            "contactType": "customer service",
+            "areaServed": "AU",
+            "availableLanguage": "English"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Client Connect Australia",
+          "url": "https://clientconnectaustralia.com.au"
+        }
+      ]} />
       <main className="flex-1">
         <Header />
         <SuperHero />
