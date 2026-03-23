@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
@@ -267,6 +268,34 @@ const SEOService = () => {
         description="Expert SEO services in Sydney. We help tradies and local businesses rank higher on Google, drive organic traffic and generate more qualified leads."
         path="/services/seo"
       />
+      <SchemaMarkup schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "SEO Services",
+          "description": "Expert SEO services in Sydney for tradies and local businesses. Higher rankings, more organic traffic, more leads.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "Client Connect Australia",
+            "telephone": "+61272071038",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Sydney",
+              "addressRegion": "NSW",
+              "addressCountry": "AU"
+            }
+          },
+          "areaServed": { "@type": "City", "name": "Sydney" }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+            { "@type": "ListItem", "position": 2, "name": "SEO Services", "item": "https://clientconnectaustralia.com.au/services/seo" }
+          ]
+        }
+      ]} />
       <Header />
       <main style={{ flex: 1 }}>
 

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { MousePointerClick, Target, DollarSign, BarChart, TrendingUp, Zap, Minus, Plus, MessageSquare } from "lucide-react";
@@ -267,6 +268,34 @@ const GoogleAds = () => {
         description="Professional Google Ads management for Sydney businesses. Get instant visibility, qualified traffic and measurable ROI with our expert PPC campaigns."
         path="/services/google-ads"
       />
+      <SchemaMarkup schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Google Ads Management",
+          "description": "Professional Google Ads management for Sydney businesses. Instant visibility, qualified traffic and measurable ROI.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "Client Connect Australia",
+            "telephone": "+61272071038",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Sydney",
+              "addressRegion": "NSW",
+              "addressCountry": "AU"
+            }
+          },
+          "areaServed": { "@type": "City", "name": "Sydney" }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+            { "@type": "ListItem", "position": 2, "name": "Google Ads", "item": "https://clientconnectaustralia.com.au/services/google-ads" }
+          ]
+        }
+      ]} />
       <Header />
       <main style={{ flex: 1 }}>
 

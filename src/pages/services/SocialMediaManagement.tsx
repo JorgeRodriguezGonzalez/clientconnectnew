@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Share2, Calendar, Users, BarChart, TrendingUp, MessageSquare, Minus, Plus } from "lucide-react";
@@ -712,6 +713,34 @@ const SocialMediaManagement = () => {
         description="Professional social media management for Sydney businesses. We handle your content, engagement and growth across all platforms so you can focus on your trade."
         path="/services/social-media-management"
       />
+      <SchemaMarkup schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Social Media Management",
+          "description": "Professional social media management for Sydney businesses. Content, engagement and growth across all platforms.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "Client Connect Australia",
+            "telephone": "+61272071038",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Sydney",
+              "addressRegion": "NSW",
+              "addressCountry": "AU"
+            }
+          },
+          "areaServed": { "@type": "City", "name": "Sydney" }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+            { "@type": "ListItem", "position": 2, "name": "Social Media Management", "item": "https://clientconnectaustralia.com.au/services/social-media-management" }
+          ]
+        }
+      ]} />
       <Header />
       <main style={{ flex: 1 }}>
 

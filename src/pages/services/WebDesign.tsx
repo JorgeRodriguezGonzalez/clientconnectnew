@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
@@ -819,6 +820,34 @@ const WebDesign = () => {
         description="Custom web design for Sydney tradies and service businesses. Fast, mobile-friendly websites built to turn visitors into customers and generate leads."
         path="/services/web-design"
       />
+      <SchemaMarkup schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Web Design",
+          "description": "Custom web design for Sydney tradies and service businesses. Fast, mobile-friendly sites that convert visitors into customers.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "Client Connect Australia",
+            "telephone": "+61272071038",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Sydney",
+              "addressRegion": "NSW",
+              "addressCountry": "AU"
+            }
+          },
+          "areaServed": { "@type": "City", "name": "Sydney" }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+            { "@type": "ListItem", "position": 2, "name": "Web Design", "item": "https://clientconnectaustralia.com.au/services/web-design" }
+          ]
+        }
+      ]} />
       <Header />
       <main className="flex-1">
 

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import CTASection from "@/components/home/CTASection";
 import * as Accordion from "@radix-ui/react-accordion";
 import { cn } from "@/lib/utils";
@@ -830,6 +831,34 @@ const ContentCreationService = () => {
         description="Professional content creation for Sydney businesses. Blog posts, social media content, photography and video that engages your audience and drives results."
         path="/services/content-creation"
       />
+      <SchemaMarkup schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Content Creation",
+          "description": "Professional content creation for Sydney businesses. Blog posts, social media content, photography and video that drives results.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "Client Connect Australia",
+            "telephone": "+61272071038",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Sydney",
+              "addressRegion": "NSW",
+              "addressCountry": "AU"
+            }
+          },
+          "areaServed": { "@type": "City", "name": "Sydney" }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+            { "@type": "ListItem", "position": 2, "name": "Content Creation", "item": "https://clientconnectaustralia.com.au/services/content-creation" }
+          ]
+        }
+      ]} />
       <Header />
       <main style={{ flex: 1 }}>
 

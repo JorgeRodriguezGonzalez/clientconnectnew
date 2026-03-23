@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { TrendingUp, Target, Users, BarChart, Zap, DollarSign, Minus, Plus, MessageSquare } from "lucide-react";
@@ -514,6 +515,34 @@ const SocialMediaAds = () => {
         description="Targeted social media ads for Sydney businesses. Facebook, Instagram and LinkedIn campaigns that generate quality leads and measurable returns."
         path="/services/social-media-ads"
       />
+      <SchemaMarkup schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Social Media Advertising",
+          "description": "Targeted social media ads for Sydney businesses. Facebook, Instagram and LinkedIn campaigns that generate quality leads.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "Client Connect Australia",
+            "telephone": "+61272071038",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Sydney",
+              "addressRegion": "NSW",
+              "addressCountry": "AU"
+            }
+          },
+          "areaServed": { "@type": "City", "name": "Sydney" }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+            { "@type": "ListItem", "position": 2, "name": "Social Media Ads", "item": "https://clientconnectaustralia.com.au/services/social-media-ads" }
+          ]
+        }
+      ]} />
       <Header />
       <main style={{ flex: 1 }}>
 
