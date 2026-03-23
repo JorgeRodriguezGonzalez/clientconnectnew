@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { MousePointerClick, Target, DollarSign, BarChart, TrendingUp, Zap, Minus, Plus, MessageSquare } from "lucide-react";
@@ -261,6 +262,11 @@ const GoogleAds = () => {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: FONT, overflowX: "clip" }}>
+      <SEOHead
+        title="Google Ads Management Sydney | Client Connect Australia"
+        description="Professional Google Ads management for Sydney businesses. Get instant visibility, qualified traffic and measurable ROI with our expert PPC campaigns."
+        path="/services/google-ads"
+      />
       <Header />
       <main style={{ flex: 1 }}>
 

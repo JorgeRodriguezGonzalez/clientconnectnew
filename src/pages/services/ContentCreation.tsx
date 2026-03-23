@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import CTASection from "@/components/home/CTASection";
 import * as Accordion from "@radix-ui/react-accordion";
 import { cn } from "@/lib/utils";
@@ -824,6 +825,11 @@ const ContentCreationService = () => {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: FONT, overflowX: "clip" }}>
+      <SEOHead
+        title="Content Creation Sydney | Client Connect Australia"
+        description="Professional content creation for Sydney businesses. Blog posts, social media content, photography and video that engages your audience and drives results."
+        path="/services/content-creation"
+      />
       <Header />
       <main style={{ flex: 1 }}>
 

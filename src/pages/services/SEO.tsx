@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
@@ -261,6 +262,11 @@ const SEOService = () => {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: FONT, overflowX: "clip" }}>
+      <SEOHead
+        title="SEO Services Sydney | Client Connect Australia - Rank Higher on Google"
+        description="Expert SEO services in Sydney. We help tradies and local businesses rank higher on Google, drive organic traffic and generate more qualified leads."
+        path="/services/seo"
+      />
       <Header />
       <main style={{ flex: 1 }}>
 

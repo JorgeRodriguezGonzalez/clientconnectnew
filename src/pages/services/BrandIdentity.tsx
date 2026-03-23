@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
 import { brandIdentityServices, brandIdentityHeading, brandIdentityHighlight, brandIdentitySubtitle } from "@/data/services/brandidentity-services";
@@ -303,6 +304,11 @@ const BrandIdentityService = () => {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: FONT, overflowX: "clip" }}>
+      <SEOHead
+        title="Brand Identity Design Sydney | Client Connect Australia"
+        description="Stand out from competitors with professional brand identity design. Logos, style guides and visual branding for Sydney tradies and service businesses."
+        path="/services/brand-identity"
+      />
       <Header />
       <main style={{ flex: 1 }}>
 

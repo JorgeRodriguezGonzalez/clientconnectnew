@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { TrendingUp, Target, Users, BarChart, Zap, DollarSign, Minus, Plus, MessageSquare } from "lucide-react";
@@ -508,6 +509,11 @@ const SocialMediaAds = () => {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: FONT, overflowX: "clip" }}>
+      <SEOHead
+        title="Social Media Advertising Sydney | Client Connect Australia"
+        description="Targeted social media ads for Sydney businesses. Facebook, Instagram and LinkedIn campaigns that generate quality leads and measurable returns."
+        path="/services/social-media-ads"
+      />
       <Header />
       <main style={{ flex: 1 }}>
 

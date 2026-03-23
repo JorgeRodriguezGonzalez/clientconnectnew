@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Share2, Calendar, Users, BarChart, TrendingUp, MessageSquare, Minus, Plus } from "lucide-react";
@@ -706,6 +707,11 @@ const SocialMediaManagement = () => {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: FONT, overflowX: "clip" }}>
+      <SEOHead
+        title="Social Media Management Sydney | Client Connect Australia"
+        description="Professional social media management for Sydney businesses. We handle your content, engagement and growth across all platforms so you can focus on your trade."
+        path="/services/social-media-management"
+      />
       <Header />
       <main style={{ flex: 1 }}>
 

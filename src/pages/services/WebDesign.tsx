@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
@@ -813,6 +814,11 @@ const WebDesign = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead
+        title="Web Design Sydney | Client Connect Australia - Sites That Convert"
+        description="Custom web design for Sydney tradies and service businesses. Fast, mobile-friendly websites built to turn visitors into customers and generate leads."
+        path="/services/web-design"
+      />
       <Header />
       <main className="flex-1">
 
