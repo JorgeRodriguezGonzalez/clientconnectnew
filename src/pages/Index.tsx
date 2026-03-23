@@ -4,6 +4,7 @@ import { FloatingBanner } from "@/components/home/floatingbanner";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/home/CTASection";
+import SEOHead from "@/components/seo/SEOHead";
 
 // --- Lazy imports: these chunks (and their videos) only load when needed ---
 const FounderSection = lazy(() => import("@/components/home/FounderSection"));
@@ -60,6 +61,11 @@ function LazySection({
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead
+        title="Client Connect Australia | Sydney Digital Marketing Agency"
+        description="Sydney digital marketing agency helping local businesses grow with SEO, Google Ads, web design & social media. Results-driven strategies for tradies & service businesses."
+        path="/"
+      />
       <main className="flex-1">
         <Header />
         <SuperHero />

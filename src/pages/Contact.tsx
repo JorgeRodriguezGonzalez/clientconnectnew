@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Mail, Phone, MapPin, Clock, User, Building2, Globe, MessageSquare, Send, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { COLORS } from "@/lib/design-tokens";
+import SEOHead from "@/components/seo/SEOHead";
 
 const PRIMARY = "#34d399";
 const SECONDARY = "#06b6d4";
@@ -105,6 +106,11 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead
+        title="Contact Us | Client Connect Australia - Get a Free Consultation"
+        description="Get in touch with Client Connect Australia. Call (02) 7207 1038 or fill out our form for a free digital marketing consultation in Sydney."
+        path="/contact"
+      />
       <Header />
       <main className="flex-1">
         {/* Hero */}

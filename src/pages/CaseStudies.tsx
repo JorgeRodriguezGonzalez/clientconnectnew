@@ -4,6 +4,7 @@ import CaseStudiesHome from "@/components/home/case-studies";
 import Footer from "@/components/layout/Footer";
 import { HowWeWork } from "@/components/home/HowWeWork";
 import CTASection from "@/components/home/CTASection";
+import SEOHead from "@/components/seo/SEOHead";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -126,6 +127,11 @@ export default function CaseStudiesPage() {
 
   return (
     <div style={{ fontFamily: FONT, background: BG, color: TEXT_DARK, minHeight: "100vh", overflowX: "hidden" }}>
+      <SEOHead
+        title="Case Studies | Client Connect Australia - Real Results for Real Businesses"
+        description="See how Client Connect Australia helps Sydney tradies and service businesses grow. Real case studies with measurable SEO, Google Ads and web design results."
+        path="/case-studies"
+      />
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}

@@ -8,6 +8,7 @@ import InteractivePath from "@/components/home/InteractivePath";
 import { HowWeWork } from "@/components/home/HowWeWork";
 import { Minus, Plus, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
+import SEOHead from "@/components/seo/SEOHead";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -375,6 +376,11 @@ export default function About() {
 
   return (
     <div style={{ fontFamily: FONT, background: BG, color: TEXT_DARK, minHeight: "100vh", overflowX: "hidden" }}>
+      <SEOHead
+        title="About Us | Client Connect Australia - Sydney Marketing Experts"
+        description="Meet the team behind Client Connect Australia. We're tradies who became digital marketers, helping Sydney service businesses get more leads and customers."
+        path="/about"
+      />
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}
