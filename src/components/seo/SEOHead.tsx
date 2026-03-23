@@ -8,7 +8,7 @@ interface SEOHeadProps {
 }
 
 const DOMAIN = 'https://clientconnectaustralia.com.au';
-const OG_IMAGE = `${DOMAIN}/images/logoCCA2.png`;
+const OG_IMAGE = `${DOMAIN}/images/og-image.jpg`;
 const SITE_NAME = 'Client Connect Australia';
 
 export default function SEOHead({ title, description, path, ogType = 'website' }: SEOHeadProps) {
