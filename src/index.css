@@ -187,7 +187,7 @@ All colors MUST be HSL.
 }
 
 @media (min-width: 768px) {
-  .contact-hero-title {
+  .hero-title-spacing {
     padding-top: 180px !important;
   }
 }
