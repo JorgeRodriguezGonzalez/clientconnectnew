@@ -133,11 +133,13 @@ function Footer(): JSX.Element {
              <Link to="/" className="inline-flex items-center gap-2 no-underline">
                 <img
                   src="/images/logoCCA2.png"
-                  alt="Client Connect Australia"
+                  alt="Client Connect"
                   className="w-14 h-14 shrink-0 object-contain"
                 />
                 <span className="text-xl font-medium tracking-tight text-white">
-                  Client Connect <span className="text-[#34d399]">Australia</span><span className="text-[#ffa93b]">.</span>
+                  <span className="inline-flex items-baseline">
+                    Cl<span className="cc-brand-dotted-i">i</span>ent Connect
+                  </span>
                 </span>
              </Link>
              <p className="font-sans text-zinc-500 leading-relaxed max-w-sm text-sm">
