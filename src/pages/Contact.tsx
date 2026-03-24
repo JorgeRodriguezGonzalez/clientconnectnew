@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -60,9 +61,10 @@ const FormInput = ({
 const Contact = () => {
   const { toast } = useToast();
   const { phoneDisplay, phoneTel, trackingData } = useTracking();
+  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    email: searchParams.get('email') || "",
     phone: "",
     company: "",
     url: "",
