@@ -169,10 +169,22 @@ function Header() {
               alt="Client Connect"
               className="w-14 h-14 shrink-0 object-contain"
             />
-            <span className="text-xl font-medium tracking-tight text-white">
-              <span className="inline-flex items-baseline">
-                Cl<span className="cc-brand-dotted-i">i</span>ent Connect
+            <span className="text-xl font-medium tracking-tight text-white" style={{ letterSpacing: "-0.02em" }}>
+              Cl
+              <span className="relative">
+                <span
+                  className="text-transparent bg-clip-text"
+                  style={{
+                    backgroundImage: "linear-gradient(to bottom, #34d399 45%, white 45%)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  i
+                </span>
               </span>
+              ent Connect
             </span>
           </Link>
 
