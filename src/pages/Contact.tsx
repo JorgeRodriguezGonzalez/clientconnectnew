@@ -67,6 +67,7 @@ const Contact = () => {
     company: "",
     url: "",
     service: "",
+    referred_by: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -269,6 +270,15 @@ const Contact = () => {
                           onChange={handleChange}
                         />
                       </div>
+
+                      <FormInput
+                        icon={User}
+                        label="Referred by"
+                        name="referred_by"
+                        placeholder="Name of person who referred you (optional)"
+                        value={formData.referred_by}
+                        onChange={handleChange}
+                      />
 
                       {/* Row 3: Website URL */}
                       <FormInput
