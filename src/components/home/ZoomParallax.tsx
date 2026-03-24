@@ -113,7 +113,7 @@ function MobileCarousel() {
 }
 
 function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMobile: boolean }) {
-    const { phoneDisplay, phoneTel } = useTracking();
+    const { phoneTel } = useTracking();
     const container = useRef<HTMLDivElement>(null);
     const isTablet = useIsTablet();
     const { scrollYProgress } = useScroll({ target: container, offset: ['start start', 'end end'] });
@@ -197,7 +197,7 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                         border: '1px solid rgba(255,255,255,0.2)',
                                                         color: '#ffffff', transition: 'all 0.3s ease',
                                                     }}>
-                                                    {phoneDisplay}
+                                                    {"Let's talk"}
                                                 </motion.a>
                                                 {/* BOOK A CALL → /contact */}
                                                 <motion.a
