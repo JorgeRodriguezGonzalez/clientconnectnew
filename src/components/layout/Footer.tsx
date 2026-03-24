@@ -141,7 +141,7 @@ function Footer(): JSX.Element {
                   <span
                     className="text-transparent"
                     style={{
-                      backgroundImage: "linear-gradient(to bottom, #34d399 50%, white 50%)",
+                      backgroundImage: "linear-gradient(to bottom, #34d399 38%, white 38%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
