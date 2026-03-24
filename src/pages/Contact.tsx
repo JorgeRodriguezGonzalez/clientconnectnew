@@ -157,7 +157,7 @@ const Contact = () => {
             }}
           />
 
-          <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "180px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
+          <div style={{ textAlign: "center", paddingTop: "240px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
             <h1
               style={{
                 fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
