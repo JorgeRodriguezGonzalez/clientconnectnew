@@ -4,10 +4,6 @@ import { Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const fontStyles = `
-  .font-inter {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-
   @keyframes gradientMove {
     0% { background-position: -200% center; }
     100% { background-position: 200% center; }
@@ -188,7 +184,7 @@ const ClientCarousel = ({ isMobile, onCardClick }: { isMobile?: boolean; onCardC
         style={{ background: 'linear-gradient(to right, #050505 60%, transparent 100%)' }}
       >
         <p
-          className="text-white/30 text-[10px] font-inter font-semibold uppercase tracking-[4px] ml-8"
+          className="text-white/30 text-[10px] font-sans font-semibold uppercase tracking-[4px] ml-8"
           style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
           Our Local Clients
@@ -264,7 +260,7 @@ export const SuperHero = ({
   // Wait until isMobile is determined to prevent layout shift
   if (isMobile === null) {
     return (
-      <div className="w-full flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-inter" style={{ background: '#050505', minHeight: '100vh' }}>
+      <div className="w-full flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-sans" style={{ background: '#050505', minHeight: '100vh' }}>
         <style>{fontStyles}</style>
       </div>
     );
@@ -294,7 +290,7 @@ export const SuperHero = ({
 
   return (
     <div
-      className="w-full relative flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-inter"
+      className="w-full relative flex flex-col items-center justify-start px-0 overflow-hidden pb-0 font-sans"
       style={{ background: '#050505' }}
     >
       <style>{fontStyles}</style>
@@ -415,7 +411,7 @@ export const SuperHero = ({
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 1.0, ease: 'easeOut' }}
-              className="font-inter font-semibold text-[42px] md:text-[56px] lg:text-[68px] leading-[1.1] tracking-[-2px] text-white mb-6 normal-case"
+              className="font-sans font-semibold text-[42px] md:text-[56px] lg:text-[68px] leading-[1.1] tracking-[-2px] text-white mb-6 normal-case"
             >
               We Bring{' '}
               {isMobile ? (
@@ -490,7 +486,7 @@ export const SuperHero = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9, duration: 1.0, ease: 'easeOut' }}
-                className="flex flex-col items-center gap-2 font-inter font-light text-white max-w-3xl mx-auto"
+                className="flex flex-col items-center gap-2 font-sans font-light text-white max-w-3xl mx-auto"
                 style={{ fontSize: 'clamp(14px, 1.5vw, 16px)' }}
               >
                 <p>Stop relying on guesswork. We act as your entire growth engine.</p>
@@ -514,7 +510,7 @@ export const SuperHero = ({
               >
                 {['Google Ads', 'Paid Social', 'SEO', 'Web Design', 'Content Creation'].map((tag, i, arr) => (
                   <React.Fragment key={tag}>
-                    <span className="text-white/50 text-[13px] font-inter font-medium px-3">{tag}</span>
+                    <span className="text-white/50 text-[13px] font-sans font-medium px-3">{tag}</span>
                     {i < arr.length - 1 && <span className="text-white/20 text-[13px]">·</span>}
                   </React.Fragment>
                 ))}
@@ -531,7 +527,7 @@ export const SuperHero = ({
               >
                 {['SEO', 'Paid Ads', 'Websites', 'Social Media'].map((tag, i, arr) => (
                   <React.Fragment key={tag}>
-                    <span className="text-[13px] font-inter font-medium px-3" style={{ color: emeraldColor }}>{tag}</span>
+                    <span className="text-[13px] font-sans font-medium px-3" style={{ color: emeraldColor }}>{tag}</span>
                     {i < arr.length - 1 && <span className="text-white/20 text-[13.5px] font-bold">·</span>}
                   </React.Fragment>
                 ))}
@@ -551,7 +547,7 @@ export const SuperHero = ({
                     <input
                       type="email"
                       placeholder="Enter your email for a free audit"
-                      className="relative w-full h-full bg-transparent rounded-[50px] px-6 pr-14 text-white text-[16px] font-inter font-medium placeholder-white/40 outline-none z-10"
+                      className="relative w-full h-full bg-transparent rounded-[50px] px-6 pr-14 text-white text-[16px] font-sans font-medium placeholder-white/40 outline-none z-10"
                     />
                     <button
                       className="absolute right-[5px] top-1/2 -translate-y-1/2 w-[48px] h-[36px] rounded-[50px] flex items-center justify-center transition-all duration-300 z-10"
@@ -572,7 +568,7 @@ export const SuperHero = ({
                     style={{ height: 48, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 50, padding: '12px 24px', backdropFilter: 'blur(8px)' }}
                     whileHover={{ boxShadow: '0 0 20px rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.2)' }}
                   >
-                    <p className="font-inter font-semibold text-white whitespace-nowrap" style={{ fontSize: 15 }}>{secondaryButtonText}</p>
+                    <p className="font-sans font-semibold text-white whitespace-nowrap" style={{ fontSize: 15 }}>{secondaryButtonText}</p>
                   </motion.div>
 
                   <motion.div
@@ -584,7 +580,7 @@ export const SuperHero = ({
                     whileHover={{ boxShadow: '0 0 20px rgba(52,211,153,0.5)', background: 'rgba(255,255,255,0.2)' }}
                   >
                     <Calendar style={{ width: 17, height: 14, color: isHovered ? emeraldColor : lampColor }} />
-                    <p className="font-inter font-semibold whitespace-nowrap" style={{ fontSize: 15, color: isHovered ? emeraldColor : lampColor }}>
+                    <p className="font-sans font-semibold whitespace-nowrap" style={{ fontSize: 15, color: isHovered ? emeraldColor : lampColor }}>
                       {primaryButtonText}
                     </p>
                   </motion.div>
