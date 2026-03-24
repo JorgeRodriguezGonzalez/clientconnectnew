@@ -150,6 +150,7 @@ function Footer(): JSX.Element {
                     i
                   </span>
                   ent Connect
+                  <span className="text-[#34d399]">.</span>
                 </span>
              </Link>
              <p className="font-sans text-zinc-500 leading-relaxed max-w-sm text-sm">

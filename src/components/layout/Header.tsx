@@ -183,6 +183,7 @@ function Header() {
                 i
               </span>
               ent Connect
+              <span className="text-[#34d399]">.</span>
             </span>
           </Link>
 
