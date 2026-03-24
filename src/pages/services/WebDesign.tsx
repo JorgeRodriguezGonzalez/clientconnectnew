@@ -7,7 +7,7 @@ import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code, Minus, Plus, MessageSquare } from "lucide-react";
 import { webdesignServices, webdesignHeading, webdesignHighlight, webdesignSubtitle } from "@/data/services/webdesign-services";
 import * as Accordion from "@radix-ui/react-accordion";
@@ -805,6 +805,8 @@ const benefits = [
 const WebDesign = () => {
   const [loaded, setLoaded] = useState(false);
   const isTablet = useIsTablet();
+  const navigate = useNavigate();
+  const [heroEmail, setHeroEmail] = useState('');
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
 
   const anim = (d = 0) => ({
@@ -915,12 +917,23 @@ const WebDesign = () => {
                 <input
                   type="email"
                   placeholder="Enter your email for a free audit"
+                  value={heroEmail}
+                  onChange={(e) => setHeroEmail(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                    }
+                  }}
                   style={{
                     flex: 1, background: "transparent", border: "none", outline: "none",
                     fontFamily: FONT, fontWeight: 500, fontSize: "14px", color: "#fff", minWidth: 0,
                   }}
                 />
                 <button
+                  onClick={() => {
+                    navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                  }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 0 20px rgba(${C.primaryRGB},0.5)`; e.currentTarget.style.background = C.gradient; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = C.cyan; }}
                   style={{

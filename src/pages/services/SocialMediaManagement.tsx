@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/seo/SEOHead";
 import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Share2, Calendar, Users, BarChart, TrendingUp, MessageSquare, Minus, Plus } from "lucide-react";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
@@ -695,6 +695,8 @@ const SocialMediaManagement = () => {
   const [loaded, setLoaded] = useState(false);
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
+  const navigate = useNavigate();
+  const [heroEmail, setHeroEmail] = useState('');
 
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
 
@@ -811,12 +813,23 @@ const SocialMediaManagement = () => {
                 <input
                   type="email"
                   placeholder="Drop your email — we'll send a free strategy"
+                  value={heroEmail}
+                  onChange={(e) => setHeroEmail(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                    }
+                  }}
                   style={{
                     flex: 1, background: "transparent", border: "none", outline: "none",
                     fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 500, fontSize: "14px", color: "#fff", minWidth: 0,
                   }}
                 />
                 <button
+                  onClick={() => {
+                    navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                  }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 20px rgba(52,211,153,0.5)"; e.currentTarget.style.background = "linear-gradient(135deg, #34d399, #06b6d4)"; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = "#06b6d4"; }}
                   style={{
