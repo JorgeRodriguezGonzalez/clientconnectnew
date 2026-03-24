@@ -87,7 +87,7 @@ const Index = () => {
           },
           "description": "Sydney digital marketing agency specialising in SEO, Google Ads, web design and social media for tradies and local service businesses.",
           "priceRange": "$$",
-          "image": "https://clientconnectaustralia.com.au/images/CCA-icon.png",
+          "image": "https://clientconnectaustralia.com.au/images/CCA-icon-final.png",
           "sameAs": []
         },
         {
@@ -95,7 +95,7 @@ const Index = () => {
           "@type": "Organization",
           "name": "Client Connect Australia",
           "url": "https://clientconnectaustralia.com.au",
-          "logo": "https://clientconnectaustralia.com.au/images/CCA-icon.png",
+          "logo": "https://clientconnectaustralia.com.au/images/CCA-icon-final.png",
           "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+61272071038",

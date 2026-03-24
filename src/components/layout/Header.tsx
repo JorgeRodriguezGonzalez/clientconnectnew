@@ -165,7 +165,7 @@ function Header() {
         <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 no-underline">
             <img
-              src="/images/CCA-icon.png"
+              src="/images/CCA-icon-final.png"
               alt="Client Connect"
               className="w-14 h-14 shrink-0 object-contain"
             />

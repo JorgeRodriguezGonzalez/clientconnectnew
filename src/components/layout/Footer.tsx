@@ -132,7 +132,7 @@ function Footer(): JSX.Element {
           <div className="md:col-span-4 flex flex-col gap-6">
              <Link to="/" className="inline-flex items-center gap-2 no-underline">
                 <img
-                  src="/images/CCA-icon.png"
+                  src="/images/CCA-icon-final.png"
                   alt="Client Connect"
                   className="w-14 h-14 shrink-0 object-contain"
                 />
