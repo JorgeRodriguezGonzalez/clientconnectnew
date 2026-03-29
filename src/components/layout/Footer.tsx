@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Instagram, Linkedin, Twitter, Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTracking } from "@/context/TrackingContext";
 
 // --- COLORS ---
 const COLORS = {
@@ -15,7 +16,7 @@ const navigation = {
     { name: "About Us", href: "/about" },
     { name: "Case Studies", href: "/case-studies" },
     { name: "Contact", href: "/contact" },
-    { name: "Services", href: "/services" },
+    { name: "Services", href: "/services/seo" },
   ],
   social: [
     { name: "LinkedIn", icon: Linkedin, href: "#" },
@@ -29,6 +30,7 @@ const navigation = {
 };
 
 function Footer(): JSX.Element {
+  const { phoneDisplay, phoneTel } = useTracking();
   return (
     <footer className="relative bg-black text-white pt-24 pb-12 overflow-hidden font-sans border-t border-zinc-800">
       
@@ -130,12 +132,25 @@ function Footer(): JSX.Element {
           <div className="md:col-span-4 flex flex-col gap-6">
              <Link to="/" className="inline-flex items-center gap-2 no-underline">
                 <img
-                  src="/images/logoCCA2.png"
-                  alt="Client Connect Australia"
+                  src="/images/CCA-icon-final.png"
+                  alt="Client Connect"
                   className="w-14 h-14 shrink-0 object-contain"
                 />
-                <span className="text-xl font-medium tracking-tight text-white">
-                  Client Connect <span className="text-[#34d399]">Australia</span><span className="text-[#ffa93b]">.</span>
+                <span className="text-2xl font-medium tracking-tight text-white">
+                  Cl
+                  <span
+                    className="text-transparent"
+                    style={{
+                      backgroundImage: "linear-gradient(to bottom, #34d399 38%, white 38%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    i
+                  </span>
+                  ent Connect
+                  <span className="text-[#34d399]">.</span>
                 </span>
              </Link>
              <p className="font-sans text-zinc-500 leading-relaxed max-w-sm text-sm">
@@ -186,12 +201,12 @@ function Footer(): JSX.Element {
                    </a>
                 </li>
                 <li>
-                   <a href="tel:+61272071038" className="flex items-center gap-3 group">
+                  <a href={`tel:${phoneTel}`} className="flex items-center gap-3 group">
                       <div className="p-2 border border-zinc-800 bg-zinc-900 text-zinc-400 group-hover:text-emerald-400 group-hover:border-emerald-500/30 transition-colors rounded-none">
                         <Phone size={16} />
                       </div>
                       <span className="font-sans text-sm text-zinc-400 group-hover:text-white transition-colors">
-                        (02) 7207 1038
+                      {phoneDisplay}
                       </span>
                    </a>
                 </li>
@@ -211,9 +226,9 @@ function Footer(): JSX.Element {
 
         {/* 3. BIG TYPE BOTTOM */}
         <div className="w-full border-t border-zinc-800 pt-16 pb-4 flex flex-col items-center select-none pointer-events-none">
-           <h1 className="font-sans font-black text-[12vw] leading-[0.8] tracking-tighter text-zinc-900 text-center whitespace-nowrap opacity-80">
+           <p className="font-sans font-black text-[12vw] leading-[0.8] tracking-tighter text-zinc-900 text-center whitespace-nowrap opacity-80">
               CLIENT CONNECT
-           </h1>
+           </p>
         </div>
 
         {/* 4. COPYRIGHT & LEGAL */}

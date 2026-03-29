@@ -8,6 +8,8 @@ import InteractivePath from "@/components/home/InteractivePath";
 import { HowWeWork } from "@/components/home/HowWeWork";
 import { Minus, Plus, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
+import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -375,6 +377,19 @@ export default function About() {
 
   return (
     <div style={{ fontFamily: FONT, background: BG, color: TEXT_DARK, minHeight: "100vh", overflowX: "hidden" }}>
+      <SEOHead
+        title="About Us | Client Connect Australia - Sydney Marketing Experts"
+        description="Meet the team behind Client Connect Australia. We're tradies who became digital marketers, helping Sydney service businesses get more leads and customers."
+        path="/about"
+      />
+      <SchemaMarkup schema={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+          { "@type": "ListItem", "position": 2, "name": "About Us", "item": "https://clientconnectaustralia.com.au/about" }
+        ]
+      }} />
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}
@@ -382,7 +397,7 @@ export default function About() {
         <div style={{ position: "absolute", top: "180px", left: "50%", marginLeft: "-250px", width: "500px", height: "500px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "200px", left: "50%", marginLeft: "-50px", width: "600px", height: "600px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
-        <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
+        <div className="hero-title-spacing" style={{ textAlign: "center", paddingTop: "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
           <h1 style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
             fontSize: "clamp(42px, 8vw, 68px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-2px", margin: 0, color: "#fff",

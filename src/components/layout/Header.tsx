@@ -16,6 +16,7 @@ import {
   Mail,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTracking } from "@/context/TrackingContext";
 
 // --- UTILS ---
 function cn(...classes: (string | undefined | null | false)[]) {
@@ -118,6 +119,7 @@ function useScrollHide(idleDelay = 300) {
 
 // --- MAIN COMPONENT ---
 function Header() {
+  const { phoneDisplay, phoneTel } = useTracking();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
@@ -158,19 +160,30 @@ function Header() {
           y: headerVisible ? 0 : -100,
         }}
         transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-        className="fixed top-0 left-0 right-0 z-[999] font-sans bg-black"
+        className="fixed top-0 left-0 right-0 z-[999] font-sans bg-[#050505]"
       >
         <nav className="flex max-w-7xl mx-auto px-4 md:px-6 py-4 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 no-underline">
             <img
-              src="/images/logoCCA2.png"
-              alt="Client Connect Australia"
+              src="/images/CCA-icon-final.png"
+              alt="Client Connect"
               className="w-14 h-14 shrink-0 object-contain"
             />
-            <span className="text-xl font-medium tracking-tight text-white">
-              Client Connect{" "}
-              <span className="text-[#34d399]">Australia</span>
-              <span className="text-[#ffa93b]">.</span>
+            <span className="text-2xl font-medium tracking-tight text-white">
+              Cl
+              <span
+                className="text-transparent"
+                style={{
+                  backgroundImage: "linear-gradient(to bottom, #34d399 38%, white 38%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                i
+              </span>
+              ent Connect
+              <span className="text-[#34d399]">.</span>
             </span>
           </Link>
 
@@ -283,21 +296,21 @@ function Header() {
                             <div className="mt-5 space-y-3">
                               <div className="space-y-2">
                                 <a
-                                  href="tel:0272071038"
+                                  href={`tel:${phoneTel}`}
                                   className="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors no-underline"
                                 >
                                   <Phone size={13} className="text-[#34d399]" />
                                   <span className="font-medium">
-                                    (02) 7207 1038
+                                    {phoneDisplay}
                                   </span>
                                 </a>
                                 <a
-                                  href="mailto:info@clientconnectaustralia.com"
+                                  href="mailto:info@clientconnectaustralia.com.au"
                                   className="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors no-underline"
                                 >
                                   <Mail size={13} className="text-[#34d399]" />
                                   <span className="font-medium truncate">
-                                    info@clientconnectaustralia.com
+                                    info@clientconnectaustralia.com.au
                                   </span>
                                 </a>
                               </div>

@@ -4,6 +4,8 @@ import CaseStudiesHome from "@/components/home/case-studies";
 import Footer from "@/components/layout/Footer";
 import { HowWeWork } from "@/components/home/HowWeWork";
 import CTASection from "@/components/home/CTASection";
+import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 
 const PRIMARY = "#34d399";
 const PRIMARY_RGB = "52,211,153";
@@ -126,6 +128,19 @@ export default function CaseStudiesPage() {
 
   return (
     <div style={{ fontFamily: FONT, background: BG, color: TEXT_DARK, minHeight: "100vh", overflowX: "hidden" }}>
+      <SEOHead
+        title="Case Studies | Client Connect Australia - Real Results for Real Businesses"
+        description="See how Client Connect Australia helps Sydney tradies and service businesses grow. Real case studies with measurable SEO, Google Ads and web design results."
+        path="/case-studies"
+      />
+      <SchemaMarkup schema={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+          { "@type": "ListItem", "position": 2, "name": "Case Studies", "item": "https://clientconnectaustralia.com.au/case-studies" }
+        ]
+      }} />
       <Header />
 
       {/* ═══════════════ HERO ═══════════════ */}
@@ -134,7 +149,7 @@ export default function CaseStudiesPage() {
         <div style={{ position: "absolute", top: "180px", left: "50%", transform: "translateX(-70%)", width: "400px", height: "400px", background: `radial-gradient(circle, rgba(${PRIMARY_RGB},0.2) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: "160px", left: "50%", transform: "translateX(-30%)", width: "400px", height: "400px", background: `radial-gradient(circle, rgba(${SECONDARY_RGB},0.12) 0%, transparent 70%)`, borderRadius: "50%", pointerEvents: "none" }} />
 
-        <div style={{ textAlign: "center", paddingTop: isMobile ? "100px" : "140px", position: "relative", zIndex: 2 }}>
+        <div className="hero-title-spacing" style={{ textAlign: "center", paddingTop: "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
           {/* Title */}
           <h1 style={{
             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',

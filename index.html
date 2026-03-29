@@ -3,22 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="GWQODeqZcK5BjGAqQNGWL4MTvOxt3deO7BzWpe4v8WU" />
+    <link rel="icon" type="image/png" href="/images/CCA-icon-final.png" />
+    <link rel="apple-touch-icon" href="/images/CCA-icon-final.png" />
     <title>Client Connect Australia | Sydney Digital Marketing Agency</title>
-    <meta name="description" content="Connecting Sydney businesses with their ideal clients through expert SEO, Google Ads, web design, and social media marketing. Get results-driven digital marketing strategies." />
-    <meta name="author" content="Client Connect Australia" />
 
+    <!-- Static OG/Twitter tags for scrapers that don't execute JS (WhatsApp, Facebook, LinkedIn, Twitter) -->
+    <!-- react-helmet-async will override these dynamically per route in the browser -->
+    <meta name="description" content="Sydney digital marketing agency helping local businesses grow with SEO, Google Ads, web design & social media. Results-driven strategies for tradies & service businesses." />
     <meta property="og:title" content="Client Connect Australia | Sydney Digital Marketing Agency" />
-    <meta property="og:description" content="Connecting Sydney businesses with their ideal clients through expert SEO, Google Ads, web design, and social media marketing." />
+    <meta property="og:description" content="Sydney digital marketing agency helping local businesses grow with SEO, Google Ads, web design & social media." />
+    <meta property="og:url" content="https://clientconnectaustralia.com.au" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
+    <meta property="og:image" content="https://clientconnectaustralia.com.au/images/og-image.jpg" />
+    <meta property="og:site_name" content="Client Connect Australia" />
+    <meta property="og:locale" content="en_AU" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@ClientConnectAU" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:title" content="Client Connect Australia | Sydney Digital Marketing Agency" />
+    <meta name="twitter:description" content="Sydney digital marketing agency helping local businesses grow with SEO, Google Ads, web design & social media." />
+    <meta name="twitter:image" content="https://clientconnectaustralia.com.au/images/og-image.jpg" />
 
     <link rel="preload" href="/fonts/satoshi/satoshi-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/satoshi/satoshi-500.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/satoshi/satoshi-700.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L3CKX7WWXZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-L3CKX7WWXZ');
+    </script>
   </head>
 
   <body>
@@ -31,6 +48,14 @@
       <input type="text" name="company" />
       <input type="url" name="url" />
       <textarea name="message"></textarea>
+      <input type="hidden" name="referred_by" />
+      <input type="hidden" name="utm_source" />
+      <input type="hidden" name="utm_medium" />
+      <input type="hidden" name="utm_campaign" />
+      <input type="hidden" name="utm_term" />
+      <input type="hidden" name="utm_content" />
+      <input type="hidden" name="landing_page" />
+      <input type="hidden" name="referrer" />
     </form>
 
     <form name="contact-page" netlify netlify-honeypot="bot-field" hidden>
@@ -42,6 +67,14 @@
       <input type="url" name="url" />
       <input type="text" name="service" />
       <textarea name="message"></textarea>
+      <input type="hidden" name="referred_by" />
+      <input type="hidden" name="utm_source" />
+      <input type="hidden" name="utm_medium" />
+      <input type="hidden" name="utm_campaign" />
+      <input type="hidden" name="utm_term" />
+      <input type="hidden" name="utm_content" />
+      <input type="hidden" name="landing_page" />
+      <input type="hidden" name="referrer" />
     </form>
 
     <div id="root"></div>

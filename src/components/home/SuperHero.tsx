@@ -258,6 +258,7 @@ export const SuperHero = ({
   const lampColor = '#06b6d4';
   const emeraldColor = '#34d399';
   const [isHovered, setIsHovered] = useState(false);
+  const [heroEmail, setHeroEmail] = useState('');
   const isMobile = useIsMobile();
   const navigate = useNavigate();
 
@@ -551,9 +552,20 @@ export const SuperHero = ({
                     <input
                       type="email"
                       placeholder="Enter your email for a free audit"
+                      value={heroEmail}
+                      onChange={(e) => setHeroEmail(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                        }
+                      }}
                       className="relative w-full h-full bg-transparent rounded-[50px] px-6 pr-14 text-white text-[16px] font-inter font-medium placeholder-white/40 outline-none z-10"
                     />
                     <button
+                      onClick={() => {
+                        navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                      }}
                       className="absolute right-[5px] top-1/2 -translate-y-1/2 w-[48px] h-[36px] rounded-[50px] flex items-center justify-center transition-all duration-300 z-10"
                       style={{ background: lampColor }}
                     >

@@ -2,8 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TrendingUp, Target, Users, BarChart, Zap, DollarSign, Minus, Plus, MessageSquare } from "lucide-react";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
@@ -495,6 +497,8 @@ const SocialMediaAds = () => {
   const [loaded, setLoaded] = useState(false);
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
+  const navigate = useNavigate();
+  const [heroEmail, setHeroEmail] = useState('');
 
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
 
@@ -508,6 +512,39 @@ const SocialMediaAds = () => {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ fontFamily: FONT, overflowX: "clip" }}>
+      <SEOHead
+        title="Social Media Advertising Sydney | Client Connect Australia"
+        description="Targeted social media ads for Sydney businesses. Facebook, Instagram and LinkedIn campaigns that generate quality leads and measurable returns."
+        path="/services/social-media-ads"
+      />
+      <SchemaMarkup schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Social Media Advertising",
+          "description": "Targeted social media ads for Sydney businesses. Facebook, Instagram and LinkedIn campaigns that generate quality leads.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "Client Connect Australia",
+            "telephone": "+61272071038",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Sydney",
+              "addressRegion": "NSW",
+              "addressCountry": "AU"
+            }
+          },
+          "areaServed": { "@type": "City", "name": "Sydney" }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+            { "@type": "ListItem", "position": 2, "name": "Social Media Ads", "item": "https://clientconnectaustralia.com.au/services/social-media-ads" }
+          ]
+        }
+      ]} />
       <Header />
       <main style={{ flex: 1 }}>
 
@@ -578,12 +615,23 @@ const SocialMediaAds = () => {
                 <input
                   type="email"
                   placeholder="Enter your email for a free strategy session"
+                  value={heroEmail}
+                  onChange={(e) => setHeroEmail(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                    }
+                  }}
                   style={{
                     flex: 1, background: "transparent", border: "none", outline: "none",
                     fontFamily: 'Inter, -apple-system, sans-serif', fontWeight: 500, fontSize: "14px", color: "#fff", minWidth: 0,
                   }}
                 />
                 <button
+                  onClick={() => {
+                    navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                  }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 0 20px rgba(52,211,153,0.5)"; e.currentTarget.style.background = "linear-gradient(135deg, #34d399, #06b6d4)"; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = "#06b6d4"; }}
                   style={{

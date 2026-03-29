@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Mail, Phone, MapPin, Clock, User, Building2, Globe, MessageSquare, Send, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { COLORS } from "@/lib/design-tokens";
+import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
+import { useTracking } from "@/context/TrackingContext";
 
 const PRIMARY = "#34d399";
 const SECONDARY = "#06b6d4";
@@ -56,19 +60,21 @@ const FormInput = ({
 
 const Contact = () => {
   const { toast } = useToast();
+  const { phoneDisplay, phoneTel, trackingData } = useTracking();
+  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    email: searchParams.get('email') || "",
     phone: "",
     company: "",
     url: "",
     service: "",
+    referred_by: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(false);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
   };
@@ -84,6 +90,13 @@ const Contact = () => {
         body: new URLSearchParams({
           "form-name": "contact-page",
           ...formData,
+          utm_source: trackingData.utm_source,
+          utm_medium: trackingData.utm_medium,
+          utm_campaign: trackingData.utm_campaign,
+          utm_term: trackingData.utm_term,
+          utm_content: trackingData.utm_content,
+          landing_page: trackingData.landing_page,
+          referrer: trackingData.referrer,
         }).toString(),
       });
 
@@ -105,6 +118,19 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead
+        title="Contact Us | Client Connect Australia - Get a Free Consultation"
+        description={`Get in touch with Client Connect Australia. Call ${phoneDisplay} or fill out our form for a free digital marketing consultation in Sydney.`}
+        path="/contact"
+      />
+      <SchemaMarkup schema={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+          { "@type": "ListItem", "position": 2, "name": "Contact Us", "item": "https://clientconnectaustralia.com.au/contact" }
+        ]
+      }} />
       <Header />
       <main className="flex-1">
         {/* Hero */}
@@ -123,7 +149,7 @@ const Contact = () => {
             }}
           />
 
-          <div style={{ textAlign: "center", paddingTop: "180px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
+          <div className="hero-title-spacing" style={{ textAlign: "center", paddingTop: "140px", paddingBottom: "16px", position: "relative", zIndex: 2 }}>
             <h1
               style={{
                 fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
@@ -245,6 +271,15 @@ const Contact = () => {
                           onChange={handleChange}
                         />
                       </div>
+
+                      <FormInput
+                        icon={User}
+                        label="Referred by"
+                        name="referred_by"
+                        placeholder="Name of person who referred you (optional)"
+                        value={formData.referred_by}
+                        onChange={handleChange}
+                      />
 
                       {/* Row 3: Website URL */}
                       <FormInput
@@ -395,8 +430,8 @@ const Contact = () => {
                       </div>
                       <div>
                         <div className="font-medium mb-1 text-white">Phone</div>
-                        <a href="tel:0272071038" className="text-zinc-400 hover:text-[#06b6d4] transition-colors">
-                          02 7207 1038
+                        <a href={`tel:${phoneTel}`} className="text-zinc-400 hover:text-[#06b6d4] transition-colors">
+                          {phoneDisplay}
                         </a>
                       </div>
                     </div>

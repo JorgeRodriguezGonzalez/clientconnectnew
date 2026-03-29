@@ -1,3 +1,5 @@
+import { HelmetProvider } from "react-helmet-async";
+import { TrackingProvider } from "@/context/TrackingContext";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,30 +22,34 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/case-studies" element={<CaseStudies />} />
-          <Route path="/services/seo" element={<SEO />} />
-          <Route path="/services/google-ads" element={<GoogleAds />} />
-          <Route path="/services/web-design" element={<WebDesign />} />
-          <Route path="/services/social-media-management" element={<SocialMediaManagement />} />
-          <Route path="/services/social-media-ads" element={<SocialMediaAds />} />
-          <Route path="/services/content-creation" element={<ContentCreation />} />
-          <Route path="/services/brand-identity" element={<BrandIdentity />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <HelmetProvider>
+    <TrackingProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/case-studies" element={<CaseStudies />} />
+              <Route path="/services/seo" element={<SEO />} />
+              <Route path="/services/google-ads" element={<GoogleAds />} />
+              <Route path="/services/web-design" element={<WebDesign />} />
+              <Route path="/services/social-media-management" element={<SocialMediaManagement />} />
+              <Route path="/services/social-media-ads" element={<SocialMediaAds />} />
+              <Route path="/services/content-creation" element={<ContentCreation />} />
+              <Route path="/services/brand-identity" element={<BrandIdentity />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </TrackingProvider>
+  </HelmetProvider>
 );
 
 export default App;

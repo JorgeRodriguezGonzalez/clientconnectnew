@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
+import SchemaMarkup from "@/components/seo/SchemaMarkup";
 import SubServicesSection from "@/components/home/SubServicesSection";
 import CTASection from "@/components/home/CTASection";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Globe, Smartphone, Rocket, Palette, TrendingUp, Code, Minus, Plus, MessageSquare } from "lucide-react";
 import { webdesignServices, webdesignHeading, webdesignHighlight, webdesignSubtitle } from "@/data/services/webdesign-services";
 import * as Accordion from "@radix-ui/react-accordion";
@@ -803,6 +805,8 @@ const benefits = [
 const WebDesign = () => {
   const [loaded, setLoaded] = useState(false);
   const isTablet = useIsTablet();
+  const navigate = useNavigate();
+  const [heroEmail, setHeroEmail] = useState('');
   useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
 
   const anim = (d = 0) => ({
@@ -813,6 +817,39 @@ const WebDesign = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEOHead
+        title="Web Design Sydney | Client Connect Australia - Sites That Convert"
+        description="Custom web design for Sydney tradies and service businesses. Fast, mobile-friendly websites built to turn visitors into customers and generate leads."
+        path="/services/web-design"
+      />
+      <SchemaMarkup schema={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Web Design",
+          "description": "Custom web design for Sydney tradies and service businesses. Fast, mobile-friendly sites that convert visitors into customers.",
+          "provider": {
+            "@type": "ProfessionalService",
+            "name": "Client Connect Australia",
+            "telephone": "+61272071038",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Sydney",
+              "addressRegion": "NSW",
+              "addressCountry": "AU"
+            }
+          },
+          "areaServed": { "@type": "City", "name": "Sydney" }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://clientconnectaustralia.com.au" },
+            { "@type": "ListItem", "position": 2, "name": "Web Design", "item": "https://clientconnectaustralia.com.au/services/web-design" }
+          ]
+        }
+      ]} />
       <Header />
       <main className="flex-1">
 
@@ -880,12 +917,23 @@ const WebDesign = () => {
                 <input
                   type="email"
                   placeholder="Enter your email for a free audit"
+                  value={heroEmail}
+                  onChange={(e) => setHeroEmail(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                    }
+                  }}
                   style={{
                     flex: 1, background: "transparent", border: "none", outline: "none",
                     fontFamily: FONT, fontWeight: 500, fontSize: "14px", color: "#fff", minWidth: 0,
                   }}
                 />
                 <button
+                  onClick={() => {
+                    navigate(heroEmail.trim() ? `/contact?email=${encodeURIComponent(heroEmail.trim())}` : '/contact');
+                  }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 0 20px rgba(${C.primaryRGB},0.5)`; e.currentTarget.style.background = C.gradient; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = C.cyan; }}
                   style={{

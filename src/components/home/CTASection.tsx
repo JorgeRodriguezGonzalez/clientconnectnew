@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Sparkles, Send, User, Mail, Phone, Building2, Globe, MessageSquare } from "lucide-react";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
+import { useTracking } from "@/context/TrackingContext";
 
 const cn = (...classes: (string | undefined | null | false)[]) => {
   return classes.filter(Boolean).join(' ');
@@ -131,6 +132,7 @@ const FormInput = ({ icon: Icon, label, name, type = "text", placeholder, requir
 );
 
 const CTASection = () => {
+  const { trackingData } = useTracking();
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", url: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -151,6 +153,13 @@ const CTASection = () => {
         body: new URLSearchParams({
           "form-name": "contact",
           ...formData,
+          utm_source: trackingData.utm_source,
+          utm_medium: trackingData.utm_medium,
+          utm_campaign: trackingData.utm_campaign,
+          utm_term: trackingData.utm_term,
+          utm_content: trackingData.utm_content,
+          landing_page: trackingData.landing_page,
+          referrer: trackingData.referrer,
         }).toString(),
       });
 
