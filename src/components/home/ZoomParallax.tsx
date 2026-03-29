@@ -173,7 +173,6 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                 could be next.
                                             </h3>
                                             <div className="flex gap-3 mt-2">
-                                                {/* LET'S CHAT → tel:0272071038 */}
                                                 <motion.a
                                                     href="tel:0272071038"
                                                     style={{ pointerEvents: 'auto', position: 'relative', zIndex: 50 }}
@@ -197,7 +196,6 @@ function ParallaxContent({ videos, isMobile }: { videos: { src: string }[], isMo
                                                     }}>
                                                     Let's chat
                                                 </motion.a>
-                                                {/* BOOK A CALL → /contact */}
                                                 <motion.a
                                                     href="/contact"
                                                     style={{ pointerEvents: 'auto', position: 'relative', zIndex: 50 }}
@@ -255,18 +253,14 @@ export default function ZoomParallax() {
             lenis.destroy?.(); };
     }, []);
 
-    const ylrDesktop = "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771987258/0225_spcg8h.mov";
-    const ylrMobile = "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773808379/YLRmobile_wh2rmc.mov";
-    const landscapingDesktop = "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978172/landscaping_lierf1.mov";
-    const landscapingMobile = "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773808760/landscapingmobile_rokp6c.mov";
     const videos = [
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1772058232/prolexbathrooms_f8cpx0.mov" },
-        { src: isMobile ? landscapingMobile : landscapingDesktop },
-        { src: isMobile ? ylrMobile : ylrDesktop },
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978168/nanotise_s5oatf.mov" },
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771978181/driveways_sdxoqa.mov" },
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771992243/assetplumbing_a73cav.mov" },
-        { src: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771989643/0225_1_jymeqw.mov" },
+        { src: "/videos/prolexzoom.mp4" },
+        { src: isMobile ? "/videos/landscapingzoom.mp4" : "/videos/landscapingzoom.mp4" },
+        { src: isMobile ? "/videos/YLRzoom.mp4" : "/videos/YLRzoom.mp4" },
+        { src: "/videos/nanotisezoom.mp4" },
+        { src: "/videos/drivewayszoom.mp4" },
+        { src: "/videos/assetzoom.mp4" },
+        { src: "/videos/turnbullzoom.mp4" },
     ];
 
     return (
@@ -278,7 +272,6 @@ export default function ZoomParallax() {
                     className="pointer-events-none absolute -top-1/2 left-1/2 h-[100vmin] w-[100vmin] -translate-x-1/2 rounded-full blur-[100px] opacity-20"
                     style={{ background: 'radial-gradient(circle, rgba(52,211,153,0.25) 0%, rgba(5,5,5,0) 70%)' }} />
                 <div className="relative z-10 text-center flex flex-col items-center">
-                    {/* Badge */}
                     <motion.span
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
