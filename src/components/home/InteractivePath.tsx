@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 const RECENT_WORKS = [
-  { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/so_0/v1771820402/Testimonial_Vertical_1_agbhiv.jpg", handle: "Alex Ross", testimonial: "Nanotise" },
-  { id: "2", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773885639/alphafencing_rr2qge.mp4", posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/so_0/v1773885639/alphafencing_rr2qge.jpg", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
+  { id: "1", videoSrc: "/videos/nanotisetestimonial.mp4", posterSrc: "/images/nanotise-poster.jpg", handle: "Alex Ross", testimonial: "Nanotise" },
+  { id: "2", videoSrc: "/videos/alphafencing.mp4", posterSrc: "/images/alphafencing-poster.jpg", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
   { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", posterSrc: "/images/117.png", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
   { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", posterSrc: "/images/image2.jpg", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
   { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", posterSrc: "/images/assetplumbing-vertical.png", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
@@ -223,7 +223,6 @@ export default function TestimonialsSection() {
     if (!isMobile) return;
     const dx = Math.abs(e.touches[0].clientX - touchStartX.current);
     const dy = Math.abs(e.touches[0].clientY - touchStartY.current);
-    // Si el movimiento es más horizontal que vertical, marcamos como swipe
     if (dx > dy && dx > 10) {
       isSwiping.current = true;
     }
@@ -234,15 +233,12 @@ export default function TestimonialsSection() {
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
     if (Math.abs(deltaX) >= SWIPE_THRESHOLD) {
       if (deltaX < 0) {
-        // Swipe izquierda → siguiente
         setActive(i => (i + 1) % RECENT_WORKS.length);
       } else {
-        // Swipe derecha → anterior
         setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
       }
     }
   }, [isMobile]);
-  // --- Fin swipe táctil ---
 
   const prev = () => setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
   const next = () => setActive(i => (i + 1) % RECENT_WORKS.length);
@@ -290,7 +286,6 @@ export default function TestimonialsSection() {
         </p>
       </div>
 
-      {/* Zona del carrusel con eventos touch solo en mobile */}
       <div
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
