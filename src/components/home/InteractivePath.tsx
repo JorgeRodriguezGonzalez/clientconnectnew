@@ -37,7 +37,6 @@ const useIsMobile = (breakpoint = 768) => {
 const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [hasRequestedPlay, setHasRequestedPlay] = useState(false);
 
   const abs = Math.abs(position);
 
@@ -45,37 +44,17 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
     if (!isActive) {
       if (videoRef.current) {
         videoRef.current.pause();
+        if (isMobile) {
+          videoRef.current.currentTime = 0;
+        }
       }
       setIsPlaying(false);
-      if (isMobile) {
-        setHasRequestedPlay(false);
-      }
     }
   }, [isActive, isMobile]);
-
-  useEffect(() => {
-    if (isMobile && hasRequestedPlay && videoRef.current) {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
-    }
-  }, [hasRequestedPlay, isMobile]);
 
   const togglePlay = (e) => {
     e.stopPropagation();
     if (!isActive) { onClick(); return; }
-
-    if (isMobile) {
-      if (!hasRequestedPlay) {
-        setHasRequestedPlay(true);
-      } else if (videoRef.current) {
-        if (isPlaying) {
-          videoRef.current.pause();
-          setIsPlaying(false);
-        } else {
-          videoRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
-        }
-      }
-      return;
-    }
 
     if (!videoRef.current) return;
     if (isPlaying) {
@@ -92,8 +71,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
   const zIndex = 10 - abs * 3;
   const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
-
-  const showVideo = isMobile ? (isActive && hasRequestedPlay) : true;
 
   return (
     <div
@@ -115,39 +92,22 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
         boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
-      {isMobile && item.posterSrc && (
-        <img
-          src={item.posterSrc}
-          alt={item.handle}
-          loading="eager"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: 0,
-          }}
-        />
-      )}
-
-      {showVideo && (
-        <video
-          ref={videoRef}
-          src={item.videoSrc}
-          loop
-          playsInline
-          preload={isMobile ? "auto" : "metadata"}
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: 1,
-          }}
-        />
-      )}
+      <video
+        ref={videoRef}
+        src={item.videoSrc}
+        loop
+        playsInline
+        muted
+        preload="auto"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 1,
+        }}
+      />
 
       <div style={{
         position: "absolute", inset: 0,
@@ -205,7 +165,6 @@ export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
   const isMobile = useIsMobile();
 
-  // --- Swipe táctil (solo mobile) ---
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
   const isSwiping = useRef(false);
