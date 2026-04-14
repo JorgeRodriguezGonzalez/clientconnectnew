@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { COLORS, BACKGROUNDS } from "@/lib/design-tokens";
 
 const RECENT_WORKS = [
-  { id: "1", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1771820402/Testimonial_Vertical_1_agbhiv.mp4", posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/so_0/v1771820402/Testimonial_Vertical_1_agbhiv.jpg", handle: "Alex Ross", testimonial: "Nanotise" },
-  { id: "2", videoSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/v1773885639/alphafencing_rr2qge.mp4", posterSrc: "https://res.cloudinary.com/dsdnvhpmr/video/upload/so_0/v1773885639/alphafencing_rr2qge.jpg", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
+  { id: "1", videoSrc: "/videos/nanotisetestimonial.mp4", posterSrc: "/images/nanotise-poster.jpg", handle: "Alex Ross", testimonial: "Nanotise" },
+  { id: "2", videoSrc: "/videos/alphafencing.mp4", posterSrc: "/images/alphafencing-poster.jpg", handle: "Alpha Fencing", testimonial: "Alpha Fencing" },
   { id: "3", videoSrc: "https://framerusercontent.com/assets/f2fyZuzpw4LXDReDBa9x0RM74.mp4", posterSrc: "/images/117.png", handle: "Pioneer", testimonial: "150 Qualified Leads in one month" },
   { id: "4", videoSrc: "https://framerusercontent.com/assets/tdObAjmo5rYV9y0dSN1y6Fi8E.mp4", posterSrc: "/images/image2.jpg", handle: "Premier Bathrooms", testimonial: "From cold traffic to loyal users" },
   { id: "5", videoSrc: "https://framerusercontent.com/assets/G76LWpCqcnDqr4JqhtkD3NlnRtU.mp4", posterSrc: "/images/assetplumbing-vertical.png", handle: "Shaun", testimonial: "Asset Plumbing Solutions" },
@@ -37,7 +37,6 @@ const useIsMobile = (breakpoint = 768) => {
 const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [hasRequestedPlay, setHasRequestedPlay] = useState(false);
 
   const abs = Math.abs(position);
 
@@ -45,37 +44,17 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
     if (!isActive) {
       if (videoRef.current) {
         videoRef.current.pause();
+        if (isMobile) {
+          videoRef.current.currentTime = 0;
+        }
       }
       setIsPlaying(false);
-      if (isMobile) {
-        setHasRequestedPlay(false);
-      }
     }
   }, [isActive, isMobile]);
-
-  useEffect(() => {
-    if (isMobile && hasRequestedPlay && videoRef.current) {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
-    }
-  }, [hasRequestedPlay, isMobile]);
 
   const togglePlay = (e) => {
     e.stopPropagation();
     if (!isActive) { onClick(); return; }
-
-    if (isMobile) {
-      if (!hasRequestedPlay) {
-        setHasRequestedPlay(true);
-      } else if (videoRef.current) {
-        if (isPlaying) {
-          videoRef.current.pause();
-          setIsPlaying(false);
-        } else {
-          videoRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
-        }
-      }
-      return;
-    }
 
     if (!videoRef.current) return;
     if (isPlaying) {
@@ -92,8 +71,6 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
   const opacity = abs === 0 ? 1 : abs === 1 ? 0.65 : 0.35;
   const zIndex = 10 - abs * 3;
   const blur = abs === 0 ? 0 : abs === 1 ? 1 : 3;
-
-  const showVideo = isMobile ? (isActive && hasRequestedPlay) : true;
 
   return (
     <div
@@ -115,39 +92,22 @@ const VideoCard = ({ item, position, onClick, isActive, isMobile }) => {
         boxShadow: isActive ? "0 32px 64px rgba(0,0,0,0.6)" : "0 8px 24px rgba(0,0,0,0.4)",
       }}
     >
-      {isMobile && item.posterSrc && (
-        <img
-          src={item.posterSrc}
-          alt={item.handle}
-          loading="eager"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: 0,
-          }}
-        />
-      )}
-
-      {showVideo && (
-        <video
-          ref={videoRef}
-          src={item.videoSrc}
-          loop
-          playsInline
-          preload={isMobile ? "auto" : "metadata"}
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: 1,
-          }}
-        />
-      )}
+      <video
+        ref={videoRef}
+        src={item.videoSrc}
+        loop
+        playsInline
+        muted
+        preload="auto"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 1,
+        }}
+      />
 
       <div style={{
         position: "absolute", inset: 0,
@@ -205,7 +165,6 @@ export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
   const isMobile = useIsMobile();
 
-  // --- Swipe táctil (solo mobile) ---
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
   const isSwiping = useRef(false);
@@ -223,7 +182,6 @@ export default function TestimonialsSection() {
     if (!isMobile) return;
     const dx = Math.abs(e.touches[0].clientX - touchStartX.current);
     const dy = Math.abs(e.touches[0].clientY - touchStartY.current);
-    // Si el movimiento es más horizontal que vertical, marcamos como swipe
     if (dx > dy && dx > 10) {
       isSwiping.current = true;
     }
@@ -234,15 +192,12 @@ export default function TestimonialsSection() {
     const deltaX = e.changedTouches[0].clientX - touchStartX.current;
     if (Math.abs(deltaX) >= SWIPE_THRESHOLD) {
       if (deltaX < 0) {
-        // Swipe izquierda → siguiente
         setActive(i => (i + 1) % RECENT_WORKS.length);
       } else {
-        // Swipe derecha → anterior
         setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
       }
     }
   }, [isMobile]);
-  // --- Fin swipe táctil ---
 
   const prev = () => setActive(i => (i - 1 + RECENT_WORKS.length) % RECENT_WORKS.length);
   const next = () => setActive(i => (i + 1) % RECENT_WORKS.length);
@@ -290,7 +245,6 @@ export default function TestimonialsSection() {
         </p>
       </div>
 
-      {/* Zona del carrusel con eventos touch solo en mobile */}
       <div
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
